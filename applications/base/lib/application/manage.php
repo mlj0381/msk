@@ -379,11 +379,11 @@ class base_application_manage
         echo $app_id;
         exit;
     }
-    public function update_app_content($app_id, $autofix = true)
+    public function update_app_content($app_id, $autofix = true, $force = false)
     {
         foreach ($this->content_detector($app_id) as $k => $detector) {
             $last_modified = $detector->last_modified($app_id);
-            if (base_kvstore::instance('system')->fetch('service_last_modified.'.get_class($detector).'.'.$app_id, $current_define_modified) == false || $last_modified != $current_define_modified) {
+            if ($force || base_kvstore::instance('system')->fetch('service_last_modified.'.get_class($detector).'.'.$app_id, $current_define_modified) == false || $last_modified != $current_define_modified) {
                 logger::info('Updating '.$k.'@'.$app_id.'.');
                 if ($autofix) {
                     $detector->update($app_id);

@@ -10,6 +10,8 @@ class desktop_finder_builder_view extends desktop_finder_builder_prototype
     public $use_buildin_setcol = true;
     public $use_buildin_selectrow = true;
 
+	public $use_buildin_dialog = array(); // finder 弹层
+
     public $object_select_model = false;
     public $selectrow_type = 'checkbox';
 
@@ -29,6 +31,9 @@ class desktop_finder_builder_view extends desktop_finder_builder_prototype
         $this->html_footer = '';
         $this->html_pager = '';
         $this->html_actions = '';
+
+		$this->html_dialog = '';
+
         $this->short_object_name = substr($this->object_name, strpos($this->object_name, '_mdl_') + 5);
         $this->__view = $this->get_views();
         if (count($this->__view) && $this->use_view_tab) {
@@ -113,7 +118,8 @@ class desktop_finder_builder_view extends desktop_finder_builder_prototype
         $this->_footer($this->html_pager);
         $this->html_pager = $render->fetch('finder/view/pager.html');
         $this->html_body = $render->fetch('finder/view/body.html');
-        $output .= $render->fetch('finder/view/finder_title.html').$this->html_actions.$this->html_header.$this->html_body.$this->html_footer;
+		$this->html_dialog = $this->_dialog();
+        $output .= $render->fetch('finder/view/finder_title.html').$this->html_actions.$this->html_header.$this->html_body.$this->html_footer.$this->html_dialog;
         echo $output;
 
         return $output;
@@ -268,6 +274,23 @@ EOF;
 
         $this->html_actions = $render->fetch('finder/view/actions.html');
     }
+
+    // finder 弹层 2015/09/18
+	public function _dialog()
+	{
+		$param = $this->use_buildin_dialog;
+		if(empty($param['id'])) return '';
+		$_return = <<<EOF
+	<div class="modal fade" id="{$param['id']}" role="basic" aria-hidden="false">
+	<div class="modal-dialog">
+	<div class="modal-content">
+		test
+	</div>
+	</div>
+	</div>
+EOF;
+		return $_return;
+	}
     public function toinput($params)
     {
         $html = null;

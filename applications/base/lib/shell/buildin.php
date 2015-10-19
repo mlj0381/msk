@@ -300,8 +300,13 @@ class base_shell_buildin extends base_shell_prototype
             logger::info('系统未安装!请先运行install');
             return;
         }
-
-        if (!$args || $args[0] == 'vmcshop') {
+        $force = array_search('force', $args);
+        if($force !== false)
+        {
+            unset($args[$force]);
+            $force = true;
+        }
+        if (!$args) {
             $rows = app::get('base')->model('apps')->getList('app_id', array('installed' => 1));
             foreach ($rows as $r) {
                 if ($r['app_id'] == 'base') {
@@ -318,7 +323,7 @@ class base_shell_buildin extends base_shell_prototype
             if (version_compare($appinfo[0]['local_ver'], $appinfo[0]['dbver'], '>')) {
                 app::get('base')->model('apps')->update(array('dbver' => $appinfo[0]['local_ver']), array('app_id' => $app_id));
                 app::get($app_id)->runtask('pre_update', array('dbver' => $appinfo[0]['dbver']));
-                vmc::singleton('base_application_manage')->update_app_content($app_id);
+                vmc::singleton('base_application_manage')->update_app_content($app_id, true, $force);
                 app::get($app_id)->runtask('post_update', array('dbver' => $appinfo[0]['dbver']));
             } else {
                 vmc::singleton('base_application_manage')->update_app_content($app_id);
@@ -441,5 +446,47 @@ class base_shell_buildin extends base_shell_prototype
         return vmc::singleton('base_demo')->init();
     }
 
-
+	/*
+	 * 新增
+	*/
+	public $command_db_export = '数据结构';
+	public function command_db_export()
+    {
+		$rows = app::get('base')->model('apps')->getlist('*');
+        foreach ($rows as $k => $v) {
+			$result = "VMC dbSchema";
+			$result.= "\r\n=====================================================================\r\n";
+			$dbdir = APP_DIR . "/" . $v['app_id'] . "/dbschema";
+			//array_walk($dbdir, function($k, $v){});
+			$result.= "{$v['app_name']}({$v['app_id']})\r\n";
+			$dbs = scandir($dbdir);
+			foreach($dbs as $item)
+			{
+				if($item == '.' || $item == '..') continue;
+				$key = str_replace(".php", "", $item);
+				require($dbdir . "/" . $item);
+				$label = isset($db[$key]['comment']) ? $db[$key]['comment'] : $db[$key]['label'];
+				$result.= "----{$key}{$label}";
+				$result.= isset($db[$key]['engine']) ? $db[$key]['engine'] : "MyIsam";
+				$result.= "\r\n";
+				foreach($db[$key]['columns'] as $k => $col)
+				{
+					$result.= "\t{$k}\t{$col['label']}\t";
+					$type = '';
+					if(is_array($col['type']))
+					{
+						foreach($col['type'] as $t => $p)
+						{
+							$type = "{$k}：{$p}|";
+						}
+					}else{
+						$type = $col['type'];
+					}
+					$result.= $type . "\r\n";
+				}
+			}
+			file_put_contents(APP_DIR . "{$v['app_id']}.txt", $result);
+        }
+		//echo $result;
+    }
 }

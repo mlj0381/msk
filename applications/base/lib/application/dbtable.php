@@ -268,10 +268,20 @@ class base_application_dbtable extends base_application_prototype_filepath{
         $db = vmc::database();
         $sql = $this->get_sql();
         $real_table_name = $this->real_table_name();
-        logger::info('Creating table '.$real_table_name);
         $db->exec('drop table if exists `'.$real_table_name.'`');
         $db->exec($sql);
+
+		$log = 'Creating table '.$real_table_name;
+		if(intVal($db->errorCode()) > 0)
+		{
+			$error_info = $db->errorInfo();
+			logger::info($err = $log . " fail \n" . 'ERROR_INFO:'. $error_info[2]);
+			logger::error($err . "\n" . $db->last_query);
+		}else{
+			logger::info($log . " success");
+		}
     }
+
 
     private function get_current_define($tbname){
         $define = vmc::database()->select("show tables like '".$tbname."'");
@@ -378,9 +388,6 @@ class base_application_dbtable extends base_application_prototype_filepath{
                 foreach($new_define['index'] as $key=>$define){
                     if(isset($old_define['index'][$key])){
                         if($old_define['index'][$key] != $new_define['index'][$key]){
-                            print_r($old_define['index'][$key]);
-                            print_r($new_define['index'][$key]);
-                            echo "=====================\n";
                             $diff[] = 'ALTER IGNORE TABLE `'.$real_table_name.'` DROP PRIMARY KEY, ADD '.$this->get_index_sql($key);
                         }
                         unset($old_define_index[$key]);

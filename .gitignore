@@ -8,7 +8,8 @@ $.swn
 config/certi.php
 config/config.php
 config/install.lock.php
-
+config/dev.zl
+config/example.config.php
 tmp/
 logs/
 mobile_test_case

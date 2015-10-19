@@ -1,0 +1,45 @@
+<site>
+	<module controller='site_seller' id="seller">
+		<name>seller</name>
+		<title>商家中心</title>
+		<disable>true</disable>
+	</module>
+
+	<module controller='site_order' id="seller">
+		<name>sellerorder</name>
+		<title>商家订单</title>
+		<disable>true</disable>
+	</module>
+	<module controller='site_goods' id="seller">
+		<name>sellergoods</name>
+		<title>商家商品</title>
+		<disable>true</disable>
+	</module>
+	<module controller='site_brand' id="seller">
+		<name>sellerbrand</name>
+		<title>商家订单</title>
+		<disable>true</disable>
+	</module>
+	<module controller='site_cat' id="seller">
+		<name>sellercat</name>
+		<title>店铺分类</title>
+		<disable>true</disable>
+	</module>
+	<module controller='site_passport' id="seller">
+		<name>sellerpassport</name>
+		<title>商家用户</title>
+		<disable>true</disable>
+	</module>
+
+	<module controller='site_store' id="seller">
+		<name>sellerstore</name>
+		<title>商家店铺</title>
+		<disable>true</disable>
+	</module>
+
+	<module controller='site_template' id="seller">
+		<name>sellertemplate</name>
+		<title>店铺模板</title>
+		<disable>true</disable>
+	</module>
+</site>

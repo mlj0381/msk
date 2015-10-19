@@ -1,0 +1,68 @@
+<div class="alert alert-warning">
+    <div class="m-baseinfo row">
+        <div class="col-xs-1">
+            <a href="<{link app=seller ctl=site_seller act=avatar}>">
+                <img  class="img-thumbnail img-circle" src="<{$member.avatar|storager:'avatar'}>" alt="<{$member.uname}>头像" />
+            </a>
+        </div>
+        <div class="col-xs-6">
+            <h4>
+                <a href="<{link app=seller ctl=site_member act=setting}>"><{$member.uname}></a>
+                <span class="btn-group">
+                    <{if !$pam_data.local}>
+                    <a class="btn btn-xs btn-default" href="<{link app=seller ctl=site_member act=set_pam_uname}>">设置昵称</a>
+                    <{/if}>
+                    <{if $pam_data.email && $pam_data.email.disabled=='true'}>
+                    <a class="btn btn-xs btn-default" href="<{link app=seller ctl=site_member act=active_pam_email}>">验证邮箱  <{$pam_data.email.login_account}></a>
+                    <{/if}>
+                </span>
+            </h4>            
+        </div>       
+    </div>
+</div>
+<div class="row m-os-count">
+    <div class="col-xs-4 col-1">
+        <a href="<{link app=seller ctl=site_member act=orders}>" class="btn  btn-block btn-link">全部订单</a>
+    </div>
+    <div class="col-xs-2 col-2">
+        <a href="<{link app=seller ctl=site_member act=orders args0=s1}>" class="btn  btn-block btn-link">
+            待支付
+            <{if $order_count_arr.s1}>
+            &nbsp;
+            <span class="label label-default"><{$order_count_arr.s1}></span>
+            <{/if}>
+        </a>
+    </div>
+    <div class="col-xs-2 col-3">
+        <a href="<{link app=seller ctl=site_member act=orders args0=s2}>" class="btn  btn-block btn-link">待发货
+            <{if $order_count_arr.s2}>
+            &nbsp;
+            <span class="label label-default"><{$order_count_arr.s2}></span>
+            <{/if}>
+        </a>
+    </div>
+    <div class="col-xs-2 col-4">
+        <a href="<{link app=seller ctl=site_member act=orders args0=s3}>" class="btn  btn-block btn-link">待结算
+            <{if $order_count_arr.s3}>
+            &nbsp;
+            <span class="label label-default"><{$order_count_arr.s3}></span>
+            <{/if}>
+        </a>
+    </div>    
+</div>
+
+<script type="text/javascript">
+$(function(){
+    /**
+     * 模板填充工具
+     */
+    var substitute = function(str, obj) {
+        return str.replace(/\\?\{([^{}]+)\}/g, function(match, name) {
+            if (match.charAt(0) == '\\') return match.slice(1);
+            return (obj[name] != undefined) ? obj[name] : '';
+        });
+    };
+    
+});
+
+</script>
