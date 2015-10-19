@@ -1,0 +1,35 @@
+<ul class="table-view">
+        <{foreach from=$available_coupons item=coupon}>
+            <li class="table-view-cell media">
+                    <{$coupon.memc_code}>
+                    <p><{$coupon.description}></p>
+                    <p>
+                        获得时间：<{$coupon.memc_gen_time|cdate}><br>
+                        有效期至：<{$coupon.to_time|cdate}><br>
+                    </p>
+                    <span class="badge badge-positive">有效</span>
+            </li>
+        <{/foreach}>
+        <{foreach from=$mycoupons item=coupon}>
+        <{if !$coupon.forbidden}><{continue;}><{/if}>
+            <li class="table-view-cell media">
+                    <{$coupon.memc_code}>
+                    <p><{$coupon.description}></p>
+                    <p><{$coupon.forbidden}></p>
+                    <p>
+                        获得时间：<{$coupon.memc_gen_time|cdate}>
+                    </p>
+                    <{assign var=looplog value=$couponlogs[$coupon.memc_code]}>
+                    <{if $looplog}>
+                    <p>
+                        应用订单：<a href="<{link app=b2c ctl=mobile_order act=detail args0=$looplog.order_id}>"><{$looplog.order_id}></a>
+                        <br>
+                        订单金额：<{$looplog.order_total|cur}><br>
+                        该券抵扣：<{$looplog.coupon_save|cur}>
+                    </p>
+                    <{else}>
+                        <span class="badge badge-negative">失效</span>
+                    <{/if}>
+            </li>
+        <{/foreach}>
+</ul>

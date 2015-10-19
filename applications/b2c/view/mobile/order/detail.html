@@ -1,0 +1,167 @@
+<div class="content order-detail-container">
+<{assign var=paystatus_map value=array('0','3','4','5')}>
+    <ul class="table-view">
+        <li class="table-view-divider">
+         订单号：<{$order.order_id}>
+        </li>
+        <{if $order.status == 'dead'}>
+        <li class="table-view-cell media text-danger">
+            <span class="fa fa-warning media-object pull-left"></span>
+            <div class="media-body">
+                订单已作废
+                <p>
+                    订单已作废,若需购买,请重新下单!<br>
+                    作废时间：<{$order.last_modify|cdate}>
+                </p>
+            </div>
+        </li>
+        <li class="table-view-divider"></li>
+        <{/if}>
+        <li class="table-view-cell">
+            收货人
+            <p>
+                <{$order.consignee.name}>,<{$order.consignee.mobile}>,
+                    <{$order.consignee.area|region}><{$order.consignee.addr}><{if $order.consignee.zip}>&nbsp;(&nbsp;<{$order.consignee.zip}>&nbsp;)&nbsp;<{/if}>
+            </p>
+        </li>
+        <{if $order.memo}>
+        <li class="table-view-cell">
+            订单备注
+            <p>
+                <{$order.memo}>
+            </p>
+        </li>
+        <{/if}>
+        <li class="table-view-cell">
+            支付方式
+            <p class="pull-right">
+                <{$payapp.display_name}>
+            </p>
+        </li>
+        <li class="table-view-cell">
+            付款状态
+            <p class="pull-right">
+                <{$order.pay_status|order_pay_status}>
+            </p>
+            <{if $order.is_cod!='Y' && $order.pay_status|in_array:$paystatus_map}>&nbsp;&nbsp;
+            <a href="<{link app=b2c ctl=mobile_checkout act=payment args0=$order.order_id}>" class="btn btn-negative">付款</a>
+            <{/if}>
+        </li>
+        <li class="table-view-cell">
+            配送方式
+            <p class="pull-right">
+                <{$order.dlytype.dt_name}>
+            </p>
+        </li>
+        <{if $order.need_shipping == 'Y'}>
+        <li class="table-view-cell">
+            发货状态
+            <p class="pull-right">
+                <{$order.ship_status|order_ship_status}>
+            </p>
+        </li>
+        <{if $delivery_id}>
+        <li class="table-view-cell">
+            <a class="navigate-right">
+                物流状态
+                <p class="pull-right">
+                    查询物流状态
+                </p>
+            </a>
+        </li>
+        <{/if}>
+        <{/if}>
+        <{if $order.need_invoice == 'true' && $order.invoice_title}>
+        <li class="table-view-cell">
+            发票
+            <p><{$order.invoice_title}></p>
+        </li>
+        <{/if}>
+        <li class="table-view-divider">购物清单 <span class="badge">共<{$order.quantity}>件</span></li>
+        <{foreach from=$order.items item=item}>
+        <li class="table-view-cell media">
+            <a href="<{link app=b2c ctl=mobile_product args0=$item.product_id}>" class="navigate-right">
+                <img src="<{$item.image_id|storager:'s'}>" class="media-object pull-left" width="50" alt="<{$item.name}>-<{$item.spec_info}>" />
+                <div class="media-body">
+                    <p>
+                        <{$item.name|cut:40:"..."}><{if $item.spec_info}><br><{$item.spec_info}><{/if}>
+                        <br>
+                        <strong><{$item.buy_price|cur}></strong>
+                        <span class="text-muted">x <{$item.nums}></span>
+                    </p>
+                    <{if $goods_pmt.{$item.product_id}}>
+                    <ul class="promotion-list">
+                        <{foreach from=$goods_pmt.{$item.product_id} item=pitem}>
+                            <li>
+                                <span class="label label-danger"><{$pitem.pmt_tag}></span>
+                                <{$pitem.pmt_description}>
+                                <{if $pitem.pmt_save>0}>,<em>已省 <{$pitem.pmt_save|cur}></em><{/if}>
+                            </li>
+                        <{/foreach}>
+                    </ul>
+                    <{/if}>
+                </div>
+            </a>
+         </li>
+        <{/foreach}>
+        <li class="table-view-divider"></li>
+        <{if $order_pmt}>
+        <li class="table-view-cell">
+            <ul class="promotion-list">
+                <{foreach from=$order_pmt item=opitem}>
+                    <li>
+                        <span class="label label-danger"><{$opitem.pmt_tag}></span>
+                        <{$opitem.pmt_description}>
+                        <{if $opitem.pmt_save>0}>,<em>已省 <{$opitem.pmt_save|cur}></em><{/if}>
+                    </li>
+                <{/foreach}>
+            </ul>
+        </li>
+        <{/if}>
+        <li class="table-view-cell">
+            <{$order.quantity}>件商品，成交金额：
+            <p class="pull-right">￥<span><{$order.finally_cart_amount|cur}></span></p>
+        </li>
+        <li class="table-view-cell">
+            运费：
+            <p class="pull-right">￥<span><{$order.cost_freight|cur}></span></p>
+        </li>
+        <li class="table-view-cell">
+            订单应付总金额：
+            <p class="text-danger pull-right">
+                ￥<strong><{$order.order_total|cur}></strong>
+            </p>
+        </li>
+    </ul>
+</div>
+<{if $order.need_shipping == 'Y' && $delivery_id}>
+<script charset="utf-8">
+/*
+*物流状态展示
+*
+*/
+    // $(function(){
+    //     var el = $('[data-deliveryid]');
+    //     var delivery_id = el.attr('data-deliveryid');
+    //     delivery_id = delivery_id.split('|');
+    //     //组织物流追踪记录列表
+    //     var each_li = function(obj_arr){
+    //         var _return = "<ul class='list-unstyled'>";
+    //         $.each(obj_arr,function(i,v){
+    //             _return+="<li>["+v.time+"]&nbsp;"+v.context+"</li>";
+    //         });
+    //         return _return+="</ul>";
+    //     };
+    //     (function(id){
+    //         if(!id)return el.find('.ld').remove();
+    //         var _fn = arguments.callee;
+    //         $.getJSON('<{link app=b2c ctl=mobile_order act=logistics_tracker args0="__tracker_id__"}>'.replace('__tracker_id__',id),function(re){
+    //             if(re.data){
+    //                 el.append("<div class='well well-sm'><strong>物流单号："+re.data.logi_no+"</strong>"+each_li(re.data.logi_log)+"</div>");
+    //             }
+    //             _fn(delivery_id.shift());//递归
+    //         });
+    //     })(delivery_id.shift());//可能有多个单据
+    // });
+</script>
+<{/if}>

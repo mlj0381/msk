@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>PRINTER</title>
+    <{css src='bootstrap.min.css'}>
+</head>
+<style>
+body{
+    font-size:9pt;
+    padding: 0;
+    margin: 0;
+    font-family:'SimHei';
+}
+</style>
+<body>
+    <div class="print-container container">
+        <{$print_content}>
+    </div>
+    <div class="navbar-fixed-bottom panel text-center hidden-print">
+        <button type="button" class="btn btn-success" onclick="print();"><i class="glyphicon glyphicon-print"></i> 立即打印</button>
+    </div>
+    <script charset="utf-8">
+        <{if $env.get.direct_printing}>
+            self.focus();
+            self.print();
+        <{/if}>
+    </script>
+</body>
+</html>

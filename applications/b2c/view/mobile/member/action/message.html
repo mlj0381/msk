@@ -1,0 +1,50 @@
+<{if $msg_list}>
+<ul class="table-view member-msg-list">
+    <{foreach from=$msg_list item=msg}>
+    <li class="table-view-cell media">
+        <a href="<{link app=b2c ctl=mobile_member act=message agrs0=$msg.msg_id args1=$msg.msg_id}>" class="navigate-right">
+            <span class="pull-left fa <{if $msg.status!='sent'}> fa-envelope-o<{else}>fa-envelope<{/if}>"></span>
+            <div class="media-body">
+                <{$msg.subject}>
+                <p>
+                    <{$msg.createtime|cdate}>
+                </p>
+                <p>
+                    <{$msg.content|replace:"\n":''|replace:"\t":''|cut:90:'...'}>
+                </p>
+            </div>
+        </a>
+    </li>
+    <{/foreach}>
+</ul>
+<div class="content-morepage content-padded">
+    <{morepage data=$pager}>
+</div>
+<script type="text/javascript">
+//翻页
+var current_page = 1;
+$('.btn-morepage').on('touchend',function(e){
+    e.stopPropagation();
+    var btn = $(this);
+    btn.find('.fa-circle-o-notch').removeClass('hidden');
+    var data_morepage = btn.attr('data-morepage');
+    data_morepage = $.parseJSON(data_morepage);
+    var new_page = $('<div></div>');
+    new_page.load(data_morepage.link.replace(data_morepage.token,++current_page)+" .member-msg-list",function(){
+        new_page.find('.member-msg-list .table-view-cell').appendTo($('.member-msg-list'));
+        btn.find('.fa-circle-o-notch').addClass('hidden');
+    });
+    if(current_page == data_morepage.total){
+        btn.remove();
+    }
+    return false;
+});
+</script>
+<{else}>
+<div class="content-splash">
+    <i class="fa fa-inbox fa-5x"></i>
+    <p>
+        暂无
+    </p>
+</div>
+<{/if}>

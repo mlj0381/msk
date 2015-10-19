@@ -1,0 +1,31 @@
+<{assign var=children value=array()}>
+<ul class="list-group category-root">
+    <{foreach from=$category_tree item=cat}>
+    <li class="list-group-item<{if $cat.has_children=='true'}> has-children<{/if}>" data-path="<{$cat.cat_path}>" data-pid="<{$cat.parent_id}>" data-catid="<{$cat.cat_id}>">
+        <a href="<{link app=b2c ctl=site_list}>?cat_id=<{$cat.cat_id}>"><{$cat.cat_name}></a>
+        <{if $cat.has_children=='true'}>
+            <i class="glyphicon glyphicon-menu-right pull-right"></i>
+        <{/if}>
+    </li>
+    <{/foreach}>
+</ul>
+<{foreach from=$category_tree item=cat1}>
+    <{if $cat1.children}>
+        <div class="panel panel-default category-children" data-pid="<{$cat_lv2.parent_id}>" data-catid="<{$cat_lv2.cat_id}>">
+            <div class="panel-body">
+                <{foreach from=$cat1.children item=cat_l2}>
+                    <dl>
+                        <dt><a href="<{link app=b2c ctl=site_list}>?cat_id=<{$cat_l2.cat_id}>"><{$cat_l2.cat_name}></a></dt>
+                        <{if $cat_l2.children}>
+                        <dd>
+                            <{foreach from=$cat_l2.children item=cat_l3}>
+                                <a href="<{link app=b2c ctl=site_list}>?cat_id=<{$cat_l3.cat_id}>"><{$cat_l3.cat_name}></a>
+                            <{/foreach}>
+                        </dd>
+                        <{/if}>
+                    </dl>
+                <{/foreach}>
+            </div>
+        </div>
+    <{/if}>
+<{/foreach}>

@@ -1,0 +1,104 @@
+<root>
+    <register act="dopay" ctl="admin_order" module="order" param="order_id">
+        <operate_type>订单支付</operate_type>
+        <template>订单 %s 支付</template>
+    </register>
+
+    <register act="dodelivery" ctl="admin_order" module="order" param="order_id">
+        <operate_type>订单发货</operate_type>
+        <template>订单 %s 发货</template>
+    </register>
+
+    <register act="dofinish" ctl="admin_order" method="get" module="order" param="p">
+        <operate_type>订单完成</operate_type>
+        <template>订单 %s 完成</template>
+    </register>
+
+    <register act="dorefund" ctl="admin_order" module="order" param="order_id">
+        <operate_type>订单退款</operate_type>
+        <template>订单 %s 退款</template>
+    </register>
+
+    <register act="doreship" ctl="admin_order" module="order" param="order_id">
+        <operate_type>订单退货</operate_type>
+        <template>订单 %s 退货</template>
+    </register>
+
+    <register act="docancel" ctl="admin_order" method="get" module="order" param="p">
+        <operate_type>订单作废</operate_type>
+        <template>订单 %s 作废</template>
+    </register>
+
+    <register act="dodelete" ctl="admin_order" method="get" module="order" param="p">
+        <operate_type>订单删除</operate_type>
+        <template>订单 %s 删除</template>
+    </register>
+
+
+<!-- 模块：会员管理(member) -->
+<!-- 模块：会员个体操作 -->
+    <register act="add" ctl="admin_member" module="member" param="pam_account.login_name">
+        <operate_type>添加会员</operate_type>
+        <template>添加新会员 %s</template>
+    </register>
+<!-- 模块：营销管理(sales) -->
+<!-- 促销管理 -->
+    <register act="toAdd" ctl="admin_sales_goods" module="sales" param="rule.name" prk="rule.rule_id">
+        <operate_type>商品促销规则</operate_type>
+        <template>商品促销规则 %s</template>
+    </register>
+
+    <register act="apply" ctl="admin_sales_goods" module="sales" param="rule_id">
+        <operate_type>应用 商品促销规则</operate_type>
+        <template>应用 商品促销规则ID %s</template>
+    </register>
+
+    <register act="toAdd" ctl="admin_sales_order" module="sales" param="rule.name" prk="rule.rule_id">
+        <operate_type>订单促销规则</operate_type>
+        <template>订单促销规则 %s</template>
+    </register>
+
+<!-- 模块：营销管理(sales) -->
+<!-- 优惠券管理 -->
+    <register act="toAdd" ctl="admin_sales_coupon" module="sales" param="coupon.cpns_name" prk="cpns_id">
+        <operate_type>优惠券</operate_type>
+        <template>优惠券 %s</template>
+    </register>
+
+    <register act="download" ctl="admin_sales_coupon" method="get" module="sales" param="p.0">
+        <operate_type>下载 优惠券</operate_type>
+        <template>下载优惠券 %s</template>
+    </register>
+
+
+<!-- 模块：营销管理(sales) -->
+<!-- 注册营销＠todo -->
+
+<!-- 模块：系统管理(system) -->
+<!-- 配送设置 -->
+    <register act="saveDlType" ctl="admin_dlytype" module="system" param="dt_name" prk="dt_id">
+        <operate_type>配送方式</operate_type>
+        <template>配送方式 %s</template>
+    </register>
+
+<!--     <register module="system" ctl="admin_dlytype" act="dorecycle" param="dt_id">
+        <operate_type>删除 配送方式</operate_type>
+        <template>批量删除 配送方式 %s</template>
+    </register> -->
+
+    <register act="addnew" ctl="admin_dlycorp" module="system" param="name">
+        <operate_type>添加物流公司</operate_type>
+        <template>添加物流公司 %s</template>
+    </register>
+
+<!--     <register module="system" ctl="admin_dlycorp" act="dorecycle" param="corp_id">
+        <operate_type>删除物流公司</operate_type>
+        <template>批量删除物流公司 %s</template>
+    </register> -->
+
+    <register act="detail" ctl="admin_dlycorp" module="system" param="name">
+        <operate_type>编辑物流公司</operate_type>
+        <template>编辑物流公司 %s</template>
+    </register>
+
+</root>
