@@ -82,6 +82,13 @@ class b2c_view_helper
         $render->pagedata['category_tree'] = $tree;
         return $render->fetch('widget/category.html'); 
     }
+	// 首页幻灯
+	public function function_WIDGET_B2C_INDEX_SLIDER($params, &$smarty)
+	{
+		var_dump($params);
+		$render = new base_render(app::get('b2c'));        
+		return $render->fetch('widget/slider.html'); 
+	}
 
     public function function_minipagers($params, &$smarty)
     {

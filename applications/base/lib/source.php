@@ -13,17 +13,6 @@
 
 class base_source
 {
-	private $url = '';
-	private $module = ''; // member/seller/product/order
-	private $app = ''; // 
-	private $action = ''; // add/update/delete/query
-	private $params = Array();
-	private $token = '';
-
-	private function __construct(){
-		
-	}
-
     protected function success($data)
     {
         header('Content-Type:application/json; charset=utf-8');
