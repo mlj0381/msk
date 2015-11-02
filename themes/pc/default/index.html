@@ -12,14 +12,18 @@
     <{require file="public/nav.html" }>    
     <div class="container">        
         <div class="row firstContainer">            
-            <div class="slider">
-                <{assign var=slider value='array(target => index)'}>
-                <{WIDGET_B2C_INDEX_SLIDER target=index num=2}>
+            <div class="slider">                
+                <{WIDGET_B2C_INDEX_SLIDER target=index num=3}>
             </div>
             <div class="category">               
                 <{WIDGET_B2C_GOODS_CAT}> 
             </div>
         </div>
+        <!--好评 商品-->
+        <div class="goodComment">
+            <{WIDGET_B2C_GOODS_INDEX_GOOD_COMMENT num=4}>
+        </div>
+
     </div>
     <{require file="public/footer.html" }>
     <{SYSTEM_FOOTER}>

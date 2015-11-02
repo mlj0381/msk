@@ -1,5 +1,4 @@
-<?php
-
+ <?php
 // +----------------------------------------------------------------------
 // | VMCSHOP [V M-Commerce Shop]
 // +----------------------------------------------------------------------
@@ -13,24 +12,65 @@
 
 class base_source
 {
-    protected function success($data)
+    protected $source;
+	protected $host = 'localhost';
+	protected $schema = 'http';// Http/Https
+	protected $method = 'get';// post/get
+	protected $params = Array();
+	protected $_timeout = 300;
+	private $_cookieFileLocation = '/tmp/source.cookie'; // 设置cookie路径
+	private $_cache_path = 'source/';
+	private $ttl = 300;
+	protected $app = '';
+
+	private $agent = '';
+
+    public function __construct($params)
     {
-        header('Content-Type:application/json; charset=utf-8');
-        echo json_encode(array(
-            'result' => 'success',
-            'data' => $data,
-        ));
-        exit;
+		foreach($params as $key => $val)
+		{
+			$this->$key = $val;
+		}
     }
 
-    protected function failure($msg)
-    {
-        header('Content-Type:application/json; charset=utf-8');
-        echo json_encode(array(
-            'result' => 'failure',
-            'data' => array(),
-            'msg' => $msg,
-        ));
-        exit;
+    public function get($params)   
+    { 
+		$key = $this->get_key();
+		$path = $this->_cache_path . $this->app->app_id;
+		base_kvstore::instance($path)->fetch($key, $vcode);
     }
+
+    public function set($key, $data)
+    {
+		$path = $this->_cache_path . $this->app;
+		base_kvstore::instance($path)->store($key, $data, $this->ttl);
+    }
+
+	private function get_key()
+	{
+		return md5(json_encode($this->params));
+	}
+
+	public function remote()
+	{
+		$ch = curl_init();		
+		curl_setopt($ch, CURLOPT_URL, $this->host);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+		curl_setopt($ch, CURLOPT_HEADER, 0);
+		if($this->method == 'post')
+		{
+			curl_setopt($ch, CURLOPT_POST, 1);		
+			curl_setopt($ch, CURLOPT_POSTFIELDS, $this->params);
+		}
+		curl_setopt($ch, CURLOPT_HTTPHEADER, array('Expect:')); 
+		curl_setopt($ch, CURLOPT_TIMEOUT, $this->_timeout);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);		
+		curl_setopt($ch, CURLOPT_COOKIEJAR, $this->_cookieFileLocation); 
+		curl_setopt($ch, CURLOPT_COOKIEFILE, $this->_cookieFileLocation);
+		return curl_exec($ch);		
+		curl_close($ch);
+	}
+
+
 }
+
