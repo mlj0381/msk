@@ -1,0 +1,260 @@
+.fl {
+  float: left;
+}
+.fr {
+  float: right;
+}
+.clearfix:after {
+  display: block;
+  content: "";
+  height: 0;
+  line-height: 0;
+  font-size: 0;
+  clear: both;
+}
+.hidden {
+  display: none;
+}
+.basecolor {
+  color: #e93428;
+}
+body {
+  padding-top: 0px;
+  font-size: 12px;
+}
+body ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+body .container {
+  padding: 0px;
+}
+header {
+  background: #fff;
+  /* 顶部样式 */
+  /* 顶部搜索栏 */
+}
+header .container-fulid {
+  font-size: 12px;
+  color: #333333;
+  padding: 0;
+}
+header .container-fulid .topbar {
+  position: relative;
+  background: #fafafa;
+  border-bottom: 1px solid #e0e0e0;
+  height: 39px;
+  line-height: 39px;
+}
+header .container-fulid .topbar .top {
+  width: 1200px;
+  margin: 0 auto;
+  height: 39px;
+  line-height: 39px;
+}
+header .container-fulid .topbar .top .topLeft {
+  width: 400px;
+  float: left;
+}
+header .container-fulid .topbar .top .topLeft .location {
+  display: inline-block;
+}
+header .container-fulid .topbar .top .topLeft .location ul {
+  margin: 0;
+}
+header .container-fulid .topbar .top .topLeft .loginStatus {
+  display: inline-block;
+  margin-left: 50px;
+}
+header .container-fulid .topbar .top .topLeft .loginStatus span {
+  padding-right: 10px;
+  color: #646464;
+}
+header .container-fulid .topbar .top .topLeft .loginStatus a.freeReg {
+  padding-left: 10px;
+}
+header .container-fulid .topbar .top .topRight {
+  width: auto;
+  float: right;
+}
+header .container-fulid .topbar .top .topRight ul {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+header .container-fulid .topbar .top .topRight ul li {
+  float: left;
+  margin-left: 20px;
+}
+header .container-fulid .topbar .top .topRight ul li a {
+  display: block;
+}
+header .container-fulid .topbar .top .topRight ul li .icon-shopping-cart {
+  color: #e93428;
+}
+header .container-fulid .topbar .top .topRight ul li ul {
+  padding: 0;
+  margin: 0;
+}
+header .container-fulid .topbar .top .topRight ul li ul li {
+  margin: 0;
+  width: 100%;
+}
+header .container-fulid .topbar .top .topRight ul li.site_nav .icon-angle-down {
+  color: #e93428;
+}
+header .container-fulid .topbar .website_menu {
+  position: absolute;
+  display: none;
+  width: 100%;
+  margin: 0 auto;
+  min-height: 400px;
+  z-index: 1000000000;
+  background: #fff;
+  border-bottom: 1px solid #ccc;
+}
+header .container-fulid .topbar .website_menu .menu_con {
+  width: 1200px;
+  margin: 0 auto;
+  color: #333;
+}
+header .searchbar {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100px;
+}
+header .searchbar .searchbar_con {
+  width: 1200px;
+  padding: 0;
+  margin: 0 auto;
+}
+header .searchbar .searchbar_con .logo {
+  padding: 0;
+  margin: 0 auto;
+}
+header .searchbar .searchbox {
+  width: 375px;
+  padding: 0;
+  padding-top: 10px;
+}
+header .searchbar .searchbox .search_label {
+  width: 100%;
+}
+header .searchbar .searchbox .search_label span {
+  display: inline-block;
+  padding: 4px 13px;
+  margin: 0;
+  cursor: pointer;
+}
+header .searchbar .searchbox .search_label span.active {
+  background: #e93428;
+  color: #fff;
+}
+header .searchbar .searchbox .search_form {
+  border: 1px solid #e93428;
+  display: inline-block;
+}
+header .searchbar .searchbox .search_form .search_txt input {
+  display: inline-block;
+  width: 305px;
+  height: 34px;
+  line-height: 34px;
+  border: none;
+  padding: 0;
+  outline: none;
+  padding-left: 10px;
+}
+header .searchbar .searchbox .search_form .search_btn button {
+  width: 60px;
+  background: #e93428;
+  height: 36px;
+  line-height: 36px;
+  color: #fff;
+  border: none;
+}
+header .searchbar .searchbox .hotSearch {
+  width: 370px;
+}
+header .searchbar .searchbox .hotSearch li {
+  float: left;
+  padding: 5px 10px;
+}
+header .searchbar .kefu {
+  float: right;
+  margin: 0;
+  padding: 0;
+  height: 40px;
+  line-height: 40px;
+  margin-top: 34px;
+}
+header .searchbar .kefu .mobile {
+  position: relative;
+}
+header .searchbar .kefu .mobile .wxcode {
+  position: absolute;
+  width: 196px;
+  height: 196px;
+  background: #fff;
+  border: 1px solid #f1f1f1;
+  z-index: 100;
+  padding: 10px;
+  left: -50px;
+}
+header .searchbar .kefu .mobile .wxcode:before {
+  content: "";
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-bottom: 10px solid #e1e1e1;
+  top: -10px;
+  left: 84px;
+  position: absolute;
+}
+header .searchbar .kefu .hotLine {
+  line-height: 20px;
+  height: 40px;
+  font-size: 14px;
+  float: right;
+}
+header .searchbar .kefu .hotLine b {
+  color: #e93428;
+  display: block;
+}
+nav.navbar {
+  background-color: #fff;
+  border: none;
+  border-radius: 0px;
+  border-bottom: 2px solid #e93428;
+  height: 46px;
+  line-height: 46px;
+  margin-bottom: 0px;
+}
+nav.navbar .container {
+  padding: 0;
+}
+nav.navbar ul.nav li {
+  margin: 0 38px 0 20px;
+}
+nav.navbar ul.nav li a {
+  font-size: 16px;
+  color: #5d5d5d;
+}
+nav.navbar ul.nav li a:hover {
+  color: #e93428;
+}
+nav.navbar ul.nav li a.active {
+  color: #e93428;
+}
+nav.navbar ul.nav li.default {
+  width: 200px;
+  background: #e93428;
+  margin-left: 0px;
+  margin-right: 0px;
+}
+nav.navbar ul.nav li.default a {
+  color: #fff;
+  padding-left: 20px;
+}

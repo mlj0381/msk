@@ -1,0 +1,85 @@
+body {
+  font-size: 12px;
+  background: #fff;
+}
+ul,
+ol {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+.glist-container .breadcrumb_row {
+  background: #f5f5f5;
+  padding: 0px;
+  margin: 20px 0;
+  height: 56px;
+  margin-bottom: 0;
+}
+.glist-container .breadcrumb_row .breadcrumb {
+  margin-bottom: 0px;
+  height: 56px;
+  padding: 0 10px;
+}
+.glist-container .breadcrumb_row .breadcrumb li {
+  padding: 0;
+}
+.glist-container .breadcrumb_row .breadcrumb li.search_li form.goods_search {
+  margin-left: 10px;
+  height: 20px;
+  line-height: 20px;
+}
+.glist-container .breadcrumb_row .breadcrumb li.search_li form.goods_search input {
+  padding: 0 5px;
+}
+.glist-container .breadcrumb_row .breadcrumb li.search_li form.goods_search button {
+  background: #333;
+  border: none;
+  width: 40px;
+  height: 24px;
+  margin-left: -6px;
+}
+.glist-container .breadcrumb_row .breadcrumb li.search_li form.goods_search button i {
+  color: #fff;
+}
+.glist-container .breadcrumb_row .breadcrumb li.search_li:before {
+  content: "";
+}
+.glist-container .breadcrumb_row .about_goods_total {
+  height: 56px;
+  line-height: 56px;
+  font-size: 14px;
+}
+.glist-container .breadcrumb_row .about_goods_total span {
+  color: #e93428;
+  padding: 0 5px;
+}
+.glist-container .panel-body {
+  padding: 0px;
+}
+.glist-container .gfilter {
+  margin: 0;
+  border-radius: 0px;
+  padding: 0px;
+}
+.glist-container .gfilter .gfilter-list {
+  margin-bottom: 0px;
+}
+.glist-container .gfilter .gfilter-list dt {
+  background: #f5f5f5;
+  padding: 15px 0;
+  text-align: center;
+}
+.glist-container .gfilter .gfilter-list dd {
+  position: relative;
+}
+.glist-container .gfilter .gfilter-list dd ul.list-inline {
+  position: absolute;
+  top: 50%;
+  -webkit-transform: translate(0%, -50%);
+  -ms-transform: translate(0%, -50%);
+  -moz-transform: translate(0%, -50%);
+  transform: translate(0%, -50%);
+}
+.glist-container .goods-list {
+  margin-top: 20px;
+}
