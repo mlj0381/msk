@@ -10,6 +10,7 @@ config/config.php
 config/install.lock.php
 config/dev.zl
 config/example.config.php
+data/
 tmp/
 logs/
 mobile_test_case

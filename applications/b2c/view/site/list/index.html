@@ -2,22 +2,32 @@
     <{include file='site/brand/inlist.html'}>
 <{/if}>
 <div class="glist-container">
-    <{if !$brand}>
-    <ol class="breadcrumb">
-        <{if $cat_path}>
-        <li><a href="<{link app=b2c ctl=site_list act=index}>">全部</a></li>
-        <{foreach from=$cat_path item=cat name=cp}>
-        <{if $env.foreach.cp.last}>
-        <li class="active"><{$cat.title}> （<span><{$count}></span>）</li>
-        <{else}>
-        <li><a href="<{link app=b2c ctl=site_list act=index}>?cat_id=<{$cat.ident}>"><{$cat.title}></a></li>
+    <div class="row breadcrumb_row"> 
+        <{if !$brand}>
+        <ol class="breadcrumb col-md-10">
+            <li><a>您当前的位置：</a></li>
+            <{if $cat_path}>
+            <li><a href="<{link app=b2c ctl=site_list act=index}>">全部</a></li>
+            <{foreach from=$cat_path item=cat name=cp}>
+            <{if $env.foreach.cp.last}>
+            <li class="active"><{$cat.title}> （<span><{$count}></span>）</li>
+            <{else}>
+            <li><a href="<{link app=b2c ctl=site_list act=index}>?cat_id=<{$cat.ident}>"><{$cat.title}></a></li>
+            <{/if}>
+            <{/foreach}>
+            <{else}>
+            <li class="active">全部商品（<span><{$all_count}></span>）</li>
+            <{/if}>
+            <li class="search_li">
+                <form class="goods_search">
+                    <input type="text" placeholder="在当前条件下搜索">
+                    <button><i class="icon-search"></i></button>
+                </form>
+            </li>
+        </ol>
         <{/if}>
-        <{/foreach}>
-        <{else}>
-        <li class="active">全部商品（<span><{$all_count}></span>）</li>
-        <{/if}>
-    </ol>
-    <{/if}>
+        <div class="col-md-2 about_goods_total">共<span>32</span>件相关商品  </div>
+    </div>
     <{if $data_screen}>
     <div class="panel panel-default gfilter">
       <div class="panel-body">
@@ -26,9 +36,7 @@
               <{assign var=options_count value=count($item.options)}>
               <{if $options_count<1}><{continue;}><{/if}>
               <{if !$env.get.cat_id && $pkey!='cat_id'}><{continue;}><{/if}>
-                  <dt>
-                      <{$item.title}>
-                  </dt>
+                  <dt><{$item.title}></dt>
                   <dd>
                       <ul class="list-inline">
                           <{if $pkey!='cat_id'}>
@@ -47,6 +55,7 @@
                   </dd>
               <{/foreach}>
           </dl>
+          
       </div>
     </div>
     <{/if}>

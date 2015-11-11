@@ -87,7 +87,7 @@ class b2c_view_helper
 	public function function_WIDGET_B2C_PUBLIC_NAV($params, &$smarty)
 	{
 		$render = new base_render(app::get('b2c')); 
-		$render->pagedata['nav'] = app::get('b2c')->;
+		/*$render->pagedata['nav'] = app::get('b2c')->;*/
 		return $render->fetch('widget/nav.html'); 
 	}
 
@@ -104,13 +104,7 @@ class b2c_view_helper
 		$render = new base_render(app::get('b2c'));        
 		return $render->fetch('widget/good.comment.html'); 
 	}
-	// 首页-好评商品
-	public function function_WIDGET_B2C_GOODS_INDEX_GOOD_COMMENT($params, &$smarty)
-	{		
-		$render = new base_render(app::get('b2c'));        
-		return $render->fetch('widget/good.comment.html'); 
-	}
-
+	
     public function function_minipagers($params, &$smarty)
     {
         if (!$params['data']['current']) {

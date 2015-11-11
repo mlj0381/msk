@@ -1,0 +1,114 @@
+body{
+	font-size: 12px;
+	background: #fff;
+}
+ul,ol{
+	padding: 0;
+	margin: 0;
+	list-style: none;
+}
+
+@basecolor:#e93428;
+
+//商品列表
+.glist-container{
+
+	//面包屑导航
+	.breadcrumb_row{
+		background: #f5f5f5;
+		padding:0px;
+		margin:20px 0;
+		height:56px;
+		margin-bottom:0;
+
+		.breadcrumb{
+			margin-bottom:0px;
+			height:56px;
+			padding:0 10px;
+			li{
+				padding: 0;
+				
+			}
+			li.search_li{
+				form.goods_search{
+					margin-left:10px;
+					height:20px;
+					line-height: 20px;
+					input{
+						padding:0 5px;
+					}
+					button{
+						background:#333;
+						border:none;
+						width:40px;
+						height:24px;
+						margin-left:-6px;
+						i{
+							color:#fff;
+							
+
+						}
+					}
+				}
+				&:before{
+					content: "";
+				}
+			}
+		}
+
+		.about_goods_total{
+			height:56px;
+			line-height: 56px;
+			font-size: 14px;
+			span{
+				color:@basecolor;
+				padding:0 5px;
+			}
+		}
+	}
+
+	//END 面包屑导航
+	.panel-body{
+		padding:0px;
+	}
+	.gfilter{
+		margin:0;
+		border-radius:0px;
+		padding:0px;
+
+		.gfilter-list{
+			margin-bottom:0px;
+			dt{
+				background: #f5f5f5;
+				padding:15px 0;
+				text-align: center;
+			}
+			dd{
+				position: relative;
+				ul.list-inline{
+					position: absolute;
+					top:50%;
+					-webkit-transform: translate(0%,-50%);
+					-ms-transform: translate(0%,-50%);
+					-moz-transform: translate(0%,-50%);
+					transform: translate(0%,-50%);
+
+				}
+				
+			}
+		}
+	}
+
+	//END 面包屑导航
+	
+
+	//商品列表板块
+	.goods-list{
+		margin-top:20px;
+	}
+
+	//END 商品列表板块
+
+	
+}
+//END 商品列表页

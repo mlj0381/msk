@@ -1,31 +1,208 @@
 <!DOCTYPE HTML>
 <html lang="zh-CN">
+
 <head>
     <meta charset="utf-8" />
-    <title><{$title}></title>
+    <title>
+        <{$title}>
+    </title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <{SYSTEM_HEADER}>
         <link rel="stylesheet" href="statics/theme.css">
-</head>
-<body>
-    <{require file="public/header.html" }>
-    <{require file="public/nav.html" }>    
-    <div class="container">        
-        <div class="row firstContainer">            
-            <div class="slider">                
-                <{WIDGET_B2C_INDEX_SLIDER target=index num=3}>
-            </div>
-            <div class="category">               
-                <{WIDGET_B2C_GOODS_CAT}> 
-            </div>
-        </div>
-        <!--好评 商品-->
-        <div class="goodComment">
-            <{WIDGET_B2C_GOODS_INDEX_GOOD_COMMENT num=4}>
-        </div>
+        <link rel="stylesheet" href="statics/header.css">
+        <link rel="stylesheet" href="statics/index.css">
+        <link rel="stylesheet" href="statics/font-awesome.css">
 
-    </div>
-    <{require file="public/footer.html" }>
-    <{SYSTEM_FOOTER}>
+        <script type="text/javascript" src="statics/js/jquery.shopScroll.js"></script>
+        <script type="text/javascript" src="statics/js/header.js"></script>  
+</head>
+
+<body class="index_page">
+    <{require file="public/header.html" }>
+        <{require file="public/nav.html" }>
+            <div class="container">
+                <div class="firstContainer">
+                    <div class="sliderbox">
+                        <{WIDGET_B2C_INDEX_SLIDER target=index num=3}>
+                    </div>
+                    <div class="category">
+                        <{WIDGET_B2C_GOODS_CAT}>
+                    </div>
+                </div>
+
+                <!-- 商品楼层列表 -->
+                <div class="pro_list">
+                    <h3 class="list_title">
+                        <span class="floor">1F</span>
+                        中餐食材
+                    </h3>
+                    <div class="list_con clearfix">
+                        <div class="list_lt">
+                            <div class="list_item">
+                                <a href="#">
+                                    <img src="<{$base_url}>./themes/pc/default/statics/images/proimg.jpg" alt="" title="" class="proimg">
+                                    <div class="list_info">
+                                        <span class="price">￥18.00</span>
+                                        <p>神农客10公斤精品五花肉</p>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                        <ul class="list_rt">
+                            <li>
+                                <a href="#">
+                                    <img src="<{$base_url}>./themes/pc/default/statics/images/proimg.jpg" class="proimg">
+                                    <div class="list_info">
+                                        <span class="price">￥18.00</span>
+                                        <p>神农客10公斤精品五花肉</p>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <img src="<{$base_url}>./themes/pc/default/statics/images/proimg.jpg" class="proimg">
+                                    <div class="list_info">
+                                        <span class="price">￥18.00</span>
+                                        <p>神农客10公斤精品五花肉</p>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <img src="<{$base_url}>./themes/pc/default/statics/images/proimg.jpg" class="proimg">
+                                    <div class="list_info">
+                                        <span class="price">￥18.00</span>
+                                        <p>神农客10公斤精品五花肉</p>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <img src="<{$base_url}>./themes/pc/default/statics/images/proimg.jpg" class="proimg">
+                                    <div class="list_info">
+                                        <span class="price">￥18.00</span>
+                                        <p>神农客10公斤精品五花肉</p>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <img src="<{$base_url}>./themes/pc/default/statics/images/proimg.jpg" class="proimg">
+                                    <div class="list_info">
+                                        <span class="price">￥18.00</span>
+                                        <p>神农客10公斤精品五花肉</p>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <img src="<{$base_url}>./themes/pc/default/statics/images/proimg.jpg" class="proimg">
+                                    <div class="list_info">
+                                        <span class="price">￥18.00</span>
+                                        <p>神农客10公斤精品五花肉</p>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <img src="<{$base_url}>./themes/pc/default/statics/images/proimg.jpg" class="proimg">
+                                    <div class="list_info">
+                                        <span class="price">￥18.00</span>
+                                        <p>神农客10公斤精品五花肉</p>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <img src="<{$base_url}>./themes/pc/default/statics/images/proimg.jpg" class="proimg">
+                                    <div class="list_info">
+                                        <span class="price">￥18.00</span>
+                                        <p>神农客10公斤精品五花肉</p>
+                                    </div>
+                                </a>
+                            </li> 
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- 店铺橱窗展示 -->
+                <div class="shop_show">
+                    <!-- <div class="hd">
+                        <a class="next"></a>
+                        <ul></ul>
+                        <a class="prev"></a>
+                        <span class="pageState"></span>
+                    </div> -->
+                    <div class="bd">
+                        <ul class="picList">
+                            <li>
+                                <div class="pic"><a href="#" target="_blank"><img src="statics/images/shopimg.png" /></a></div>
+                                <div class="title"><a href="#" target="_blank">店铺名称1</a></div>
+                            </li>
+                            <li>
+                                <div class="pic"><a href="#" target="_blank"><img src="statics/images/shopimg.png" /></a></div>
+                                <div class="title"><a href="#" target="_blank">店铺名称2</a></div>
+                            </li>
+                            <li>
+                                <div class="pic"><a href="#" target="_blank"><img src="statics/images/shopimg.png" /></a></div>
+                                <div class="title"><a href="#" target="_blank">店铺名称3</a></div>
+                            </li>
+                            <li>
+                                <div class="pic"><a href="#" target="_blank"><img src="statics/images/shopimg.png" /></a></div>
+                                <div class="title"><a href="#" target="_blank">店铺名称4</a></div>
+                            </li>
+                            <li>
+                                <div class="pic"><a href="#" target="_blank"><img src="statics/images/shopimg.png" /></a></div>
+                                <div class="title"><a href="#" target="_blank">店铺名称5</a></div>
+                            </li>
+                            <li>
+                                <div class="pic"><a href="#" target="_blank"><img src="statics/images/shopimg.png" /></a></div>
+                                <div class="title"><a href="#" target="_blank">店铺名称6</a></div>
+                            </li>
+                            <li>
+                                <div class="pic"><a href="#" target="_blank"><img src="statics/images/shopimg.png" /></a></div>
+                                <div class="title"><a href="#" target="_blank">店铺名称6</a></div>
+                            </li>
+                            <li>
+                                <div class="pic"><a href="#" target="_blank"><img src="statics/images/shopimg.png" /></a></div>
+                                <div class="title"><a href="#" target="_blank">店铺名称6</a></div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <script type="text/javascript">
+                jQuery(".shop_show").slide({titCell:".hd ul",mainCell:".bd ul",autoPage:true,effect:"left",autoPlay:true,vis:6,trigger:"click"});
+                </script>
+
+
+            </div>
+            <!-- 右侧固定边栏 -->
+            <div class="container-fulid">
+                <div class="fixed_slidebar">
+                    <ul>
+                        <li><a href="#"><i class="icon-shopping-cart"></i> 购物车</a></li>
+                        <li data-toggle="tooltip" data-placement="left" title="我关注的品牌"><a href="#"><i class="icon-heart-empty" ></i></a></li>
+                        <li data-toggle="tooltip" data-placement="left" title="我的搜藏"><a href="#"><i class="icon-star-empty" ></i></a></li>
+                        <li data-toggle="tooltip" data-placement="left" title="我的足迹"><a href="#"><i class="icon-eye-open"></i></a></li>
+                        <li data-toggle="tooltip" data-placement="left" title="我要充值"><a href="#"><i class="icon-credit-card"></i></a></li>
+                        <li data-toggle="tooltip" data-placement="left" title="用户反馈"><i class="icon-file-alt"></i></li>
+                        <li data-toggle="tooltip" data-placement="left" title="返回顶部"><a href="#"><i class="icon-arrow-up"></i></a></li>
+                    </ul>
+                    <script type="text/javascript">
+                        $(function () {
+                          $('.fixed_slidebar ul li[data-toggle="tooltip"]').tooltip()
+                        })
+                    </script>
+                </div>
+
+                <div class="fixed_floorNav">
+                    
+                </div>
+            </div>
+            <{require file="public/footer.html" }>
+            <{SYSTEM_FOOTER}>
+
+
 </body>
+
 </html>

@@ -1,0 +1,293 @@
+.fl{
+	float: left;
+}
+.fr{
+	float: right;
+}
+.clearfix:after{
+	display: block;
+	content: "";
+	height: 0;
+	line-height: 0;
+	font-size: 0;
+	clear: both;
+}
+.hidden{
+	display:none;
+}
+.height(@H){
+	height: @H;
+	line-height: @H;
+}
+
+@basecolor:#e93428;
+
+.basecolor{
+	color:#e93428;
+}
+
+
+body{
+	padding-top:0px;
+	font-size: 12px;
+	ul{
+		margin:0;
+		padding: 0;
+		list-style: none;
+	}
+	.container{
+		padding:0px;
+	}
+}
+header{
+	background: #fff;
+
+	/* 顶部样式 */
+	.container-fulid{
+		font-size: 12px;
+		color: #333333;
+		padding:0;
+		.topbar{
+			position: relative;
+			background: #fafafa;
+			border-bottom:1px solid #e0e0e0;
+			.height(39px);
+			.top{
+
+				width:1200px;
+				margin:0 auto;
+				.height(39px);
+
+				.topLeft{
+					width:400px;
+					.fl;
+					.location{
+						display: inline-block;
+						ul{
+							margin:0;
+						}
+					}
+					.loginStatus{
+						display: inline-block;
+						margin-left:50px;
+						span{
+							padding-right:10px;
+							color:#646464;
+						}
+						a.freeReg{
+							padding-left:10px;
+						}
+					}
+					
+				}
+				.topRight{
+					width:auto;
+					.fr;
+					ul{
+						padding:0;
+						margin: 0;
+						list-style: none;
+						li{
+							.fl;
+							margin-left:20px;
+							
+							a{
+								display: block;
+							}
+
+							.icon-shopping-cart{
+								.basecolor;
+							}
+							ul{
+								padding: 0;
+								margin:0;
+								li{
+									margin:0;
+									width:100%;
+								}
+							}
+
+						}
+						li.site_nav{
+							.icon-angle-down{
+								.basecolor;
+							}
+							
+						}
+					}
+				}
+			}
+			.website_menu{
+				position: absolute;
+				display: none;
+				width:100%;
+				margin: 0 auto;
+				min-height:400px;
+				z-index: 1000000000;
+				background: #fff;
+				border-bottom:1px solid #ccc;
+				.menu_con{
+					width:1200px;
+					margin: 0 auto;
+					color: #333;
+				}
+				
+			}	
+		}
+
+	}
+
+	/* 顶部搜索栏 */
+	.searchbar{
+		margin: 0;
+		padding: 0;
+		width:100%;
+		height:100px;
+
+		.searchbar_con{
+			width:1200px;
+			padding: 0;
+			margin:0 auto;
+
+			.logo{
+				padding: 0;
+				margin:0 auto;
+			}
+		}
+		.searchbox{
+			width:375px;
+			padding:0;
+			padding-top:10px;
+
+			.search_label{
+				width:100%;
+				span{
+					display: inline-block;
+					padding:4px 13px;
+					margin: 0;
+					cursor: pointer;
+
+					&.active{
+						background: @basecolor;
+						color:#fff;
+					}	
+				}
+			}
+			.search_form{
+				border:1px solid @basecolor;
+				display: inline-block;
+				.search_txt input{
+					display: inline-block;
+					width:305px;
+					.height(34px);
+					border: none;
+					padding:0;
+					outline: none;
+					padding-left:10px;
+				}
+				.search_btn button{
+					width:60px;
+					background: @basecolor;
+					.height(36px);
+					color:#fff;
+					border:none;
+				}
+			}
+			.hotSearch{
+				width:370px;
+				li{
+					.fl;
+					padding: 5px 10px;
+				}
+
+			}
+		}
+
+		.kefu{
+			.fr;
+			margin:0;
+			padding: 0;
+			.height(40px);
+			margin-top:34px;
+			.mobile{
+				position: relative;
+
+				.wxcode{
+					position:absolute;
+					width:196px;
+					height:196px;
+					background: #fff;
+					border: 1px solid #f1f1f1;
+					z-index: 100;
+					padding:10px;
+					left:-50px;
+				}
+				.wxcode:before{
+					content: "";
+					width:0;
+					height:0;
+					width: 0;
+				    height: 0;
+				    border-left: 10px solid transparent;
+				    border-right: 10px solid transparent;
+					border-bottom: 10px solid #e1e1e1;
+					top:-10px;
+					left:84px;
+					position: absolute;
+				}
+			}
+			.hotLine{
+				line-height: 20px;
+				height:40px;
+				font-size: 14px;
+				.fr;
+				b{
+					color:@basecolor;
+					display: block;
+				}
+			}
+		}
+	}		
+}
+
+nav.navbar{
+	background-color: #fff;
+	border:none;
+	border-radius: 0px;
+	border-bottom:2px solid @basecolor;
+	.height(46px);
+	margin-bottom:0px;
+
+	.container{
+		padding: 0;
+	}
+
+	ul.nav{
+
+		li{
+			margin:0 38px 0 20px;
+			a{
+				font-size: 16px;
+				color: #5d5d5d;
+				&:hover{
+					color:@basecolor;
+				}
+				&.active{
+					color:@basecolor;
+				}
+			}
+
+			&.default{
+				width:200px;
+				background: @basecolor;
+				margin-left:0px;
+				margin-right:0px;
+				
+				a{
+					color:#fff;
+					padding-left:20px;
+				}
+			}
+		}
+	}
+}
