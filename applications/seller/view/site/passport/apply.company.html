@@ -1,0 +1,69 @@
+<div class="passport-signup-container">
+    <div class="panel panel-default signup-panel">
+        <div class="panel-heading clearfix">
+            <a class="btn btn-default" label="账号注册" icon="fa fa-plus" >账号注册&nbsp;<i class="fa fa fa-plus"></i></a>
+  		    <a class="btn btn-danger" label="入驻申请" icon="fa fa-plus" >公司信息&nbsp;<i class="fa fa fa-plus"></i></a>
+  		    <a class="btn btn-default" label="商城签约" icon="fa fa-plus" >资质认证&nbsp;<i class="fa fa fa-plus"></i></a>
+            <a class="btn btn-default" label="商家入驻" icon="fa fa-plus" >店铺申请&nbsp;<i class="fa fa fa-plus"></i></a>
+            <a class="btn btn-default" label="商家入驻" icon="fa fa-plus" >品牌申请&nbsp;<i class="fa fa fa-plus"></i></a>
+        </div>
+        <div class="panel-body">
+              <form id="seller_signup_form" class="form-horizontal" action="<{link app=seller ctl=site_passport act=signup args0=2}>" method="post">
+                  <div class="companys">
+                      <{include file='site/passport/company/apply.company.html'}>
+                  </div>
+                  <div class="companys">
+                      <{include file='site/passport/company/apply.legal.html'}>
+                  </div>
+                  <div class="companys">
+                      <{include file='site/passport/company/apply.business.html'}>
+                  </div>
+                  <div class="companys">
+                      <{include file='site/passport/company/apply.organization.html'}>
+                  </div>
+                  <div class="form-group">
+                      <div class="col-xs-offset-2 col-xs-5">
+                          <button type="button" data-loading-text="正在提交..." class="btn btn-warning up">上一步</button>
+                          <button type="button" data-loading-text="正在提交..." class="btn btn-warning dn">下一步</button>
+                          <button type="submit" data-loading-text="正在提交..." class="btn btn-warning">提交</button>
+                      </div>
+                  </div>
+              </form>
+         </div>
+    </div>
+</div>
+
+</div>
+<style type="text/css">
+    .tabClass{display:none;}
+</style>
+<script>
+$(function(){
+    $(".companys").addClass("tabClass");
+    $(":submit").addClass("tabClass");
+    $(".companys").eq(0).removeClass("tabClass");
+    $(".up").click(function(){tab(-1);});
+    $(".dn").click(function(){tab(1);});
+});
+function tab(index){
+    for(var i = 0; i < $('.companys').length; i++){
+        if($(".companys").eq(i).css('display') == "block"){
+            index += i;
+            $(".companys").addClass("tabClass");
+            index = index < 0 ? 0 : index;
+            index = index >= $('.companys').length - 1 ? $('.companys').length - 1 : index;
+            $(".companys").eq(index).removeClass("tabClass");
+            $(".dn").removeAttr("disabled");
+            if(index >= $('.companys').length - 1){
+                $(".dn").attr({"disabled" : "disabled"});
+                $(":submit") . removeClass("tabClass");
+            }
+            $(".up").removeAttr("disabled");
+            if(index == 0){
+                $(".up").attr({"disabled" : "disabled"});
+            }
+            return;
+        }
+    }
+}
+</script>

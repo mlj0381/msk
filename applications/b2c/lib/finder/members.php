@@ -17,6 +17,7 @@ class b2c_finder_members
     public $column_editbutton_order = 0;
     public $column_uname = '登录账号';
     public $column_uname_order = 1;
+    public $detail_basic = '编辑';
     public function __construct($app)
     {
         $this->app = $app;
@@ -24,10 +25,13 @@ class b2c_finder_members
         $this->column_uname = ('登录账号');
     }
 
+    public function detail_basic($row)
+    {
+        var_dump($row);
+    }
     public function column_editbutton($row)
     {
         $btn = '<a href="index.php?app=b2c&ctl=admin_member&act=detail&p[0]='.$row['member_id'].'" class="btn btn-default btn-xs"><i class="fa  fa-edit"></i> 查看/编辑</a>';
-
         return $btn;
     }
 

@@ -1,0 +1,86 @@
+<div class="passport-signup-container">
+    <div style="margin:auto; width:100px;"><h3>资质审核</h3></div>
+    <div class="panel panel-default signup-panel">
+        <div class="panel-body">
+                <div class="form-group">
+                    <label for="input_login_name" class="col-xs-4 control-label">全国工业产品生产许可证编号图片
+                        <span class="text-danger">*</span>
+                    </label>
+                    <div class="col-xs-5">
+                        <{input type="siteimage" required="true" autocomplete='off' value=$seller_info.industry_licence_image class="form-control" id="input_login_name"}>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="input_login_name" class="col-xs-4 control-label">生产许可证范围
+                        <span class="text-danger">*</span>
+                    </label>
+                    <div class="col-xs-5">
+                        <{input type="siteimage" required="true" autocomplete='off' value=$seller_info.licence_region class="form-control" id="input_login_name"}>
+                    </div>
+                </div>
+                <div class="form-group">
+                <label for="input_login_name" class="col-xs-4 control-label">第三方检测报告
+                    <span class="text-danger">*</span>
+                </label>
+                <div class="col-xs-5">
+                    <{input type="siteimage" required="true" autocomplete='off' value=$seller_info.test_report_image class="form-control" id="input_login_name"}>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="input_login_name" class="col-xs-4 control-label">屠宰许可证编号
+                    <span class="text-danger">*</span>
+                </label>
+                <div class="col-xs-5">
+                    <{input type="siteimage" required="true" autocomplete='off' value=$seller_info.butcher_report_image class="form-control" id="input_login_name"}>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="input_login_name" class="col-xs-4 control-label">进京证电子版
+                    <span class="text-danger">*</span>
+                </label>
+                <div class="col-xs-5">
+                    <{input type="siteimage" required="true" autocomplete='off' value=$seller_info.beijing_image class="form-control" id="input_login_name"}>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="input_login_name" class="col-xs-4 control-label">进沪证电子版
+                    <span class="text-danger">*</span>
+                </label>
+                <div class="col-xs-5">
+                    <{input type="siteimage" required="true" autocomplete='off' value=$seller_info.shanghai_image class="form-control" id="input_login_name"}>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="input_login_name" class="col-xs-4 control-label">其他证件
+                    <span class="text-danger">*</span>
+                </label>
+                <div class="col-xs-5">
+                    <{foreach from=$seller_info.other_image key=key item=item}>
+                        <{input type="siteimage" required="true" autocomplete='off' value=$item class="form-control" id="input_login_name"}>
+                    <{/foreach}>
+                </div>
+            </div>
+            <{if $seller_info.status neq '1'}>
+                <div class="form-group">
+                    <label for="input_login_name" class="col-xs-4 control-label">
+
+                    </label>
+                    <div class="col-xs-5">
+                        <form action="index.php?app=seller&ctl=admin_seller&act=checked" method="post">
+                            <div>
+                                <input type="hidden" value="<{$seller_info.seller_id}>" name="seller_id" />
+                                <input type="hidden" value="aptitudes" name="seller_type" />
+                                <input type="radio" required="true" name="status" value="1" />通过
+                                <input type="radio" required="true" name="status" value="-1" />拒绝
+                            </div>
+                            <br/>
+                            <button type="submit" class="btn btn-default" label="通过审核">提交</button>
+                        </form>
+                    </div>
+                </div>
+             <{/if}>
+        </div>
+    </div>
+</div>
+
+</div>

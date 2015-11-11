@@ -110,8 +110,7 @@ class seller_user_passport
      */
     public function pre_signup_process($data)
     {
-        
-        
+
         if ($data['pam_account']) {
             $accountData = $this->pre_account_signup_process($data['pam_account']);
         }
@@ -541,4 +540,48 @@ class seller_user_passport
             $service->logout();
         }
     }
+    //商家入驻公司信息注册
+   public function signup_company($post){
+       $db = vmc::database();
+       $db->beginTransaction();
+       if($company_id = $this->app->model('company')->insert($post['seller'])){
+         $update_seller_data = array('status' => 1,
+                                     'company_id' => $company_id,
+                                   );
+         if(!$this->app->model('sellers')->update( $update_seller_data, array('seller_id' => $post['seller']['seller_id']))){
+           $db->rollBack();
+           return false;
+         }
+         $db->commit();
+         return true;
+       }
+       return false;
+   }
+   //商家入驻资质信息注册
+   public function signup_aptitudes($post){
+       $mdl_aptitudes = $this->app->model('aptitudes');
+       if($mdl_aptitudes->save($post['seller'])){
+           return true;
+       }
+       return false;
+   }
+   //商家入驻店铺注册
+   public function signup_shop($post){
+       //var_dump($post);exit;
+       $mdl_store = app::get('store')->model('store');
+       if($mdl_store->save($post['seller'])){
+           return true;
+       }
+       return false;
+   }
+   //商家入驻品牌信息注册
+   public function signup_brand($post){
+       $mdl_brand = $this->app->model('brand');
+       $post['seller']['create_time'] = time();
+       if(!$mdl_brand->save($post['seller'])){
+           return false;
+       }
+       return true;
+
+   }
 }

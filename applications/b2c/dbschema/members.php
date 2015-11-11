@@ -148,14 +148,14 @@ $db['members'] = array(
             'label' => ('生月') ,
             'type' => 'tinyint unsigned',
 
-            
+
             'in_list' => false,
         ) ,
         'b_day' => array(
             'label' => ('生日') ,
             'type' => 'tinyint unsigned',
 
-            
+
             'in_list' => false,
         ) ,
         'sex' => array(
@@ -206,7 +206,7 @@ $db['members'] = array(
 
             'type' => 'time',
             'filtertype' => 'time',
-            
+
             'in_list' => true,
             'default_in_list' => true,
             'comment' => ('注册时间') ,
@@ -238,6 +238,18 @@ $db['members'] = array(
             'label' => ('经验值') ,
             'type' => 'int(10)',
             'in_list' => true,
+        ) ,
+        'checkin' => array(
+            'label' => ('审核状态') ,
+            'type' => array(
+                '-1' => ('拒绝'),
+                '0' => ('审核中'),
+                '1' => ('通过'),
+            ),
+            'default' => '0',
+            'required' => true,
+            'in_list' => true,
+            'default_in_list' => true,
         ) ,
         'source' => array(
             'type' => array(

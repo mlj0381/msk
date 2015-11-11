@@ -1,0 +1,52 @@
+<div class="passport-signup-container">
+    <div style="margin:auto; width:100px;">
+        <h3>公司审核</h3>
+    </div>
+    <hr />
+    <div class="panel-heading clearfix" style="margin:auto; width:80%;">
+        <{foreach from=$sections item=section key=key name=tab_nav}>
+            <button type="button" href="#tab_edit_<{$key}>" data-toggle="tab" class="btn <{if $env.foreach.tab_nav.first}>btn-danger<{else}>btn-default<{/if}> tab" icon="fa fa-plus">
+            <{$section.label}>&nbsp;<i class="fa fa fa-plus"></i></button>
+        <{/foreach}>
+    </div>
+
+    <div class="form-horizontal">
+        <div class="tab-content">
+            <{foreach from=$sections item=section key=key name=tab_content}>
+                <div id="tab_edit_<{$key}>" class="tab-pane<{if $env.foreach.tab_content.first}> active<{/if}>">
+                    <{include app=$section.app file=$section.file}>
+                </div>
+            <{/foreach}>
+        </div>
+        <div>
+            <{if $seller_info.status neq '1'}>
+            <div class="form-group">
+                <label for="input_login_name" class="col-xs-4 control-label">
+                </label>
+                <div class="col-xs-5">
+                    <form action="index.php?app=seller&ctl=admin_seller&act=checked" method="post">
+                        <div>
+                            <input type="hidden" value="<{$seller_info.seller_id}>" name="seller_id" />
+                            <input type="hidden" value="company" name="seller_type" />
+                            <input type="radio" required="true" name="status" value="1" />通过
+                            <input type="radio" required="true" name="status" value="-1" />拒绝
+                        </div>
+                        <br/>
+                        <button type="submit" class="btn btn-default" label="通过审核">提交</button>
+                    </form>
+                </div>
+            </div>
+            <{/if}>
+        </div>
+    </div>
+</div>
+<script charset="utf-8">
+
+$('.panel-heading button').each(function(index) {
+    $(this).click(function() {
+        $('.panel-heading button').removeClass('btn-danger').addClass('btn-default');
+        $(this).removeClass('btn-default').addClass('btn-danger');
+    })
+});
+
+</script>

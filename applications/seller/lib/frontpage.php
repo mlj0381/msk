@@ -157,12 +157,10 @@ class seller_frontpage extends site_controller {
         }
     }
     public function get_current_seller() {
-        return Array('seller_id' => 1);
         return vmc::singleton('seller_user_object')->get_current_seller();
     }
 
     public function get_current_store() {
-        return Array('store_id' => 1);
         return vmc::singleton('seller_user_object')->get_current_seller();
     }
 

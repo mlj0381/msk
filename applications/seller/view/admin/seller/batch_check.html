@@ -1,0 +1,19 @@
+<div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">关闭</button>
+        <h3 class="modal-title">批量审核</h3>
+</div>
+<form action="index.php?app=seller&ctl=admin_seller&act=checked" method="post"  >
+    <div class="modal-body">
+            <input type="hidden" name="seller_id" value="<{$seller_id}>"/>
+            <select name="checkin" class="form-control">
+                    <option  value="0">待核</option>
+                    <option  value="1">通过</option>
+                    <option  value="-1">未通过</option>
+            </select>
+
+    </div>
+    <div class="modal-footer">
+            <button type="button" class="btn default" data-dismiss="modal">关闭</button>
+            <button type="submit" class="btn blue">确定</button>
+    </div>
+</form>

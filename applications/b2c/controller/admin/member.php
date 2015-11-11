@@ -35,6 +35,7 @@ class b2c_ctl_admin_member extends desktop_controller
         $actions_base['use_buildin_filter'] = true;
         $this->finder('b2c_mdl_members', $actions_base);
     }
+
     public function edit($member_id)
     {
         $app = app::get('b2c');
@@ -94,6 +95,19 @@ class b2c_ctl_admin_member extends desktop_controller
         $this->pagedata['member_id'] = $member_id;
         $this->display('admin/member/edit.html');
     }
+    //2015 11 09 bibin 会员审核
+    public function checkin()
+    {
+        $this->begin('index.php?app=b2c&ctl=admin_member&act=index');
+        if(!$_POST) $this->end(false, '非法请求');
+        $post = $_POST;
+        if(!$this->member_model->save($post)){
+             $this->end(false, '审核失败');
+        }
+        $this->end(true, '审核成功');
+
+    }
+    //>>
     public function detail($member_id)
     {
 
@@ -116,6 +130,7 @@ class b2c_ctl_admin_member extends desktop_controller
         $a_mem['integral'] = vmc::singleton('b2c_member_integral')->amount($member_id);
         $userPassport = vmc::singleton('b2c_user_passport');
         $this->pagedata['attr'] = $userPassport->get_signup_attr($member_id);
+        $a_mem['addon'] = unserialize($a_mem['addon']);
         $this->pagedata['mem'] = $a_mem;
 
         $this->pagedata['account'] = $accountData;
