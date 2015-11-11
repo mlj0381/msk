@@ -1,60 +1,97 @@
 <header>
-    <div class="container">
-        <div class="top">
-            <div class="topLeft">
-                <div class="location dropdown">            
-                    <a id="cityPlan" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false" aria-haspopup="true" role="button" href="">
-                        所在城市                        
-                        <span class="halflings halflings-menu-right"></span>                
-                    </a>
-                    <ul class="dropdown-menu" role="menu" aria-labelledby="cityPlan">
-                        <li class="seller"><a href="">上海</a></li>
-                        <li class="seller_block"><a href="">北京</a></li>                    
+    <div class="container-fulid">
+        <div class="topbar">
+            <div class="top">
+                <div class="topLeft">
+                    <div class="location dropdown">
+                        <a id="cityPlan" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false" aria-haspopup="true" role="button" href="">
+                            所在城市 <i class="icon-angle-down"></i>                                       
+                        </a>
+                        <ul class="dropdown-menu" role="menu" aria-labelledby="cityPlan">
+                            <li><a href="">上海</a></li>
+                            <li><a href="">北京</a></li>
+                        </ul>
+                    </div>
+                    <div class="loginStatus">
+                    <span>您好，请<a href="#">登录</a></span>|<a href="#" class="freeReg">免费注册</a>
+                    </div>
+                </div>
+                <div class="topRight">
+                    <ul>
+                        <li class="seller dropdown">
+                            <a id="mySnk" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false" aria-haspopup="true" role="button" href="">我的神农客
+                                <i class="icon-angle-down"></i>
+                            </a>
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="mySnk">
+                                <li><a href="">我的订单</a></li>
+                                <li><a href="">已买到的宝贝</a></li>
+                            </ul>
+                        </li>
+                        <li class="cart"><a href=""><i class="icon-shopping-cart"></i> 购物车</a></li>
+                        <li class="userCenter"><a href="">会员中心</a></li>
+                        <li class="favorite"><a href=""><i class="icon-star"></i> 收藏夹</a></li>
+                        <li>|</li>
+                        <li class="sellerSignup"><a href="">商家入驻 <i class=" icon-circle-arrow-right"></i></a></li>
+                        <li class="seller_block dropdown">
+                            <a id="sellerCenter" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false" aria-haspopup="true" role="button" href="">
+                            卖家中心 <i class="icon-angle-down"></i>                                       
+                            </a>
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="sellerCenter">
+                                <li><a href="">子菜单一</a></li>
+                                <li><a href="">子菜单二</a></li>
+                            </ul>
+                        </li>
+                        <li class="seller_block"><a href="">分销商登录</a></li>
+                        <li class="seller"><a href="">鲜驰达商城</a></li>
+                        <li class="seller_block site_nav"><a href="javascript:;">网站导航 <i class="icon-angle-down"></i></a></li>
                     </ul>
                 </div>
-
-                <div class="loginStatus">
-                    您好，请登录 | <a>免费注册</a>
+            </div>
+            <!-- 网站导航 -->
+            <div class="row website_menu">
+                <div class="menu_con">
+                    
                 </div>
-            </div>            
-            <div class="topRight">               
-                <ul>
-                    <li class="seller dropdown">
-                        <a id="mySnk" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false" aria-haspopup="true" role="button" href=""><i class="glyphicon"></i> 我的神农客
-                            <span class="caret"></span>
-                        </a>
-                        <ul class="dropdown-menu" role="menu" aria-labelledby="mySnk">
-                            <li class="seller"><a href="">我的订单</a></li>
-                            <li class="seller_block"><a href="">已买到的宝贝</a></li>                    
-                        </ul>
-                    </li>
+            </div>
 
-                    <li class="userCenter"><a href="">会员中心</a></li>
-                    <li class="favorite"><a href="">收藏夹</a></li>   
-                    <li>|</li>
-                    <li class="sellerSignup"><a href="">商家入驻</a></li>
-                    <li class="seller_block"><a href="">专家中心</a></li>
-                    <li class="seller_block"><a href="">分销商登录</a></li>
-            
-                    <li class="seller"><a href="">鲜驰达商城</a></li>
-                    <li class="seller_block"><a href="">网站导航</a></li>
-                </ul> 
-             </div>
-        </div>  
+        </div> 
     </div>
-
     <!-- Search Box -->
-    <div class="container search">
-        <div class="logo col-md-5">
-            <img src="public/images/logo.png" />
+    <div class="container searchbar">
+        <div class="row searchbar_con">
+            <div class="logo col-md-5">
+                <img src="statics/images/logo.jpg" alt="美侍客" title="美侍客" />
+            </div>
+            <div class="searchbox col-md-4">
+                <div class="search_label">
+                    <span class="active">商品</span>
+                    <span>店铺</span>
+                </div>
+                <form class="search_form" action="" method="">
+                    <span class="search_txt"><input type="text" placeholder="请输入您要查找的商品" /></span>
+                    <span class="search_btn"><button>搜索</button></span>
+                </form>
+                <ul class="hotSearch">
+                    <li><a href="">鸡腿</a></li>
+                    <li><a href="">鸡翅</a></li>
+                    <li><a href="">鸭腿</a></li>
+                    <li><a href="">三黄鸡</a></li>
+                </ul>
+            </div>
+            <div class="col-md-3 kefu">
+                <a class="mobile fl" href="javascript:;">手机美侍客 <i class="icon-angle-down"></i>
+                    <div class="wxcode hidden">
+                        <img src="../statics/images/wxcode.png" />
+                    </div>
+                </a>
+                <span class="hotLine">
+                    24小时客服专线
+                    <b>400-6017-123</b>
+                </span>
+            </div>
         </div>
-        <div class="logo col-md-5">
-            搜索
-        </div>
-    </div>    
+    </div>
 </header>
-
-
 <script type="text/template" id="minicart_item_tpl">
     <li class="mc-item">
         <div class="row">
@@ -74,87 +111,85 @@
         </div>
     </li>
 </script>
-
 <script charset="utf-8">
-    $(function(){
-        /**
-         * 模板填充工具
-         */
-        var substitute = function(str, obj) {
-            return str.replace(/\\?\{([^{}]+)\}/g, function(match, name) {
-                if (match.charAt(0) == '\\') return match.slice(1);
-                return (obj[name] != undefined) ? obj[name] : '';
-            });
-        };
-        /**
-         * 登录\注册切换
-         */
-        if($.cookie('UNAME') && $.cookie('MEMBER_IDENT')){
-            $('.top-tools .is-unlogin').addClass('hidden');
-            $('.top-tools .is-login').removeClass('hidden');
-            $('.top-tools .is-login .uname').text($.cookie('UNAME'));
+$(function() {
+    /**
+     * 模板填充工具
+     */
+    var substitute = function(str, obj) {
+        return str.replace(/\\?\{([^{}]+)\}/g, function(match, name) {
+            if (match.charAt(0) == '\\') return match.slice(1);
+            return (obj[name] != undefined) ? obj[name] : '';
+        });
+    };
+    /**
+     * 登录\注册切换
+     */
+    if ($.cookie('UNAME') && $.cookie('MEMBER_IDENT')) {
+        $('.top-tools .is-unlogin').addClass('hidden');
+        $('.top-tools .is-login').removeClass('hidden');
+        $('.top-tools .is-login .uname').text($.cookie('UNAME'));
+    }
+    /**
+     * 迷你购物车
+     */
+    //购物车数量加载
+    $.getJSON('<{$base_url}>/openapi/cart/count', function(re) {
+        try {
+            if (re.data.count > 0) {
+                $('.cart-count').removeClass('hidden').text(re.data.count);
+            }
+        } catch (e) {
+
         }
-        /**
-         * 迷你购物车
-         */
-         //购物车数量加载
-         $.getJSON('<{$base_url}>/openapi/cart/count',function(re){
-             try{
-                 if(re.data.count>0){
-                     $('.cart-count').removeClass('hidden').text(re.data.count);
-                 }
-             }catch(e){
+    });
+    //购物车项
+    var load_minicart = function(e) {
+        if ($(this).find('.cart-count').text() == '') return false;
+        var mc_content = $(this).find('.mc-content');
+        var li_loading = $(this).find('.mc-loading');
+        var _self = arguments.callee;
+        if (li_loading.length) return true;
+        mc_content.find('.mcc-bottom').before('<li class="mc-loading text-center"><h6>加载中...</h6></li>');
+        li_loading = $(this).find('.mc-loading');
+        mc_content.css('width', $(this).closest('.container').width() * .3);
+        mc_content.find('.mc-item').remove();
+        $.getJSON("<{$base_url}>/openapi/cart/preview", function(re) {
+            try {
+                if (re.data && re.data.length) {
+                    var item_html = '',
+                        item_html_tpl = $('#minicart_item_tpl').html();
+                    $.each(re.data, function(idx, item) {
+                        item_html += substitute(item_html_tpl, item);
+                    });
+                    li_loading.replaceWith(item_html);
+                    $('.mini-cart').off('show.bs.dropdown', _self);
+                }
+            } catch (e) {}
+        });
+    };
+    $('.mini-cart').on('show.bs.dropdown', load_minicart);
+    //购物车快速删除
+    $('.mc-content').on('click', '.cart-remove', function(e) {
+        e.stopPropagation();
+        var cr_btn = $(this);
+        cr_btn.text('删除中..');
+        $.getJSON(cr_btn.prop('href'), function(re) {
+            if (re) {
+                cr_btn.closest('.mc-item').fadeOut(function() {
+                    $(this).remove();
+                    var cart_count = parseInt($('.cart-count').text());
+                    if (!isNaN(cart_count) && cart_count > 1) {
+                        $('.cart-count').text(--cart_count);
+                    } else {
+                        $('.cart-count').addClass('hidden');
+                    }
 
-             }
-         });
-         //购物车项
-         var load_minicart = function(e){
-             if($(this).find('.cart-count').text() == '')return false;
-             var mc_content = $(this).find('.mc-content');
-             var li_loading = $(this).find('.mc-loading');
-             var _self = arguments.callee;
-             if(li_loading.length)return true;
-             mc_content.find('.mcc-bottom').before('<li class="mc-loading text-center"><h6>加载中...</h6></li>');
-             li_loading = $(this).find('.mc-loading');
-             mc_content.css('width',$(this).closest('.container').width()*.3);
-             mc_content.find('.mc-item').remove();
-             $.getJSON("<{$base_url}>/openapi/cart/preview",function(re){
-                 try{
-                     if(re.data && re.data.length){
-                         var item_html ='',item_html_tpl = $('#minicart_item_tpl').html();
-                         $.each(re.data,function(idx,item){
-                             item_html+=substitute(item_html_tpl,item);
-                         });
-                         li_loading.replaceWith(item_html);
-                         $('.mini-cart').off('show.bs.dropdown',_self);
-                     }
-                 }catch(e){}
-             });
-         };
-         $('.mini-cart').on('show.bs.dropdown',load_minicart);
-         //购物车快速删除
-         $('.mc-content').on('click','.cart-remove',function(e){
-             e.stopPropagation();
-             var cr_btn = $(this);
-             cr_btn.text('删除中..');
-             $.getJSON(cr_btn.prop('href'),function(re){
-                 if(re){
-                     cr_btn.closest('.mc-item').fadeOut(function(){
-                         $(this).remove();
-                         var cart_count = parseInt($('.cart-count').text());
-                         if(!isNaN(cart_count) && cart_count>1){
-                            $('.cart-count').text(--cart_count);
-                        }else{
-                            $('.cart-count').addClass('hidden');
-                        }
-
-                     });
-                 }
-             });
-             return false;
-         });
-
+                });
+            }
+        });
+        return false;
     });
 
-
+});
 </script>
