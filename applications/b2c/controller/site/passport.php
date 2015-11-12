@@ -140,6 +140,16 @@ class b2c_ctl_site_passport extends b2c_frontpage
         $this->set_tmpl('passport');
         $this->page('site/passport/signup.html');
     }
+    //注册页面--审核信息
+    public function signup_checkInfo($forward)
+    {
+        $this->page('site/passport/signup_checkInfo.html');
+    }
+    //注册页面--注册完成
+    public function signup_complete($forward)
+    {
+        $this->page('site/passport/signup_complete.html');
+    }
     //注册的时，检查用户名
     public function check_login_name()
     {
