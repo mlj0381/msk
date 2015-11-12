@@ -68,6 +68,13 @@
 		</div>
 	</div>
 </div>
+<form action="index.php?app=b2c&ctl=admin_goods&act=checkin" method="post">
+    审核状态：
+    <input type="hidden" name="goods_id" value="<{$data_detail.goods_id}>"/>
+    <input type="radio" name="checkin" <{if $data_detail.checkin eq '1'}> checked<{/if}> value="1"/>通过
+    <input type="radio" name="checkin" <{if $data_detail.checkin eq '-1'}> checked<{/if}> value="-1"/>不通过
+    <input type="submit" value="确定" />
+</form>
 <div class="table-scrollable">
 <table class="table">
         <thead>

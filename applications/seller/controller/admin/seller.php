@@ -46,7 +46,7 @@ class seller_ctl_admin_seller extends desktop_controller {
     }
     private function _checked($post)
     {
-        $this->begin('index.php?app=seller&ctl=admin_seller&act=checkin');
+        $this->begin('index.php?app=seller&ctl=admin_seller&act=index');
         if($post['seller_type'] == 'store'){
             $model = app::get('store')->model('store');
         }else{

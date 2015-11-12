@@ -1,0 +1,38 @@
+<{script app=desktop  src="../global/plugins/jquery-tags-input/jquery.tagsinput.min.js"}>
+<div class="modal-header">
+    <h3 class="modal-title">
+        <{if $goods.goods_id }>商品编辑
+            <{else}>商品添加
+                <{/if}>
+    </h3>
+</div>
+<div class="panel-heading clearfix">
+    <{foreach from=$sections item=section key=key name=tab_nav}>
+        <button type="button" href="#tab_edit_<{$key}>" data-toggle="tab" class="btn <{if $env.foreach.tab_nav.first}>btn-danger<{else}>btn-default<{/if}> tab" icon="fa fa-plus">
+            <{$section.label}>&nbsp;<i class="fa fa fa-plus"></i></button>
+        <{/foreach}>
+</div>
+<form method="post" action="<{link app=seller ctl=site_goods act=save}>" id='goods_form' calss="form">
+    <div class="form-horizontal">
+        <div class="tab-content">
+            <{foreach from=$sections item=section key=key name=tab_content}>
+                <div id="tab_edit_<{$key}>" class="tab-pane<{if $env.foreach.tab_content.first}> active<{/if}>">
+                    <{include app=$section.app file=$section.file}>
+                </div>
+                <{/foreach}>
+        </div>
+        <div class="modal-footer">
+        <button type="submit" class="btn blue">保存</button>
+</div>
+    </div>
+</form>
+<script charset="utf-8">
+
+$('.panel-heading button').each(function(index) {
+    $(this).click(function() {
+        $('.panel-heading button').removeClass('btn-danger').addClass('btn-default');
+        $(this).removeClass('btn-default').addClass('btn-danger');
+    })
+});
+
+</script>

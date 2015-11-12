@@ -27,7 +27,11 @@ class b2c_finder_members
 
     public function detail_basic($row)
     {
-        var_dump($row);
+        $memberItem = $this->app->model('members')->getRow('*', array('member_id' => $row));
+        $memberItem['addon'] = unserialize($memberItem['addon']);
+        $render = $this->app->render();
+        $render->pagedata['memberItem'] = $memberItem;
+        return $render->fetch('admin/member/finder/detail.html');
     }
     public function column_editbutton($row)
     {

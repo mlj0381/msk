@@ -16,5 +16,7 @@
     <service id="desktop_finder.seller_mdl_sellers">
          <class>seller_finder_sellers</class>
      </service>
-
+     <service id="desktop_finder.seller_mdl_brand">
+          <class>seller_finder_brand</class>
+      </service>
 </services>

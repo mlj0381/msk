@@ -199,6 +199,27 @@ $db['goods'] = array(
             'filtertype' => 'normal',
             'label' => ('周购买次数') ,
         ) ,
+        'seller_id' => array(
+            'type' => 'table:sellers@seller',
+            'default' => '0',
+            'label' => '所属商家',
+            'required' => true,
+            'default_in_list' => true,
+            'in_list' => true,
+        ),
+        'checkin' => array(
+           'type' => array(
+               '-1' => ('未通过'),
+               '0' => ('待核'),
+               '1' => ('正常'),
+               ),
+           'default' => '0',
+           'required' => true,
+           'label' => ('审核状态') ,
+           'filtertype' => 'yes',
+           'in_list' => true,
+           'default_in_list' => true,
+       ) ,
         'params' =>
             array (
               'type' => 'serialize',

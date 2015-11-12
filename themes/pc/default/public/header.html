@@ -5,7 +5,7 @@
                 <div class="topLeft">
                     <div class="location dropdown">
                         <a id="cityPlan" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false" aria-haspopup="true" role="button" href="">
-                            所在城市 <i class="icon-angle-down"></i>                                       
+                            所在城市 <i class="icon-angle-down"></i>
                         </a>
                         <ul class="dropdown-menu" role="menu" aria-labelledby="cityPlan">
                             <li><a href="">上海</a></li>
@@ -13,7 +13,7 @@
                         </ul>
                     </div>
                     <div class="loginStatus">
-                    <span>您好，请<a href="#">登录</a></span>|<a href="#" class="freeReg">免费注册</a>
+                    <span>您好，请<a href="<{link app=b2c ctl=site_passport act=login}>">登录</a></span>|<a href="<{link app=b2c ctl=site_passport act=signup args0=$forward}>" class="freeReg">免费注册</a>
                     </div>
                 </div>
                 <div class="topRight">
@@ -31,17 +31,18 @@
                         <li class="userCenter"><a href="">会员中心</a></li>
                         <li class="favorite"><a href=""><i class="icon-star"></i> 收藏夹</a></li>
                         <li>|</li>
-                        <li class="sellerSignup"><a href="">商家入驻 <i class=" icon-circle-arrow-right"></i></a></li>
+                        <li class="sellerSignup"><a href="#">商家入驻 <i class=" icon-circle-arrow-right"></i></a></li>
                         <li class="seller_block dropdown">
-                            <a id="sellerCenter" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false" aria-haspopup="true" role="button" href="">
-                            卖家中心 <i class="icon-angle-down"></i>                                       
+                            <a href="<{link app=seller ctl=site_seller act=index}>">卖家中心<i class="icon-angle-down"></i></a>
+                            <!-- <a id="sellerCenter" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false" aria-haspopup="true" role="button" href="<{link app=seller ctl=site_seller act=index}>">
+                            卖家中心 <i class="icon-angle-down"></i>
                             </a>
                             <ul class="dropdown-menu" role="menu" aria-labelledby="sellerCenter">
                                 <li><a href="">子菜单一</a></li>
                                 <li><a href="">子菜单二</a></li>
-                            </ul>
+                            </ul> -->
                         </li>
-                        <li class="seller_block"><a href="">分销商登录</a></li>
+                        <li class="seller_block"><a href="<{link app=seller ctl=site_passport act=login}>">分销商登录</a></li>
                         <li class="seller"><a href="">鲜驰达商城</a></li>
                         <li class="seller_block site_nav"><a href="javascript:;">网站导航 <i class="icon-angle-down"></i></a></li>
                     </ul>
@@ -50,11 +51,11 @@
             <!-- 网站导航 -->
             <div class="row website_menu">
                 <div class="menu_con">
-                    
+
                 </div>
             </div>
 
-        </div> 
+        </div>
     </div>
     <!-- Search Box -->
     <div class="container searchbar">

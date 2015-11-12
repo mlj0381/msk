@@ -71,11 +71,6 @@ class seller_frontpage extends site_controller {
 
     function verify() {
         $user_obj = vmc::singleton('seller_user_object');
-		    exit($this->gen_url(array(
-            'app' => 'seller',
-            'ctl' => 'site_passport',
-            'act' => 'login' //
-        )));
         if ($this->app->seller_id = $user_obj->get_seller_id()) {
             $data = $user_obj->get_sellers_data(array(
                 'sellers' => 'seller_id'

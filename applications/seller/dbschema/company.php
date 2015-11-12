@@ -200,6 +200,18 @@ $db['company'] = array(
             'order' => '1',
 			'comment' => '商家',
         ),
+        'status' => array(
+            'type' => array(
+                '0' => '待核',
+                '1' => '已通过',
+                '-1' => '已拒绝'
+            ),
+            'default' => '0',
+            'label' => ('审核状态'),
+            'commit' => ('审核状态'),
+            'in_list' => true,
+            'default_in_list' => true,
+        ),
 	),
 	'index' => array(
 	'ind_name' => array(
