@@ -20,7 +20,7 @@
             <{/if}>
             <li class="search_li">
                 <form class="goods_search">
-                    <input type="text" placeholder="在当前条件下搜索">
+                    <input class="" type="text" placeholder="在当前条件下搜索">
                     <button><i class="icon-search"></i></button>
                 </form>
             </li>
@@ -30,38 +30,93 @@
     </div>
     <{if $data_screen}>
     <div class="panel panel-default gfilter">
-      <div class="panel-body">
-          <dl class="dl-horizontal gfilter-list">
-              <{foreach from=$data_screen key=pkey item=item}>
+      <table class="gfilter_tab">
+        <{foreach from=$data_screen key=pkey item=item}>
               <{assign var=options_count value=count($item.options)}>
               <{if $options_count<1}><{continue;}><{/if}>
               <{if !$env.get.cat_id && $pkey!='cat_id'}><{continue;}><{/if}>
-                  <dt><{$item.title}></dt>
-                  <dd>
-                      <ul class="list-inline">
-                          <{if $pkey!='cat_id'}>
-                          <li><a href="<{link app=b2c ctl=site_list act=index}>?<{$query|merge_query:$pkey}>">不限</a></li>
-                          <{/if}>
-                          <{foreach from=$item.options key=vkey item=item}>
-                           <li>
-                               <{if $pkey=='cat_id'}>
-                               <a href="<{link app=b2c ctl=site_list act=index}>?cat_id=<{$vkey}>"><{$item}></a>
-                               <{else}>
-                               <a class="<{if $env.get.{$pkey} == $vkey}>active<{/if}>" href="<{link app=b2c ctl=site_list act=index}>?<{$query|merge_query:$pkey:$vkey}>"><{$item}></a>
-                               <{/if}>
-                           </li>
-                          <{/foreach}>
-                      </ul>
-                  </dd>
-              <{/foreach}>
-          </dl>
-          
-      </div>
+           <tr>
+              <td><{$item.title}></td>
+              <td>
+                  <ul>
+                  <{if $pkey!='cat_id'}>
+                    <li><a href="<{link app=b2c ctl=site_list act=index}>?<{$query|merge_query:$pkey}>">不限</a></li>
+                  <{/if}>
+                  <{foreach from=$item.options key=vkey item=item}>
+                    <li>
+                    <{if $pkey=='cat_id'}>
+                       <a href="<{link app=b2c ctl=site_list act=index}>?cat_id=<{$vkey}>"><{$item}></a>
+                       <{else}>
+                       <a class="<{if $env.get.{$pkey} == $vkey}>active<{/if}>" href="<{link app=b2c ctl=site_list act=index}>?<{$query|merge_query:$pkey:$vkey}>"><{$item}></a>
+                    <{/if}>
+                    </li>
+                  <{/foreach}>
+                  </ul>
+              </td>
+          </tr>
+        <{/foreach}>
+          <tr>
+              <td>品牌</td>
+              <td>
+                  <ul>
+                      <li><a href="">神农客</a></li>
+                      <li><a href="">神农客</a></li>
+                      <li><a href="">神农客</a></li>
+                      <li><a href="">神农客</a></li>
+                      <li><a href="">神农客</a></li>
+                      <li><a href="">神农客</a></li>
+                      <li><a href="">神农客</a></li>
+                      <li><a href="">神农客</a></li>
+                      <li><a href="">神农客</a></li>
+                      <li><a href="">神农客</a></li>
+
+                  </ul>
+              </td>
+          </tr>
+          <tr>
+              <td>价格</td>
+              <td>
+                  <ul>
+                      <li><a href="">不限</a></li>
+                      <li><a href="">0-40</a></li>
+                      <li><a href="">41-100</a></li>
+                      <li><a href="">100-200</a></li>
+                      <li><a href="">200-400</a></li>
+                      <li><a href="">400以上</a></li>
+                  </ul>
+              </td>
+          </tr>
+          <tr>
+              <td>产地</td>
+              <td>
+                  <ul>
+                      <li><a href="">不限</a></li>
+                      <li><a href="">上海</a></li>
+                      <li><a href="">河南</a></li>
+                      <li><a href="">天津</a></li>
+                      <li><a href="">湖北</a></li>
+                      <li><a href="">广东</a></li>
+                  </ul>
+              </td>
+          </tr>
+          <tr>
+              <td>重量</td>
+              <td>
+                  <ul>
+                      <li><a href="">不限</a></li>
+                      <li><a href="">0-5KG</a></li>
+                      <li><a href="">5-10KG</a></li>
+                      <li><a href="">10-20KG</a></li>
+                      <li><a href="">20KG以上</a></li>
+                  </ul>
+              </td>
+          </tr>
+      </table>
     </div>
     <{/if}>
     <div class="goods-list">
         <div class="panel panel-default">
-          <div class="panel-heading">
+          <div class="panel-heading clearfix">
                   <div class="form-inline" role="search">
                       <div class="btn-group order-btn btn-sm" role="group" aria-label="...">
                           <a class="btn  btn-sm <{if !$env.get.orderby}>btn-danger<{else}>btn-default<{/if}>" href="<{link app=b2c ctl=site_list act=index}>?<{$query|merge_query:'orderby'}>">
@@ -90,6 +145,18 @@
                       </div>
                         <input type="text" id="input_keyword" class="form-control input-sm input-small" placeholder="在结果中搜索">
                         <button type="button" data-action="<{link app=b2c ctl=site_list act=index}>?<{$query|merge_query:'keyword'}>" onclick="location=$(this).attr('data-action')+'&keyword='+$('#input_keyword').val()" class="btn btn-sm btn-default">确定</button>
+                  </div>
+
+                  <div class="heading_rt row">
+                      <div class="col-sm-6 toggleSpan">
+                            <span class="active"><i></i>店铺</span>
+                            <span class=""><i></i>商品</span>
+                      </div>
+                      <div class="col-sm-6 pageNav">
+                          <span href=""><b>1</b>/2</span>
+                          <a href="" class="prevBtn"><i class="icon-chevron-left"></i></a>
+                          <a href="" class="prevBtn"><i class="icon-chevron-right"></i></a>
+                      </div>
                   </div>
             </div>
         </div>
