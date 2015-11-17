@@ -26,6 +26,13 @@ class b2c_mdl_goods extends dbeav_model
     );
     public $has_one = array();
     public $subSdf = array(
+        'goods_list' => array(
+            'product' => array(
+                'price',
+                'marketable',
+                'product_id',
+            ),
+        ),
         'default' => array(
             'tag' => array(
                 'tag_id',
@@ -60,6 +67,7 @@ class b2c_mdl_goods extends dbeav_model
                 '*',
             ),
         ),
+
     );
     public function __construct($app)
     {
@@ -220,7 +228,7 @@ class b2c_mdl_goods extends dbeav_model
         return true;
     }
 
-    
+
     public function pre_recycle($rows)
     {
         $this->recycle_msg = '删除成功!';

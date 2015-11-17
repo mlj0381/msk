@@ -142,6 +142,15 @@ class b2c_ctl_site_member extends b2c_frontpage
                         ),
                     ) ,
                     array(
+                        'label' => ('公司信息') ,
+                        'ordernum' => 0,
+                        'link' => array(
+                            'app' => 'b2c',
+                            'ctl' => 'site_member',
+                            'act' => 'company',
+                        ),
+                    ) ,
+                    array(
                         'label' => ('安全中心') ,
                         'ordernum' => 10,
                         'link' => array(
@@ -417,6 +426,15 @@ class b2c_ctl_site_member extends b2c_frontpage
         $this->output();
     }
 
+    public function company()
+    {
+        $user_obj = vmc::singleton('b2c_user_object');
+        $pam_data = $user_obj->get_pam_data('*', $this->member['member_id']);
+        $pam_data['memberData']['addon'] = unserialize($pam_data['memberData']['addon']);
+        $this->pagedata['pam_data'] = $pam_data;
+        $this->output();
+    }
+
     public function save_setting()
     {
         $url = $this->gen_url(array(
@@ -438,6 +456,7 @@ class b2c_ctl_site_member extends b2c_frontpage
             'profile',
             'pam_account',
             'currency',
+            'addon'
         );
         $attr = $this->app->model('member_attr')->getList('attr_column');
         foreach ($attr as $attr_colunm) {
@@ -450,7 +469,7 @@ class b2c_ctl_site_member extends b2c_frontpage
             }
         }
         //---end
-        $_POST['member_id'] = $this->member['member_id'];
+        $_POST['member_id'] = $this->member['member_id'];print_r($_POST);exit;
         if ($member_model->save($_POST)) {
             $this->splash('success', $url, ('保存成功'));
         } else {
