@@ -17,7 +17,7 @@ $db['brand'] = array(
             'required' => true,
             'pkey' => true,
             'extra' => 'auto_increment',
-            'in_list' => true,
+            //'in_list' => true,
 			'comment' => 'id',
         ),
         'brand_id' => array(
@@ -65,7 +65,12 @@ $db['brand'] = array(
             'type' => 'serialize',
             'label' => ('品牌'),
             'in_list' => true,
-            'default_in_list' => false,
+            //'default_in_list' => false,
+        ),
+        'why' => array(
+            'type' => 'text',
+            'label' => ('未通过原因'),
+            'comment' => ('未通过原因'),
         ),
     ),
 	'index' => array(

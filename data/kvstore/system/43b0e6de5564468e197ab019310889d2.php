@@ -1,1 +1,0 @@
-<?php exit(); ?>a:3:{s:5:"value";s:32:"b1192b1f576b1d70a8343da5a5686030";s:3:"ttl";i:0;s:8:"dateline";i:1447315081;}

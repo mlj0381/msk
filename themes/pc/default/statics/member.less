@@ -45,6 +45,13 @@ ul,ol{
 			width:1000px;
 			//background: #fff;
 			.fr;
+
+			.page-header{
+				h1{
+					font-size: 18px;
+					margin-top:15px;
+				}
+			}
 			
 			//会员首页
 			.alert-warning{
@@ -186,6 +193,69 @@ ul,ol{
 
 			//END 我的收藏夹
 			
+
+			//收货地址
+			.receiver_form{
+
+				.region{
+					width:100%;
+					input{
+						width:33.33333%;
+					}
+					select{
+						width:33.33333%;
+					}
+				}
+
+				button.btn-primary{
+					width:120px;
+					padding:0;
+					height:34px;
+					line-height: 34px;
+					background: @basecolor;
+					color:#fff;
+					border:none;
+				}
+			}
+
+			.list-group{
+				ul.list-inline{
+					margin:10px 0;
+				}
+			}
+			//END 收货地址
+			
+
+			//个人资料
+			.perInfo{
+				width:100%;
+				height:40px;
+				border-bottom:1px solid #ccc;
+				margin: 20px auto;
+				ul{
+					height:40px;
+					li{
+						.fl;
+						height:40px;
+						line-height: 40px;
+						padding:0 15px;
+						a{
+							font-size: 14px;
+
+						}
+						&.active{
+							border-bottom:2px solid @basecolor;
+							a{
+								color:@basecolor;
+							}
+						}
+					}
+				}
+			}
+
+
+			//END 个人资料
+		
 		}
 
 	}

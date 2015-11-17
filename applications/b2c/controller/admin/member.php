@@ -100,7 +100,8 @@ class b2c_ctl_admin_member extends desktop_controller
     {
         $this->begin('index.php?app=b2c&ctl=admin_member&act=index');
         if(!$_POST) $this->end(false, '非法请求');
-        $post = $_POST;
+        extract($_POST);
+        $post = compact('member_id', 'checkin');
         if(!$this->member_model->save($post)){
              $this->end(false, '审核失败');
         }

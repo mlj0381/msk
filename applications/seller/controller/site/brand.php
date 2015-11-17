@@ -25,8 +25,11 @@ class seller_ctl_site_brand extends seller_frontpage
     }
 
     //添加品牌
-    public function add(){
+    public function add($brand_id){
         if($_POST) $this->_post($_POST);
+        if(is_numeric($brand_id)){
+            $this->pagedata['brand'] = $this->mBrand->getRow('*', array('id' => $brand_id));
+        }
         $this->output();
     }
 

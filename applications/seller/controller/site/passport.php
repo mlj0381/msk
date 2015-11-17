@@ -43,6 +43,44 @@ class seller_ctl_site_passport extends seller_frontpage
        $this->set_tmpl('passport');
        $this->page('site/passport/login.html');
     }
+    public function post_login()
+    {
+        $login_url = $this->gen_url(array(
+            'app' => 'seller',
+            'ctl' => 'site_passport',
+            'act' => 'login',
+        ));
+        //_POST过滤
+        $params = utils::_filter_input($_POST);
+        unset($_POST);
+        $account_data = array(
+            'login_account' => $params['uname'],
+            'login_password' => $params['password'],
+        );
+        if (empty($params['vcode'])) {
+            $this->splash('error', $login_url, '请输入验证码');
+        }
+
+        //尝试登陆
+        $seller_id = vmc::singleton('pam_passport_site_basic')->login($account_data, $params['vcode'], $msg, 'sellers');
+        if (!$seller_id) {
+            $this->splash('error', $login_url,  $msg);
+        }
+
+        //设置session
+        $this->user_obj->set_seller_session($seller_id);
+        //设置客户端cookie
+        $this->bind_seller($seller_id);
+        $forward = $params['forward'];
+        if (!$forward) {
+            $forward = $this->gen_url(array(
+                'app' => 'seller',
+                'ctl' => 'site_seller',
+                'act' => 'index',
+            ));
+        }
+        $this->splash('success', $forward, '登录成功');
+    } //end function
     //注册方法
     public function signup($step){
         if($_POST) $this->_signup($_POST, $step);
@@ -175,7 +213,16 @@ class seller_ctl_site_passport extends seller_frontpage
 
     }
     //退出登录
-    public function unset_selelr(){
-
+    public function logout($forward)
+    {
+        $this->unset_seller();
+        if (!$forward) {
+            $forward = $this->gen_url(array(
+                'app' => 'site',
+                'ctl' => 'index',
+                'full' => 1,
+            ));
+        }
+        $this->splash('success', $forward, '退出登录成功');
     }
 }

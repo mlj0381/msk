@@ -20,6 +20,11 @@ class b2c_ctl_admin_brand extends desktop_controller {
                     'icon' => 'fa-plus',
                     'href' => 'index.php?app=b2c&ctl=admin_brand&act=create',
                 ) ,
+                array(
+                    'label' => ('品牌审核') ,
+                    'icon' => 'fa-plus',
+                    'href' => 'index.php?app=seller&ctl=admin_brand&act=index',
+                ) ,
             )
         ));
     }

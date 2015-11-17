@@ -71,13 +71,7 @@
 		<div>公司名称：<{$mem.addon.company}></div><br />
 		<div>公司地址：<{$mem.addon.company_area|region}>-<{$mem.addon.addr}></div><br />
 		<div>
-			<form action="index.php?app=b2c&ctl=admin_member&act=checkin" method="post">
-				审核状态：
-				<input type="hidden" name="member_id" value="<{$mem.member_id}>"/>
-				<input type="radio" name="checkin" <{if $mem.checkin eq '1'}> checked<{/if}> value="1"/>通过
-				<input type="radio" name="checkin" <{if $mem.checkin eq '-1'}> checked<{/if}> value="-1"/>不通过
-				<input type="submit" value="确定" />
-			</form>
+			
 		</div><br />
 		<a href="index.php?app=b2c&ctl=admin_member&act=edit&p[0]=<{$mem.member_id}>" data-target="#member_edit" data-toggle="modal" class="btn green btn-sm"><i class="fa fa-edit"></i> 编辑会员资料</a>
 	</div>

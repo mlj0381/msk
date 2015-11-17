@@ -111,6 +111,16 @@ class b2c_ctl_admin_goods extends desktop_controller
         $this->pagedata['filter'] = htmlspecialchars(serialize($params));
         $this->display('admin/goods/batchedit/'.$type.'.html');
     }
+
+    public function checkin(){
+        $this->begin('index.php?app=b2c&ctl=admin_goods&act=index');
+        if(!$_POST) $this->end(flase, '非法请求');
+        $mdl_goods = $this->app->model('goods');
+        if(!$mdl_goods->save($_POST)){
+            $this->end(flase, '审核失败');
+        }
+        $this->end(flase, '审核成功');
+    }
     public function batch_save(){
         $this->begin();
         $params = $_POST;
