@@ -1,12 +1,13 @@
 <div class="page-header">
   <h1>我的个人信息 <small>My Setting</small></h1>
 </div>
-<div class="perInfo">
+<div class="perInfo_nav">
     <ul>
-        <li class="active"><a href="#">基本信息</a></li>
+        <li class="active"><a href="<{link app=b2c ctl=site_member act=setting}>">基本信息</a></li>
+        <li><a href="<{link app=b2c ctl=site_member act=avatar}>">头像照片</a></li>
     </ul>
 </div>
-<form id="member_setting_form" class="form-horizontal" action="<{link app=b2c ctl=site_member act=save_setting}>" method="post">
+<form id="member_setting_form" class="form-horizontal m-baseInfo_form" action="<{link app=b2c ctl=site_member act=save_setting}>" method="post">
     <div class="form-group">
         <label  class="col-xs-2 control-label">
             当前头像
@@ -22,7 +23,7 @@
         </div>
     </div>
     <{foreach from=$pam_data key=key item=item}>
-    <div class="form-group">
+    <!-- <div class="form-group">
         <label  class="col-xs-2 control-label">
             <{switch from=$key}>
                 <{case value='mobile'}>手机号
@@ -47,16 +48,30 @@
             <a href="<{link app=b2c ctl=site_member act=active_pam_email}>" class="btn btn-link btn-xs">立即验证激活邮箱&raquo;</a>
             <{/if}>
         </div>
-    </div>
+    </div> -->
     <{/foreach}>
     <div class="form-group">
         <label  class="col-xs-2 control-label">
             手机号码
         </label>
         <div class="col-xs-5">
-            <div class="input-group">
-                <input type="text" readonly=true class="form-control" >
-            </div>
+            <input type="text" class="form-control" >
+        </div>
+    </div>
+    <div class="form-group">
+        <label  class="col-xs-2 control-label">
+            真实姓名
+        </label>
+        <div class="col-xs-5">
+            <input type="text" class="form-control" >
+        </div>
+    </div>
+    <div class="form-group">
+        <label  class="col-xs-2 control-label">
+            电子邮件
+        </label>
+        <div class="col-xs-5">
+            <input type="text" class="form-control" >
         </div>
     </div>
     <hr>
