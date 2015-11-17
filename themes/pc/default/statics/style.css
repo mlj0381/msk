@@ -159,3 +159,66 @@ ol {
   margin-left: 0px;
   width: 100%;
 }
+.reg_progress {
+  width: 100%;
+  height: 50px;
+  line-height: 50px;
+  margin: 20px 0;
+  background: #f5f5f5;
+}
+.reg_progress ol {
+  width: 100%;
+  margin: 0;
+}
+.reg_progress ol li {
+  float: left;
+  text-align: center;
+}
+.reg_progress ol li.active {
+  background: #e93428;
+  color: #fff;
+  cursor: pointer;
+}
+.reg_progress ol li.active a {
+  color: #fff;
+}
+#member_signup_checkInfo_form .customer_address select {
+  width: 123px;
+}
+#member_signup_checkInfo_form input[type='file'] {
+  border: none;
+  box-shadow: none;
+  padding-left: 0;
+  outline: none;
+  width: 190px;
+}
+#member_signup_checkInfo_form #regTerms {
+  width: 960px;
+  margin: 0 auto;
+}
+#member_signup_checkInfo_form #regTerms .modal-dialog {
+  width: 960px;
+}
+#member_signup_checkInfo_form .form_datetime {
+  position: relative;
+}
+#member_signup_checkInfo_form .form_datetime span.add-on {
+  display: inline-block;
+  width: 34px;
+  height: 34px;
+  position: absolute;
+  right: 15px;
+  top: 0px;
+  text-align: center;
+  vertical-align: middle;
+  border-left: 1px solid #ccc;
+}
+#member_signup_checkInfo_form .form_datetime span.add-on i {
+  display: inline-block;
+  padding-top: 12px;
+}
+.signup_complete_con {
+  width: 100%;
+  text-align: center;
+  margin: 20px 0;
+}
