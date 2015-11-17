@@ -48,7 +48,10 @@
                           <span class="required" aria-required="true">*</span>
                      </label>
                       <div class="col-md-5">
-                          <{input type="siteimage" required=true value=$cat name="seller[extra][brand_logo]" vtype='required' class='form-control'}>
+
+                          <input type="file" accept="image/*" data-url="<{link app=image ctl=site_upload act=index}>"  class="form-control" value="">
+                          <input type="hidden" name="seller[extra][brand_logo]"  value=""/>
+                          <span class="hide">上传成功</span>
                       </div>
                   </div>
 
@@ -57,7 +60,10 @@
                               <span class="required" aria-required="true">*</span>
                          </label>
                           <div class="col-md-5">
-                              <{input type="siteimage" required=true value=$brand.aptitudes_image col name="seller[extra][aptitudes_image]" vtype='required' class='form-control'}>
+
+                              <input type="file" accept="image/*" data-url="<{link app=image ctl=site_upload act=index}>" class="form-control" value="">
+                              <input type="hidden" name="seller[extra][aptitudes_image]"  value=""/>
+                              <span class="hide">上传成功</span>
                           </div>
                       </div>
 
@@ -86,6 +92,23 @@
 
 <script charset="utf-8">
     $(function(){
+
+        $('input[type="file"]').fileupload({
+
+            add:function(e, data){
+                if(!data.files[0]['type'].match(/^image/)){
+                    alert('非法上传，不是图片类型');
+                }
+                data.submit();
+            },
+            done:function(e, data){
+                var re = $.parseJSON(data.result);
+                var input= e.target || e.srcElement;
+                $(input).next('input').val(re.image_id);
+                $(input).next('input').nextAll().removeClass('hide');
+            }
+        });
+
         $('#check_brand_name').blur(function(){
             var url = "<{link app=seller ctl=site_brand act=check_brand_name}>";
             var url_initial = "<{link app=seller ctl=site_brand act=brand_initial}>";

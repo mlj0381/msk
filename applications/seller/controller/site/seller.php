@@ -28,7 +28,7 @@ class seller_ctl_site_seller extends seller_frontpage
 
 	public function company()
 	{
-        $this->title .= "-公司信息";
+        $this->title .= "公司信息";
         if($_POST) $this->_company_post($_POST);
         $seller = $this->app->model('sellers')->getRow('*', array(
             'seller_id' => $this->seller['seller_id']

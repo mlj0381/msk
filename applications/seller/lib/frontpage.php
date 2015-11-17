@@ -129,9 +129,9 @@ class seller_frontpage extends site_controller {
         $user_obj = vmc::singleton('seller_user_object');
         $cookie_expires = $user_obj->cookie_expires ? time() + $user_obj->cookie_expires * 60 : 0;
 		/*
-        $seller_data = $user_obj->get_sellers_data($columns,$seller_id);
+        $seller_data = $user_obj->get_sellers_data($columns,$seller_id);*/
         $login_name = $user_obj->get_seller_name($data['account']['login_name'],$seller_id);
-		*/
+
         $this->cookie_path = vmc::base_url() . '/';
         $this->set_cookie('UNAME', $login_name, $cookie_expires);
         $this->set_cookie('SELLER_IDENT', $seller_id, $cookie_expires);

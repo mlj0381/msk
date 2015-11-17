@@ -1,45 +1,41 @@
 <div class="passport-signup-container">
     <div class="panel panel-default signup-panel">
-      <div class="panel-heading clearfix">
-          注册成为会员
-          <a class="btn btn-danger btn-xs pull-right" href="<{link app=b2c ctl=site_passport act=login args0=$forward}>">立即登录&raquo;</a>
-      </div>
       <div class="panel-body">
-          <form id="member_signup_form" class="form-horizontal" action="<{link app=b2c ctl=site_passport act=create}>" method="post">
+          <form id="member_signup_form" class="form-horizontal" action="<{link app=b2c ctl=site_member act=save_setting}>" method="post">
 
               <h3>企业基本信息</h3>
               <div class="form-group">
                   <label for="input_psw_confirm" class="col-md-2 control-label"><span class="text-danger">*</span>客户名称：</label>
                   <div class="col-md-4">
 
-                    <input type="text" required="true" name="pam_account[addon][company_name]" class="form-control" id="input_psw_confirm" >
+                    <input type="text" value="<{$pam_data.memberData.addon.company_name}>" required="true" name="addon[company_name]" class="form-control" id="input_psw_confirm" >
                   </div>
               </div>
               <div class="form-group">
                   <label for="input_psw_confirm" class="col-md-2 control-label"><span class="text-danger">*</span>客户地区：</label>
                   <div class="col-md-4">
-                    <{input type=region name="pam_account[addon][company_area]"}>
+                    <{input type=region name="addon[company_area]" value=$pam_data.memberData.addon.company_area}>
                   </div>
                   <div class="col-md-4">
-                    <input type="text" required="true" name="pam_account[addon][company_addr]" class="form-control" id="input_psw_confirm" >
+                    <input type="text" required="true" value="<{$pam_data.memberData.addon.company_addr}>" name="addon[company_addr]" class="form-control" id="input_psw_confirm" >
                   </div>
               </div>
               <div class="form-group">
                   <label for="input_psw_confirm" class="col-md-2 control-label"><span class="text-danger">*</span>客户营业电话：</label>
                   <div class="col-md-4">
 
-                    <input type="text" required="true" name="pam_account[addon][company_phone]" class="form-control" id="input_psw_confirm" >
+                    <input type="text" required="true" name="addon[company_phone]" value="<{$pam_data.memberData.addon.company_phone}>" class="form-control" id="input_psw_confirm" >
                   </div>
               </div>
               <div class="form-group">
                   <label for="input_psw_confirm" class="col-md-2 control-label"><span class="text-danger">*</span>老板姓名：</label>
                   <div class="col-md-4">
-                    <input type="text" required="true" name="pam_account[addon][boss_name]" class="form-control" id="input_psw_confirm" >
+                    <input type="text" required="true" name="addon[boss_name]" value="<{$pam_data.memberData.addon.boss_name}>" class="form-control" id="input_psw_confirm" >
                     请填写老板姓名并上传老板名片照
                   </div>
                   <div class="col-md-4">
-                    <input type="file" accept="image/*" data-url="<{link app=image ctl=site_upload act=index}>" required="true" class="form-control" id="input_psw_confirm" >
-                    <input type="hidden" name="pam_account[addon][boss_image]"  value=""/>
+                    <input type="file" accept="image/*" data-url="<{link app=image ctl=site_upload act=index}>" class="form-control" id="input_psw_confirm" >
+                    <input type="hidden" name="addon[boss_image]"  value=""/>
                     <span class="hide">上传成功</span>
                   </div>
               </div>
@@ -47,63 +43,63 @@
               <div class="form-group">
                   <label for="input_psw_confirm" class="col-md-2 control-label"><span class="text-danger">*</span>老板电话：</label>
                   <div class="col-md-4">
-                    <input type="text" required="true" name="pam_account[addon][boss_phone]" class="form-control" id="input_psw_confirm" >
+                    <input type="text" required="true" name="addon[boss_phone]" value="<{$pam_data.memberData.addon.boss_phone}>" class="form-control" id="input_psw_confirm" >
                   </div>
               </div>
               <div class="form-group">
                   <label for="input_psw_confirm" class="col-md-2 control-label">老板QQ号：</label>
                   <div class="col-md-4">
 
-                    <input type="text" required="true" name="pam_account[addon][boss_qq]" class="form-control" id="input_psw_confirm" >
+                    <input type="text" required="true" name="addon[boss_qq]" value="<{$pam_data.memberData.addon.boss_qq}>" class="form-control" id="input_psw_confirm" >
                   </div>
               </div>
               <div class="form-group">
                   <label for="input_psw_confirm" class="col-md-2 control-label">老板微信号：</label>
                   <div class="col-md-4">
 
-                    <input type="text" required="true" name="pam_account[addon][boss_wechat]" class="form-control" id="input_psw_confirm" >
+                    <input type="text" required="true" name="addon[boss_wechat]" value="<{$pam_data.memberData.addon.boss_wechat}>" class="form-control" id="input_psw_confirm" >
                   </div>
               </div>
               <div class="form-group">
                   <label for="input_psw_confirm" class="col-md-2 control-label"><span class="text-danger">*</span>有权联系人姓名：</label>
                   <div class="col-md-4">
 
-                    <input type="text" required="true" name="pam_account[addon][pressing_name]" class="form-control" id="input_psw_confirm" >
+                    <input type="text" required="true" name="addon[pressing_name]" value="<{$pam_data.memberData.addon.pressing_name}>" class="form-control" id="input_psw_confirm" >
                   </div>
               </div>
               <div class="form-group">
                   <label for="input_psw_confirm" class="col-md-2 control-label"><span class="text-danger">*</span>有权联系人电话:</label>
                   <div class="col-md-4">
 
-                    <input type="text" required="true" name="pam_account[addon][pressing_phone]" class="form-control" id="input_psw_confirm" >
+                    <input type="text" required="true" name="addon[pressing_phone]" value="<{$pam_data.memberData.addon.pressing_phone}>" class="form-control" id="input_psw_confirm" >
                   </div>
               </div>
               <div class="form-group">
                   <label for="input_psw_confirm" class="col-md-2 control-label">有权联系人QQ号：</label>
                   <div class="col-md-4">
 
-                    <input type="text" required="true" name="pam_account[addon][pressing_qq]" class="form-control" id="input_psw_confirm" >
+                    <input type="text" required="true" name="addon[pressing_qq]" value="<{$pam_data.memberData.addon.pressing_qq}>" class="form-control" id="input_psw_confirm" >
                   </div>
               </div>
               <div class="form-group">
                   <label for="input_psw_confirm" class="col-md-2 control-label">有权联系人微信号：</label>
                   <div class="col-md-4">
 
-                    <input type="text" required="true" name="pam_account[addon][pressing_wechat]" class="form-control" id="input_psw_confirm" >
+                    <input type="text" required="true" name="addon[pressing_wechat]" value="<{$pam_data.memberData.addon.pressing_wechat}>" class="form-control" id="input_psw_confirm" >
                   </div>
               </div>
               <div class="form-group">
                   <label for="input_psw_confirm" class="col-md-2 control-label"><span class="text-danger">*</span>采购产品：</label>
                   <div class="col-md-4">
 
-                    <{input type=select name="pam_account[addon][company_goods]"}>
+                    <{input type=select name="addon[company_goods]"}>
                   </div>
               </div>
               <div class="form-group">
                   <label for="input_psw_confirm" class="col-md-2 control-label"><span class="text-danger">*</span>销售对象：</label>
                   <div class="col-md-4">
 
-                    <input type="text" required="true" name="pam_account[addon][market_obj]" class="form-control" id="input_psw_confirm" >
+                    <input type="text" required="true" name="addon[market_obj]" value="<{$pam_data.memberData.addon.market_obj}>" class="form-control" id="input_psw_confirm" >
                   </div>
               </div>
 
@@ -111,32 +107,32 @@
               <div class="form-group">
                   <label for="input_psw_confirm" class="col-md-2 control-label"><span class="text-danger">*</span>附件1：</label>
                   <div class="col-md-4">
-                    <input type="file" accept="image/*" data-url="<{link app=image ctl=site_upload act=index}>" required="true" class="form-control" value="">
-                    <input type="hidden" name="pam_account[addon][company_license]"  value=""/>
+                    <input type="file" accept="image/*" data-url="<{link app=image ctl=site_upload act=index}>" class="form-control" value="">
+                    <input type="hidden" name="addon[company_license]"  value=""/>
                     请上传您的企业营业执照或许可证 <span class="hide">上传成功</span>
                   </div>
               </div>
               <div class="form-group">
                   <label for="input_psw_confirm" class="col-md-2 control-label"><span class="text-danger">*</span>附件2：</label>
                   <div class="col-md-4">
-                    <input type="file" accept="image/*" data-url="<{link app=image ctl=site_upload act=index}>" required="true" class="form-control" value="">
-                    <input type="hidden" name="pam_account[addon][food_license]"  value=""/>
+                    <input type="file" accept="image/*" data-url="<{link app=image ctl=site_upload act=index}>" class="form-control" value="">
+                    <input type="hidden" name="addon[food_license]"  value=""/>
                     请上传您的食品安全许可证 <span class="hide">上传成功</span>
                   </div>
               </div>
               <div class="form-group">
                   <label for="input_psw_confirm" class="col-md-2 control-label">附件3：</label>
                   <div class="col-md-4">
-                    <input type="file" accept="image/*" data-url="<{link app=image ctl=site_upload act=index}>" required="true" class="form-control" value="">
-                    <input type="hidden" name="pam_account[addon][place_image]"  value=""/>
+                    <input type="file" accept="image/*" data-url="<{link app=image ctl=site_upload act=index}>" class="form-control" value="">
+                    <input type="hidden" name="addon[place_image]"  value=""/>
                     请上传您的经营场地门头照片 <span class="hide">上传成功</span>
                   </div>
               </div>
               <div class="form-group">
                   <label for="input_psw_confirm" class="col-md-2 control-label">附件4：</label>
                   <div class="col-md-4">
-                    <input type="file" accept="image/*" data-url="<{link app=image ctl=site_upload act=index}>" required="true"  class="form-control" value="">
-                    <input type="hidden" name="pam_account[addon][menu_image]"  value=""/>
+                    <input type="file" accept="image/*" data-url="<{link app=image ctl=site_upload act=index}>" class="form-control" value="">
+                    <input type="hidden" name="addon[menu_image]"  value=""/>
                     请上传您的菜单照片 <span class="hide">上传成功</span>
                   </div>
               </div>
@@ -146,97 +142,89 @@
               <div class="form-group">
                   <label for="input_psw_confirm" class="col-md-2 control-label"><span class="text-danger">*</span>经营地面积：</label>
                   <div class="col-md-4">
-                    <input type="text" required="true" name="pam_account[addon][operate_area]" class="form-control" id="input_psw_confirm" >
+                    <input type="text" required="true" name="addon[operate_area]" value="<{$pam_data.memberData.addon.operate_area}>" class="form-control" id="input_psw_confirm" >
                   </div>
               </div>
 
               <div class="form-group">
                   <label for="input_psw_confirm" class="col-md-2 control-label"><span class="text-danger">*</span>冻品存放地：</label>
                   <div class="col-md-4">
-                    <input type="text" required="true" class="form-control" id="input_psw_confirm" >
-                    <!-- name="pam_account[addon][goods_stash]" -->
+                    <input type="text" required="true" class="form-control" name="addon[goods_stash]"  value="<{$pam_data.memberData.addon.goods_stash}>"  id="input_psw_confirm" >
+                    <!-- name="addon[goods_stash]" -->
                     请上传冻品存放地照片
                   </div>
                   <div class="col-md-3">
-                    <input type="file" accept="image/*" data-url="<{link app=image ctl=site_upload act=index}>" id="test" required="true" class="form-control" value="">
-                    <input type="hidden" name="pam_account[addon][goods_stash_image]"  value=""/>
+                    <input type="file" accept="image/*" data-url="<{link app=image ctl=site_upload act=index}>" id="test" class="form-control" value="">
+                    <input type="hidden" name="addon[goods_stash_image]"  value=""/>
                     <span class="hide">上传成功</span>
                   </div>
               </div>
               <div class="form-group">
                   <label for="input_psw_confirm" class="col-md-2 control-label"><span class="text-danger">*</span>存放能力：</label>
                   <div class="col-md-4">
-                    <input type="text" required="true" name="pam_account[addon][stash_ability]" class="form-control" id="input_psw_confirm" >
+                    <input type="text" required="true" name="addon[stash_ability]" value="<{$pam_data.memberData.addon.stash_ability}>" class="form-control" id="input_psw_confirm" >
                   </div>
               </div>
               <div class="form-group">
                   <label for="input_psw_confirm" class="col-md-2 control-label"><span class="text-danger">*</span>员工人数：</label>
                   <div class="col-md-4">
-                    <input type="text" required="true" name="pam_account[addon][staff_num]" class="form-control" id="input_psw_confirm" >
+                    <input type="text" required="true" name="addon[staff_num]" value="<{$pam_data.memberData.addon.staff_num}>" class="form-control" id="input_psw_confirm" >
                   </div>
               </div>
               <div class="form-group">
                   <label for="input_psw_confirm" class="col-md-2 control-label"><span class="text-danger">*</span>是否连锁：</label>
                   <div class="col-md-4">
                       <label class="radio-inline">
-                      <input type="radio" id="inlineCheckbox1" name="pam_account[addon][chain]" value="1"> 是
+                      <input type="radio" id="inlineCheckbox1" name="addon[chain]" value="1"> 是
                       </label>
                       <label class="radio-inline">
-                      <input type="radio" id="inlineCheckbox2" name="pam_account[addon][chain]" value="0"> 否
+                      <input type="radio" id="inlineCheckbox2" name="addon[chain]" value="0"> 否
                       </label>
                   </div>
               </div>
               <div class="form-group">
                   <label for="input_psw_confirm" class="col-md-2 control-label"><span class="text-danger">*</span>连锁数量：</label>
                   <div class="col-md-4">
-                    <input type="text" required="true" name="pam_account[addon][chain_num]" class="form-control" id="input_psw_confirm" >
+                    <input type="text" required="true" name="addon[chain_num]" value="<{$pam_data.memberData.addon.chain_num}>" class="form-control" id="input_psw_confirm" >
                   </div>
               </div>
               <div class="form-group">
                   <label for="input_psw_confirm" class="col-md-2 control-label">习惯正常收货时间段：</label>
                   <div class="col-md-4">
-                      <input type="text" required="true" name="pam_account[addon][receipt_date_early]" class="form-control" id="input_psw_confirm" >
+                      <input type="text" required="true" name="addon[receipt_date_early]" value="<{$pam_data.memberData.addon.receipt_date_early}>" class="form-control" id="input_psw_confirm" >
                   </div>
                   <div class="col-md-4">
-                      <input type="text" required="true" name="pam_account[addon][receipt_date_late]" class="form-control" id="input_psw_confirm" >
+                      <input type="text" required="true" name="addon[receipt_date_late]" value="<{$pam_data.memberData.addon.receipt_date_late}>" class="form-control" id="input_psw_confirm" >
                   </div>
               </div>
               <div class="form-group">
                   <label for="input_psw_confirm" class="col-md-2 control-label">习惯收货最早时间要求：</label>
                   <div class="col-md-4">
-                    <input type="text" required="true" name="pam_account[addon][receipt_early]" class="form-control" id="input_psw_confirm" >
+                    <input type="text" required="true" name="addon[receipt_early]" value="<{$pam_data.memberData.addon.receipt_early}>" class="form-control" id="input_psw_confirm" >
                   </div>
               </div>
               <div class="form-group">
                   <label for="input_psw_confirm" class="col-md-2 control-label">习惯收货最晚时间要求：</label>
                   <div class="col-md-4">
-                    <input type="text" required="true" name="pam_account[addon][receipt_early]" class="form-control" id="input_psw_confirm" >
+                    <input type="text" required="true" name="addon[receipt_early]" value="<{$pam_data.memberData.addon.receipt_early}>" class="form-control" id="input_psw_confirm" >
                   </div>
               </div>
               <div class="form-group">
                   <label for="input_psw_confirm" class="col-md-2 control-label">支付方式：</label>
                   <div class="col-md-4">
-                    <input type="text" required="true" name="pam_account[addon][pay_menthod]" class="form-control" id="input_psw_confirm" >
+                    <input type="text" required="true" name="addon[pay_menthod]" value="<{$pam_data.memberData.addon.pay_menthod}>" class="form-control" id="input_psw_confirm" >
                   </div>
               </div>
               <div class="form-group">
                   <label for="input_psw_confirm" class="col-md-2 control-label">距离门店最近停车距离：</label>
                   <div class="col-md-4">
-                    <input type="text" required="true" name="pam_account[addon][stop_distance]" class="form-control" id="input_psw_confirm" >
+                    <input type="text" required="true" name="addon[stop_distance]" value="<{$pam_data.memberData.addon.stop_distance}>" class="form-control" id="input_psw_confirm" >
                   </div>
               </div>
               <div class="form-group">
                   <label for="input_psw_confirm" class="col-md-2 control-label">单次配送规模：</label>
                   <div class="col-md-4">
-                    <input type="text" required="true" name="pam_account[addon][one_distribution]" class="form-control" id="input_psw_confirm" >
-                  </div>
-              </div>
-              <div class="form-group">
-                  <label for="input_psw_confirm" class="col-md-2 control-label"></label>
-                  <div class="col-md-4">
-                      <label class="checkbox-inline">
-          				<input type="checkbox" id="inlineCheckbox1" value="option1"> 我已阅读并同意<a href="#">《美侍客用户注册协议》</a>
-          			</label>
+                    <input type="text" required="true" name="addon[one_distribution]"  value="<{$pam_data.memberData.addon.one_distribution}>" class="form-control" id="input_psw_confirm" >
                   </div>
               </div>
               <hr>
@@ -271,20 +259,9 @@
               </div>
               <{/if}>
               <{/foreach}>
-
               <div class="form-group">
                   <div class="col-md-offset-2 col-md-4">
-                    <div class="checkbox">
-                      <label>
-                        <input onclick="return false;" type="checkbox" checked name="" value="1">同意
-                      </label>
-                      <a href="javascript:;">《会员注册条款》</a>
-                    </div>
-                  </div>
-              </div>
-              <div class="form-group">
-                  <div class="col-md-offset-2 col-md-4">
-                    <button type="submit" data-loading-text="正在提交..." class="btn btn-warning">提交</button>
+                    <button type="submit" data-loading-text="正在提交..." class="btn btn-warning">修改</button>
                   </div>
               </div>
           </form>
@@ -327,7 +304,7 @@
 
         $('#input_login_name').on('blur',function(e){
             var ipt = $(this);
-            $.post('<{link app=b2c ctl=site_passport act=check_login_name}>',{'pam_account[login_name]':ipt.val()},function(re){
+            $.post('<{link app=b2c ctl=site_passport act=check_login_name}>',{'login_name]':ipt.val()},function(re){
                 if(re.error){
                     ipt.popover({content:re.error,placement:'right',trigger:'click',container:'body'});
                     ipt.popover('show');
@@ -365,19 +342,7 @@
             return false;
         });
 
-        //获得短信验证码
-        var _cutdown_sms = function(btn){
-            btn.addClass('disabled');
-            var cutdown = 120,btn_o_text = btn.text(),timer =
-            setInterval((function(){
-                btn.text('短信已发送,'+(cutdown--)+'秒后可重试');
-                if(cutdown<1){
-                    clearInterval(timer);
-                    btn.text(btn_o_text).removeClass('disabled');
-                }
-                return arguments.callee;
-            })(),1000);
-        };
+
         signup_form.find('.mobile-vcode button').on('click',function(e){
             var btn = $(this);
             if(btn.hasClass('disabled'))return;

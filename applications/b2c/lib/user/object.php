@@ -192,10 +192,13 @@ class b2c_user_object{
             $columns .= ',login_type';
         }
         $pam_members_model = app::get('pam')->model('members');
+        $b2c_members_model = app::get('b2c')->model('members');
         $accountData = $pam_members_model->getList($columns,array('member_id'=>$member_id));
+        $memberData = $b2c_members_model->getRow($columns,array('member_id'=>$member_id));
         foreach((array)$accountData as $row){
           $arr_colunms[$row['login_type']] = $row;
         }
+        $arr_colunms['memberData'] = $memberData;
         return $arr_colunms;
     }
 

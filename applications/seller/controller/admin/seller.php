@@ -44,42 +44,42 @@ class seller_ctl_admin_seller extends desktop_controller {
         $this->_editor();
         $this->display("admin/seller/finder/{$type}.html");
     }
-    private function _checked($post)
-    {
-        $this->begin('index.php?app=seller&ctl=admin_seller&act=index');
-        if($post['seller_type'] == 'store'){
-            $model = app::get('store')->model('store');
-        }else{
-            $model = $this->app->model($post['seller_type']);
-        }
-        $db = vmc::database();
-        $db->beginTransaction();
-        if(!$model->update(array('status' => $post['status']), array('seller_id' => $post['seller_id']))){
-            $this->end(false, '审核失败');
-        }
-        $mdl_seller = $this->app->model('sellers');
-        $seller_check = $mdl_seller->dump($post['seller_id'], '*', 'checkin');
-        $suatus[] = array_shift($seller_check['company']);
-        array_unshift($suatus, array_shift($seller_check['aptitudes']));
-        array_unshift($suatus, array_shift($seller_check['store']));
-        array_unshift($suatus, array_shift($seller_check['brand']));
-        $status = ture;
-        foreach ($suatus as $key => $value) {
-            if($value['status'] == '-1' || $value['status'] == '0'){
-                $status = false;
-                break;
-            }
-        }
-        if($status){
-            if(!$mdl_seller->update(array('checkin' => '1'), array('seller_id' => $post['seller_id']))){
-                $db->rollback();
-            }
-        }
-        //写入日志
+    private function _checked($post){
+       $this->begin('index.php?app=seller&ctl=admin_seller&act=checkin');
 
-        $db->commit();
-        $this->end(true, '审核成功');
-    }
+       if($post['seller_type'] == 'store'){
+           $model = app::get('store')->model('store');
+       }else{
+           $model = $this->app->model($post['seller_type']);
+       }
+       $db = vmc::database();
+       $db->beginTransaction();
+       if(!$model->update(array('status' => $post['status']), array('seller_id' => $post['seller_id']))){
+           $this->end(false, '审核失败');
+       }
+       $mdl_seller = $this->app->model('sellers');
+       $seller_check = $mdl_seller->dump($post['seller_id'], '*', 'checkin');
+       $suatus[] = array_shift($seller_check['company']);
+       array_unshift($suatus, array_shift($seller_check['aptitudes']));
+       array_unshift($suatus, array_shift($seller_check['store']));
+       array_unshift($suatus, array_shift($seller_check['brand']));
+       $type = true;
+       foreach ($suatus as $key => $value) {
+           if($value['status'] == '-1' || $value['status'] == '0'){
+               $status = false;
+               break;
+           }
+       }
+       if($type){
+           if(!$mdl_seller->update(array('checkin' => '1'), array('seller_id' => $post['seller_id']))){
+               $db->rollback();
+           }
+       }
+       //写入日志
+
+       $db->commit();
+       $this->end(true, '审核成功');
+   }
     private function _editor()
     {
         $this->pagedata['sections'] = array();

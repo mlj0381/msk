@@ -14,7 +14,7 @@
         <link rel="stylesheet" href="statics/font-awesome.css">
 
         <script type="text/javascript" src="statics/js/jquery.shopScroll.js"></script>
-        <script type="text/javascript" src="statics/js/header.js"></script>  
+        <script type="text/javascript" src="statics/js/header.js"></script>
 </head>
 
 <body class="index_page">
@@ -32,7 +32,8 @@
 
                 <!-- 商品楼层列表 -->
                 <div class="pro_list">
-                    <h3 class="list_title">
+                    <{WIDGET_B2C_GOODS_INDEX_GOOD_FLOOR target=index num=8 type=chinafood orderby=last_modify desc}>
+                    <!-- <h3 class="list_title">
                         <span class="floor">1F</span>
                         中餐食材
                     </h3>
@@ -120,20 +121,21 @@
                                         <p>神农客10公斤精品五花肉</p>
                                     </div>
                                 </a>
-                            </li> 
+                            </li>
                         </ul>
-                    </div>
+                    </div> -->
                 </div>
 
                 <!-- 店铺橱窗展示 -->
                 <div class="shop_show">
+                    <{WIDGET_B2C_GOODS_INDEX_SHOP_SHOW target=index num=1 type=chinafood}>
                     <!-- <div class="hd">
                         <a class="next"></a>
                         <ul></ul>
                         <a class="prev"></a>
                         <span class="pageState"></span>
                     </div> -->
-                    <div class="bd">
+                    <!-- <div class="bd">
                         <ul class="picList">
                             <li>
                                 <div class="pic"><a href="#" target="_blank"><img src="statics/images/shopimg.png" /></a></div>
@@ -168,7 +170,7 @@
                                 <div class="title"><a href="#" target="_blank">店铺名称6</a></div>
                             </li>
                         </ul>
-                    </div>
+                    </div> -->
                 </div>
                 <script type="text/javascript">
                 jQuery(".shop_show").slide({titCell:".hd ul",mainCell:".bd ul",autoPage:true,effect:"left",autoPlay:true,vis:6,trigger:"click"});
@@ -180,7 +182,7 @@
             <div class="container-fulid">
                 <div class="fixed_slidebar">
                     <ul>
-                        <li><a href="#"><i class="icon-shopping-cart"></i> 购物车</a></li>
+                        <li><a href="<{link app=b2c ctl=site_cart}>"><i class="icon-shopping-cart"></i> 购物车</a></li>
                         <li data-toggle="tooltip" data-placement="left" title="我关注的品牌"><a href="#"><i class="icon-heart-empty" ></i></a></li>
                         <li data-toggle="tooltip" data-placement="left" title="我的搜藏"><a href="#"><i class="icon-star-empty" ></i></a></li>
                         <li data-toggle="tooltip" data-placement="left" title="我的足迹"><a href="#"><i class="icon-eye-open"></i></a></li>
@@ -196,7 +198,7 @@
                 </div>
 
                 <div class="fixed_floorNav">
-                    
+
                 </div>
             </div>
             <{require file="public/footer.html" }>

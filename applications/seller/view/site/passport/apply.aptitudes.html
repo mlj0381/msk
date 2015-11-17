@@ -9,13 +9,15 @@
         </div>
         <div class="panel-body">
             <form id="seller_signup_form" class="form-horizontal" action="<{link app=seller ctl=site_passport act=signup args0=3}>" method="post">
-            
+
                 <div class="form-group">
                     <label for="input_login_name" class="col-xs-2 control-label">全国工业产品生产许可证编号图片
                         <span class="text-danger">*</span>
                     </label>
                     <div class="col-xs-5">
-                        <{input type="siteimage" required="true" autocomplete='off' name="seller[industry_licence_image]" class="form-control" id="input_login_name"}>
+                        <input type="file" accept="image/*" data-url="<{link app=image ctl=site_upload act=index}>" class="form-control" value="">
+                        <input type="hidden" name="seller[industry_licence_image]"  value=""/>
+                        <span class="hide">上传成功</span>
                     </div>
                 </div>
                 <div class="form-group">
@@ -23,7 +25,10 @@
                         <span class="text-danger">*</span>
                     </label>
                     <div class="col-xs-5">
-                        <{input type="siteimage" required="true" autocomplete='off' name="seller[licence_region]" class="form-control" id="input_login_name"}>
+
+                        <input type="file" accept="image/*" data-url="<{link app=image ctl=site_upload act=index}>" class="form-control" value="">
+                        <input type="hidden" name="seller[licence_region]"  value=""/>
+                        <span class="hide">上传成功</span>
                     </div>
                 </div>
                 <div class="form-group">
@@ -31,7 +36,10 @@
                     <span class="text-danger">*</span>
                 </label>
                 <div class="col-xs-5">
-                    <{input type="siteimage" required="true" autocomplete='off' name="seller[test_report_image]" class="form-control" id="input_login_name"}>
+
+                    <input type="file" accept="image/*" data-url="<{link app=image ctl=site_upload act=index}>" class="form-control" value="">
+                    <input type="hidden" name="seller[test_report_image]"  value=""/>
+                    <span class="hide">上传成功</span>
                 </div>
             </div>
             <div class="form-group">
@@ -39,7 +47,10 @@
                     <span class="text-danger">*</span>
                 </label>
                 <div class="col-xs-5">
-                    <{input type="siteimage" required="true" autocomplete='off' name="seller[butcher_report_image]" class="form-control" id="input_login_name"}>
+
+                    <input type="file" accept="image/*" data-url="<{link app=image ctl=site_upload act=index}>" class="form-control" value="">
+                    <input type="hidden" name="seller[butcher_report_image]"  value=""/>
+                    <span class="hide">上传成功</span>
                 </div>
             </div>
             <div class="form-group">
@@ -47,7 +58,10 @@
                     <span class="text-danger">*</span>
                 </label>
                 <div class="col-xs-5">
-                    <{input type="siteimage" required="true" autocomplete='off' name="seller[beijing_image]" class="form-control" id="input_login_name"}>
+
+                    <input type="file" accept="image/*" data-url="<{link app=image ctl=site_upload act=index}>" class="form-control" value="">
+                    <input type="hidden" name="seller[beijing_image]"  value=""/>
+                    <span class="hide">上传成功</span>
                 </div>
             </div>
             <div class="form-group">
@@ -55,7 +69,10 @@
                     <span class="text-danger">*</span>
                 </label>
                 <div class="col-xs-5">
-                    <{input type="siteimage" required="true" autocomplete='off' name="seller[shanghai_image]" class="form-control" id="input_login_name"}>
+
+                    <input type="file" accept="image/*" data-url="<{link app=image ctl=site_upload act=index}>" class="form-control" value="">
+                    <input type="hidden" name="seller[shanghai_image]"  value=""/>
+                    <span class="hide">上传成功</span>
                 </div>
             </div>
             <div class="form-group">
@@ -63,7 +80,10 @@
                     <span class="text-danger">*</span>
                 </label>
                 <div class="col-xs-5">
-                    <{input type="siteimage" required="true" autocomplete='off' name="seller[other_image][]" class="form-control" id="input_login_name"}>
+
+                    <input type="file" accept="image/*" data-url="<{link app=image ctl=site_upload act=index}>" class="form-control" value="">
+                    <input type="hidden" name="seller[other_image][]"  value=""/>
+                    <span class="hide">上传成功</span>
                 </div>
             </div>
                 <div class="form-group">
@@ -77,3 +97,23 @@
 </div>
 
 </div>
+
+<script>
+    $(function(){
+        $('input[type="file"]').fileupload({
+
+            add:function(e, data){
+                if(!data.files[0]['type'].match(/^image/)){
+                    alert('非法上传，不是图片类型');
+                }
+                data.submit();
+            },
+            done:function(e, data){
+                var re = $.parseJSON(data.result);
+                var input= e.target || e.srcElement;
+                $(input).next('input').val(re.image_id);
+                $(input).next('input').nextAll().removeClass('hide');
+            }
+        });
+    });
+</script>

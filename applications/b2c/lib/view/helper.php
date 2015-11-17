@@ -80,31 +80,66 @@ class b2c_view_helper
         $tree = vmc::singleton('b2c_openapi_goods')->catalog($params,true);
         $render = new base_render(app::get('b2c'));
         $render->pagedata['category_tree'] = $tree;
-        return $render->fetch('widget/category.html'); 
+        return $render->fetch('widget/category.html');
     }
-	
+
 	// Nav
 	public function function_WIDGET_B2C_PUBLIC_NAV($params, &$smarty)
 	{
-		$render = new base_render(app::get('b2c')); 
+		$render = new base_render(app::get('b2c'));
 
-		return $render->fetch('widget/nav.html'); 
+		return $render->fetch('widget/nav.html');
 	}
 
 	// 首页-幻灯
 	public function function_WIDGET_B2C_INDEX_SLIDER($params, &$smarty)
 	{
-		$render = new base_render(app::get('b2c'));        
-		return $render->fetch('widget/slider.html'); 
+		$render = new base_render(app::get('b2c'));
+		return $render->fetch('widget/slider.html');
 	}
 
 	// 首页-好评商品
 	public function function_WIDGET_B2C_GOODS_INDEX_GOOD_COMMENT($params, &$smarty)
-	{		
-		$render = new base_render(app::get('b2c'));        
-		return $render->fetch('widget/good.comment.html'); 
+	{
+		$render = new base_render(app::get('b2c'));
+		return $render->fetch('widget/good.comment.html');
 	}
+    //所在城市
+    public function function_WIDGET_B2C_INDEX_CITY($params, &$smarty)
+    {
+        $render = new base_render(app::get('b2c'));
+		return $render->fetch('widget/b2c.city.html');
+    }
+    //楼层左侧推荐
+    public function function_WIDGET_B2C_INDEX_LEFT_GOOD($params, &$smaryt){
+        $render = new base_render(app::get('b2c'));
+        $desktop_tag = app::get('desktop')->model('tag');
+        $tag_id = app::get('desktop')->model('tag')->getList('tag_id', array());
+        return $render->fetch('widget/index_left_good.html');
+    }
+    //楼层左侧推荐
+    public function function_WIDGET_B2C_GOODS_INDEX_SHOP_SHOW($params, &$smaryt){
+        $render = new base_render(app::get('b2c'));
+        return $render->fetch('widget/index.shop.show.html');
+    }
+    // 首页-楼层
+	public function function_WIDGET_B2C_GOODS_INDEX_GOOD_FLOOR($params, &$smarty)
+	{
 
+        $mdl_b2c_goods = app::get('b2c')->model('goods');
+
+		$render = new base_render(app::get('b2c'));
+        $mdl_b2c_product = app::get('b2c')->model('products');
+        $goods_list = $mdl_b2c_goods->getList('goods_id, name, brand_id, image_default_id, seller_id, buy_count, comment_count',
+                                            array('marketable' => 'true', 'checkin' => 1), 0 ,$params['num'], $params['orderby']);
+        foreach ($goods_list as $key => $value) {
+            $goods_list[$key]['products'] = $mdl_b2c_product->getRow('product_id, unit, weight, price',array('goods_id' => $value['goods_id']), 0, 1);
+        }
+        $goods['type'] = '中餐食材';
+        $goods['goods'] = $goods_list;
+        $render->pagedata['goods'] = $goods;
+		return $render->fetch('widget/good.floor.html');
+	}
 
     public function function_minipagers($params, &$smarty)
     {
