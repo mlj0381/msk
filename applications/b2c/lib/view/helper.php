@@ -95,6 +95,7 @@ class b2c_view_helper
 	public function function_WIDGET_B2C_INDEX_SLIDER($params, &$smarty)
 	{
 		$render = new base_render(app::get('b2c'));
+        $render->pagedata['slider'] = vmc::singleton('b2c_datasetting_index')->slider();
 		return $render->fetch('widget/slider.html');
 	}
 
@@ -108,16 +109,16 @@ class b2c_view_helper
     public function function_WIDGET_B2C_INDEX_CITY($params, &$smarty)
     {
         $render = new base_render(app::get('b2c'));
+        $render->pagedata['city'] = vmc::singleton('b2c_datasetting_index')->city();
 		return $render->fetch('widget/b2c.city.html');
     }
     //楼层左侧推荐
     public function function_WIDGET_B2C_INDEX_LEFT_GOOD($params, &$smaryt){
         $render = new base_render(app::get('b2c'));
-        $desktop_tag = app::get('desktop')->model('tag');
-        $tag_id = app::get('desktop')->model('tag')->getList('tag_id', array());
+        $render->pagedata['floor_left'] = vmc::singleton('b2c_datasetting_index')->floor_left($params);
         return $render->fetch('widget/index_left_good.html');
     }
-    //楼层左侧推荐
+    //楼层店铺
     public function function_WIDGET_B2C_GOODS_INDEX_SHOP_SHOW($params, &$smaryt){
         $render = new base_render(app::get('b2c'));
         return $render->fetch('widget/index.shop.show.html');
@@ -125,19 +126,8 @@ class b2c_view_helper
     // 首页-楼层
 	public function function_WIDGET_B2C_GOODS_INDEX_GOOD_FLOOR($params, &$smarty)
 	{
-
-        $mdl_b2c_goods = app::get('b2c')->model('goods');
-
 		$render = new base_render(app::get('b2c'));
-        $mdl_b2c_product = app::get('b2c')->model('products');
-        $goods_list = $mdl_b2c_goods->getList('goods_id, name, brand_id, image_default_id, seller_id, buy_count, comment_count',
-                                            array('marketable' => 'true', 'checkin' => 1), 0 ,$params['num'], $params['orderby']);
-        foreach ($goods_list as $key => $value) {
-            $goods_list[$key]['products'] = $mdl_b2c_product->getRow('product_id, unit, weight, price',array('goods_id' => $value['goods_id']), 0, 1);
-        }
-        $goods['type'] = '中餐食材';
-        $goods['goods'] = $goods_list;
-        $render->pagedata['goods'] = $goods;
+        $render->pagedata['goods'] = vmc::singleton('b2c_datasetting_index')->floor($params);
 		return $render->fetch('widget/good.floor.html');
 	}
 

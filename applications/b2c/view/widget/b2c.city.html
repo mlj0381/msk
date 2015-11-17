@@ -3,7 +3,8 @@
         所在城市 <i class="icon-angle-down"></i>
     </a>
     <ul class="dropdown-menu" role="menu" aria-labelledby="cityPlan">
-        <li><a href="">上海</a></li>
-        <li><a href="">北京</a></li>
+        <{foreach from=$city item=item}>
+        <li><a href=""><{$item.name}></a></li>
+        <{/foreach}>
     </ul>
 </div>

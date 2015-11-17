@@ -1,27 +1,16 @@
 <h3 class="list_title">
     <span class="floor">1F</span>
-    <{$goods.type}>
+    <{$goods.name}>
 </h3>
 <div class="list_con clearfix">
-    <!-- <div class="list_lt">
-        <div class="list_item">
-            <a href="#">
-                <img src="<{$base_url}>./themes/pc/default/statics/images/proimg.jpg" alt="" title="" class="proimg">
-                <div class="list_info">
-                    <span class="price">￥18.00</span>
-                    <p>神农客10公斤精品五花肉</p>
-                </div>
-            </a>
-        </div>
-    </div> -->
-    <{WIDGET_B2C_INDEX_LEFT_GOOD target=index type=chainfood num=1}>
+    <{WIDGET_B2C_INDEX_LEFT_GOOD target=index type=china_food}>
     <ul class="list_rt">
-        <{foreach from=$goods.goods item=item}>
+        <{foreach from=$goods.item item=item}>
         <li>
             <a href="<{link app=b2c ctl=site_product args0=$item.products.product_id args1=$item.seller_id}>">
-                <img src="<{$item.image_default_id|storager:'s'}>" class="proimg">
+                <img src="<{$item.image_id|storager:'s'}>" class="proimg">
                 <div class="list_info">
-                    <span class="price">￥<{$item.products.price|cur}></span>
+                    <span class="price">￥<{$item.price|cur}></span>
                     <p><{$item.name}></p>
                 </div>
             </a>
