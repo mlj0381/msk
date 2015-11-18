@@ -15,7 +15,7 @@
 </div>
 <{switch from=$action}>
 <{case value='edit'}>
-<form class="form-horizontal" action="<{link app=b2c ctl=site_member act=receiver args0=save}>" method="post" id="receiver_form">
+<form class="form-horizontal receiver_form" action="<{link app=b2c ctl=site_member act=receiver args0=save}>" method="post" id="receiver_form">
     <{if $maddr.addr_id}>
     <input type="hidden" name="maddr[addr_id]" value="<{$maddr.addr_id}>">
     <{/if}>
@@ -51,15 +51,15 @@
         </div>
     </div>
     <div class="form-group">
-        <label  class="col-xs-2 control-label">固话</label>
+        <label  class="col-xs-2 control-label">固定电话</label>
         <div class="col-xs-7">
           <input type="text" autocomplete='off' name="maddr[tel]" class="form-control"  value="<{$maddr.tel}>" placeholder="固定电话">
         </div>
     </div>
     <div class="form-group">
-        <label  class="col-xs-2 control-label">Email</label>
+        <label  class="col-xs-2 control-label">电子邮箱</label>
         <div class="col-xs-7">
-          <input type="text" autocomplete='off' name="maddr[email]" class="form-control"  value="<{$maddr.email}>" placeholder="电子邮箱">
+          <input type="text" autocomplete='off' name="maddr[email]" class="form-control"  value="<{$maddr.email}>" placeholder="请输入您常用的电子邮箱">
         </div>
     </div>
     <div class="form-group">

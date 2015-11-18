@@ -17,6 +17,9 @@
     <service id="member_logout">
         <class>b2c_service_logout</class>
     </service>
+    <service id="view_datasetting">
+        <class>b2c_view_datasetting</class>
+    </service>
     <service id="cachemgr_global_vary">
         <class>b2c_service_cachemgr_globalvary</class>
     </service>
@@ -248,7 +251,7 @@
     <service id="mobile.router.cache">
         <class>b2c_mcache</class>
     </service>
-    
+
     <!--渲染拦截-->
     <service id="base_render_pre_display">
         <class orderby="29">b2c_view_pre_render</class>

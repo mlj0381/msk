@@ -3,7 +3,15 @@
         <div class="topbar">
             <div class="top">
                 <div class="topLeft">
-                    <{WIDGET_B2C_INDEX_CITY}>
+                    <div class="location dropdown">
+                        <a id="cityPlan" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false" aria-haspopup="true" role="button" href="">
+                            所在城市 <i class="icon-angle-down"></i>
+                        </a>
+                        <ul class="dropdown-menu" role="menu" aria-labelledby="cityPlan">
+                            <li><a href="">上海</a></li>
+                            <li><a href="">北京</a></li>
+                        </ul>
+                    </div>
                     <div class="loginStatus">
                     <span>您好，请<a href="<{link app=b2c ctl=site_passport act=login}>">登录</a></span>|<a href="<{link app=b2c ctl=site_passport act=signup args0=$forward}>" class="freeReg">免费注册</a>
                     </div>
@@ -19,8 +27,8 @@
                                 <li><a href="">已买到的宝贝</a></li>
                             </ul>
                         </li>
-                        <li class="cart"><a href="<{link app=b2c ctl=site_cart}>"><i class="icon-shopping-cart"></i> 购物车</a></li>
-                        <li class="userCenter"><a href="<{link app=b2c ctl=site_member}>">会员中心</a></li>
+                        <li class="cart"><a href=""><i class="icon-shopping-cart"></i> 购物车</a></li>
+                        <li class="userCenter"><a href="">会员中心</a></li>
                         <li class="favorite"><a href=""><i class="icon-star"></i> 收藏夹</a></li>
                         <li>|</li>
                         <li class="sellerSignup"><a href="#">商家入驻 <i class=" icon-circle-arrow-right"></i></a></li>
@@ -53,18 +61,16 @@
     <div class="container searchbar">
         <div class="row searchbar_con">
             <div class="logo col-md-5">
-                <a href="<{link app=site ctl=index act=index}>">
-                    <img src="statics/images/logo.jpg" alt="美侍客" title="美侍客" />
-                </a>
+                <img src="statics/images/logo.jpg" alt="美侍客" title="美侍客" />
             </div>
             <div class="searchbox col-md-4">
                 <div class="search_label">
                     <span class="active">商品</span>
                     <span>店铺</span>
                 </div>
-                <form class="search_form" action="<{link app=b2c ctl=site_goods act=index}>" method="post">
+                <form class="search_form" action="" method="">
                     <span class="search_txt"><input type="text" placeholder="请输入您要查找的商品" /></span>
-                    <span class="search_btn"><button type="submit">搜索</button></span>
+                    <span class="search_btn"><button>搜索</button></span>
                 </form>
                 <ul class="hotSearch">
                     <li><a href="">鸡腿</a></li>
@@ -108,10 +114,6 @@
 </script>
 <script charset="utf-8">
 $(function() {
-    $('.search_label span').click(function(){
-        $('.search_label span').removeClass('active');
-        $(this).addClass('active');
-    });
     /**
      * 模板填充工具
      */
@@ -125,12 +127,9 @@ $(function() {
      * 登录\注册切换
      */
     if ($.cookie('UNAME') && $.cookie('MEMBER_IDENT')) {
-        $('.loginStatus>span').text('欢迎您，'+$.cookie('UNAME'));
-        $('.loginStatus>a').prop('href', '<{link app=b2c ctl=site_passport act=logout}>').text('注销');
-    }
-    if ($.cookie('UNAME') && $.cookie('SELLER_IDENT')) {
-        $('.loginStatus>span').text('欢迎您，'+$.cookie('UNAME'));
-        $('.loginStatus>a').prop('href', '<{link app=seller ctl=site_passport act=logout}>').text('注销');
+        $('.top-tools .is-unlogin').addClass('hidden');
+        $('.top-tools .is-login').removeClass('hidden');
+        $('.top-tools .is-login .uname').text($.cookie('UNAME'));
     }
     /**
      * 迷你购物车

@@ -95,7 +95,7 @@ class b2c_view_helper
 	public function function_WIDGET_B2C_INDEX_SLIDER($params, &$smarty)
 	{
 		$render = new base_render(app::get('b2c'));
-        $render->pagedata['slider'] = vmc::singleton('b2c_datasetting_index')->slider();
+        $render->pagedata['slider'] = vmc::service('view_datasetting')->slider();
 		return $render->fetch('widget/slider.html');
 	}
 
@@ -105,17 +105,18 @@ class b2c_view_helper
 		$render = new base_render(app::get('b2c'));
 		return $render->fetch('widget/good.comment.html');
 	}
+
     //所在城市
     public function function_WIDGET_B2C_INDEX_CITY($params, &$smarty)
     {
         $render = new base_render(app::get('b2c'));
-        $render->pagedata['city'] = vmc::singleton('b2c_datasetting_index')->city();
+        $render->pagedata['city'] = vmc::service('view_datasetting')->city();
 		return $render->fetch('widget/b2c.city.html');
     }
     //楼层左侧推荐
     public function function_WIDGET_B2C_INDEX_LEFT_GOOD($params, &$smaryt){
         $render = new base_render(app::get('b2c'));
-        $render->pagedata['floor_left'] = vmc::singleton('b2c_datasetting_index')->floor_left($params);
+        $render->pagedata['floor_left'] = vmc::service('view_datasetting')->floor_left($params);
         return $render->fetch('widget/index_left_good.html');
     }
     //楼层店铺
@@ -127,9 +128,10 @@ class b2c_view_helper
 	public function function_WIDGET_B2C_GOODS_INDEX_GOOD_FLOOR($params, &$smarty)
 	{
 		$render = new base_render(app::get('b2c'));
-        $render->pagedata['goods'] = vmc::singleton('b2c_datasetting_index')->floor($params);
+        $render->pagedata['goods'] = vmc::service('view_datasetting')->floor($params);
 		return $render->fetch('widget/good.floor.html');
 	}
+
 
     public function function_minipagers($params, &$smarty)
     {

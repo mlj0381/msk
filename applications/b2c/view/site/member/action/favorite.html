@@ -4,34 +4,66 @@
     </h1>
 </div>
 <div class="glist-container">
+    <div class="fav_nav">
+        <span>
+            <a href="javascript:;" class="active">商品收藏</a>
+            <a href="javascript:;">店铺收藏</a>
+        </span>
+        <p>共<small>8</small>项收藏</p>
+    </div>
     <div class="row goods-list gl-default">
-        <{foreach from=$data item=item}>
-            <div class="col-xs-3 fav-item">
-                <div class="thumbnail goods-item">
-                    <div class="gi-image-wrapper">
-                        <a href="<{link app=b2c ctl=site_product args0=$item.product_id}>">
-                            <img src="<{$item.image_default_id|storager:'s'}>" alt="<{$item.goods_name}>">
-                        </a>
-                    </div>
-                    <div class="caption">
-                        <h3 class="g-name"><a href="<{link app=b2c ctl=site_product args0=$item.product_id}>"><{$item.goods_name}></a></h3>
-                        <ul class="list-inline">
-                            <{if 0 && $member_lv_discount<1 && $member_lv_discount>0}>
-                            <li class="text-muted"><small>￥</small><{$item.goods_price|cur}></li>
-                            <li class="price-1 text-danger"><{$member_lv_name}>价：<small>￥</small><{$item.mem_price|cur}></li>
-                            <{else}>
-                            <li class="price-1 text-danger"><small>￥</small><{$item.goods_price|cur}></li>
-                            <{/if}>
-                        </ul>
-                        <p>
-                            <a class="btn btn-xs btn-default remove-fav" href="<{link app=b2c ctl=site_member act=favorite args0=del args1=$item.goods_id}>">
-                                <i class="glyphicon glyphicon-trash"></i> 从收藏夹删除
+        <div class="gl_item_box">
+            <{foreach from=$data item=item}>
+                <div class="col-xs-3 fav-item">
+                    <div class="thumbnail goods-item">
+                        <div class="gi-image-wrapper">
+                            <a href="<{link app=b2c ctl=site_product args0=$item.product_id}>">
+                                <img src="<{$item.image_default_id|storager:'s'}>" alt="<{$item.goods_name}>">
                             </a>
-                        </p>
+                        </div>
+                        <div class="caption">
+                            <h3 class="g-name"><a href="<{link app=b2c ctl=site_product args0=$item.product_id}>"><{$item.goods_name}></a></h3>
+                            <ul class="list-inline">
+                                <{if 0 && $member_lv_discount && $member_lv_discount>0 }>
+                                <li class="text-muted"><small>￥</small><{$item.goods_price|cur}></li>
+                                <li class="price-1 text-danger"><{$member_lv_name}>价：<small>￥</small><{$item.mem_price|cur}></li>
+                                <{else}>
+                                <li class="price-1 text-danger"><small>￥</small><{$item.goods_price|cur}></li>
+                                <{/if}>
+                            </ul>
+                            <p>
+                                <a class="btn btn-xs btn-default remove-fav" href="<{link app=b2c ctl=site_member act=favorite args0=del args1=$item.goods_id}>">
+                                    <i class="glyphicon glyphicon-trash"></i> 从收藏夹删除
+                                </a>
+                            </p>
+                        </div>
                     </div>
                 </div>
-            </div>
-        <{/if}>
+            <{/if}>
+        </div>
+        <!-- 店铺收藏列表 -->
+        <div class="gl_item_box">
+            <{foreach from=$data item=item}>
+                <div class="col-xs-3 fav-item">
+                    <div class="thumbnail goods-item">
+                        <div class="gi-image-wrapper">
+                            <a href="<{link app=b2c ctl=site_product args0=$item.product_id}>">
+                                <img src="<{$item.image_default_id|storager:'s'}>" alt="<{$item.goods_name}>">
+                            </a>
+                        </div>
+                        <div class="caption">
+                            <h3 class="g-name"><a href="<{link app=b2c ctl=site_product args0=$item.product_id}>"><{$item.goods_name}></a></h3>
+                            <p>
+                                <a class="btn btn-xs btn-default remove-fav" href="<{link app=b2c ctl=site_member act=favorite args0=del args1=$item.goods_id}>">
+                                    <i class="glyphicon glyphicon-trash"></i> 从收藏夹删除
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            <{/if}>
+        </div>
+        <!--END 店铺收藏列表 -->
     </div>
 </div>
 

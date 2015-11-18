@@ -21,17 +21,12 @@ class seller_ctl_site_goods extends seller_frontpage
 
     //商品页
     public function index(){
-        
-        $this->pagedata['goodList'] = $this->_good_list(1);
-        $this->output();
+        echo '111';
     }
     //添加商品
-    public function add($goods_id){
+    public function add(){
         $this->pagedata['_PAGE_'] = 'from.html';
         $this->_editor();
-        if(is_numeric($goods_id)){
-            $this->pagedata['goods'] = $this->mGoods->getRow('*', array('goods_id' => $goods_id, 'seller_id' => $this->seller['seller_id']));
-        }
         $this->output();
     }
 
@@ -56,12 +51,7 @@ class seller_ctl_site_goods extends seller_frontpage
 	}
     //修改
     public function edit(){
-        $post = $_POST;
-       $redirect_url = array('app' => 'seller', 'ctl' => 'site_goods', 'act' => 'index');
-       if(!$this->mGoods->save($post)){
-           $this->splash('error', $redirect_url, '失败');
-       }
-       $this->splash('success', $redirect_url, '修改成功');
+
     }
 
     //删除
@@ -76,64 +66,8 @@ class seller_ctl_site_goods extends seller_frontpage
 
     //仓库中的商品
     public function storage(){
-        $this->pagedata['type'] = 'storage';
-        $this->pagedata['goodList'] = $this->_good_list();
-        $this->pagedata['_PAGE_'] = 'index.html';
-        $this->output();
+
     }
-
-    //商品上下架
-   public function marketable($goods_id, $type){
-       $redirect_url = array('app' => 'seller', 'ctl' => 'site_goods', 'act' => $type == 'dn' ? 'index' : 'storage');
-       if(!$goods_id || !$type) $this->splash('error', $redirect_url, '非法请求');
-       $update_value['marketable'] = $type == 'up' ? true : false;
-       $update_value[$type == 'up' ? 'uptime' : 'downtime'] = time();
-       $filter = array(
-           'goods_id' => $goods_id,
-           'store_id' => $this->store['store_id'],
-       );
-       if(!$this->mGoods->update($update_value, $filter)){
-           $this->splash('error', $redirect_url, '操作失败');
-       }
-       $this->splash('success', $redirect_url);
-   }
-
-    private function _good_list($type){
-       $filter['marketable'] = 'false';
-
-       if($type){
-           $filter['marketable'] = 'true';
-            $filter['checkin'] = $type;
-       }
-       $filter['seller_id'] =  $this->seller['seller_id'];
-       $goodsList = $this->mGoods->getList('*', $filter);
-       $brandList = app::get('b2c')->model('brand')->getList('brand_id, brand_name');
-       $store_goods_cat = app::get('b2c')->model('goods_cat')->getList('*');
-       foreach($goodsList as $key => $value){
-           foreach ($brandList as $k => $v) {
-               if($value['brand_id'] == $v['brand_id']){
-                   $goodsList[$key]['brand_id'] = $v['brand_name'];
-               }
-           }
-           foreach ($store_goods_cat as $k => $v) {
-               if($value['cat_id'] == $v['cat_id']){
-                   $goodsList[$key]['cat_id'] = $v['cat_name'];
-               }
-           }
-           switch ($value['goods_type']) {
-               case 'normal':
-                   $goodsList[$key]['goods_type'] = '普通商品';
-                   break;
-               case 'bind':
-                   $goodsList[$key]['goods_type'] = '捆绑商品';
-                   break;
-               case 'gift':
-                   $goodsList[$key]['goods_type'] = '赠品';
-                   break;
-           }
-       }
-       return $goodsList;
-   }
 
     //价格修改
     private function _price(){
