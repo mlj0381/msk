@@ -11,7 +11,7 @@
 // +----------------------------------------------------------------------
 
 
-class b2c_view_helper
+class b2c_view_helper extends b2c_view_widget
 {
     public function __construct($app)
     {
@@ -73,64 +73,6 @@ class b2c_view_helper
 
         return $html.'</ul>';
     }
-    /**
-     * 分类挂件
-     */
-    public function function_WIDGET_B2C_GOODS_CAT($params,&$smarty){
-        $tree = vmc::singleton('b2c_openapi_goods')->catalog($params,true);
-        $render = new base_render(app::get('b2c'));
-        $render->pagedata['category_tree'] = $tree;
-        return $render->fetch('widget/category.html');
-    }
-
-	// Nav
-	public function function_WIDGET_B2C_PUBLIC_NAV($params, &$smarty)
-	{
-		$render = new base_render(app::get('b2c'));
-
-		return $render->fetch('widget/nav.html');
-	}
-
-	// 首页-幻灯
-	public function function_WIDGET_B2C_INDEX_SLIDER($params, &$smarty)
-	{
-		$render = new base_render(app::get('b2c'));
-        $render->pagedata['slider'] = vmc::service('view_datasetting')->slider();
-		return $render->fetch('widget/slider.html');
-	}
-
-	// 首页-好评商品
-	public function function_WIDGET_B2C_GOODS_INDEX_GOOD_COMMENT($params, &$smarty)
-	{
-		$render = new base_render(app::get('b2c'));
-		return $render->fetch('widget/good.comment.html');
-	}
-
-    //所在城市
-    public function function_WIDGET_B2C_INDEX_CITY($params, &$smarty)
-    {
-        $render = new base_render(app::get('b2c'));
-        $render->pagedata['city'] = vmc::service('view_datasetting')->city();
-		return $render->fetch('widget/b2c.city.html');
-    }
-    //楼层左侧推荐
-    public function function_WIDGET_B2C_INDEX_LEFT_GOOD($params, &$smaryt){
-        $render = new base_render(app::get('b2c'));
-        $render->pagedata['floor_left'] = vmc::service('view_datasetting')->floor_left($params);
-        return $render->fetch('widget/index_left_good.html');
-    }
-    //楼层店铺
-    public function function_WIDGET_B2C_GOODS_INDEX_SHOP_SHOW($params, &$smaryt){
-        $render = new base_render(app::get('b2c'));
-        return $render->fetch('widget/index.shop.show.html');
-    }
-    // 首页-楼层
-	public function function_WIDGET_B2C_GOODS_INDEX_GOOD_FLOOR($params, &$smarty)
-	{
-		$render = new base_render(app::get('b2c'));
-        $render->pagedata['goods'] = vmc::service('view_datasetting')->floor($params);
-		return $render->fetch('widget/good.floor.html');
-	}
 
 
     public function function_minipagers($params, &$smarty)

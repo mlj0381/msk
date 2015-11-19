@@ -23,6 +23,7 @@ class b2c_ctl_site_list extends b2c_frontpage
     public function index($fix_brand = false)
     {
         $params = utils::_filter_input($_GET);
+        $this->pagedata['cat_id'] = $params['cat_id'];
         $query_str = $this->_query_str($params);
         $this->pagedata['query'] = $this->_query_str($params, 0);
         $params = $this->_params_decode($params);

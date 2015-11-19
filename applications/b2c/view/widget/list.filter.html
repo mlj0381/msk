@@ -1,0 +1,5 @@
+<ul>
+    <{foreach from=$filter.item item=item}>
+    <li><a href="<{link app=b2c ctl=site_list act=index}>?<{$filter.filter|merge_query:$filter.type:$item.id}>"><{$item.name}></a></li>
+    <{/foreach}>
+</ul>

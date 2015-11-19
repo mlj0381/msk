@@ -20,6 +20,10 @@ $setting = array(
     'coupon_code_count_len' => array(
         'default' => 5,
     ) ,
+    'index_slider' => array(
+        'type' => 'imagearray',
+        'desc' => '首页幻灯',
+    ),
     'shop_logo' => array(
         'type' => 'image',
         'desc' => '商店LOGO' ,
@@ -77,9 +81,6 @@ $setting = array(
         'default'=>get_cfg_var('upload_max_filesize')?intval(get_cfg_var('upload_max_filesize')):2,
         'helpinfo'=>(get_cfg_var('upload_max_filesize') ? '<span class="text-danger">服务器当前限制'.get_cfg_var('upload_max_filesize').'</span>' : '')
     ) ,
-    // 'banner_images' => array(
-    //     'type' => '',
-    //     'desc' => '首页',
-    // )
+
 
 );

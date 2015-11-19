@@ -19,16 +19,17 @@
             <li class="active">全部商品（<span><{$all_count}></span>）</li>
             <{/if}>
             <li class="search_li">
-                <form class="goods_search">
-                    <input class="" type="text" placeholder="在当前条件下搜索">
-                    <button><i class="icon-search"></i></button>
+                <form class="goods_search" action="<{link app=b2c ctl=site_list act=index}>" mothod="post">
+                    <input type="hidden" name="goods[filter]" value="<{$query}>"/>
+                    <input class="" type="text" name="goods[keywords]" placeholder="在当前条件下搜索">
+                    <button type="submit"><i class="icon-search"></i></button>
                 </form>
             </li>
         </ol>
         <{/if}>
         <div class="col-md-2 about_goods_total">共<span>32</span>件相关商品  </div>
     </div>
-    <{if $data_screen}>
+    <{*if $data_screen*}>
     <div class="panel panel-default gfilter">
       <table class="gfilter_tab">
         <{foreach from=$data_screen key=pkey item=item}>
@@ -55,65 +56,42 @@
               </td>
           </tr>
         <{/foreach}>
+        <!-- <tr>
+            <td>分类</td>
+            <td>
+                 <{*WIDGET_B2C_GOODS_LIST_CAT target=cat parent_id=$cat_id*}>
+                 <ul>
+                     <li><a href="<{link app=b2c ctl=site_list act=index}>?cat_id=<{$item.id}>"><{$item.name}></a></li>
+                 </ul>
+            </td>
+        </tr> -->
           <tr>
               <td>品牌</td>
               <td>
-                  <ul>
-                      <li><a href="">神农客</a></li>
-                      <li><a href="">神农客</a></li>
-                      <li><a href="">神农客</a></li>
-                      <li><a href="">神农客</a></li>
-                      <li><a href="">神农客</a></li>
-                      <li><a href="">神农客</a></li>
-                      <li><a href="">神农客</a></li>
-                      <li><a href="">神农客</a></li>
-                      <li><a href="">神农客</a></li>
-                      <li><a href="">神农客</a></li>
-
-                  </ul>
+                   <{WIDGET_B2C_GOODS_LIST_FILTER target=brand filter=$query}>
               </td>
           </tr>
           <tr>
               <td>价格</td>
               <td>
-                  <ul>
-                      <li><a href="">不限</a></li>
-                      <li><a href="">0-40</a></li>
-                      <li><a href="">41-100</a></li>
-                      <li><a href="">100-200</a></li>
-                      <li><a href="">200-400</a></li>
-                      <li><a href="">400以上</a></li>
-                  </ul>
+                <{WIDGET_B2C_GOODS_LIST_FILTER target=price filter=$query}>
               </td>
           </tr>
           <tr>
               <td>产地</td>
               <td>
-                  <ul>
-                      <li><a href="">不限</a></li>
-                      <li><a href="">上海</a></li>
-                      <li><a href="">河南</a></li>
-                      <li><a href="">天津</a></li>
-                      <li><a href="">湖北</a></li>
-                      <li><a href="">广东</a></li>
-                  </ul>
+                 <{WIDGET_B2C_GOODS_LIST_FILTER target=origin filter=$query}>
               </td>
           </tr>
           <tr>
               <td>重量</td>
               <td>
-                  <ul>
-                      <li><a href="">不限</a></li>
-                      <li><a href="">0-5KG</a></li>
-                      <li><a href="">5-10KG</a></li>
-                      <li><a href="">10-20KG</a></li>
-                      <li><a href="">20KG以上</a></li>
-                  </ul>
+                 <{WIDGET_B2C_GOODS_LIST_FILTER target=weight filter=$query}>
               </td>
           </tr>
       </table>
     </div>
-    <{/if}>
+    <{*/if*}>
     <div class="goods-list">
         <div class="panel panel-default">
           <div class="panel-heading clearfix">

@@ -1,8 +1,8 @@
 <{assign var=children value=array()}>
 <ul class="list-group category-root">
     <{foreach from=$category_tree item=cat key=ck}>
-    <li class="list-group-item <{if $cat.has_children=='true'}> has-children <{/if}>" data-toggle="tab" data-catid="<{$cat.cat_id}>" >
-        <a href="#subCat<{$ck}>" -href="<{link app=b2c ctl=site_list}>?cat_id=<{$cat.cat_id}>"><{$cat.cat_name}></a>
+    <li class="list-group-item <{if $cat.has_children=='true'}> has-children <{/if}>" data-toggle="tab" data-catid="<{$cat.id}>" >
+        <a href="#subCat<{$ck}>" -href="<{link app=b2c ctl=site_list}>?cat_id=<{$cat.cat_id}>"><{$cat.name}></a>
         <{if $cat.has_children=='true'}>
             <i class="glyphicon glyphicon-menu-right pull-right"></i>
         <{/if}>
@@ -11,13 +11,18 @@
 </ul>
 <div class="tab-content">
     <{foreach from=$category_tree item=cat key=ck}>
-    <div class="tab-pane fade in<{if $ck==20}> active<{/if}>" id="subCat<{$ck}>">
-        <{$cat.cat_name}> 子类
+    <div class="tab-pane fade in<{if $ck==20}> active<{/if}>" id="subCat<{$ck+1}>">
+        <{foreach from=$cat.items item=item}>
+            <{$item.name}><--->
+            <{foreach from=$item.items item=it}>
+                <{$it}><br />
+            <{/foreach}>
+        <{/foreach}>
     </div>
-    <{/foreach}>    
+    <{/foreach}>
 </div>
 <script charset="utf-8">
-$(function(){ 
+$(function(){
     $(".category").hover(function(){},function(){
         $('.category-root li').removeClass('open');
         $(".category .tab-content").hide();

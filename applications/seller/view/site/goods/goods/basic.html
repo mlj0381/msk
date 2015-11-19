@@ -1,3 +1,4 @@
+
 <div class="modal-body  form-horizontal">
     <div class="form-body">
 
@@ -43,30 +44,7 @@
                 <input type="hidden" name="image_default" value="<{$goods.image_default_id}>">
             </label>
             <div class="col-md-10">
-                <div class="tiles goods-images-pane">
-                    <{foreach from=$goods.images item=gimage}>
-                        <div class="tile image bg-grey <{if $goods.image_default_id==$gimage.image_id}>selected<{/if}>">
-                            <input type="hidden" name="goods[images][]" value="<{$gimage.image_id}>">
-                            <div class="tile-body">
-                                <img src="<{$gimage.image_id|storager:'s'}>" />
-                            </div>
-                            <div class="tile-object">
-                                <div class="number">
-                                    <span class=" fa fa-trash-o text-danger delete-image">x</span>
-                                </div>
-                            </div>
-                            <{if $goods.image_default_id==$gimage.image_id}>
-                                <span class="badge badge-roundless badge-danger" style="position:absolute;top:0px;left:0px;">默认图</span>
-                                <{/if}>
-                        </div>
-                        <{/foreach}>
-                        <div class="tile bg-grey goods-images-upload-pane fileinput-button" style="overflow:hidden">
-                            <div class="tile-body">
-                                <i class="glyphicon glyphicon-plus"></i>
-                            </div>
-                            <input id="goods_images_fileupload" style="z-index:-1" type="file"  multiple data-url="<{link app=image ctl=site_upload act=gimages_upload}>" accept="image/*">
-                        </div>
-                </div>
+                <{input type=imagearray}>
             </div>
         </div>
 

@@ -31,7 +31,7 @@
              'url' => '',
          ),
          array(
-             'name' => '新品惠',
+             'name' => '大促会',
              'url' => '',
          )
      ),
@@ -61,40 +61,7 @@
              'image_id' => '5a102e5e42ccda868671320889fe1873a231b187',
          ),
      ),
-    //  'nav' => array(
-    //      array(
-    //          'name' => '所有产品分类',
-    //          'url' => array(
-    //             'app' => 'site',
-    //             'ctl' => 'index',
-    //             'act' => 'index',
-    //          ),
-    //      ),
-    //      array(
-    //          'name' => '首页',
-    //          'url' => array(
-    //             'app' => 'b2c',
-    //             'ctl' => 'site_list',
-    //             'act' => 'index',
-    //          ),
-    //      ),
-    //      array(
-    //          'name' => '新品惠',
-    //          'url' => array(
-    //             'app' => 'site',
-    //             'ctl' => 'site_promotion',
-    //             'act' => 'index',
-    //          ),
-    //      ),
-    //      array(
-    //          'name' => '聚划算',
-    //          'url' => array(
-    //             'app' => 'site',
-    //             'ctl' => 'site_promotion',
-    //             'act' => 'index',
-    //          ),
-    //      ),
-    //  ),
+
     'floor' => array(
         array(
             'type' => 'china_food',
@@ -222,15 +189,256 @@
         ),
     ),
     'store' => array(
-        'name' => '沙县小吃',
-        'url' => array(
-            'app' => 'store',
-            'ctl' => 'site_store',
-            'act' => 'index',
-            'args' => array(
-                '1',//storeid
+        array(
+            'name' => '店铺1',
+            'url' => array(
+                'app' => 'store',
+                'ctl' => 'site_store',
+                'act' => 'index',
+                'args' => array(
+                    '1',//storeid
+                ),
+            ),
+            'image_id' =>'',
+        ),
+        array(
+            'name' => '店铺2',
+            'url' => array(
+                'app' => 'store',
+                'ctl' => 'site_store',
+                'act' => 'index',
+                'args' => array(
+                    '2',//storeid
+                ),
+            ),
+            'image_id' =>'',
+        ),
+        array(
+            'name' => '店铺3',
+            'url' => array(
+                'app' => 'store',
+                'ctl' => 'site_store',
+                'act' => 'index',
+                'args' => array(
+                    '3',//storeid
+                ),
+            ),
+            'image_id' =>'',
+        ),
+        array(
+            'name' => '店铺4',
+            'url' => array(
+                'app' => 'store',
+                'ctl' => 'site_store',
+                'act' => 'index',
+                'args' => array(
+                    '4',//storeid
+                ),
+            ),
+            'image_id' =>'',
+        ),
+        array(
+            'name' => '店铺5',
+            'url' => array(
+                'app' => 'store',
+                'ctl' => 'site_store',
+                'act' => 'index',
+                'args' => array(
+                    '5',//storeid
+                ),
+            ),
+            'image_id' =>'',
+        ),
+        array(
+            'name' => '店铺6',
+            'url' => array(
+                'app' => 'store',
+                'ctl' => 'site_store',
+                'act' => 'index',
+                'args' => array(
+                    '6',//storeid
+                ),
+            ),
+            'image_id' =>'',
+        ),
+        array(
+            'name' => '店铺7',
+            'url' => array(
+                'app' => 'store',
+                'ctl' => 'site_store',
+                'act' => 'index',
+                'args' => array(
+                    '7',//storeid
+                ),
+            ),
+            'image_id' =>'',
+        ),
+        array(
+            'name' => '店铺8',
+            'url' => array(
+                'app' => 'store',
+                'ctl' => 'site_store',
+                'act' => 'index',
+                'args' => array(
+                    '8',//storeid
+                ),
+            ),
+            'image_id' =>'',
+        ),
+    ),
+    'filter' => array(
+        'brand' => array(
+            'type' => 'brand',
+            'item' => array(
+                array(
+                    'name' => '神龙客',
+                    'id' => '1',
+                ),
+                array(
+                    'name' => '多鲜乐',
+                    'id' => '2',
+                ),
+                array(
+                    'name' => '美侍客',
+                    'id' => '3',
+                ),
             ),
         ),
-        'image_id' =>'',
+        'price' => array(
+            'type' => 'price',
+            'item' => array(
+                array(
+                    'name' => '0-40',
+                    'id' => '1',
+                ),
+                array(
+                    'name' => '41-100',
+                    'id' => '2',
+                ),
+                array(
+                    'name' => '100-200',
+                    'id' => '3',
+                ),
+                array(
+                    'name' => '200-400',
+                    'id' => '4',
+                ),
+                array(
+                    'name' => '400以上',
+                    'id' => '5',
+                ),
+            ),
+        ),
+        'origin' => array(
+            'type' => 'origin',
+            'item' => array(
+                array(
+                    'name' => '上海',
+                    'id' => '1',
+                ),
+                array(
+                    'name' => '河南',
+                    'id' => '2',
+                ),
+                array(
+                    'name' => '广东',
+                    'id' => '3',
+                ),
+                array(
+                    'name' => '天津',
+                    'id' => '4',
+                ),
+                array(
+                    'name' => '湖北',
+                    'id' => '5',
+                ),
+            ),
+        ),
+        'weight' => array(
+            'type' => 'weight',
+            'item' => array(
+                array(
+                    'name' => '0-5KG',
+                    'id' => '1',
+                ),
+                array(
+                    'name' => '5-10KG',
+                    'id' => '2',
+                ),
+                array(
+                    'name' => '10-20KG',
+                    'id' => '3',
+                ),
+                array(
+                    'name' => '20KG以上',
+                    'id' => '4',
+                ),
+            ),
+        ),
     ),
+    'cat' => array(
+        //一级分类
+        array(
+            'name' => '鸡肉类',
+            'id' => '1',
+            'order' => '0',
+            'has_children' => true,
+            'parent_id' => '0',
+        ),
+        array(
+            'name' => '鸭肉类',
+            'id' => '2',
+            'order' => '0',
+            'has_children' => true,
+            'parent_id' => '0',
+        ),
+        array(
+            'name' => '猪肉类',
+            'id' => '3',
+            'order' => '0',
+            'has_children' => true,
+            'parent_id' => '0',
+        ),
+        array(
+            'name' => '牛羊肉类',
+            'id' => '4',
+            'order' => '0',
+            'has_children' => true,
+            'parent_id' => '0',
+        ),
+        //end 一级分类
+        //二级分类
+        array(
+            'name' => '原料/白条',
+            'id' => '5',
+            'order' => '0',
+            'has_children' => true,
+            'parent_id' => '1',
+        ),
+        array(
+            'name' => '原料/分割品',
+            'id' => '6',
+            'order' => '0',
+            'has_children' => true,
+            'parent_id' => '1',
+        ),
+        //end二级分类
+        //三级分类
+        array(
+            'name' => '鸡肉',
+            'id' => '7',
+            'order' => '0',
+            'has_children' => true,
+            'parent_id' => '5',
+        ),
+        array(
+            'name' => '鸡肉',
+            'id' => '8',
+            'order' => '0',
+            'has_children' => true,
+            'parent_id' => '6',
+        ),
+        //end 三级分类
+    ),
+
  );

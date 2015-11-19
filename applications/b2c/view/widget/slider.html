@@ -8,14 +8,15 @@
     </ol>
     <!-- Wrapper for slides -->
     <div class="carousel-inner" role="listbox">
-        <div class="item active">
-            <img src="<{$base_url}>./themes/pc/default/statics/images/banner-3.png" alt="...">
-        </div>
+        <{foreach from=$slider item=item}>
         <div class="item">
-            <img src="<{$base_url}>./themes/pc/default/statics/images/banner-2.png" alt="...">
+            <img src="<{$item|storager}>" alt="...">
         </div>
-        <div class="item">
-            <img src="<{$base_url}>./themes/pc/default/statics/images/banner-1.png" alt="...">
-        </div>
+        <{/foreach}>
     </div>
 </div>
+<script>
+    $(function(){
+        $('.carousel-inner div:first-child').addClass('active');
+    });
+</script>

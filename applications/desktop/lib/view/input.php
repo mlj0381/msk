@@ -28,6 +28,27 @@ class desktop_view_input {
         $render->pagedata['tag'] = $params['tag'];
         return $render->fetch('ui/input_image.html');
     }
+
+    function input_imagearray($params){
+        $ui = new base_component_ui($this);
+        $domid = $ui->new_dom_id();
+        $input_name = $params['name'];
+        $input_value = $params['value'];
+        $input_default = $params['default'];
+        if ($input_value) {
+            $image_url = base_storager::image_path($input_value);
+        }
+        $render = app::get('desktop')->render();
+        $render->pagedata = $params;
+        $render->pagedata['id'] = $domid;
+        $render->pagedata['name'] = $input_name;
+        $render->pagedata['url'] = $image_url;
+        $render->pagedata['imageList'] = $input_value;
+        $render->pagedata['default'] = $input_default;
+        $render->pagedata['tag'] = $params['tag'];
+        return $render->fetch('ui/input_imagearray.html');
+    }
+
     function input_object($params) {
         $object = $params['object'];
         if (strpos($params['object'], '@') !== false) {

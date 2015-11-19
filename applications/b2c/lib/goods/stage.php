@@ -102,45 +102,45 @@ class b2c_goods_stage
         //分类
         $mdl_gcat = app::get('b2c')->model('goods_cat');
         if ($cat_list = $mdl_gcat->get_tree($cat_id?$cat_id:0)) {
-            $_return['cat_id']['title'] = '分类';
+            $_return['cat_id']['title'] = '一级分类';
             foreach ($cat_list as $value) {
                 $_return['cat_id']['options'][$value['cat_id']] = $value['cat_name'];
             }
         }
-        $filter = array();
-
-        if ($cat_id) {
-            $filter['cat_id'] = $mdl_gcat->get_all_children_id($cat_id);
-        }
-
-        $gprops_arr = app::get('b2c')->model('goods')->lw_getList('brand_id,type_id,cat_id', $filter);
-        foreach ($gprops_arr as $arr) {
-            $type_id_arr[] = $arr['type_id'];
-            $brand_id_arr[] = $arr['brand_id'];
-        }
-        //品牌
-        if ($brands = app::get('b2c')->model('brand')->getList('brand_id,brand_name', array(
-            'brand_id' => $brand_id_arr,
-            'disabled' => 'false',
-        ))) {
-            $_return['brand_id']['title'] = '品牌';
-            foreach ($brands as $key => $value) {
-                $_return['brand_id']['options'][$value['brand_id']] = $value['brand_name'];
-            }
-        }
-        //扩展属性
-        if ($type_id_arr) {
-            foreach ($type_id_arr as $type_id) {
-                $type_info = app::get('b2c')->model('goods_type')->dump2(array(
-                    'type_id' => $type_id,
-                ));
-                $props = $type_info['props'];
-                foreach ($props as $key => $prop) {
-                    $_return['p_'.$key]['title'] = $prop['name'];
-                    $_return['p_'.$key]['options'] = $prop['options'];
-                }
-            }
-        }
+        // $filter = array();
+        //
+        // if ($cat_id) {
+        //     $filter['cat_id'] = $mdl_gcat->get_all_children_id($cat_id);
+        // }
+        //
+        // $gprops_arr = app::get('b2c')->model('goods')->lw_getList('brand_id,type_id,cat_id', $filter);
+        // foreach ($gprops_arr as $arr) {
+        //     $type_id_arr[] = $arr['type_id'];
+        //     $brand_id_arr[] = $arr['brand_id'];
+        // }
+        // //品牌
+        // if ($brands = app::get('b2c')->model('brand')->getList('brand_id,brand_name', array(
+        //     'brand_id' => $brand_id_arr,
+        //     'disabled' => 'false',
+        // ))) {
+        //     $_return['brand_id']['title'] = '品牌';
+        //     foreach ($brands as $key => $value) {
+        //         $_return['brand_id']['options'][$value['brand_id']] = $value['brand_name'];
+        //     }
+        // }
+        // //扩展属性
+        // if ($type_id_arr) {
+        //     foreach ($type_id_arr as $type_id) {
+        //         $type_info = app::get('b2c')->model('goods_type')->dump2(array(
+        //             'type_id' => $type_id,
+        //         ));
+        //         $props = $type_info['props'];
+        //         foreach ($props as $key => $prop) {
+        //             $_return['p_'.$key]['title'] = $prop['name'];
+        //             $_return['p_'.$key]['options'] = $prop['options'];
+        //         }
+        //     }
+        // }
 
         return $_return;
     }

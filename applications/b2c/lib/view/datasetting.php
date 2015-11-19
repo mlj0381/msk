@@ -26,6 +26,42 @@
      {
          return $this->setting['city'];
      }
+
+     public function good_cat($params)
+     {
+         $return = array();
+         foreach ($this->setting['cat'] as $key => $value) {
+             if($value['parent_id'] == 0)
+             {
+                 $return[$key] = $value;
+             }
+             else
+             {
+                 foreach ($return as $k => $v) {
+                     foreach ($this->setting['cat'] as $key => $value) {
+                        if($value['parent_id'] == $v['id'])
+                        {
+                            $return[$k]['items'][$key] = $value;
+                        }
+                        else
+                        {
+                            foreach ($return[$k]['items'] as $k1 => $v2) {
+                                if($v2['id'] == $value['parent_id'])
+                                {
+                                    $return[$k]['items'][$k1]['items'] = $value;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        return $return;
+        //print_r($return);
+        //return $this->setting['cat'];
+    }
+
      public function floor_left($params)
      {
          foreach ($this->setting['floor'] as $key => $value) {
@@ -50,21 +86,60 @@
                      if($v['default'] == '1')
                      {
                          unset($value['item'][$k]);
-                         break;
+                         continue;
                      }
-                     $value['item']['url'] = $this->router->gen_url($v['url']);
+                     $value['item'][$k]['url'] = $this->router->gen_url($v['url']);
                  }
+
                  return $value;
              }
          }
      }
 
-     public function slider()
+     public function slider($params)
      {
-         foreach($this->setting['slider'] as $key => $value)
-         {
-             $this->setting['slider'][$key]['url'] = $this->router->gen_url($v['url']);
+         $image = $this->app->getConf($params['target']);
+         return $image;
+     }
+
+     public function show_store($params)
+     {
+         foreach ($this->setting['store'] as $key => $value) {
+             $this->setting['store'][$key]['url'] = $this->router->gen_url($value['url']);
          }
-         return $this->setting['slider'];
+         return $this->setting['store'];
+     }
+
+     public function web_nav($params)
+     {
+         foreach ($this->setting['webnav'] as $key => $value) {
+             $this->setting['webnav'][$key]['url'] = $this->router->gen_url($value['url']);
+         }
+         return $this->setting['webnav'];
+     }
+
+     public function goods_list_filter($params)
+     {
+         foreach($this->setting['filter'] as $key => $value)
+         {
+             if($key == $params['target'])
+             {
+                 $value['filter'] = $params['filter'];
+                 return $value;
+             }
+         }
+     }
+
+     public function goods_list_cat($params)
+     {
+         $parent_id = $params['parent_id'] ? $params['parent_id'] : 0;
+         foreach ($this->setting['cat'] as $key => $value) {
+             if($parent_id == $value['parent_id'])
+             {
+                 $cat_list[$key] = $value;
+
+             }
+         }
+         return $cat_list;
      }
  }
