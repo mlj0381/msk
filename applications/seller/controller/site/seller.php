@@ -41,4 +41,5 @@ class seller_ctl_site_seller extends seller_frontpage
         $this->pagedata['company'] = $company;
         $this->output();
 	}
+
 }
