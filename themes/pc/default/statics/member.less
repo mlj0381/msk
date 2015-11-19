@@ -29,7 +29,7 @@ ul,ol{
 @basecolor:#e93428;
 
 
-//
+// 买家中心
 .buyer_container{
 	width:1200px;
 	
@@ -260,8 +260,168 @@ ul,ol{
 
 
 			//END 个人资料
-		
+
+		}//my-page
+
+	}//my-main
+
+}
+//END 买家中心
+
+
+
+
+
+//卖家中心
+.buyer_container{
+	
+
+	//卖家注册
+	.reg_progress{
+		width:100%;
+		text-align: center;
+		height:50px;
+		line-height: 50px;
+		ol{
+			padding: 0;
+			margin:0;
+			text-align: center;
+			li{
+				display: inline-block;
+				width:160px;
+				
+			}
+		}	
+	}
+
+	//END 卖家注册
+
+
+	.seller_reg_tab{
+		width:100%;
+		height:40px;
+		line-height: 40px;
+
+		ul{
+			width:100%;
+			text-align: center;
+			background: #000;
+			li{
+				display: inline-block;
+				width:120px;
+				&.active{
+					background: @basecolor;
+				}
+				a{
+					font-size: 14px;
+					color:#fff;
+				}
+			}
+		}
+	}
+
+	//商家入驻
+	.settled_container{
+		border: none;
+		margin:10px 0;
+		.panel-default{
+			border:none;
+		}
+		.settled_menu{
+			width:240px;
+			.fl;
+			background: #fff;
+			box-sizing: border-box;
+			border:1px solid #f1f1f1;
+			dl{
+				padding:0;
+				margin:0;
+				dt{
+				background: @basecolor;
+				height:36px;
+				line-height: 36px;
+				padding-left:10px;
+				font-size: 16px;
+				color:#fff;
+				border-top:2px solid #be0000;
+				
+				}
+				dd{
+					height:40px;
+					line-height: 40px;
+					border-bottom:1px solid #f1f1f1;
+					a{
+						display: block;
+						text-align: left;
+						font-size: 14px;
+						font-weight: 700;
+						padding-left:15px;
+					}
+					&.active{
+						a{
+							border-left:3px solid @basecolor;
+						}
+					}
+				}
+			}
 		}
 
+		.settled_main{
+			width:960px;
+			min-height: 600px;
+			padding:10px;
+			.fr;
+			background: #fff;
+
+			.page_heading{
+				width:100%;
+				border-bottom:1px solid #f5f5f5;
+				margin-bottom:20px;
+
+				h1{
+					font-size:18px;
+					font-weight: 700;
+					height:50px;
+					line-height: 50px;
+					padding:0 10px;
+					margin:0;
+
+				}
+			}
+
+			.settled_warning{
+				background: #fffdf0;
+				border:1px solid #ffd119;
+				padding:20px;
+
+				dl{
+					width:100%;
+					margin-bottom:0;
+					dt{
+						.fl;
+						font-size: 30px;
+						color:#ffcc00;
+						margin-left:15px;
+						margin-right:15px;
+						margin-top:15px;
+					}
+					dd{
+						.fl;
+						a{
+							color:@basecolor;
+						}
+					}
+				}
+			}
+			
+		}
 	}
+	//END 商家入驻
+
+
+
+
+
 }
+
+//END 卖家中心

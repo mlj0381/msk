@@ -81,8 +81,51 @@ class seller_ctl_site_passport extends seller_frontpage
         }
         $this->splash('success', $forward, '登录成功');
     } //end function
-    //注册方法
-    public function signup($step){
+
+
+
+
+    //注册页面
+    public function signup($forward)
+    {
+        $this->title = '注册成为会员';
+        //检查是否登录，如果已登录则直接跳转到会员中心
+        $this->check_login();
+        $this->set_forward($forward); //设置登录成功后跳转
+        //获取会员注册项
+        if ($this->app->getConf('member_signup_show_attr') == 'true') {
+            $this->pagedata['attr'] = $this->passport_obj->get_signup_attr();
+        }
+        $this->set_tmpl('passport');
+        $this->page('site/passport/signup.html');
+
+    }
+    //公司信息
+    public function companyInfo()
+    {
+      $this->set_tmpl('passport');
+      $this->page('site/passport/signup_companyInfo.html');
+    }
+    //联系人信息
+    public function contactInfo()
+    {
+      $this->set_tmpl('passport');
+      $this->page('site/passport/signup_contactInfo.html');
+    }
+
+    //注册完成
+    public function complete()
+    {
+      $this->set_tmpl('passport');
+      $this->page('site/passport/signup_complete.html');
+    }
+
+
+
+
+
+    //入驻方法
+    public function settled($step){
         if($_POST) $this->_signup($_POST, $step);
         switch ($step) {
            case '1':
@@ -101,13 +144,15 @@ class seller_ctl_site_passport extends seller_frontpage
                $tpl = 'account';//帐号
                break;
         }
+        
         $this->page("site/passport/apply.{$tpl}.html");
     }
+
     private function _signup($post, $step){
         $redirect = $this->gen_url(array(
           'app' => 'seller',
           'ctl' => 'site_passport',
-          'act' => 'signup',
+          'act' => 'settled',
           'args0' => $step,
       ));
       $post['seller']['seller_id'] = $this->seller['seller_id'];
@@ -225,4 +270,19 @@ class seller_ctl_site_passport extends seller_frontpage
         }
         $this->splash('success', $forward, '退出登录成功');
     }
+
+
+
+    /**
+     * 2015-11-18
+     * 商家入驻
+     */
+    /*public function settled()
+    {
+      $this->set_tmpl('seller_settled');
+      $this->page('site/passport/settled-1.html');
+    }*/
+
+
+
 }

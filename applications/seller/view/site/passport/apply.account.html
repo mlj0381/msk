@@ -1,33 +1,52 @@
-<div class="passport-signup-container">
-    <div class="panel panel-default signup-panel">
-      <div class="panel-heading clearfix">
-		  <a class="btn btn-danger" icon="fa fa-plus" >账号注册&nbsp;<i class="fa fa fa-plus"></i></a>
-		  <a class="btn btn-default" icon="fa fa-plus" >公司信息&nbsp;<i class="fa fa fa-plus"></i></a>
-		  <a class="btn btn-default" icon="fa fa-plus" >资质认证&nbsp;<i class="fa fa fa-plus"></i></a>
-          <a class="btn btn-default" icon="fa fa-plus" >店铺申请&nbsp;<i class="fa fa fa-plus"></i></a>
-          <a class="btn btn-default" icon="fa fa-plus" >品牌申请&nbsp;<i class="fa fa fa-plus"></i></a>
-      </div>
-      <div class="panel-body">
-          <form id="seller_signup_form" class="form-horizontal" action="<{link app=seller ctl=site_passport act=signup args0=1}>" method="post">
-              <div class="form-group">
-                  <label for="input_login_name" class="col-xs-2 control-label">手机号<span class="text-danger">*</span></label>
-                  <div class="col-xs-5">
-                    <input type="text" required="true" autocomplete='off' name="pam_account[login_name]" class="form-control" id="input_login_name" placeholder="手机号">
-                  </div>
-              </div>
-              <div class="form-group">
-                  <label for="input_login_password" class="col-xs-2 control-label">登录密码<span class="text-danger">*</span></label>
-                  <div class="col-xs-5">
-
-                    <input type="password" required="true" name="pam_account[login_password]" class="form-control" id="input_login_password" placeholder="登录密码">
-                  </div>
-              </div>
-              <div class="form-group">
-                  <label for="input_psw_confirm" class="col-xs-2 control-label">确认密码<span class="text-danger">*</span></label>
-                  <div class="col-xs-5">
-                    <input type="password" required="true" name="pam_account[psw_confirm]" class="form-control" id="input_psw_confirm" placeholder="再次输入登录密码">
-                  </div>
-              </div>
+<div class="seller_reg_tab">
+    <ul>
+        <li class="active"><a href="#">用户注册</a></li>
+        <li><a href="#">商家入驻</a></li>
+        <li><a href="#">平台审核</a></li>
+    </ul>
+</div>
+<div class="passport-signup-container settled_container">
+    <!-- <div class="panel-heading clearfix">
+            <a class="btn btn-danger" icon="fa fa-plus">账号注册&nbsp;<i class="fa fa fa-plus"></i></a>
+            <a class="btn btn-default" icon="fa fa-plus">公司信息&nbsp;<i class="fa fa fa-plus"></i></a>
+            <a class="btn btn-default" icon="fa fa-plus">资质认证&nbsp;<i class="fa fa fa-plus"></i></a>
+            <a class="btn btn-default" icon="fa fa-plus">店铺申请&nbsp;<i class="fa fa fa-plus"></i></a>
+            <a class="btn btn-default" icon="fa fa-plus">品牌申请&nbsp;<i class="fa fa fa-plus"></i></a>
+            </div> -->
+    <div class="settled_menu">
+        <dl>
+            <dt>商家入驻</dt>
+            <dd class="active"><a href="">入驻须知</a></dd>
+            <dd><a href="">公司信息认证</a></dd>
+            <dd><a href="">店铺信息上传</a></dd>
+            <dd><a href="">平台审核</a></dd>
+        </dl>
+    </div>
+    <div class="panel-body settled_main">
+        <div class="page_heading">
+            <h1>入驻须知</h1>
+        </div>
+        <p>请仔细阅读入驻须知</p>
+        <a href="<{link app=seller ctl=site_passport act=settled args0=1}>" class="btn btn-danger">我知道了</a>
+        <!-- <form id="seller_signup_form" class="form-horizontal" action="<{link app=seller ctl=site_passport act=settled args0=1}>" method="post">
+                <div class="form-group">
+                    <label for="input_login_name" class="col-xs-2 control-label">手机号码<span class="text-danger">*</span></label>
+                    <div class="col-xs-5">
+                        <input type="text" required="true" autocomplete='off' name="pam_account[login_name]" class="form-control" id="input_login_name" placeholder="手机号">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="input_login_password" class="col-xs-2 control-label">登录密码<span class="text-danger">*</span></label>
+                    <div class="col-xs-5">
+                        <input type="password" required="true" name="pam_account[login_password]" class="form-control" id="input_login_password" placeholder="登录密码">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="input_psw_confirm" class="col-xs-2 control-label">确认密码<span class="text-danger">*</span></label>
+                    <div class="col-xs-5">
+                        <input type="password" required="true" name="pam_account[psw_confirm]" class="form-control" id="input_psw_confirm" placeholder="再次输入登录密码">
+                    </div>
+                </div>
                 <div class="form-group">
                     <label for="input_vcode" class="col-xs-2 control-label">手机验证码<span class="text-danger">*</span></label>
                     <div class="col-xs-2">
@@ -39,141 +58,155 @@
                         </div>
                     </div>
                 </div>
-              <div class="form-group">
-                  <label for="input_vcode" class="col-xs-2 control-label">验证码<span class="text-danger">*</span></label>
-                  <div class="col-xs-2">
-                    <input type="text" required="true" name="vcode" class="form-control" id="input_vcode" placeholder="验证码">
-                  </div>
-                  <div class="col-xs-2">
-                      <div class="local-vcode">
-						<img id="codeimage" class="codechange" src="<{link app=site ctl=vcode act=index args0='sellerpassport'}>" alt="验证码" style="width:51px;height:20px;"/>
-						<button type="button" class="btn btn-link btn-sm codechange" >更换验证码</button>
-                      </div>
-                  </div>
-              </div>
-              <div class="form-group">
-                  <label for="input_psw_confirm" class="col-xs-2 control-label"></label>
-                  <div class="col-xs-5">
-                    <input type="checkbox" required="true" id="protocol" name="protocol" style="margin-right:10px;">
-                    <a href="#">查看入驻须知</a>
-                  </div>
-              </div>
-              <div class="form-group">
-                  <div class="col-xs-offset-2 col-xs-5">
-                    <button type="submit" disabled=false data-loading-text="正在提交..." class="btn btn-warning">提交</button>
-                  </div>
-              </div>
-          </form>
-      </div>
-
+                <div class="form-group">
+                    <label for="input_vcode" class="col-xs-2 control-label">验证码<span class="text-danger">*</span></label>
+                    <div class="col-xs-2">
+                        <input type="text" required="true" name="vcode" class="form-control" id="input_vcode" placeholder="验证码">
+                    </div>
+                    <div class="col-xs-2">
+                        <div class="local-vcode">
+                            <img id="codeimage" class="codechange" src="<{link app=site ctl=vcode act=index args0='sellerpassport'}>" alt="验证码" style="width:51px;height:20px;" />
+                            <button type="button" class="btn btn-link btn-sm codechange">更换验证码</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="input_psw_confirm" class="col-xs-2 control-label"></label>
+                    <div class="col-xs-5">
+                        <input type="checkbox" required="true" id="protocol" name="protocol" style="margin-right:10px;">
+                        <a href="#">查看入驻须知</a>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-xs-offset-2 col-xs-5">
+                        <button type="submit" disabled=false data-loading-text="正在提交..." class="btn btn-warning">提交</button>
+                    </div>
+                </div>
+            </form> -->
     </div>
-
 </div>
 <script>
-    void function(signup_form){
-        var alert_timer = 0;
-        var _alert_error = function(msg){
-            signup_form.find('.alert-error').remove();
-            signup_form.append($('<div class="alert alert-danger">'+msg+'</div>'));
-            alert_timer = setTimeout(function(){
-                clearTimeout(alert_timer);
-                signup_form.find('.alert-danger').fadeOut('fast',function(){
-                    $(this).remove();
-                });
-            },3000);
-        }
+void
 
-        var vcodeChange = function(){
-            var codeLink = "<{link app=site ctl=vcode act=index args0='sellerpassport'}>";
-		    codeLink += '?' + new Date().getTime();
-		    $("#codeimage").prop('src', codeLink);
-        }
-
-        var mobileCheck = function(){
-            var ipt = $('#input_login_name');
-            var mobile = $(ipt).val();
-            if(mobile.length == 11) return true;
-            ipt.popover({content:'请填写正确的手机号', placement:'right', trigger:'click', container:'body'});
-            ipt.popover('show');
-            ipt.closest('.form-group').removeClass('has-success').addClass('has-error');
-            return false;
-        }
-
-        signup_form.find('#input_login_name').on('blur',function(e){
-            var ipt = $(this);
-            if(! mobileCheck()) return ;
-            var action_url = '<{link app=seller ctl=site_passport act=check_login_name}>';
-            $.post(action_url, {'pam_account[login_name]':ipt.val()},function(re){
-                if(re.error){
-                    ipt.popover({content:re.error,placement:'right',trigger:'click',container:'body'});
-                    ipt.popover('show');
-                    ipt.closest('.form-group').removeClass('has-success').addClass('has-error');
-                }else if(re.success){
-                    ipt.closest('.form-group').removeClass('has-error').addClass('has-success');
-                }
+function(signup_form) {
+    var alert_timer = 0;
+    var _alert_error = function(msg) {
+        signup_form.find('.alert-error').remove();
+        signup_form.append($('<div class="alert alert-danger">' + msg + '</div>'));
+        alert_timer = setTimeout(function() {
+            clearTimeout(alert_timer);
+            signup_form.find('.alert-danger').fadeOut('fast', function() {
+                $(this).remove();
             });
-        });
-        signup_form.find('#input_login_name').on('focus',function(e){
-            $(this).popover('destroy');
-        });
+        }, 3000);
+    }
 
-        signup_form.find('.codechange').on('click', vcodeChange);
+    var vcodeChange = function() {
+        var codeLink = "<{link app=site ctl=vcode act=index args0='sellerpassport'}>";
+        codeLink += '?' + new Date().getTime();
+        $("#codeimage").prop('src', codeLink);
+    }
 
-        signup_form.on('submit',function(e){
-            e.stopPropagation();
-            // signup_form.find('button[type=submit]').button('loading');
-            $.post(signup_form.prop('action'),signup_form.serialize(),function(re){
-                if(re.error){
-                    _alert_error(re.error);
-					//vcode_change(); // 失败更换验证码
-                }
-                if(re.success){
-                    location = re.redirect;
-                }
-                signup_form.find('button[type=submit]').button('reset');
-            },'json');
-            return false;
+    var mobileCheck = function() {
+        var ipt = $('#input_login_name');
+        var mobile = $(ipt).val();
+        if (mobile.length == 11) return true;
+        ipt.popover({
+            content: '请填写正确的手机号',
+            placement: 'right',
+            trigger: 'click',
+            container: 'body'
         });
+        ipt.popover('show');
+        ipt.closest('.form-group').removeClass('has-success').addClass('has-error');
+        return false;
+    }
 
-        // 短信验证
-        signup_form.find('.mobile-vcode button').on('click',function(e){
-            var btn = $(this);
-            if(! mobileCheck()) return ;
-            if(btn.hasClass('disabled')) return;
-            btn.addClass('disabled');
-            _cutdown_sms(btn);
-            $.post('<{link app=seller ctl=site_passport act=send_vcode_sms}>',{mobile:$('#input_login_name').val()},function(re){
-                if(re && re.error){
-                    btn.removeClass('disabled');
-                    _alert_error(re.error);
-                }
-                if(re && re.success){
-                    //_cutdown_sms(btn);
-                    $("#input_sms_vcode").val(re.redirect);
-                }
-            },'json');
+    signup_form.find('#input_login_name').on('blur', function(e) {
+        var ipt = $(this);
+        if (!mobileCheck()) return;
+        var action_url = '<{link app=seller ctl=site_passport act=check_login_name}>';
+        $.post(action_url, {
+            'pam_account[login_name]': ipt.val()
+        }, function(re) {
+            if (re.error) {
+                ipt.popover({
+                    content: re.error,
+                    placement: 'right',
+                    trigger: 'click',
+                    container: 'body'
+                });
+                ipt.popover('show');
+                ipt.closest('.form-group').removeClass('has-success').addClass('has-error');
+            } else if (re.success) {
+                ipt.closest('.form-group').removeClass('has-error').addClass('has-success');
+            }
         });
+    });
+    signup_form.find('#input_login_name').on('focus', function(e) {
+        $(this).popover('destroy');
+    });
 
-        //获得短信验证码
-        var _cutdown_sms = function(btn){
-            btn.addClass('disabled');
-            var cutdown = 10, btn_o_text = btn.text(),timer =
-            setInterval((function(){
-                btn.text('短信已发送,'+(cutdown--)+'秒后可重试');
-                if(cutdown<1){
+    signup_form.find('.codechange').on('click', vcodeChange);
+
+    signup_form.on('submit', function(e) {
+        e.stopPropagation();
+        // signup_form.find('button[type=submit]').button('loading');
+        $.post(signup_form.prop('action'), signup_form.serialize(), function(re) {
+            if (re.error) {
+                _alert_error(re.error);
+                //vcode_change(); // 失败更换验证码
+            }
+            if (re.success) {
+                location = re.redirect;
+            }
+            signup_form.find('button[type=submit]').button('reset');
+        }, 'json');
+        return false;
+    });
+
+    // 短信验证
+    signup_form.find('.mobile-vcode button').on('click', function(e) {
+        var btn = $(this);
+        if (!mobileCheck()) return;
+        if (btn.hasClass('disabled')) return;
+        btn.addClass('disabled');
+        _cutdown_sms(btn);
+        $.post('<{link app=seller ctl=site_passport act=send_vcode_sms}>', {
+            mobile: $('#input_login_name').val()
+        }, function(re) {
+            if (re && re.error) {
+                btn.removeClass('disabled');
+                _alert_error(re.error);
+            }
+            if (re && re.success) {
+                //_cutdown_sms(btn);
+                $("#input_sms_vcode").val(re.redirect);
+            }
+        }, 'json');
+    });
+
+    //获得短信验证码
+    var _cutdown_sms = function(btn) {
+        btn.addClass('disabled');
+        var cutdown = 10,
+            btn_o_text = btn.text(),
+            timer =
+            setInterval((function() {
+                btn.text('短信已发送,' + (cutdown--) + '秒后可重试');
+                if (cutdown < 1) {
                     clearInterval(timer);
                     btn.text(btn_o_text).removeClass('disabled');
                 }
                 return arguments.callee;
-            })(),1000);
-        };
-        $('#protocol').click(function(){
-            if($(this).prop('checked')){
-                $('[type=submit]').removeAttr('disabled');
-            }else{
-                $('[type=submit]').attr('disabled', true);
-            }
-        });
-    }($('#seller_signup_form'));
-
+            })(), 1000);
+    };
+    $('#protocol').click(function() {
+        if ($(this).prop('checked')) {
+            $('[type=submit]').removeAttr('disabled');
+        } else {
+            $('[type=submit]').attr('disabled', true);
+        }
+    });
+}($('#seller_signup_form'));
 </script>

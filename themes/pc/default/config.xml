@@ -23,5 +23,6 @@
         <file type="checkout" use="默认订单确认页">checkout.html</file>
         <file type="member" use="默认会员中心页"></file>
         <file type="passport" use="默认登录注册页"></file>
+        <file type="seller_settled" use="商家入驻页">seller-settled.html</file>
     </views>
 </theme>

@@ -1,0 +1,72 @@
+<div class="reg_progress clearfix">
+    <ol>
+        <li>
+            <a href="<{link app=seller ctl=site_passport act=signup}>"><i></i>填写账号信息</a>
+        </li>
+        <li class="active">
+            <a href="<{link app=seller ctl=site_passport act=companyInfo}>"><i></i>填写公司信息</a>
+        </li>
+        <li>
+            <a href="<{link app=seller ctl=site_passport act=contactInfo}>"><i></i>填写联系人信息</a>
+        </li>
+        <li>
+            <a href="<{link app=seller ctl=site_passport act=complete}>"><i></i>完成注册</a>
+        </li>
+    </ol>
+</div>
+<div class="passport-signup-container">
+    <div class="panel panel-default signup-panel">
+        <div class="panel-heading clearfix">
+            注册成为会员(卖家)
+            <!-- <a class="btn btn-danger btn-xs pull-right" href="<{link app=b2c ctl=site_passport act=login args0=$forward}>">立即登录&raquo;</a> -->
+        </div>
+        <div class="panel-body">
+            <form id="" class="form-horizontal" action="" method="post">
+                <!-- 登陆后跳转地址 -->
+                <input type="hidden" name="forward" value="<{$forward}>">
+                <div class="form-group">
+                    <label for="" class="col-xs-2 control-label">公司名称<span class="text-danger">*</span></label>
+                    <div class="col-xs-5">
+                        <input type="text" required="true" autocomplete='off' name="seller[company_name]" value="" class="form-control" id="input_login_name" placeholder="公司名称" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-2 control-label">所在地区<span class="text-danger">*</span></label>
+                    <div class="col-xs-5">
+                        <{input type=region required="true" name="seller[company_area]" value=$company.company_area }>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="input_addr" class="col-xs-2 control-label">详细地址<span class="text-danger">*</span></label>
+                    <div class="col-xs-5">
+                        <input type="text" required="true" name="seller[company_addr]" value="" class="form-control" id="input_company_addr" placeholder="详细地址" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-2 control-label">公司电话<span class="text-danger">*</span></label>
+                    <div class="col-xs-5">
+                        <input type="text" required="true" name="seller[company_tel]" value="" class="form-control" id="input_company_addr" placeholder="公司电话" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="input_vcode" class="col-xs-2 control-label">紧急联系人<span class="text-danger">*</span></label>
+                    <div class="col-xs-5">
+                        <input type="text" required="true" name="seller[company_contacts]" value="" class="form-control" id="input_company_addr" placeholder="紧急联系人" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="input_vcode" class="col-xs-2 control-label">联系人手机<span class="text-danger">*</span></label>
+                    <div class="col-xs-5">
+                        <input type="text" required="true" name="seller[contacts_phone]" value="" class="form-control" id="input_company_addr" placeholder="联系人电话" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-4">
+                    	<button type="submit" class="btn btn-warning">上一步</button>
+                        <button type="submit" data-loading-text="正在提交..." class="btn btn-warning">下一步</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

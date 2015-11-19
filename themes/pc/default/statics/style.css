@@ -169,9 +169,11 @@ ol {
 .reg_progress ol {
   width: 100%;
   margin: 0;
+  padding: 0;
+  text-align: center;
 }
 .reg_progress ol li {
-  float: left;
+  width: 160px;
   text-align: center;
 }
 .reg_progress ol li.active {

@@ -50,9 +50,9 @@
                      if($v['default'] == '1')
                      {
                          unset($value['item'][$k]);
-                         break;
+                         continue;
                      }
-                     $value['item']['url'] = $this->router->gen_url($v['url']);
+                     $value['item'][$k]['url'] = $this->router->gen_url($v['url']);
                  }
                  return $value;
              }
