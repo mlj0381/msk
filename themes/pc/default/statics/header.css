@@ -258,3 +258,84 @@ nav.navbar ul.nav li.default a {
   color: #fff;
   padding-left: 20px;
 }
+nav.navbar ul.nav li .category-container {
+  margin: 0 auto;
+  height: 550px;
+  position: relative;
+  z-index: 1000;
+}
+nav.navbar ul.nav li .category {
+  width: 200px;
+  background: #cc0116;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  height: 550px;
+  opacity: 0.85;
+}
+nav.navbar ul.nav li .category .list-group {
+  margin: 0px;
+}
+nav.navbar ul.nav li .category .list-group-item:first-child {
+  border-top-left-radius: 0px;
+  border-top-right-radius: 0px;
+}
+nav.navbar ul.nav li .category .list-group-item:last-child {
+  border-radius: 0px;
+}
+nav.navbar ul.nav li .category .list-group-item {
+  font-size: 16px;
+  position: relative;
+  display: block;
+  padding: 0 15px;
+  background-color: #cc0116;
+  border: 0px;
+  margin: 0;
+  height: 40px;
+  line-height: 40px;
+}
+nav.navbar ul.nav li .category .list-group-item a {
+  margin: 0;
+  padding: 0;
+  background: none;
+}
+nav.navbar ul.nav li .category .list-group-item i {
+  color: #FFF;
+  font-size: 12px;
+  padding-top: 13px;
+}
+nav.navbar ul.nav li .category .open {
+  background: #e93428;
+}
+nav.navbar ul.nav li .category .open a {
+  color: #fff;
+}
+nav.navbar ul.nav li .category .dropdown-subcat {
+  left: 200px;
+  top: -2px;
+  border: 0px;
+  position: relative;
+}
+nav.navbar ul.nav li .category .nav-tabs {
+  float: normal;
+  border-bottom: 0px solid #ddd;
+}
+nav.navbar ul.nav li .category .tab-content {
+  position: absolute;
+  left: 200px;
+  top: 0px;
+  width: 900px;
+  background: #FFF;
+  overflow: hidden;
+  z-index: 9999;
+  height: 554px;
+  padding: 10px 20px;
+  display: none;
+  opacity: 1;
+}
+nav.navbar ul.nav li .category-root {
+  cursor: pointer;
+}
+nav.navbar ul.nav li .category .tab-pane {
+  color: #333;
+}

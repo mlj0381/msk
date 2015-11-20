@@ -82,22 +82,4 @@
         </form> -->
     </div>
 </div>
-<script>
-$(function() {
-    $('input[type="file"]').fileupload({
 
-        add: function(e, data) {
-            if (!data.files[0]['type'].match(/^image/)) {
-                alert('非法上传，不是图片类型');
-            }
-            data.submit();
-        },
-        done: function(e, data) {
-            var re = $.parseJSON(data.result);
-            var input = e.target || e.srcElement;
-            $(input).next('input').val(re.image_id);
-            $(input).next('input').nextAll().removeClass('hide');
-        }
-    });
-});
-</script>
