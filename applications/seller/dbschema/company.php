@@ -188,7 +188,12 @@ $db['company'] = array(
             'label' => '开户银行所在地',
             'comment' => '开户银行所在地',
         ),
-
+        'extra' => array(
+            'type' => 'serialize',
+            'default' => '',
+            'label' => '资质信息',
+            'comment' => '资质信息',
+        ),
         'seller_id' => array(
             'type' => 'number',
             'required' => true,

@@ -22,7 +22,7 @@
                 </dd>
             </dl>
         </div>
-        <form id="" class="form-horizontal settled_company_form" action="<{link app=seller ctl=site_passport act=signup args0=2}>" method="post">
+        <form id="" class="form-horizontal settled_company_form" action="<{link app=seller ctl=site_passport act=settled args0=2}>" method="post">
             <!-- 联系人信息 -->
             <h2 class="area_heading">
             联系人信息<small>用于入驻过程中接收平台反馈的入驻通知，请务必正确填写</small>
@@ -30,19 +30,19 @@
             <div class="form-group">
                 <label class="col-xs-2 control-label"><span class="text-danger">*</span>联系人姓名：</label>
                 <div class="col-xs-5">
-                    <input type="text" class="form-control" />
+                    <input type="text" value="<{$contact.name}>" class="form-control" />
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-xs-2 control-label"><span class="text-danger">*</span>验证手机：</label>
                 <div class="col-xs-5">
-                    <input type="text" class="form-control" />
+                    <input type="text" value="<{$contact.tel}>" id="input_mobile" class="form-control" />
                 </div>
             </div>
             <div class="form-group">
                 <label for="input_vcode" class="col-xs-2 control-label">短信验证码<span class="text-danger">*</span></label>
                 <div class="col-xs-2">
-                    <input type="text" required="true" name="smscode" value="" class="form-control" id="input_sms_vcode" placeholder="验证码">
+                    <input type="text" required="true" name="smscode" value="" class="form-control" id="input_vcode" placeholder="验证码">
                 </div>
                 <div class="col-xs-2">
                     <div class="mobile-vcode">
@@ -53,7 +53,7 @@
             <div class="form-group">
                 <label class="col-xs-2 control-label"><span class="text-danger">*</span>联系人邮箱：</label>
                 <div class="col-xs-5">
-                    <input type="text" class="form-control" />
+                    <input type="text" value="<{$contact.email}>" class="form-control" />
                 </div>
             </div>
             <!-- 营业执照信息 -->
@@ -63,26 +63,26 @@
             <div class="form-group">
                 <label class="col-xs-2 control-label"><span class="text-danger">*</span>公司名称：</label>
                 <div class="col-xs-5">
-                    <input type="text" class="form-control" />
+                    <input type="text" name="seller[company_name]" value="<{$company.company_name}>" class="form-control" />
                 </div>
                 <p class="prompt">请按公司营业执照上的公司名称填写，不可多字或少字</p>
             </div>
             <div class="form-group">
                 <label class="col-xs-2 control-label"><span class="text-danger">*</span>营业执照注册号：</label>
                 <div class="col-xs-5">
-                    <input type="text" class="form-control" />
+                    <input type="text" name="seller[business_license_number]"  value=$company.business_license_number class="form-control" />
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-xs-2 control-label"><span class="text-danger">*</span>法定代表人姓名：</label>
                 <div class="col-xs-5">
-                    <input type="text" class="form-control" />
+                    <input type="text" name="seller[legal_person]"  value=$company.legal_person class="form-control" class="form-control" />
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-xs-2 control-label"><span class="text-danger">*</span>省份证号：</label>
+                <label class="col-xs-2 control-label"><span class="text-danger">*</span>身份证号：</label>
                 <div class="col-xs-5">
-                    <input type="text" class="form-control" />
+                    <input type="text" name="seller[legal_idcard]"  value=$company.legal_idcard class="form-control" class="form-control" />
                 </div>
             </div>
             <div class="form-group">
@@ -103,13 +103,13 @@
             <div class="form-group">
                 <label class="col-xs-2 control-label"><span class="text-danger">*</span>营业执照所在地：</label>
                 <div class="col-xs-5">
-                    <{input type="region" required="true" name="seller[store_area]" value=$store.store_area}>
+                    <{input type="region" required="true" name="seller[business_license_area]"  value=$company.business_license_area}>
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-xs-2 control-label"><span class="text-danger">*</span>营业执照详细地址：</label>
                 <div class="col-xs-5">
-                    <input type="text" class="form-control" />
+                    <input type="text" name="seller[business_license_addr]"  value=$company.business_license_addr class="form-control" />
                 </div>
             </div>
             <div class="form-group">
@@ -133,20 +133,20 @@
             <div class="form-group">
                 <label class="col-xs-2 control-label"><span class="text-danger">*</span>注册资金：</label>
                 <div class="col-xs-5">
-                    <input type="text" class="form-control" />
+                    <input type="text" name="seller[business_money]"  value=$company.business_money class="form-control" class="form-control" />
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-xs-2 control-label"><span class="text-danger">*</span>经营范围：</label>
                 <div class="col-xs-5">
-                    <textarea class="form-control" placeholder="经营范围"></textarea>
+                    <textarea class="form-control" name="seller[business_region]"  value=$company.business_region placeholder="经营范围"></textarea>
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-xs-2 control-label"><span class="text-danger">*</span>营业执照副本电子版：</label>
                 <div class="col-xs-5">
                     <div class="filebox">
-                        <input type="file" accept="image/*" class="file_input" />
+                        <input type="file" accept="image/*" name="seller[business_license_image]" class="file_input" />
                         <div class="showImg">
                             <img src="./../../themes/pc/default/statics/images/file_add.jpg">
                         </div>
@@ -160,48 +160,48 @@
             <div class="form-group">
                 <label class="col-xs-2 control-label"><span class="text-danger">*</span>公司所在地：</label>
                 <div class="col-xs-5">
-                    <{input type="region" required="true" name="seller[store_area]" value=$store.store_area}>
+                    <{input type="region" required="true"  name="seller[company_area]" value=$company.company_area}>
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-xs-2 control-label"><span class="text-danger">*</span>公司详细地址：</label>
                 <div class="col-xs-5">
-                    <input type="text" class="form-control" />
+                    <input type="text" name="seller[company_addr]" value=$company.company_addr  class="form-control" />
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-xs-2 control-label"><span class="text-danger">*</span>公司电话：</label>
                 <div class="col-xs-5">
-                    <input type="text" class="form-control" />
+                    <input type="text" name="seller[company_tel]" value=$company.company_tel class="form-control" />
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-xs-2 control-label"><span class="text-danger">*</span>公司紧急联系人：</label>
                 <div class="col-xs-5">
-                    <input type="text" class="form-control" />
+                    <input type="text" name="seller[company_contacts]" value=$company.company_contacts class="form-control" />
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-xs-2 control-label"><span class="text-danger">*</span>公司紧急联系人手机：</label>
                 <div class="col-xs-5">
-                    <input type="text" class="form-control" />
+                    <input type="text" name="seller[contacts_phone]" value=$company.contacts_phone class="form-control" />
                 </div>
             </div>
             <h3>组织机构代码证信息</h3>
             <div class="form-group">
                 <label class="col-xs-2 control-label"><span class="text-danger">*</span>组织机构代码证：</label>
                 <div class="col-xs-5">
-                    <input type="text" class="form-control" />
+                    <input type="text" name="seller[organization_number]"  value=$company.organization_number class="form-control" />
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-xs-2 control-label"><span class="text-danger">*</span>代码有效期限：</label>
                 <div class="col-md-5 date form_datetime" style="width:200px;">
-                    <input type="text" required="true" name="pam_account[addon][receipt_date_early]" class="form-control" id="" placeholder="开始时间">
+                    <input type="text" required="true" name="seller[organization_outtime][]"  value="<{$company.organization_outtime}>" class="form-control" id="" placeholder="开始时间">
                     <span class="add-on"><i class="icon-th"></i></span>
                 </div>
                 <div class="col-md-5 date form_datetime" style="width:200px;">
-                    <input type="text" required="true" name="pam_account[addon][receipt_date_early]" class="form-control" id="" placeholder="结束时间">
+                    <input type="text" required="true" name="seller[organization_outtime][]" class="form-control" id="" placeholder="结束时间">
                     <span class="add-on"><i class="icon-th"></i></span>
                 </div>
             </div>
@@ -239,7 +239,7 @@
                         <label class="col-xs-2 control-label"><span class="text-danger">*</span>屠宰证编号：</label>
                         <div class="col-xs-5">
                             <div class="filebox">
-                                <input type="file" accept="image/*" class="file_input" />
+                                <input type="file" accept="image/*" name="seller[extar][butcher_report_image]" class="file_input" />
                                 <div class="showImg">
                                     <img src="./../../themes/pc/default/statics/images/file_add.jpg">
                                 </div>
@@ -254,7 +254,7 @@
                         <label class="col-xs-2 control-label"><span class="text-danger">*</span>进京证电子版：</label>
                         <div class="col-xs-5">
                             <div class="filebox">
-                                <input type="file" accept="image/*" class="file_input" />
+                                <input type="file" accept="image/*" name="seller[extar][beijing_image]" class="file_input" />
                                 <div class="showImg">
                                     <img src="./../../themes/pc/default/statics/images/file_add.jpg">
                                 </div>
@@ -269,7 +269,7 @@
                         <label class="col-xs-2 control-label"><span class="text-danger">*</span>进沪证电子版：</label>
                         <div class="col-xs-5">
                             <div class="filebox">
-                                <input type="file" accept="image/*" class="file_input" />
+                                <input type="file" accept="image/*"  name="seller[extar][shanghai_image]" class="file_input" />
                                 <div class="showImg">
                                     <img src="./../../themes/pc/default/statics/images/file_add.jpg">
                                 </div>
@@ -284,7 +284,7 @@
                         <label class="col-xs-2 control-label"><span class="text-danger">*</span>其他证件：</label>
                         <div class="col-xs-5">
                             <div class="filebox">
-                                <input type="file" accept="image/*" class="file_input" />
+                                <input type="file" accept="image/*" name="seller[extar][other_image][]" class="file_input" />
                                 <div class="showImg">
                                     <img src="./../../themes/pc/default/statics/images/file_add.jpg">
                                 </div>
@@ -301,7 +301,7 @@
                         <label class="col-xs-2 control-label"><span class="text-danger">*</span>全国工业产品许可证编号：</label>
                         <div class="col-xs-5">
                             <div class="filebox">
-                                <input type="file" accept="image/*" class="file_input" />
+                                <input type="file" accept="image/*" name="seller[extar][industry_licence_image]" class="file_input" />
                                 <div class="showImg">
                                     <img src="./../../themes/pc/default/statics/images/file_add.jpg">
                                 </div>
@@ -315,14 +315,14 @@
                     <div class="form-group">
                         <label class="col-xs-2 control-label"><span class="text-danger">*</span>全国工业产品许可证范围:</label>
                         <div class="col-xs-5">
-                            <input type="text" class="form-control" />
+                            <input type="text" name="seller[extar][industry_licence_extend]" class="form-control" />
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-xs-2 control-label"><span class="text-danger">*</span>第三方检测报告：</label>
                         <div class="col-xs-5">
                             <div class="filebox">
-                                <input type="file" accept="image/*" class="file_input" />
+                                <input type="file" accept="image/*" name="seller[extar][third]" class="file_input" />
                                 <div class="showImg">
                                     <img src="./../../themes/pc/default/statics/images/file_add.jpg">
                                 </div>
@@ -339,7 +339,7 @@
                         <label class="col-xs-2 control-label"><span class="text-danger">*</span>食品流通许可证电子版：</label>
                         <div class="col-xs-5">
                             <div class="filebox">
-                                <input type="file" accept="image/*" class="file_input" />
+                                <input type="file" accept="image/*" name="seller[extar][circulate]" class="file_input" />
                                 <div class="showImg">
                                     <img src="./../../themes/pc/default/statics/images/file_add.jpg">
                                 </div>
@@ -354,7 +354,7 @@
                         <label class="col-xs-2 control-label"><span class="text-danger">*</span>产品第三方检测报告：</label>
                         <div class="col-xs-5">
                             <div class="filebox">
-                                <input type="file" accept="image/*" class="file_input" />
+                                <input type="file" accept="image/*" name="seller[extar][third_party]" class="file_input" />
                                 <div class="showImg">
                                     <img src="./../../themes/pc/default/statics/images/file_add.jpg">
                                 </div>
@@ -369,7 +369,7 @@
                         <label class="col-xs-2 control-label"><span class="text-danger">*</span>产品检验检疫合格证电子版：</label>
                         <div class="col-xs-5">
                             <div class="filebox">
-                                <input type="file" accept="image/*" class="file_input" />
+                                <input type="file" accept="image/*" name="seller[extar][quarantine]" class="file_input" />
                                 <div class="showImg">
                                     <img src="./../../themes/pc/default/statics/images/file_add.jpg">
                                 </div>
@@ -384,7 +384,7 @@
                         <label class="col-xs-2 control-label"><span class="text-danger">*</span>厂家屠宰证电子版：</label>
                         <div class="col-xs-5">
                             <div class="filebox">
-                                <input type="file" accept="image/*" class="file_input" />
+                                <input type="file" accept="image/*" name="seller[extar][maker]" class="file_input" />
                                 <div class="showImg">
                                     <img src="./../../themes/pc/default/statics/images/file_add.jpg">
                                 </div>
@@ -399,7 +399,7 @@
                         <label class="col-xs-2 control-label"><span class="text-danger">*</span>网络运营授权证书电子版：</label>
                         <div class="col-xs-5">
                             <div class="filebox">
-                                <input type="file" accept="image/*" class="file_input" />
+                                <input type="file" accept="image/*" name="seller[extar][web]" class="file_input" />
                                 <div class="showImg">
                                     <img src="./../../themes/pc/default/statics/images/file_add.jpg">
                                 </div>
@@ -418,7 +418,7 @@
                 <label class="col-xs-2 control-label">无公害农产品认证：</label>
                 <div class="col-xs-5">
                     <div class="filebox">
-                        <input type="file" accept="image/*" class="file_input" />
+                        <input type="file" accept="image/*" name="seller[extar][harmless]" class="file_input" />
                         <div class="showImg">
                             <img src="./../../themes/pc/default/statics/images/file_add.jpg">
                         </div>
@@ -433,7 +433,7 @@
                 <label class="col-xs-2 control-label">农产品地理标志登记证书：</label>
                 <div class="col-xs-5">
                     <div class="filebox">
-                        <input type="file" accept="image/*" class="file_input" />
+                        <input type="file" accept="image/*" name="seller[extar][landmark]" class="file_input" />
                         <div class="showImg">
                             <img src="./../../themes/pc/default/statics/images/file_add.jpg">
                         </div>
@@ -448,7 +448,7 @@
                 <label class="col-xs-2 control-label"> 绿色食品认证证书：</label>
                 <div class="col-xs-5">
                     <div class="filebox">
-                        <input type="file" accept="image/*" class="file_input" />
+                        <input type="file" accept="image/*" name="seller[extar][green]" class="file_input" />
                         <div class="showImg">
                             <img src="./../../themes/pc/default/statics/images/file_add.jpg">
                         </div>
@@ -463,7 +463,7 @@
                 <label class="col-xs-2 control-label">有机食品认证证书：</label>
                 <div class="col-xs-5">
                     <div class="filebox">
-                        <input type="file" accept="image/*" class="file_input" />
+                        <input type="file" accept="image/*" name="seller[extar][organic]" class="file_input" />
                         <div class="showImg">
                             <img src="./../../themes/pc/default/statics/images/file_add.jpg">
                         </div>
@@ -478,7 +478,7 @@
                 <label class="col-xs-2 control-label">有ISO系列、HACCP系列证书：</label>
                 <div class="col-xs-5">
                     <div class="filebox">
-                        <input type="file" accept="image/*" class="file_input" />
+                        <input type="file" accept="image/*" name="seller[extar][iso]" class="file_input" />
                         <div class="showImg">
                             <img src="./../../themes/pc/default/statics/images/file_add.jpg">
                         </div>
@@ -495,7 +495,7 @@
             <div class="form-group">
                 <label class="col-xs-2 control-label"><span class="text-danger">*</span>纳税人识别号：</label>
                 <div class="col-xs-5">
-                    <input type="text" class="form-control" />
+                    <input type="text" name="seller[tax_payer_number]" class="form-control" />
                 </div>
             </div>
             <div class="form-group">
@@ -550,19 +550,19 @@
             <div class="form-group">
                 <label class="col-xs-2 control-label"><span class="text-danger">*</span>银行开户名：</label>
                 <div class="col-xs-5">
-                    <input type="text" class="form-control" />
+                    <input type="text" name="seller[bank_account_namebank_account_name]" class="form-control" />
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-xs-2 control-label"><span class="text-danger">*</span>公司银行账号：</label>
                 <div class="col-xs-5">
-                    <input type="text" class="form-control" />
+                    <input type="text" name="seller[bank_account_number]" class="form-control" />
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-xs-2 control-label"><span class="text-danger">*</span>开户银行支行名称：</label>
                 <div class="col-xs-5">
-                    <input type="text" class="form-control" />
+                    <input type="text"  name="seller[bank_name]"  class="form-control" />
                 </div>
             </div>
             <div class="form-group">
@@ -574,7 +574,8 @@
             <div class="form-group">
                 <label class="col-xs-2 control-label"><span class="text-danger">*</span>开户银行支行所在地：</label>
                 <div class="col-xs-5">
-                    <{input type="region" required="true" name="seller[store_area]" value=$store.store_area}>
+                    <{input type="region" required="true" name="seller[bank_area
+                    ]" value=$store.store_area}>
                 </div>
             </div>
             <div class="form-group">
@@ -592,7 +593,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="companys">
                 <{include file='site/passport/company/apply.company.html' }>
             </div>
@@ -632,6 +633,41 @@
         tab(1);
     });
 });*/
+//获得短信验证码
+    var _cutdown_sms = function(btn) {
+        btn.addClass('disabled');
+        var cutdown = 120,
+            btn_o_text = btn.text(),
+            timer =
+            setInterval((function() {
+                btn.text('短信已发送,' + (cutdown--) + '秒后可重试');
+                if (cutdown < 1) {
+                    clearInterval(timer);
+                    btn.text(btn_o_text).removeClass('disabled');
+                }
+                return arguments.callee;
+            })(), 1000);
+    }
+    $('.mobile-vcode button').bind('click', function(e) {
+        var btn = $(this);
+        if (btn.hasClass('disabled')) return;
+        btn.addClass('disabled');
+        $.post('<{link app=seller ctl=site_passport act=send_vcode_sms}>', {
+            mobile: $('#input_mobile').val()
+        }, function(re) {
+            if (re && re.error) {//input_vcode
+                btn.removeClass('disabled');
+                _alert_error(re.error);
+            }
+            if (re && re.success) {
+                $("#input_vcode").val(re.redirect);
+                _cutdown_sms(btn);
+            }
+        }, 'json');
+
+
+    });
+
 
 function tab(index) {
     for (var i = 0; i < $('.companys').length; i++) {

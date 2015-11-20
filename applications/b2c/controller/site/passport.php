@@ -20,6 +20,7 @@ class b2c_ctl_site_passport extends b2c_frontpage
         vmc::singleton('base_session')->start();
         $this->user_obj = vmc::singleton('b2c_user_object');
         $this->passport_obj = vmc::singleton('b2c_user_passport');
+        $this->members = $this->get_current_member();
     }
     /*
      * 如果是登录状态则直接跳转到会员中心
@@ -148,6 +149,19 @@ class b2c_ctl_site_passport extends b2c_frontpage
     //注册页面--注册完成
     public function signup_complete($forward)
     {
+        if($_POST)
+        {
+            $redirect = $this->gen_url(array(
+                        'app' => 'b2c',
+                        'ctl' => 'site_passport',
+                        'act' => 'signup_complete',
+                    ));
+            $params = $_POST;
+            $params['member_id'] = $this->members['member_id'];
+            if(!$this->app->model('members')->save($params['pam_account'])){
+                $this->splash('error', $redirect, '注册失败');
+            }
+        }
         $this->page('site/passport/signup_complete.html');
     }
     //注册的时，检查用户名
@@ -177,12 +191,13 @@ class b2c_ctl_site_passport extends b2c_frontpage
     {
         $params = $_POST;
         $forward = $params['forward'];
-        if (!$forward) {
-            $forward = $this->gen_url(array(
-                'app' => 'site',
-                'ctl' => 'index',
+
+            $next = $this->gen_url(array(
+                'app' => 'b2c',
+                'ctl' => 'site_passport',
+                'act' => 'signup_checkInfo',
             )); //PC首页
-        }
+
         unset($_POST['forward']);
         $signup_url = $this->gen_url(array(
             'app' => 'b2c',
@@ -210,7 +225,7 @@ class b2c_ctl_site_passport extends b2c_frontpage
             foreach (vmc::servicelist('member.create_after') as $object) {
                 $object->create_after($member_id);
             }
-            $this->splash('success', $forward, '注册成功');
+            $this->splash('success', $next, '注册成功');
         } else {
             $this->splash('error', $signup_url, '注册失败,会员数据保存异常');
         }

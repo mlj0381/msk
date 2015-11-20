@@ -29,12 +29,22 @@ $db['contact'] = array(
 			'default_in_list' => true,
 			'comment' => '姓名',
         ),
-		'department' => array(
+
+        'contact_addr' => array(
             'type' => 'varchar(200)',
             'required' => true,
-            'label' => '部门',
+            'label' => '公司地址',
+            'in_list' => false,
+            'comment' => '公司地址',
+        ),
+        'contact_area' => array(
+            'label' => ('地区') ,
+            'type' => 'region',
+            'sdfpath' => 'contact/area',
+            'filtertype' => 'yes',
+            'filterdefault' => true,
             'in_list' => true,
-			'comment' => '部门',
+            'default_in_list' => true,
         ),
         'tel' => array(
             'type' => 'varchar(50)',
@@ -53,7 +63,7 @@ $db['contact'] = array(
             'label' => ('联系人Email') ,
             'comment' => ('联系人Email') ,
         ) ,
-        
+
         'seller_id' => array(
             'type' => 'number',
             'required' => false,

@@ -557,6 +557,14 @@ class seller_user_passport
        }
        return false;
    }
+   //商家入驻联系人信息注册
+   public function signup_contactInfo($post){
+       $mdl_contact = $this->app->model('contact');
+       if($mdl_contact->save($post['contact'])){
+           return true;
+       }
+       return false;
+   }
    //商家入驻资质信息注册
    public function signup_aptitudes($post){
        $mdl_aptitudes = $this->app->model('aptitudes');

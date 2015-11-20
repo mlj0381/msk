@@ -20,9 +20,9 @@
           <a class="btn btn-danger btn-xs pull-right" href="<{link app=b2c ctl=site_passport act=login args0=$forward}>">立即登录&raquo;</a>
       </div>
       <div class="panel-body">
-          <form id="member_signup_checkInfo_form" class="form-horizontal" action="<{link app=b2c ctl=site_passport act=create}>" method="post">
-   
-            
+          <form id="member_signup_checkInfo_form" class="form-horizontal" action="<{link app=b2c ctl=site_passport act=signup_complete}>" method="post">
+
+
               <h3>企业基本信息</h3>
               <div class="form-group">
                   <label for="" class="col-md-2 control-label"><span class="text-danger">*</span>客户名称：</label>
@@ -56,11 +56,11 @@
               <div class="form-group">
                   <label for="" class="col-md-2 control-label"><span class="text-danger">*</span>老板名片照：</label>
                   <div class="col-md-4">
-                    <input type="file" accept="image/*" data-url="<{link app=image ctl=site_upload act=index}>" required="true" class="form-control" id="" >
+                    <input type="file" accept="image/*" data-url="<{link app=image ctl=site_upload act=index}>"class="form-control" id="" >
                     <input type="hidden" name="pam_account[addon][boss_image]"  value=""/>
                     <span class="hide">上传成功</span>
                   </div>
-                  
+
               </div>
 
               <div class="form-group">
@@ -130,7 +130,7 @@
               <div class="form-group">
                   <label for="" class="col-md-2 control-label"><span class="text-danger">*</span>企业营业执照或许可证：</label>
                   <div class="col-md-4">
-                    <input type="file" accept="image/*" data-url="<{link app=image ctl=site_upload act=index}>" required="true" class="form-control" value="">
+                    <input type="file" accept="image/*" data-url="<{link app=image ctl=site_upload act=index}>" class="form-control" value="">
                     <input type="hidden" name="pam_account[addon][company_license]"  value=""/>
                     <span class="hide">上传成功</span>
                   </div>
@@ -138,7 +138,7 @@
               <div class="form-group">
                   <label for="" class="col-md-2 control-label"><span class="text-danger">*</span>食品安全许可证：</label>
                   <div class="col-md-4">
-                    <input type="file" accept="image/*" data-url="<{link app=image ctl=site_upload act=index}>" required="true" class="form-control" value="">
+                    <input type="file" accept="image/*" data-url="<{link app=image ctl=site_upload act=index}>"  class="form-control" value="">
                     <input type="hidden" name="pam_account[addon][food_license]"  value=""/>
                     <span class="hide">上传成功</span>
                   </div>
@@ -146,7 +146,7 @@
               <div class="form-group">
                   <label for="" class="col-md-2 control-label">经营场地门头照片：</label>
                   <div class="col-md-4">
-                    <input type="file" accept="image/*" data-url="<{link app=image ctl=site_upload act=index}>" required="true" class="form-control" value="">
+                    <input type="file" accept="image/*" data-url="<{link app=image ctl=site_upload act=index}>"  class="form-control" value="">
                     <input type="hidden" name="pam_account[addon][place_image]"  value=""/>
                     <span class="hide">上传成功</span>
                   </div>
@@ -154,7 +154,7 @@
               <div class="form-group">
                   <label for="" class="col-md-2 control-label">菜单照片：</label>
                   <div class="col-md-4">
-                    <input type="file" accept="image/*" data-url="<{link app=image ctl=site_upload act=index}>" required="true"  class="form-control" value="">
+                    <input type="file" accept="image/*" data-url="<{link app=image ctl=site_upload act=index}>"   class="form-control" value="">
                     <input type="hidden" name="pam_account[addon][menu_image]"  value=""/>
                     <span class="hide">上传成功</span>
                   </div>
@@ -179,11 +179,11 @@
               <div class="form-group">
                   <label for="" class="col-md-2 control-label"><span class="text-danger">*</span>冻品存放地照片：</label>
                   <div class="col-md-4">
-                    <input type="file" accept="image/*" data-url="<{link app=image ctl=site_upload act=index}>" id="test" required="true" class="form-control" value="">
+                    <input type="file" accept="image/*" data-url="<{link app=image ctl=site_upload act=index}>" id="test" class="form-control" value="">
                     <input type="hidden" name="pam_account[addon][goods_stash_image]"  value=""/>
                     <span class="hide">上传成功</span>
                   </div>
-                  
+
               </div>
               <div class="form-group">
                   <label for="" class="col-md-2 control-label"><span class="text-danger">*</span>存放能力：</label>
@@ -301,7 +301,7 @@
               <{/if}>
               <{/foreach}>
 
-             
+
               <div class="form-group">
                   <div class="col-md-offset-2 col-md-4">
                     <button type="submit" data-loading-text="正在提交..." class="btn btn-warning">提交</button>
@@ -324,7 +324,7 @@
                       </div>
                     </div>
                   </div>
-              </div>  
+              </div>
 
 
               <!--END 会员注册条款modal -->
@@ -452,11 +452,9 @@
     $(".form_datetime").datetimepicker({
         format: "yyyy-mm-dd hh:ii",    //时间格式
         autoclose: true,
-        todayBtn: true,                 
+        todayBtn: true,
         pickerPosition: "bottom-left",
         language:"zh-CN"              //设置中文
     });
 
 </script>
-
-

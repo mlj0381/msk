@@ -15,6 +15,7 @@ class seller_ctl_site_passport extends seller_frontpage
 {
     public function __construct(&$app){
         parent::__construct($app);
+        $this->seller = $this->get_current_seller();
     }
 
     public function index(){
@@ -60,7 +61,7 @@ class seller_ctl_site_passport extends seller_frontpage
         if (empty($params['vcode'])) {
             $this->splash('error', $login_url, '请输入验证码');
         }
-        
+
         //尝试登陆
         $seller_id = vmc::singleton('pam_passport_site_basic')->login($account_data, $params['vcode'], $msg, 'sellers');
         if (!$seller_id) {
@@ -88,6 +89,23 @@ class seller_ctl_site_passport extends seller_frontpage
     //注册页面
     public function signup($forward)
     {
+        if($_POST){
+            $redirect = $this->gen_url(array(
+              'app' => 'seller',
+              'ctl' => 'site_passport',
+              'act' => 'signup',
+            ));
+            if(!$this->_signup_account($_POST, $redirect))
+            {
+                $this->splash('error', $redirect, '注册失败');
+            }
+            $redirect = $this->gen_url(array(
+              'app' => 'seller',
+              'ctl' => 'site_passport',
+              'act' => 'companyInfo',
+            ));
+            $this->splash('success', $redirect, '注册成功');
+        }
         $this->title = '注册成为会员';
         //检查是否登录，如果已登录则直接跳转到会员中心
         $this->check_login();
@@ -103,12 +121,46 @@ class seller_ctl_site_passport extends seller_frontpage
     //公司信息
     public function companyInfo()
     {
-      $this->set_tmpl('passport');
-      $this->page('site/passport/signup_companyInfo.html');
+        if($_POST){
+            $redirect = $this->gen_url(array(
+              'app' => 'seller',
+              'ctl' => 'site_passport',
+              'act' => 'companyInfo',
+            ));
+            $_POST['seller']['seller_id'] = $this->seller['seller_id'];
+            if(!$this->passport_obj->signup_company($_POST)){
+                $this->splash('error', $redirect, '注册失败');
+            }
+            $redirect = $this->gen_url(array(
+              'app' => 'seller',
+              'ctl' => 'site_passport',
+              'act' => 'contactInfo',
+            ));
+            $this->splash('success', $redirect, '注册成功');
+        }
+        $this->set_tmpl('passport');
+        $this->page('site/passport/signup_companyInfo.html');
     }
     //联系人信息
     public function contactInfo()
     {
+        if($_POST){
+            $redirect = $this->gen_url(array(
+              'app' => 'seller',
+              'ctl' => 'site_passport',
+              'act' => 'contactInfo',
+            ));
+            $_POST['contact']['seller_id'] = $this->seller['seller_id'];
+            if(!$this->passport_obj->signup_contactInfo($_POST)){
+                $this->splash('error', $redirect, '注册失败');
+            }
+            $redirect = $this->gen_url(array(
+              'app' => 'seller',
+              'ctl' => 'site_passport',
+              'act' => 'complete',
+            ));
+            $this->splash('success', $redirect, '注册成功');
+        }
       $this->set_tmpl('passport');
       $this->page('site/passport/signup_contactInfo.html');
     }
@@ -116,6 +168,7 @@ class seller_ctl_site_passport extends seller_frontpage
     //注册完成
     public function complete()
     {
+
       $this->set_tmpl('passport');
       $this->page('site/passport/signup_complete.html');
     }
@@ -126,9 +179,11 @@ class seller_ctl_site_passport extends seller_frontpage
 
     //入驻方法
     public function settled($step){
+        $this->verify();
         if($_POST) $this->_signup($_POST, $step);
         switch ($step) {
            case '1':
+               $this->_contact();
                $tpl = 'company';//公司信息
                break;
            case '2':
@@ -146,6 +201,11 @@ class seller_ctl_site_passport extends seller_frontpage
         }
 
         $this->page("site/passport/apply.{$tpl}.html");
+    }
+    //读取联系人信息
+    private function _contact()
+    {
+        $this->pagedata['contact'] = $this->app->model('contact')->getRow('*', array('seller_id' => $this->seller['seller_id']));
     }
 
     private function _signup($post, $step){
@@ -239,7 +299,6 @@ class seller_ctl_site_passport extends seller_frontpage
 
       $uvcode_obj = vmc::singleton('seller_user_vcode');
       $vcode = $uvcode_obj->set_vcode($mobile, $type , $msg);
-
       $this->splash('success', $vcode, '短信已发送'); // 2015/9/7 短信直接显示
 
       if ($vcode) {

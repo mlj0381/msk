@@ -120,7 +120,7 @@ class b2c_user_passport
         $data['currency'] = $arrDefCurrency['cur_code'];
         $data['reg_ip'] = base_request::get_remote_addr();
         $data['regtime'] = time();
-        $data['addon'] = $data['pam_account']['addon'];
+        $data['mobile'] = $data['pam_account']['addon']['mobile'];
 
         //--防止恶意修改
         foreach ($data as $key => $val) {
@@ -136,7 +136,7 @@ class b2c_user_passport
             'contact',
             'profile',
             'member_lv',
-            'addon'
+            'mobile',
         );
         $attr = $this->app->model('member_attr')->getList('attr_column');
         foreach ($attr as $attr_colunm) {

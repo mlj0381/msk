@@ -15,8 +15,9 @@
 		<menu app='b2c' controller='site_member' action='index' display='true' order="60">我的足迹</menu>
 		<menu app='b2c' controller='site_member' action='index' display='true' order="60">最近访问</menu>
 		<menu app='b2c' controller='site_member' action='index' display='true' order="60">大促会</menu>
-
+        <menu app='b2c' controller='site_member' action='setting' display='true' order="60">帐户信息</menu>
         <menu app='b2c' controller='site_member' action='index' display='true' order="60">神农客会员</menu>
 		<menu app='b2c' controller='site_member' action='index' display='true' order="60">鲜驰达会员</menu>
+
     </menugroup>
 </menus>

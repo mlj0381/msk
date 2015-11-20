@@ -267,6 +267,7 @@ class b2c_ctl_site_member extends b2c_frontpage
     {
         $user_obj = vmc::singleton('b2c_user_object');
         $pam_data = $user_obj->get_pam_data('*', $this->member['member_id']);
+        $pam_data['memberData']['addon'] = unserialize($pam_data['memberData']['addon']);
         $this->pagedata['pam_data'] = $pam_data;
         $attr = vmc::singleton('b2c_user_passport')->get_signup_attr($this->member['member_id']);
         $this->pagedata['attr'] = $attr;
@@ -316,7 +317,7 @@ class b2c_ctl_site_member extends b2c_frontpage
             }
         }
         //---end
-        $_POST['member_id'] = $this->member['member_id'];print_r($_POST);exit;
+        $_POST['member_id'] = $this->member['member_id'];
         if ($member_model->save($_POST)) {
             $this->splash('success', $url, ('保存成功'));
         } else {

@@ -21,13 +21,13 @@
             <!-- <a class="btn btn-danger btn-xs pull-right" href="<{link app=b2c ctl=site_passport act=login args0=$forward}>">立即登录&raquo;</a> -->
         </div>
         <div class="panel-body">
-            <form id="" class="form-horizontal" action="<{link app=b2c ctl=site_passport act=create}>" method="post">
+            <form id="seller_signup_form" class="form-horizontal" action="<{link app=seller ctl=site_passport act=contactInfo}>" method="post">
                 <!-- 登陆后跳转地址 -->
                 <input type="hidden" name="forward" value="<{$forward}>">
                 <div class="form-group">
                     <label for="" class="col-xs-2 control-label">联系人姓名<span class="text-danger">*</span></label>
                     <div class="col-xs-5">
-                        <input type="text" required="true" autocomplete='off' class="form-control" id="" placeholder="请输入联系人姓名" />
+                        <input type="text" required="true" autocomplete='off' name="contact[name]"class="form-control" id="" placeholder="请输入联系人姓名" />
                     </div>
                 </div>
                 <div class="form-group">
@@ -35,25 +35,31 @@
                         <span class="text-danger">*</span>
                     </label>
                     <div class="col-xs-3">
-                        <input type="text" required="true" autocomplete='off' class="form-control" id="" placeholder="请输入联系人手机" />
+                        <input type="text" required="true" autocomplete='off' name="contact[tel]" class="form-control" id="input_mobile" placeholder="请输入联系人手机" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-2 control-label">所在地址<span class="text-danger">*</span></label>
+                    <div class="col-xs-5">
+                        <{input type=region required="true" autocomplete='off' name="contact[contact_addr]"  class="form-control" id="" placeholder="公司名称" }>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-xs-2 control-label">所在地区<span class="text-danger">*</span></label>
                     <div class="col-xs-5">
-                        <input type="text" required="true" autocomplete='off' class="form-control" id="" placeholder="公司名称" />
+                        <input type="text" required="true" autocomplete='off' name="contact[contact_area]" class="form-control" id="" placeholder="公司名称" />
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="" class="col-xs-2 control-label">联系人电子邮箱<span class="text-danger">*</span></label>
                     <div class="col-xs-5">
-                        <input type="text" required="true" autocomplete='off' class="form-control" id="" placeholder="请输入联系人电子邮箱" />
+                        <input type="text" required="true" autocomplete='off' name="contact[email]" class="form-control" id="" placeholder="请输入联系人电子邮箱" />
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="" class="col-md-2 control-label"><span class="text-danger">*</span>短信验证码：</label>
                     <div class="col-md-3">
-                        <input type="text" required="true" name="smscode" class="form-control" id="input_psw_confirm">
+                        <input type="text" required="true" name="smscode" class="form-control" id="input_vcode">
                     </div>
                     <div class="col-md-2">
                         <div class="mobile-vcode">
@@ -68,7 +74,7 @@
                         我已阅读并同意 <a href="#">《美侍客用户注册协议》</a> <a href="#">《美侍客服务条款》</a>
                     </div>
                 </div>
-                
+
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-4">
                     	<button type="submit" class="btn btn-warning">上一步</button>
@@ -79,3 +85,49 @@
         </div>
     </div>
 </div>
+<script>
+/*
+ * 会员注册脚本
+ */
+
+$(function(){
+
+//获得短信验证码
+    var _cutdown_sms = function(btn) {
+        btn.addClass('disabled');
+        var cutdown = 120,
+            btn_o_text = btn.text(),
+            timer =
+            setInterval((function() {
+                btn.text('短信已发送,' + (cutdown--) + '秒后可重试');
+                if (cutdown < 1) {
+                    clearInterval(timer);
+                    btn.text(btn_o_text).removeClass('disabled');
+                }
+                return arguments.callee;
+            })(), 1000);
+    }
+    $('.mobile-vcode button').bind('click', function(e) {
+        var btn = $(this);
+        if (btn.hasClass('disabled')) return;
+        btn.addClass('disabled');
+        $.post('<{link app=seller ctl=site_passport act=send_vcode_sms}>', {
+            mobile: $('#input_mobile').val()
+        }, function(re) {
+            if (re && re.error) {//input_vcode
+                btn.removeClass('disabled');
+                _alert_error(re.error);
+            }
+            if (re && re.success) {
+                $("#input_vcode").val(re.redirect);
+                _cutdown_sms(btn);
+            }
+        }, 'json');
+
+
+    });
+
+
+
+});
+</script>
