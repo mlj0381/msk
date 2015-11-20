@@ -16,7 +16,7 @@
     </module>
     <module controller='site_product' id='b2c'>
         <name>item</name>
-        <title>商品详细页</title> 
+        <title>商品详细页</title>
         <allow_seo act="index">
             <title>商品详细页</title>
             <config id="{ENV_goods_name}">商品名称</config>

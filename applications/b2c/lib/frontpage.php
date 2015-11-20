@@ -115,4 +115,35 @@ class b2c_frontpage extends site_controller {
         $this->noindex = $seo['seo_noindex'];
     } //End Function
 
+    public function get_menu()
+	{
+		$xmlfile = $this->app->app_dir . "/menu.xml";
+		$parser = xml_parser_create();
+		xml_parser_set_option($parser, XML_OPTION_CASE_FOLDING, 0);
+        xml_parser_set_option($parser, XML_OPTION_SKIP_WHITE, 1);
+        xml_parse_into_struct($parser, file_get_contents($xmlfile), $tags);
+        xml_parser_free($parser);
+		$group = Array();
+		$menus = Array();
+		$count = count($tags);
+		foreach($tags as $key => $item)
+		{
+			if($item['tag'] == 'menugroup')
+			{
+				$menuItem = $item['attributes'];
+				for($i=$key+1; $i<$count; $i++)
+				{
+					if($tags[$i]['tag'] == 'menu')
+					{
+						$tags[$i]['attributes']['label'] = $tags[$i]['value'];
+						$menuItem['items'][] = $tags[$i]['attributes'];
+						continue;
+					}
+					break;
+				}
+				$menus[] = $menuItem;
+			}
+		}
+		return $menus;
+	}
 }

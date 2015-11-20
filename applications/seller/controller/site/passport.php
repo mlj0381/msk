@@ -60,7 +60,7 @@ class seller_ctl_site_passport extends seller_frontpage
         if (empty($params['vcode'])) {
             $this->splash('error', $login_url, '请输入验证码');
         }
-
+        
         //尝试登陆
         $seller_id = vmc::singleton('pam_passport_site_basic')->login($account_data, $params['vcode'], $msg, 'sellers');
         if (!$seller_id) {
@@ -144,7 +144,7 @@ class seller_ctl_site_passport extends seller_frontpage
                $tpl = 'account';//帐号
                break;
         }
-        
+
         $this->page("site/passport/apply.{$tpl}.html");
     }
 
