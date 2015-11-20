@@ -382,6 +382,11 @@ ol {
   overflow: hidden;
   border: 1px solid #ccc;
 }
+.buyer_container .settled_container .settled_main .settled_company_form .form-group .filebox .showImg img,
+.buyer_container .settled_container .settled_main .settled_shop_form .form-group .filebox .showImg img {
+  width: 118px;
+  height: 118px;
+}
 .buyer_container .settled_container .settled_main .settled_company_form .form-group .filebox .file_ctr,
 .buyer_container .settled_container .settled_main .settled_shop_form .form-group .filebox .file_ctr {
   position: absolute;

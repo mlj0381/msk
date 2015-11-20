@@ -28,14 +28,29 @@
   padding: 0;
 }
 .index_page .firstContainer {
-  position: relative;
   height: 550px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0;
+  margin: 0;
+}
+.index_page .firstContainer .sliderbox {
+  position: relative;
+}
+.index_page .firstContainer .sliderbox .slide {
+  position: absolute;
+  z-index: 500;
+}
+.index_page .firstContainer .sliderbox .slide .carousel-inner img {
+  width: 100%;
+  height: 550px;
+}
+.index_page .firstContainer .category-container {
   width: 1200px;
   margin: 0 auto;
-}
-.index_page .firstContainer .carousel-inner img {
-  width: 1200px;
   height: 550px;
+  position: relative;
+  z-index: 1000;
 }
 .index_page .firstContainer .category {
   width: 200px;

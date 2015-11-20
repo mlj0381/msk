@@ -12,66 +12,67 @@
         <link rel="stylesheet" href="statics/header.css">
         <link rel="stylesheet" href="statics/index.css">
         <link rel="stylesheet" href="statics/font-awesome.css">
-
         <script type="text/javascript" src="statics/js/jquery.shopScroll.js"></script>
         <script type="text/javascript" src="statics/js/common.js"></script>
 </head>
 
 <body class="index_page">
-    <{require file="public/header.html" }>
-        <{require file="public/nav.html" }>
-            <div class="container">
-                <div class="firstContainer">
-                    <div class="sliderbox">
-                        <{WIDGET_B2C_INDEX_SLIDER target=index_slider num=3}>
-                    </div>
-                    <div class="category">
-                        <{WIDGET_B2C_GOODS_CAT}>
-                    </div>
-                </div>
-
-                <!-- 商品楼层列表 -->
-                <div class="pro_list">
-                    <{WIDGET_B2C_GOODS_INDEX_GOOD_FLOOR target=index num=8 type=china_food orderby=last_modify desc}>
-                </div>
-
-                <!-- 店铺橱窗展示 -->
-                <div class="shop_show">
-                    <{WIDGET_B2C_GOODS_INDEX_SHOP_SHOW target=index num=1 type=chinafood}>
-                </div>
-                <script type="text/javascript">
-                jQuery(".shop_show").slide({titCell:".hd ul",mainCell:".bd ul",autoPage:true,effect:"left",autoPlay:true,vis:6,trigger:"click"});
-                </script>
-
-
-            </div>
-            <!-- 右侧固定边栏 -->
-            <div class="container-fulid">
-                <div class="fixed_slidebar">
-                    <ul>
-                        <li><a href="#"><i class="icon-shopping-cart"></i> 购物车</a></li>
-                        <li data-toggle="tooltip" data-placement="left" title="我关注的品牌"><a href="#"><i class="icon-heart-empty" ></i></a></li>
-                        <li data-toggle="tooltip" data-placement="left" title="我的搜藏"><a href="#"><i class="icon-star-empty" ></i></a></li>
-                        <li data-toggle="tooltip" data-placement="left" title="我的足迹"><a href="#"><i class="icon-eye-open"></i></a></li>
-                        <li data-toggle="tooltip" data-placement="left" title="我要充值"><a href="#"><i class="icon-credit-card"></i></a></li>
-                        <li data-toggle="tooltip" data-placement="left" title="用户反馈"><i class="icon-file-alt"></i></li>
-                        <li data-toggle="tooltip" data-placement="left" title="返回顶部"><a href="#"><i class="icon-arrow-up"></i></a></li>
-                    </ul>
-                    <script type="text/javascript">
-                        $(function () {
-                          $('.fixed_slidebar ul li[data-toggle="tooltip"]').tooltip()
-                        })
-                    </script>
-                </div>
-
-                <div class="fixed_floorNav">
-
-                </div>
-            </div>
-            <{require file="public/footer.html" }>
-            <{SYSTEM_FOOTER}>
-
-
+<{require file="public/header.html" }>
+<{require file="public/nav.html" }>
+<div class="firstContainer">
+    <div class="sliderbox">
+        <{WIDGET_B2C_INDEX_SLIDER target=index_slider num=3}>
+    </div>
+    <div class="category-container">
+        <div class="category">
+            <{WIDGET_B2C_GOODS_CAT}>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <!-- 商品楼层列表 -->
+    <div class="pro_list">
+        <{WIDGET_B2C_GOODS_INDEX_GOOD_FLOOR target=index num=8 type=china_food orderby=last_modify desc}>
+    </div>
+    <!-- 店铺橱窗展示 -->
+    <div class="shop_show">
+        <{WIDGET_B2C_GOODS_INDEX_SHOP_SHOW target=index num=1 type=chinafood}>
+    </div>
+    <script type="text/javascript">
+    jQuery(".shop_show").slide({
+        titCell: ".hd ul",
+        mainCell: ".bd ul",
+        autoPage: true,
+        effect: "left",
+        autoPlay: true,
+        vis: 6,
+        trigger: "click"
+    });
+    </script>
+</div>
+<!-- 右侧固定边栏 -->
+<div class="container-fulid">
+    <div class="fixed_slidebar">
+        <ul>
+            <li><a href="#"><i class="icon-shopping-cart"></i> 购物车</a></li>
+            <li data-toggle="tooltip" data-placement="left" title="我关注的品牌"><a href="#"><i class="icon-heart-empty" ></i></a></li>
+            <li data-toggle="tooltip" data-placement="left" title="我的搜藏"><a href="#"><i class="icon-star-empty" ></i></a></li>
+            <li data-toggle="tooltip" data-placement="left" title="我的足迹"><a href="#"><i class="icon-eye-open"></i></a></li>
+            <li data-toggle="tooltip" data-placement="left" title="我要充值"><a href="#"><i class="icon-credit-card"></i></a></li>
+            <li data-toggle="tooltip" data-placement="left" title="用户反馈"><i class="icon-file-alt"></i></li>
+            <li data-toggle="tooltip" data-placement="left" title="返回顶部"><a href="#"><i class="icon-arrow-up"></i></a></li>
+        </ul>
+        <script type="text/javascript">
+        $(function() {
+            $('.fixed_slidebar ul li[data-toggle="tooltip"]').tooltip()
+        })
+        </script>
+    </div>
+    <div class="fixed_floorNav">
+    </div>
+</div>
+<{require file="public/footer.html" }>
+<{SYSTEM_FOOTER}>
 </body>
 
 </html>
