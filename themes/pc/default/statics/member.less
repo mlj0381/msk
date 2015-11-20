@@ -414,7 +414,7 @@ ul,ol{
 				}
 			}
 
-			.settled_company_form{
+			.settled_company_form, .settled_shop_form{
 
 				h2.area_heading{
 					font-weight: 700;
@@ -473,6 +473,55 @@ ul,ol{
 							border-left:1px solid #ddd;
 							text-align: center;
 						}
+					}
+				}
+			}
+
+			.settled_shop_form{
+				margin-top:20px;
+			}
+
+			.platform_audit{
+				.audit_wait, .audit_fail, .audit_success{
+					padding:10px;
+					h2{
+						height:40px;
+						line-height: 40px;
+						font-size: 26px;
+
+						i{
+							padding-right:10px;
+							margin-top:5px;
+						}
+					}
+					p{
+						font-size: 16px;
+					}
+					a{
+						display: block;
+						width:120px;
+						height:40px;
+						line-height: 40px;
+						font-size: 14px;
+						background: @basecolor;
+						color:#fff;
+						text-align: center;
+						.radius(5px)
+					}
+				}
+				.audit_wait{
+					i{
+						color:#e4bd53;
+					}
+				}
+				.audit_fail{
+					i{
+						color:#bc1818;
+					}
+				}
+				.audit_success{
+					i{
+						color:#0db53c;
 					}
 				}
 			}
