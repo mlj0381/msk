@@ -30,12 +30,24 @@ class seller_frontpage extends site_controller {
 
         $this->seller = $this->get_current_seller();
         $this->store = $this->get_current_store();
-
-		$this->_menus = $this->get_menu();
+        $this->_signup_checkin();
 		$this->set_tmpl('seller');
         $this->user_obj = vmc::singleton('seller_user_object');
         $this->passport_obj = vmc::singleton('seller_user_passport');
 	}
+
+    private function _signup_checkin()
+    {
+        $checkin = $this->app->model('sellers')->getRow('checkin', array('seller_id' => $this->seller['seller_id']));
+        $this->_menus = $this->get_menu();
+        if($checkin['checkin'] != 1){
+            foreach ($this->_menus as $key => $value) {
+                if($value['name'] != '帐户管理'){
+                    unset($this->_menus[$key]);
+                }
+            }
+        }
+    }
 
     protected function redirect_url($params = array())
     {
@@ -228,7 +240,7 @@ class seller_frontpage extends site_controller {
     {
         $app_id || $app_id = $this->app->app_id;
         $this->pagedata['seller'] = $this->seller;
-        $this->pagedata['menu'] = $this->get_menu();
+        $this->pagedata['menu'] = $this->_menus;
         $this->pagedata['app'] = $this->app->app_id;
         $this->pagedata['current_controller'] = $this->controller;
         $this->pagedata['current_action'] = $this->action;

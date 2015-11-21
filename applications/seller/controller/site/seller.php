@@ -26,6 +26,21 @@ class seller_ctl_site_seller extends seller_frontpage
 		$this->output();
 	}
 
+    public function account()
+    {
+        $this->pagedata['company'] = $this->app->model('company')->getRow('*', array('seller_id' => $this->seller['seller_id']));
+        $this->pagedata['contact'] = $this->app->model('contact')->getRow('*', array('seller_id' => $this->seller['seller_id']));
+        if($_POST)
+        {
+            $post = $_POST;
+            $user_passport = vmc::singleton('seller_user_passport');
+            $post['seller']['company_id'] = $this->pagedata['company']['company_id'];
+            $post['seller']['seller_id'] = $this->seller['seller_id'];
+            $user_passport->settled_company($post['seller']);
+            $user_passport->signup_contactInfo($post['contact']);
+        }
+        $this->output();
+    }
 	public function company()
 	{
         $this->title .= "公司信息";

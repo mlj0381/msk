@@ -87,113 +87,78 @@ class seller_ctl_site_passport extends seller_frontpage
 
 
     //注册页面
-    public function signup($forward)
+    public function signup($step)
     {
-        if($_POST){
-            $redirect = $this->gen_url(array(
-              'app' => 'seller',
-              'ctl' => 'site_passport',
-              'act' => 'signup',
-            ));
-            if(!$this->_signup_account($_POST, $redirect))
-            {
-                $this->splash('error', $redirect, '注册失败');
-            }
-            $redirect = $this->gen_url(array(
-              'app' => 'seller',
-              'ctl' => 'site_passport',
-              'act' => 'companyInfo',
-            ));
-            $this->splash('success', $redirect, '注册成功');
-        }
         $this->title = '注册成为会员';
+        $this->set_tmpl('passport');
         //检查是否登录，如果已登录则直接跳转到会员中心
-        $this->check_login();
-        $this->set_forward($forward); //设置登录成功后跳转
+        //$this->check_login();
+        //$this->set_forward($forward); //设置登录成功后跳转
         //获取会员注册项
         if ($this->app->getConf('member_signup_show_attr') == 'true') {
             $this->pagedata['attr'] = $this->passport_obj->get_signup_attr();
         }
-        $this->set_tmpl('passport');
-        $this->page('site/passport/signup.html');
-
-    }
-    //公司信息
-    public function companyInfo()
-    {
-        if($_POST){
-            $redirect = $this->gen_url(array(
-              'app' => 'seller',
-              'ctl' => 'site_passport',
-              'act' => 'companyInfo',
-            ));
-            $_POST['seller']['seller_id'] = $this->seller['seller_id'];
-            if(!$this->passport_obj->signup_company($_POST)){
-                $this->splash('error', $redirect, '注册失败');
-            }
-            $redirect = $this->gen_url(array(
-              'app' => 'seller',
-              'ctl' => 'site_passport',
-              'act' => 'contactInfo',
-            ));
-            $this->splash('success', $redirect, '注册成功');
+        if($_POST) $this->_signup($_POST, $step);
+        switch($step)
+        {
+            case '1':
+                $tpl = 'signup_companyInfo';
+                break;
+            case '2':
+                $tpl = 'signup_contactInfo';
+                break;
+            case '3':
+                $tpl = 'signup_complete';
+                break;
+            default:
+                $tpl = 'signup';
+                break;
         }
-        $this->set_tmpl('passport');
-        $this->page('site/passport/signup_companyInfo.html');
+        $this->page('site/passport/'.$tpl.'.html');
+
     }
-    //联系人信息
-    public function contactInfo()
+    private function _signup($post, $step)
     {
-        if($_POST){
-            $redirect = $this->gen_url(array(
-              'app' => 'seller',
-              'ctl' => 'site_passport',
-              'act' => 'contactInfo',
-            ));
-            $_POST['contact']['seller_id'] = $this->seller['seller_id'];
-            if(!$this->passport_obj->signup_contactInfo($_POST)){
-                $this->splash('error', $redirect, '注册失败');
-            }
-            $redirect = $this->gen_url(array(
-              'app' => 'seller',
-              'ctl' => 'site_passport',
-              'act' => 'complete',
-            ));
-            $this->splash('success', $redirect, '注册成功');
+        $redirect = $this->gen_url(array(
+          'app' => 'seller',
+          'ctl' => 'site_passport',
+          'act' => 'signup',
+          'args' => array($step),
+        ));
+        $return = false;
+        switch ($step) {
+            case '1':
+                $return = $this->_signup_account($post['seller'], $redirect);
+                break;
+            case '2':
+                $return = $this->passport_obj->signup_company($post['seller']);
+                break;
+            case '3':
+                $post['contact']['seller_id'] = $this->seller['seller_id'];
+                $return = $this->passport_obj->signup_contactInfo($post['contact']);
+                break;
         }
-      $this->set_tmpl('passport');
-      $this->page('site/passport/signup_contactInfo.html');
+        if($return){
+            $this->splash('success', $redirect, '注册成功');
+        }else{
+            $this->splash('error', null, '注册成功');
+        }
     }
-
-    //注册完成
-    public function complete()
-    {
-
-      $this->set_tmpl('passport');
-      $this->page('site/passport/signup_complete.html');
-    }
-
-
-
-
 
     //入驻方法
     public function settled($step){
         $this->verify();
-        if($_POST) $this->_signup($_POST, $step);
+        if($_POST) $this->_settled($_POST, $step);
         switch ($step) {
            case '1':
                $this->_contact();
                $tpl = 'company';//公司信息
                break;
            case '2':
-               $tpl = 'aptitudes';//资质信息
+               $tpl = 'shop';//资质信息
                break;
            case '3':
-               $tpl = 'shop';//店铺
-               break;
-           case '4':
-               $tpl = 'brand';//品牌
+               $tpl = 'complete';//店铺
                break;
            default:
                $tpl = 'account';//帐号
@@ -206,9 +171,10 @@ class seller_ctl_site_passport extends seller_frontpage
     private function _contact()
     {
         $this->pagedata['contact'] = $this->app->model('contact')->getRow('*', array('seller_id' => $this->seller['seller_id']));
+        $this->pagedata['company'] = $this->app->model('company')->getRow('*', array('seller_id' => $this->seller['seller_id']));
     }
 
-    private function _signup($post, $step){
+    private function _settled($post, $step){
         $redirect = $this->gen_url(array(
           'app' => 'seller',
           'ctl' => 'site_passport',
@@ -217,29 +183,16 @@ class seller_ctl_site_passport extends seller_frontpage
       ));
       $post['seller']['seller_id'] = $this->seller['seller_id'];
       switch ($step) {
-          case '1':
-              $return = $this->_signup_account($post, $redirect);//帐号
-              break;
           case '2':
-              $return = $this->passport_obj->signup_company($post);//公司信息
+              $return = $this->passport_obj->settled_company($post['seller']);//公司信息
               break;
           case '3':
-              $return = $this->passport_obj->signup_aptitudes($post);//资质信息
+              $return = $this->passport_obj->signup_shop($post['seller']); //店铺
               break;
           case '4':
-              $return = $this->passport_obj->signup_shop($post);//店铺
+
               break;
-          case '5':
-              $return = $this->passport_obj->signup_brand($post);//品牌
-              if($return){
-                  $redirect = $this->gen_url(array(
-                      'app' => 'seller',
-                      'ctl' => 'site_seller',
-                      'act' => 'index',
-                  ));
-              }
-              break;
-      }
+    }
       if($return){
           $this->splash('success', $redirect, '成功');
       }else{
@@ -329,19 +282,4 @@ class seller_ctl_site_passport extends seller_frontpage
         }
         $this->splash('success', $forward, '退出登录成功');
     }
-
-
-
-    /**
-     * 2015-11-18
-     * 商家入驻
-     */
-    /*public function settled()
-    {
-      $this->set_tmpl('seller_settled');
-      $this->page('site/passport/settled-1.html');
-    }*/
-
-
-
 }

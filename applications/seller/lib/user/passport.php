@@ -544,11 +544,11 @@ class seller_user_passport
    public function signup_company($post){
        $db = vmc::database();
        $db->beginTransaction();
-       if($company_id = $this->app->model('company')->insert($post['seller'])){
+       if($company_id = $this->app->model('company')->insert($post)){
          $update_seller_data = array('status' => 1,
                                      'company_id' => $company_id,
                                    );
-         if(!$this->app->model('sellers')->update( $update_seller_data, array('seller_id' => $post['seller']['seller_id']))){
+         if(!$this->app->model('sellers')->update( $update_seller_data, array('seller_id' => $post['seller_id']))){
            $db->rollBack();
            return false;
          }
@@ -557,39 +557,49 @@ class seller_user_passport
        }
        return false;
    }
+
+   //入驻商家公司信息完善
+   public function settled_company($post){
+       $filter['seller_id'] = $post['seller_id'];
+       unset($post['seller_id']);
+       if(!$this->app->model('company')->update($post, $filter))
+       {
+           return false;
+       }
+       return true;
+   }
    //商家入驻联系人信息注册
    public function signup_contactInfo($post){
        $mdl_contact = $this->app->model('contact');
-       if($mdl_contact->save($post['contact'])){
+       if($mdl_contact->save($post)){
            return true;
        }
        return false;
    }
    //商家入驻资质信息注册
-   public function signup_aptitudes($post){
-       $mdl_aptitudes = $this->app->model('aptitudes');
-       if($mdl_aptitudes->save($post['seller'])){
-           return true;
-       }
-       return false;
-   }
+   // public function signup_aptitudes($post){
+   //     $mdl_aptitudes = $this->app->model('aptitudes');
+   //     if($mdl_aptitudes->save($post['seller'])){
+   //         return true;
+   //     }
+   //     return false;
+   // }
    //商家入驻店铺注册
    public function signup_shop($post){
-       //var_dump($post);exit;
        $mdl_store = app::get('store')->model('store');
-       if($mdl_store->save($post['seller'])){
+       if($mdl_store->save($post)){
            return true;
        }
        return false;
    }
    //商家入驻品牌信息注册
-   public function signup_brand($post){
-       $mdl_brand = $this->app->model('brand');
-       $post['seller']['create_time'] = time();
-       if(!$mdl_brand->save($post['seller'])){
-           return false;
-       }
-       return true;
-
-   }
+   // public function signup_brand($post){
+   //     $mdl_brand = $this->app->model('brand');
+   //     $post['seller']['create_time'] = time();
+   //     if(!$mdl_brand->save($post['seller'])){
+   //         return false;
+   //     }
+   //     return true;
+   //
+   // }
 }

@@ -60,7 +60,6 @@ $db['store'] = array(
             'in_list' => true,
             'default_in_list' => true,
         ) ,
-
         'logo' => array(
             'type' => 'char(32)',
             'comment' => ('店铺logo') ,
@@ -75,9 +74,9 @@ $db['store'] = array(
             'in_list' => false,
             'default_in_list' => false,
         ),
-        'template_setting' => array(
+        'store_setting' => array(
             'type' => 'serialize',
-            'comment' => ('模板设置') ,
+            'comment' => ('店铺设置') ,
             'deny_export' => true,
         ),
 

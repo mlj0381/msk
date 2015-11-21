@@ -21,6 +21,20 @@ $db['company'] = array(
             'in_list' => true,
 			'comment' => '公司ID',
         ),
+        'company_contacts' => array(
+            'type' => 'varchar(100)',
+            'required' => true,
+            'label' => '紧急联系人',
+            'in_list' => true,
+            'comment' => '紧急联系人',
+        ),
+        'contacts_phone' => array(
+            'type' => 'varchar(100)',
+            'required' => true,
+            'label' => '紧急联系人电话',
+            'in_list' => true,
+            'comment' => '紧急联系人电话',
+        ),
 		'company_name' => array(
             'type' => 'varchar(100)',
             'required' => true,
@@ -187,6 +201,12 @@ $db['company'] = array(
             'sdfpath' => 'contact/area',
             'label' => '开户银行所在地',
             'comment' => '开户银行所在地',
+        ),
+        'bank_branch_number' => array(
+            'type' => 'text',
+            'default' => '',
+            'label' => '开户银行支行联行号：',
+            'comment' => '开户银行支行联行号：',
         ),
         'extra' => array(
             'type' => 'serialize',
