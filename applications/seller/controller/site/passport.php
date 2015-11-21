@@ -145,6 +145,17 @@ class seller_ctl_site_passport extends seller_frontpage
         }
     }
 
+    //入驻首页
+    public function settled_index(){
+        $this->set_tmpl('passport');
+        $this->page('site/passport/settled.html');
+    }
+    public function settled_status(){
+        $this->set_tmpl('passport');
+        $this->page('site/passport/apply.status.html');
+    }
+
+
     //入驻方法
     public function settled($step){
         $this->verify();

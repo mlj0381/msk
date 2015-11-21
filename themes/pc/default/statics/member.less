@@ -531,11 +531,225 @@ ul,ol{
 			}
 			
 		}
+
 	}
 	//END 商家入驻
+	
 
 
+	//商家入驻首页
+	.settled_indexpage{
+		width:100%;
+		background: #fff;
+		padding: 20px;
+		border-top:1px solid #ddd;
 
+		.side_left{
+			width:200px;
+			box-sizing: border-box;
+			border:1px solid #ddd;
+			.fl;
+
+			dl{
+				dt.menu_root{
+					width:100%;
+					background: #f5f5f5;
+					height:34px;
+					line-height: 34px;
+					padding:0 10px;
+					font-size:16px;
+					margin-bottom:10px;
+				}
+				dd.menu_item{
+					width:100%;
+					padding:0 10px;
+					height: 34px;
+					line-height: 34px;
+					font-size: 14px;
+	
+					&.active{
+						background: @basecolor;
+						a{
+							color:#fff;
+						}
+					}
+				}
+			}
+		}
+		.maincon_right{
+			width:940px;
+			.fr;
+
+			.advbox{
+				width:100%;
+				height:310px;
+				overflow: hidden;
+				background: url(../statics/images/settled_indexAdv.jpg) no-repeat;
+
+				span{
+					display: block;
+					width:100%;
+					margin-top:225px; 
+					text-align: center;
+
+					a{
+						display: inline-block;
+						width:165px;
+						height:46px;
+						line-height: 46px;
+						font-size: 22px;
+					}
+					a.settled_btn{
+						background: @basecolor;
+						color:#fff;
+					}
+					a.settled_progress_btn{
+						background: #fff;
+						color:@basecolor;
+						margin-left:10px;
+					}
+				}
+			}
+			.settled_process{
+				width:100%;
+				overflow: hidden;
+				h2{
+
+				}
+				.process_items{
+					width:100%;
+					margin-top:45px;
+					margin-left:-45px;
+					.process_item{
+						width:220px;
+						border:2px solid #ddd;
+						.radius(10px);
+						.fl;
+						padding-bottom:30px;
+						margin-left:90px;
+						position: relative;
+						span{
+							position: absolute;
+							display: block;
+							left:50%;
+							top:-20px;
+							width:40px;
+							height:40px;
+							margin-left:-20px;
+							line-height: 40px;
+							font-size: 16px;
+							border:2px solid #ddd;
+							text-align: center;
+							.radius(50%);
+							background: #fff;
+							color:#ddd;
+							font-weight: 700;
+						}
+						dl{
+							margin-top:30px;
+							width:100%;
+							padding:0 15px;
+							dt{
+								font-size: 20px;
+								font-weight: bold;
+								text-align: center;
+							}
+							dd{
+								margin-top:25px;
+								p{
+									font-size: 12px;
+									color:#727171;
+								}
+							}
+						}
+						&:hover{
+							border:2px solid @basecolor;
+							span{
+								border:2px solid @basecolor;
+								color:@basecolor;
+							}
+						}
+
+					}
+				}
+			}
+		}
+	}
+
+	//END 商家入驻首页
+	
+	//商家入驻状态
+	.settled_statuspage{
+		width:100%;
+		background: #fff;
+		min-height: 600px;
+		padding:20px;
+		text-align: center;
+		ul.status_label{
+			padding-top:50px;
+			display: inline-block;
+			margin:0 auto;
+			margin-bottom:10px;
+			li{
+				display: inline-block;
+				width:200px;
+				font-size:14px;
+				font-weight: bold;
+				.fl;
+			}
+		}
+		ul.status_process{
+			margin-top:20px;
+			display: inline-block;
+			margin:0 auto;
+			height:8px;
+			line-height: 8px;
+			background: #ddd;
+			li{
+				display:inline-block;
+				width:200px;
+				position: relative;
+				height:8px;
+				.fl;
+
+				span{
+					position: absolute;
+					display: inline-block;
+					width:20px;
+					line-height: 20px;
+					text-align: center;
+					background: #ddd;
+					left:50%;
+					margin-left:-10px;
+					margin-top:-6px;
+					.radius(50%);
+					color:#fff;
+				}
+				&.active{
+					background: #222;
+					span{
+						background: @basecolor;
+					}
+				}
+			}
+		}
+		.return_btn, .return_index{
+			width:160px;
+			height:40px;
+			line-height: 40px;
+			text-align: center;
+			background: @basecolor;
+			color:#fff;
+			font-size: 16px;
+			display: block;
+			margin:0 auto;
+			border:none;
+			.radius(20px);
+			margin-top:100px;
+		}
+	}
+
+	//END 商家入驻状态
 
 
 }
