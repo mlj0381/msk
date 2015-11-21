@@ -13,19 +13,23 @@
             <h1>平台审核</h1>
         </div>
         <div class="platform_audit">
+            <{if $store.status eq '0'}>
             <div class="audit_wait">
                 <h2><i class="glyphicon glyphicon-time"></i>请耐心等待品台资质审核</h2>
                 <p>您的开店申请已经受理，平台管理部门将在3个工作日内完成资质审核，敬请期待</p>
             </div>
+            <{elseif $store.status eq '-1'}>
             <div class="audit_fail">
                 <h2><i class="glyphicon glyphicon-remove"></i>开店审核未通过</h2>
                 <p>很遗憾，您的开店审核未通过，期待未来能够再次合作。</p>
             </div>
+            <{elseif $store.status eq '1'}>
             <div class="audit_success">
                 <h2><i class="glyphicon glyphicon-ok"></i>已经审核通过，去开店吧！</h2>
                 <p>您的开店审核已经通过，去设置您的店铺吧！</p>
                 <a href="#">设置店铺</a>
             </div>
+            <{/if}>
         </div>
         <!-- <form id="seller_signup_form" class="form-horizontal" action="<{link app=seller ctl=site_passport act=signup args0=4}>" method="post">
             <div class="form-group">

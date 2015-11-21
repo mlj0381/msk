@@ -31,7 +31,16 @@ class seller_ctl_admin_seller extends desktop_controller {
         ));
 
     }
-
+    public function checkin()
+    {
+        $this->begin('index.php?app=seller&ctl=admin_seller&act=index&p[0]=checkin');
+        if(!$_POST) $this->end(false, '非法请求');
+        $user_passport = vmc::singleton('seller_user_passport');
+        if(!$user_passport->update_selelr($_POST['seller'])){
+           $this->end(false, '审核失败');
+       }
+        $this->end(true, '审核成功');
+    }
     public function checked($id, $type)
     {
         if($_POST) $this->_checked($_POST);

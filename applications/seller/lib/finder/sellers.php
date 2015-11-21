@@ -12,7 +12,6 @@ class seller_finder_sellers{
 
     public $column_control = '操作';
     public $column_store = '店铺';
-    public $column_check = '审核';
     public $column_goods = '商品数';
     public $column_order = '订单数';
     public $column_contact = '联系人';
@@ -22,7 +21,14 @@ class seller_finder_sellers{
     public function __construct($app){
         $this->app = $app;
     }
-    
+    public function detail_basic($seller_id){
+        $render = $this->app->render();
+        $user_passport = vmc::singleton('seller_user_passport');
+        $render->pagedata['company'] = $user_passport->get_company($seller_id);
+        $render->pagedata['contact'] = $user_passport->get_contact($seller_id);
+        return $render->fetch('admin/seller/finder/baics.html');
+    }
+
     public function column_contact($seller_id){
         $this->contact = app::get('seller')->model('contact')->getRow('name, tel', array('seller_id' => $seller_id));
         return $this->contact['name'];
@@ -36,10 +42,14 @@ class seller_finder_sellers{
     }
     public function column_store($row){
         $store = app::get('store')->model('store')->getRow('store_id, status', array('seller_id' => $row['seller_id']));
-        if($store['status'] == 0){
-            $return = '审核中';
-        }else if($store['status'] == 1){
-            $return = "<a class='btn btn-default btn-xs'$row href='index.php?app=seller&ctl=admin_seller&act=assign_goods&p[0]={$store['store_id']}'>分配商品</a>";
+        if($store){
+            if($store['status'] == 0){
+                $return = '审核中';
+            }else if($store['status'] == 1){
+                $return = "<a class='btn btn-default btn-xs'$row href='index.php?app=seller&ctl=admin_seller&act=assign_goods&p[0]={$store['store_id']}'>分配商品</a>";
+            }else {
+                $return = '未通过';
+            }
         }else{
             $return = '未申请';
         }
@@ -55,65 +65,6 @@ class seller_finder_sellers{
     public function column_order($row){
         return '订单数';
     }
-    public function column_check($row){
 
-         $seller = app::get('seller')->model('sellers')->dump($row['seller_id'], '*', 'checkin');
-         $suatus[] = array_shift($seller['company']);
-         array_unshift($suatus, array_shift($seller['aptitudes']));
-         array_unshift($suatus, array_shift($seller['store']));
-         array_unshift($suatus, array_shift($seller['brand']));
-         foreach ($suatus as $key => $value) {
-             switch ($value['status']) {
-                 case '1':
-                     $style[$key] = 'background-color:#008000';
-                     break;
-                 case '-1':
-                     $style[$key] = 'background-color:#ff0000';
-                     break;
-                 case '0':
-                     $style[$key] = '';
-                     break;
-             }
-         }
-         $html = <<<HTML
-                <a style="{$style[3]}" href="index.php?app=seller&ctl=admin_seller&act=checked&p[0]={$row['seller_id']}&p[1]=company" class="btn btn-default btn-xs" data-toggle="modal" data-target="#check_company"><i class="fa fa-edit"></i>公司</a>
-                <a style="{$style[2]}" href="index.php?app=seller&ctl=admin_seller&act=checked&p[0]={$row['seller_id']}&p[1]=aptitudes" class="btn btn-default btn-xs" data-toggle="modal" data-target="#check_aptitudes"><i class="fa fa-edit"></i>资质</a>
-                <a style="{$style[1]}" href="index.php?app=seller&ctl=admin_seller&act=checked&p[0]={$row['seller_id']}&p[1]=store" class="btn btn-default btn-xs" data-toggle="modal" data-target="#check_store"><i class="fa fa-edit"></i>店铺</a>
-                <a style="{$style[0]}" href="index.php?app=seller&ctl=admin_seller&act=checked&p[0]={$row['seller_id']}&p[1]=brand" class="btn btn-default btn-xs" data-toggle="modal" data-target="#check_brand"><i class="fa fa-edit"></i>品牌</a>
-                <div class="modal fade" id="check_company" role="basic" aria-hidden="true">
-                    <div class="modal-dialog">
-                          <div class="modal-content">
-
-                          </div>
-                    </div>
-                </div>
-                <div class="modal fade" id="check_aptitudes" role="basic" aria-hidden="true">
-                    <div class="modal-dialog">
-                          <div class="modal-content">
-
-                          </div>
-                    </div>
-                </div>
-
-                <div class="modal fade" id="check_store" role="basic" aria-hidden="true">
-                    <div class="modal-dialog">
-                          <div class="modal-content">
-
-                          </div>
-                    </div>
-                </div>
-
-                <div class="modal fade" id="check_brand" role="basic" aria-hidden="true">
-                    <div class="modal-dialog">
-                          <div class="modal-content">
-
-                          </div>
-                    </div>
-                </div>
-
-
-HTML;
-        return $html;
-    }
 
 }

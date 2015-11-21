@@ -159,6 +159,7 @@ class seller_ctl_site_passport extends seller_frontpage
     //入驻方法
     public function settled($step){
         $this->verify();
+        $stroe = $this->passport_obj->get_store($this->seller['seller_id']);
         if($_POST) $this->_settled($_POST, $step);
         switch ($step) {
            case '1':
@@ -169,7 +170,8 @@ class seller_ctl_site_passport extends seller_frontpage
                $tpl = 'shop';//资质信息
                break;
            case '3':
-               $tpl = 'complete';//店铺
+               $this->pagedata['store'] = $stroe;
+               $tpl = 'complete';//完成
                break;
            default:
                $tpl = 'account';//帐号

@@ -545,10 +545,13 @@ class seller_user_passport
        $db = vmc::database();
        $db->beginTransaction();
        if($company_id = $this->app->model('company')->insert($post)){
-         $update_seller_data = array('status' => 1,
-                                     'company_id' => $company_id,
-                                   );
-         if(!$this->app->model('sellers')->update( $update_seller_data, array('seller_id' => $post['seller_id']))){
+         $seller_data = array(
+                            'status' => 1,
+                             'company_id' => $company_id,
+                             'seller_id' => $post['seller_id'],
+                            );
+         //if(!$this->app->model('sellers')->update( $update_seller_data, array('seller_id' => $post['seller_id']))){
+        if(!$this->update_selelr($seller_data)){
            $db->rollBack();
            return false;
          }
@@ -556,6 +559,10 @@ class seller_user_passport
          return true;
        }
        return false;
+   }
+
+   public function update_selelr($data){
+      return $this->app->model('sellers')->save($data);
    }
 
    //入驻商家公司信息完善
@@ -592,6 +599,8 @@ class seller_user_passport
        }
        return false;
    }
+
+
    //商家入驻品牌信息注册
    // public function signup_brand($post){
    //     $mdl_brand = $this->app->model('brand');
@@ -602,4 +611,15 @@ class seller_user_passport
    //     return true;
    //
    // }
+   public function get_company($seller_id){
+       return $this->app->model('company')->getRow('*', array('seller_id' => $seller_id));
+
+   }
+
+   public function get_store($seller_id){
+       return app::get('store')->model('store')->getRow('*', array('seller_id' => $seller_id));
+   }
+   public function get_contact($seller_id){
+       return $this->app->model('contact')->getRow('*', array('seller_id' => $seller_id));
+   }
 }

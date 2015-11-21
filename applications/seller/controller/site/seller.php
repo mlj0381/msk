@@ -28,8 +28,8 @@ class seller_ctl_site_seller extends seller_frontpage
 
     public function account()
     {
-        $this->pagedata['company'] = $this->app->model('company')->getRow('*', array('seller_id' => $this->seller['seller_id']));
-        $this->pagedata['contact'] = $this->app->model('contact')->getRow('*', array('seller_id' => $this->seller['seller_id']));
+        $this->pagedata['company'] = $this->get_company();
+        $this->pagedata['contact'] = $this->get_contact();
         if($_POST)
         {
             $post = $_POST;
