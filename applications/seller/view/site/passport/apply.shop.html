@@ -4,82 +4,124 @@
             <dt>商家入驻</dt>
             <dd><a href="">入驻须知</a></dd>
             <dd><a href="">公司信息认证</a></dd>
-            <dd><a href="">店铺信息上传</a></dd>
-            <dd class="active"><a href="">平台审核</a></dd>
+            <dd class="active"><a href="">店铺信息上传</a></dd>
+            <dd><a href="">平台审核</a></dd>
         </dl>
     </div>
     <div class="panel-body settled_main">
         <div class="page_heading">
-            <h1>平台审核</h1>
+            <h1>店铺信息上传</h1>
         </div>
-        <div class="platform_audit">
-            <div class="audit_wait">
-                <h2><i class="glyphicon glyphicon-time"></i>请耐心等待品台资质审核</h2>
-                <p>您的开店申请已经受理，平台管理部门将在3个工作日内完成资质审核，敬请期待</p>
-            </div>
-            <div class="audit_fail">
-                <h2><i class="glyphicon glyphicon-remove"></i>开店审核未通过</h2>
-                <p>很遗憾，您的开店审核未通过，期待未来能够再次合作。</p>
-            </div>
-            <div class="audit_success">
-                <h2><i class="glyphicon glyphicon-ok"></i>已经审核通过，去开店吧！</h2>
-                <p>您的开店审核已经通过，去设置您的店铺吧！</p>
-                <a href="#">设置店铺</a>
-            </div>
+        <div class="settled_warning">
+            <dl class="clearfix">
+                <dt><i class="icon-warning-sign"></i></dt>
+                <dd>
+                    <p>1.信息提交前，请务必先了解<a href="">《神农客招商标准》</a>;</p>
+                    <p>2.公司类需填项较多，建议先查看<a href="">《公司信息注意事项》</a>再填写;</p>
+                    <p>3.以下所需要上传的电子版资质仅支持JPG、GIF、PNG格式图片，大小不超过1M,且必须加盖企业公章;</p>
+                </dd>
+            </dl>
         </div>
-        <!-- <form id="seller_signup_form" class="form-horizontal" action="<{link app=seller ctl=site_passport act=signup args0=4}>" method="post">
-            <div class="form-group">
-                <label for="input_addr" class="col-xs-2 control-label">店铺LOGO<span class="text-danger">*</span></label>
+        <form id="" class="form-horizontal settled_shop_form" action="<{link app=seller ctl=site_passport act=settled args0=3}>" method="post">
+            <!-- <div class="form-group">
+                <label for="input_addr" class="col-xs-2 control-label">店铺LOGO：<span class="text-danger">*</span></label>
                 <div class="col-xs-5" style="margin-top:8px;">
                     <input type="file" accept="image/*" data-url="<{link app=image ctl=site_upload act=index}>" class="form-control" value="">
                     <input type="hidden" name="seller[logo]" value="" />
                     <span class="hide">上传成功</span>
                 </div>
-            </div>
+            </div> -->
             <div class="form-group">
-                <label for="input_addr" class="col-xs-2 control-label">店铺名称<span class="text-danger">*</span></label>
-                <div class="col-xs-5" style="margin-top:8px;">
+                <label for="input_addr" class="col-xs-2 control-label"><span class="text-danger">*</span>店铺类型：</label>
+                <div class="col-xs-5">
+                    <select class="form-control" name="seller[store_setting][type]">
+                        <option value="1">旗舰店</option>
+                        <option value="2">品牌店</option>
+                        <option value="3">专营店</option>
+                        <option value="4">专卖店</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="" class="col-xs-2 control-label"><span class="text-danger">*</span>店铺名称：</label>
+                <div class="col-xs-5" >
                     <{input type="text" required="true" name="seller[store_name]" value=$store.store_name placeholder="店铺名称" }>
                 </div>
             </div>
             <div class="form-group">
-                <label for="input_addr" class="col-xs-2 control-label">店铺简介<span class="text-danger">*</span></label>
-                <div class="col-xs-5" style="margin-top:8px;">
-                    <{input type="textarea" required="true" name="seller[description]" value=$store.description placeholder="店铺简介" }>
+                <label for="" class="col-xs-2 control-label"><span class="text-danger">*</span>产品大类：</label>
+                <div class="col-xs-5" >
+                    <select class="form-control" name="seller[store_setting][good_type]">
+                        <option value="1">鸡肉类</option>
+                        <option value="2">鱼类</option>
+                    </select>
                 </div>
             </div>
             <div class="form-group">
-                <label for="input_addr" class="col-xs-2 control-label">所在地区<span class="text-danger">*</span></label>
-                <div class="col-xs-5" style="margin-top:8px;">
-                    <{input type="region" required="true" name="seller[store_area]" value=$store.store_area}>
+                <label for="" class="col-xs-2 control-label"><span class="text-danger">*</span>详细产品类目：</label>
+                <div class="col-xs-5" >
+                    <button class="btn btn-default">添加</button>
+                    <a href="#">《查看类目费用标准》</a>
                 </div>
             </div>
             <div class="form-group">
-                <label for="input_addr" class="col-xs-2 control-label">详细地址<span class="text-danger">*</span></label>
-                <div class="col-xs-5" style="margin-top:8px;">
-                    <{input type="text" required="true" name="seller[store_address]" value=$store.store_address placeholder="详细地址" }>
+                <label for="" class="col-xs-2 control-label"><span class="text-danger">*</span>经营品牌：</label>
+                <div class="col-xs-5" >
+                    无
+                    <button class="btn btn-default">品牌添加</button>
+
                 </div>
             </div>
             <div class="form-group">
-                <label for="input_addr" class="col-xs-2 control-label">主要货源<span class="text-danger">*</span></label>
+                <label for="" class="col-xs-2 control-label"><span class="text-danger">*</span>经营产品：</label>
                 <div class="col-xs-5" style="margin-top:8px;">
-                    <input type="radio" required=true name="seller[source]" value="1" style="margin:0px 8px;" />线下批发市场
-                    <input type="radio" required=true name="seller[source]" value="2" style="margin:0px 8px;" />实体店拿货
-                    <input type="radio" required=true name="seller[source]" value="3" style="margin:0px 8px;" />自己生产
+                    <{input type="textarea" required="true" name="seller[store_setting][operate_good]" value=$store.operate_good placeholder="经营产品" }>
                 </div>
             </div>
             <div class="form-group">
-                <label for="input_addr" class="col-xs-2 control-label">店铺介绍<span class="text-danger">*</span></label>
-                <div class="col-xs-5" style="margin-top:8px;">
-                    <{input type="textarea" required="true" name="seller[present]" value=$store.present placeholder="店铺介绍" }>
+                <label class="col-xs-2 control-label"><span class="text-danger">*</span>法人身份证电子版：</label>
+                <div class="col-xs-5">
+                    <div class="filebox">
+                        <input type="file" accept="image/*" input-name="seller[store_setting][legal_idcard_image]" class="file_input" data-url="<{link app=image ctl=site_upload act=index}>" />
+                        <div class="showImg">
+                            <img src="<{$base_url}>/themes/pc/default/statics/images/file_add.jpg">
+                        </div>
+                        <span class="file_ctr">
+                            <a href="#">查看</a>
+                            <a href="#">删除</a>
+                        </span>
+                    </div>
                 </div>
             </div>
+
             <div class="form-group">
                 <div class="col-xs-offset-2 col-xs-5">
+                    <a href="<{link app=seller ctl=site_passport act=settled args0=1}>" class="btn btn-warning">上一步</a>
+                    <a href="<{link app=seller ctl=site_passport act=settled args0=3}>" class="btn btn-warning">下一步</a>
                     <button type="submit" data-loading-text="正在提交..." class="btn btn-warning">提交</button>
                 </div>
             </div>
-        </form> -->
+        </form>
     </div>
 </div>
+<script>
+$(function() {
+    $('input[type="file"]').fileupload({
 
+        add: function(e, data) {
+            if (!data.files[0]['type'].match(/^image/)) {
+                alert('非法上传，不是图片类型');
+            }
+            data.submit();
+        },
+        done: function(e, data) {
+            var re = $.parseJSON(data.result);
+            var input = e.target || e.srcElement;
+            $(input).next('.showImg').append('<input type="hidden" name="'+$(input).attr('input-name')+'" value="'+re.image_id+'" />');
+            $(input).next('.showImg').find('img').attr('src',re.url);
+
+        }
+    });
+});
+</script>

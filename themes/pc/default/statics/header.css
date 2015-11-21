@@ -109,8 +109,7 @@ header .container-fulid .topbar .website_menu {
   display: none;
   width: 100%;
   margin: 0 auto;
-  min-height: 400px;
-  z-index: 1000000000;
+  z-index: 2000;
   background: #fff;
   border-bottom: 1px solid #ccc;
 }
@@ -166,13 +165,17 @@ header .searchbar .searchbox .search_form .search_txt input {
   outline: none;
   padding-left: 10px;
 }
-header .searchbar .searchbox .search_form .search_btn button {
+header .searchbar .searchbox .search_form .search_btn {
+  display: inline-block;
   width: 60px;
   background: #e93428;
   height: 36px;
   line-height: 36px;
   color: #fff;
   border: none;
+  text-align: center;
+  cursor: pointer;
+  outline: none;
 }
 header .searchbar .searchbox .hotSearch {
   width: 370px;
@@ -201,6 +204,7 @@ header .searchbar .kefu .mobile .wxcode {
   z-index: 100;
   padding: 10px;
   left: -50px;
+  z-index: 10000;
 }
 header .searchbar .kefu .mobile .wxcode:before {
   content: "";
@@ -259,31 +263,27 @@ nav.navbar ul.nav li.default a {
   padding-left: 20px;
 }
 nav.navbar ul.nav li .category-container {
-  margin: 0 auto;
-  height: 550px;
-  position: relative;
-  z-index: 1000;
-}
-nav.navbar ul.nav li .category {
   width: 200px;
-  background: #cc0116;
   position: absolute;
-  top: 0px;
+  top: 50px;
   left: 0px;
+  z-index: 5000;
   height: 550px;
+  background: #cc0116;
   opacity: 0.85;
 }
-nav.navbar ul.nav li .category .list-group {
+nav.navbar ul.nav li .category-container .category ul.list-group {
   margin: 0px;
+  cursor: pointer;
 }
-nav.navbar ul.nav li .category .list-group-item:first-child {
+nav.navbar ul.nav li .category-container .category ul.list-group li.list-group-item:first-child {
   border-top-left-radius: 0px;
   border-top-right-radius: 0px;
 }
-nav.navbar ul.nav li .category .list-group-item:last-child {
+nav.navbar ul.nav li .category-container .category ul.list-group li.list-group-item:last-child {
   border-radius: 0px;
 }
-nav.navbar ul.nav li .category .list-group-item {
+nav.navbar ul.nav li .category-container .category ul.list-group li.list-group-item {
   font-size: 16px;
   position: relative;
   display: block;
@@ -294,33 +294,34 @@ nav.navbar ul.nav li .category .list-group-item {
   height: 40px;
   line-height: 40px;
 }
-nav.navbar ul.nav li .category .list-group-item a {
+nav.navbar ul.nav li .category-container .category ul.list-group li.list-group-item a {
   margin: 0;
   padding: 0;
   background: none;
+  font-size: 14px;
 }
-nav.navbar ul.nav li .category .list-group-item i {
+nav.navbar ul.nav li .category-container .category ul.list-group li.list-group-item i {
   color: #FFF;
   font-size: 12px;
   padding-top: 13px;
 }
-nav.navbar ul.nav li .category .open {
+nav.navbar ul.nav li .category-container .category ul.list-group li.open {
   background: #e93428;
 }
-nav.navbar ul.nav li .category .open a {
+nav.navbar ul.nav li .category-container .category ul.list-group li.open a {
   color: #fff;
 }
-nav.navbar ul.nav li .category .dropdown-subcat {
+nav.navbar ul.nav li .category-container .category ul.list-group .dropdown-subcat {
   left: 200px;
   top: -2px;
   border: 0px;
   position: relative;
 }
-nav.navbar ul.nav li .category .nav-tabs {
+nav.navbar ul.nav li .category-container .category .nav-tabs {
   float: normal;
   border-bottom: 0px solid #ddd;
 }
-nav.navbar ul.nav li .category .tab-content {
+nav.navbar ul.nav li .category-container .category .tab-content {
   position: absolute;
   left: 200px;
   top: 0px;
@@ -333,9 +334,6 @@ nav.navbar ul.nav li .category .tab-content {
   display: none;
   opacity: 1;
 }
-nav.navbar ul.nav li .category-root {
-  cursor: pointer;
-}
-nav.navbar ul.nav li .category .tab-pane {
+nav.navbar ul.nav li .category-container .category .tab-pane {
   color: #333;
 }

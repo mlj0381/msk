@@ -20,7 +20,6 @@
                     <ul>
                         <li class="seller dropdown">
                             <a id="mySnk" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false" aria-haspopup="true" role="button" href="">我的神农客
-                                <i class="icon-angle-down"></i>
                             </a>
                             <ul class="dropdown-menu" role="menu" aria-labelledby="mySnk">
                                 <li><a href="">我的订单</a></li>
@@ -33,7 +32,7 @@
                         <li>|</li>
                         <li class="sellerSignup"><a href="<{link app=seller ctl=site_passport act=settled}>">商家入驻 <i class=" icon-circle-arrow-right"></i></a></li>
                         <li class="seller_block dropdown">
-                            <a href="<{link app=seller ctl=site_seller act=index}>">卖家中心<i class="icon-angle-down"></i></a>
+                            <a href="<{link app=seller ctl=site_seller act=index}>">卖家中心</a>
                             <!-- <a id="sellerCenter" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false" aria-haspopup="true" role="button" href="<{link app=seller ctl=site_seller act=index}>">
                             卖家中心 <i class="icon-angle-down"></i>
                             </a>
@@ -66,11 +65,11 @@
             <div class="searchbox col-md-4">
                 <div class="search_label">
                     <span class="active">商品</span>
-                    <span>店铺</span>
+                    <span >店铺</span>
                 </div>
-                <form class="search_form" action="" method="">
-                    <span class="search_txt"><input type="text" placeholder="请输入您要查找的商品" /></span>
-                    <span class="search_btn"><button>搜索</button></span>
+                <form class="search_form" action="<{link app=b2c ctl=site_list act=index}>" method="post">
+                    <span class="search_txt"><input type="text" value="" placeholder="请输入您要查找的商品"/></span>
+                    <button type="submit" class="search_btn">搜索</button>
                 </form>
                 <ul class="hotSearch">
                     <li><a href="">鸡腿</a></li>
@@ -196,4 +195,39 @@ $(function() {
     });
 
 });
+</script>
+
+<script type="text/javascript">
+    /**
+     * 顶部商品或店铺搜索
+     */
+    $('.search_label span').click(function(){
+        $(this).addClass('active').siblings().removeClass('active');
+        var index = $('.search_label span').index(this);
+        var url_list="<{link app=b2c ctl=site_list act=index}>";
+        var url_store="<{link app=seller ctl=site_store act=index}>";
+        if(index=="0"){
+            $('.search_form').attr('action',url_list);
+            $('.search_form .search_txt input').attr('value','');
+            $('.search_form .search_txt input').attr('placeholder','请输入你要查找的商品');
+        }else{
+
+            $('.search_form').attr('action',url_store);
+            $('.search_form .search_txt input').attr('value','');
+            $('.search_form .search_txt input').attr('placeholder','请输入你要查找的店铺名');
+        }
+    })
+
+    $('.search_btn').click(function(){
+        var keyword = $('.search_form .search_txt input').val();
+        var tips="亲，您还没输入关键词";
+        
+        if(!keyword||keyword==tips){
+            $('.search_form .search_txt input').attr('value',tips);
+            $('.search_form .search_txt input').focus(function(){
+                $(this).attr('value','');
+            })
+            return false;
+        }
+    })
 </script>

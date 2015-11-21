@@ -16,9 +16,27 @@ $(function(){
      * 全站导航
      */
 
-    $('.site_nav').bind('click',function(){
-    	$('.website_menu').slideToggle();
+    $('.site_nav').click(function(){
+        $('.website_menu').slideToggle();
     })
+
+
+    /**
+     * 首页搜索
+     */
+
+    /*$('.search_label span').click(function(){
+        $(this).addClass('active').siblings().removeClass('active');
+        var index = $('.search_label span').index(this);
+        if(index=="0"){
+            $('.search_form').attr('action','<{link app=b2c ctl=site_list act=index}>');
+        }else{
+            $('.search_form').attr('action','');
+        }
+    })*/
+    
+    
+    
 
 
     /**
