@@ -22,59 +22,84 @@ class b2c_ctl_site_list extends b2c_frontpage
     }
     public function index($fix_brand = false)
     {
+        if(isset($_POST['keywords']) && !empty($_POST['keywords'])) $keywords = $_POST['keywords'];
         $params = utils::_filter_input($_GET);
+        $datasetting = vmc::singleton('b2c_view_datasetting');
+        $cat_setting = $datasetting->goods_list_cat();
+        $params['cat_id'] = $params['cat_id'] ? $params['cat_id'] : 0;
+        $cat_title = '一级分类';
+        foreach ($cat_setting as $key => $value) {
+            if($value['parent_id'] == $params['cat_id']){
+                if($value['cat_lv'] == 2){
+                    $cat_title = '二级分类';
+                }else if($value['cat_lv'] == 3){
+                    $cat_title = '三级分类';
+                }
+                $this->pagedata['cat_title'] = $cat_title;
+                break;
+            }
+        }
+        $this->pagedata['cat'] = $cat_setting;
         $this->pagedata['cat_id'] = $params['cat_id'];
         $query_str = $this->_query_str($params);
         $this->pagedata['query'] = $this->_query_str($params, 0);
         $params = $this->_params_decode($params);
         $filter = $params['filter'];
-        if (!$fix_brand && $filter['cat_id']) {
-            $mdl_cat = $this->app->model('goods_cat');
-            $cat_info = $mdl_cat->dump($filter['cat_id']);
-            if ($cat_info['gallery_setting']['site_template']) {
-                $this->set_tmpl_file($cat_info['gallery_setting']['site_template']); //设置模板文件
-            }
-            $this->seo_info = $cat_info['seo_info'];
-            $this->pagedata['cat_path'] = $mdl_cat->getPath($filter['cat_id']);
-        } elseif($fix_brand) {
-            $filter['brand_id'] = $fix_brand;
-        }
-        $goods_list = $this->_list($filter, $params['page'], $params['orderby']);
-        $this->pagedata['data_list'] = $goods_list['data'];
-        $this->pagedata['count'] = $goods_list['count'];
-        $this->pagedata['all_count'] = $goods_list['all_count'];
-        $this->pagedata['pager'] = $goods_list['page_info'];
-        $this->pagedata['pager']['token'] = time();
-        $this->pagedata['pager']['link'] = $this->gen_url(array(
-            'app' => 'b2c',
-            'ctl' => 'site_list',
-            'act' => 'index',
-            'full' => 1,
-        )).'?page='.$this->pagedata['pager']['token'].($query_str ? '&'.$query_str : '');
-        if (!$fix_brand) {
-            $this->pagedata['data_screen'] = vmc::singleton('b2c_goods_stage')->screening_data_by_cat($filter['cat_id']);
-        } else {
-            $brand = app::get('b2c')->model('brand')->dump($fix_brand);
-            $this->pagedata['brand'] = $brand;
-            $this->pagedata['data_screen'] = vmc::singleton('b2c_goods_stage')->screening_data_by_brand($fix_brand);
-            $this->set_tmpl('brandlist'); //锁定品牌型列表模板
-            $brand_setting = $brand['brand_setting'];
-            if ($brand_setting['site_template']) {
-                $this->set_tmpl_file($brand_setting['site_template']);
-            }
-        }
-        //seo
-        $this->generate_seo_data();
+        // if (!$fix_brand && $filter['cat_id']) {
+        //     $mdl_cat = $this->app->model('goods_cat');
+        //     $cat_info = $mdl_cat->dump($filter['cat_id']);
+        //     if ($cat_info['gallery_setting']['site_template']) {
+        //         $this->set_tmpl_file($cat_info['gallery_setting']['site_template']); //设置模板文件
+        //     }
+        //     $this->seo_info = $cat_info['seo_info'];
+        //     $this->pagedata['cat_path'] = $mdl_cat->getPath($filter['cat_id']);
+        // } elseif($fix_brand) {
+        //     $filter['brand_id'] = $fix_brand;
+        // }
+         $goods_list = $this->_list($filter, $params['page'], $params['orderby'], $keywords);
+         $this->pagedata['data_list'] = $goods_list['data'];
+
+        // $this->pagedata['count'] = $goods_list['count'];
+        // $this->pagedata['all_count'] = $goods_list['all_count'];
+        // $this->pagedata['pager'] = $goods_list['page_info'];
+        // $this->pagedata['pager']['token'] = time();
+        // $this->pagedata['pager']['link'] = $this->gen_url(array(
+        //     'app' => 'b2c',
+        //     'ctl' => 'site_list',
+        //     'act' => 'index',
+        //     'full' => 1,
+        // )).'?page='.$this->pagedata['pager']['token'].($query_str ? '&'.$query_str : '');
+        // if (!$fix_brand) {
+        //     $this->pagedata['data_screen'] = vmc::singleton('b2c_goods_stage')->screening_data_by_cat($filter['cat_id']);
+        // } else {
+        //     $brand = app::get('b2c')->model('brand')->dump($fix_brand);
+        //     $this->pagedata['brand'] = $brand;
+        //     $this->pagedata['data_screen'] = vmc::singleton('b2c_goods_stage')->screening_data_by_brand($fix_brand);
+        //     $this->set_tmpl('brandlist'); //锁定品牌型列表模板
+        //     $brand_setting = $brand['brand_setting'];
+        //     if ($brand_setting['site_template']) {
+        //         $this->set_tmpl_file($brand_setting['site_template']);
+        //     }
+        // }
+        // //seo
+        // $this->generate_seo_data();
         $this->page('site/list/index.html');
     }
     //获取商品列表，包装商品列表
-    private function _list($filter, $page, $orderby)
+    private function _list($filter, $page, $orderby, $keywords)
     {
         $cache_key =  utils::array_md5(func_get_args());
         if(cachemgr::get($cache_key, $return)){
             return $return;
         }
         cachemgr::co_start();
+        if($keywords){
+            $goods_keywords = $this->app->model('goods_keywords');
+            $goods = $goods_keywords->getList('goods_id', array('keyword|has' => $keywords, 'res_type' => 'goods'));
+            foreach ($goods as $key => $value) {
+                $filter['goods_id|in'][$key] = $value['goods_id'];
+            }
+        }
         $goods_cols = '*';
         $mdl_goods = $this->app->model('goods');
         $goods_list = $mdl_goods->getList($goods_cols, $filter, $page['size'] * ($page['index'] - 1), $page['size'], $orderby);

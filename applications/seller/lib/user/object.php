@@ -208,4 +208,15 @@ class seller_user_object{
         }
         return $login_name;
     }
+
+    public function get_company($seller_id, $columns = '*'){
+        return $this->app->model('company')->getRow($columns, array('seller_id' => $seller_id));
+    }
+
+    public function get_store($seller_id, $columns = '*'){
+        return app::get('store')->model('store')->getRow($columns, array('seller_id' => $seller_id));
+    }
+    public function get_contact($seller_id, $columns = '*'){
+        return $this->app->model('contact')->getRow($columns, array('seller_id' => $seller_id));
+    }
 }

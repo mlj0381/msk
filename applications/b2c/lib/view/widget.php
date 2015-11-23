@@ -19,8 +19,6 @@ class b2c_view_widget
      * 分类挂件
      */
     public function function_WIDGET_B2C_GOODS_CAT($params,&$smarty){
-        //$tree = vmc::singleton('b2c_openapi_goods')->catalog($params,true);
-
         $render = new base_render(app::get('b2c'));
         $render->pagedata['category_tree'] = vmc::service('view_datasetting')->good_cat($params);
         return $render->fetch('widget/category.html');
@@ -90,10 +88,10 @@ class b2c_view_widget
 		return $render->fetch('widget/list.filter.html');
     }
     //商品列表分类
-    public function function_WIDGET_B2C_GOODS_LIST_CAT($params, &$smarty)
-    {
-        $render = new base_render(app::get('b2c'));
-        $render->pagedata['cat'] = vmc::service('view_datasetting')->goods_list_cat($params);
-		return $render->fetch('widget/list.cat.html');
-    }
+    // public function function_WIDGET_B2C_GOODS_LIST_CAT($params, &$smarty)
+    // {
+    //     $render = new base_render(app::get('b2c'));
+    //     $render->pagedata['cat'] = vmc::service('view_datasetting')->goods_list_cat($params);
+	// 	return $render->fetch('widget/list.cat.html');
+    // }
 }

@@ -23,7 +23,7 @@ class seller_finder_sellers{
     }
     public function detail_basic($seller_id){
         $render = $this->app->render();
-        $user_passport = vmc::singleton('seller_user_passport');
+        $user_passport = vmc::singleton('seller_user_object');
         $render->pagedata['company'] = $user_passport->get_company($seller_id);
         $render->pagedata['contact'] = $user_passport->get_contact($seller_id);
         return $render->fetch('admin/seller/finder/baics.html');

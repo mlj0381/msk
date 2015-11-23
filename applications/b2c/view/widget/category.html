@@ -10,13 +10,14 @@
     <{/foreach}>
 </ul>
 <div class="tab-content">
-    <{foreach from=$category_tree item=cat key=ck}>
+    <{foreach from=$category_tree item=one_cat key=ck}>
     <div class="tab-pane fade in<{if $ck==20}> active<{/if}>" id="subCat<{$ck+1}>">
-        <{foreach from=$cat.items item=item}>
-            <{$item.name}><--->
-            <{foreach from=$item.items item=it}>
-                <{$it}><br />
+        <{foreach from=$one_cat.items item=two_item}>
+            <{$two_item.name}>-->
+            <{foreach from=$two_item.items item=three_item}>
+                <{$three_item.name}><-->
             <{/foreach}>
+            <br/>
         <{/foreach}>
     </div>
     <{/foreach}>

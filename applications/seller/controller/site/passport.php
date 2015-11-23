@@ -128,7 +128,7 @@ class seller_ctl_site_passport extends seller_frontpage
         $return = false;
         switch ($step) {
             case '1':
-                $return = $this->_signup_account($post['seller'], $redirect);
+                $return = $this->_signup_account($post, $redirect);
                 break;
             case '2':
                 $return = $this->passport_obj->signup_company($post['seller']);
@@ -150,41 +150,32 @@ class seller_ctl_site_passport extends seller_frontpage
         $this->set_tmpl('passport');
         $this->page('site/passport/settled.html');
     }
-    public function settled_status(){
-        $this->set_tmpl('passport');
-        $this->page('site/passport/apply.status.html');
-    }
-
 
     //入驻方法
     public function settled($step){
         $this->verify();
-        $stroe = $this->passport_obj->get_store($this->seller['seller_id']);
+        $this->pagedata['store'] = $this->user_obj->get_store($this->seller['seller_id']);
+        $this->pagedata['company'] = $this->user_obj->get_company($this->seller['seller_id']);
+        $this->pagedata['contact'] = $this->user_obj->get_contact($this->seller['seller_id']);
         if($_POST) $this->_settled($_POST, $step);
         switch ($step) {
            case '1':
-               $this->_contact();
                $tpl = 'company';//公司信息
                break;
            case '2':
-               $tpl = 'shop';//资质信息
+               $tpl = 'shop';//店铺信息
                break;
            case '3':
-               $this->pagedata['store'] = $stroe;
                $tpl = 'complete';//完成
+               break;
+           case '4':
+               $tpl = 'status';//进度查询
                break;
            default:
                $tpl = 'account';//帐号
                break;
         }
-
         $this->page("site/passport/apply.{$tpl}.html");
-    }
-    //读取联系人信息
-    private function _contact()
-    {
-        $this->pagedata['contact'] = $this->app->model('contact')->getRow('*', array('seller_id' => $this->seller['seller_id']));
-        $this->pagedata['company'] = $this->app->model('company')->getRow('*', array('seller_id' => $this->seller['seller_id']));
     }
 
     private function _settled($post, $step){
@@ -216,7 +207,7 @@ class seller_ctl_site_passport extends seller_frontpage
     //商家入驻帐号注册
    private function _signup_account($post, $signup_url){
        extract($post);
-       if(!vmc::singleton('seller_user_vcode')->verify($smscode, $pam_account['login_name'], 'signup'))
+       if(!vmc::singleton('seller_user_vcode')->verify($smscode, $pam_account['mobile'], 'signup'))
        {
            $this->splash('error', $signup_url, '手机短信验证码不正确');
        }

@@ -6,13 +6,12 @@
             <li>店铺授权</li>
         </ul>
         <ul class="status_process clearfix">
-            <li class="active"><span>1</span></li>
-            <li><span>2</span></li>
-            <li><span>3</span></li>
+            <li <{if $company.status eq '0' && $store.status eq '0'}> class="active" <{/if}>><span>1</span></li>
+            <li <{if $company.status eq '1'}>class="active"<{/if}>><span>2</span></li>
+            <li <{if $company.status eq '1' && $store.status eq '1'}> class="active" <{/if}>><span>3</span></li>
         </ul>
 
-        <button class="return_btn">返回上一步</button>
+        <a href="<{link app=seller ctl=site_passport act=settled args0=2}>" class="return_btn"><{if $company.status eq '-1' && $store.status eq '-1'}>审核失败，返回上一步修改<{else}>返回上一步<{/if}></a>
         <button class="return_index hidden">返回平台首页</button>
     </div>
 </div>
-

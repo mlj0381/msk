@@ -277,11 +277,11 @@ class seller_frontpage extends site_controller {
     }
 
     public function get_company(){
-        return $this->passport_obj->get_company($this->seller['seller_id']);
+        return $this->user_obj->get_company($this->seller['seller_id']);
 
     }
 
     public function get_contact(){
-        return $this->passport_obj->get_contact($this->seller['seller_id']);
+        return $this->user_obj->get_contact($this->seller['seller_id']);
     }
 }

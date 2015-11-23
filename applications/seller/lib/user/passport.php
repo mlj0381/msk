@@ -118,6 +118,7 @@ class seller_user_passport
         //$data['currency'] = $arrDefCurrency['cur_code'];
         $seller['reg_ip'] = base_request::get_remote_addr();
         $seller['regtime'] = time();
+        $seller['mobile'] = $data['pam_account']['mobile'];
         //--防止恶意修改
         foreach ($data as $key => $val) {
             if (strpos($key, 'box:') !== false) {
@@ -583,14 +584,7 @@ class seller_user_passport
        }
        return false;
    }
-   //商家入驻资质信息注册
-   // public function signup_aptitudes($post){
-   //     $mdl_aptitudes = $this->app->model('aptitudes');
-   //     if($mdl_aptitudes->save($post['seller'])){
-   //         return true;
-   //     }
-   //     return false;
-   // }
+
    //商家入驻店铺注册
    public function signup_shop($post){
        $mdl_store = app::get('store')->model('store');
@@ -610,16 +604,6 @@ class seller_user_passport
    //     }
    //     return true;
    //
-   // }
-   public function get_company($seller_id){
-       return $this->app->model('company')->getRow('*', array('seller_id' => $seller_id));
+   // // }
 
-   }
-
-   public function get_store($seller_id){
-       return app::get('store')->model('store')->getRow('*', array('seller_id' => $seller_id));
-   }
-   public function get_contact($seller_id){
-       return $this->app->model('contact')->getRow('*', array('seller_id' => $seller_id));
-   }
 }

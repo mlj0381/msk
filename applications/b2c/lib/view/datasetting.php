@@ -20,6 +20,7 @@
         parent::__construct($app);
         include($this->app->app_dir.'/datasetting.php');
         $this->setting = $setting;
+        $this->goods_list = $goods_list;
         $this->router = app::get('site')->router();
      }
      public function city()
@@ -27,6 +28,9 @@
          return $this->setting['city'];
      }
 
+     public function goods_list_cat(){
+         return $this->setting['cat'];
+     }
      public function good_cat($params)
      {
          $return = array();
@@ -34,32 +38,24 @@
              if($value['parent_id'] == 0)
              {
                  $return[$key] = $value;
-             }
-             else
-             {
-                 foreach ($return as $k => $v) {
-                     foreach ($this->setting['cat'] as $key => $value) {
-                        if($value['parent_id'] == $v['id'])
-                        {
-                            $return[$k]['items'][$key] = $value;
-                        }
-                        else
-                        {
-                            foreach ($return[$k]['items'] as $k1 => $v2) {
-                                if($v2['id'] == $value['parent_id'])
-                                {
-                                    $return[$k]['items'][$k1]['items'] = $value;
-                                }
+                 unset($this->setting['cat'][$key]);
+                 foreach ($this->setting['cat'] as $k1 => $v1) {
+                    if($v1['parent_id'] == $return[$key]['id'])
+                    {
+                        $return[$key]['items'][$k1] = $v1;
+                        unset($this->setting['cat'][$k1]);
+                        foreach ($this->setting['cat'] as $k2 => $v2) {
+                            if($v2['parent_id'] == $return[$key]['items'][$k1]['id'])
+                            {
+                                $return[$key]['items'][$k1]['items'][$k2] = $v2;
+                                unset($this->setting['cat'][$k2]);
                             }
                         }
                     }
                 }
-            }
+             }
         }
-
         return $return;
-        //print_r($return);
-        //return $this->setting['cat'];
     }
 
      public function floor_left($params)
@@ -130,16 +126,13 @@
          }
      }
 
-     public function goods_list_cat($params)
-     {
-         $parent_id = $params['parent_id'] ? $params['parent_id'] : 0;
-         foreach ($this->setting['cat'] as $key => $value) {
-             if($parent_id == $value['parent_id'])
-             {
-                 $cat_list[$key] = $value;
+     public function list_goods($filter, $page, $orderby){
 
-             }
+
+         foreach ($this->goods_list as $key => $value) {
+
          }
-         return $cat_list;
+
+         return $this->goods_list;
      }
  }
