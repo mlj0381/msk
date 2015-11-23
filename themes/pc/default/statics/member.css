@@ -28,6 +28,23 @@ ol {
 .buyer_container .my-main .row {
   margin: 0;
 }
+.buyer_container .my-main .row .member_left {
+  margin: 0;
+  padding: 0;
+}
+.buyer_container .my-main .row .member_left .my-menu {
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  border: none;
+  background: #fff;
+  border-radius: 0px;
+}
+.buyer_container .my-main .row .member_left .my-menu dd ul li {
+  height: 40px;
+  line-height: 40px;
+  border-bottom: 1px solid #f5f5f5;
+}
 .buyer_container .my-main .left_menu {
   width: 200px;
   padding: 0;
@@ -44,9 +61,15 @@ ol {
   width: 100%;
   background: #fff;
   border: none;
+  height: 200px;
+  padding-top: 30px;
+  border-top-left-radius: 100px;
+  border-bottom-left-radius: 100px;
+  margin-bottom: 15px;
 }
 .buyer_container .my-main .my-page .alert-warning .m-baseinfo {
   width: 32%;
+  margin-left: 30px;
 }
 .buyer_container .my-main .my-page .alert-warning .m-baseinfo dl {
   width: 100%;
@@ -64,9 +87,27 @@ ol {
   border-radius: 50%;
   overflow: hidden;
 }
-.buyer_container .my-main .my-page .alert-warning .m-baseinfo dl dt img {
+.buyer_container .my-main .my-page .alert-warning .m-baseinfo dl dt a {
+  display: inline-block;
+  position: relative;
+  overflow: hidden;
+}
+.buyer_container .my-main .my-page .alert-warning .m-baseinfo dl dt a span {
+  position: absolute;
+  display: none;
+  width: 100%;
+  text-align: center;
+  top: 50%;
+  margin-top: -8px;
+}
+.buyer_container .my-main .my-page .alert-warning .m-baseinfo dl dt a img {
   width: 100px;
   height: 100px;
+}
+.buyer_container .my-main .my-page .alert-warning .m-baseinfo dl dt a:hover span {
+  display: inline-block;
+  background: #fff;
+  opacity: 0.8;
 }
 .buyer_container .my-main .my-page .alert-warning .m-baseinfo dl dd {
   float: left;
@@ -100,10 +141,10 @@ ol {
   margin-left: 10px;
 }
 .buyer_container .my-main .my-page .alert-warning .order_status_list li {
-  width: 50%;
+  width: 42%;
   float: left;
   height: 50px;
-  margin: 10px 0;
+  margin: 10px 0 10px 5%;
 }
 .buyer_container .my-main .my-page .alert-warning .order_status_list li span.status_icon {
   display: inline-block;
@@ -146,6 +187,39 @@ ol {
   color: #e93428;
   display: block;
   font-size: 14px;
+}
+.buyer_container .my-main .my-page .my-orders-nav li.last_li {
+  width: 200px;
+  height: 39px;
+  float: right;
+}
+.buyer_container .my-main .my-page .my-orders-nav li.last_li form input {
+  height: 30px;
+}
+.buyer_container .my-main .my-page .my-orders-nav li.last_li form .input-group-addon {
+  padding-left: 0;
+  padding-right: 0;
+  height: 30px;
+}
+.buyer_container .my-main .my-page .my-orders-nav li.last_li form .input-group-addon button {
+  border: none;
+  background: none;
+  padding: 0 15px;
+  outline: none;
+}
+.buyer_container .my-main .my-page .my-orders-list .mo-list-head {
+  margin-bottom: 0px;
+}
+.buyer_container .my-main .my-page .my-orders-list .mo-list-head thead th {
+  border-bottom: 0px;
+}
+.buyer_container .my-main .my-page .my-orders-list .mo-list-items .order_cz a {
+  text-align: center;
+  display: inline-block;
+  width: 100%;
+}
+.buyer_container .my-main .my-page .my-orders-list .mo-list-items .order_cz a:hover {
+  text-decoration: underline;
 }
 .buyer_container .my-main .my-page .fav_nav {
   width: 100%;

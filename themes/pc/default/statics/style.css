@@ -149,11 +149,20 @@ ol {
   width: 40%;
   float: right;
 }
+.passport-login-container .login_panel_rt .panel-heading {
+  padding: 0;
+  border-bottom: 1px solid #ddd;
+}
 .passport-login-container .login_panel_rt .panel-heading span {
   cursor: pointer;
+  display: inline-block;
+  height: 40px;
+  line-height: 40px;
+  padding: 0 15px;
 }
 .passport-login-container .login_panel_rt .panel-heading span.active {
   background: #e93428;
+  color: #fff;
 }
 .passport-login-container .login_panel_rt .login-panel {
   margin-left: 0px;
