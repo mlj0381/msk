@@ -78,6 +78,10 @@
 			background: @basecolor;
 			color: #fff;
 			margin: 0;
+			span.floor{
+				display: inline-block;
+				margin-left:15px;
+			}
 		}
 		.list_con{
 			width:100%;
@@ -92,14 +96,32 @@
 
 				.list_item{
 
-					.proimg{
-						width:260px;
+					.goodsImgbox{
+						width:100%;
 						height:260px;
+						margin:10px auto;
+						overflow: hidden;
+
+						.proimg{
+							max-height:100%;
+							display: block;
+							margin-left:auto;
+							margin-right:auto;
+
+						}
 					}
 
 					.list_info{
 						margin-top:20px;
-						height:65px;
+						height:45px;
+					}
+
+				}
+
+				&:hover{
+					.proimg{
+						transform:scale(1.2);
+						transition:0.3s;
 					}
 				}
 
@@ -122,18 +144,36 @@
 						width:225px;
 						height:285px;
 						padding:0 10px;
-						.proimg{
-							max-width:205px;
-							max-height:205px;
+						.goodsImgbox{
+							width:100%;
+							height:200px;
+							margin:10px auto;
+							overflow: hidden;
+
+							.proimg{
+								max-height:100%;
+								display: block;
+								margin-left:auto;
+								margin-right:auto;
+
+							}
 						}
+						
 
 						.list_info{
 							width:100%;
-							height:65px;
+							height:45px;
 							margin-top:20px;
 						}
+
+						&:hover{
+							.proimg{
+								transform:scale(1.2);
+								transition:0.3s;
+							}
+						}
 					}
-					a:hover{
+					/* a:hover{
 						position: absolute;
 						left:-1px;
 						top:-1px;
@@ -141,7 +181,7 @@
 						height:285px;
 						border: 2px solid red;
 						display:block;
-					}
+					} */
 
 				}	
 			}

@@ -271,6 +271,7 @@ nav.navbar ul.nav li .category-container {
   height: 550px;
   background: #cc0116;
   opacity: 0.85;
+  display: none;
 }
 nav.navbar ul.nav li .category-container .category ul.list-group {
   margin: 0px;

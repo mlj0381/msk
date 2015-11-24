@@ -13,8 +13,8 @@
         <{/if}>
     </ol>
     <div class="product-page">
-        <div class="row">
-            <div class="col-xs-6">
+        <div class="row product_firstRow">
+            <div class="col-xs-5">
                 <div class="product-main-image" style="position: relative; overflow: hidden;">
                     <a href="<{$data_detail.image_default_id|storager:'l'}>" target="_blank">
                         <img src="<{$data_detail.image_default_id|storager:'m'}>" alt="<{$data_detail.name}>" >
@@ -24,28 +24,51 @@
                     <{foreach from=$data_detail.images item=image name=poi}>
                     <li <{if $data_detail.image_default_id == $image.image_id}>class="current"<{/if}>>
                         <a href="<{$image.image_id|storager:'l'}>" data-middlesrc="<{$image.image_id|storager:'m'}>" target="_blank">
-                            <img height=50 src="<{$image.image_id|storager:'s'}>" />
+                            <img height=50 width="50" src="<{$image.image_id|storager:'s'}>" />
                         </a>
                     </li>
                     <{/foreach}>
                 </ul>
             </div>
-            <div class="col-xs-6">
+            <div class="col-xs-7">
                 <h1>
                     <{$data_detail.name}><br>
                     <small><{$data_detail.product.spec_info}></small>
                 </h1>
-                <p class="avg-mark">
-                    <span class="text-warning"><{$data_detail.mark_star|star}></span> <small><{$data_detail.mark_star|number_format:'1'}></small>
+                <p class="pro_No">
+                货号：<span>abc435364</span>
                 </p>
+                <div class="pref_info">
+                <p><span>采购数量</span><span>&lt;10箱</span><span>&gt;10箱</span></p>
+                <p><span>价格</span><span>￥100/箱</span><span>￥90/箱</span></p>
+                </div>
+
+                <div class="distr_info">
+                    配送：
+                    <span>上海 至 上海松江区</span>
+                    <span>运费 ￥:10.00</span>
+                </div>
+
+                <div class="turnover_info">
+                    <ul>
+                        <li>总成交量<span>186<small>笔</small></span></li>
+                        <li>累计评价<span>100<small>条</small></span></li>
+                        <li>
+                            <i class="icon-star"></i>
+                            <i class="icon-star"></i>
+                            <i class="icon-star"></i>
+                            <i class="icon-star"></i>
+                            <i class="icon-star-empty"></i>
+                        </li>
+                    </ul>
+                </div>
+                <!-- <p class="avg-mark">
+                    <span class="text-warning"><{$data_detail.mark_star|star}></span> <small><{$data_detail.mark_star|number_format:'1'}></small>
+                </p> 
                 <div class="description text-danger">
                     <p><{$data_detail.brief}></p>
-                </div>
-                <div class="price-availability-block clearfix">
-                    <span class="price text-danger">
-                        <small>￥</small><strong><{$data_detail.product.buy_price|cur}></strong>
-                    </span>
-                </div>
+                </div>-->
+                
                 <ul class="list-unstyled promotion-list">
                 </ul>
                 <{if $data_detail.spec_desc}>
@@ -86,6 +109,7 @@
                 <!--购买区-->
                 <div class="product-page-cart">
                     <div class="product-quantity input-group" style="width:150px;" data-minibuy="<{$data_detail.minibuy}>">
+
         				<div class="spinner-buttons input-group-btn">
         					<button type="button" class="btn btn-default">
         					-
@@ -98,6 +122,12 @@
         					</button>
         				</div>
         			</div>
+                    <br>
+                    <div class="price-availability-block clearfix">
+                        <span class="price text-danger">
+                            <small>￥</small><strong><{$data_detail.product.buy_price|cur}></strong>
+                        </span>
+                    </div>
                     <hr>
                     <a class="btn btn-danger btn-lg btn-buy" href="<{link app=b2c ctl=site_cart act=add args0=$data_detail.product.product_id args1=1}>">加入购物车</a>
                     <a class="btn btn-success btn-lg btn-buy" href="<{link app=b2c ctl=site_cart act=fastbuy args0=$data_detail.product.product_id args1=1}>">立即购买</a>
@@ -109,6 +139,60 @@
                 <!--购买区end-->
             </div>
         </div>
+        <!-- 支付方式、卖家承诺 -->
+        <div class="row payment-method">
+            <div class="col-xs-6">
+                <p>支付方式</p>
+                <ul>
+                    <li><a href="#">会员卡支付</a></li>
+                    <li><a href="#">银联卡支付</a></li>
+                    <li><a href="#">货到付款</a></li>
+                </ul>
+            </div>
+            <div class="col-xs-6">
+                <p>卖家承诺</p>
+                <ul>
+                    <li><a href="#">72小时极速发货</a></li>
+                </ul>
+            </div>
+        </div>
+        <!-- 商城推荐 -->
+        <div class="mall_reco clearfix">
+            <h3>商城推荐</h3>
+            <ul>
+                <li>
+                    <a href="#">
+                        <p><span>￥:128.00</span><span>神农客精选五花肉01</span></p>
+                        <img src="<{$baseurl}>/themes/pc/default/statics/images/customer_04.jpg">
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <p><span>￥:128.00</span><span>神农客精选五花肉01</span></p>
+                        <img src="<{$baseurl}>/themes/pc/default/statics/images/customer_04.jpg">
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <p><span>￥:128.00</span><span>神农客精选五花肉01</span></p>
+                        <img src="<{$baseurl}>/themes/pc/default/statics/images/customer_04.jpg">
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <p><span>￥:128.00</span><span>神农客精选五花肉01</span></p>
+                        <img src="<{$baseurl}>/themes/pc/default/statics/images/customer_04.jpg">
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <p><span>￥:128.00</span><span>神农客精选五花肉01</span></p>
+                        <img src="<{$baseurl}>/themes/pc/default/statics/images/customer_04.jpg">
+                    </a>
+                </li>
+            </ul>
+        </div>
+
         <!-- 相关商品 -->
         <div class="goods-rel-items hide">
             <hr>
@@ -117,8 +201,68 @@
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-xs-12">
+        <div class="row goods-detailRow">
+            <div class="col-xs-3 goods_side_left">
+               <!-- 店铺信息 -->
+               <div class="shop_info">
+                   <dl>
+                       <dt>沙县小吃食材专营店</dt>
+                       <dd>
+                           <p>联系卖家:<span>神农客<a href=""><i class="icon-comment"></i></a></span></p>
+                           <p>经营品牌:<span>双汇</span></p>
+                           <p>所在地区:<span>上海 上海市松江区</span></p>
+                       </dd>
+                   </dl>
+                   <div class="server_info">
+                        <span>描述<small>4.9<i class="icon-arrow-up"></i></small></span>
+                        <span>服务<small>4.9<i class="icon-arrow-up"></i></small></span>
+                        <span>物流<small>4.9<i class="icon-arrow-up"></i></small></span>
+                   </div>
+                   <div class="shop_ctr">
+                        <a href="#" class="btn btn-danger">进入店铺</a>
+                        <a href="#" class="btn btn-default">收藏店铺</a>
+                   </div>
+               </div>
+
+               <!-- 客服中心 -->
+               <div class="kefu_list">
+                   <a href="#">
+                       <img src="<{$baseurl}>/themes/pc/default/statics/images/kefulist.png" />
+                   </a>
+               </div>
+
+               <!-- 店主推荐 -->
+               <div class="shopkeeper_tj">
+                    <h3><span>店主推荐</span><a href="">更多推荐》</a></h3>
+                    <ul>
+                        <li>
+                            <div class="goods_img">
+                                <a href="#">
+                                    <img src="<{$baseurl}>/themes/pc/default/statics/images/proimg.jpg">
+                                </a>
+                            </div>
+                            <div class="goods_info">
+                                <p class="goods_price">￥128.00</p>
+                                <p class="goods_name"><a class="#" >神农客精选五花肉</a></p>
+                                <p class="sell_info"><span>已售出<small>1230</small>笔</span></p>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="goods_img">
+                                <a href="#">
+                                    <img src="<{$baseurl}>/themes/pc/default/statics/images/proimg.jpg">
+                                </a>
+                            </div>
+                            <div class="goods_info">
+                                <p class="goods_price">￥128.00</p>
+                                <p class="goods_name"><a class="#" >神农客精选五花肉</a></p>
+                                <p class="sell_info"><span>已售出<small>1230</small>笔</span></p>
+                            </div>
+                        </li>
+                    </ul>
+               </div>
+            </div>
+            <div class="col-xs-9">
                 <div class="product-page-content">
                     <ul id="pp_tabs" class="nav nav-tabs">
                         <li class="active"><a href="#desc" data-toggle="tab">详情介绍</a></li>
