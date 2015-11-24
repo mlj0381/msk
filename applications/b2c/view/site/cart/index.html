@@ -1,5 +1,5 @@
-<div class="page-header">
-        <h1>购物车<small>Shopping Cart</small></h1>
+<div class="page-header cart-header">
+        <h1>我的购物车<small>Shopping Cart</small><a href="#">继续购物</a></h1>
 </div>
 <div class="cart-container">
     <{if !$member_id}>
@@ -14,77 +14,82 @@
                 <input type="checkbox"  data-checkall='.cart-body input:checkbox[data-ident]'> 全选
             </label>
         </div>
-        <div class="col-xs-5 c-ch-title">商品</div>
+        <div class="col-xs-4 c-ch-title">商品</div>
         <div class="col-xs-1 c-ch-price">单价</div>
         <div class="col-xs-2 c-ch-quantity">数量</div>
-        <div class="col-xs-1 c-ch-amount">小计</div>
+        <div class="col-xs-2 c-ch-amount">金额(元)</div>
         <div class="col-xs-2 c-ch-opt">操作</div>
     </div>
     <div class="cart-body">
         <{foreach from=$cart_result.objects.goods item=object}>
         <!-- cart-item begin  -->
-        <div class="row <{$object.obj_ident}> cart-item <{if $object.disabled!='true'}>enabled<{/if}>">
-            <div class="col-xs-1 c-ci-check">
-                <label class="control-label">
-                    <input type="checkbox" data-ident="<{$object.obj_ident}>" name="ident[]" value="<{$object.obj_ident}>" <{if $object.disabled!='true'}>checked=true<{/if}> <{if $object.warning}>disabled<{/if}>>&nbsp;&nbsp;&nbsp;&nbsp;
-                </label>
+        <div class="itembox">
+            <div class="shop_name">
+                沙县小吃专营店<a href="#" class="icon-comments"></a>
             </div>
-            <div class="col-xs-5 c-ci-title">
-                <div class="row">
-                      <div class="col-xs-3">
-                        <a href="<{link app=b2c ctl=site_product args0=$object.item.product.product_id}>">
-                            <img class="img-thumbnail" src="<{$object.item.product.image_id|storager:'s'}>" alt="<{$object.item.product.name}>-<{$object.item.product.spec_info}>" />
-                        </a>
-                      </div>
-                      <div class="col-xs-9">
-                        <h5><a href="<{link app=b2c ctl=site_product args0=$object.item.product.product_id}>"><{$object.item.product.name}></a></h5>
-                        <p class="spec-info">
-                            <{$object.item.product.spec_info}>
-                        </p>
-                        <p class="warning text-warning <{if !$object.warning}>hide<{/if}>">
-                            <i class="glyphicon glyphicon-warning-sign"></i>&nbsp;
-                            <span data-bind="warning"><{$object.warning}></span>
-                        </p>
-                        <ul class="list-unstyled promotion-list plist-goods">
-                            <{foreach from=$cart_result.promotions.goods key=key item=pitem}>
-                                 <{if $object.obj_ident!=$key}><{continue;}><{/if}>
-                                 <{foreach from=$pitem item=item}>
-                                <li data-ruleid="<{$item.rule_id}>">
-                                    <span class="label label-danger"><{$item.tag}></span>
-                                    <{$item.desc}>
-                                </li>
+            <div class="row <{$object.obj_ident}> cart-item <{if $object.disabled!='true'}>enabled<{/if}>">
+                <div class="col-xs-1 c-ci-check">
+                    <label class="control-label">
+                        <input type="checkbox" data-ident="<{$object.obj_ident}>" name="ident[]" value="<{$object.obj_ident}>" <{if $object.disabled!='true'}>checked=true<{/if}> <{if $object.warning}>disabled<{/if}>>&nbsp;&nbsp;&nbsp;&nbsp;
+                    </label>
+                </div>
+                <div class="col-xs-4 c-ci-title">
+                    <div class="row">
+                          <div class="col-xs-3">
+                            <a href="<{link app=b2c ctl=site_product args0=$object.item.product.product_id}>">
+                                <img class="img-thumbnail" src="<{$object.item.product.image_id|storager:'s'}>" alt="<{$object.item.product.name}>-<{$object.item.product.spec_info}>" />
+                            </a>
+                          </div>
+                          <div class="col-xs-9">
+                            <h5><a href="<{link app=b2c ctl=site_product args0=$object.item.product.product_id}>"><{$object.item.product.name}></a></h5>
+                            <p class="spec-info">
+                                <{$object.item.product.spec_info}>
+                            </p>
+                            <p class="warning text-warning <{if !$object.warning}>hide<{/if}>">
+                                <i class="glyphicon glyphicon-warning-sign"></i>&nbsp;
+                                <span data-bind="warning"><{$object.warning}></span>
+                            </p>
+                            <ul class="list-unstyled promotion-list plist-goods">
+                                <{foreach from=$cart_result.promotions.goods key=key item=pitem}>
+                                     <{if $object.obj_ident!=$key}><{continue;}><{/if}>
+                                     <{foreach from=$pitem item=item}>
+                                    <li data-ruleid="<{$item.rule_id}>">
+                                        <span class="label label-danger"><{$item.tag}></span>
+                                        <{$item.desc}>
+                                    </li>
+                                    <{/foreach}>
                                 <{/foreach}>
-                            <{/foreach}>
-                        </ul>
-                      </div>
-                </div>
-            </div>
-            <div class="col-xs-1 c-ci-price" data-bind="item/product/buy_price"><{$object.item.product.buy_price|cur}></div>
-            <div class="col-xs-2 c-ci-quantity">
-                <div class="product-quantity input-group input-group-sm"  data-minibuy="<{$data_detail.minibuy}>">
-                    <div class="spinner-buttons input-group-btn">
-                        <button type="button" class="btn btn-default">
-                        -
-                        </button>
-                    </div>
-                    <input type="text" data-ident="<{$object.obj_ident}>" class="spinner-input form-control"  value="<{$object.quantity}>" data-now="<{$object.quantity}>">
-                    <div class="spinner-buttons input-group-btn">
-                        <button type="button" class="btn btn-default">
-                        +
-                        </button>
+                            </ul>
+                          </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-xs-1 c-ci-amount">
-                <strong data-bind="amount"><{$object.item.product.buy_price*$object.quantity|cur}></strong>
-            </div>
-            <div class="col-xs-2 c-ci-opt">
-                <ul class="list-unstyled">
-                    <li><a href="javascript:;" data-remove=".cart-body input:text[data-ident='<{$object.obj_ident}>']" class="btn btn-link btn-xs">删除</a></li>
-                    <{if $member_id}>
-                    <li><a href="javascript:;" data-mvtofav=".cart-body input:text[data-ident='<{$object.obj_ident}>']" class="btn btn-link btn-xs">移到收藏夹</a></li>
-                    <{/if}>
-                </ul>
+                <div class="col-xs-1 c-ci-price" data-bind="item/product/buy_price"><{$object.item.product.buy_price|cur}></div>
+                <div class="col-xs-2 c-ci-quantity">
+                    <div class="product-quantity input-group input-group-sm"  data-minibuy="<{$data_detail.minibuy}>">
+                        <div class="spinner-buttons input-group-btn">
+                            <button type="button" class="btn btn-default">
+                            -
+                            </button>
+                        </div>
+                        <input type="text" data-ident="<{$object.obj_ident}>" class="spinner-input form-control"  value="<{$object.quantity}>" data-now="<{$object.quantity}>">
+                        <div class="spinner-buttons input-group-btn">
+                            <button type="button" class="btn btn-default">
+                            +
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-2 c-ci-amount">
+                    <strong data-bind="amount"><{$object.item.product.buy_price*$object.quantity|cur}></strong>
+                </div>
+                <div class="col-xs-2 c-ci-opt">
+                    <ul class="list-unstyled">
+                        <li><a href="javascript:;" data-remove=".cart-body input:text[data-ident='<{$object.obj_ident}>']" class="btn btn-link btn-xs">删除</a></li>
+                        <{if $member_id}>
+                        <li><a href="javascript:;" data-mvtofav=".cart-body input:text[data-ident='<{$object.obj_ident}>']" class="btn btn-link btn-xs">移到收藏夹</a></li>
+                        <{/if}>
+                    </ul>
+                </div>
             </div>
         </div>
         <!-- cart-item end  -->
@@ -138,7 +143,88 @@
         </div>
         <div class="col-xs-2 c-cf-opt"><a href="<{link app=b2c ctl=site_checkout}>" class="checkout-btn btn btn-lg btn-danger <{if $cart_result.goods_count<1}>disabled<{/if}>" >去结算</a></div>
     </div>
+
+    <div class="cart_like">
+        <div class="like_menu">
+            <span>
+                <a class="active">最近浏览过</a>
+                <a>最近收藏</a>
+            </span>
+            <a class="sc_btan" href="#">进入我的收藏</a>
+        </div>
+        <div class="like_con">
+            <ul>
+                <li>
+                    <a href="#">
+                        <p><span>￥:128.00</span><span>神农客精选五花肉</span></p>
+                        <img src="<{$baseurl}>/themes/pc/default/statics/images/customer_04.jpg">
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <p><span>￥:128.00</span><span>神农客精选五花肉</span></p>
+                        <img src="<{$baseurl}>/themes/pc/default/statics/images/customer_04.jpg">
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <p><span>￥:128.00</span><span>神农客精选五花肉</span></p>
+                        <img src="<{$baseurl}>/themes/pc/default/statics/images/customer_04.jpg">
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <p><span>￥:128.00</span><span>神农客精选五花肉</span></p>
+                        <img src="<{$baseurl}>/themes/pc/default/statics/images/customer_04.jpg">
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <p><span>￥:128.00</span><span>神农客精选五花肉</span></p>
+                        <img src="<{$baseurl}>/themes/pc/default/statics/images/customer_04.jpg">
+                    </a>
+                </li>
+     
+            </ul>
+            
+            <!-- 最近收藏 -->
+            <ul>
+                <li>
+                    <a href="#">
+                        <p><span>￥:128.00</span><span>神农客精选五花肉01</span></p>
+                        <img src="<{$baseurl}>/themes/pc/default/statics/images/customer_04.jpg">
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <p><span>￥:128.00</span><span>神农客精选五花肉01</span></p>
+                        <img src="<{$baseurl}>/themes/pc/default/statics/images/customer_04.jpg">
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <p><span>￥:128.00</span><span>神农客精选五花肉01</span></p>
+                        <img src="<{$baseurl}>/themes/pc/default/statics/images/customer_04.jpg">
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <p><span>￥:128.00</span><span>神农客精选五花肉01</span></p>
+                        <img src="<{$baseurl}>/themes/pc/default/statics/images/customer_04.jpg">
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <p><span>￥:128.00</span><span>神农客精选五花肉01</span></p>
+                        <img src="<{$baseurl}>/themes/pc/default/statics/images/customer_04.jpg">
+                    </a>
+                </li>
+     
+            </ul>
+        </div>
+    </div>
 </div>
+
 
 
 

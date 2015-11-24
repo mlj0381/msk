@@ -146,4 +146,23 @@ class b2c_frontpage extends site_controller {
 		}
 		return $menus;
 	}
+    /**
+     * 会员中心框架统一输出.
+     */
+    protected function output($app_id)
+    {
+        $app_id = $app_id?$app_id:$this->app->app_id;
+        $this->pagedata['member'] = $this->member;
+        $this->pagedata['menu'] = $this->get_menu();
+        $this->pagedata['current_action'] = $this->action;
+        $this->action_view = 'action/'.$this->action.'.html';
+        if ($this->pagedata['_PAGE_']) {
+            //$this->pagedata['_PAGE_'] = 'site/member/'.$this->pagedata['_PAGE_'];
+        } else {
+            $this->pagedata['_PAGE_'] = 'site/member/'.$this->action_view;
+        }
+        $this->pagedata['app_id'] = $app_id;
+        $this->pagedata['_MAIN_'] = 'site/member/main.html';
+        $this->page('site/member/main.html');
+    }
 }

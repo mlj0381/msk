@@ -216,8 +216,11 @@ class b2c_ctl_site_order extends b2c_frontpage
                 break;
             }
         }
+        //$this->pagedata['menu'] = $this->get_menu();
+        $this->pagedata['_PAGE_'] = 'site/order/detail.html';
+        $this->output();
         $this->set_tmpl('order');
-        $this->page('site/order/detail.html');
+       // $this->page('site/order/detail.html');
     }
 
     public function logistics_tracker($delivery_id)

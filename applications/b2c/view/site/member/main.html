@@ -9,7 +9,7 @@
                         <ul class="mm-list list-unstyled">
                             <{foreach from=$i.items item=m key=j}>
 								<{if $m.display == 'true'}>
-                               <li data-myaction="<{$m.action}>" class="mm-<{$m.controller}>-<{$m.items.action}> <{if $current_action!='index' && $m.items.action == $current_action}> active<{/if}>">
+                               <li data-myaction="<{$m.action}>" class="mm-<{$m.controller}>-<{$m.items.action}> <{if $current_action!='index' && $m.items.action == $current_action}>active<{/if}>">
                                    <a target="<{if $m.app != 'b2c'}>_blank<{else}>_self<{/if}>" data-target="main" href="<{link app=$m.app ctl=$m.controller act=$m.action}>">
                                        <span><{$m.label}></span>
                                    </a>

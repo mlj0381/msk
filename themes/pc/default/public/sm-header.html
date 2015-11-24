@@ -1,43 +1,233 @@
 <header>
-    <div class="container">
-        <nav class="navbar  navbar-inverse">
-                <div class="navbar-header">
-                  <a class="navbar-brand" href="<{link app=site ctl=index act=index}>">
-                      LOGO
-                      <!-- <img src="LOGO_URL" alt="" /> -->
-                      <!-- class text-hide for hidden text -->
-                  </a>
+    <div class="container-fulid">
+        <div class="topbar">
+            <div class="top">
+                <div class="topLeft">
+                    <div class="location dropdown">
+                        <a id="cityPlan" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false" aria-haspopup="true" role="button" href="">
+                            所在城市 <i class="icon-angle-down"></i>
+                        </a>
+                        <ul class="dropdown-menu" role="menu" aria-labelledby="cityPlan">
+                            <li><a href="">上海</a></li>
+                            <li><a href="">北京</a></li>
+                        </ul>
+                    </div>
+                    <div class="loginStatus">
+                    <span>您好，请<a href="<{link app=b2c ctl=site_passport act=login}>">登录</a></span>|<a href="<{link app=b2c ctl=site_passport act=signup args0=$forward}>" class="freeReg">免费注册</a>
+                    </div>
                 </div>
-                <ul class="nav navbar-nav">
-                  <li class="active"><a href="<{link app=site ctl=index act=index}>">首页</a></li>
-                  <li><a href="<{link app=b2c ctl=site_list act=index}>">商品列表</a></li>
-                  <!-- <li><a href="<{link app=b2c ctl=site_promotion act=index}>">活动列表</a></li> -->
-                  <li><a href="<{link app=b2c ctl=site_brand act=index}>">品牌专区</a></li>
-                  <li><a href="<{link app=b2c ctl=site_member act=index}>">会员中心</a></li>
-                </ul>
-                <ul class="nav navbar-nav top-tools navbar-right">
-                    <li class="is-login dropdown hide">
-                        <a id="member_menu" href="<{link app=b2c ctl=site_member act=index}>" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false" aria-haspopup="true" role="button">欢迎你，<strong class="uname"></strong><span class="caret"></span></a>
-                    <ul class="dropdown-menu" role="menu" aria-labelledby="member_menu">
-                      <li><a href="<{link app=b2c ctl=site_member}>">会员中心</a></li>
-                        <li class="divider"></li>
-                      <li><a href="<{link app=b2c ctl=site_member}>">我的订单</a></li>
-                      <li><a href="<{link app=b2c ctl=site_member}>">我的咨询</a></li>
-                      <li><a href="<{link app=b2c ctl=site_member}>">我的账户</a></li>
-                      <li><a href="<{link app=b2c ctl=site_cart}>">我的购物车</a></li>
-                      <li class="divider"></li>
-                      <li><a href="<{link app=b2c ctl=site_passport act=logout}>">退出登录</a></li>
+                <div class="topRight">
+                    <ul>
+                        <li class="seller dropdown">
+                            <a id="mySnk" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false" aria-haspopup="true" role="button" href="">我的神农客
+                            </a>
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="mySnk">
+                                <li><a href="">我的订单</a></li>
+                                <li><a href="">已买到的宝贝</a></li>
+                            </ul>
+                        </li>
+                        <li class="cart"><a href="<{link app=b2c ctl=site_cart act=index}>"><i class="icon-shopping-cart"></i> 购物车</a></li>
+                        <li class="userCenter"><a href="<{link app=b2c ctl=site_member act=index}>">会员中心</a></li>
+                        <li class="favorite"><a href=""><i class="icon-star"></i> 收藏夹</a></li>
+                        <li>|</li>
+                        <li class="sellerSignup"><a href="<{link app=seller ctl=site_passport act=settled_index}>">商家入驻 <i class=" icon-circle-arrow-right"></i></a></li>
+                        <li class="seller_block dropdown">
+                            <a href="<{link app=seller ctl=site_seller act=index}>">卖家中心</a>
+                            <!-- <a id="sellerCenter" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false" aria-haspopup="true" role="button" href="<{link app=seller ctl=site_seller act=index}>">
+                            卖家中心 <i class="icon-angle-down"></i>
+                            </a>
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="sellerCenter">
+                                <li><a href="">子菜单一</a></li>
+                                <li><a href="">子菜单二</a></li>
+                            </ul> -->
+                        </li>
+                        <li class="seller_block"><a href="<{link app=seller ctl=site_passport act=login}>">分销商登录</a></li>
+                        <li class="seller"><a href="">鲜驰达商城</a></li>
+                        <li class="seller_block site_nav"><a href="javascript:;">网站导航 <i class="icon-angle-down"></i></a></li>
                     </ul>
-                    </li>
-                    <li class="is-unlogin"><a href="<{link app=b2c ctl=site_passport act=login}>">登录</a></li>
+                </div>
+            </div>
+            <!-- 网站导航 -->
+            <div class="row website_menu">
+                <div class="menu_con">
+                    <{WIDGET_B2C_GOODS_INDEX_WEB_NAV target=index}>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- Search Box -->
+    <div class="container searchbar">
+        <div class="row searchbar_con">
+            <div class="logo col-md-5">
+                <img src="statics/images/logo.jpg" alt="美侍客" title="美侍客" />
+            </div>
+            <div class="searchbox col-md-4">
+                <div class="search_label">
+                    <span class="active">商品</span>
+                    <span >店铺</span>
+                </div>
+                <form class="search_form" action="<{link app=b2c ctl=site_list act=index}>" method="post">
+                    <span class="search_txt"><input type="text" name="keywords" value="<{$keywords}>" placeholder="请输入您要查找的商品"/></span>
+                    <button type="submit" class="search_btn">搜索</button>
+                </form>
+                <ul class="hotSearch">
+                    <li><a href="">鸡腿</a></li>
+                    <li><a href="">鸡翅</a></li>
+                    <li><a href="">鸭腿</a></li>
+                    <li><a href="">三黄鸡</a></li>
                 </ul>
-        </nav>
+            </div>
+            <div class="col-md-3 kefu">
+                <a class="mobile fl" href="javascript:;">手机美侍客 <i class="icon-angle-down"></i>
+                    <div class="wxcode hidden">
+                        <img src="../statics/images/wxcode.png" />
+                    </div>
+                </a>
+                <span class="hotLine">
+                    24小时客服专线
+                    <b>400-6017-123</b>
+                </span>
+            </div>
+        </div>
     </div>
 </header>
+<script type="text/template" id="minicart_item_tpl">
+    <li class="mc-item">
+        <div class="row">
+            <div class="col-xs-2">
+                <a href='{item_url}'><img class="img-responsive" src="{image_url}"></a>
+            </div>
+            <div class="col-xs-6">
+                <span>{name}</span>
+                <p class="spec-info text-muted">{spec_info}</p>
+            </div>
+            <div class="col-xs-4">
+                <span class="text-danger text-price">
+                    <small>￥</small>{buy_price}
+                </span>
+                <a href="{remove_url}" class='cart-remove btn btn-xs btn-default'>删除</a>
+            </div>
+        </div>
+    </li>
+</script>
 <script charset="utf-8">
-    if($.cookie('UNAME') && $.cookie('MEMBER_IDENT')){
-        $('.top-tools .is-unlogin').addClass('hide');
-        $('.top-tools .is-login').removeClass('hide');
-        $('.top-tools .is-login .uname').text($.cookie('UNAME'));
+$(function() {
+    /**
+     * 模板填充工具
+     */
+    var substitute = function(str, obj) {
+        return str.replace(/\\?\{([^{}]+)\}/g, function(match, name) {
+            if (match.charAt(0) == '\\') return match.slice(1);
+            return (obj[name] != undefined) ? obj[name] : '';
+        });
+    };
+    /**
+     * 登录\注册切换
+     */
+    if ($.cookie('UNAME') && $.cookie('MEMBER_IDENT')) {
+        $('.loginStatus span').text('你好，' + $.cookie('UNAME'));
+        $('.loginStatus > a').text('注销').attr('href', '<{link app=b2c ctl=site_passport act=logout}>');
     }
+    if ($.cookie('UNAME') && $.cookie('SELLER_IDENT')) {
+        $('.loginStatus span').text('你好，' + $.cookie('UNAME'));
+        $('.loginStatus > a').text('注销').attr('href', '<{link app=seller ctl=site_passport act=logout}>');
+    }
+    /**
+     * 迷你购物车
+     */
+    //购物车数量加载
+    $.getJSON('<{$base_url}>/openapi/cart/count', function(re) {
+        try {
+            if (re.data.count > 0) {
+                $('.cart-count').removeClass('hidden').text(re.data.count);
+            }
+        } catch (e) {
+
+        }
+    });
+    //购物车项
+    var load_minicart = function(e) {
+        if ($(this).find('.cart-count').text() == '') return false;
+        var mc_content = $(this).find('.mc-content');
+        var li_loading = $(this).find('.mc-loading');
+        var _self = arguments.callee;
+        if (li_loading.length) return true;
+        mc_content.find('.mcc-bottom').before('<li class="mc-loading text-center"><h6>加载中...</h6></li>');
+        li_loading = $(this).find('.mc-loading');
+        mc_content.css('width', $(this).closest('.container').width() * .3);
+        mc_content.find('.mc-item').remove();
+        $.getJSON("<{$base_url}>/openapi/cart/preview", function(re) {
+            try {
+                if (re.data && re.data.length) {
+                    var item_html = '',
+                        item_html_tpl = $('#minicart_item_tpl').html();
+                    $.each(re.data, function(idx, item) {
+                        item_html += substitute(item_html_tpl, item);
+                    });
+                    li_loading.replaceWith(item_html);
+                    $('.mini-cart').off('show.bs.dropdown', _self);
+                }
+            } catch (e) {}
+        });
+    };
+    $('.mini-cart').on('show.bs.dropdown', load_minicart);
+    //购物车快速删除
+    $('.mc-content').on('click', '.cart-remove', function(e) {
+        e.stopPropagation();
+        var cr_btn = $(this);
+        cr_btn.text('删除中..');
+        $.getJSON(cr_btn.prop('href'), function(re) {
+            if (re) {
+                cr_btn.closest('.mc-item').fadeOut(function() {
+                    $(this).remove();
+                    var cart_count = parseInt($('.cart-count').text());
+                    if (!isNaN(cart_count) && cart_count > 1) {
+                        $('.cart-count').text(--cart_count);
+                    } else {
+                        $('.cart-count').addClass('hidden');
+                    }
+
+                });
+            }
+        });
+        return false;
+    });
+
+});
+</script>
+
+<script type="text/javascript">
+    /**
+     * 顶部商品或店铺搜索
+     */
+    $('.search_label span').click(function(){
+        $(this).addClass('active').siblings().removeClass('active');
+        var index = $('.search_label span').index(this);
+        var url_list="<{link app=b2c ctl=site_list act=index}>";
+        var url_store="<{link app=seller ctl=site_store act=index}>";
+        if(index=="0"){
+            $('.search_form').attr('action',url_list);
+            $('.search_form .search_txt input').attr('value','');
+            $('.search_form .search_txt input').attr('placeholder','请输入你要查找的商品');
+        }else{
+
+            $('.search_form').attr('action',url_store);
+            $('.search_form .search_txt input').attr('value','');
+            $('.search_form .search_txt input').attr('placeholder','请输入你要查找的店铺名');
+        }
+    })
+
+    $('.search_btn').click(function(){
+        var keyword = $('.search_form .search_txt input').val();
+        var tips="亲，您还没输入关键词";
+
+        if(!keyword||keyword==tips){
+            $('.search_form .search_txt input').attr('value',tips);
+            $('.search_form .search_txt input').focus(function(){
+                $(this).attr('value','');
+            })
+            return false;
+        }
+    })
 </script>

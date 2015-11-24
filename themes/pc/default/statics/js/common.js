@@ -20,21 +20,6 @@ $(function(){
         $('.website_menu').slideToggle();
     })
 
-
-    /**
-     * 首页搜索
-     */
-
-    /*$('.search_label span').click(function(){
-        $(this).addClass('active').siblings().removeClass('active');
-        var index = $('.search_label span').index(this);
-        if(index=="0"){
-            $('.search_form').attr('action','<{link app=b2c ctl=site_list act=index}>');
-        }else{
-            $('.search_form').attr('action','');
-        }
-    })*/
-    
     
     
 
@@ -59,5 +44,7 @@ $(function(){
     }
      
     tabslider('.fav_nav span a','.gl_item_box','active');   //我的收藏调用
+
+    tabslider('.like_menu span a','.like_con > ul','active');   //购物车浏览记录
     
 })

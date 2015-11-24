@@ -11,14 +11,6 @@ body {
   width: 1200px!important;
   margin: 0 auto;
 }
-.cart-html .container,
-.order-detail-html .container,
-.checkout-html .container,
-.cart-html .main-container,
-.order-detail-html .main-container,
-.checkout-html .main-container {
-  width: 990px!important;
-}
 .checkout-container .btn-list-edit button {
   visibility: hidden;
 }
