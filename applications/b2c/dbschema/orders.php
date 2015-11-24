@@ -315,6 +315,12 @@ $db['orders'] = array(
             'type' => 'longtext',
             'label' => ('订单创建时附言') ,
         ) ,
+        'store_id' => array(
+            'type' => 'table:store@store',
+            'label' => ('所属店铺') ,
+            'required' => true,
+            'in_list' => true,
+        ) ,
         'remarks' => array(
             'type' => 'longtext',
             'label' => ('订单管理员备注') ,
