@@ -86,12 +86,12 @@
     <li <{if $current_status=='s4' }>class="active"
         <{/if}>><a href="<{link app=b2c ctl=site_member act=orders args0=s4}>">待评价</a></li>
     <li class="last_li">
-        <form action="#" method="">
+        <form action="<{link app=b2c ctl=site_member act=orders}>" method="post">
             <div class="form-group">
                 <div class="input-group">
-                    <input type="text" class="form-control" placeholder="商品名称/订单编号">
+                    <input type="text" class="form-control" name="search" placeholder="商品名称/订单编号">
                     <div class="input-group-addon">
-                        <button><i class="glyphicon glyphicon-search"></i></button>
+                        <button type="submit"><i class="glyphicon glyphicon-search"></i></button>
                     </div>
                 </div>
             </div>
@@ -126,7 +126,7 @@
                         </div>
                     </th>
                     <th width="12%">
-                        订单金额
+                        订单状态
                     </th>
                     <th width="12%">
                         订单操作
@@ -150,7 +150,7 @@
                                 <li>
                                     <{$order.ship_status|order_ship_status}>
                                 </li>
-                                <li><a href="#">沙县小吃食材专营批发店</a></li>
+                                <li><a href="<{link app=store ctl=site_store act=index args0=$order.store_id}>"><{$order.store_name}></a></li>
                                 <li><a href="#"><img src="<{$baseurl}>/themes/pc/default/statics/images/customer_03.jpg"></a></li>
                             </ul>
                         </th>
@@ -168,9 +168,9 @@
                                     <div class="col-xs-3">
                                         <a class="text-muted" href="<{link app=b2c ctl=site_product act=index args0=$item.product_id}>">
                                             <{$item.name}>
-                                                <{if $item.spec_info}>
-                                                    <br><small><{$item.spec_info}></small>
-                                                    <{/if}>
+                                            <{if $item.spec_info}>
+                                                <br><small><{$item.spec_info}></small>
+                                            <{/if}>
                                         </a>
                                     </div>
                                     <div class="col-xs-1 text-center">
@@ -195,16 +195,18 @@
                                             <{if $order.status!='dead' && $order.ship_status!='0' }>
                                                 <a class="btn btn-xs btn-block btn-default" href="<{link app=b2c ctl=site_comment act=form args0=$order.order_id args1=$item.product_id}>">评价商品</a>
                                             <{/if}>
+                                            <a class="btn btn-xs btn-block btn-default" href="#">取消订单</a>
                                     </div>
                                     <div class="col-xs-2 text-center">
-                                        ￥:149.00
+
+                                        <{$item.buy_price|cur}>
                                     </div>
                                 </div>
                                 <{/foreach}>
                         </td>
                         <td class="text-center" width="12%">
-                            <small>￥</small>
-                            <{$order.order_total|cur}>
+                                <div><{$order.pay_status|order_pay_status}></div>
+                                <div><{$order.ship_status|order_ship_status}></div>
                                 <br>
                                 <{if $order.is_cod=='Y' }>
                                     <span class="label label-default">货到付款</span>

@@ -14,6 +14,7 @@
     <div class="row goods-list gl-default">
         <div class="gl_item_box">
             <{foreach from=$data item=item}>
+            <{if $item.gnotify_type == 'goods'}>
                 <div class="col-xs-3 fav-item">
                     <div class="thumbnail goods-item">
                         <div class="gi-image-wrapper">
@@ -39,11 +40,13 @@
                         </div>
                     </div>
                 </div>
-            <{/if}>
+                <{/if}>
+            <{/foreach}>
         </div>
         <!-- 店铺收藏列表 -->
         <div class="gl_item_box">
             <{foreach from=$data item=item}>
+            <{if $item.gnotify_type == 'store'}>
                 <div class="col-xs-3 fav-item">
                     <div class="thumbnail goods-item">
                         <div class="gi-image-wrapper">
@@ -61,7 +64,8 @@
                         </div>
                     </div>
                 </div>
-            <{/if}>
+                <{/if}>
+            <{/foreach}>
         </div>
         <!--END 店铺收藏列表 -->
     </div>

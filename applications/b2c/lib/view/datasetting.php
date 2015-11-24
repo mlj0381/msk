@@ -21,6 +21,9 @@
         include($this->app->app_dir.'/datasetting.php');
         $this->setting = $setting;
         $this->goods_list = $goods_list;
+        $this->order_list = $order_list;
+        $this->order_list_items = $order_list_items;
+        $this->store = $store;
         $this->router = app::get('site')->router();
      }
      public function city()
@@ -126,13 +129,29 @@
          }
      }
 
-     public function list_goods($filter, $page, $orderby){
-
-
-         foreach ($this->goods_list as $key => $value) {
-
+     public function order_list($filter, $page, $orderby){
+         foreach ($this->order_list as $key => $value) {
+             if($value['member_id'] != $filter['member_id']){
+                 unset($this->order_list[$key]);
+             }
+             foreach ($this->store as $k => $v) {
+                 if($v['store_id'] == $value['store_id']){
+                     $this->order_list[$key]['store_name'] = $v['store_name'];
+                 }
+             }
          }
-
-         return $this->goods_list;
+         return $this->order_list;
      }
+     public function order_list_item($filter){
+         $return = array();
+         foreach ($filter as $key => $value) {
+             foreach ($this->order_list_items as $k => $v) {
+                 if($value == $v['order_id']){
+                     $return[$key] = $v;
+                 }
+             }
+         }
+         return $return;
+     }
+
  }

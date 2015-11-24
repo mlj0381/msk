@@ -20,7 +20,7 @@ class seller_ctl_site_order extends seller_frontpage
 
     //商家订单
     public function index(){
-
+        $this->output();
     }
 
     //支付

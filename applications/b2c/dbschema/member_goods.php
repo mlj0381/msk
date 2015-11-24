@@ -21,7 +21,7 @@ $db['member_goods']=array (
       'extra' => 'auto_increment',
       'label' => 'ID',
       'width' => 110,
-      
+
       'default_in_list' => true,
       'id_title' => true,
     ),
@@ -50,13 +50,18 @@ $db['member_goods']=array (
         'label' => ('商品名称'),
         'width' => 310,
     ),
+    'gnotify_type' => array(
+        'type' => "enum('store', 'goods')",
+        'label' => '收藏类型',
+        'default' => 'goods',
+    ),
     'goods_price' =>
     array (
         'type' => 'money',
         'default' => '0',
         'label' => ('销售价'),
         'width' => 75,
-        
+
         'filtertype' => 'number',
         'orderby'=>true,
     ),
@@ -65,8 +70,8 @@ $db['member_goods']=array (
         'type' => 'varchar(32)',
         'label' => ('默认图片'),
         'width' => 75,
-        
-        
+
+
     ),
     'email' => array(
         'type'=>'varchar(100)',
@@ -91,9 +96,9 @@ $db['member_goods']=array (
       'type' => 'time',
       'label' => ('发送时间'),
       'width' => 110,
-      
+
       'filtertype' => 'time',
-      
+
       'in_list' => true,
     ),
     'create_time' =>
@@ -101,9 +106,9 @@ $db['member_goods']=array (
       'type' => 'time',
       'label' => ('申请时间'),
       'width' => 110,
-      
+
       'filtertype' => 'time',
-      
+
       'in_list' => true,
     ),
     'disabled' => array (

@@ -36,7 +36,7 @@ class b2c_ctl_site_member extends b2c_frontpage
         return $a['ordernum'] > $b['ordernum'] ? +1 : -1;
     }
 
-    
+
     /**
      * 会员中心首页.
      */
@@ -86,6 +86,14 @@ class b2c_ctl_site_member extends b2c_frontpage
                 $order_count_arr[$key] = $count;
             }
         }
+        $datasetting = vmc::singleton('b2c_view_datasetting');
+        $filter['member_id'] = $this->member['member_id'];
+        $order_list = $datasetting->order_list($filter);
+        $oids = array_keys(utils::array_change_key($order_list, 'order_id'));
+        $order_items = $datasetting->order_list_item($oids);
+        $order_items_group = utils::array_change_key($order_items, 'order_id', true);
+        $this->pagedata['order_list'] = $order_list;
+        $this->pagedata['order_items_group'] = $order_items_group;
         $user_obj = vmc::singleton('b2c_user_object');
         $this->pagedata['pam_data'] = $user_obj->get_pam_data('*', $this->member['member_id']);
         $this->pagedata['order_count_arr'] = $order_count_arr;
@@ -358,15 +366,20 @@ class b2c_ctl_site_member extends b2c_frontpage
                 'member_id' => $this->member['member_id'],
             );
         }
-        $mdl_order = $this->app->model('orders');
-        $mdl_order_items = $this->app->model('order_items');
-        $order_list = $mdl_order->getList('*', $filter, ($page - 1) * $limit, $limit);
+        $datasetting = vmc::singleton('b2c_view_datasetting');
+        $filter['member_id'] = $this->member['member_id'];
+        $order_list = $datasetting->order_list($filter);
+
+        //$mdl_order = $this->app->model('orders');
+        //$mdl_order_items = $this->app->model('order_items');
+        //$order_list = $mdl_order->getList('*', $filter, ($page - 1) * $limit, $limit);
         $oids = array_keys(utils::array_change_key($order_list, 'order_id'));
-        $order_items = $mdl_order_items->getList('*', array(
-            'order_id' => $oids,
-        ));
+        // $order_items = $mdl_order_items->getList('*', array(
+        //     'order_id' => $oids,
+        // ));
+        $order_items = $datasetting->order_list_item($oids);
         $order_items_group = utils::array_change_key($order_items, 'order_id', true);
-        $order_count = $mdl_order->count($filter);
+        $order_count = count($order_list);
         $this->pagedata['current_status'] = $status;
         $this->pagedata['status_map'] = $status_filter;
         $this->pagedata['order_list'] = $order_list;
@@ -418,7 +431,7 @@ class b2c_ctl_site_member extends b2c_frontpage
                     $this->splash('success', '', '加入收藏成功!');
                 }
             default:
-            $list = $mdl_member_goods->getList('*', array('member_id' => $member_id,'type'=>'fav'));
+            $list = $mdl_member_goods->getList('*', array('member_id' => $member_id, 'type'=>'fav'));
             $this->pagedata['member_lv_name'] = $this->member['levelname'];
             $this->pagedata['member_lv_discount'] = $this->member['lv_discount'];
             $this->pagedata['data'] = $list;
