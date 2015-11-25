@@ -45,6 +45,7 @@ ol {
   border: none;
   background: #fff;
   border-radius: 0px;
+  padding-top: 10px;
 }
 .buyer_container .my-main .row .member_left .my-menu dt {
   padding: 0 10px;
@@ -59,7 +60,9 @@ ol {
   padding: 0;
 }
 .buyer_container .my-main .my-page {
-  width: 1000px;
+  width: 980px;
+  background: #fff;
+  min-height: 800px;
   float: right;
 }
 .buyer_container .my-main .my-page .page-header h1 {
@@ -77,7 +80,7 @@ ol {
   margin-bottom: 15px;
 }
 .buyer_container .my-main .my-page .alert-warning .m-baseinfo {
-  width: 32%;
+  width: 300px;
   margin-left: 30px;
 }
 .buyer_container .my-main .my-page .alert-warning .m-baseinfo dl {
@@ -143,17 +146,17 @@ ol {
   background: #e93428;
 }
 .buyer_container .my-main .my-page .alert-warning .order_status_list {
-  width: 38%;
+  width: 360px;
   box-sizing: border-box;
   border-right: 1px dashed #ccc;
   border-left: 1px dashed #ccc;
-  margin-left: 10px;
+  margin-left: 20px;
 }
 .buyer_container .my-main .my-page .alert-warning .order_status_list li {
-  width: 42%;
+  width: 130px;
   float: left;
   height: 50px;
-  margin: 10px 0 10px 5%;
+  margin: 10px 0 10px 25px;
 }
 .buyer_container .my-main .my-page .alert-warning .order_status_list li span.status_icon {
   display: inline-block;
@@ -172,9 +175,9 @@ ol {
   display: inline-block;
   height: 50px;
   line-height: 50px;
-  width: 70px;
+  width: 60px;
   float: left;
-  margin-left: 10px;
+  margin-left: 5px;
   font-size: 14px;
 }
 .buyer_container .my-main .my-page .alert-warning .order_status_list li span small {
@@ -956,4 +959,34 @@ ol {
   -o-border-radius: 20px;
   border-radius: 20px;
   margin-top: 100px;
+}
+.buyer_container .seller_page {
+  background: #fff;
+}
+.buyer_container .seller_page .order-screening {
+  margin: 15px auto;
+}
+.buyer_container .seller_page .order-screening .form-group {
+  margin: 10px 10px 10px 0;
+}
+.buyer_container .seller_page .order-screening .form-group button {
+  width: 90px;
+}
+.buyer_container .seller_page .seller-orderlist-tab {
+  width: 100%;
+  height: auto;
+  margin: 20px auto;
+  border-collapse: collapse;
+}
+.buyer_container .seller_page .seller-orderlist-tab th {
+  background: #ddd;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+}
+.buyer_container .seller_page .seller-orderlist-tab tbody td {
+  height: 60px;
+  vertical-align: middle;
+  text-align: center;
+  border-bottom: 1px solid #ddd;
 }

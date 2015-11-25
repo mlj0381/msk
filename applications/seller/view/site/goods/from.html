@@ -1,38 +1,1580 @@
-<{script app=desktop  src="../global/plugins/jquery-tags-input/jquery.tagsinput.min.js"}>
-<div class="modal-header">
-    <h3 class="modal-title">
-        <{if $goods.goods_id }>商品编辑
-            <{else}>商品添加
-                <{/if}>
-    </h3>
-</div>
-<div class="panel-heading clearfix">
-    <{foreach from=$sections item=section key=key name=tab_nav}>
-        <button type="button" href="#tab_edit_<{$key}>" data-toggle="tab" class="btn <{if $env.foreach.tab_nav.first}>btn-danger<{else}>btn-default<{/if}> tab" icon="fa fa-plus">
-            <{$section.label}>&nbsp;<i class="fa fa fa-plus"></i></button>
-        <{/foreach}>
-</div>
-<form method="post" action="<{link app=seller ctl=site_goods act=save}>" id='goods_form' calss="form">
-    <div class="form-horizontal">
-        <div class="tab-content">
-            <{foreach from=$sections item=section key=key name=tab_content}>
-                <div id="tab_edit_<{$key}>" class="tab-pane<{if $env.foreach.tab_content.first}> active<{/if}>">
-                    <{include app=$section.app file=$section.file}>
-                </div>
-                <{/foreach}>
-        </div>
-        <div class="modal-footer">
-        <button type="submit" class="btn blue">保存</button>
-</div>
+<{script app=desktop  src="../com/global/plugins/jquery-tags-input/jquery.tagsinput.min.js"}>
+<{css app=desktop href="../com/global/plugins/jquery-tags-input/jquery.tagsinput.css"}>
+<{css app=desktop href="../stylesheets/desktop-theme.css"}>
+      <div class="col-xs-10 my-page">
+          <div class="page-seller">
+    <div class="page-header">
+        <h1>添加商品<small></small></h1>
     </div>
-</form>
-<script charset="utf-8">
-
-$('.panel-heading button').each(function(index) {
-    $(this).click(function() {
-        $('.panel-heading button').removeClass('btn-danger').addClass('btn-default');
-        $(this).removeClass('btn-default').addClass('btn-danger');
-    })
+    <div style="height: 1px; background: #b5b5b5; width:946px; margin:0 auto;"></div>
+    <form class="addgoods_form"  action="" method="post" id="goods_edit_form">
+        <input name="goods[goods_id]" value="" type="hidden"/>
+        <div class="con_row clearfix">
+            <span class="row_lt">*品类</span>
+            <div class="row_rt" >
+                 <select name="goods[type][type_id]" id="goods_prototype" class="select_pinglei ">
+                    <option value="请选择品类">请选择品类</option>
+                                            <option  value='1' selected>奢侈品</option>
+                                    </select>
+                <span class="tips redfont">品类即类型</span>
+            </div>
+        </div>
+        <div class="con_row clearfix">
+            <span class="row_lt">*品名</span>
+            <div class="row_rt " id="select_cat">
+                <!--<select name="goods[category][cat_id]" id="select_cat" class="select_pinglei create_goods_name">-->
+                    <!--<option value="0">未分类</option>-->
+                    <!---->
+                <!--</select>-->
+                <!--<input type="hidden" name="goods[category][cat_id]" value="">-->
+                <!--<select class="for  m-control class_select">-->
+                    <!--<option value="-1">请选择</option>-->
+                    <!---->
+                <!--</select>-->
+                <div id="category_sel_8d636a" class="form-inline">
+    <input type="hidden" name="goods[category][cat_id]" value="">
+    <select class="form-control">
+        <option value="-1">
+                        请选择
+                    </option>
+                    <option value="21" >男</option>
+                    <option value="22" >女</option>
+            </select>
+    </div>
+<script type="text/javascript">
+$(function(){
+    var _callback = function(cat_id){
+            };
+    var fix_select = function(){
+        var fix_select = $('#category_sel_8d636a select').filter(function(){
+            return this.options[this.selectedIndex].value>0;
+        });
+        if(!fix_select.length){
+            _callback('');
+            return $('#category_sel_8d636a input[type=hidden]').val('');
+        }
+        fix_select = fix_select.last();
+        var fix_option = fix_select[0].options[fix_select[0].selectedIndex];
+        $('#category_sel_8d636a input[type=hidden]').val(fix_option.value);
+        $(fix_option).text(fix_option.label+' •');
+        _callback(fix_option.value);
+    };
+    fix_select();
+    $('#category_sel_8d636a').on('change','select',function(e){
+        //•
+        var selected_value = this.options[this.selectedIndex].value,
+        selected_label = this.options[this.selectedIndex].label,
+        the_select = $(this),
+        input_el = $('#category_sel_8d636a input[type=hidden]');
+        $('#category_sel_8d636a select option:contains("•")')
+        .text($('#category_sel_8d636a select option:contains("•")').text().replace('•',''));
+        the_select.nextAll('select').remove();
+        $.getJSON('http://180.153.145.21:88/index.php/openapi/goods/catalog//parent_id/'+$(this).val(),function(re){
+            if(re.result == 'success'){
+                var options = '';
+                $.each(re.data,function(cat_id,cat){
+                    options+="<option value='"+cat.cat_id+"'>"+cat.cat_name+"</option>";
+                });
+                $('<select class="form-control"><option value=-1>…</option></select>').append("<optgroup label='"+selected_label+"'>"+options+"</optgroup>").insertAfter(the_select);
+            }
+        });
+        if(selected_value>0){
+            input_el.val(selected_value);
+            _callback(selected_value);
+            $(this.options[this.selectedIndex]).text($(this.options[this.selectedIndex]).text()+' •');
+        }else{
+            fix_select();
+        }
+    });
 });
 
+</script>
+            </div>
+        </div>
+        <div class="con_row clearfix">
+            <span class="row_lt">*品牌</span>
+            <div class="row_rt ">
+                <!-- <select name="goods[brand][brand_id]" id="select_brand" class="select_pinglei ">
+                    <option  value='' ></option>
+                                        
+                        <option  value='11'  >gplus品牌测试</option>
+                
+                                    
+                        <option  value='6'  >LV</option>
+                
+                                    
+                        <option  value='5'  >ob01</option>
+                
+                                    
+                        <option  value='9'  >ob</option>
+                
+                                    
+                        <option  value='2'  >rty43we</option>
+                
+                                    
+                        <option  value='3'  >试试事实上</option>
+                
+                                    
+                        <option  value='4'  >sss</option>
+                
+                                    
+                        <option  value='7'  >123</option>
+                
+                                    
+                        <option  value='8'  >1212</option>
+                
+                                    
+                        <option  value='10'  >111</option>
+                
+                                    
+                        <option  value='1'  >232</option>
+                
+                                    </select> -->
+                <div class="select_brand">
+                    <input type="text" value="" id='select_brand'  class="brand_input" placeholder="请输入品牌名" >
+                    <input name="goods[brand][brand_id]" value="" type="hidden"/>
+                    <ul class="ul_brand_list hidden">
+                                            <li data-id='11' data-value='gplus品牌测试'  >gplus品牌测试</li> 
+                                            <li data-id='6' data-value='LV'  >LV</li> 
+                                            <li data-id='5' data-value='ob01'  >ob01</li> 
+                                            <li data-id='9' data-value='ob'  >ob</li> 
+                                            <li data-id='2' data-value='rty43we'  >rty43we</li> 
+                                            <li data-id='3' data-value='试试事实上'  >试试事实上</li> 
+                                            <li data-id='4' data-value='sss'  >sss</li> 
+                                            <li data-id='7' data-value='123'  >123</li> 
+                                            <li data-id='8' data-value='1212'  >1212</li> 
+                                            <li data-id='10' data-value='111'  >111</li> 
+                                            <li data-id='1' data-value='232'  >232</li> 
+                                        </ul>
+                </div>
+                <script>
+                    $(function(){
+                        $('.brand_input').focus(function(){
+                            $('.ul_brand_list').removeClass('hidden');
+                        })
+                        
+                        $('.ul_brand_list li').click(function(){
+                            var brand_name=$.trim($(this).text());
+                            var dataId=$(this).attr('data-id');
+                            $('.brand_input').val(brand_name);
+                            $('input[name="goods[brand][brand_id]"]').val(dataId);
+                            $('.ul_brand_list').addClass('hidden');
+                            //品牌触发商品生产
+                            generate_goods_name();
+
+                        })
+                        //品牌搜索查询
+                        $('.brand_input').keyup(function(event) {
+                            
+                            var myVal=($('.brand_input').val()).toLowerCase();
+                            var dataVal,result;
+                            $('.ul_brand_list li').addClass('hidden');
+                            $('.ul_brand_list li').each(function(index, el) {
+                                dataVal=($(this).attr('data-value')).toLowerCase();
+                                result=dataVal.indexOf(myVal);
+                                if(result>=0){
+                                    $(this).removeClass('hidden')
+                                }
+                            });
+                        });
+                    })
+                </script>
+            </div>
+        </div>
+        <div class="con_row clearfix">
+            <span class="row_lt">关键词</span>
+            <div class="row_rt">
+
+                <div class="goods_keywords_box">
+                                        <input type="text" id="goods_keywords_input" name="keywords" value="" class="form-control" style="display: none;">
+                </div>
+            </div>
+        </div>
+        <div class="con_row clearfix">
+            <span class="row_lt">商品名称</span>
+            <div class="row_rt">
+                <input type="text" name="goods[name]" value="" class="input_goodsname" placeholder="按'品牌+服装+品名'规则自动生成">
+            </div>
+        </div>
+        <div class="con_row clearfix" style="padding-top:30px;" id="params">
+            <span class="row_lt">属性参数</span>
+
+                        <div class="row_rt">
+                <div class="attr_box">
+                                        <div class="attr_item clearfix">
+                        <label >主要色系</label>
+                        <select class="form-control input-sm select_sex form-control" name="goods[props][p_1][value]" type="select" nulloption="1" id="el_882c0b1"><option></option><option  value="1">黑色</option><option  value="2">白色</option><option  value="3">灰色</option><option  value="4">红色</option><option  value="5">黄色</option><option  value="6">绿色</option><option  value="7">蓝色</option><option  value="8">紫色</option><option  value="9">金色</option><option  value="10">银色</option><option  value="11">迷彩</option><option  value="12">多色</option><option  value="13">咖啡色</option><option  value="14">透明</option><option  value="15">粉色</option></select>                    </div>
+                                        <div class="attr_item clearfix">
+                        <label >图案</label>
+                        <select class="form-control input-sm select_sex form-control" name="goods[props][p_2][value]" type="select" nulloption="1" id="el_882c0b2"><option></option><option  value="16">纯色</option><option  value="17">印花</option><option  value="18">条纹</option><option  value="19">格子</option><option  value="20">波点</option><option  value="21">几何</option><option  value="22">字母</option></select>                    </div>
+                                        <div class="attr_item clearfix">
+                        <label >产地</label>
+                        <input class="form-control  form-control input-sm" class="form-control input-sm" type="text" name="goods[props][p_21][value]" value="" id="el_882c0b3" />                    </div>
+                                        <div class="attr_item clearfix">
+                        <label >面料成份</label>
+                        <input class="form-control  form-control input-sm" class="form-control input-sm" type="text" name="goods[props][p_22][value]" value="" id="el_882c0b4" />                    </div>
+                                        <div class="attr_item clearfix">
+                        <label >年份</label>
+                        <select class="form-control input-sm select_sex form-control" name="goods[props][p_3][value]" type="select" nulloption="1" id="el_882c0b5"><option></option><option  value="23">2010</option><option  value="24">2011</option><option  value="25">2012</option><option  value="26">2013</option><option  value="27">2014</option><option  value="28">2015</option></select>                    </div>
+                                        <div class="attr_item clearfix">
+                        <label >季节</label>
+                        <select class="form-control input-sm select_sex form-control" name="goods[props][p_4][value]" type="select" nulloption="1" id="el_882c0b6"><option></option><option  value="29">SS（春夏）</option><option  value="30">FW（秋冬）</option></select>                    </div>
+                                        <div class="attr_item clearfix">
+                        <label >品牌</label>
+                        <input class="form-control  form-control input-sm" class="form-control input-sm" type="text" name="goods[props][p_23][value]" value="" id="el_882c0b7" />                    </div>
+                                    </div>
+            </div>
+            
+
+        </div>
+        <div class="con_row clearfix" style="padding-top:20px;">
+            <span class="row_lt">产品相册</span>
+            <div class="row_rt">
+                <ul class="addgoods_ul">
+                    <!---->
+                    <li>
+                        <input type="file"  class="goods_add_imgs">
+                        <div class="add_imgbox">
+                                                            <img src="../themes/gplus/images/addgoods_img01.jpg" alt="">
+                            
+                        </div>
+                    </li>
+                    <li>
+                        <input type="file"  class="goods_add_imgs">
+                        <div class="add_imgbox">
+                                                            <img src="../themes/gplus/images/addgoods_img02.jpg" alt="">
+                            
+                        </div>
+                    </li>
+                    <li>
+                        <input type="file"  class="goods_add_imgs">
+                        <div class="add_imgbox">
+                                                            <img src="../themes/gplus/images/addgoods_img03.jpg" alt="">
+                            
+                        </div>
+                    </li>
+                    <li>
+                        <input type="file"  class="goods_add_imgs">
+                        <div class="add_imgbox">
+                                                            <img src="../themes/gplus/images/addgoods_img04.jpg" alt="">
+                            
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="con_row clearfix" style="padding-top:10px;">
+            <span class="row_lt">是否上架销售</span>
+            <div class="row_rt">
+                <div class="groundingbox">
+                    <label><input type="radio" checked  value="true" name="goods[marketable]">是</label>
+                    <label><input type="radio"  value="false" name="goods[marketable]">否</label>
+                    <span class="redfont">商品下架操作同时影响货品</span>
+                </div>
+            </div>
+        </div>
+        <!-- 开始 -->
+        <div class="con_row clearfix" >
+            <span class="row_lt">货品信息</span>
+            <div class="row_rt">
+                <div class="goods_infobox" id="no_spec">
+                    <dl>
+                        <dd>*出厂货号(SKC)</dd>
+                        <!--商品编号 SKC-->
+                        <dt><input type="text" id="goods_gid" value="" name="goods[gid]" class="input_bianhao"></dt>
+                    </dl>
+                                        <input type="hidden" name="goods[product][new_0][marketable]" value="true">
+                    <dl>
+                        <dd>*货号(SKU)</dd>
+                        <!-- SKU-->
+                                                <dt>
+                            <input class="form-control  form-control" value="" data-map="bn" required="1" type="text" name="goods[product][new_0][bn]" id="el_39cccf2">
+                        </dt>
+                    </dl>
+                    <p class="clearfix"></p>
+                    <div class="clearfix">
+                        销售价
+                        <input type="text" class="input_xsj" value="" data-map="price" name="goods[product][new_0][price]" id="el_eb881a4">
+                        重量
+                        <input type="text" class="input_weight" value="" data-map="weight" type="text" name="goods[product][new_0][weight]" id="el_eb881a6">
+                        单位
+                        <input type="text" class="input_danwei"  data-map="unit" value="件" name="goods[product][new_0][unit]" id="el_eb881a7">
+                    </div>
+                                    </div>
+                
+            </div>
+        </div>
+
+        
+        <div class="row guige_add_box"  id="spec_edit_pane">
+            <div class="checker guige_yanse">
+                <span class="checked"><input type="checkbox"  class="checkbox_gg" ></span>有多种规格 如：多个尺码。
+                <a href="#"  class="chima_list" data-toggle="modal" data-target="#ornament">尺码参考列表</a>
+                <!-- <a class="btn btn-link btn-lg" data-toggle="modal" data-target="#ornament">
+                  <small>尺码指南</small>
+                </a> -->
+            </div>
+                            <div class="spec-edit">
+                <table class="table spec_add_table">
+                    <thead>
+                    <tr>
+                        <th width="25%">规格名称</th>
+                        <th>规格项 <i class="fa fa-lightbulb-o"></i><small>每输入一个规格项后，回车确认</small></th>
+                        <th width="10%"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>
+                            <div class="input-group">
+                                <input class="form-control spec-t" name="goods[spec_desc][t][]" type="text" value="颜色" placeholder="颜色" readonly="readonly">
+                                                            </div>
+                        </td>
+                        <td>
+                            <input  class='form-control spec-v'  name="goods[spec_desc][v][]" type="text"  value="" id="color_input">
+                        </td>
+                        <td>
+                            <button type=button class="btn btn-sm default hide"><i class="glyphicon glyphicon-trash"></i></button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="input-group">
+                                <input class="form-control spec-t" name="goods[spec_desc][t][]" type="text" value="" placeholder="如:尺码">
+                                                            </div>
+                        </td>
+                        <td>
+                            <input  class='form-control spec-v' width="100px" name="goods[spec_desc][v][]" type="text"  value="">
+                        </td>
+                        <td>
+                            <button type=button class="btn btn-sm default spec-del" ><i class="glyphicon glyphicon-trash"></i></button>
+                        </td>
+                    </tr>
+                    </tbody>
+                    <tfoot>
+                    <tr>
+                        <td colspan=3>
+                            <!-- <button type=button class="btn btn-sm blue-madison new-spec-item"><i class="fa fa-plus"></i> 新增其他名称</button> -->
+                            <button type=button class="btn btn-sm green-meadow create-product-items"><i class="fa fa-cogs"></i> 根据以上信息生成多规格货品</button>
+                        </td>
+                    </tr>
+                    </tfoot>
+                </table>
+            </div>
+                        <div class="col-md-12 product-items">
+                <table class="table table-striped  table-hover">
+                    <thead>
+                    <tr>
+                        <th width="150px">规格</th>
+                        <th>
+                            货号
+                        </th>
+                        <th>
+                            条码
+                        </th>
+                        <th>
+                            销售价
+                        </th>
+                        <!-- <th>
+                            市场价
+                        </th> -->
+                        <th>
+                            重量
+                        </th>
+                        <th>
+                            单位
+                        </th>
+                        <th width="50px;">
+                            上架
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                                        </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- 结束 -->
+        <div class="form_action">
+            <a href="/index.php/merchant-goodslist.html">返回商品列表</a>
+            <a href='javascript:;' class="save_goods" data-redirect="/index.php/merchant-addgoods.html&p[0]={goods_id}">保存</a>
+            <a href='javascript:;' class="save_goods" data-redirect="/index.php/merchant-addgoods.html&p[0]={goods_id}">保存并添加商品</a>
+        </div>
+
+    </form>
+
+    <textarea class="spec-item-tpl hide">
+ <tr>
+     <td>
+         <div class="input-group">
+             <input class="form-control spec-t" name="goods[spec_desc][t][]" type="text" value="" placeholder="规格名称">
+                      </div>
+     </td>
+     <td>
+         <input  class='form-control spec-v' name="goods[spec_desc][v][]" type="text"  value="">
+     </td>
+     <td>
+         <button type=button class="btn btn-sm spec-del default"><i class="glyphicon glyphicon-trash"></i></button>
+     </td>
+ </tr>
+</textarea>
+    <textarea class="product-item-tpl hide">
+<tr>
+    <td>
+        <input type="text"  name="goods[product][{key}][spec_info]" class="form-control input-sm spec-info" value="{spec_info}" readonly=true>
+        <input type="hidden" name="goods[product][{key}][spec_desc]" class="spec-desc"  value="{spec_desc}" >
+    </td>
+    <td>
+        <input type="text" required="true" data-map="bn" class="form-control input-sm" name="goods[product][{key}][bn]" value="">
+    </td>
+    <td>
+        <input type="text" data-map="barcode" class="form-control input-sm" name="goods[product][{key}][barcode]" value="">
+    </td>
+    <td>
+        <input type="text" data-map="price" class="form-control input-sm" name="goods[product][{key}][price]" value="">
+    </td>
+    <!-- <td>
+        <input type="text" data-map="mktprice" class="form-control input-sm" name="goods[product][{key}][mktprice]" value="">
+    </td> -->
+    <td>
+        <input type="text" data-map="weight" name="goods[product][{key}][weight]" class="form-control input-sm input-xsmall" value="" placeholder="克">
+    </td>
+    <td>
+        <input type="text" data-map="unit" name="goods[product][{key}][unit]" class="form-control input-sm input-xsmall" value="">
+    </td>
+    <td>
+        <input type="checkbox"  name="goods[product][{key}][marketable]" value="true" checked>
+    </td>
+</tr>
+</textarea>
+
+</div>
+
+    <script src="http://180.153.145.21:88/public/desktop/javascripts/../global/plugins/jquery-tags-input/jquery.tagsinput.min.js?v049b" app="desktop" type="text/javascript" charset="utf-8" ></script>
+<link href="http://180.153.145.21:88/public/desktop/stylesheets/../global/plugins/jquery-tags-input/jquery.tagsinput.css?v049b" rel="stylesheet" type="text/css" />
+
+<textarea class="spec-item-tpl hide">
+ <tr>
+     <td>
+         <div class="input-group">
+             <input class="form-control spec-t" name="goods[spec_desc][t][]" type="text" value="" placeholder="规格名称">
+                      </div>
+     </td>
+     <td>
+         <input  class='form-control spec-v' name="goods[spec_desc][v][]" type="text"  value="">
+     </td>
+     <td>
+         <button type=button class="btn btn-sm spec-del default"><i class="glyphicon glyphicon-trash"></i></button>
+     </td>
+ </tr>
+</textarea>
+<textarea class="product-item-tpl hide">
+<tr>
+    <td>
+        <input type="text"  name="goods[product][{key}][spec_info]" class="form-control input-sm spec-info" value="{spec_info}" readonly=true>
+        <input type="hidden" name="goods[product][{key}][spec_desc]" class="spec-desc"  value="{spec_desc}" >
+    </td>
+    <td>
+        <input type="text" required="true" data-map="bn" class="form-control input-sm" name="goods[product][{key}][bn]" value="">
+    </td>
+    <td>
+        <input type="text" data-map="barcode" class="form-control input-sm" name="goods[product][{key}][barcode]" value="">
+    </td>
+    <td>
+        <input type="text" data-map="price" class="form-control input-sm" name="goods[product][{key}][price]" value="">
+    </td>
+    <td>
+        <input type="text" data-map="mktprice" class="form-control input-sm" name="goods[product][{key}][mktprice]" value="">
+    </td>
+    <td>
+        <input type="text" data-map="weight" name="goods[product][{key}][weight]" class="form-control input-sm input-xsmall" value="" placeholder="克">
+    </td>
+    <td>
+        <input type="text" data-map="unit" name="goods[product][{key}][unit]" class="form-control input-sm input-xsmall" value="">
+    </td>
+    <td>
+        <input type="checkbox"  name="goods[product][{key}][marketable]" value="true" checked>
+    </td>
+</tr>
+</textarea>
+
+<!--尺码指南弹出框-->
+<div class="ornament-block">
+    <div class="modal fade" id="ornament" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">尺码指南</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="size_nav">
+                        <ul>
+                            <li class="active">服装</li>
+                            <li>鞋履</li>
+                            <li>配饰</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="size_main">
+                        <div  class="sizebox">
+                            <h4 class="modal-title" id="myModalLabel">女士</h4>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th class="left-table-title ">国际</th>
+                                        <th>XXXS</th>
+                                        <th>XXS</th>
+                                        <th>XS</th>
+                                        <th>S</th>
+                                        <th>M</th>
+                                        <th>L</th>
+                                        <th>XL</th>
+                                        <th>XXL</th>
+                                        <th>XXXL</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th class="left-table-title">欧洲</th>
+                                        <td>32</td>
+                                        <td>34</td>
+                                        <td>36</td>
+                                        <td>38</td>
+                                        <td>40</td>
+                                        <td>42</td>
+                                        <td>44</td>
+                                        <td>46</td>
+                                        <td>48</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <th class="left-table-title">美国</th>
+                                        <td>0</td>
+                                        <td>2</td>
+                                        <td>4</td>
+                                        <td>6</td>
+                                        <td>8</td>
+                                        <td>10</td>
+                                        <td>12</td>
+                                        <td>14</td>
+                                        <td>16</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <th class="left-table-title">中国(上装)</th>
+                                        <td>145/73A</td>
+                                        <td>150/76A</td>
+                                        <td>155/80A</td>
+                                        <td>160/84A</td>
+                                        <td>165/88A</td>
+                                        <td>170/92A</td>
+                                        <td>175/96A</td>
+                                        <td>180/100A</td>
+                                        <td>185/104A</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <th class="left-table-title">中国(下装)</th>
+                                        <td>145/56A</td>
+                                        <td>150/60A</td>
+                                        <td>155/64A</td>
+                                        <td>160/68A</td>
+                                        <td>165/72A</td>
+                                        <td>170/76A</td>
+                                        <td>175/80A</td>
+                                        <td>180/84A</td>
+                                        <td>185/88A</td>
+                                        <td></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <p>*请注意,由于不同品牌测量尺码的方法可能有稍微的差异,因此此指南仅适用于参考使用</p>
+                            <h4 class="modal-title" id="myModalLabel">男士</h4>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th class="left-table-title">国际</th>
+                                        <th>XXXS</th>
+                                        <th>XXS</th>
+                                        <th>XS</th>
+                                        <th>S</th>
+                                        <th>M</th>
+                                        <th>L</th>
+                                        <th>XL</th>
+                                        <th>XXL</th>
+                                        <th>XXXL</th>
+                                        <th>4XL</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th class="left-table-title">欧洲</th>
+                                        <td>40</td>
+                                        <td>42</td>
+                                        <td>44</td>
+                                        <td>46</td>
+                                        <td>48</td>
+                                        <td>50</td>
+                                        <td>52</td>
+                                        <td>54</td>
+                                        <td>56</td>
+                                        <td>58</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="left-table-title">衬衫</th>
+                                        <td>36</td>
+                                        <td>37</td>
+                                        <td>38</td>
+                                        <td>39</td>
+                                        <td>40</td>
+                                        <td>41</td>
+                                        <td>42</td>
+                                        <td>43</td>
+                                        <td>44</td>
+                                        <td>45</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="left-table-title">中国(上装)</th>
+                                        <td>155/76A</td>
+                                        <td>160/80A</td>
+                                        <td>165/84A</td>
+                                        <td>170/88A</td>
+                                        <td>175/92A</td>
+                                        <td>180/96A</td>
+                                        <td>185/100A</td>
+                                        <td>190/104A</td>
+                                        <td>195/108A</td>
+                                        <td>200/112A</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="left-table-title">中国(下装)</th>
+                                        <td>155/64A</td>
+                                        <td>160/68A</td>
+                                        <td>165/72A</td>
+                                        <td>170/76A</td>
+                                        <td>175/80A</td>
+                                        <td>180/84A</td>
+                                        <td>185/88A</td>
+                                        <td>190/92A</td>
+                                        <td>195/96A</td>
+                                        <td>200/100A</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <p>*请注意,由于不同品牌测量尺码的方法可能有稍微的差异,因此此指南仅适用于参考使用</p>
+                        </div>
+                        <!-- 服装结束 -->
+
+                        <div class="sizebox hidden">
+                            <h4 class="modal-title" id="myModalLabel">女士</h4>
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <th class="left-table-title long-title">美国</th>
+                                        <td>4</td>
+                                        <td>4.5</td>
+                                        <td>5</td>
+                                        <td>5.5</td>
+                                        <td>6</td>
+                                        <td>6.5</td>
+                                        <td>7</td>
+                                        <td>7.5</td>
+                                        <td>8</td>
+                                        <td>8.5</td>
+                                        <td>9</td>
+                                        <td>9.5</td>
+                                        <td>10</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="left-table-title">英国</th>
+                                        <td>1</td>
+                                        <td>1.5</td>
+                                        <td>2</td>
+                                        <td>2.5</td>
+                                        <td>3</td>
+                                        <td>3.5</td>
+                                        <td>4</td>
+                                        <td>4.5</td>
+                                        <td>5</td>
+                                        <td>5.5</td>
+                                        <td>6</td>
+                                        <td>6.5</td>
+                                        <td>7</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="left-table-title">欧洲/中国</th>
+                                        <td>34</td>
+                                        <td>34.5</td>
+                                        <td>35</td>
+                                        <td>35.5</td>
+                                        <td>36</td>
+                                        <td>36.5</td>
+                                        <td>37</td>
+                                        <td>37.5</td>
+                                        <td>38</td>
+                                        <td>38.5</td>
+                                        <td>39</td>
+                                        <td>39.5</td>
+                                        <td>40</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="left-table-title">脚长(mm)</th>
+                                        <td>210(1.5)</td>
+                                        <td>215(1.5)</td>
+                                        <td>220(1.5)</td>
+                                        <td>225(1.5)</td>
+                                        <td>230(1.5)</td>
+                                        <td>235(1.5)</td>
+                                        <td>240(1.5)</td>
+                                        <td>245(1.5)</td>
+                                        <td>250(1.5)</td>
+                                        <td>255(1.5)</td>
+                                        <td>260(1.5)</td>
+                                        <td>265(1.5)</td>
+                                        <td>270(1.5)</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <p>*请注意,此标准尺码指南仅适于参考使用</p>
+                            <h4 class="modal-title" id="myModalLabel">男士</h4>
+                            <div style="width:1200px;overflow-x:scroll;">
+                                <table class="too-long">
+                                <tbody>
+                                    <tr>
+                                        <th class="left-table-title long-title">美国</th>
+                                        <td>3</td>
+                                        <td>3.5</td>
+                                        <td>4</td>
+                                        <td>4.5</td>
+                                        <td>5</td>
+                                        <td>5.5</td>
+                                        <td>6</td>
+                                        <td>6.5</td>
+                                        <td>7</td>
+                                        <td>7.5</td>
+                                        <td>8</td>
+                                        <td>8.5</td>
+                                        <td>9</td>
+                                        <td>9.5</td>
+                                        <td>10</td>
+                                        <td>10.5</td>
+                                        <td>11</td>
+                                        <td>11.5</td>
+                                        <td>12</td>
+                                        <td>12.5</td>
+                                        <td>13</td>
+                                        <td>13.5</td>
+                                        <td>14</td>
+                                        <td>14.5</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="left-table-title">英国</th>
+                                        <td>2</td>
+                                        <td>2.5</td>
+                                        <td>3</td>
+                                        <td>3.5</td>
+                                        <td>4</td>
+                                        <td>4.5</td>
+                                        <td>5</td>
+                                        <td>5.5</td>
+                                        <td>6</td>
+                                        <td>6.5</td>
+                                        <td>7</td>
+                                        <td>7.5</td>
+                                        <td>8</td>
+                                        <td>8.5</td>
+                                        <td>9</td>
+                                        <td>9.5</td>
+                                        <td>10</td>
+                                        <td>10.5</td>
+                                        <td>11</td>
+                                        <td>11.5</td>
+                                        <td>12</td>
+                                        <td>12.5</td>
+                                        <td>13</td>
+                                        <td>13.5</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="left-table-title">欧洲/中国</th>
+                                        <td>37</td>
+                                        <td>37.5</td>
+                                        <td>38</td>
+                                        <td>38.5</td>
+                                        <td>39</td>
+                                        <td>39.5</td>
+                                        <td>40</td>
+                                        <td>40.5</td>
+                                        <td>41</td>
+                                        <td>41.5</td>
+                                        <td>42</td>
+                                        <td>42.5</td>
+                                        <td>43</td>
+                                        <td>43.5</td>
+                                        <td>44</td>
+                                        <td>44.5</td>
+                                        <td>45</td>
+                                        <td>45.5</td>
+                                        <td>46</td>
+                                        <td>46.5</td>
+                                        <td>47</td>
+                                        <td>47.5</td>
+                                        <td>48</td>
+                                        <td>48.5</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="left-table-title">脚长(mm)</th>
+                                        <td>220(2.5)</td>
+                                        <td>225(2.5)</td>
+                                        <td>230(2.5)</td>
+                                        <td>235(2.5)</td>
+                                        <td>240(2.5)</td>
+                                        <td>245(2.5)</td>
+                                        <td>250(2.5)</td>
+                                        <td>255(2.5)</td>
+                                        <td>260(2.5)</td>
+                                        <td>265(2.5)</td>
+                                        <td>270(2.5)</td>
+                                        <td>275(2.5)</td>
+                                        <td>280(2.5)</td>
+                                        <td>285(2.5)</td>
+                                        <td>290(2.5)</td>
+                                        <td>295(2.5)</td>
+                                        <td>300(2.5)</td>
+                                        <td>305(2.5)</td>
+                                        <td>310(2.5)</td>
+                                        <td>315(2.5)</td>
+                                        <td>320(2.5)</td>
+                                        <td>325(2.5)</td>
+                                        <td>330(2.5)</td>
+                                        <td>335(2.5)</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            </div>
+                            <p>*请注意,此标准尺码指南仅适于参考使用</p>
+                        </div>
+                        <!-- 鞋履结束 -->
+
+                        <div class="sizebox hidden">
+                            <h4 class="modal-title" id="myModalLabel">手套</h4>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th class="left-table-title">国际</th>
+                                        <th colspan="2">XXS</th>
+                                        <th colspan="2">XS</th>
+                                        <th colspan="2">S</th>
+                                        <th colspan="2">M</th>
+                                        <th colspan="2">L</th>
+                                        <th colspan="2">XL</th>
+                                        <th>XXL</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th class="left-table-title">手套(英寸)</th>
+                                        <td>6</td>
+                                        <td>6.5</td>
+                                        <td>7</td>
+                                        <td>7.5</td>
+                                        <td>8</td>
+                                        <td>8.5</td>
+                                        <td>9</td>
+                                        <td>9.5</td>
+                                        <td>10</td>
+                                        <td>10.5</td>
+                                        <td>11</td>
+                                        <td>11.5</td>
+                                        <td>12</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="left-table-title">手套(厘米)</th>
+                                        <td>15.2</td>
+                                        <td>16.5</td>
+                                        <td>17.8</td>
+                                        <td>19</td>
+                                        <td>20.3</td>
+                                        <td>21.6</td>
+                                        <td>22.9</td>
+                                        <td>24</td>
+                                        <td>25.4</td>
+                                        <td>26.7</td>
+                                        <td>27.9</td>
+                                        <td>29.2</td>
+                                        <td>30.5</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <p>*手套测量方法:先测量掌宽(手掌最宽的部位),再测量长度(手掌根部到中指顶部)</p>
+                            <h4 class="modal-title" id="myModalLabel">帽子</h4>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th class="left-table-title">国际</th>
+                                        <th colspan="2">XXS</th>
+                                        <th colspan="2">XS</th>
+                                        <th colspan="2">S</th>
+                                        <th colspan="2">M</th>
+                                        <th colspan="2">L</th>
+                                        <th colspan="2">XL</th>
+                                        <th>XXL</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th class="left-table-title">帽子(英寸)</th>
+                                        <td>21&frac13</td>
+                                        <td>21&frac34</td>
+                                        <td>22</td>
+                                        <td>22&frac12</td>
+                                        <td>22&frac45</td>
+                                        <td>23&frac14</td>
+                                        <td>23&frac12</td>
+                                        <td>24</td>
+                                        <td>22&frac25</td>
+                                        <td>22&frac45</td>
+                                        <td>25&frac12</td>
+                                        <td>22&frac35</td>
+                                        <td>26</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="left-table-title">帽子(厘米)</th>
+                                        <td>54</td>
+                                        <td>55</td>
+                                        <td>56</td>
+                                        <td>57</td>
+                                        <td>58</td>
+                                        <td>59</td>
+                                        <td>60</td>
+                                        <td>61</td>
+                                        <td>62</td>
+                                        <td>63</td>
+                                        <td>64</td>
+                                        <td>65</td>
+                                        <td>66</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <p>*帽子的测量方式:测量中额头部位或眉弓上缘和枕部最高的部位</p>
+                            <h4 class="modal-title" id="myModalLabel">戒指</h4>
+                            <div style="width:1200px;overflow-x:scroll;">
+                                <table class="too-long">
+                                    <thead>
+                                        <tr>
+                                            <th class="left-table-title">国际</th>
+                                            <th colspan="4">XXXS</th>
+                                            <th colspan="4">XXS</th>
+                                            <th colspan="4">XS</th>
+                                            <th colspan="4">S</th>
+                                            <th colspan="4">M</th>
+                                            <th colspan="4">L</th>
+                                            <th colspan="4">XL</th>
+                                            <th colspan="4">XXL</th>
+                                            <th colspan="4">XXXL</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th class="left-table-title">美国</th>
+                                            <td>4</td>
+                                            <td>4&frac14</td>
+                                            <td>4&frac12</td>
+                                            <td>4&frac34</td>
+                                            <td>5</td>
+                                            <td>5&frac14</td>
+                                            <td>5&frac12</td>
+                                            <td>5&frac34</td>
+                                            <td>6</td>
+                                            <td>6&frac14</td>
+                                            <td>6&frac12</td>
+                                            <td>6&frac34</td>
+                                            <td>7</td>
+                                            <td>7&frac14</td>
+                                            <td>7&frac12</td>
+                                            <td>7&frac34</td>
+                                            <td>7</td>
+                                            <td>8&frac14</td>
+                                            <td>8&frac12</td>
+                                            <td>8&frac34</td>
+                                            <td>9</td>
+                                            <td>9&frac14</td>
+                                            <td>9&frac12</td>
+                                            <td>9&frac34</td>
+                                            <td>10</td>
+                                            <td>10&frac14</td>
+                                            <td>10&frac12</td>
+                                            <td>10&frac34</td>
+                                            <td>11</td>
+                                            <td>11&frac14</td>
+                                            <td>11&frac12</td>
+                                            <td>11&frac34</td>
+                                            <td>12</td>
+                                            <td>12&frac14</td>
+                                            <td>12&frac12</td>
+                                            <td>12&frac34</td>
+                                        </tr>
+                                        <tr>
+                                            <th class="left-table-title">英国</th>
+                                            <td>H&frac12</td>
+                                            <td>I</td>
+                                            <td>I&frac12</td>
+                                            <td>J</td>
+                                            <td>J&frac12</td>
+                                            <td>K</td>
+                                            <td>K&frac12</td>
+                                            <td>L</td>
+                                            <td>L&frac12</td>
+                                            <td>M</td>
+                                            <td>M&frac12</td>
+                                            <td>N</td>
+                                            <td>O</td>
+                                            <td>O&frac12</td>
+                                            <td>P</td>
+                                            <td>P&frac12</td>
+                                            <td>Q</td>
+                                            <td>Q&frac12</td>
+                                            <td>R</td>
+                                            <td>R&frac12</td>
+                                            <td>S</td>
+                                            <td>S&frac12</td>
+                                            <td>S&frac34</td>
+                                            <td>T&frac12</td>
+                                            <td>T</td>
+                                            <td>U</td>
+                                            <td>U&frac12</td>
+                                            <td>V</td>
+                                            <td>V&frac12</td>
+                                            <td>W</td>
+                                            <td>W&frac12</td>
+                                            <td>X</td>
+                                            <td>Y</td>
+                                            <td>Y&frac12</td>
+                                            <td>Z</td>
+                                            <td>Z&frac12</td>
+                                        </tr>
+                                        <tr>
+                                            <th class="left-table-title">英制单位(英寸)*</th>
+                                            <td>1.84</td>
+                                            <td>1.86</td>
+                                            <td>1.89</td>
+                                            <td>1.91</td>
+                                            <td>1.94</td>
+                                            <td>1.97</td>
+                                            <td>1.99</td>
+                                            <td>2.02</td>
+                                            <td>2.04</td>
+                                            <td>2.06</td>
+                                            <td>2.09</td>
+                                            <td>2.11</td>
+                                            <td>2.14</td>
+                                            <td>2.17</td>
+                                            <td>2.19</td>
+                                            <td>2.22</td>
+                                            <td>2.24</td>
+                                            <td>2.27</td>
+                                            <td>2.29</td>
+                                            <td>2.32</td>
+                                            <td>2.34</td>
+                                            <td>2.37</td>
+                                            <td>2.39</td>
+                                            <td>2.42</td>
+                                            <td>2.44</td>
+                                            <td>2.47</td>
+                                            <td>2.49</td>
+                                            <td>2.52</td>
+                                            <td>2.54</td>
+                                            <td>2.57</td>
+                                            <td>2.59</td>
+                                            <td>2.62</td>
+                                            <td>2.64</td>
+                                            <td>2.67</td>
+                                            <td>2.69</td>
+                                            <td>2.72</td>
+                                        </tr>
+                                        <tr>
+                                            <th class="left-table-title">公制(毫米)*</th>
+                                            <td>46.7</td>
+                                            <td>47.4</td>
+                                            <td>48</td>
+                                            <td>48.7</td>
+                                            <td>49.3</td>
+                                            <td>49.9</td>
+                                            <td>50.6</td>
+                                            <td>51.2</td>
+                                            <td>51.8</td>
+                                            <td>52.5</td>
+                                            <td>53.1</td>
+                                            <td>53.8</td>
+                                            <td>54.4</td>
+                                            <td>55</td>
+                                            <td>55.7</td>
+                                            <td>56.3</td>
+                                            <td>56.9</td>
+                                            <td>57.6</td>
+                                            <td>58.2</td>
+                                            <td>58.9</td>
+                                            <td>59.5</td>
+                                            <td>60.1</td>
+                                            <td>60.8</td>
+                                            <td>61.4</td>
+                                            <td>62.1</td>
+                                            <td>62.7</td>
+                                            <td>63.3</td>
+                                            <td>64</td>
+                                            <td>64.6</td>
+                                            <td>65.2</td>
+                                            <td>65.9</td>
+                                            <td>66.5</td>
+                                            <td>67.2</td>
+                                            <td>67.8</td>
+                                            <td>68.4</td>
+                                            <td>69.1</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <p>*圆周**请注意,此标准尺码指南仅适用于参考使用</p>
+                            <h4 class="modal-title" id="myModalLabel">腰带</h4>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th class="left-table-title">国际</th>
+                                        <th colspan="2">XXS</th>
+                                        <th colspan="2">XS</th>
+                                        <th colspan="2">S</th>
+                                        <th colspan="2">M</th>
+                                        <th colspan="2">L</th>
+                                        <th colspan="2">XL</th>
+                                        <th>XXL</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th class="left-table-title">帽子(英寸)</th>
+                                        <td style="position:relative;">
+                                            23&frac12
+                                        </td>
+                                        <td>25&frac12</td>
+                                        <td>27&frac12</td>
+                                        <td>29&frac12</td>
+                                        <td>31&frac12</td>
+                                        <td>33&frac12</td>
+                                        <td>35&frac12</td>
+                                        <td>37&frac25</td>
+                                        <td>39&frac12</td>
+                                        <td>41&frac27</td>
+                                        <td>43&frac14</td>
+                                        <td>45&frac27</td>
+                                        <td>47&frac15</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="left-table-title">帽子(厘米)</th>
+                                        <td>60</td>
+                                        <td>65</td>
+                                        <td>70</td>
+                                        <td>75</td>
+                                        <td>80</td>
+                                        <td>85</td>
+                                        <td>90</td>
+                                        <td>95</td>
+                                        <td>100</td>
+                                        <td>105</td>
+                                        <td>110</td>
+                                        <td>115</td>
+                                        <td>120</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <p>*测量皮带头到最常用的洞眼的长度</p>
+                        </div>
+                        <!-- 配饰结束 -->
+
+
+
+                    </div>
+                    <!-- sizemain结束 -->
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+ <!-- 尺码指南结束 --> 
+
+<script>
+    $(function(){
+        $('#goods_keywords_input').tagsInput({
+            width: 'auto',
+            'defaultText':'输入新词',
+        });
+    })
+</script>
+    <script charset="utf-8">
+        !function(){
+
+            /**
+             * 新增粘贴事件
+             *
+             *    $("input[type='text']").on("postpaste", function() {
+ *        // code...
+ *    }).pasteEvents();
+             *
+             *
+             */
+            $.fn.pasteEvents = function( delay ) {
+                if (delay == undefined) delay = 20;
+                return $(this).each(function() {
+                    var $el = $(this);
+                    $el.on("paste", function() {
+                        $el.trigger("prepaste");
+                        setTimeout(function() { $el.trigger("postpaste"); }, delay);
+                    });
+                });
+            };
+
+
+            $('#spec_edit_pane .checker :checkbox').on('change',function(){
+                var checked = $(this).is(':checked');
+                $('#spec_edit_pane .spec-edit,#spec_edit_pane .product-items')[checked?'removeClass':'addClass']('hide');
+                $('#spec_edit_pane .spec-edit,#spec_edit_pane .product-items').find('input,:checkbox,:radio,textarea').attr('disabled',checked?false:true);
+                $(this).parent('span')[checked?'addClass':'removeClass']('checked');
+            });
+            $('#spec_edit_pane .checker :checkbox').change();
+
+
+            var substitute = function(str,obj){
+                return str.replace(/\\?\{([^{}]+)\}/g, function(match, name){
+                    if (match.charAt(0) == '\\') return match.slice(1);
+                    return (obj[name] != undefined) ? obj[name] : '';
+                });
+            }
+
+            var tagsinput_options = {
+                width: 'auto',
+                'defaultText':'新规格项',
+                onAddTag:function(){
+                    product_items_change();
+                },
+                onRemoveTag:function(){
+                    product_items_change();
+                }
+            };
+            $('#spec_edit_pane .spec-edit .spec-v').tagsInput(tagsinput_options);
+            $('#spec_edit_pane .spec-edit .new-spec-item').on('click',function(){
+                $('#spec_edit_pane .spec-edit tbody').append($('.spec-item-tpl').val());
+                $('#spec_edit_pane .spec-edit tbody tr:last .spec-v').tagsInput(tagsinput_options);
+            });
+            $('#spec_edit_pane .spec-edit').on('click','.spec-del',function(e){
+                e.stopPropagation();
+                if(!confirm('确定删除？'))return;
+                $(this).closest('tr').remove();
+                product_items_change();
+            });
+            /**
+             * 货号、条码 粘贴监听
+             * @see desktop.js
+             */
+            var listen_postpaste = function(els){
+
+                //只监听第一个
+                $(els).eq(0).on("postpaste", function(e) {
+                    var val = $(this).val(),val_arr = val.split(/\s/);;
+                    if(val_arr.length && val_arr.length>1){
+                        $.each(val_arr,function(i,v){
+                            $(els).eq(i).val(v);
+                        });
+                    }
+                }).pasteEvents();
+
+                //便捷性提示
+                $(els).eq(0).wrap('<div class="input-icon right"></div>');
+                $('<i class="fa fa-paste text-success tooltips" data-container="body" data-toggle="tooltip" data-placement="top" title="粘贴含有`空格`或`换行`的数据,将自动被分隔填充。例：你可以从Excel批量复制粘贴数据到此"></i>').tooltip().insertBefore($(els).eq(0));
+
+            }
+
+            var create_product_items_func = function(){
+
+                var spec_v = $('#spec_edit_pane .spec-v');
+                /*计算规格交集*/
+                var spec_v_item = new Array();
+                $.each(spec_v,function(idx,item){
+                    if($.trim($(item).val()) == '')return;
+                    spec_v_item[idx] = $(item).val().split(',');
+                });
+
+                $('#spec_edit_pane .product-items table')[spec_v_item.length?'removeClass':'addClass']('hide');
+                if(!spec_v_item.length){
+                    return Messagebox.warning('您还没有填写任何规格值。','操作提醒');
+                }
+
+                var root_arr = spec_v_item.shift();
+                var loop_arr;
+                var lnk_arr = function(r,a){
+                    var _return = [];
+                    $.each(a,function(i,n){
+                        _return.push(r+':::'+n);
+                    });
+                    return _return;
+                }
+
+                while(loop_arr = spec_v_item.shift()){
+                    var cur_len = root_arr.length;
+                    console.log(cur_len);
+                    console.log(root_arr);
+                    for(var i=0;i<cur_len;i++){
+                        var a = root_arr.shift();
+                        console.log(a);
+                        root_arr = root_arr.concat(lnk_arr(a,loop_arr));
+                        console.log(root_arr);
+
+                    }
+                    root_arr.slice(cur_len);
+                }
+                /*计算规格交集*/
+                var pit_content = "";
+                $.each(root_arr,function(idx,n){
+                    pit_content += substitute($('.product-item-tpl').val(),{key:'new_'+idx,spec_info:n.replace(/:::/g,'/'),spec_desc:n});
+                });
+                $('.product-items tbody').empty().append(pit_content);
+
+                /*支持货号条码换行字符粘贴*/
+                listen_postpaste($('.product-items tbody input[name$="[bn]"]'));
+                listen_postpaste($('.product-items tbody input[name$="[barcode]"]'));
+
+                var item_length = $('.product-items tbody').find('> tr').length;
+                $(this).next('.text-success').remove();
+                if(item_length){
+                    $(this).after('<span class="text-success">将会新建<span class="badge badge-success">'+item_length+'</span>个货品</span>');
+                }
+
+                $.each($('.product-items input[data-map]'),function(i,n){
+                    var map = $(n).attr('data-map'),val = $('#no_spec input[data-map="'+map+'"]').val();
+                    if(map == 'bn'||map == 'barcode'){
+                        if(!val||val==''){
+                            val = new String(new Date().getTime()).slice(-5);
+                        }
+                        val+=map == 'bn'?'-'+i:i;
+                    }
+                    $(n).val(val);
+                });
+
+
+
+            };
+
+            var timer_delay = 0;
+            $('#spec_edit_pane .create-product-items').on('click',function(e){
+                e.stopPropagation();
+                clearTimeout(timer_delay);
+                var _this = this;
+                timer_delay = setTimeout(function(){
+                    return create_product_items_func.apply(_this);
+                },0);//TODO 性能问题
+            });
+
+            var product_items_change = function(){
+                if($('#spec_edit_pane .product-items tbody > tr').length){
+                    $('#spec_edit_pane .create-product-items').trigger('click');
+                }
+            };
+        }();
+        //    
+    </script>
+<script>
+    $(function(){
+        $(".goods_add_imgs").change(function(){
+            var _this=$(this);
+            //创建FormData对象
+            var data = new FormData();
+            //为FormData对象添加数据
+            $.each($(this)[0].files, function(i, file) {
+
+                data.append('files', file);
+            });
+
+            $.ajax({
+                url:'image-gimages_upload.html',
+                type:'POST',
+                data:data,
+                cache: false,
+                contentType: false,    //不可缺
+                processData: false,    //不可缺
+                success:function(data){
+                    data = eval("("+data+")");
+
+                    $("#image_default").val(data['image_id']);
+                    //_this.next().html("");
+                    _this.next().find('img').attr('src',data['url']);
+                    _this.next().append('<input type="hidden" value="'+data['image_id']+'" name="goods[images][]">');
+
+                    /*$("#showimage").append('<img src="'+data['url']+'" alt="">');
+                    $("#showimage").append('<input type="hidden" value="'+data['image_id']+'" name="goods[images][]">');*/
+
+                }
+            });
+        });
+    });
+    String.prototype.trim=function() {
+        return this.replace(/(^\s*)|(\s*$)/g,'');
+    };
+
+    //商品规则生成
+    function generate_goods_name()
+    {
+        //品牌＋一级（男或女）＋最小级＋商品编号
+        var select_brand = $("#select_brand").val().trim();
+        var index = $("#select_cat select").length;
+        var cat_name = '';
+        if(index >1)
+        {
+            cat_name = $("#select_cat").children().children('select').eq(0).find("option:selected").text().trim();
+            var last_cat_name = $("#select_cat").children().children('select').eq(index-1).find("option:selected").text();
+            if(last_cat_name != '…')
+            {
+                cat_name += last_cat_name;
+            }else if(index > 2)
+            {
+                cat_name +=  $("#select_cat").children().children('select').eq(index-2).find("option:selected").text();
+            }
+
+        }else{
+            cat_name =$("#select_cat").children().children('select').eq(index-1).find("option:selected").text();
+        }
+        cat_name = cat_name.replace('•', '').trim();
+        var gid = $("input[name='goods[gid]']").val().trim();
+        $(".input_goodsname").val(select_brand+cat_name+gid);
+    }
+
+    //出厂货号和货号同步
+    $("#goods_gid").blur(function()
+    {
+        var gid = $(this).val();
+        $("input[name='goods[product][new_0][bn]']").val(gid);
+        //商品名称生成
+        generate_goods_name();
+    });
+
+
+    //提交表单添加商品
+    $(".save_goods").click(function(){
+        var formdata = $("#goods_edit_form").serialize();
+        if(!$("#goods_prototype").val())
+        {
+            alert('品类不可为空');
+            return;
+        }
+        var cat_val = $("input[name='goods[category][cat_id]']").val();
+        if(!cat_val || cat_val ==0)
+        {
+            alert('品名不可为空');
+            return;
+        }
+        if(!$("#select_brand").val()){
+            alert('品牌不可为空');
+            return;
+        }
+
+        $.ajax({
+            url:'/index.php/merchant-save.html',
+            type:'POST',
+            data:formdata,
+            dataType:'json',
+            success:function(data){
+                if(data.success){
+                    location.href = data.redirect;
+                }else{
+                    alert(data.error);
+                }
+            }
+        });
+    });
+
+    $("#select_cat").on('change','select',function(){
+//        var the_select = $(this);
+//        var cat_id = $(this).val();
+//        var selected_label = $(this).find("option:selected").text();
+//        var input_el = $('#select_cat input[type=hidden]');
+//        $('#select_cat select option:contains("•")').text($('#select_cat select option:contains("•")').text().replace('•', ''));
+//        the_select.nextAll('select').remove();
+//        $.getJSON('http://gplus.com/index.php/openapi/goods/catalog//parent_id/' + cat_id, function(re) {
+//            if (re.result == 'success') {
+//                var options = '';
+//                $.each(re.data, function(cat_id, cat) {
+//                    options += "<option value='" + cat.cat_id + "'>" + cat.cat_name + "</option>";
+//                });
+//                $('<select class="form-control class_select"><option value=-1>…</option></select>').append("<optgroup label='" + selected_label + "'>" + options + "</optgroup>").insertAfter(the_select);
+//            }
+//        });
+//        if(cat_id > 0)
+//        {
+//            $("input[name='goods[category][cat_id]']").val(cat_id);
+//            var selectedIndex = input_el.val();
+//            $(this.options[this.selectedIndex]).text($(this.options[this.selectedIndex]).text() + ' •')
+//        }else{
+//            $("input[name='goods[category][cat_id]']").val('');
+//        }
+        //商品名称生产
+        generate_goods_name();
+    });
+
+    $(function(){
+        $('#goods_prototype').change(function(){
+            var data = {
+                'type_id':$(this).val()
+            };
+            $.ajax({
+                url:'/index.php/merchant-prototype.html',
+                type:'GET',
+                data:data,
+                success:function(data){
+                    $("#params").children('div').remove();
+                    $("#params").append(data);
+                }
+            });
+        });
+
+        /*分类树逻辑*/
+        (function(){           
+            var empty_nbsp='&nbsp&nbsp&nbsp&nbsp&nbsp';
+            $.each($('#select_cat option'),function(i,n){
+                var step = $(n).data('step');
+
+                if(step>1){
+                    var pid=$(this).data('pid');
+                    $(this).insertAfter($('#select_cat option[value='+pid+']'));
+                }
+
+                while(step>1){
+                    $(n).html(empty_nbsp+$(n).html());
+                    step--;
+                }
+            });
+        })();
+
+    });
+</script>
+
+
+<!-- 规格项自动获取颜色 -->
+<script type="text/javascript">
+    $(function(){
+        $('#params .attr_item').each(function(index, el) {
+            var mylabel=$(this).children('label').text();
+            var myinput=$('#color_input');
+            if(mylabel=="主要色系"){
+                  var myColor='';
+                  $(this).children('select').change(function(){
+                     $('.checkbox_gg').trigger('click');
+                     myColor=$(this).find('option:selected').text();
+                     myinput.attr('value',myColor);
+                     $('#color_input_addTag span.tag').remove();
+                     $('#color_input_addTag').append('<span class="tag">'+myColor+'</span>');
+                     $('#color_input_addTag #color_input_tag').css('display','none');
+                  })                 
+            }
+        });
+    })
 </script>
