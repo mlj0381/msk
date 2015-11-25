@@ -45,6 +45,10 @@ class b2c_ctl_site_cart extends b2c_frontpage
             //迷你购物车使用
             $this->splash('success','',$result);
         }
+        $store_obj = vmc::singleton('store_store_object');
+        foreach ($result['objects']['goods'] as $key => $value) {
+            $result['objects']['goods'][$key]['store_info'] = $store_obj->store_info($value['store_id']);
+        }
         $this->pagedata['cart_result'] = $result;
         $this->set_tmpl('cart');
         $this->page('site/cart/index.html');
@@ -56,21 +60,23 @@ class b2c_ctl_site_cart extends b2c_frontpage
         $this->page('site/cart/blank.html');
     }
     //向购物车添加商品
-    public function add($product_id, $num)
+    public function add($product_id, $store_id, $num)
     {
         $params = $this->_request->get_params(true);
         $product_id = ($product_id ? $product_id : $params['product_id']);
+        $store_id = ($store_id ? $store_id : $params['store_id']);
         $num = ($num ? $num : $params['num']);
         if (!$num) {
             $num = 1;
         }
-        if (!$product_id || !$num || $num < 1) {
+        if (!$product_id || !$num || $num < 1 || !is_numeric($store_id)) {
             $this->splash('error', '', '参数错误!');
         }
         $object = array(
             'goods' => array(
                 'product_id' => $product_id,
                 'num' => $num,
+                'store_id' => $store_id,
             ),
         );
         $ident = $this->cart_stage->add('goods', $object, $msg);

@@ -25,7 +25,7 @@
         <!-- cart-item begin  -->
         <div class="itembox">
             <div class="shop_name">
-                沙县小吃专营店<a href="#" class="icon-comments"></a>
+                <a href="<{link app=store ctl=site_store act=index args0=$object.store_info.store_id}>"><{$object.store_info.store_name}></a><a href="#" class="icon-comments"></a>
             </div>
             <div class="row <{$object.obj_ident}> cart-item <{if $object.disabled!='true'}>enabled<{/if}>">
                 <div class="col-xs-1 c-ci-check">
@@ -184,9 +184,9 @@
                         <img src="<{$baseurl}>/themes/pc/default/statics/images/customer_04.jpg">
                     </a>
                 </li>
-     
+
             </ul>
-            
+
             <!-- 最近收藏 -->
             <ul>
                 <li>
@@ -219,7 +219,7 @@
                         <img src="<{$baseurl}>/themes/pc/default/statics/images/customer_04.jpg">
                     </a>
                 </li>
-     
+
             </ul>
         </div>
     </div>

@@ -61,6 +61,12 @@ $db['goods'] = array(
             'type'=>'serialize',
             'label'=>'扩展分类'
         ),
+        'store_id' => array(
+            'type' => 'table:store@store',
+            'label' => ('所属店铺') ,
+            'required' => true,
+            'in_list' => true,
+        ) ,
         'brand_id' => array(
             'type' => 'table:brand',
             'sdfpath' => 'brand/brand_id',

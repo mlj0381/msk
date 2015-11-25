@@ -180,7 +180,12 @@ class b2c_ctl_site_order extends b2c_frontpage
             ':dlytype' => array(
                 '*',
             ),
+            // 'store_info' => array(
+            //     'store_name, store_id',
+            // ),
         ));
+        $store_obj = vmc::singleton('store_store_object');
+        $order['store_info'] = $store_obj->store_info($order['store_id'], 'store_id, store_name');
         if ($order['member_id'] != $this->app->member_id) {
             $this->splash('error', '非法操作!');
         }

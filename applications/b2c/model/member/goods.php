@@ -17,7 +17,7 @@ class b2c_mdl_member_goods extends dbeav_model
     /**
      * 添加商品到会员收藏夹.
      */
-    public function add_fav($member_id = null, $goods_id = null)
+    public function add_fav($member_id = null, $goods_id = null, $obj_type = 'goods')
     {
         if (!$member_id || !$goods_id) {
             return false;
@@ -29,8 +29,8 @@ class b2c_mdl_member_goods extends dbeav_model
         if ($this->count($filter) > 0) {
             return true; //已存在
         }
-        $gdetail = app::get('b2c')->model('goods')->dump($goods_id, 'goods_id,name,image_default_id', array('product' => array('price', 'image_id
-')));
+        if($obj_type == 'goods'){
+        $gdetail = app::get('b2c')->model('goods')->dump($goods_id, 'goods_id,name,image_default_id', array('product' => array('price', 'image_id')));
         $product_id = key($gdetail['product']);
         $product = current($gdetail['product']);
         $sdf = array(
@@ -43,8 +43,21 @@ class b2c_mdl_member_goods extends dbeav_model
            'status' => 'ready',
            'create_time' => time(),
            'type' => 'fav',
-           'object_type' => 'goods',
+           'object_type' => $obj_type,
           );
+        }else if($obj_type == 'store'){
+            $store_detail = app::get('store')->model('store')->getRow('*', array('store_id' => $goods_id));
+            $sdf = array(
+                'goods_id' => $store_detail['store_id'],
+                'member_id' => $member_id,
+                'goods_name' => $store_detail['store_name'],
+                'status' => 'ready',
+                'image_default_id' => $store_detail['logo'],
+                'create_time' => time(),
+                'type' => 'fav',
+                'object_type' => $obj_type,
+            );
+        }
         if ($this->save($sdf)) {
             return true;
         } else {

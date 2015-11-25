@@ -139,9 +139,9 @@ class seller_ctl_site_passport extends seller_frontpage
                 break;
         }
         if($return){
-            $this->splash('success', $redirect, '注册成功');
+            $this->splash('success', $redirect);
         }else{
-            $this->splash('error', null, '注册成功');
+            $this->splash('error', null, '注册失败');
         }
     }
 
@@ -198,7 +198,7 @@ class seller_ctl_site_passport extends seller_frontpage
               break;
     }
       if($return){
-          $this->splash('success', $redirect, '成功');
+          $this->splash('success', $redirect);
       }else{
           $this->splash('error', $redirect, '注册失败，数据保存异常');
       }

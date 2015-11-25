@@ -48,6 +48,13 @@ $db['cart_objects'] = array(
 
       'in_list' => true,
     ),
+    'store_id' => array(
+        'type' => 'table:store@store',
+        'label' => ('所属店铺') ,
+        'default' => '0',//默认为0，平台自营
+        'required' => true,
+        'in_list' => true,
+    ) ,
     'params' => array(
       'type' => 'serialize',
       'required' => true,

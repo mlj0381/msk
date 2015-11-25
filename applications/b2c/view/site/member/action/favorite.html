@@ -9,12 +9,12 @@
             <a href="javascript:;" class="active">商品收藏</a>
             <a href="javascript:;">店铺收藏</a>
         </span>
-        <p>共<small>8</small>项收藏</p>
+        <p>共<small><{$favorite_count}></small>项收藏</p>
     </div>
     <div class="row goods-list gl-default">
         <div class="gl_item_box">
             <{foreach from=$data item=item}>
-            <{if $item.gnotify_type == 'goods'}>
+            <{if $item.object_type == 'goods'}>
                 <div class="col-xs-3 fav-item">
                     <div class="thumbnail goods-item">
                         <div class="gi-image-wrapper">
@@ -46,7 +46,7 @@
         <!-- 店铺收藏列表 -->
         <div class="gl_item_box">
             <{foreach from=$data item=item}>
-            <{if $item.gnotify_type == 'store'}>
+            <{if $item.object_type == 'store'}>
                 <div class="col-xs-3 fav-item">
                     <div class="thumbnail goods-item">
                         <div class="gi-image-wrapper">

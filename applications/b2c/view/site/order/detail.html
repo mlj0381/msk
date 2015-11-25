@@ -92,9 +92,9 @@
             <dt>下单时间:</dt>
             <dd><{$order.createtime|cdate}></dd>
             <dt>卖家店铺:</dt>
-            <dd>多鲜乐官方旗舰店</dd>
+            <dd><{$order.store_info.store_name}></dd>
         </dl>
-        <{if $order.need_invoice}>
+        <{if $order.need_invoice eq 'ture'}>
         <dl class="dl-horizontal">
             <dt>发票说明:</dt>
             <dd><{$order.invoice_title}></dd>
@@ -110,7 +110,7 @@
                     <div class="col-xs-2">单价</div>
                     <div class="col-xs-2">数量</div>
                     <div class="col-xs-1">优惠</div>
-                    <div class="col-xs-2">订单状态</div>   
+                    <div class="col-xs-2">订单状态</div>
                 </div>
                 <div class="col-xs-2">运费</div>
             </div>
@@ -122,7 +122,7 @@
                     <tr>
                         <td class="col-xs-10">
                             <div class="express_info">
-                                <span>先驰达速运&nbsp;&nbsp;</span>
+                                <span><{$order.dlytype.dt_name}>&nbsp;&nbsp;</span>
                                 <span>运单号:&nbsp;&nbsp;4561316656</span>
                             </div>
                             <div class="goods_item">
@@ -153,8 +153,8 @@
                                     </div>
                                     <div class="col-xs-2 center"><{$item.buy_price|cur}></div>
                                     <div class="col-xs-2 center"><{$item.nums}></div>
-                                    <div class="col-xs-1 center">优惠</div>
-                                    <div class="col-xs-2 center">订单状态</div>
+                                    <div class="col-xs-1 center">0.00</div>
+                                    <div class="col-xs-2 center"><div><{$order.pay_status|order_pay_status}></div><{$order.ship_status|order_ship_status}></div>
                               </div>
                             </div>
                         </td>
