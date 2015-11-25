@@ -246,32 +246,55 @@ class seller_ctl_site_passport extends seller_frontpage
     //发送短信验证码
     public function send_vcode_sms($type = 'signup'){
         $mobile = trim($_POST['mobile']);
-      if (!$this->passport_obj->check_signup_account($mobile, $msg)) {
-          $this->splash('error', null, $msg);
-      }
+        if($_POST['type'] != 'securitycenter'){
+            if (!$this->passport_obj->check_signup_account($mobile, $msg)) {
+              $this->splash('error', null, $msg);
+            }
 
-      if($msg != 'mobile'){
-          $this->splash('error', null, '错误的手机格式');
-      }
+            if($msg != 'mobile'){
+              $this->splash('error', null, '错误的手机格式');
+            }
+        }else{
+            if('mobile' != $this->passport_obj->get_login_account_type($_POST['mobile'])){
+                $this->splash('error', null, '错误的手机格式');
+            }
+        }
 
-      $uvcode_obj = vmc::singleton('seller_user_vcode');
-      $vcode = $uvcode_obj->set_vcode($mobile, $type , $msg);
-      $this->splash('success', $vcode, '短信已发送'); // 2015/9/7 短信直接显示
+        $uvcode_obj = vmc::singleton('seller_user_vcode');
+        $vcode = $uvcode_obj->set_vcode($mobile, $type , $msg);
+        $this->splash('success', $vcode, '短信已发送'); // 2015/9/7 短信直接显示
 
-      if ($vcode) {
+        if ($vcode) {
           //发送验证码 发送短信
           $data['vcode'] = $vcode;
           if (!$uvcode_obj->send_sms($type, (string) $mobile, $data)) {
               $this->splash('error', null, '短信发送失败');
           }
-      } else {
+        } else {
           $this->splash('failed', null, $msg);
-      }
-      $this->splash('success', null, '短信已发送');
+        }
+        $this->splash('success', null, '短信已发送');
     }
     //重置密码
     public function reset_password(){
 
+        $redirect = $this->gen_url(array(
+          'app' => 'seller',
+          'ctl' => 'site_seller',
+          'act' => 'securitycenter',
+        ));
+        extract($_POST);
+        if(!vmc::singleton('seller_user_vcode')->verify($smscode, $pam_account['mobile'], 'signup'))
+        {
+            $this->splash('error', $redirect, '手机短信验证码不正确');
+        }
+        if($pam_account['login_password'] != $pam_account['psw_confirm']){
+            $this->splash('error', $redirect, '确认密码输入不正确');
+        }
+        if(!$this->passport_obj->reset_password($this->seller['seller_id'], $pam_account['psw_confirm'])){
+            $this->splash('error', $redirect, '重置失败');
+        }
+        $this->splash('success', $redirect, '重置成功');
     }
     //退出登录
     public function logout($forward)

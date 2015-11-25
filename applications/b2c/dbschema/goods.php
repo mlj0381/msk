@@ -67,6 +67,13 @@ $db['goods'] = array(
             'required' => true,
             'in_list' => true,
         ) ,
+        'assign' => array(
+            'type' => "enum('Y', 'N')",
+            'label' => ('分配状态') ,
+            'required' => true,
+            'default' => 'Y',
+            'in_list' => true,
+        ) ,
         'brand_id' => array(
             'type' => 'table:brand',
             'sdfpath' => 'brand/brand_id',

@@ -89,10 +89,10 @@
                 <label class="col-xs-2 control-label"><span class="text-danger">*</span>法人身份证电子版：</label>
                 <div class="col-xs-5">
                     <div class="filebox">
-                        <input type="hidden" value="" name="seller[legal_idcard_image]"/>
+                        <input type="hidden" value="<{$company.legal_idcard_image}>" name="seller[legal_idcard_image]"/>
                         <input type="file" data-url="<{link app=image ctl=site_upload act=index}>" accept="image/*" class="file_input" />
                         <div class="showImg">
-                            <img src="<{$company.legal_idcard_image|storager:'xs'}><{if $company.legal_idcard_image eq ''}>./../../themes/pc/default/statics/images/file_add.jpg<{/if}>">
+                            <img src="<{if $company.legal_idcard_image eq ''}>./../../themes/pc/default/statics/images/file_add.jpg<{else}><{$company.legal_idcard_image|storager:'xs'}><{/if}>">
                         </div>
                         <span class="file_ctr">
                             <a href="#">查看</a>
@@ -147,7 +147,7 @@
                 <label class="col-xs-2 control-label"><span class="text-danger">*</span>营业执照副本电子版：</label>
                 <div class="col-xs-5">
                     <div class="filebox">
-                        <input type="hidden" value="" name="seller[business_license_image]"/>
+                        <input type="hidden" value="<{$company.business_license_image}>" name="seller[business_license_image]"/>
                         <input type="file" data-url="<{link app=image ctl=site_upload act=index}>" accept="image/*" class="file_input" />
                         <div class="showImg">
                             <img src="<{$company.business_license_image|storager:'xs'}><{if $company.business_license_image eq ''}>./../../themes/pc/default/statics/images/file_add.jpg<{/if}>">
@@ -211,7 +211,7 @@
                 <label class="col-xs-2 control-label"><span class="text-danger">*</span>组织机构代码证电子版：</label>
                 <div class="col-xs-5">
                     <div class="filebox">
-                        <input type="hidden" value="" name="seller[organization_image]"/>
+                        <input type="hidden" value="<{$company.organization_image}>" name="seller[organization_image]"/>
                         <input type="file" data-url="<{link app=image ctl=site_upload act=index}>" accept="image/*" class="file_input" />
                         <div class="showImg">
                             <img src="<{$company.organization_image|storager:'xs'}><{if $company.organization_image eq ''}>./../../themes/pc/default/statics/images/file_add.jpg<{/if}>">
@@ -242,7 +242,7 @@
                         <label class="col-xs-2 control-label"><span class="text-danger">*</span>屠宰证编号：</label>
                         <div class="col-xs-5">
                             <div class="filebox">
-                                <input type="hidden" value="" name="seller[extra][butcher_report_image]"/>
+                                <input type="hidden" value="<{$company.extra.butcher_report_image}>" name="seller[extra][butcher_report_image]"/>
                                 <input type="file" data-url="<{link app=image ctl=site_upload act=index}>" accept="image/*"  class="file_input" />
                                 <div class="showImg">
                                     <img src="<{$company.extra.butcher_report_image|storager:'xs'}><{if $company.extra.butcher_report_image eq ''}>./../../themes/pc/default/statics/images/file_add.jpg<{/if}>">
@@ -258,7 +258,7 @@
                         <label class="col-xs-2 control-label"><span class="text-danger">*</span>进京证电子版：</label>
                         <div class="col-xs-5">
                             <div class="filebox">
-                                <input type="hidden" value="" name="seller[extra][beijing_image]"/>
+                                <input type="hidden" value="<{$company.extra.beijing_image}>" name="seller[extra][beijing_image]"/>
                                 <input type="file" data-url="<{link app=image ctl=site_upload act=index}>" accept="image/*"  class="file_input" />
                                 <div class="showImg">
                                     <img src="<{$company.extra.beijing_image|storager:'xs'}><{if $company.extra.beijing_image eq ''}>./../../themes/pc/default/statics/images/file_add.jpg<{/if}>">
@@ -274,7 +274,7 @@
                         <label class="col-xs-2 control-label"><span class="text-danger">*</span>进沪证电子版：</label>
                         <div class="col-xs-5">
                             <div class="filebox">
-                                <input type="hidden" value="" name="seller[extra][shanghai_image]"/>
+                                <input type="hidden" value="<{$company.extra.shanghai_image}>" name="seller[extra][shanghai_image]"/>
                                 <input type="file" data-url="<{link app=image ctl=site_upload act=index}>" accept="image/*" class="file_input" />
                                 <div class="showImg">
                                     <img src="<{$company.extra.shanghai_image|storager:'xs'}><{if $company.extra.shanghai_image eq ''}>./../../themes/pc/default/statics/images/file_add.jpg<{/if}>">
@@ -290,7 +290,7 @@
                         <label class="col-xs-2 control-label"><span class="text-danger">*</span>其他证件：</label>
                         <div class="col-xs-5">
                             <div class="filebox">
-                                <input type="hidden" value="" name="seller[extra][other_image]"/>
+                                <input type="hidden" value="<{$company.extra.other_image}>" name="seller[extra][other_image]"/>
                                 <input type="file" data-url="<{link app=image ctl=site_upload act=index}>" accept="image/*"  class="file_input" />
                                 <div class="showImg">
                                     <img src="<{$company.extra.other_image|storager:'xs'}><{if $company.extra.other_image eq ''}>./../../themes/pc/default/statics/images/file_add.jpg<{/if}>">
@@ -308,7 +308,7 @@
                         <label class="col-xs-2 control-label"><span class="text-danger">*</span>全国工业产品许可证编号：</label>
                         <div class="col-xs-5">
                             <div class="filebox">
-                                <input type="hidden" value="" name="seller[extra][industry_licence_image]"/>
+                                <input type="hidden" value="<{$company.extra.industry_licence_image}>" name="seller[extra][industry_licence_image]"/>
                                 <input type="file" data-url="<{link app=image ctl=site_upload act=index}>" accept="image/*"  class="file_input" />
                                 <div class="showImg">
                                     <img src="<{$company.extra.industry_licence_image|storager:'xs'}><{if $company.extra.industry_licence_image eq ''}>./../../themes/pc/default/statics/images/file_add.jpg<{/if}>">
@@ -330,7 +330,7 @@
                         <label class="col-xs-2 control-label"><span class="text-danger">*</span>第三方检测报告：</label>
                         <div class="col-xs-5">
                             <div class="filebox">
-                                <input type="hidden" value="" name="seller[extra][third]" />
+                                <input type="hidden" value="<{$company.extra.third}>" name="seller[extra][third]" />
                                 <input type="file" data-url="<{link app=image ctl=site_upload act=index}>" accept="image/*" class="file_input" />
                                 <div class="showImg">
                                     <img src="<{$company.extra.third|storager:'xs'}><{if $company.extra.third eq ''}>./../../themes/pc/default/statics/images/file_add.jpg<{/if}>">
@@ -348,7 +348,7 @@
                         <label class="col-xs-2 control-label"><span class="text-danger">*</span>食品流通许可证电子版：</label>
                         <div class="col-xs-5">
                             <div class="filebox">
-                                <input type="hidden" value="" name="seller[extra][circulate]"/>
+                                <input type="hidden" value="<{$company.extra.circulate}>" name="seller[extra][circulate]"/>
                                 <input type="file" data-url="<{link app=image ctl=site_upload act=index}>" accept="image/*" class="file_input" />
                                 <div class="showImg">
                                     <img src="<{$company.extra.circulate|storager:'xs'}><{if $company.extra.circulate eq ''}>./../../themes/pc/default/statics/images/file_add.jpg<{/if}>">
@@ -364,7 +364,7 @@
                         <label class="col-xs-2 control-label"><span class="text-danger">*</span>产品第三方检测报告：</label>
                         <div class="col-xs-5">
                             <div class="filebox">
-                                <input type="hidden" value="" name="seller[extra][third_party]"/>
+                                <input type="hidden" value="<{$company.extra.third_party}>" name="seller[extra][third_party]"/>
                                 <input type="file" data-url="<{link app=image ctl=site_upload act=index}>" accept="image/*"  class="file_input" />
                                 <div class="showImg">
                                     <img src="<{$company.extra.third_party|storager:'xs'}><{if $company.extra.third_party eq ''}>./../../themes/pc/default/statics/images/file_add.jpg<{/if}>">
@@ -380,7 +380,7 @@
                         <label class="col-xs-2 control-label"><span class="text-danger">*</span>产品检验检疫合格证电子版：</label>
                         <div class="col-xs-5">
                             <div class="filebox">
-                                <input type="hidden" value="" name="seller[extra][quarantine]" />
+                                <input type="hidden" value="<{$company.extra.quarantine}>" name="seller[extra][quarantine]" />
                                 <input type="file" data-url="<{link app=image ctl=site_upload act=index}>" accept="image/*" class="file_input" />
                                 <div class="showImg">
                                     <img src="<{$company.extra.quarantine|storager:'xs'}><{if $company.extra.quarantine eq ''}>./../../themes/pc/default/statics/images/file_add.jpg<{/if}>">
@@ -396,7 +396,7 @@
                         <label class="col-xs-2 control-label"><span class="text-danger">*</span>厂家屠宰证电子版：</label>
                         <div class="col-xs-5">
                             <div class="filebox">
-                                <input type="hidden" value="" name="seller[extra][maker]"/>
+                                <input type="hidden" value="<{$company.extra.maker}>" name="seller[extra][maker]"/>
                                 <input type="file" data-url="<{link app=image ctl=site_upload act=index}>" accept="image/*"  class="file_input" />
                                 <div class="showImg">
                                     <img src="<{$company.extra.maker|storager:'xs'}><{if $company.extra.maker eq ''}>./../../themes/pc/default/statics/images/file_add.jpg<{/if}>">
@@ -412,7 +412,7 @@
                         <label class="col-xs-2 control-label"><span class="text-danger">*</span>网络运营授权证书电子版：</label>
                         <div class="col-xs-5">
                             <div class="filebox">
-                                <input type="hidden" value="" name="seller[extra][web]"/>
+                                <input type="hidden" value="<{$company.extra.web}>" name="seller[extra][web]"/>
                                 <input type="file" data-url="<{link app=image ctl=site_upload act=index}>" accept="image/*"  class="file_input" />
                                 <div class="showImg">
                                     <img src="<{$company.extra.web|storager:'xs'}><{if $company.extra.web eq ''}>./../../themes/pc/default/statics/images/file_add.jpg<{/if}>">
@@ -432,7 +432,7 @@
                 <label class="col-xs-2 control-label">无公害农产品认证：</label>
                 <div class="col-xs-5">
                     <div class="filebox">
-                        <input type="hidden" value="" name="seller[extra][harmless]"/>
+                        <input type="hidden" value="<{$company.extra.harmless}>" name="seller[extra][harmless]"/>
                         <input type="file" data-url="<{link app=image ctl=site_upload act=index}>" accept="image/*" class="file_input" />
                         <div class="showImg">
                             <img src="<{$company.extra.harmless|storager:'xs'}><{if $company.extra.harmless eq ''}>./../../themes/pc/default/statics/images/file_add.jpg<{/if}>">
@@ -448,7 +448,7 @@
                 <label class="col-xs-2 control-label">农产品地理标志登记证书：</label>
                 <div class="col-xs-5">
                     <div class="filebox">
-                        <input type="hidden" value="" name="seller[extra][landmark]"/>
+                        <input type="hidden" value="<{$company.extra.landmark}>" name="seller[extra][landmark]"/>
                         <input type="file" data-url="<{link app=image ctl=site_upload act=index}>" accept="image/*"  class="file_input" />
                         <div class="showImg">
                             <img src="<{$company.extra.landmark|storager:'xs'}><{if $company.extra.landmark eq ''}>./../../themes/pc/default/statics/images/file_add.jpg<{/if}>">
@@ -464,7 +464,7 @@
                 <label class="col-xs-2 control-label"> 绿色食品认证证书：</label>
                 <div class="col-xs-5">
                     <div class="filebox">
-                        <input type="hidden" value="" name="seller[extra][green]"/>
+                        <input type="hidden" value="<{$company.extra.green}>" name="seller[extra][green]"/>
                         <input type="file" data-url="<{link app=image ctl=site_upload act=index}>" accept="image/*"  class="file_input" />
                         <div class="showImg">
                             <img src="<{$company.extra.green|storager:'xs'}><{if $company.extra.green eq ''}>./../../themes/pc/default/statics/images/file_add.jpg<{/if}>">
@@ -480,7 +480,7 @@
                 <label class="col-xs-2 control-label">有机食品认证证书：</label>
                 <div class="col-xs-5">
                     <div class="filebox">
-                        <input type="hidden" value="" name="seller[extra][organic]"/>
+                        <input type="hidden" value="<{$company.extra.organic}>" name="seller[extra][organic]"/>
                         <input type="file" data-url="<{link app=image ctl=site_upload act=index}>" accept="image/*"  class="file_input" />
                         <div class="showImg">
                             <img src="<{$company.extra.organic|storager:'xs'}><{if $company.extra.organic eq ''}>./../../themes/pc/default/statics/images/file_add.jpg<{/if}>">
@@ -496,7 +496,7 @@
                 <label class="col-xs-2 control-label">有ISO系列、HACCP系列证书：</label>
                 <div class="col-xs-5">
                     <div class="filebox">
-                        <input type="hidden" value="" name="seller[extra][iso]"/>
+                        <input type="hidden" value="<{$company.extra.iso}>" name="seller[extra][iso]"/>
                         <input type="file" data-url="<{link app=image ctl=site_upload act=index}>" accept="image/*"  class="file_input" />
                         <div class="showImg">
                             <img src="<{$company.extra.iso|storager:'xs'}><{if $company.extra.iso eq ''}>./../../themes/pc/default/statics/images/file_add.jpg<{/if}>">
@@ -539,7 +539,7 @@
                 <label class="col-xs-2 control-label">税务登记证电子版：</label>
                 <div class="col-xs-5">
                     <div class="filebox">
-                        <input type="hidden" value="" name="seller[tax_image]"/>
+                        <input type="hidden" value="<{$company.tax_image}>" name="seller[tax_image]"/>
                         <input type="file"  data-url="<{link app=image ctl=site_upload act=index}>" accept="image/*" class="file_input" />
                         <div class="showImg">
                             <img src="<{$company.tax_image|storager:'xs'}><{if $company.tax_image eq ''}>./../../themes/pc/default/statics/images/file_add.jpg<{/if}>">
@@ -555,7 +555,7 @@
                 <label class="col-xs-2 control-label"><span class="text-danger">*</span>一般纳税人资格证：</label>
                 <div class="col-xs-5">
                     <div class="filebox">
-                        <input type="hidden" value="" name="seller[extra][tax_status]"/>
+                        <input type="hidden" value="<{$company.extra.tax_status}>" name="seller[extra][tax_status]"/>
                         <input type="file" input-name="seller[extra][tax_status]" data-url="<{link app=image ctl=site_upload act=index}>" accept="image/*" class="file_input" />
 
                         <div class="showImg">
@@ -603,7 +603,7 @@
                 <label class="col-xs-2 control-label"><span class="text-danger">*</span>银行开户许可证电子版：</label>
                 <div class="col-xs-5">
                     <div class="filebox">
-                        <input type="hidden" value="" name="seller[extra][bank_image]"/>
+                        <input type="hidden" value="<{$company.extra.bank_image}>" name="seller[extra][bank_image]"/>
                         <input type="file" data-url="<{link app=image ctl=site_upload act=index}>" accept="image/*" class="file_input" />
                         <div class="showImg">
                             <img src="<{$company.extra.bank_image|storager:'xs'}><{if $company.extra.bank_image eq ''}>./../../themes/pc/default/statics/images/file_add.jpg<{/if}>">

@@ -30,23 +30,29 @@ class seller_frontpage extends site_controller {
 
         $this->seller = $this->get_current_seller();
         $this->store = $this->get_current_store();
-        $this->_signup_checkin();
+        $this->user_manage();
 		$this->set_tmpl('seller');
         $this->user_obj = vmc::singleton('seller_user_object');
         $this->passport_obj = vmc::singleton('seller_user_passport');
 	}
 
-    private function _signup_checkin()
+    protected function user_manage($type)
     {
-        $checkin = $this->app->model('sellers')->getRow('checkin', array('seller_id' => $this->seller['seller_id']));
         $this->_menus = $this->get_menu();
-        if($checkin['checkin'] != 1){
+        if($type == 'manage' ){
             foreach ($this->_menus as $key => $value) {
                 if($value['name'] != '帐户管理'){
                     unset($this->_menus[$key]);
                 }
             }
+        }else{
+            foreach ($this->_menus as $key => $value) {
+                if($value['name'] == '帐户管理'){
+                    unset($this->_menus[$key]);
+                }
+            }
         }
+
     }
 
     protected function redirect_url($params = array())
@@ -101,7 +107,7 @@ class seller_frontpage extends site_controller {
             'app' => 'seller',
             'ctl' => 'site_passport',
             'act' => 'login' //
-        )) , '未登录');
+        )) , '请用分销商帐号登录');
     }
 
     // 是否开店

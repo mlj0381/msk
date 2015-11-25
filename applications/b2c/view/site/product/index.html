@@ -42,13 +42,13 @@
                  <p><span>采购数量</span><span>&lt;10箱</span><span>&gt;10箱</span></p>
                  <p><span>价格</span><span>￥100/箱</span><span>￥90/箱</span></p>
                  </div>
-                
+
                  <div class="distr_info">
                      配送：
                      <span>上海 至 上海松江区</span>
                      <span>运费 ￥:10.00</span>
                  </div>
- 
+
                  <div class="turnover_info">
                      <ul>
                          <li>总成交量<span>186<small>笔</small></span></li>
@@ -64,11 +64,11 @@
                  </div>
                  <!-- <p class="avg-mark">
                      <span class="text-warning"><{$data_detail.mark_star|star}></span> <small><{$data_detail.mark_star|number_format:'1'}></small>
-                 </p> 
+                 </p>
                  <div class="description text-danger">
                      <p><{$data_detail.brief}></p>
                  </div>-->
-                 
+
                 <ul class="list-unstyled promotion-list">
                 </ul>
                 <{if $data_detail.spec_desc}>
@@ -117,7 +117,7 @@
         				<input type="text" class="spinner-input form-control"  value=1>
         				<div class="spinner-buttons input-group-btn">
         					<button type="button" class="btn btn-default">
-        					 
+                                +
         					</button>
         				</div>
         			</div>
@@ -133,7 +133,6 @@
                         <i class="glyphicon glyphicon-heart-empty"></i>
                         <small>Favorite<em></em></small>
                     </a>
-                    <div><{$store_info.store_name}><a class="btn btn-link btn-lg favorite-button" href='<{link app=b2c ctl=site_member act=favorite args0=add args1=$store_info.store_id args2=store}>'>收藏店铺</a></div>
                 </div>
                 <!--购买区end-->
             </div>
@@ -191,7 +190,7 @@
                  </li>
              </ul>
          </div>
- 
+
         <!-- 相关商品 -->
         <div class="goods-rel-items hide">
             <hr>
@@ -204,11 +203,11 @@
                <!-- 店铺信息 -->
                <div class="shop_info">
                    <dl>
-                       <dt>沙县小吃食材专营店</dt>
+                       <dt><{$store_info.store_name}></dt>
                        <dd>
-                           <p>联系卖家:<span>神农客<a href=""><i class="icon-comment"></i></a></span></p>
+                           <p>联系卖家:<span><a href=""><i class="icon-comment"></i></a></span></p>
                            <p>经营品牌:<span>双汇</span></p>
-                           <p>所在地区:<span>上海 上海市松江区</span></p>
+                           <p>所在地区:<span>上海 上海市松江区<{$store_info.store_area}></span></p>
                        </dd>
                    </dl>
                    <div class="server_info">
@@ -217,18 +216,18 @@
                         <span>物流<small>4.9<i class="icon-arrow-up"></i></small></span>
                    </div>
                    <div class="shop_ctr">
-                        <a href="#" class="btn btn-danger">进入店铺</a>
-                        <a href="#" class="btn btn-default">收藏店铺</a>
+                        <a href="<{link app=store ctl=site_store act=index args0=$store_info.store_id}>" class="btn btn-danger">进入店铺</a>
+                        <a href="<{link app=b2c ctl=site_member act=favorite args0=add args1=$store_info.store_id args2=store}>" class="btn btn-default">收藏店铺</a>
                    </div>
                </div>
-+
+
                <!-- 客服中心 -->
                <div class="kefu_list">
                    <a href="#">
                        <img src="<{$baseurl}>/themes/pc/default/statics/images/kefulist.png" />
                    </a>
                </div>
-+
+
                <!-- 店主推荐 -->
                <div class="shopkeeper_tj">
                     <h3><span>店主推荐</span><a href="">更多推荐》</a></h3>

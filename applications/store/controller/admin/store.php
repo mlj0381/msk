@@ -31,6 +31,17 @@ class store_ctl_admin_store extends desktop_controller {
         ));
     }
 
+    public function checkin(){
+        $this->begin('index.php?app=store&ctl=admin_store&act=index&p[0]=checkin');
+        if(!$_POST) $this->end(false, '非法请求');
+        $post = $_POST;
+
+        if(!$this->app->model('store')->save($post['store'])){
+            $this->end(false, '审核失败');
+        }
+        $this->end(true, '审核成功');
+    }
+
     function save() {
         $this->begin('index.php?app=store&ctl=admin_store&act=index');
         $data = $_POST;

@@ -30,6 +30,7 @@ class seller_ctl_site_seller extends seller_frontpage
     {
         $this->pagedata['company'] = $this->get_company();
         $this->pagedata['contact'] = $this->get_contact();
+        $this->user_manage('manage');
         if($_POST)
         {
             $post = $_POST;
@@ -43,6 +44,7 @@ class seller_ctl_site_seller extends seller_frontpage
     }
 	public function company()
 	{
+        $this->user_manage('manage');
         $this->title .= "公司信息";
         if($_POST) $this->_company_post($_POST);
         $seller = $this->app->model('sellers')->getRow('*', array(
@@ -57,4 +59,9 @@ class seller_ctl_site_seller extends seller_frontpage
         $this->output();
 	}
 
+    public function securitycenter(){
+        $user_obj = vmc::singleton('seller_user_object');
+        $this->pagedata['pam_data'] = $user_obj->get_pam_data('*', $this->seller['seller_id']);
+        $this->output();
+    }
 }

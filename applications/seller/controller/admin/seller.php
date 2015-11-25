@@ -41,54 +41,78 @@ class seller_ctl_admin_seller extends desktop_controller {
        }
         $this->end(true, '审核成功');
     }
-    public function checked($id, $type)
-    {
-        if($_POST) $this->_checked($_POST);
-        if($type == 'store'){
-           $model = app::get('store')->model('store');
-        }else{
-           $model = $this->app->model($type);
+    public function assign_goods($store_id, $type = 'Y'){
+        $goods = app::get('b2c')->model('goods')->getList('*', array('assign' => $type));
+        $mdl_cat = app::get('b2c')->model('goods_cat');
+        foreach ($goods as $key => $value) {
+            $cat_name = $mdl_cat->getRow('cat_name', array('cat_id' => $value['cat_id']));
+            $goods[$key]['cat_id'] = $cat_name['cat_name'];
         }
-        $this->pagedata['seller_info'] = $model->getRow('*', array('seller_id' => $id));
-        $this->_editor();
-        $this->display("admin/seller/finder/{$type}.html");
+        $this->pagedata['store_id'] = $store_id;
+        $this->pagedata['goods'] = $goods;
+        $this->page('admin/seller/assign_goods.html');
     }
-    private function _checked($post)
-    {
-        $this->begin('index.php?app=seller&ctl=admin_seller&act=index');
-        if($post['seller_type'] == 'store'){
-            $model = app::get('store')->model('store');
-        }else{
-            $model = $this->app->model($post['seller_type']);
-        }
-        $db = vmc::database();
-        $db->beginTransaction();
-        if(!$model->update(array('status' => $post['status']), array('seller_id' => $post['seller_id']))){
-            $this->end(false, '审核失败');
-        }
-        $mdl_seller = $this->app->model('sellers');
-        $seller_check = $mdl_seller->dump($post['seller_id'], '*', 'checkin');
-        $suatus[] = array_shift($seller_check['company']);
-        array_unshift($suatus, array_shift($seller_check['aptitudes']));
-        array_unshift($suatus, array_shift($seller_check['store']));
-        array_unshift($suatus, array_shift($seller_check['brand']));
-        $status = ture;
-        foreach ($suatus as $key => $value) {
-            if($value['status'] == '-1' || $value['status'] == '0'){
-                $status = false;
-                break;
-            }
-        }
-        if($status){
-            if(!$mdl_seller->update(array('checkin' => '1'), array('seller_id' => $post['seller_id']))){
-                $db->rollback();
-            }
-        }
-        //写入日志
 
-        $db->commit();
-        $this->end(true, '审核成功');
+
+    public function assign_post(){
+        $this->begin('index.php?app=seller&ctl=admin_seller&act=index');
+        if(!$_POST) $this->end(false, '非法请求');
+        $mdl_goods = app::get('b2c')->model('goods');
+        $update_value = array('store_id' => $_POST['store_id'], 'assign' => $_POST['assign']);
+        if(!$mdl_goods->update($update_value, array('goods_id|in' => $_POST['goods_id']))){
+            $this->end(false, '分配失败');
+        }else{
+            $this->end(ture, '分配成功');
+        }
     }
+    // public function checked($id, $type)
+    // {
+    //     if($_POST) $this->_checked($_POST);
+    //     if($type == 'store'){
+    //        $model = app::get('store')->model('store');
+    //     }else{
+    //        $model = $this->app->model($type);
+    //     }
+    //     $this->pagedata['seller_info'] = $model->getRow('*', array('seller_id' => $id));
+    //     $this->_editor();
+    //     $this->display("admin/seller/finder/{$type}.html");
+    // }
+    // private function _checked($post)
+    // {
+    //     $this->begin('index.php?app=seller&ctl=admin_seller&act=index');
+    //     if($post['seller_type'] == 'store'){
+    //         $model = app::get('store')->model('store');
+    //     }else{
+    //         $model = $this->app->model($post['seller_type']);
+    //     }
+    //     $db = vmc::database();
+    //     $db->beginTransaction();
+    //     if(!$model->update(array('status' => $post['status']), array('seller_id' => $post['seller_id']))){
+    //         $this->end(false, '审核失败');
+    //     }
+    //     $mdl_seller = $this->app->model('sellers');
+    //     $seller_check = $mdl_seller->dump($post['seller_id'], '*', 'checkin');
+    //     $suatus[] = array_shift($seller_check['company']);
+    //     array_unshift($suatus, array_shift($seller_check['aptitudes']));
+    //     array_unshift($suatus, array_shift($seller_check['store']));
+    //     array_unshift($suatus, array_shift($seller_check['brand']));
+    //     $status = ture;
+    //     foreach ($suatus as $key => $value) {
+    //         if($value['status'] == '-1' || $value['status'] == '0'){
+    //             $status = false;
+    //             break;
+    //         }
+    //     }
+    //     if($status){
+    //         if(!$mdl_seller->update(array('checkin' => '1'), array('seller_id' => $post['seller_id']))){
+    //             $db->rollback();
+    //         }
+    //     }
+    //     //写入日志
+    //
+    //     $db->commit();
+    //     $this->end(true, '审核成功');
+    // }
     private function _editor()
     {
         $this->pagedata['sections'] = array();

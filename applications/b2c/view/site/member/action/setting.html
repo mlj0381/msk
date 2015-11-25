@@ -108,11 +108,20 @@
     <div class="form-group">
         <label for="" class="col-md-2 control-label"><span class="text-danger">*</span>老板名片照：</label>
         <div class="col-md-4">
-          <img class="img-thumbnail"  src="<{$pam_data.memberData.addon.boss_image|storager:'s'}>">
-          <input type="file" accept="image/*" data-url="<{link app=image ctl=site_upload act=index}>"class="form-control" id="" >
-          <input type="hidden" name="addon[boss_image]"  value="<{$pam_data.memberData.addon.boss_image}>"/>
-          <span class="hide">上传成功</span>
+          <div class="filebox">
+              <input type="hidden" name="addon[boss_image]"  value="<{$pam_data.memberData.addon.boss_image}>"/>
+              <input type="file" data-url="<{link app=image ctl=site_upload act=index}>" accept="image/*" class="file_input" />
+              <div class="showImg">
+                  <img src="<{if $pam_data.memberData.addon.boss_image eq ''}>./../../themes/pc/default/statics/images/file_add.jpg<{else}><{$pam_data.memberData.addon.boss_image|storager:'xs'}><{/if}>">
+              </div>
+              <span class="file_ctr">
+                  <a href="#">查看</a>
+                  <a href="#">删除</a>
+              </span>
+          </div>
         </div>
+
+
 
     </div>
 
@@ -183,39 +192,71 @@
     <div class="form-group">
         <label for="" class="col-md-2 control-label"><span class="text-danger">*</span>企业营业执照或许可证：</label>
         <div class="col-md-4">
-            <img class="img-thumbnail"  src="<{$pam_data.memberData.addon.company_license|storager:'s'}>">
-          <input type="file" accept="image/*" data-url="<{link app=image ctl=site_upload act=index}>" class="form-control" value="">
-          <input type="hidden" name="addon[company_license]"  value="<{$pam_data.memberData.addon.company_license}>"/>
-          <span class="hide">上传成功</span>
+          <div class="filebox">
+              <input type="hidden" name="addon[company_license]"  value="<{$pam_data.memberData.addon.company_license}>"/>
+              <input type="file" data-url="<{link app=image ctl=site_upload act=index}>" accept="image/*" class="file_input" />
+              <div class="showImg">
+                  <img src="<{if $pam_data.memberData.addon.company_license eq ''}>./../../themes/pc/default/statics/images/file_add.jpg<{else}><{$pam_data.memberData.addon.company_license|storager:'xs'}><{/if}>">
+              </div>
+              <span class="file_ctr">
+                  <a href="#">查看</a>
+                  <a href="#">删除</a>
+              </span>
         </div>
     </div>
+</div>
     <div class="form-group">
         <label for="" class="col-md-2 control-label"><span class="text-danger">*</span>食品安全许可证：</label>
         <div class="col-md-4">
-            <img class="img-thumbnail"  src="<{$pam_data.memberData.addon.food_license|storager:'s'}>">
-          <input type="file" accept="image/*" data-url="<{link app=image ctl=site_upload act=index}>"  class="form-control" value="">
-          <input type="hidden" name="addon[food_license]"  value="<{$pam_data.memberData.addon.food_license}>"/>
-          <span class="hide">上传成功</span>
+
+          <div class="filebox">
+              <input type="hidden" name="addon[food_license]"  value="<{$pam_data.memberData.addon.food_license}>"/>
+              <input type="file" data-url="<{link app=image ctl=site_upload act=index}>" accept="image/*" class="file_input" />
+              <div class="showImg">
+                  <img src="<{if $pam_data.memberData.addon.food_license eq ''}>./../../themes/pc/default/statics/images/file_add.jpg<{else}><{$pam_data.memberData.addon.food_license|storager:'xs'}><{/if}>">
+              </div>
+              <span class="file_ctr">
+                  <a href="#">查看</a>
+                  <a href="#">删除</a>
+              </span>
         </div>
     </div>
+</div>
     <div class="form-group">
         <label for="" class="col-md-2 control-label">经营场地门头照片：</label>
         <div class="col-md-4">
-            <img class="img-thumbnail"  src="<{$pam_data.memberData.addon.place_image|storager:'s'}>">
-          <input type="file" accept="image/*" data-url="<{link app=image ctl=site_upload act=index}>"  class="form-control" value="">
-          <input type="hidden" name="addon[place_image]"   value="<{$pam_data.memberData.addon.place_image}>"/>
-          <span class="hide">上传成功</span>
+
+          <div class="filebox">
+              <input type="hidden" name="addon[place_image]"   value="<{$pam_data.memberData.addon.place_image}>"/>
+              <input type="file" data-url="<{link app=image ctl=site_upload act=index}>" accept="image/*" class="file_input" />
+              <div class="showImg">
+                  <img src="<{if $pam_data.memberData.addon.place_image eq ''}>./../../themes/pc/default/statics/images/file_add.jpg<{else}><{$pam_data.memberData.addon.place_image|storager:'xs'}><{/if}>">
+              </div>
+              <span class="file_ctr">
+                  <a href="#">查看</a>
+                  <a href="#">删除</a>
+              </span>
         </div>
     </div>
+</div>
     <div class="form-group">
         <label for="" class="col-md-2 control-label">菜单照片：</label>
         <div class="col-md-4">
-            <img class="img-thumbnail"  src="<{$pam_data.memberData.addon.menu_image|storager:'s'}>">
-          <input type="file" accept="image/*" data-url="<{link app=image ctl=site_upload act=index}>"   class="form-control" value="">
-          <input type="hidden" name="addon[menu_image]" value="<{$pam_data.memberData.addon.menu_image}>"/>
-          <span class="hide">上传成功</span>
+
+
+          <div class="filebox">
+              <input type="hidden" name="addon[menu_image]" value="<{$pam_data.memberData.addon.menu_image}>"/>
+              <input type="file" data-url="<{link app=image ctl=site_upload act=index}>" accept="image/*" class="file_input" />
+              <div class="showImg">
+                  <img src="<{if $pam_data.memberData.addon.menu_image eq ''}>./../../themes/pc/default/statics/images/file_add.jpg<{else}><{$pam_data.memberData.addon.menu_image|storager:'xs'}><{/if}>">
+              </div>
+              <span class="file_ctr">
+                  <a href="#">查看</a>
+                  <a href="#">删除</a>
+              </span>
         </div>
     </div>
+</div>
 
 
     <h3>企业经营信息</h3>
@@ -235,13 +276,21 @@
     <div class="form-group">
         <label for="" class="col-md-2 control-label"><span class="text-danger">*</span>冻品存放地照片：</label>
         <div class="col-md-4">
-            <img class="img-thumbnail"  src="<{$pam_data.memberData.addon.goods_stash_image|storager:'s'}>">
-          <input type="file" accept="image/*" data-url="<{link app=image ctl=site_upload act=index}>" id="test" class="form-control" value="">
-          <input type="hidden" name="addon[goods_stash_image]"  value="<{$pam_data.memberData.addon.goods_stash_image}>"/>
-          <span class="hide">上传成功</span>
+
+          <div class="filebox">
+              <input type="hidden" name="addon[goods_stash_image]"  value="<{$pam_data.memberData.addon.goods_stash_image}>"/>
+              <input type="file" data-url="<{link app=image ctl=site_upload act=index}>" accept="image/*" class="file_input" />
+              <div class="showImg">
+                  <img src="<{if $pam_data.memberData.addon.goods_stash_image eq ''}>./../../themes/pc/default/statics/images/file_add.jpg<{else}><{$pam_data.memberData.addon.goods_stash_image|storager:'xs'}><{/if}>">
+              </div>
+              <span class="file_ctr">
+                  <a href="#">查看</a>
+                  <a href="#">删除</a>
+              </span>
         </div>
 
     </div>
+</div>
     <div class="form-group">
         <label for="" class="col-md-2 control-label"><span class="text-danger">*</span>存放能力：</label>
         <div class="col-md-4">
@@ -273,20 +322,23 @@
     </div>
     <div class="form-group">
         <label for="" class="col-md-2 control-label">习惯正常收货时间段：</label>
-        <div class="col-md-2 date form_datetime">
+        <div class="col-md-2">
             <input type="text" required="true" name="addon[receipt_date_early]" value="<{$pam_data.memberData.addon.receipt_date_early}>"  class="form-control" id="" placeholder="起始时间" >
-            <span class="add-on"><i class="icon-th"></i></span>
+            <!--  <span class="add-on"><i class="icon-th"></i></span> -->
+            格式：时：分
         </div>
         <div class="col-md-2 date form_datetime">
             <input type="text" required="true" name="addon[receipt_date_late]" value="<{$pam_data.memberData.addon.receipt_date_late}>"  class="form-control" id="" placeholder="截止时间">
-            <span class="add-on"><i class="icon-th"></i></span>
+            <!-- <span class="add-on"><i class="icon-th"></i></span> -->
+            格式：时：分
         </div>
     </div>
     <div class="form-group">
         <label for="" class="col-md-2 control-label">习惯收货最早时间要求：</label>
         <div class="col-md-4 date form_datetime">
           <input type="text" required="true" name="addon[receipt_early]" value="<{$pam_data.memberData.addon.receipt_early}>"  class="form-control" id="" >
-          <span class="add-on"><i class="icon-th"></i></span>
+          <!-- <span class="add-on"><i class="icon-th"></i></span> -->
+          格式：时：分
         </div>
 
     </div>
@@ -295,7 +347,8 @@
         <label for="" class="col-md-2 control-label">习惯收货最晚时间要求：</label>
         <div class="col-md-4 date form_datetime">
           <input type="text" required="true" name="addon[receipt_early]" value="<{$pam_data.memberData.addon.receipt_early}>"  class="form-control" id="" >
-          <span class="add-on"><i class="icon-th"></i></span>
+          <!-- <span class="add-on"><i class="icon-th"></i></span> -->
+          格式：时：分
         </div>
     </div>
     <div class="form-group">
@@ -361,30 +414,31 @@
     $(function(){
         $('input[type="file"]').fileupload({
 
-            add:function(e, data){
-                if(!data.files[0]['type'].match(/^image/)){
-                    alert('非法上传，不是图片类型');
-                }
-                data.submit();
-            },
-            done:function(e, data){
-                var re = $.parseJSON(data.result);
-                var input= e.target || e.srcElement;
-                $(input).next('input').val(re.image_id);
-                $(input).next('input').nextAll().removeClass('hide');
+        add: function(e, data) {
+            if (!data.files[0]['type'].match(/^image/)) {
+                alert('非法上传，不是图片类型');
             }
-        });
+            data.submit();
+        },
+        done: function(e, data) {
+            var re = $.parseJSON(data.result);
+            var input = e.target || e.srcElement;
+            $(input).prev('input[type="hidden"]').attr('value', re.image_id);
+            $(input).next('.showImg').find('img').attr('src',re.url);
+
+        }
+    });
         /**
          * 日历插件
          */
 
-        $(".form_datetime").datetimepicker({
-            format: "yyyy-mm-dd hh:ii",    //时间格式
-            autoclose: true,
-            todayBtn: true,
-            pickerPosition: "bottom-left",
-            language:"zh-CN"              //设置中文
-        });
+        // $(".form_datetime").datetimepicker({
+        //     format: "yyyy-mm-dd hh:ii",    //时间格式
+        //     autoclose: true,
+        //     todayBtn: true,
+        //     pickerPosition: "bottom-left",
+        //     language:"zh-CN"              //设置中文
+        // });
 
     });
 </script>
