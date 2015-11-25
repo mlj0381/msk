@@ -131,7 +131,7 @@
                       <div class="col-xs-10">
                         <a class="text-muted" href="<{link app=b2c ctl=site_product act=index args0=$object.item.product.product_id}>"><{$object.item.product.name}>
                         <small>
-                            <{$object.item.product.spec_info}>
+                            <{$object.item.product.spec_info}> 店铺名称：<{$object.store_info.store_name}>店铺id：<{$object.store_info.store_id}>
                         </small>
                         </a>
                         <br>
@@ -255,7 +255,7 @@
         </div>
     </div>
 
-    <div class="checkout-footer panel panel-default checkout-submit">
+    <div class="checkout-footer panel panel-default chckekout-submit">
         <div class="row">
             <div class="col-xs-7">
                 <textarea name="memo" rows="2" class="form-control" placeholder="订单备注"></textarea>
@@ -671,8 +671,6 @@ $(function () {
 
 });
 </script>
-
-
 <script type="text/javascript">
     $(function(){
         $('.checkout-dlytime ul li').click(function(){

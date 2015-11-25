@@ -56,9 +56,11 @@ class b2c_ctl_site_checkout extends b2c_frontpage
         if ($fastbuy !== false) {
             $this->pagedata['is_fastbuy'] = 'is_fastbuy';
         }
-
+        $store_obj = vmc::singleton('store_store_object');
+        foreach ($this->pagedata['cart_result']['objects']['goods'] as $key => $value) {
+            $this->pagedata['cart_result']['objects']['goods'][$key]['store_info'] = $store_obj->store_info($value['store_id']);
+        }
         $available_coupons = vmc::singleton('b2c_coupon_stage')->get_member_couponlist($member_id, $my_coupons);
-
         foreach ($cart_result['promotions']['order'] as $p) {
             if ($p['rule_type'] == 'coupon' && $available_coupons[$p['coupon_code']]) {
                 $available_coupons[$p['coupon_code']]['in_cart'] = 'true';

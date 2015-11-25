@@ -17,7 +17,8 @@ class b2c_mdl_orders extends dbeav_model{
     var $defaultOrder = array('createtime','DESC');
     var $has_many = array(
         'items'=>'order_items',
-        'promotions'=>'order_pmt'
+        'promotions'=>'order_pmt',
+        //'store_info' => 'store@store:append:store_id^store_id'
     );
 
 

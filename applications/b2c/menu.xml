@@ -1,23 +1,22 @@
 <menus>
     <menugroup name="">
-		<menu app='' controller='' action='' display='true' order="60">全部功能</menu>
+		<menu app='b2c' controller='site_member' action='index' display='true' order="60">全部功能</menu>
     </menugroup>
 
 	<menugroup name="">
         <menu app='b2c' controller='site_cart' action='index' display='true' order="60">我的购物车</menu>
         <menu app='b2c' controller='site_member' action='orders' display='true' order="60">已买到的商品</menu>
-		<menu app='b2c' controller='site_cat' action='index' display='true' order="60">购买过的店铺</menu>
+		<menu app='b2c' controller='site_member' action='buy_store' display='true' order="60">购买过的店铺</menu>
 		<menu app='b2c' controller='site_member' action='favorite' display='true' order="60">我的收藏</menu>
 		<menu app='b2c' controller='site_member' action='coupon' display='true' order="60">我的优惠信息</menu>
 
-        <menu app='b2c' controller='site_comment' action='index' display='true' order="60">我的评价</menu>
-		<menu app='b2c' controller='site_member' action='index' display='true' order="60">退货与维权</menu>
-		<menu app='b2c' controller='site_member' action='index' display='true' order="60">我的足迹</menu>
-		<menu app='b2c' controller='site_member' action='index' display='true' order="60">最近访问</menu>
+        <menu app='b2c' controller='site_comment' action='show' display='true' order="60">我的评价</menu>
+		<menu app='b2c' controller='site_member' action='refund' display='true' order="60">退货与维权</menu>
+		<menu app='b2c' controller='site_member' action='sleuth ' display='true' order="60">我的足迹</menu>
+		<menu app='b2c' controller='site_member' action='visit' display='true' order="60">最近访问</menu>
 		<menu app='b2c' controller='site_member' action='index' display='true' order="60">大促会</menu>
         <menu app='b2c' controller='site_member' action='setting' display='true' order="60">帐户信息</menu>
         <menu app='b2c' controller='site_member' action='index' display='true' order="60">神农客会员</menu>
 		<menu app='b2c' controller='site_member' action='index' display='true' order="60">鲜驰达会员</menu>
-
     </menugroup>
 </menus>

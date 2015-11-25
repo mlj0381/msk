@@ -50,11 +50,6 @@ $db['member_goods']=array (
         'label' => ('商品名称'),
         'width' => 310,
     ),
-    'gnotify_type' => array(
-        'type' => "enum('store', 'goods')",
-        'label' => '收藏类型',
-        'default' => 'goods',
-    ),
     'goods_price' =>
     array (
         'type' => 'money',

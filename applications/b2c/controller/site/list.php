@@ -57,10 +57,13 @@ class b2c_ctl_site_list extends b2c_frontpage
         //     $filter['brand_id'] = $fix_brand;
         // }
          $goods_list = $this->_list($filter, $params['page'], $params['orderby'], $keywords);
+         $store_obj = vmc::singleton('store_store_object');
+         foreach ($goods_list['data'] as $key => $value) {
+             $goods_list['data'][$key]['store_info'] = $store_obj->store_info($value['store_id']);
+         }
          $this->pagedata['data_list'] = $goods_list['data'];
-
-        // $this->pagedata['count'] = $goods_list['count'];
-        // $this->pagedata['all_count'] = $goods_list['all_count'];
+        $this->pagedata['count'] = $goods_list['count'];
+        $this->pagedata['all_count'] = $goods_list['all_count'];
         // $this->pagedata['pager'] = $goods_list['page_info'];
         // $this->pagedata['pager']['token'] = time();
         // $this->pagedata['pager']['link'] = $this->gen_url(array(

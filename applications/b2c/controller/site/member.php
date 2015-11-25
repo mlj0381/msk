@@ -109,6 +109,10 @@ class b2c_ctl_site_member extends b2c_frontpage
         $this->output();
     }
 
+    public function home(){
+        $this->page('site/member/home.html');
+    }
+
     /**
      * 会员头像
      */
@@ -410,10 +414,29 @@ class b2c_ctl_site_member extends b2c_frontpage
         $this->output();
     }
 
+    //购买过的店铺
+    public function buy_store(){
+        $this->output();
+    }
+
+    //最近访问
+    public function visit(){
+        $this->output();
+    }
+
+    //我的足迹
+    public function sleuth(){
+        $this->output();
+    }
+
+    //退货与维权
+    public function refund(){
+        $this->output();
+    }
     /**
      * 我的收藏.
      */
-    public function favorite($action = 'list', $gid = false)
+    public function favorite($action = 'list', $gid = false, $obj_type = 'goods')
     {
         $member_id = $this->member['member_id'];
         $member_discout = $this->member['member_discout'];
@@ -433,18 +456,19 @@ class b2c_ctl_site_member extends b2c_frontpage
                 }
                 break;
             case 'add':
-                if (!$mdl_member_goods->add_fav($member_id, $gid)) {
+                if (!$mdl_member_goods->add_fav($member_id, $gid, $obj_type)) {
                     $this->splash('error', '', '加入收藏失败!');
                 } else {
                     $this->splash('success', '', '加入收藏成功!');
                 }
             default:
             $list = $mdl_member_goods->getList('*', array('member_id' => $member_id, 'type'=>'fav'));
+            $this->pagedata['favorite_count'] = count($list);
             $this->pagedata['member_lv_name'] = $this->member['levelname'];
             $this->pagedata['member_lv_discount'] = $this->member['lv_discount'];
             $this->pagedata['data'] = $list;
             $this->output();
-            $this->page('site/member/action/favorite.html');
+            //$this->page('site/member/action/favorite.html');
             break;
         }
     }

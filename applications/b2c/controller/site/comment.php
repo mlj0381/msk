@@ -215,7 +215,9 @@ class b2c_ctl_site_comment extends b2c_frontpage
             $this->pagedata['goods_detail'] = $goods_detail;
             $this->title = $goods_detail['name'].' 评价\口碑';
             $this->set_tmpl('comment_show');
-            $this->page('site/comment/show.html');
+            $this->pagedata['_PAGE_'] = 'site/comment/show.html';
+            $this->output();
+            //$this->page('site/comment/show.html');
         }
 
     }
