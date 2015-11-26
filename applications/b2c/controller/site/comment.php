@@ -39,7 +39,9 @@ class b2c_ctl_site_comment extends b2c_frontpage
         $this->pagedata['member_avatar'] = $this->member['avatar'];
         $this->title = '评价#'.$order['order_id'].' 商品';
         $this->set_tmpl('comment_form');
-        $this->page('site/comment/form.html');
+        $this->pagedata['_PAGE_'] = 'site/comment/form.html';
+        $this->output();
+        //$this->page('site/comment/form.html');
     }
 
     public function save($type = 'comment')

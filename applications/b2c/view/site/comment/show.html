@@ -1,4 +1,4 @@
-<ol class="breadcrumb">
+<!-- <ol class="breadcrumb">
   <li><a href="<{link app=site ctl=index}>">首页</a></li>
   <li><a href="<{link app=b2c ctl=site_product args0=$goods_detail.product.product_id}>"><{$goods_detail.name}></a></li>
   <li class="active">评价</li>
@@ -20,4 +20,94 @@
     <div class="col-md-9">
         <{include file="site/comment/list.html"}>
     </div>
+</div> -->
+
+<div class="appraisal_page">
+    <div class="page-header">
+        <h1>评价列表</h1>
+    </div>
+
+    <div class="appra_box">
+        <ul class="appra_nav">
+            <li class="active">全部评价</li>
+            <li>好评</li>
+            <li>中评</li>
+            <li>差评</li>
+        </ul>
+        <div class="appra_items">
+            <dl>
+                <dt>
+                    <table>
+                        <tr>
+                            <th colspan="2" width="40%">
+                                <select>
+                                    <option>评价</option>
+                                    <option>好评</option>
+                                    <option>中评</option>
+                                    <option>差评</option>
+                                </select>
+                            </th>
+                            <th width="15%">评价人</th>
+                            <th width="30%">宝贝信息</th>
+                            <th width="15%">操作</th>
+                        </tr>
+                    </table>
+                </dt>
+                <dd>
+                    <div class="appra_item">
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <td width="5%"><span class="appra_status poor"></span></td>
+                                    <td colspan="2" width="35%">
+                                        东西很烂，物流速度也很慢，不会再来啦，很伤心！东西很烂，物流速度也很慢，不会再来啦，很伤心！东西很烂，物流速度也很慢，不会再来啦，很伤心！
+                                    </td>
+                                    <td width="15%">买家:1991</td>
+                                    <td width="30%">七分牛仔裤</td>
+                                    <td width="15%"><button class="btn btn-xs btn-danger reply_btn">追加评论</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </dd>
+                <dd>
+                    <div class="appra_item">
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <td width="5%"><span class="appra_status good"></span></td>
+                                    <td colspan="2" width="35%">
+                                        很不错呦！下次会再来的
+                                    </td>
+                                    <td width="15%">买家:1991</td>
+                                    <td width="30%">七分牛仔裤</td>
+                                    <td width="15%"><button class="btn btn-xs btn-danger reply_btn">追加评论</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </dd>
+                <dd>
+                    <div class="appra_item">
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <td width="5%"><span class="appra_status medium"></span></td>
+                                    <td colspan="2" width="35%">
+                                        一般般吧,东西还行！
+                                    </td>
+                                    <td width="15%">买家:1991</td>
+                                    <td width="30%">七分牛仔裤</td>
+                                    <td width="15%"><button class="btn btn-xs btn-danger reply_btn">追加评论</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </dd>
+            </dl>
+
+        </div>
+    </div>
 </div>
+
+

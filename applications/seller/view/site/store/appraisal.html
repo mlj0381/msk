@@ -1,3 +1,118 @@
 <div class="appraisal_page">
-	
+	<div class="page-header">
+		<h1>评价列表</h1>
+	</div>
+
+	<div class="appra_box">
+		<ul class="appra_nav">
+			<li class="active">全部评价</li>
+			<li>好评</li>
+			<li>中评</li>
+			<li>差评</li>
+		</ul>
+		<div class="appra_items">
+			<dl>
+				<dt>
+					<table>
+						<tr>
+							<th colspan="2" width="40%">
+								<select>
+									<option>评价</option>
+									<option>好评</option>
+									<option>中评</option>
+									<option>差评</option>
+								</select>
+							</th>
+							<th width="15%">评价人</th>
+							<th width="30%">宝贝信息</th>
+							<th width="15%">操作</th>
+						</tr>
+					</table>
+				</dt>
+				<dd>
+					<div class="appra_item">
+						<table>
+							<tbody>
+								<tr>
+									<td width="5%"><span class="appra_status poor"></span></td>
+									<td colspan="2" width="35%">
+										东西很烂，物流速度也很慢，不会再来啦，很伤心！东西很烂，物流速度也很慢，不会再来啦，很伤心！东西很烂，物流速度也很慢，不会再来啦，很伤心！
+									</td>
+									<td width="15%">买家:1991</td>
+									<td width="30%">七分牛仔裤</td>
+									<td width="15%"><button class="btn btn-xs btn-danger reply_btn">回复</button></td>
+								</tr>
+							</tbody>
+						</table>
+						<div class="replyCon hidden">我回复：</div>
+						<div class="replyShow hidden"></div>
+					</div>
+				</dd>
+				<dd>
+					<div class="appra_item">
+						<table>
+							<tbody>
+								<tr>
+									<td width="5%"><span class="appra_status good"></span></td>
+									<td colspan="2" width="35%">
+										很不错呦！下次会再来的
+									</td>
+									<td width="15%">买家:1991</td>
+									<td width="30%">七分牛仔裤</td>
+									<td width="15%"><button class="btn btn-xs btn-danger reply_btn">回复</button></td>
+								</tr>
+							</tbody>
+						</table>
+						<div class="replyCon hidden">我回复：</div>
+						<div class="replyShow hidden"></div>
+					</div>
+				</dd>
+				<dd>
+					<div class="appra_item">
+						<table>
+							<tbody>
+								<tr>
+									<td width="5%"><span class="appra_status medium"></span></td>
+									<td colspan="2" width="35%">
+										一般般吧,东西还行！
+									</td>
+									<td width="15%">买家:1991</td>
+									<td width="30%">七分牛仔裤</td>
+									<td width="15%"><button class="btn btn-xs btn-danger reply_btn">回复</button></td>
+								</tr>
+							</tbody>
+						</table>
+						<div class="replyCon hidden">我回复：</div>
+						<div class="replyShow hidden"></div>
+					</div>
+				</dd>
+			</dl>
+
+		</div>
+	</div>
 </div>
+
+<script type="text/javascript">
+	$(function(){
+		$('.appra_item .reply_btn').click(function(){
+
+			var _this=$(this).parents('table').siblings('.replyShow');
+			_this.html('');
+			_this.removeClass('hidden');
+			_this.append(
+				'<form action="" method="">'
+					+'<textarea class="form-control" placeholder="请输入回复内容"></textarea>'
+					+'<button type="button" class="btn btn-info">提交</button>'
+				+'</form>'
+			)
+
+			_this.on('click','.btn',function(){
+
+				var value=$(this).siblings('textarea').val();
+				$(this).parents('.replyShow').siblings('.replyCon').append(value);
+				$(this).parents('.replyShow').siblings('.replyCon').removeClass('hidden');
+
+			})
+		})
+	})
+</script>

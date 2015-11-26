@@ -406,12 +406,14 @@ void function(){
              }
              _alert(re.error,target_el);
          }
+         
          if(re.success && re.data){
              checkbox_all_status();//更新全选状态
              //location = re.redirect;
              $('.row.'+ident_arr.join(',.row.')).addClass('removeing').fadeOut('fast',function(e){
                  $(this).remove();
              });
+             $(target_el).parents('.itembox').find('.shop_name').html("");     //删除店铺名称
              _update(re.data);
          }
      };
@@ -425,9 +427,9 @@ void function(){
             ident_arr.push($(el).attr('data-ident')||el.value);
         });
         if(ident_arr.length && confirm('确认删除？')){
-            $.post(cart_remove_action,{ident:ident_arr},function(re){
-                _remove_handler(target_el,re,ident_arr)
-            },'json');
+             $.post(cart_remove_action,{ident:ident_arr},function(re){
+                 _remove_handler(target_el,re,ident_arr)
+             },'json');
         }
     });
     /**
