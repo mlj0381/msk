@@ -22,24 +22,24 @@
             <!-- Tab panes -->
             <div class="tab-content">
                 <div role="tabpanel" class="tab-pane active" id="baseinfo">
-                    
-                    <input name="goods[goods_id]" value="" type="hidden" />
+
+                    <input name="goods[goods_id]" value="<{$goods.goods_id}>" type="hidden" />
                     <div class="form-group">
                         <label class="col-xs-2 control-label"><span>商品编号</span></label>
                         <div class="col-xs-5">
-                            <input type="text" value="" placeholder="请输入商品编号" class="form-control">
+                            <input type="text" value="<{$goods.gid}>" name="goods[gid]" placeholder="请输入商品编号" class="form-control">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-xs-2 control-label"><span>商品名称</span></label>
                         <div class="col-xs-5">
-                            <input type="text" value="" placeholder="请输入商品名称" class="form-control">
+                            <input type="text" name="goods[name]" value="<{$goods.name}>" placeholder="请输入商品名称" class="form-control">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-xs-2 control-label"><span>文字描述</span></label>
                         <div class="col-xs-5">
-                            <input type="text" value="" placeholder="请输文字描述" class="form-control">
+                            <input type="text" value="<{$goods.brief}>" name="goods[brief]" placeholder="请输文字描述" class="form-control">
                         </div>
                     </div>
                     <div class="form-group">
@@ -55,7 +55,7 @@
                         <div class="col-xs-5">
                             <div class="filebox">
                                 <input type="hidden" value="" name="seller[legal_idcard_image]">
-                                <input type="file" data-url="/index.php/image.html" accept="image/*" class="file_input">
+                                <input type="file" data-url="<{link app=image ctl=site_upload act=index}>" accept="image/*" class="file_input">
                                 <div class="showImg">
                                     <img src="<{$baseurl}>/themes/pc/default/statics/images/file_add.jpg">
                                 </div>
@@ -66,11 +66,11 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="form-group">
                         <label class="col-xs-2 control-label"><span>分类</span></label>
                         <div class="col-xs-5">
-                            <select class="form-control">
+                            <select class="form-control" name="goods[category][cat_id]">
                                 <option>无</option>
                             </select>
                         </div>
@@ -78,7 +78,7 @@
                     <div class="form-group">
                         <label class="col-xs-2 control-label"><span>扩展分类</span></label>
                         <div class="col-xs-5">
-                            <select class="form-control">
+                            <select class="form-control" name="goods[extended_cat][]">
                                 <option>无</option>
                                 <option>鸡肉类</option>
                             </select>
@@ -87,15 +87,15 @@
                     <div class="form-group">
                         <label class="col-xs-2 control-label"><span>是否上架销售</span></label>
                         <div class="col-xs-5">
-                            <span style="margin-right:20px;"><input type="radio">是</span>
-                            <span style="margin-right:20px;"><input type="radio">否</span>
+                            <span style="margin-right:20px;"><input type="radio" name="goods[marketable]" value="true">是</span>
+                            <span style="margin-right:20px;"><input type="radio" name="goods[marketable]" value="false">否</span>
                             <span class="text-danger">商品下架操作同时影响货品</span>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-xs-2 control-label"><span>是否忽略库存</span></label>
                         <div class="col-xs-5">
-                            <span style="margin-right:20px;"><input type="radio">是</span>
+                            <span style="margin-right:20px;"><input type="radio" name="goods[nostore_sell]" value="1">是</span>
                             <span style="margin-right:20px;"><input type="radio">否</span>
                             <span class="text-danger">无库存也可以下单</span>
                         </div>
@@ -124,11 +124,11 @@
                                     <div class="col-xs-4">
                                         销售价
                                         <input type="text" class=" form-control input_xsj" value="" data-map="price" name="goods[product][new_0][price]" id="el_eb881a4">
-                                    </div> 
+                                    </div>
                                     <div class="col-xs-4">
                                         重量
                                         <input type="text" class="form-control input_weight" value="" data-map="weight" type="text" name="goods[product][new_0][weight]" id="el_eb881a6" >
-                                    </div> 
+                                    </div>
                                     <div class="col-xs-4">
                                         单位
                                         <input type="text" class="form-control input_danwei" data-map="unit" value="件" name="goods[product][new_0][unit]" id="el_eb881a7">
@@ -139,8 +139,8 @@
 
                         </div>
                     </div>
-                
-                    
+
+
                     <div class="row guige_add_box" id="spec_edit_pane">
                         <div class="checker guige_yanse">
                             <span class="checked"><input type="checkbox"  class="checkbox_gg" ></span>有多种规格 如：多个尺码。
@@ -419,7 +419,7 @@
         </div>
     </form>
 </div>
-    
+
 
 
 <script>
@@ -758,5 +758,27 @@ $('#goods_prototype').change(function() {
     });
 })();
 
+});
+</script>
+
+
+<script>
+$(function() {
+    $('input[type="file"]').fileupload({
+
+    add: function(e, data) {
+        if (!data.files[0]['type'].match(/^image/)) {
+            alert('非法上传，不是图片类型');
+        }
+        data.submit();
+    },
+    done: function(e, data) {
+        var re = $.parseJSON(data.result);
+        var input = e.target || e.srcElement;
+        $(input).prev('input[type="hidden"]').attr('value', re.image_id);
+        $(input).next('.showImg').find('img').attr('src',re.url);
+
+    }
+});
 });
 </script>

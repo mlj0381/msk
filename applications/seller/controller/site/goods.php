@@ -21,7 +21,55 @@ class seller_ctl_site_goods extends seller_frontpage
 
     //商品页
     public function index(){
-        echo '111';
+        // 入商品库
+        $this->pagedata['choose'] = array(
+            array(
+                'ch_name' => '橱窗推荐',
+                'ch_id' => 'win',
+            ),
+            array(
+                'ch_name' => '店铺推荐',
+                'ch_id' => 'shop',
+            ),
+        );
+        $this->pagedata['goodList'] = $this->_good_list(1);
+		$this->output();
+    }
+    private function _good_list($type){
+        $filter['marketable'] = 'false';
+
+        if($type){
+            $filter['marketable'] = 'true';
+             $filter['checkin'] = $type;
+        }
+        $filter['store_id'] =  $this->store['store_id'];
+        $goodsList = $this->mGoods->getList('*', $filter);
+        $brandList = app::get('b2c')->model('brand')->getList('brand_id, brand_name');
+        $store_goods_cat = app::get('b2c')->model('goods_cat')->getList('*');
+        foreach($goodsList as $key => $value){
+            foreach ($brandList as $k => $v) {
+                if($value['brand_id'] == $v['brand_id']){
+                    $goodsList[$key]['brand_id'] = $v['brand_name'];
+                }
+            }
+            foreach ($store_goods_cat as $k => $v) {
+                if($value['cat_id'] == $v['cat_id']){
+                    $goodsList[$key]['cat_id'] = $v['cat_name'];
+                }
+            }
+            switch ($value['goods_type']) {
+                case 'normal':
+                    $goodsList[$key]['goods_type'] = '普通商品';
+                    break;
+                case 'bind':
+                    $goodsList[$key]['goods_type'] = '捆绑商品';
+                    break;
+                case 'gift':
+                    $goodsList[$key]['goods_type'] = '赠品';
+                    break;
+            }
+        }
+        return $goodsList;
     }
     //添加商品
     public function add(){
@@ -61,12 +109,15 @@ class seller_ctl_site_goods extends seller_frontpage
 
     //商品库存
     public function stock(){
-
+        $this->output();
     }
 
     //仓库中的商品
     public function storage(){
-
+        $this->pagedata['type'] = 'storage';
+        $this->pagedata['goodList'] = $this->_good_list();
+        $this->pagedata['_PAGE_'] = 'index.html';
+        $this->output();
     }
 
     //价格修改
