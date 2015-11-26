@@ -22,31 +22,55 @@ class seller_ctl_site_goods extends seller_frontpage
     //商品页
     public function index(){
         // 入商品库
-        $this->pagedata['choose'] = array(
-            array(
-                'ch_name' => '橱窗推荐',
-                'ch_id' => 'win',
-            ),
-            array(
-                'ch_name' => '店铺推荐',
-                'ch_id' => 'shop',
-            ),
-        );
-        $this->pagedata['goodList'] = $this->_good_list(1);
+        $serach = $_POST['goods'] ? $_POST['goods'] : '';
+        $this->pagedata['goodList'] = $this->_good_list(1, $serach);
 		$this->output();
     }
-    private function _good_list($type){
+    private function _good_list($type, $serach){
+        $brandList = app::get('b2c')->model('brand')->getList('brand_id, brand_name');
+        $store_goods_cat = app::get('b2c')->model('goods_cat')->getList('*');
+        $mdl_product = app::get('b2c')->model('products');
+        $mdl_stock = app::get('b2c')->model('stock');
         $filter['marketable'] = 'false';
-
         if($type){
             $filter['marketable'] = 'true';
              $filter['checkin'] = $type;
         }
+        $this->pagedata['serach'] = $serach;
+        if($serach['price']){
+            if(is_numeric($serach['price'][0]) && is_numeric($serach['price'][1])){
+                $price['price|between'] = $serach['price'];
+                $goods_id =  $mdl_product->getList('goods_id', $price);
+            }
+            if(!$goods_id){
+                return array();
+            }
+        }
+        if($serach['buy_count']){
+            if(is_numeric($serach['buy_count'][0]) && is_numeric($serach['buy_count'][1])){
+                $filter['buy_coun|between'] = $serach['buy_count'];
+            }
+        }
+        $tmp = Array();
+        foreach($goods_id as $k => $v)
+        {
+            array_push($tmp, $v['goods_id']);
+        	$tmp = array_unique($tmp);
+        }
+        $filter['goods_id|in'] = $tmp;
+        $filter['name|has'] = $serach['name'];
+        $filter['gid'] = $serach['gid'];
         $filter['store_id'] =  $this->store['store_id'];
+        $filter['seller_id'] = $this->seller['seller_id'];
         $goodsList = $this->mGoods->getList('*', $filter);
-        $brandList = app::get('b2c')->model('brand')->getList('brand_id, brand_name');
-        $store_goods_cat = app::get('b2c')->model('goods_cat')->getList('*');
+
         foreach($goodsList as $key => $value){
+            $product = $mdl_product->getList('barcode', array('goods_id' => $value['goods_id']));
+            foreach ($product as $k => $v) {
+                $barcode['barcode'][$k] = $v['barcode'];
+            }
+            $stock = $mdl_stock->getRow('sum(quantity) as stock', array('barcode|in' => $barcode['barcode']));
+             $goodsList[$key]['stock'] = $stock['stock'];
             foreach ($brandList as $k => $v) {
                 if($value['brand_id'] == $v['brand_id']){
                     $goodsList[$key]['brand_id'] = $v['brand_name'];
@@ -57,22 +81,12 @@ class seller_ctl_site_goods extends seller_frontpage
                     $goodsList[$key]['cat_id'] = $v['cat_name'];
                 }
             }
-            switch ($value['goods_type']) {
-                case 'normal':
-                    $goodsList[$key]['goods_type'] = '普通商品';
-                    break;
-                case 'bind':
-                    $goodsList[$key]['goods_type'] = '捆绑商品';
-                    break;
-                case 'gift':
-                    $goodsList[$key]['goods_type'] = '赠品';
-                    break;
-            }
         }
         return $goodsList;
     }
     //添加商品
-    public function add(){
+    public function add($goods_id){
+        $this->pagedata['goods'] = $this->mGoods->dump($goods_id, '*', 'default');
         $this->pagedata['_PAGE_'] = 'from.html';
         $this->_editor();
         $this->output();
@@ -91,15 +105,35 @@ class seller_ctl_site_goods extends seller_frontpage
         }
         //$this->_price($_POST);
         $goods['seller_id'] = $this->seller['seller_id'];
-        $goods['checkin'] = $_POST['checkin'];
+        $goods['checkin'] = '1';
+        $goods['marketable'] = 'false';
+        $goods['store_id'] = $this->store['store_id'];
         if(!$this->mGoods->save($goods)){
             $this->splash('error', $redirect_url, '商品添加失败');
         }
         $this->splash('success', $redirect_url, '商品添加成功');
 	}
+
+
     //修改
     public function edit(){
 
+    }
+
+    //商品上下架
+    public function marketable($goods_id, $type){
+        $redirect_url = array('app' => 'seller', 'ctl' => 'site_goods', 'act' => $type == 'dn' ? 'index' : 'storage');
+        if(!$goods_id || !$type) $this->splash('error', $redirect_url, '非法请求');
+        $update_value['marketable'] = $type == 'up' ? true : false;
+        $update_value[$type == 'up' ? 'uptime' : 'downtime'] = time();
+        $filter = array(
+            'goods_id' => $goods_id,
+            'store_id' => $this->store['store_id'],
+        );
+        if(!$this->mGoods->update($update_value, $filter)){
+            $this->splash('error', $redirect_url, '操作失败');
+        }
+        $this->splash('success', $redirect_url);
     }
 
     //删除
@@ -115,7 +149,8 @@ class seller_ctl_site_goods extends seller_frontpage
     //仓库中的商品
     public function storage(){
         $this->pagedata['type'] = 'storage';
-        $this->pagedata['goodList'] = $this->_good_list();
+        $serach = $_POST['goods'] ? $_POST['goods'] : '';
+        $this->pagedata['goodList'] = $this->_good_list(null, $serach);
         $this->pagedata['_PAGE_'] = 'index.html';
         $this->output();
     }

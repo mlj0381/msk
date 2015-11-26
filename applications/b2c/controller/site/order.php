@@ -46,6 +46,7 @@ class b2c_ctl_site_order extends b2c_frontpage
             'need_invoice' => $params['need_invoice'],
             'invoice_title' => $params['invoice_title'],
             'platform' => 'pc',
+            'store_id' => $params['store_id'],
         );
         $redirect_cart = $this->gen_url(array(
             'app' => 'b2c',

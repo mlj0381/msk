@@ -10,6 +10,7 @@
 </div>
 <form action="<{link app=b2c ctl=site_order act=create args0=$is_fastbuy}>" class="checkout-container">
 <input type="hidden" name="cart_md5" value="<{$cart_md5}>">
+<input type="hidden" name="store_id" value="<{$cart_result.objects.goods[0].store_info.store_id}>">
     <!-- checkout-container begin -->
 <div data-flowindex=0 class="panel <{if !$member_addrs}>panel-warning<{else}>panel-default<{/if}> checkout-maddr ">
     <div class="panel-heading clearfix">

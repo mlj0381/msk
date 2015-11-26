@@ -174,7 +174,7 @@ class seller_frontpage extends site_controller {
     }
 
     public function get_current_store() {
-        return vmc::singleton('seller_user_object')->get_current_seller();
+        return vmc::singleton('seller_user_object')->get_store($this->seller['seller_id'], 'store_id, store_name');
     }
 
     function set_cookie($name, $value, $expire = false, $path = null) {
