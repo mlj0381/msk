@@ -18,7 +18,7 @@ class seller_ctl_site_store extends seller_frontpage
     }
 
     public function index(){
-
+        $this->output();
     }
 
     //店铺设置
@@ -28,6 +28,10 @@ class seller_ctl_site_store extends seller_frontpage
     //修改基本信息
     public function edit(){
 
+    }
+    //评价
+    public function appraisal(){
+        $this->output();
     }
 
 }

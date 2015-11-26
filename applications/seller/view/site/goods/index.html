@@ -1,69 +1,86 @@
 
-<h3 class="page-title"><{if $type eq 'storage'}>仓库<{else}>在售<{/if}>商品</h3>
+<div class="goods_sell">
+    <h3 class="page-title"><{if $type eq 'storage'}>仓库<{else}>在售<{/if}>商品</h3>
+    <form class="form-inline goods_filter">
+        <div class="form-group">
+            <label for="" class="control-label"><span>商品名称</span></label>
+            <input type="text" class="form-control" placeholder="请输入商品名称">
+        </div>
+        <div class="form-group">
+            <label for="" class="control-label"><span>商品编码</span></label>
+            <input type="text" class="form-control" placeholder="请输入商品编码">
+        </div>
+        <div class="form-group">
+            <label for="" class="control-label"><span>所属类目</span></label>
+            <select class="form-control" style="width:180px">
+                <option>鸡肉类</option>
+                <option>鸭肉类</option>
+                <option>猪肉类</option>
+                <option>鱼肉类</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="control-label"><span>价格区间</span></label>
+            <input type="text" class="form-control" style="width:78px;" />&nbsp;到&nbsp;
+            <input type="text" class="form-control" style="width:78px;" />
+        </div>
+        <div class="form-group">
+            <label class="control-label"><span>总销量&nbsp;&nbsp;&nbsp;</span></label>
+            <input type="text" class="form-control" style="width:78px;" />&nbsp;到&nbsp;
+            <input type="text" class="form-control" style="width:78px;" />
+        </div>
+        <div class="form-group">
+            <button type="reset" class="btn btn-default">清空条件</button>
+            <button type="submit" class="btn btn-default">搜索</button>
+        </div>
 
-<!-- <div class="table-toolbar">
-    <div class="btn-group">
-        <a class="btn green"  label="添加商品" icon="fa-plus" href="<{link app=seller ctl=site_goods act=add}>">
-                添加商品&nbsp;<i class="fa fa-plus"></i>
-        </a>
+    </form>
+
+    <form  action="<{link app=seller ctl=site_classify act=update}>" method="post">
+
+    <div class="table-scrollable">
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th width="15%">上架时间</th>
+                    <th width="10%">商品编号</th>
+                    <th width="20%">商品名称</th>
+                    <th width="10%">规格</th>
+                    <th width="10%">所属分类</th>
+                    <th width="10%">库存数量</th>
+                    <th width="10%">销量</th>
+                    <th width="15%">操作</th>
+
+                </tr>
+            </thead>
+        <tbody id="cat_list">
+            <{foreach from=$goodList item=item name="item"}>
+                <tr>
+                    <td>2015-10-12 12:05</td>
+                    <td><{$item.gid}></td>
+                    <td><{$item.name|cut:40:'...'}></td>
+                    <td>5*2kg</td>
+                    <td><{$item.cat_id}></td>
+                    <td>1000</td>
+                    <td>586</td>
+
+
+                        <td>
+                             <{if $type eq 'storage'}>
+                                <a href="<{link app=seller ctl=site_goods act=marketable args0=$item.goods_id args1=up}>" class="btn btn-default">上架</a>
+                            <{else}>
+                                <a href="<{link app=seller ctl=site_goods act=marketable args0=$item.goods_id args1=dn}>" class="btn btn-default">下架</a>
+                            <{/if}>
+
+                        <a href="<{link app=seller ctl=site_goods act=add args0=$item.goods_id}>" class="btn btn-default"><i class="fa fa-edit"></i>编辑</a>
+                    </td>
+                </tr>
+            <{/foreach}>
+        </tbody>
+        </table>
     </div>
-</div> -->
-<form  action="<{link app=seller ctl=site_classify act=update}>" method="post">
-
-
-<div class="table-scrollable">
-    <table class="table  table-striped table-hover">
-        <thead>
-            <tr>
-                <th>商品编号</th>
-                <th>所属品牌</th>
-                <th>商品名称</th>
-                <th>所属分类</th>
-                <th>销售类型</th>
-                <{if $type neq 'storage'}><th>推荐</th><{/if}>
-                <th>操作</th>
-
-            </tr>
-        </thead>
-    <tbody id="cat_list">
-        <{foreach from=$goodList item=item name="item"}>
-            <tr>
-                <td><{$item.gid}></td>
-                <td><{$item.brand_id}></td>
-                <!-- <td class="tdObj" data-id="<{$item.goods_id}>"><{$item.name|cut:50:'...'}></td> -->
-                <td><input class='form-control edit-col input-sm' name="goods_name" type='text' data-pkey='<{$item.goods_id}>' value='<{$item.name|cut:50:'...'}>'></td>
-                <td><{$item.cat_id}></td>
-
-                <td><{$item.goods_type}></td>
-
-               <{if $type neq 'storage'}>
-                   <td>
-                       <{input class="form-control" type="select" data-pkey=$item.goods_id  name="choose" style="font-size:12px;width:100px;height:30px;" value=$item.choose  rows=$choose valueColumn="ch_id" labelColumn="ch_name"}>
-                   </td>
-               <{/if}>
-
-                    <td>
-                         <{if $type eq 'storage'}>
-                            <!-- <if $item.checkin eq '0'>
-                                <a class="btn btn-xs btn-default">审核中</a>
-                            <elseif $item.checkin eq '-1'>
-                                <a class="btn btn-xs btn-default">未通过</a>
-                            <elseif $item.marketable eq 'false'> -->
-                                <a href="<{link app=seller ctl=site_goods act=marketable args0=$item.goods_id args1=up}>" class="btn btn-xs btn-default">上架</a>
-                            <!-- </if> -->
-                        <{else}>
-                            <a href="<{link app=seller ctl=site_goods act=marketable args0=$item.goods_id args1=dn}>" class="btn btn-xs btn-default">下架</a>
-                        <{/if}>
-
-                    <a href="<{link app=seller ctl=site_goods act=add args0=$item.goods_id}>" class="btn btn-xs btn-default"><i class="fa fa-edit"></i>编辑</a>
-                </td>
-                <td>
-            </tr>
-        <{/foreach}>
-    </tbody>
-    </table>
+    </form>
 </div>
-</form>
 <script type="text/javascript">
 $(function(){
     $('#cat_list').on('focus', 'input.edit-col', function(){
