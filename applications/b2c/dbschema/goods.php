@@ -64,6 +64,7 @@ $db['goods'] = array(
         'store_id' => array(
             'type' => 'table:store@store',
             'label' => ('所属店铺') ,
+            'default' => '0',
             'required' => true,
             'in_list' => true,
         ) ,

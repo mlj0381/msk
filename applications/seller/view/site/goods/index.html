@@ -1,18 +1,18 @@
 
 <div class="goods_sell">
     <h3 class="page-title"><{if $type eq 'storage'}>仓库<{else}>在售<{/if}>商品</h3>
-    <form class="form-inline goods_filter">
+    <form class="form-inline goods_filter" action="<{link app=seller ctl=site_goods act=index}>" method="post">
         <div class="form-group">
             <label for="" class="control-label"><span>商品名称</span></label>
-            <input type="text" class="form-control" placeholder="请输入商品名称">
+            <input type="text" class="form-control" name="goods[name]" value="<{$serach.name}>" placeholder="请输入商品名称">
         </div>
         <div class="form-group">
             <label for="" class="control-label"><span>商品编码</span></label>
-            <input type="text" class="form-control" placeholder="请输入商品编码">
+            <input type="text" class="form-control" name="goods[gid]" value="<{$serach.gid}>" placeholder="请输入商品编码">
         </div>
         <div class="form-group">
             <label for="" class="control-label"><span>所属类目</span></label>
-            <select class="form-control" style="width:180px">
+            <select class="form-control" style="width:180px" name="">
                 <option>鸡肉类</option>
                 <option>鸭肉类</option>
                 <option>猪肉类</option>
@@ -21,13 +21,13 @@
         </div>
         <div class="form-group">
             <label class="control-label"><span>价格区间</span></label>
-            <input type="text" class="form-control" style="width:78px;" />&nbsp;到&nbsp;
-            <input type="text" class="form-control" style="width:78px;" />
+            <input type="text" class="form-control" style="width:78px;" value="<{$serach.price[0]}>" name="goods[price][]"/>&nbsp;到&nbsp;
+            <input type="text" class="form-control" style="width:78px;" value="<{$serach.price[1]}>" name="goods[price][]"/>
         </div>
         <div class="form-group">
             <label class="control-label"><span>总销量&nbsp;&nbsp;&nbsp;</span></label>
-            <input type="text" class="form-control" style="width:78px;" />&nbsp;到&nbsp;
-            <input type="text" class="form-control" style="width:78px;" />
+            <input type="text" class="form-control" style="width:78px;" value="<{$serach.buy_count[0]}>" name="goods[buy_count][]"/>&nbsp;到&nbsp;
+            <input type="text" class="form-control" style="width:78px;" value="<{$serach.buy_count[1]}>" name="goods[buy_count][]"/>
         </div>
         <div class="form-group">
             <button type="reset" class="btn btn-default">清空条件</button>
@@ -37,16 +37,15 @@
     </form>
 
     <form  action="<{link app=seller ctl=site_classify act=update}>" method="post">
-
     <div class="table-scrollable">
         <table class="table table-striped table-hover">
             <thead>
                 <tr>
                     <th width="15%">上架时间</th>
                     <th width="10%">商品编号</th>
-                    <th width="20%">商品名称</th>
-                    <th width="10%">规格</th>
-                    <th width="10%">所属分类</th>
+                    <th width="25%">商品名称</th>
+                    <!-- <th width="10%">规格</th> -->
+                    <th width="15%">所属分类</th>
                     <th width="10%">库存数量</th>
                     <th width="10%">销量</th>
                     <th width="15%">操作</th>
@@ -54,17 +53,16 @@
                 </tr>
             </thead>
         <tbody id="cat_list">
+            <{if $goodList}>
             <{foreach from=$goodList item=item name="item"}>
                 <tr>
-                    <td>2015-10-12 12:05</td>
+                    <td><{$item.uptime|cdate}></td>
                     <td><{$item.gid}></td>
-                    <td><{$item.name|cut:40:'...'}></td>
-                    <td>5*2kg</td>
+                    <td><{$item.name|cut:50:'...'}></td>
+                    <!-- <td>5*2kg</td> -->
                     <td><{$item.cat_id}></td>
-                    <td>1000</td>
-                    <td>586</td>
-
-
+                    <td><{$item.stock}></td>
+                    <td><{$item.buy_count}></td>
                         <td>
                              <{if $type eq 'storage'}>
                                 <a href="<{link app=seller ctl=site_goods act=marketable args0=$item.goods_id args1=up}>" class="btn btn-default">上架</a>
@@ -76,6 +74,7 @@
                     </td>
                 </tr>
             <{/foreach}>
+            <{/if}>
         </tbody>
         </table>
     </div>
@@ -83,6 +82,10 @@
 </div>
 <script type="text/javascript">
 $(function(){
+    var type = '<{$type}>';
+    if(type != ''){
+        $('.form-inline').attr('action', '<{link app=seller ctl=site_goods act=storage}>');
+    }
     $('#cat_list').on('focus', 'input.edit-col', function(){
         $(this).data('v', $(this).val());
     });

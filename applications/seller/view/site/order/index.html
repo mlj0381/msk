@@ -13,7 +13,7 @@
           <div class="form-group">
             <label>成交时间</label>
             <input type="text" class="form-control" placeholder="2015-11-01">
-             至 
+             至
             <input type="text" class="form-control" placeholder="2015-11-30">
           </div>
           <div class="form-group">
@@ -45,13 +45,19 @@
         </form>
     </div>
     <ul class="nav nav-tabs my-orders-nav">
-        <li class="active"><a href="#">全部订单</a></li>
-        <li><a href="#">待付款</a></li>
-        <li><a href="#">待发货</a></li>
-        <li><a href="#">待收货</a></li>
-        <li><a href="#">待评价</a></li>
-        <li><a href="#">已关闭</a></li>
+        <li <{if !$current_status||$current_status=='all' }>class="active"
+            <{/if}>><a href="<{link app=seller ctl=site_order act=index}>">全部订单</a></li>
+        <li <{if $current_status=='s1' }>class="active"
+            <{/if}>><a href="<{link app=seller ctl=site_order act=index args0=s1}>">待付款</a></li>
+        <li <{if $current_status=='s2' }>class="active"
+            <{/if}>><a href="<{link app=seller ctl=site_order act=index args0=s2}>">待发货</a></li>
+        <li <{if $current_status=='s3' }>class="active"
+            <{/if}>><a href="<{link app=seller ctl=site_order act=index args0=s3}>">待收货</a></li>
+        <li <{if $current_status=='s4' }>class="active"
+            <{/if}>><a href="<{link app=seller ctl=site_order act=index args0=s4}>">待评价</a></li>
+            <li><a href="#">已关闭</a></li>
     </ul>
+     <{if $order_list}>
     <table class="seller-orderlist-tab">
         <thead>
             <tr>
@@ -62,39 +68,26 @@
                 <th>订单操作</th>
             </tr>
         </thead>
-        <tbody>
-            <tr>
-                <td>2015-08-17 20:00</td>
-                <td>543654546</td>
-                <td>待付款</td>
-                <td>￥:10.00</td>
-                <td>
-                    <a href="#" class="btn-link btn-block">打印订单</a>
-                </td>
-            </tr>
-            <tr>
-                <td>2015-08-17 20:00</td>
-                <td>543654546</td>
-                <td>待付款</td>
-                <td>￥:10.00</td>
-                <td>
-                    <a href="#" class="btn-link btn-block">打印订单</a>
-                </td>
-            </tr>
-            <tr>
-                <td>2015-08-17 20:00</td>
-                <td>543654546</td>
-                <td>待付款</td>
-                <td>￥:10.00</td>
-                <td>
-                    <a href="#" class="btn-link btn-block">打印订单</a>
-                </td>
-            </tr>
-        </tbody>
-    </table>
 
+        <tbody>
+            <{foreach from=$order_list item=order}>
+            <tr>
+                <td><{$order.createtime|cdate}></td>
+                <td><{$order.order_id}></td>
+                <td>待付款</td>
+                <td>￥:10.00<{$item.buy_price|cur}></td>
+                <td>
+                    <a href="#" class="btn-link btn-block">打印订单</a>
+                </td>
+            </tr>
+            <{/foreach}>
+
+        </tbody>
+
+    </table>
+<{/if}>
 </div>
-<!-- <{if $order_list}>
+ <{if $order_list}>
     <div class="my-orders-list">
         <table class="table mo-list-head table-bordered">
             <thead>
@@ -104,18 +97,16 @@
                             <div class="col-xs-2">
                                 商品图片
                             </div>
-                            <div class="col-xs-3 text-left">
+                            <div class="col-xs-4 text-left">
                                 商品名称/规格
                             </div>
-                            <div class="col-xs-1">
+                            <div class="col-xs-2">
                                 数量
                             </div>
                             <div class="col-xs-2">
                                 商品金额(元)
                             </div>
-                            <div class="col-xs-2">
-                                商品操作
-                            </div>
+
                             <div class="col-xs-2">
                                 订单金额
                             </div>
@@ -130,24 +121,17 @@
                 </tr>
             </thead>
         </table>
-        <{foreach from=$order_list item=order}>
+<{foreach from=$order_list item=order}>
             <table class="table mo-list-items table-bordered status-<{$order.status}>">
                 <thead>
                     <tr class="text-nowrap">
                         <th width="76%" colspan="3">
                             <ul class="list-inline">
                                 <li>
-                                    <{$order.createtime|cdate}>
+                                    下单时间：<{$order.createtime|cdate}>
                                 </li>
-                                <li>#<a class="text-muted" href="<{link app=b2c ctl=site_order act=detail args0=$order.order_id}>"><strong><{$order.order_id}></strong></a></li>
-                                <li>
-                                    <{$order.pay_status|order_pay_status}>
-                                </li>
-                                <li>
-                                    <{$order.ship_status|order_ship_status}>
-                                </li>
-                                <li><a href="<{link app=store ctl=site_store act=index args0=$order.store_id}>"><{$order.store_name}></a></li>
-                                <li><a href="#"><img src="<{$baseurl}>/themes/pc/default/statics/images/customer_03.jpg"></a></li>
+                                <li>订单编号：<a class="text-muted" href="<{link app=b2c ctl=site_order act=detail args0=$order.order_id}>"><strong><{$order.order_id}></strong></a></li>
+
                             </ul>
                         </th>
                     </tr>
@@ -161,7 +145,7 @@
                                         <a href="<{link app=b2c ctl=site_product act=index args0=$item.product_id}>">
                                     <img class="img-thumbnail" src="<{$item.image_id|storager:'xs'}>" alt="<{$item.name}>" /></a>
                                     </div>
-                                    <div class="col-xs-3">
+                                    <div class="col-xs-4">
                                         <a class="text-muted" href="<{link app=b2c ctl=site_product act=index args0=$item.product_id}>">
                                             <{$item.name}>
                                             <{if $item.spec_info}>
@@ -169,7 +153,7 @@
                                             <{/if}>
                                         </a>
                                     </div>
-                                    <div class="col-xs-1 text-center">
+                                    <div class="col-xs-2 text-center">
                                         <{$item.nums}>
                                     </div>
                                     <div class="col-xs-2 text-center">
@@ -184,15 +168,7 @@
                                             </li>
                                         </ul>
                                     </div>
-                                    <div class="col-xs-2 text-center">
-                                        <{if $order.status!='cancel' && $order.ship_status!='0' && $order.ship_status!='4' }>
-                                            <a class="btn btn-xs btn-block btn-default" href="<{link app=aftersales ctl=site_member act=newrequest args0=$order.order_id args1=$item.product_id}>">退货\退款</a>
-                                            <{/if}>
-                                            <{if $order.status!='dead' && $order.ship_status!='0' }>
-                                                <a class="btn btn-xs btn-block btn-default" href="<{link app=b2c ctl=site_comment act=form args0=$order.order_id args1=$item.product_id}>">评价商品</a>
-                                            <{/if}>
-                                            <a class="btn btn-xs btn-block btn-default" href="#">取消订单</a>
-                                    </div>
+
                                     <div class="col-xs-2 text-center">
 
                                         <{$item.buy_price|cur}>
@@ -211,19 +187,10 @@
                         </td>
                         <td width="12%">
                             <div class="order_cz">
-                                <{if $order.status=='active' && $order.is_cod!='Y' && $order.pay_status|in_array:$status_map.s1.pay_status}>
-                                    <a href="<{link app=b2c ctl=site_checkout act=payment args0=$order.order_id}>" class="btn_link btn-block">订单付款</a>
-                                <{/if}>
-                                    <a href="<{link app=b2c ctl=site_order act=detail args0=$order.order_id}>" class="btn_link btn-block">订单详情</a>
-                                <{if $order.ship_status|in_array:$status_map.s3.ship_status}>
-                                    <a href="<{link app=b2c ctl=site_order act=detail args0=$order.order_id args1=logistics_tracker}>" class="btn_link btn-block">追踪物流</a>
-                                <{/if}>
-                                <{if $order.status=='dead' }>
-                                    <span class="btn_link btn-block btn-warning disabled">订单已作废
-                                        <br>
-                                        <small><{$order.last_modify|cdate}></small>
-                                    </span>
-                                <{/if}>
+
+                                    <a href="<{link app=b2c ctl=site_checkout act=payment args0=$order.order_id}>" class="btn_link btn-block">打印订单</a>
+
+
                             </div>
                         </td>
                     </tr>
@@ -238,4 +205,3 @@
         <h2>暂无</h2>
     </div>
     <{/if}>
- -->

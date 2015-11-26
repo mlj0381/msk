@@ -6,9 +6,9 @@
 
 <div class="page-seller">
     <div class="page-header">
-        <h1>添加商品<small>Add goods</small></h1>
+        <h1><{if $goods}>编辑商品<{else}>添加商品<{/if}><small>Add goods</small></h1>
     </div>
-    <form class="form-horizontal addgoods_form" action="" method="post" id="goods_edit_form">
+    <form class="form-horizontal addgoods_form" action="<{link app=seller ctl=site_goods act=save}>" method="post" id="goods_edit_form">
         <div class="goods_tabbox">
             <!-- Nav tabs -->
             <ul class="nav nav-tabs" role="tablist">
@@ -54,10 +54,10 @@
                         <label class="col-xs-2 control-label"><span>产品相册</span></label>
                         <div class="col-xs-5">
                             <div class="filebox">
-                                <input type="hidden" value="" name="seller[legal_idcard_image]">
+                                <input type="hidden" value="<{$goods.image_default_id}>" name="goods[image_default_id]">
                                 <input type="file" data-url="<{link app=image ctl=site_upload act=index}>" accept="image/*" class="file_input">
                                 <div class="showImg">
-                                    <img src="<{$baseurl}>/themes/pc/default/statics/images/file_add.jpg">
+                                    <img src="<{$base_url}>/themes/pc/default/statics/images/file_add.jpg">
                                 </div>
                                 <span class="file_ctr">
                                     <a href="#">查看</a>
@@ -71,7 +71,7 @@
                         <label class="col-xs-2 control-label"><span>分类</span></label>
                         <div class="col-xs-5">
                             <select class="form-control" name="goods[category][cat_id]">
-                                <option>无</option>
+                                <option value="1">无</option>
                             </select>
                         </div>
                     </div>
@@ -96,7 +96,7 @@
                         <label class="col-xs-2 control-label"><span>是否忽略库存</span></label>
                         <div class="col-xs-5">
                             <span style="margin-right:20px;"><input type="radio" name="goods[nostore_sell]" value="1">是</span>
-                            <span style="margin-right:20px;"><input type="radio">否</span>
+                            <span style="margin-right:20px;"><input type="radio" name="goods[nostore_sell]" value="0">否</span>
                             <span class="text-danger">无库存也可以下单</span>
                         </div>
                     </div>
@@ -108,7 +108,7 @@
                                 <dd><span class="text-danger">*</span>货号</dd>
                                     <!--商品编号 SKC-->
                                     <dt>
-                                        <input type="text" id="goods_gid" value="" name="goods[gid]" class="form-control input_bianhao">
+                                        <input type="text" id="goods_gid" data-map='bn' value="<{$product.bn}>" name="goods[product][new_0][bn]" class="form-control input_bianhao">
                                     </dt>
                                 </dl>
                                 <input type="hidden" name="goods[product][new_0][marketable]" value="true">
@@ -116,22 +116,22 @@
                                     <dd>条码</dd>
                                     <!-- SKU-->
                                     <dt>
-                                        <input class="form-control  form-control" value="" data-map="bn" required="1" type="text" name="goods[product][new_0][bn]" id="el_39cccf2">
+                                        <input class="form-control form-control" value="<{$product.barcode}>" name="goods[product][new_0][barcode]" data-map='barcode' required="1" type="text">
                                     </dt>
                                 </dl>
                                 <p class="clearfix"></p>
                                 <div class="row" >
                                     <div class="col-xs-4">
                                         销售价
-                                        <input type="text" class=" form-control input_xsj" value="" data-map="price" name="goods[product][new_0][price]" id="el_eb881a4">
+                                        <input type="text" class=" form-control input_xsj" data-map='price' value="<{$product.mktprice}>" name="goods[product][new_0][mktprice]">
                                     </div>
                                     <div class="col-xs-4">
                                         重量
-                                        <input type="text" class="form-control input_weight" value="" data-map="weight" type="text" name="goods[product][new_0][weight]" id="el_eb881a6" >
+                                        <input type="text" class="form-control input_weight" data-map='weight' type="text" value="<{$product.weight}>" name="goods[product][new_0][weight]">
                                     </div>
                                     <div class="col-xs-4">
                                         单位
-                                        <input type="text" class="form-control input_danwei" data-map="unit" value="件" name="goods[product][new_0][unit]" id="el_eb881a7">
+                                        <input type="text" class="form-control input_danwei" data-map='unit'  value="<{$product.unit|default:'件'}>" name="goods[product][new_0][unit]">
                                     </div>
                                 </div>
 
@@ -158,7 +158,7 @@
                                     <tr>
                                         <td>
                                             <div class="input-group">
-                                                <input class="form-control spec-t" name="goods[spec_desc][t][]" type="text" placeholder="如:颜色">
+                                                <input class="form-control spec-t"  name="goods[spec_desc][t][]" value="" type="text" placeholder="如:颜色">
                                             </div>
                                         </td>
                                         <td>
@@ -242,6 +242,9 @@
                             <input type="text" data-map="price" class="form-control input-sm" name="goods[product][{key}][price]" value="">
                         </td>
                         <td>
+                            <input type="text" data-map="mktprice" class="form-control input-sm" name="goods[product][{key}][mktprice]" value="">
+                        </td>
+                        <td>
                             <input type="text" data-map="weight" name="goods[product][{key}][weight]" class="form-control input-sm input-xsmall" value="" placeholder="克">
                         </td>
                         <td>
@@ -264,35 +267,6 @@
                         </td>
                         <td>
                             <button type=button class="btn btn-sm spec-del default"><i class="glyphicon glyphicon-trash"></i></button>
-                        </td>
-                    </tr>
-                </textarea>
-                <textarea class="product-item-tpl hide">
-                    <tr>
-                        <td>
-                            <input type="text" name="goods[product][{key}][spec_info]" class="form-control input-sm spec-info" value="{spec_info}" readonly=true>
-                            <input type="hidden" name="goods[product][{key}][spec_desc]" class="spec-desc" value="{spec_desc}">
-                        </td>
-                        <td>
-                            <input type="text" required="true" data-map="bn" class="form-control input-sm" name="goods[product][{key}][bn]" value="">
-                        </td>
-                        <td>
-                            <input type="text" data-map="barcode" class="form-control input-sm" name="goods[product][{key}][barcode]" value="">
-                        </td>
-                        <td>
-                            <input type="text" data-map="price" class="form-control input-sm" name="goods[product][{key}][price]" value="">
-                        </td>
-                        <td>
-                            <input type="text" data-map="mktprice" class="form-control input-sm" name="goods[product][{key}][mktprice]" value="">
-                        </td>
-                        <td>
-                            <input type="text" data-map="weight" name="goods[product][{key}][weight]" class="form-control input-sm input-xsmall" value="" placeholder="克">
-                        </td>
-                        <td>
-                            <input type="text" data-map="unit" name="goods[product][{key}][unit]" class="form-control input-sm input-xsmall" value="">
-                        </td>
-                        <td>
-                            <input type="checkbox" name="goods[product][{key}][marketable]" value="true" checked>
                         </td>
                     </tr>
                 </textarea>
@@ -350,9 +324,12 @@
                                 <span>类型</span>
                             </label>
                             <div class="col-xs-5">
-                                <select class="form-control">
-                                    <option>类型1</option>
-                                    <option>类型2</option>
+                                <select name="goods[type][type_id]" class="form-control">
+                                   <option value='0'>普通商品类型</option>
+                                   <{foreach from=$gtype item=type}>
+                                   <option  value='<{$type.type_id}>' <{if $type.type_id==$goods_prototype.type_id}>selected<{/if}>><{$type.name}>
+                                   </option>
+                                   <{/foreach}>
                                 </select>
                             </div>
                         </div>
@@ -361,10 +338,7 @@
                                 <span>品牌</span>
                             </label>
                             <div class="col-xs-5">
-                                <select class="form-control">
-                                    <option>类型1</option>
-                                    <option>类型2</option>
-                                </select>
+                                <{input class="form-control" type="select" name="goods[brand][brand_id]" nulloption="1" rows=$brandList valueColumn="brand_id" labelColumn="brand_name" value=$goods.brand.brand_id}>
                             </div>
                         </div>
                     </div>
@@ -392,19 +366,19 @@
                         <div class="form-group">
                             <label class="col-md-2 control-label">标题 <span class="badge badge-default">Title</span> </label>
                             <div class="col-md-5">
-                                <input type="text" value="" name="goods[seo_info][seo_title]" class="form-control">
+                                <input type="text" name='goods[seo_info][seo_title]' value='<{$seo_info.seo_title}>' class="form-control">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-md-2 control-label">关键词 <span class="badge badge-default">Keyword</span> </label>
                             <div class="col-md-5">
-                                <input type="text" value="" name="goods[seo_info][seo_keywords]" class="form-control">
+                                <input type="text" name='goods[seo_info][seo_keywords]' value='<{$seo_info.seo_keywords}>' class="form-control">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-md-2 control-label">简介 <span class="badge badge-default">Description</span> </label>
                             <div class="col-md-5">
-                                <input type="text" value="" name="goods[seo_info][seo_description]" class="form-control">
+                                <input type="text" name='goods[seo_info][seo_description]' value='<{$seo_info.seo_description}>' class="form-control">
                             </div>
                         </div>
                     </div>
@@ -414,8 +388,8 @@
 
         <div class="form_action">
             <a href="/index.php/merchant-goodslist.html">返回商品列表</a>
-            <a href='javascript:;' class="save_goods" data-redirect="/index.php/merchant-addgoods.html&p[0]={goods_id}">保存</a>
-            <a href='javascript:;' class="save_goods" data-redirect="/index.php/merchant-addgoods.html&p[0]={goods_id}">保存并添加商品</a>
+            <a href='javascript:;' class="save_goods" data-redirect="<{link app=seller ctl=site_goods act=save}>&p[0]={goods_id}">保存</a>
+            <a href='javascript:;' class="save_goods" data-redirect="<{link app=seller ctl=site_goods act=save}>&p[0]={goods_id}">保存并添加商品</a>
         </div>
     </form>
 </div>
@@ -694,22 +668,22 @@ generate_goods_name();
 //提交表单添加商品
 $(".save_goods").click(function() {
 var formdata = $("#goods_edit_form").serialize();
-if (!$("#goods_prototype").val()) {
-    alert('品类不可为空');
-    return;
-}
-var cat_val = $("input[name='goods[category][cat_id]']").val();
+// if (!$("#goods_prototype").val()) {
+//     alert('品类不可为空');
+//     return;
+// }
+var cat_val = $("select[name='goods[category][cat_id]']").val();
 if (!cat_val || cat_val == 0) {
     alert('品名不可为空');
     return;
 }
-if (!$("#select_brand").val()) {
-    alert('品牌不可为空');
-    return;
-}
+// if (!$("#select_brand").val()) {
+//     alert('品牌不可为空');
+//     return;
+// }
 
 $.ajax({
-    url: '/index.php/merchant-save.html',
+    url: '<{link app=seller ctl=site_goods act=save}>',
     type: 'POST',
     data: formdata,
     dataType: 'json',
@@ -725,20 +699,20 @@ $.ajax({
 
 
 $(function() {
-$('#goods_prototype').change(function() {
-    var data = {
-        'type_id': $(this).val()
-    };
-    $.ajax({
-        url: '/index.php/merchant-prototype.html',
-        type: 'GET',
-        data: data,
-        success: function(data) {
-            $("#params").children('div').remove();
-            $("#params").append(data);
-        }
-    });
-});
+// $('#goods_prototype').change(function() {
+//     var data = {
+//         'type_id': $(this).val()
+//     };
+//     $.ajax({
+//         url: '/index.php/merchant-prototype.html',
+//         type: 'GET',
+//         data: data,
+//         success: function(data) {
+//             $("#params").children('div').remove();
+//             $("#params").append(data);
+//         }
+//     });
+// });
 
 /*分类树逻辑*/
 (function() {
