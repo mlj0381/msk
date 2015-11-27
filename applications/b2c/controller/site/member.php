@@ -19,7 +19,6 @@ class b2c_ctl_site_member extends b2c_frontpage
         $this->_response->set_header('Cache-Control', 'no-store');
         $this->verify_member();
         $this->action = $this->_request->get_act_name();
-        $this->member = $this->get_current_member();
         $this->set_tmpl('member');
         //刷新经验值和会员等级
         //vmc::singleton('b2c_member_exp')->renew($this->member['member_id']);

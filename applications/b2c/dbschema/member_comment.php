@@ -101,7 +101,7 @@ $db['member_comment'] = array(
         'in_list' => true,
         'label' => ('是否公开'),
         'filtertype' => 'bool',
-        'default' => 'false',
+        'default' => 'true',
         'default_in_list' => true,
     ),
   ),

@@ -58,33 +58,7 @@
             <li><a href="#">已关闭</a></li>
     </ul>
      <{if $order_list}>
-    <table class="seller-orderlist-tab">
-        <thead>
-            <tr>
-                <th>下单时间</th>
-                <th>订单编号</th>
-                <th>订单状态</th>
-                <th>订单金额</th>
-                <th>订单操作</th>
-            </tr>
-        </thead>
-
-        <tbody>
-            <{foreach from=$order_list item=order}>
-            <tr>
-                <td><{$order.createtime|cdate}></td>
-                <td><{$order.order_id}></td>
-                <td>待付款</td>
-                <td>￥:10.00<{$item.buy_price|cur}></td>
-                <td>
-                    <a href="#" class="btn-link btn-block">打印订单</a>
-                </td>
-            </tr>
-            <{/foreach}>
-
-        </tbody>
-
-    </table>
+    
 <{/if}>
 </div>
  <{if $order_list}>

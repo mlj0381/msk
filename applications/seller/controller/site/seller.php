@@ -58,7 +58,7 @@ class seller_ctl_site_seller extends seller_frontpage
         $this->pagedata['company'] = $company;
         $this->output();
 	}
-
+    //安全设置
     public function securitycenter(){
         $user_obj = vmc::singleton('seller_user_object');
         $this->pagedata['pam_data'] = $user_obj->get_pam_data('*', $this->seller['seller_id']);

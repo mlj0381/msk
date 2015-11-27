@@ -15,6 +15,7 @@ class b2c_frontpage extends site_controller {
     protected $member = array();
     function __construct(&$app) {
         parent::__construct($app);
+        $this->member = $this->get_current_member();
     }
     /**
      * 检测用户是否登陆

@@ -182,6 +182,28 @@ class b2c_ctl_site_comment extends b2c_frontpage
         $this->_send('success', '提交成功');
     }
 
+    public function show_list($page = 1){
+        $limit = 20;
+        $mdl_order = app::get('b2c')->model('orders');
+        $mdl_mcomment = app::get('b2c')->model('member_comment');
+        $filter = array(
+            'member_id'=>$this->member['member_id'],
+            'display'=>'true'
+        );
+        $comment_list = $mdl_mcomment->groupList('*',$filter,($page - 1) * $limit, $limit);
+
+        foreach ($comment_list as $key => &$value) {
+            $order_id = reset($value);
+            $order[$key] = $mdl_order->dump($order_id['order_id'], '*', array('items' => array('*')));
+        }
+        $this->pagedata['comment'] = $comment_list;
+        $this->pagedata['order'] = $order;
+        print_r($order);
+        print_r($comment_list);
+        $this->pagedata['_PAGE_'] = 'site/comment/show_list.html';
+        $this->output();
+    }
+
     public function show($goods_id,$page=1){
         $this->_response->set_header('Cache-Control', 'no-store');
         $mdl_mcomment = app::get('b2c')->model('member_comment');
@@ -217,9 +239,7 @@ class b2c_ctl_site_comment extends b2c_frontpage
             $this->pagedata['goods_detail'] = $goods_detail;
             $this->title = $goods_detail['name'].' 评价\口碑';
             $this->set_tmpl('comment_show');
-            $this->pagedata['_PAGE_'] = 'site/comment/show.html';
-            $this->output();
-            //$this->page('site/comment/show.html');
+            $this->page('site/comment/show.html');
         }
 
     }

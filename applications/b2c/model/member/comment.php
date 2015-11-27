@@ -40,7 +40,7 @@ class b2c_mdl_member_comment extends dbeav_model
         $sign = (($type == 'comment') ? '8' : '9');
         $tb = $this->table_name(1);
         do{
-            
+
             $i = substr(mt_rand() , -3);
             $comment_id =  $sign . (date('y')+date('m')+date('d')).date('His') . $i;
             $row = $this->db->selectrow('SELECT bill_id from '.$tb.' where bill_id ='.$bill_id);

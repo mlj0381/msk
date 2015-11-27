@@ -95,12 +95,12 @@
 <script type="text/javascript">
 	$(function(){
 		$('.appra_item .reply_btn').click(function(){
-
+			$('.appra_items form').remove();
 			var _this=$(this).parents('table').siblings('.replyShow');
 			_this.html('');
 			_this.removeClass('hidden');
 			_this.append(
-				'<form action="" method="">'
+				'<form action="<{link app=seller ctl=site_store act=reply}>" method="post">'
 					+'<textarea class="form-control" placeholder="请输入回复内容"></textarea>'
 					+'<button type="button" class="btn btn-info">提交</button>'
 				+'</form>'
