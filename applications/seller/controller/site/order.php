@@ -123,8 +123,8 @@ class seller_ctl_site_order extends seller_frontpage
     }
 
     //订单详细信息
-    public function order_info(){
-
+    public function detail($order_id){
+        $this->output();
     }
 
     //退货
@@ -161,4 +161,5 @@ class seller_ctl_site_order extends seller_frontpage
     public function discount(){
 
     }
+
 }
