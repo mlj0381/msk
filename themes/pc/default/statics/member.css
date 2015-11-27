@@ -374,6 +374,61 @@ ol {
   display: block;
   font-size: 14px;
 }
+.buyer_container .my-main .my-page .radio_group {
+  display: inline-block;
+}
+.buyer_container .my-main .my-page .radio_group span {
+  margin-right: 20px;
+}
+.buyer_container .my-main .my-page .radio_group span input {
+  vertical-align: bottom;
+}
+.buyer_container .my-main .my-page .radio_group span small {
+  margin: 0 5px;
+}
+.buyer_container .my-main .my-page .radio_group span i {
+  display: inline-block;
+  width: 20px;
+  height: 18px;
+}
+.buyer_container .my-main .my-page .radio_group span i.good {
+  background: url(images/apprabg.png) no-repeat left bottom;
+}
+.buyer_container .my-main .my-page .radio_group span i.medium {
+  background: url(images/apprabg.png) no-repeat left center;
+}
+.buyer_container .my-main .my-page .radio_group span i.poor {
+  background: url(images/apprabg.png) no-repeat left top;
+}
+.buyer_container .my-main .my-page .pl_box {
+  background: #fff;
+  -webkit-border-radius: 0px;
+  -moz-border-radius: 0px;
+  -ms-border-radius: 0px;
+  -o-border-radius: 0px;
+  border-radius: 0px;
+  box-sizing: border-box;
+  margin-top: 10px;
+  box-shadow: none;
+  padding: 10px;
+  width: 543px;
+  border: none;
+}
+.buyer_container .my-main .my-page .pl_box .help-block {
+  font-size: 14px;
+  font-weight: bold;
+}
+.buyer_container .my-main .my-page .pl_box textarea {
+  -webkit-border-radius: 0px;
+  -moz-border-radius: 0px;
+  -ms-border-radius: 0px;
+  -o-border-radius: 0px;
+  border-radius: 0px;
+  border: 1px solid #ddd;
+  box-shadow: none;
+  max-width: 100%;
+  min-height: 80px;
+}
 .jumbotron {
   background: none;
 }

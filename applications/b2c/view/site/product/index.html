@@ -30,7 +30,7 @@
                     <{/foreach}>
                 </ul>
             </div>
-            <div class="col-xs-6">
+            <div class="col-xs-7">
                 <h1>
                     <{$data_detail.name}><br>
                     <small><{$data_detail.product.spec_info}></small>
@@ -109,22 +109,24 @@
                 <!--购买区-->
                 <div class="product-page-cart">
                     <div class="product-quantity input-group" style="width:150px;" data-minibuy="<{$data_detail.minibuy}>">
-        				<div class="spinner-buttons input-group-btn">
-        					<button type="button" class="btn btn-default">
-        					-
-        					</button>
-        				</div>
-        				<input type="text" class="spinner-input form-control"  value=1>
-        				<div class="spinner-buttons input-group-btn">
-        					<button type="button" class="btn btn-default">
+                        <div class="spinner-buttons input-group-btn">
+                            <button type="button" class="btn btn-default">
+                            -
+                            </button>
+                        </div>
+                        <input type="text" class="spinner-input form-control"  value=1>
+                        <div class="spinner-buttons input-group-btn">
+                            <button type="button" class="btn btn-default">
                                 +
-        					</button>
-        				</div>
-        			</div>
+                            </button>
+                        </div>
+                    </div>
                                          <br>
                     <div class="price-availability-block clearfix">
                         <span class="price text-danger">
-                           <small>￥</small><strong><{$data_detail.product.buy_price|cur}></trong>                        </span>
+                           <small>￥</small>
+                           <strong><{$data_detail.product.buy_price|cur}></strong>
+                        </span>
                     </div>
                     <hr>
                     <a class="btn btn-danger btn-lg btn-buy" href="<{link app=b2c ctl=site_cart act=add args0=$data_detail.product.product_id args1=$store_info.store_id args2=1 }>">加入购物车</a>
@@ -137,7 +139,8 @@
                 <!--购买区end-->
             </div>
         </div>
-         <!-- 支付方式、卖家承诺 -->
+
+        <!-- 支付方式、卖家承诺 -->
          <div class="row payment-method">
              <div class="col-xs-6">
                  <p>支付方式</p>
@@ -190,7 +193,6 @@
                  </li>
              </ul>
          </div>
-
         <!-- 相关商品 -->
         <div class="goods-rel-items hide">
             <hr>
@@ -198,6 +200,7 @@
             <div class="row glist-container">
             </div>
         </div>
+
         <div class="row goods-detailRow">
             <div class="col-xs-3 goods_side_left">
                <!-- 店铺信息 -->
@@ -389,10 +392,10 @@
 $(function(){
     //模板填充
     var substitute = function(str, obj) {
-        return str.replace(/\\?\{([^{}] )\}/g, function(match, name) {
+        return str.replace(/\\?\{([^{}]+)\}/g, function(match, name) {
             if (match.charAt(0) == '\\') return match.slice(1);
             if(name.match(/\./)){
-                value = eval('obj.' name);
+                value = eval('obj.'+name);
                 return value?value:'';
             }
             return (obj[name] != undefined) ? obj[name] : '';
@@ -412,12 +415,12 @@ $(function(){
                 minute = Math.floor(intDiff / 60) - (day * 24 * 60) - (hour * 60);
                 second = Math.floor(intDiff) - (day * 24 * 60 * 60) - (hour * 60 * 60) - (minute * 60);
             }
-            if (minute <= 9) minute = '0'   minute;
-            if (second <= 9) second = '0'   second;
-            show_scope.find('.day-show').html("" day "天");
-            show_scope.find('.hour-show').html('<s id="h"></s>' hour '时');
-            show_scope.find('.minute-show').html('<s></s>' minute '分');
-            show_scope.find('.second-show').html('<s></s>' second '秒 后结束');
+            if (minute <= 9) minute = '0' + minute;
+            if (second <= 9) second = '0' + second;
+            show_scope.find('.day-show').html(""+day+"天");
+            show_scope.find('.hour-show').html('<s id="h"></s>'+hour+'时');
+            show_scope.find('.minute-show').html('<s></s>'+minute+'分');
+            show_scope.find('.second-show').html('<s></s>'+second+'秒 后结束');
             intDiff--;
             return arguments.callee;
         })(), 1000);
@@ -427,9 +430,9 @@ $(function(){
     //修改数量时，影响购买按钮数量参数
     $('.product-quantity .spinner-input').on('_change',function(e,cur_val){
         $.each($('.btn-buy'),function(i,a){
-            a.href = a.href.replace(/([\s\S]*?)-([\d] ?)-([\d] ?)\.html/,function(){
+            a.href = a.href.replace(/([\s\S]*?)-([\d]+?)-([\d]+?)\.html/,function(){
                 var args = arguments;
-                return [args[1],args[2],cur_val].join('-') '.html'
+                return [args[1],args[2],cur_val].join('-')+'.html'
             });
         });
     }).trigger('_change',[$('.product-quantity .spinner-input').val(),0]);
@@ -466,7 +469,7 @@ $(function(){
         var phtml = '';
         if(recv.result == 'success' && recv.data){
             $.each(recv.data.plist,function(idx,p){
-                phtml ='<li data-ruleid="' p.rule_id '" data-remaining="' (p.to_time-p.now) '"><span class="label label-danger">' p.tag '</span>&nbsp;' p.description ' <span class="time-show"><span class="day-show"></span><span class="hour-show"></span><span class="minute-show"></span><span class="second-show"></span></span></li>';
+                phtml+='<li data-ruleid="'+p.rule_id+'" data-remaining="'+(p.to_time-p.now)+'"><span class="label label-danger">'+p.tag+'</span>&nbsp;'+p.description+' <span class="time-show"><span class="day-show"></span><span class="hour-show"></span><span class="minute-show"></span><span class="second-show"></span></span></li>';
             });
             $('.promotion-list').append(phtml);
             $.each($('.promotion-list [data-remaining]'),function(idx,item){
@@ -478,7 +481,7 @@ $(function(){
                 }
             });
             if(recv.data.sale_price && recv.data.sale_price!='null'){
-                $('<del class="text-muted">￥' $('.price-availability-block .price strong').text() '</del>').insertBefore($('.price-availability-block .price'));
+                $('<del class="text-muted">￥'+$('.price-availability-block .price strong').text()+'</del>').insertBefore($('.price-availability-block .price'));
                 $('.price-availability-block .price strong').text(recv.data.sale_price);
             }
         }
@@ -531,7 +534,7 @@ $(function(){
                 $('.favorite-button i').removeClass('glyphicon-heart-empty').addClass('glyphicon-heart');
                 $('.favorite-button').addClass('disabled');
             }
-            $('.favorite-button em').text(' (' data.fav_count ')');
+            $('.favorite-button em').text(' ('+data.fav_count+')');
 
         }catch(e){
         }
@@ -548,7 +551,7 @@ $(function(){
                     _this.find('i').removeClass('glyphicon-heart-empty').addClass('glyphicon-heart');
                     var current_count = parseInt(_this.find('em').text().replace(/[\(|\)]/g,''));
                     if(isNaN(current_count))current_count = 0;
-                    _this.find('em').text(' (' (  current_count) ')');
+                    _this.find('em').text(' ('+(++current_count)+')');
                 }).fadeIn(function(){
                     _this.addClass('disabled');
                 });

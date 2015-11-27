@@ -460,6 +460,62 @@ ul,ol{
 
 			//END 个人资料
 
+			//商品评价
+			.radio_group{
+				display: inline-block;
+				span{
+					margin-right:20px;
+					input{
+						vertical-align: bottom;
+					}
+					small{
+						margin:0 5px;
+					}
+					i{
+						display: inline-block;
+						width:20px;
+						height:18px;
+						&.good{
+							background: url(images/apprabg.png) no-repeat left bottom;
+						}
+						&.medium{
+							background: url(images/apprabg.png) no-repeat left center;
+						}
+						&.poor{
+							background: url(images/apprabg.png) no-repeat left top;
+						}
+					}
+				}
+			}
+			.pl_box{
+				background: #fff;
+				.radius(0px);
+				box-sizing: border-box;
+				margin-top:10px;
+				box-shadow: none;
+				padding:10px;
+				width:543px;
+				border:none;
+				.help-block{
+					font-size: 14px;
+					font-weight: bold;
+				}
+
+				textarea{
+					.radius(0px);
+					border:1px solid #ddd;
+					box-shadow: none;
+					max-width: 100%;
+					min-height: 80px;
+				}
+			}
+			
+
+			//END 商品评价
+
+
+
+
 		}//my-page
 
 	}//my-main

@@ -1,10 +1,10 @@
 <div class="comment-container">
-    <ol class="breadcrumb">
+    <!-- <ol class="breadcrumb">
       <li><a href="<{link app=site ctl=index}>">首页</a></li>
       <li><a href="<{link app=b2c ctl=site_member}>">会员中心</a></li>
       <li><a href="<{link app=b2c ctl=site_member act=orders}>">我的订单</a></li>
       <li class="active">评价 #<{$order.order_id}> 商品</li>
-    </ol>
+    </ol> -->
     <div class="page-header">
       <h1>商品评价 <small>Comment</small></h1>
     </div>
@@ -56,12 +56,7 @@
                                     <{/foreach}>
                                 </div>
                             <{/if}>
-                            <div class="well well-cm">
-                                <span class="help-block">追加评价：</span>
-                                <input type="hidden" name="reply[<{$i.comment_id}>][goods_id]" value="<{$i.goods_id}>">
-                                <input type="hidden" name="reply[<{$i.comment_id}>][product_id]" value="<{$i.product_id}>">
-                                <textarea name="reply[<{$i.comment_id}>][content]" rows="2" class="form-control"></textarea>
-                            </div>
+                            
                             <{foreach from=$i['reply'] item=j}>
                                     <div class="media">
                                         <div class="media-left" style="width:10%;">
@@ -73,6 +68,12 @@
                                         </div>
                                     </div>
                             <{/foreach}>
+                            <div class="well well-cm pl_box">
+                                <span class="help-block">追加评价：</span>
+                                <input type="hidden" name="reply[<{$i.comment_id}>][goods_id]" value="<{$i.goods_id}>">
+                                <input type="hidden" name="reply[<{$i.comment_id}>][product_id]" value="<{$i.product_id}>">
+                                <textarea name="reply[<{$i.comment_id}>][content]" rows="2" class="form-control"></textarea>
+                            </div>
                         </div>
                     </div>
                 <{/foreach}>
