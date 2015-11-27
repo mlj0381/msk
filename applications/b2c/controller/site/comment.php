@@ -198,8 +198,6 @@ class b2c_ctl_site_comment extends b2c_frontpage
         }
         $this->pagedata['comment'] = $comment_list;
         $this->pagedata['order'] = $order;
-        print_r($order);
-        print_r($comment_list);
         $this->pagedata['_PAGE_'] = 'site/comment/show_list.html';
         $this->output();
     }

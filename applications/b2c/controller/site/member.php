@@ -331,7 +331,7 @@ class b2c_ctl_site_member extends b2c_frontpage
      */
     public function orders($status = 'all', $page = 1)
     {
-        $limit = 10;
+        $limit = 5;
         $status_filter = array(
             'all' => array(
                 'member_id' => $this->member['member_id'],
