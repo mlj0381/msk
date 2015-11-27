@@ -11,23 +11,14 @@
 // +----------------------------------------------------------------------
 
 
-class aftersales_ctl_site_store extends seller_ctl_site_seller
+class seller_ctl_site_aftersales extends seller_frontpage
 {
-    public $title = '售后服务';
-    /**
-     * 构造方法.
-     *
-     * @param object application
-     */
-    public function __construct(&$app)
-    {
-        $this->app_current = $app;
-        $this->app_seller = app::get('seller');
-        parent::__construct($this->app_seller);
-    }
-    public function index()
-    {
-        echo '售后服务';
+    public function __construct(&$app){
+        parent::__construct($app);
+        $this->app = $app;
     }
 
+    public function order(){
+        $this->output();
+    }
 }

@@ -31,9 +31,8 @@
 
 
 		<menugroup name="客服管理">
-            <menu app='aftersales' controller='site_member' action='order' display='true' order="60">退款管理</menu>
-            <menu app='aftersales' controller='site_member' action='order' display='true' order="60">退货与维权</menu>
-			<menu app='aftersales' controller='site_member' action='order' display='true' order="60">售后管理</menu>
+            <!-- <menu app='aftersales' controller='site_store' action='price' display='true' order="60">退款管理</menu> -->
+			<menu app='seller' controller='site_aftersales' action='order' display='true' order="60">售后管理</menu>
             <menu app='seller' controller='site_store' action='complaints' display='true' order="60">举报管理</menu>
 			<menu app='seller' controller='site_store' action='appraisal' display='true' order="60">咨询回复</menu>
         </menugroup>
