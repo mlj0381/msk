@@ -116,6 +116,7 @@ class aftersales_ctl_site_member extends b2c_ctl_site_member
                 'request_id' => $mdl_as_request->apply_id(), //请求一个新的服务流水号
                 'member_id' => $this->member['member_id'],
                 'order_id' => $order_id,
+                'store_id' => $_POST['store_id'],
                 'createtime' => time(),
                 'images' => $success_upload_images,
                 'product' => array('product_id' => $product_id, 'quantity' => $_POST['product_return_num']),
@@ -134,7 +135,9 @@ class aftersales_ctl_site_member extends b2c_ctl_site_member
                 $this->redirect(array('app' => 'aftersales', 'ctl' => 'site_member', 'act' => 'order'));
             }
             $mdl_order = app::get('b2c')->model('orders');
+            $mdl_store = app::get('store')->model('store');
             $order = $mdl_order->dump($order_id, '*', array('items' => array('*')));
+            $order['store_info'] = $mdl_store->getRow('store_id, store_name', array('store_id' => $order['store_id']));
             $order_items = $order['items'];
             $order_items = utils::array_change_key($order_items, 'product_id');
             if ($order['member_id'] != $this->member['member_id'] || !isset($order_items[$product_id])) {
@@ -164,10 +167,12 @@ class aftersales_ctl_site_member extends b2c_ctl_site_member
         );
         $count = $mdl_as_request->count($filter);
         $request_list = $mdl_as_request->getList('*', $filter, ($page - 1) * $limit, $limit);
+        $mdl_store = app::get('store')->model('store');
         foreach ($request_list as $key => &$item) {
             if ($item['product']['product_id']) {
                 $item['product']['info'] = $mdl_products->dump($item['product']['product_id']);
             }
+            $item['store_info'] = $mdl_store->getRow('store_id, store_name', array('store_id' => $item['store_id']));
         }
         $this->pagedata['request_list'] = $request_list;
         $this->pagedata['pager'] = array(

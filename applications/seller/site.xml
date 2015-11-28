@@ -44,7 +44,7 @@
 	</module>
 
 	<module controller='site_aftersales' id="seller">
-		<name>aftersales</name>
+		<name>selleraftersales</name>
         <title>商家中心售后受理</title>
 		<disable>true</disable>
 	</module>

@@ -3,12 +3,12 @@
 		<h1>售后管理</h1>
 	</div>
 	<div class="filter_box clearfix">
-        <form class="form-inline">
+        <form class="form-inline" method="post" action="<{link app=seller ctl=site_aftersales act=order args0=$status}>">
           <div class="form-group">
             <label>订单编号</label>
-            <input type="text" class="form-control" placeholder="订单编号" >
+            <input type="text" name="order[order_id]" value="<{$filter.order_id}>"  class="form-control" placeholder="订单编号" >
           </div>
-          <div class="form-group">
+          <!-- <div class="form-group">
           	<label>申请时间</label>
           	<select class="form-control" style="width: 180px">
           		<option>最近7天</option>
@@ -16,27 +16,27 @@
           		<option>最近三个月</option>
           		<option>全部</option>
           	</select>
-          </div>
+          </div> -->
           <div class="form-group">
-            <label>从</label>
-            <input type="text" class="form-control" placeholder="2015-11-01">
+            <label>申请时间 从</label>
+            <input type="text" name="order[createtime][]" value="<{$filter.createtime[0]}>" class="form-control" placeholder="2015-11-01">
              至
-            <input type="text" class="form-control" placeholder="2015-11-30">
+            <input type="text" name="order[createtime][]" value="<{$filter.createtime[1]}>" class="form-control" placeholder="2015-11-30">
           </div>
           <div class="form-group">
             <label>退款编号</label>
-            <input type="text" class="form-control" placeholder="退款编号" >
+            <input type="text" name="order[request_id]" value="<{$filter.request_id}>" class="form-control" placeholder="退款编号" >
           </div>
           <div class="form-group">
           	<label>退款状态</label>
-          	<select class="form-control" style="width: 180px">
-          		<option>全部</option>
-          		<option>处理中</option>
-          		<option>退款成功</option>
-          		<option>退款失败</option>
+          	<select class="form-control" name="order[status]" style="width: 180px">
+          		<option <{if $filter.status eq '0'}> selected<{/if}> value="0">全部</option>
+          		<option <{if $filter.status eq '1'}> selected<{/if}> value="1">处理中</option>
+          		<option <{if $filter.status eq '5'}> selected<{/if}> value="5">退款成功</option>
+          		<option <{if $filter.status eq '2'}> selected<{/if}> value="2">退款失败</option>
           	</select>
           </div>
-          
+
           <div class="form-group">
             <button type="reset" class="btn btn-default">清空条件</button>
             <button type="submit" class="btn btn-default">搜索</button>
@@ -45,10 +45,10 @@
     </div>
 
 	<ul class="aftersales_nav">
-		<li class="active">全部</li>
-		<li>处理中</li>
-		<li>退款成功</li>
-		<li>退款关闭</li>
+		<li <{if $status eq 'all'}>class="active"<{/if}>><a href="<{link app=seller ctl=site_aftersales act=order args0=all}>">全部</a></li>
+		<li <{if $status eq '1' or $status eq '3' or $status eq '4'}>class="active"<{/if}>><a href="<{link app=seller ctl=site_aftersales act=order args0=1}>">处理中</a></li>
+		<li <{if $status eq '5'}>class="active"<{/if}>><a href="<{link app=seller ctl=site_aftersales act=order args0=5}>">退款成功</a></li>
+		<li <{if $status eq '2'}>class="active"<{/if}>><a href="<{link app=seller ctl=site_aftersales act=order args0=2}>">退款拒绝</a></li>
 	</ul>
 	<table class="aftersales_list">
 		<thead>
@@ -63,33 +63,31 @@
 			</tr>
 		</thead>
 		<tbody>
+			<{foreach from=$request_list item=item}>
 			<tr>
-				<td>1654654361</td>
-				<td><a href="#">4508450640</a></td>
+				<td><{$item.request_id}></td>
+				<td><a class="text-muted" href="<{link app=b2c ctl=site_order act=detail arg0=$item.order_id}>" target="_blank"><{$item.order_id}></a></td>
 				<td>东海</td>
-				<td>￥ 10.00</td>
-				<td>￥ 10.00</td>
-				<td>2015/11/12</td>
-				<td>处理中</td>
+				<td>￥<{$item.product.info.price|cur}></td>
+				<td>￥<{$item.product.info.price|cur}></td>
+				<td><{$item.createtime|cdate}></td>
+				<td>
+					<{switch from=$item.status}>
+	                    <{case value='1'}>
+	                    <span class="text-muted">申请中</span>
+	                    <{case value='2'}>
+	                    <span class="text-danger">被拒绝</span>
+	                    <{case value='3'}>
+	                    <span class="text-success">接受申请</span>
+	                    <{case value='4'}>
+	                    <span class="text-info">退款处理中</span>
+	                    <{case value='5'}>
+	                    <span class="text-muted">处理完成</span>
+                	<{/switch}>
+				</td>
 			</tr>
-			<tr>
-				<td>1654654361</td>
-				<td><a href="#">4508450640</a></td>
-				<td>东海</td>
-				<td>￥ 10.00</td>
-				<td>￥ 10.00</td>
-				<td>2015/11/12</td>
-				<td>处理中</td>
-			</tr>
-			<tr>
-				<td>1654654361</td>
-				<td><a href="#">4508450640</a></td>
-				<td>东海</td>
-				<td>￥ 10.00</td>
-				<td>￥ 10.00</td>
-				<td>2015/11/12</td>
-				<td>处理中</td>
-			</tr>
+			<{/foreach}>
+
 		</tbody>
 	</table>
 

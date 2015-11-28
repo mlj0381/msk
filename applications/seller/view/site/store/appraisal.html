@@ -5,10 +5,10 @@
 
 	<div class="appra_box">
 		<ul class="appra_nav">
-			<li class="active">全部评价</li>
-			<li>好评</li>
-			<li>中评</li>
-			<li>差评</li>
+			<li <{if $comment_type eq 'all'}>class="active" <{/if}>><a href="<{link app=seller ctl=site_store act=appraisal args0=all}>">全部评价</a></li>
+			<li <{if $comment_type eq '5'}>class="active" <{/if}>><a href="<{link app=seller ctl=site_store act=appraisal args0=5}>">好评</a></li>
+			<li <{if $comment_type eq '4'}>class="active" <{/if}>><a href="<{link app=seller ctl=site_store act=appraisal args0=4}>">中评</a></li>
+			<li <{if $comment_type eq '3'}>class="active" <{/if}>><a href="<{link app=seller ctl=site_store act=appraisal args0=3}>">差评</a></li>
 		</ul>
 		<div class="appra_items">
 			<dl>
@@ -16,12 +16,13 @@
 					<table>
 						<tr>
 							<th colspan="2" width="40%">
-								<select>
+								<!-- <select>
 									<option>评价</option>
 									<option>好评</option>
 									<option>中评</option>
 									<option>差评</option>
-								</select>
+								</select> -->
+								评价
 							</th>
 							<th width="15%">评价人</th>
 							<th width="30%">宝贝信息</th>
@@ -29,18 +30,28 @@
 						</tr>
 					</table>
 				</dt>
+				<{foreach from=$order item=item}>
+                    <{foreach from=$item.items item=i}>
 				<dd>
 					<div class="appra_item">
 						<table>
 							<tbody>
 								<tr>
-									<td width="5%"><span class="appra_status poor"></span></td>
-									<td colspan="2" width="35%">
-										东西很烂，物流速度也很慢，不会再来啦，很伤心！东西很烂，物流速度也很慢，不会再来啦，很伤心！东西很烂，物流速度也很慢，不会再来啦，很伤心！
+									<{foreach from=$comment[$i.product_id] item=mark}>
+										<td width="5%"><span class="appra_status <{if $mark.mark.mark_star eq 5}>good<{elseif $mark.mark.mark_star eq 4}>medium<{else}>poor<{/if}> "></span></td>
+									<{/foreach}>
+										<td colspan="2" width="35%">
+										<{foreach from=$comment[$i.product_id] item=j}>
+										<div><{$j.content}> <{$j.mark.mark_star}></div>
+											<{foreach from=$j['reply'] item=k}>
+												<div><{$k.content}></div>
+											<{/foreach}>
+
 									</td>
-									<td width="15%">买家:1991</td>
-									<td width="30%">七分牛仔裤</td>
-									<td width="15%"><button class="btn btn-xs btn-danger reply_btn">回复</button></td>
+									<td width="15%">买家:<{$item.member_id}></td>
+									<td width="30%"><{$i.name}></td>
+									<td width="15%"><button data-gid="<{$i.goods_id}>" data-odid="<{$i.order_id}>" data-name="<{$j.comment_id}>" data-mid="<{$item.member_id}>" data-pid="<{$i.product_id}>"  class="btn btn-xs btn-danger reply_btn">回复</button></td>
+									<{/foreach}>
 								</tr>
 							</tbody>
 						</table>
@@ -48,44 +59,8 @@
 						<div class="replyShow hidden"></div>
 					</div>
 				</dd>
-				<dd>
-					<div class="appra_item">
-						<table>
-							<tbody>
-								<tr>
-									<td width="5%"><span class="appra_status good"></span></td>
-									<td colspan="2" width="35%">
-										很不错呦！下次会再来的
-									</td>
-									<td width="15%">买家:1991</td>
-									<td width="30%">七分牛仔裤</td>
-									<td width="15%"><button class="btn btn-xs btn-danger reply_btn">回复</button></td>
-								</tr>
-							</tbody>
-						</table>
-						<div class="replyCon hidden">我回复：</div>
-						<div class="replyShow hidden"></div>
-					</div>
-				</dd>
-				<dd>
-					<div class="appra_item">
-						<table>
-							<tbody>
-								<tr>
-									<td width="5%"><span class="appra_status medium"></span></td>
-									<td colspan="2" width="35%">
-										一般般吧,东西还行！
-									</td>
-									<td width="15%">买家:1991</td>
-									<td width="30%">七分牛仔裤</td>
-									<td width="15%"><button class="btn btn-xs btn-danger reply_btn">回复</button></td>
-								</tr>
-							</tbody>
-						</table>
-						<div class="replyCon hidden">我回复：</div>
-						<div class="replyShow hidden"></div>
-					</div>
-				</dd>
+				<{/foreach}>
+			<{/foreach}>
 			</dl>
 
 		</div>
@@ -97,12 +72,18 @@
 		$('.appra_item .reply_btn').click(function(){
 			$('.appra_items form').remove();
 			var _this=$(this).parents('table').siblings('.replyShow');
+			var input_name = "reply["+$(this).attr('data-name')+"]";
+			var gid = $(this).attr('data-gid'), mid = $(this).attr('data-mid'), pid = $(this).attr('data-pid'), order_id = $(this).attr('data-odid');
 			_this.html('');
 			_this.removeClass('hidden');
 			_this.append(
-				'<form action="<{link app=seller ctl=site_store act=reply}>" method="post">'
-					+'<textarea class="form-control" placeholder="请输入回复内容"></textarea>'
-					+'<button type="button" class="btn btn-info">提交</button>'
+				'<form action="<{link app=seller ctl=site_store act=appraisal}>" method="post">'
+					+'<input type="hidden" name="order_id" value="'+order_id+'"/>'
+					+'<input type="hidden" name="'+input_name+'[goods_id]" value="'+gid+'"/>'
+					+'<input type="hidden" name="'+input_name+'[member_id]" value="'+mid+'"/>'
+					+'<input type="hidden" name="'+input_name+'[product_id]" value="'+pid+'"/>'
+					+'<textarea class="form-control" name="'+input_name+'[content]" placeholder="请输入回复内容"></textarea>'
+					+'<button type="submit" class="btn btn-info">提交</button>'
 				+'</form>'
 			)
 

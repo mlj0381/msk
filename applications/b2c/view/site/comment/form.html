@@ -20,6 +20,7 @@
                 <a class="text-muted" href="<{link app=b2c ctl=site_product act=index args0=$item.product_id}>"><{$item.name}><{if $item.spec_info}><br><small><{$item.spec_info}></small><{/if}></a>
                 <br>
                 <small>￥</small><{$item.buy_price|cur}> x <{$item.nums}>
+                <div><a href="<{link app=store ctl=site_store act=index args0=$order.store_info.store_id}>">店铺：<{$order.store_info.store_name}></a></div>
             </div>
             <div class="col-xs-8">
                 <{if $exits_comment[$item.product_id]}>
@@ -71,6 +72,7 @@
                             <div class="well well-cm pl_box">
                                 <span class="help-block">追加评价：</span>
                                 <input type="hidden" name="reply[<{$i.comment_id}>][goods_id]" value="<{$i.goods_id}>">
+                                <input type="hidden" name="reply[<{$i.comment_id}>][store_id]" value="<{$order.store_info.store_id}>">
                                 <input type="hidden" name="reply[<{$i.comment_id}>][product_id]" value="<{$i.product_id}>">
                                 <textarea name="reply[<{$i.comment_id}>][content]" rows="2" class="form-control"></textarea>
                             </div>
@@ -103,6 +105,7 @@
                 <div class="form-group">
                     <label  class="col-xs-2 control-label">说两句</label>
                     <div class="col-xs-10">
+                        <input type="hidden" name="store_id" value="<{$order.store_info.store_id}>">
                         <textarea class="form-control"  name="comment[word][<{$item.goods_id}>][<{$item.product_id}>]" rows="2"></textarea>
                     </div>
                 </div>

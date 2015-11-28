@@ -29,10 +29,10 @@
 
     <div class="appra_box">
         <ul class="appra_nav">
-            <li class="active">全部评价</li>
-            <li>好评</li>
-            <li>中评</li>
-            <li>差评</li>
+            <li <{if $comment_type eq 'all'}>class="active" <{/if}>><a href="<{link app=b2c ctl=site_comment act=show_list args0=all}>">全部评价</a></li>
+            <li <{if $comment_type eq '5'}>class="active" <{/if}>><a href="<{link app=b2c ctl=site_comment act=show_list args0=5}>">好评</a></li>
+            <li <{if $comment_type eq '4'}>class="active" <{/if}>><a href="<{link app=b2c ctl=site_comment act=show_list args0=4}>">中评</a></li>
+            <li <{if $comment_type eq '3'}>class="active" <{/if}>><a href="<{link app=b2c ctl=site_comment act=show_list args0=3}>">差评</a></li>
         </ul>
         <div class="appra_items">
             <dl>
@@ -40,12 +40,13 @@
                     <table>
                         <tr>
                             <th colspan="2" width="40%">
-                                <select>
+                                <!-- <select>
                                     <option>评价</option>
                                     <option>好评</option>
                                     <option>中评</option>
                                     <option>差评</option>
-                                </select>
+                                </select> -->
+                                评价
                             </th>
                             <th width="15%">评价人</th>
                             <th width="30%">宝贝信息</th>
@@ -62,7 +63,7 @@
                                         <tr>
                                             <!-- good  medium -->
                                             <{foreach from=$comment[$i.product_id] item=mark}>
-                                                <td width="5%"><span class="appra_status <{if $mark.mark.mark_star eq 5}>good<{elseif $mark.mark.mark_star eq 3}>medium<{else}>poor<{/if}> "></span></td>
+                                                <td width="5%"><span class="appra_status <{if $mark.mark.mark_star eq 5}>good<{elseif $mark.mark.mark_star eq 4}>medium<{else}>poor<{/if}> "></span></td>
                                                 <td colspan="2" width="35%">
                                             <{/foreach}>
                                                 <{foreach from=$comment[$i.product_id] item=j}>

@@ -34,6 +34,7 @@ class b2c_ctl_site_comment extends b2c_frontpage
         if ($order['ship_status'] == '0' || $order['status'] == 'dead') {
             $this->splash('error', '', '暂不能评价!');
         }
+        $order['store_info'] = app::get('store')->model('store')->getRow('store_id, store_name', array('store_id' => $order['store_id']));
         $this->pagedata['order'] = $order;
         $this->pagedata['exits_comment'] = $exits_comment;
         $this->pagedata['member_avatar'] = $this->member['avatar'];
@@ -71,6 +72,7 @@ class b2c_ctl_site_comment extends b2c_frontpage
                     'product_id' => $product_id,
                     'member_id' => $this->member['member_id'],
                     'order_id' => $_POST['order_id'],
+                    'store_id' => $_POST['store_id'],
                     'author_name' => $this->member['uname'],
                     'createtime' => time(),
                     'content' => htmlspecialchars($content),
@@ -132,7 +134,6 @@ class b2c_ctl_site_comment extends b2c_frontpage
                      );
                     logger::info('前台评价晒一晒图片上传操作'.'TMP_NAME:'.$item['tmp'].',FILE_NAME:'.$item['name']);
                 }
-
                 if (!$mdl_mcomment->save($new_comment)) {
                     $this->_send('error', '提交失败!');
                 }else{
@@ -158,6 +159,7 @@ class b2c_ctl_site_comment extends b2c_frontpage
                     'member_id' => $this->member['member_id'],
                     'author_name' => $this->member['uname'],
                     'createtime' => time(),
+                    'store_id' => $value['store_id'],
                     'content' => htmlspecialchars($value['content']),
                 );
                 if (empty($new_reply['content']) || trim($new_reply['content']) == '') {
@@ -182,20 +184,30 @@ class b2c_ctl_site_comment extends b2c_frontpage
         $this->_send('success', '提交成功');
     }
 
-    public function show_list($page = 1){
-        $limit = 20;
+    public function show_list($comment_type = 'all', $page = 1){
+        $limit = 10;
         $mdl_order = app::get('b2c')->model('orders');
         $mdl_mcomment = app::get('b2c')->model('member_comment');
+        $mdl_goods_mark = app::get('b2c')->model('goods_mark');
         $filter = array(
             'member_id'=>$this->member['member_id'],
             'display'=>'true'
         );
+        if(is_numeric($comment_type)){
+            $comment_id = $mdl_goods_mark->getList('comment_id', array('mark_star' => $comment_type));
+            $tmp = array();
+            foreach ($comment_id as $key => &$value) {
+                array_push($tmp, $value['comment_id']);
+            }
+            $filter['comment_id|in'] = $tmp;
+        }
         $comment_list = $mdl_mcomment->groupList('*',$filter,($page - 1) * $limit, $limit);
 
         foreach ($comment_list as $key => &$value) {
             $order_id = reset($value);
             $order[$key] = $mdl_order->dump($order_id['order_id'], '*', array('items' => array('*')));
         }
+        $this->pagedata['comment_type'] = $comment_type;
         $this->pagedata['comment'] = $comment_list;
         $this->pagedata['order'] = $order;
         $this->pagedata['_PAGE_'] = 'site/comment/show_list.html';

@@ -33,8 +33,11 @@
                     <div class="col-xs-1">
                         <img class="img-thumbnail" src="<{$request_item.image_id|storager:'xs'}>" alt="<{$request_item.name}>" />
                     </div>
-                    <div class="col-xs-6">
+                    <div class="col-xs-5">
                         <{$request_item.name}><{if $request_item.spec_info}><br><small><{$request_item.spec_info}></small><{/if}>
+                    </div>
+                    <div class="col-xs-1">
+                        <a href="<{link app=store ctl=site_store act=index args0=$order.store_info.store_id}>"><{$order.store_info.store_name}></a>
                     </div>
                     <div class="col-xs-5 text-center">
                         成交价：￥<{$request_item.buy_price|cur}>
@@ -50,6 +53,7 @@
 </table>
 <form target="new_request_frame" class="form-horizontal" action="<{link app=aftersales ctl=site_member act=newrequest args0=$order.order_id args1=$request_item.product_id args2='save'}>" method="post" enctype="multipart/form-data" id="ass_newrequest_form">
     <input type="hidden" name="request[req_type]" value="1">
+    <input type="hidden" name="store_id" value="<{$order.store_info.store_id}>">
     <div class="form-group" data-extend="req_type">
         <label  class="col-xs-2 control-label">商品返回方式</label>
         <div class="col-xs-7">

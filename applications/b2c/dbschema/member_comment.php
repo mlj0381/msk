@@ -59,6 +59,12 @@ $db['member_comment'] = array(
         'label' => ('相关会员'),
         'default' => 0,
     ),
+    'store_id' => array(
+        'type' => 'mediumint(8)',
+        'in_list' => false,
+        'label' => ('相关店铺'),
+        'default' => 0,
+    ),
     'author_name' => array(
         'type' => 'varchar(100)',
         'label' => ('发表人'),

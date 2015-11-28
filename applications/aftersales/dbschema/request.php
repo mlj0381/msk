@@ -41,6 +41,14 @@ $db['request'] = array(
       'default_in_list' => true,
       'label' => '申请人',
     ),
+    'store_id' => array(
+      'type' => 'table:store@store',
+      'default' => '0',
+      'required' => true,
+      'in_list' => true,
+      'default_in_list' => true,
+      'label' => '受理店铺',
+    ),
     'delivery_id'=>array(
       'type'=>'table:delivery@b2c',
       'default'=>'0',
