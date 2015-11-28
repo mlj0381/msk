@@ -24,5 +24,7 @@
         <file type="member" use="默认会员中心页"></file>
         <file type="passport" use="默认登录注册页"></file>
         <file type="seller_settled" use="商家入驻页">seller-settled.html</file>
+        <file type="store_home" use="店铺首页">store-default.html</file>
+        <file type="seller" use="商家中心页">default-seller.html</file>
     </views>
 </theme>

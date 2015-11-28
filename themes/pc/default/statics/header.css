@@ -338,3 +338,13 @@ nav.navbar ul.nav li .category-container .category .tab-content {
 nav.navbar ul.nav li .category-container .category .tab-pane {
   color: #333;
 }
+.footerbox {
+  width: 100%;
+  padding: 0px;
+  margin: 0px;
+  background: #fff;
+}
+.footerbox footer {
+  width: 1200px;
+  margin: 0 auto;
+}

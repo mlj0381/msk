@@ -15,7 +15,7 @@ class store_ctl_site_store extends site_controller
     public function __construct(&$app){
         parent::__construct($app);
         $this->app = $app;
-        $this->set_tmpl('store');
+        $this->set_tmpl('store_home');
     }
     public function index($store_id){
         $this->page('site/index.html');
