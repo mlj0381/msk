@@ -1622,3 +1622,222 @@ ul,ol{
 //END 卖家中心
 
 
+
+
+
+//店铺首页
+.store_header{
+	width:100%;
+	margin:0 auto;
+	background: #fff;
+	border-top:1px solid #ddd;
+	
+	.header_rt{
+		width:650px;
+		.fr;
+
+		.store_sc{
+			display: inline-block;
+			.fr;
+			margin-top:25px;
+		}
+	}
+	.pro_recom{
+		margin-top:15px;
+		display:inline-block;
+		li{
+			.fl;
+			width:100px;
+			height:100px;
+			margin:0 15px;
+			a{
+				position: relative;
+				display: inline-block;
+				width:100px;
+				height:100px;
+
+				img{
+					display: block;
+					max-height: 100%;
+					margin-left:auto;
+					margin-right:auto;
+				}
+				span{
+					position: absolute;
+					z-index: 10;
+					top: 0;
+					right:0;
+					background: @basecolor;
+					.radius(5px);
+					color: #fff;
+					padding:0 5px;
+
+				}
+			}
+		}
+	}
+
+	.nav_bg{
+		width:100%;
+		height:40px;
+		line-height: 40px;
+		background: url(images/store_navbg.png) repeat-x;
+		//overflow: hidden;
+		.store_nav{
+			width:1200px;
+			margin:0 auto;
+			li{
+				.fl;
+				border-left:1px solid #484748;
+				a{
+					padding:0 40px;
+					font-size:16px;
+					display: block;
+					height:40px;
+					line-height: 40px;
+					color:#fff;
+					&:hover{
+						background: #db0002;
+					}
+				}
+
+				&.default{
+					background: #484748;
+					a{
+						width:190px;
+						margin:0 auto;
+						color:#fff;
+						font-size: 16px;
+						padding:0 15px;
+						i{
+							.fr;
+							display: inline-block;
+							margin-top:15px;
+							font-size:12px;
+						}
+						&:hover{
+							background: none;
+						}
+
+					}
+				}
+			}
+		}
+	}
+
+	.store_banner{
+		width:100%;
+		height:499px;
+		background: url(images/store_ban.png) no-repeat top center;
+	}
+}
+
+.store_carousel{
+
+	h2{
+		text-align: center;
+		color:#222;
+	}
+}
+.kf_box{
+	margin:30px auto;
+	width:1200px;
+	background: #fff;
+	height:98px;
+	img{
+		display: block;
+		margin-left:auto;
+		margin-right:auto;
+	}
+}
+
+.store_probox{
+	width:1200px;
+	margin:0 auto;
+	background: #fff;
+	padding:10px 0;
+
+	.store_pro_floor{
+		width:100%;
+		margin-bottom:20px;
+		h2{
+			height:48px;
+			line-height: 48px;
+			background: url(images/store_bar.jpg) no-repeat center top;
+			text-align: center;
+			color:@basecolor;
+			margin:0 auto;
+		}
+		ul{
+			li{
+				.fl;
+				padding:10px 10px 0 10px;
+				border-right:1px solid #ddd;
+				border-bottom:1px solid #ddd;
+				width:300px;
+				box-sizing: border-box;
+
+				a{
+					display: block;
+					position: relative;
+					width:100%;
+					height:314px;
+					img{
+						display:block;
+						width:100%;
+						height:314px;
+					}
+					span{
+						position: absolute;
+						display: block;
+						width:100%;
+						bottom:0px;
+						height:40px;
+						line-height: 40px;
+						background: rgba(0,0,0,0.7);
+						padding:0 10px;
+						font-size:14px;
+						color:#fff;
+					}
+				}
+				span{
+					display: block;
+					width:100%;
+					height:30px;
+					line-height: 30px;
+					padding:0 10px;
+					text-align: center;
+					font-size: 14px;
+					color:#aaa;
+					small{
+						color:@basecolor;
+						display: inline-block;
+						margin-right:10px;
+					}
+				}
+			}
+			li:nth-child(4n){
+				border-right:none;
+			}
+		}
+	}
+}
+
+
+
+//END 店铺首页
+
+
+//店铺设置
+.store_setting_page{
+	.tishi{
+		border-bottom:1px dashed #ddd;
+		height:40px;
+		line-height: 40px;
+		font-size: 14px;
+	}
+}
+.setting_form{
+	margin:20px auto;
+}
+//END店铺设置
