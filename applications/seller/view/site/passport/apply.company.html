@@ -22,7 +22,7 @@
                 </dd>
             </dl>
         </div>
-        <form id="" class="form-horizontal settled_company_form" action="<{link app=seller ctl=site_passport act=settled args0=2}>" method="post">
+        <form id="company_signup_form" class="form-horizontal settled_company_form" action="<{link app=seller ctl=site_passport act=settled args0=2}>" method="post">
             <!-- 联系人信息 -->
             <h2 class="area_heading">
             联系人信息<small>用于入驻过程中接收平台反馈的入驻通知，请务必正确填写</small>
@@ -626,11 +626,6 @@
         </form>
     </div>
 </div>
-<style type="text/css">
-.tabClass {
-    display: none;
-}
-</style>
 <script>
 /*$(function() {
     $(".companys").addClass("tabClass");
@@ -642,7 +637,56 @@
     $(".dn").click(function() {
         tab(1);
     });
-});*/
+});
+function tab(index) {
+    for (var i = 0; i < $('.companys').length; i++) {
+        if ($(".companys").eq(i).css('display') == "block") {
+            index += i;
+            $(".companys").addClass("tabClass");
+            index = index < 0 ? 0 : index;
+            index = index >= $('.companys').length - 1 ? $('.companys').length - 1 : index;
+            $(".companys").eq(index).removeClass("tabClass");
+            $(".dn").removeAttr("disabled");
+            if (index >= $('.companys').length - 1) {
+                $(".dn").attr({
+                    "disabled": "disabled"
+                });
+                $(":submit").removeClass("tabClass");
+            }
+            $(".up").removeAttr("disabled");
+            if (index == 0) {
+                $(".up").attr({
+                    "disabled": "disabled"
+                });
+            }
+            return;
+        }
+    }
+}
+*/
+void function(signup_form) {
+    var _alert_error = function(msg) {
+        signup_form.find('.alert-error').remove();
+        signup_form.append($('<div class="alert alert-danger">' + msg + '</div>'));
+        alert_timer = setTimeout(function() {
+            clearTimeout(alert_timer);
+            signup_form.find('.alert-danger').fadeOut('fast', function() {
+                $(this).remove();
+            });
+        }, 3000);
+    }
+    signup_form.on('submit', function(e){
+        e.stopPropagation();
+        $.post(signup_form.attr('action'), signup_form.serialize(), function(re){
+            if(re.error){
+                _alert_error(re.error);
+            }else if(re.success){
+                location = re.redirect;
+            }
+        }, 'json');
+        return false;
+    });
+}($('#company_signup_form'));
 
 $(function() {
     $('input[type="file"]').fileupload({
@@ -694,39 +738,7 @@ $(function() {
                 _cutdown_sms(btn);
             }
         }, 'json');
-
-
     });
-
-
-function tab(index) {
-    for (var i = 0; i < $('.companys').length; i++) {
-        if ($(".companys").eq(i).css('display') == "block") {
-            index += i;
-            $(".companys").addClass("tabClass");
-            index = index < 0 ? 0 : index;
-            index = index >= $('.companys').length - 1 ? $('.companys').length - 1 : index;
-            $(".companys").eq(index).removeClass("tabClass");
-            $(".dn").removeAttr("disabled");
-            if (index >= $('.companys').length - 1) {
-                $(".dn").attr({
-                    "disabled": "disabled"
-                });
-                $(":submit").removeClass("tabClass");
-            }
-            $(".up").removeAttr("disabled");
-            if (index == 0) {
-                $(".up").attr({
-                    "disabled": "disabled"
-                });
-            }
-            return;
-        }
-    }
-}
-
-
-
 /**
  * 日历插件
  */

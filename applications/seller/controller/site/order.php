@@ -16,6 +16,7 @@ class seller_ctl_site_order extends seller_frontpage
     public $titel = '商家订单';
     public function __construct(&$app){
         parent::__construct($app);
+        $this->verify();
     }
 
     //商家订单

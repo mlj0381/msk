@@ -16,6 +16,7 @@ class seller_ctl_site_aftersales extends seller_frontpage
     public function __construct(&$app){
         parent::__construct($app);
         $this->app = $app;
+        $this->verify();
     }
 
     public function order($type = 'all'){

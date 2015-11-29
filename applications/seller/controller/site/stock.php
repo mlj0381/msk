@@ -15,6 +15,7 @@ class seller_ctl_site_stock extends seller_frontpage
 {
     public function __construct(&$app){
         parent::__construct($app);
+        $this->verify();
     }
 
     public function index(){

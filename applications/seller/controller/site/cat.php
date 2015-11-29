@@ -15,6 +15,7 @@ class seller_ctl_site_cat extends seller_frontpage
     public function __construct(&$app){
         parent::__construct($app);
         $this->mCat = app::get('store')->model('goods_cat');
+        $this->verify();
     }
 
     public function index(){

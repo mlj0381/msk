@@ -4,8 +4,9 @@
     <{elseif $seller.checkin eq '0'}>
         <div>资料正在审核中</div>
     <{/if}>
-
-
+<{else}>
+    <div>还未填写公司信息</div>
+<{/if}>
 <div class="passport-signup-container">
     <div class="panel panel-default signup-panel">
         <div class="panel-heading clearfix">
@@ -50,24 +51,18 @@
 </div>
 </div>
 </div>
-<{else}>
-    <div>还未填写公司信息</div>
-    <div><a class="btn btn-xs btn-default" href="<{link app=seller ctl=site_passport act=signup args0=1}>">前往完善信息</a></div>
-<{/if}>
-<style type="text/css">
-	.tabClass{display:none;}
-</style>
+
 <script type="text/javascript">
 $(function(){
 
-	$("#legal, #business, #bank, #organization, #companys").addClass("tabClass");
+	$("#legal, #business, #bank, #organization, #companys").addClass("hide");
   $(".tab").click(function(){
       $(".tab").each(function(){
         $(this).addClass("btn-default").removeClass("btn-danger");
-        $("#"+$(this).attr("company")).addClass("tabClass");
+        $("#"+$(this).attr("company")).addClass("hide");
       });
       $(this).addClass("btn-danger").removeClass("btn-default");
-      $("#"+$(this).attr("company")).removeClass("tabClass");
+      $("#"+$(this).attr("company")).removeClass("hide");
     });
 });
 </script>

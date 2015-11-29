@@ -16,6 +16,7 @@ class seller_ctl_site_brand extends seller_frontpage
     public function __construct(&$app){
         parent::__construct($app);
         $this->app = $app;
+        $this->verify();
         $this->mBrand = $this->app->model('brand');
     }
 

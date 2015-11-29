@@ -51,7 +51,6 @@ class seller_ctl_site_seller extends seller_frontpage
             'seller_id' => $this->seller['seller_id']
         ));
         $this->pagedata['seller'] = $seller;
-
         $company = $this->app->model('company')->getRow('*', array(
             'company_id' => $seller['company_id']
         ));

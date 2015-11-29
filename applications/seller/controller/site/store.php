@@ -15,6 +15,7 @@ class seller_ctl_site_store extends seller_frontpage
 {
     public function __construct(&$app){
         parent::__construct($app);
+        $this->verify();
         $this->app = $app;
     }
 

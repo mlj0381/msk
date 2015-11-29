@@ -1,18 +1,5 @@
-<!-- <div class="seller_reg_tab">
-    <ul>
-        <li class="active"><a href="#">用户注册</a></li>
-        <li><a href="#">商家入驻</a></li>
-        <li><a href="#">平台审核</a></li>
-    </ul>
-</div> -->
+
 <div class="passport-signup-container settled_container">
-    <!-- <div class="panel-heading clearfix">
-            <a class="btn btn-danger" icon="fa fa-plus">账号注册&nbsp;<i class="fa fa fa-plus"></i></a>
-            <a class="btn btn-default" icon="fa fa-plus">公司信息&nbsp;<i class="fa fa fa-plus"></i></a>
-            <a class="btn btn-default" icon="fa fa-plus">资质认证&nbsp;<i class="fa fa fa-plus"></i></a>
-            <a class="btn btn-default" icon="fa fa-plus">店铺申请&nbsp;<i class="fa fa fa-plus"></i></a>
-            <a class="btn btn-default" icon="fa fa-plus">品牌申请&nbsp;<i class="fa fa fa-plus"></i></a>
-            </div> -->
     <div class="settled_menu">
         <dl>
             <dt>商家入驻</dt>
@@ -28,13 +15,11 @@
         </div>
         <p>请仔细阅读入驻须知</p>
         <a href="<{link app=seller ctl=site_passport act=settled args0=1}>" class="btn btn-danger">我知道了</a>
-        
+
     </div>
 </div>
 <script>
-void
-
-function(signup_form) {
+void function(signup_form) {
     var alert_timer = 0;
     var _alert_error = function(msg) {
         signup_form.find('.alert-error').remove();
