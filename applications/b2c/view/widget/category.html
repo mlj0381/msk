@@ -11,15 +11,21 @@
 </ul>
 <div class="tab-content">
     <{foreach from=$category_tree item=one_cat key=ck}>
-
-    <div class="tab-pane fade in<{if $ck==20}> active<{/if}>" id="subCat<{$ck+1}>">
+    <div class="tab-pane fade in clearfix<{if $ck==20}> active<{/if}>" id="subCat<{$ck+1}>">
+        <div class="tab-pane-cat">
         <{foreach from=$one_cat.items item=two_item}>
-            <a href="<{link app=b2c ctl=site_list act=index args0=$two_item.id}>" style="color:#000000;"><span><{$two_item.name}></span></a>
+            <a href="<{link app=b2c ctl=site_list act=index}>?cat_id=<{$two_item.id}>"><span><{$two_item.name}></span></a>
             <!-- <foreach from=$two_item.items item=three_item>
                 <$three_item.name>
             </foreach> -->
 
         <{/foreach}>
+        </div>
+        <div class="tab-pane-brand">
+            <a href="#">
+                <img src="<{$base_url}>/themes/pc/default/statics/images/brand.png" />
+            </a>
+        </div>
     </div>
     <{/foreach}>
 </div>

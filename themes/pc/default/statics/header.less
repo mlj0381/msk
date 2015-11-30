@@ -302,7 +302,7 @@ nav.navbar{
 				z-index: 5000;
 				height:550px;
 				background:#cc0116;
-				opacity:0.85;
+				//opacity:0.85;
 				display: none;
 
 				.category{
@@ -328,8 +328,8 @@ nav.navbar{
 						    background-color: #cc0116;
 							border:0px;
 							margin:0;
-							height:40px;
-							line-height: 40px;
+							height:36px;
+							line-height: 36px;
 							a{
 								margin:0;
 								padding:0;
@@ -345,8 +345,21 @@ nav.navbar{
 						li.open{
 
 							background:@basecolor;
+							position: relative;
 							a{
 								color:#fff;
+							}
+							&:after{
+								content: '';
+								height:0;
+								width:0;
+								line-height: 0;
+								border-right:8px solid #fff;
+								border-top:8px solid transparent;
+								border-bottom:8px solid transparent;
+								position: absolute;
+								right:0px;
+								top:11px;
 							}
 
 						}
@@ -367,16 +380,37 @@ nav.navbar{
 					    position: absolute;
 					    left: 200px;
 					    top: 0px;
-					    width: 900px;
+					    width: 1000px;
 					    background:#FFF;
 					    overflow: hidden;
 						z-index:9999;
 						height:554px;
-						padding:10px 20px;
+						padding:10px;
 						display:none;
-						opacity: 1;
 					}
-					.tab-pane{color:#333}	
+					.tab-pane{
+
+						.tab-pane-cat{
+							width:740px;
+							.fl;
+							word-break:break-all;
+							word-wrap:break-word;
+							a{
+								color:#333;
+								font-size:14px;
+								padding:0px 10px;
+								border-right:1px solid #ddd;
+								&:hover{
+									color:#c92d22;
+								}
+							}
+						}
+						.tab-pane-brand{
+							width:200px;
+							height:200px;
+							.fr;
+						}
+					}	
 				}
 			}
 		}
@@ -400,7 +434,7 @@ nav.navbar{
 		margin:0 auto;
 
 		.partner{
-			
+
 		}
 	}
 }

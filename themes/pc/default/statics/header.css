@@ -270,7 +270,6 @@ nav.navbar ul.nav li .category-container {
   z-index: 5000;
   height: 550px;
   background: #cc0116;
-  opacity: 0.85;
   display: none;
 }
 nav.navbar ul.nav li .category-container .category ul.list-group {
@@ -292,8 +291,8 @@ nav.navbar ul.nav li .category-container .category ul.list-group li.list-group-i
   background-color: #cc0116;
   border: 0px;
   margin: 0;
-  height: 40px;
-  line-height: 40px;
+  height: 36px;
+  line-height: 36px;
 }
 nav.navbar ul.nav li .category-container .category ul.list-group li.list-group-item a {
   margin: 0;
@@ -308,9 +307,22 @@ nav.navbar ul.nav li .category-container .category ul.list-group li.list-group-i
 }
 nav.navbar ul.nav li .category-container .category ul.list-group li.open {
   background: #e93428;
+  position: relative;
 }
 nav.navbar ul.nav li .category-container .category ul.list-group li.open a {
   color: #fff;
+}
+nav.navbar ul.nav li .category-container .category ul.list-group li.open:after {
+  content: '';
+  height: 0;
+  width: 0;
+  line-height: 0;
+  border-right: 8px solid #fff;
+  border-top: 8px solid transparent;
+  border-bottom: 8px solid transparent;
+  position: absolute;
+  right: 0px;
+  top: 11px;
 }
 nav.navbar ul.nav li .category-container .category ul.list-group .dropdown-subcat {
   left: 200px;
@@ -326,17 +338,33 @@ nav.navbar ul.nav li .category-container .category .tab-content {
   position: absolute;
   left: 200px;
   top: 0px;
-  width: 900px;
+  width: 1000px;
   background: #FFF;
   overflow: hidden;
   z-index: 9999;
   height: 554px;
-  padding: 10px 20px;
+  padding: 10px;
   display: none;
-  opacity: 1;
 }
-nav.navbar ul.nav li .category-container .category .tab-pane {
+nav.navbar ul.nav li .category-container .category .tab-pane .tab-pane-cat {
+  width: 740px;
+  float: left;
+  word-break: break-all;
+  word-wrap: break-word;
+}
+nav.navbar ul.nav li .category-container .category .tab-pane .tab-pane-cat a {
   color: #333;
+  font-size: 14px;
+  padding: 0px 10px;
+  border-right: 1px solid #ddd;
+}
+nav.navbar ul.nav li .category-container .category .tab-pane .tab-pane-cat a:hover {
+  color: #c92d22;
+}
+nav.navbar ul.nav li .category-container .category .tab-pane .tab-pane-brand {
+  width: 200px;
+  height: 200px;
+  float: right;
 }
 .footerbox {
   width: 100%;
