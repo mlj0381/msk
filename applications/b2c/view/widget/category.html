@@ -2,7 +2,7 @@
 <ul class="list-group category-root">
     <{foreach from=$category_tree item=cat key=ck}>
     <li class="list-group-item <{if $cat.has_children=='true'}> has-children <{/if}>" data-toggle="tab" data-catid="<{$cat.id}>" >
-        <a href="#subCat<{$ck}>" -href="<{link app=b2c ctl=site_list}>?cat_id=<{$cat.cat_id}>"><{$cat.name}></a>
+        <a href="#subCat<{$ck+1}>" -href="<{link app=b2c ctl=site_list}>?cat_id=<{$cat.cat_id}>"><{$cat.name}></a>
         <{if $cat.has_children=='true'}>
             <i class="glyphicon glyphicon-menu-right pull-right"></i>
         <{/if}>
@@ -11,13 +11,14 @@
 </ul>
 <div class="tab-content">
     <{foreach from=$category_tree item=one_cat key=ck}>
+
     <div class="tab-pane fade in<{if $ck==20}> active<{/if}>" id="subCat<{$ck+1}>">
         <{foreach from=$one_cat.items item=two_item}>
-            <{$two_item.name}>-->
-            <{foreach from=$two_item.items item=three_item}>
-                <{$three_item.name}><-->
-            <{/foreach}>
-            <br/>
+            <a href="<{link app=b2c ctl=site_list act=index args0=$two_item.id}>" style="color:#000000;"><span><{$two_item.name}></span></a>
+            <!-- <foreach from=$two_item.items item=three_item>
+                <$three_item.name>
+            </foreach> -->
+
         <{/foreach}>
     </div>
     <{/foreach}>

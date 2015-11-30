@@ -42,6 +42,7 @@ class b2c_ctl_site_order extends b2c_frontpage
             'pay_app' => $params['payapp_id'],
             'dlytype_id' => $params['dlytype_id'],
             'createtime' => time() ,
+            'store_id' => $params['store_id'],
             'need_shipping' => $params['need_shipping'],
             'need_invoice' => $params['need_invoice'],
             'invoice_title' => $params['invoice_title'],

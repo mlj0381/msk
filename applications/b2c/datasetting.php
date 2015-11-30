@@ -23,6 +23,10 @@
          array(
              'name' => '上海',
              'id' => '2',
+         ),
+         array(
+             'name' => '广东',
+             'id' => '3',
          )
      ),
      'webnav' => array(
@@ -74,7 +78,7 @@
                         'ctl' => 'site_product',
                         'act' => 'index',
                         'args' => array(
-                            '25', '1',//product_id  seller_id
+                            '25', '5',//product_id  store_id
                         ),
                     ),
                     'image_id' => '69443bbc9329413cddc5080ef5d5bb59',
@@ -87,7 +91,7 @@
                         'ctl' => 'site_product',
                         'act' => 'index',
                         'args' => array(
-                            '45', '1',//product_id  seller_id
+                            '45', '5',//product_id  store_id
                         ),
                     ),
                     'image_id' => '69443bbc9329413cddc5080ef5d5bb59',
@@ -100,7 +104,7 @@
                         'ctl' => 'site_product',
                         'act' => 'index',
                         'args' => array(
-                            '37', '1',//product_id  seller_id
+                            '37', '5',//product_id  store_id
                         ),
                     ),
                     'image_id' => 'ccf9923ad28aa1dd608e9d4df3bcd045',
@@ -113,7 +117,7 @@
                         'ctl' => 'site_product',
                         'act' => 'index',
                         'args' => array(
-                            '37', '1',//product_id  seller_id
+                            '37', '5',//product_id  store_id
                         ),
                     ),
                     'image_id' => '9ca95ad385eaf776ae5d9c3e8c10ee12',
@@ -126,7 +130,7 @@
                         'ctl' => 'site_product',
                         'act' => 'index',
                         'args' => array(
-                            '25', '1',//product_id  seller_id
+                            '25', '5',//product_id  store_id
                         ),
                     ),
                     'image_id' => 'd63a67731c62829909b55a730f24a55b',
@@ -139,7 +143,7 @@
                         'ctl' => 'site_product',
                         'act' => 'index',
                         'args' => array(
-                            '1', '1',//product_id  seller_id
+                            '1', '5',//product_id  store_id
                         ),
                     ),
                     'image_id' => '9150f7e6f2bf2a5876779f254403cd52',
@@ -152,7 +156,7 @@
                         'ctl' => 'site_product',
                         'act' => 'index',
                         'args' => array(
-                            '46', '1',//product_id  seller_id
+                            '46', '5',//product_id  store_id
                         ),
                     ),
                     'image_id' => '8d2a0be90a514ecb51ca01b843142b82',
@@ -165,7 +169,7 @@
                         'ctl' => 'site_product',
                         'act' => 'index',
                         'args' => array(
-                            '125', '1',//product_id  seller_id
+                            '125', '5',//product_id  store_id
                         ),
                     ),
                     'image_id' => '8a7f5ca8819a286a2d314a253e3cc8ab',
@@ -178,7 +182,7 @@
                         'ctl' => 'site_product',
                         'act' => 'index',
                         'args' => array(
-                            '126', '1',//product_id  seller_id
+                            '126', '5',//product_id  store_id
                         ),
                     ),
                     'image_id' => '8cb3b3b84e1eba26e7e5748514590ed5',
@@ -410,10 +414,99 @@
             'has_children' => true,
             'parent_id' => '0',
         ),
+
+        array(
+            'name' => '海产品类',
+            'id' => '10',
+            'cat_lv' => '1',
+            'order' => '0',
+            'has_children' => true,
+            'parent_id' => '0',
+        ),
+        array(
+            'name' => '丸肠水发品',
+            'id' => '11',
+            'cat_lv' => '1',
+            'order' => '0',
+            'has_children' => true,
+            'parent_id' => '0',
+        ),
+        array(
+            'name' => '腌腊制品',
+            'id' => '12',
+            'cat_lv' => '1',
+            'order' => '0',
+            'has_children' => true,
+            'parent_id' => '0',
+        ),
+        array(
+            'name' => '冰品',
+            'id' => '12',
+            'cat_lv' => '1',
+            'order' => '0',
+            'has_children' => true,
+            'parent_id' => '0',
+        ),
+        array(
+            'name' => '速冻点心',
+            'id' => '13',
+            'cat_lv' => '1',
+            'order' => '0',
+            'has_children' => true,
+            'parent_id' => '0',
+        ),
+        array(
+            'name' => '速冻蔬菜',
+            'id' => '14',
+            'cat_lv' => '1',
+            'order' => '0',
+            'has_children' => true,
+            'parent_id' => '0',
+        ),
+        array(
+            'name' => '粮油产品',
+            'id' => '15',
+            'cat_lv' => '1',
+            'order' => '0',
+            'has_children' => true,
+            'parent_id' => '0',
+        ),
+        array(
+            'name' => '调味品',
+            'id' => '16',
+            'cat_lv' => '1',
+            'order' => '0',
+            'has_children' => true,
+            'parent_id' => '0',
+        ),
+        array(
+            'name' => '干货产品',
+            'id' => '17',
+            'cat_lv' => '1',
+            'order' => '0',
+            'has_children' => true,
+            'parent_id' => '0',
+        ),
+        array(
+            'name' => '小菜产品',
+            'id' => '18',
+            'cat_lv' => '1',
+            'order' => '0',
+            'has_children' => true,
+            'parent_id' => '0',
+        ),
+        array(
+            'name' => '儿童产品',
+            'id' => '19',
+            'cat_lv' => '1',
+            'order' => '0',
+            'has_children' => true,
+            'parent_id' => '0',
+        ),
         //end 一级分类
         //二级分类
         array(
-            'name' => '原料/白条',
+            'name' => '鸡大腿',
             'id' => '5',
             'cat_lv' => '2',
             'order' => '0',
@@ -421,7 +514,7 @@
             'parent_id' => '1',
         ),
         array(
-            'name' => '原料/分割品',
+            'name' => '鸡大胸',
             'id' => '6',
             'cat_lv' => '2',
             'order' => '0',
@@ -429,40 +522,40 @@
             'parent_id' => '1',
         ),
         //end二级分类
-        //三级分类
-        array(
-            'name' => '鸡肉1',
-            'id' => '7',
-            'cat_lv' => '3',
-            'order' => '0',
-            'has_children' => true,
-            'parent_id' => '5',
-        ),
-        array(
-            'name' => '鸡肉2',
-            'id' => '8',
-            'cat_lv' => '3',
-            'order' => '0',
-            'has_children' => true,
-            'parent_id' => '5',
-        ),
-        array(
-            'name' => '鸡腿1',
-            'id' => '9',
-            'cat_lv' => '3',
-            'order' => '0',
-            'has_children' => true,
-            'parent_id' => '6',
-        ),
-        array(
-            'name' => '鸡腿2',
-            'id' => '10',
-            'cat_lv' => '3',
-            'order' => '0',
-            'has_children' => true,
-            'parent_id' => '6',
-        ),
-        //end 三级分类
+        // //三级分类
+        // array(
+        //     'name' => '鸡肉1',
+        //     'id' => '7',
+        //     'cat_lv' => '3',
+        //     'order' => '0',
+        //     'has_children' => true,
+        //     'parent_id' => '5',
+        // ),
+        // array(
+        //     'name' => '鸡肉2',
+        //     'id' => '8',
+        //     'cat_lv' => '3',
+        //     'order' => '0',
+        //     'has_children' => true,
+        //     'parent_id' => '5',
+        // ),
+        // array(
+        //     'name' => '鸡腿1',
+        //     'id' => '9',
+        //     'cat_lv' => '3',
+        //     'order' => '0',
+        //     'has_children' => true,
+        //     'parent_id' => '6',
+        // ),
+        // array(
+        //     'name' => '鸡腿2',
+        //     'id' => '10',
+        //     'cat_lv' => '3',
+        //     'order' => '0',
+        //     'has_children' => true,
+        //     'parent_id' => '6',
+        // ),
+        // //end 三级分类
     ),
 
  );
