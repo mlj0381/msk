@@ -227,36 +227,3 @@
   width: 100px;
   line-height: 20px;
 }
-.filebox {
-  position: relative;
-  height: 120px;
-}
-.filebox .file_input {
-  position: absolute;
-  z-index: 10;
-  width: 120px;
-  height: 120px;
-  opacity: 0;
-  cursor: pointer;
-}
-.filebox .showImg {
-  z-index: 5;
-  position: absolute;
-  width: 118px;
-  height: 118px;
-  overflow: hidden;
-  border: 1px solid #ccc;
-}
-.filebox .showImg img {
-  width: 118px;
-  height: 118px;
-}
-.filebox .file_ctr {
-  position: absolute;
-  margin-left: 130px;
-  top: 40px;
-}
-.filebox .file_ctr a {
-  display: block;
-  font-size: 14px;
-}
