@@ -29,13 +29,15 @@
     
 </div>
 <div class="container">
-    <!-- 商品楼层列表 -->
-    <div class="pro_list">
-        <{WIDGET_B2C_GOODS_INDEX_GOOD_FLOOR target=index num=8 type=china_food orderby=last_modify desc}>
-    </div>
-    <!-- 店铺橱窗展示 -->
-    <div class="shop_show">
-        <{WIDGET_B2C_GOODS_INDEX_SHOP_SHOW target=index num=1 type=chinafood}>
+    <div class="floor">
+        <!-- 商品楼层列表 -->
+        <div class="pro_list">
+            <{WIDGET_B2C_GOODS_INDEX_GOOD_FLOOR target=index num=8 type=china_food orderby=last_modify desc}>
+        </div>
+        <!-- 店铺橱窗展示 -->
+        <div class="shop_show">
+            <{WIDGET_B2C_GOODS_INDEX_SHOP_SHOW target=index num=1 type=chinafood}>
+        </div>
     </div>
     <script type="text/javascript">
     jQuery(".shop_show").slide({

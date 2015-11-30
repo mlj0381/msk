@@ -19,27 +19,17 @@
                 <div class="topRight">
                     <ul>
                         <li class="seller dropdown">
-                            <a id="mySnk" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false" aria-haspopup="true" role="button" href="">我的神农客
+                            <a id="mySnk" class="dropdown-toggle"  href="<{link app=b2c ctl=site_member act=index}>">我的神农客
                             </a>
-                            <ul class="dropdown-menu" role="menu" aria-labelledby="mySnk">
-                                <li><a href="">我的订单</a></li>
-                                <li><a href="">已买到的宝贝</a></li>
-                            </ul>
+
                         </li>
                         <li class="cart"><a href="<{link app=b2c ctl=site_cart act=index}>"><i class="icon-shopping-cart"></i> 购物车</a></li>
-                        <li class="userCenter"><a href="<{link app=b2c ctl=site_member act=index}>">会员中心</a></li>
-                        <li class="favorite"><a href=""><i class="icon-star"></i> 收藏夹</a></li>
+                        <li class="userCenter"><a href="<{link app=b2c ctl=site_member act=home}>">会员中心</a></li>
+                        <li class="favorite"><a target="_blank" href="<{link app=b2c ctl=site_member act=favorite}>"><i class="icon-star"></i> 收藏夹</a></li>
                         <li>|</li>
                         <li class="sellerSignup"><a href="<{link app=seller ctl=site_passport act=settled_index}>">商家入驻 <i class=" icon-circle-arrow-right"></i></a></li>
                         <li class="seller_block dropdown">
                             <a href="<{link app=seller ctl=site_seller act=index}>">卖家中心</a>
-                            <!-- <a id="sellerCenter" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false" aria-haspopup="true" role="button" href="<{link app=seller ctl=site_seller act=index}>">
-                            卖家中心 <i class="icon-angle-down"></i>
-                            </a>
-                            <ul class="dropdown-menu" role="menu" aria-labelledby="sellerCenter">
-                                <li><a href="">子菜单一</a></li>
-                                <li><a href="">子菜单二</a></li>
-                            </ul> -->
                         </li>
                         <li class="seller_block"><a href="<{link app=seller ctl=site_passport act=login}>">分销商登录</a></li>
                         <li class="seller"><a href="">鲜驰达商城</a></li>
@@ -60,7 +50,7 @@
     <div class="container searchbar">
         <div class="row searchbar_con">
             <div class="logo col-md-5">
-                <img src="statics/images/logo.jpg" alt="美侍客" title="美侍客" />
+                <a href="<{link app=site ctl=index act=index}>"><img src="statics/images/logo.jpg" alt="美侍客" title="美侍客" /></a>
             </div>
             <div class="searchbox col-md-4">
                 <div class="search_label">
@@ -68,7 +58,7 @@
                     <span >店铺</span>
                 </div>
                 <form class="search_form" action="<{link app=b2c ctl=site_list act=index}>" method="post">
-                    <span class="search_txt"><input type="text" name="keywords" value="<{$keywords}>" placeholder="请输入您要查找的商品"/></span>
+                    <span class="search_txt"><input type="text" name="keywords" value="" placeholder="请输入您要查找的商品"/></span>
                     <button type="submit" class="search_btn">搜索</button>
                 </form>
                 <ul class="hotSearch">
