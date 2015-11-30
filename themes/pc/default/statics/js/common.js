@@ -48,3 +48,30 @@ $(function(){
     tabslider('.like_menu span a','.like_con > ul','active');   //购物车浏览记录
     
 })
+
+
+
+//首页楼层滚动效果
+$(function(){
+    $(window).scroll(function(){
+        var scrollTop=$(this).scrollTop();        //获取滚动条滚动的距离
+        $('.floor').each(function(){
+            var offsetTop=$(this).offset().top;    //获取每个区块距离页面顶部的距离
+            var index=$('.floor').index(this);
+            
+            if(offsetTop-scrollTop<=$(this).innerHeight()/2){
+                $('.fixed_floorNav li:eq('+index+')').addClass('active').siblings().removeClass('active');
+            }else{
+                return false;
+            }
+        })
+    })
+
+    $('.fixed_floorNav li').click(function(){
+        var index=$('.fixed_floorNav li').index(this);
+        var val=$('.floor').eq(index).offset().top
+        $("html,body").animate({scrollTop:val},1000);
+
+    })  
+
+})

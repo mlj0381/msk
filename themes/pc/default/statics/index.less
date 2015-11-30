@@ -284,6 +284,31 @@
 		
 	}
 
+	//首页左侧楼层导航
+	.fixed_floorNav{
+		position: fixed;
+		left:50px;
+		top:50%;
+		z-index: 100000;
+		box-shadow: 0px 0px 2px #ddd;
+		ul{
+			li{
+				width:25px;
+				height:25px;
+				line-height: 25px;
+				border-bottom:1px dotted #ddd;
+				text-align: center;
+				background:#fff;
+				color:#000;
+				cursor: pointer;
+
+				&.active{
+					background: @basecolor;
+					color:#fff;
+				}
+			}
+		}
+	}
 
 	//END 首页固定边栏
 

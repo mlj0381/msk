@@ -32,6 +32,52 @@
     <div class="floor">
         <!-- 商品楼层列表 -->
         <div class="pro_list">
+            <h3 class="list_title">
+                <span class="floor_name">1F</span>
+                <{$goods.name}>
+            </h3>
+            <{WIDGET_B2C_GOODS_INDEX_GOOD_FLOOR target=index num=8 type=china_food orderby=last_modify desc}>
+        </div>
+        <!-- 店铺橱窗展示 -->
+        <div class="shop_show">
+            <{WIDGET_B2C_GOODS_INDEX_SHOP_SHOW target=index num=1 type=chinafood}>
+        </div>
+    </div>
+    <div class="floor">
+        <!-- 商品楼层列表 -->
+        <div class="pro_list">
+            <h3 class="list_title">
+                <span class="floor_name">2F</span>
+                <{$goods.name}>
+            </h3>
+            <{WIDGET_B2C_GOODS_INDEX_GOOD_FLOOR target=index num=8 type=china_food orderby=last_modify desc}>
+        </div>
+        <!-- 店铺橱窗展示 -->
+        <div class="shop_show">
+            <{WIDGET_B2C_GOODS_INDEX_SHOP_SHOW target=index num=1 type=chinafood}>
+        </div>
+    </div>
+    <div class="floor">
+        <!-- 商品楼层列表 -->
+        <div class="pro_list">
+            <h3 class="list_title">
+                <span class="floor_name">3F</span>
+                <{$goods.name}>
+            </h3>
+            <{WIDGET_B2C_GOODS_INDEX_GOOD_FLOOR target=index num=8 type=china_food orderby=last_modify desc}>
+        </div>
+        <!-- 店铺橱窗展示 -->
+        <div class="shop_show">
+            <{WIDGET_B2C_GOODS_INDEX_SHOP_SHOW target=index num=1 type=chinafood}>
+        </div>
+    </div>
+    <div class="floor">
+        <!-- 商品楼层列表 -->
+        <div class="pro_list">
+            <h3 class="list_title">
+                <span class="floor_name">4F</span>
+                <{$goods.name}>
+            </h3>
             <{WIDGET_B2C_GOODS_INDEX_GOOD_FLOOR target=index num=8 type=china_food orderby=last_modify desc}>
         </div>
         <!-- 店铺橱窗展示 -->
@@ -70,6 +116,12 @@
         </script>
     </div>
     <div class="fixed_floorNav">
+        <ul>
+            <li class="active">1F</li>
+            <li>2F</li>
+            <li>3F</li>
+            <li>4F</li>
+        </ul>
     </div>
 </div>
 <{require file="public/footer.html" }>
