@@ -35,32 +35,33 @@ class seller_ctl_site_goods extends seller_frontpage
         $filter['marketable'] = 'false';
         if($type){
             $filter['marketable'] = 'true';
-             $filter['checkin'] = $type;
+            $filter['checkin'] = $type;
         }
-        $this->pagedata['serach'] = $serach;
-        if($serach['price']){
-            if(is_numeric($serach['price'][0]) && is_numeric($serach['price'][1])){
-                $price['price|between'] = $serach['price'];
-                $goods_id =  $mdl_product->getList('goods_id', $price);
+        if($serach){
+            $this->pagedata['serach'] = $serach;
+            if($serach['price']){
+                if(is_numeric($serach['price'][0]) && is_numeric($serach['price'][1])){
+                    $price['price|between'] = $serach['price'];
+                    $goods_id =  $mdl_product->getList('goods_id', $price);
+                    if(!$goods_id) return array();
+                }
             }
-            if(!$goods_id){
-                return array();
+            if($serach['buy_count']){
+                if(is_numeric($serach['buy_count'][0]) && is_numeric($serach['buy_count'][1])){
+                    $filter['buy_coun|between'] = $serach['buy_count'];
+                }
             }
-        }
-        if($serach['buy_count']){
-            if(is_numeric($serach['buy_count'][0]) && is_numeric($serach['buy_count'][1])){
-                $filter['buy_coun|between'] = $serach['buy_count'];
+            $tmp = Array();
+            foreach($goods_id as $k => $v)
+            {
+                array_push($tmp, $v['goods_id']);
+            	$tmp = array_unique($tmp);
             }
+            $filter['goods_id|in'] = $tmp;
+            $filter['name|has'] = $serach['name'];
+            $filter['gid'] = $serach['gid'];
         }
-        $tmp = Array();
-        foreach($goods_id as $k => $v)
-        {
-            array_push($tmp, $v['goods_id']);
-        	$tmp = array_unique($tmp);
-        }
-        $filter['goods_id|in'] = $tmp;
-        $filter['name|has'] = $serach['name'];
-        $filter['gid'] = $serach['gid'];
+
         $filter['store_id'] =  $this->store['store_id'];
         $filter['seller_id'] = $this->seller['seller_id'];
         $goodsList = $this->mGoods->getList('*', $filter);

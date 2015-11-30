@@ -4,42 +4,77 @@
 
 <div class="store_setting_page">
 	<p class="tishi text-warning">您填写的信息将在店铺前台展示给买家，请认真填写！</p>
-	<form action="" method="" class="setting_form form-horizontal" >
+	<form action="<{link app=seller ctl=site_store act=setting}>" method="post" class="setting_form form-horizontal" >
+		<input type="hidden" name="store[store_setting][type]" value="<{$store_info.store_setting.type}>" />
+		<input type="hidden" name="store[store_setting][good_type]" value="<{$store_info.store_setting.good_type}>" />
+		<input type="hidden" name="store[store_setting][store_brand]" value="<{$store_info.store_setting.store_brand}>" />
+		<input type="hidden" name="store[store_setting][operate_good]" value="<{$store_info.store_setting.operate_good}>" />
+		<input type="hidden" name="store[store_setting][legal_idcard_image]" value="<{$store_info.store_setting.legal_idcard_image}>" />
 		<div class="form-group">
 			<label class="col-xs-2 control-label">店铺名称:</label>
 			<div class="col-xs-5">
-				<input type="text" class="form-control" value="美侍客官方旗舰店" readonly="readonly" />
+				<input type="text" class="form-control" name="store[store_name]" value="<{$store_info.store_name}>" readonly="readonly" />
 			</div>
 		</div>
 		<div class="form-group">
 			<label class="col-xs-2 control-label">店铺logo:</label>
 			<div class="col-xs-5">
-				<input type="file" />
+				<div class="filebox">
+					<input type="hidden" value="<{$store_info.logo}>" name="store[logo]"/>
+					<input type="file" data-url="<{link app=image ctl=site_upload act=index}>" accept="image/*" class="file_input" />
+					<div class="showImg">
+						<img src="<{if $store_info.logo eq ''}>./../../themes/pc/default/statics/images/file_add.jpg<{else}><{$store_info.logo|storager:'xs'}><{/if}>">
+					</div>
+					<span class="file_ctr">
+						<a href="#">查看</a>
+						<a href="#">删除</a>
+					</span>
+				</div>
 			</div>
 		</div>
 		<div class="form-group">
 			<label class="col-xs-2 control-label">店铺简介:</label>
 			<div class="col-xs-5">
-				<textarea class="form-control" placeholder="请填写店铺简介"  rows="4"></textarea>
+				<textarea class="form-control" name="store[store_setting][about]" placeholder="请填写店铺简介"  rows="4"><{$store_info.store_setting.about}></textarea>
 			</div>
 		</div>
 		<div class="form-group">
 			<label class="col-xs-2 control-label">店铺地址:</label>
 			<div class="col-xs-5">
-				<input type="text" class="form-control" placeholder="请填写店铺详细地址" />
+				<input type="text" value="<{$store_info.store_address}>" name="store[store_address]" class="form-control" placeholder="请填写店铺详细地址" />
 			</div>
 		</div>
 		<div class="form-group">
 			<label class="col-xs-2 control-label">店铺介绍:</label>
 			<div class="col-xs-5">
-				<textarea class="form-control" placeholder="请填写店铺介绍" rows="10"></textarea>
+				<textarea class="form-control" name="store[store_setting][distription]" placeholder="请填写店铺介绍" rows="10"><{$store_info.store_setting.distription}></textarea>
 			</div>
 		</div>
 		<div class="form-group">
 			<label class="col-xs-2 control-label"></label>
 			<div class="col-xs-5">
-				<button class="btn btn-danger">保存</button>
+				<button type="submit" class="btn btn-danger">保存</button>
 			</div>
 		</div>
 	</form>
 </div>
+<script>
+$(function() {
+    $('input[type="file"]').fileupload({
+
+        add: function(e, data) {
+            if (!data.files[0]['type'].match(/^image/)) {
+                alert('非法上传，不是图片类型');
+            }
+            data.submit();
+        },
+        done: function(e, data) {
+            var re = $.parseJSON(data.result);
+            var input = e.target || e.srcElement;
+            $(input).prev('input[type="hidden"]').attr('value', re.image_id);
+            $(input).next('.showImg').find('img').attr('src',re.url);
+
+        }
+    });
+});
+</script>

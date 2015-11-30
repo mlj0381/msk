@@ -15,8 +15,9 @@ class seller_ctl_site_store extends seller_frontpage
 {
     public function __construct(&$app){
         parent::__construct($app);
-        $this->verify();
         $this->app = $app;
+        $this->verify();
+        $this->mStore = app::get('store')->model('store');
     }
 
     public function index(){
@@ -29,11 +30,18 @@ class seller_ctl_site_store extends seller_frontpage
     }
     //店铺设置
     public function setting(){
-		$this->output();
+        if($_POST) $this->_setting($_POST);
+        $this->pagedata['store_info'] = app::get('store')->model('store')->getRow('*', array('store_id' => $this->store['store_id']));
+        $this->output();
     }
     //修改基本信息
-    public function edit(){
-
+    private function _setting($post){
+        $redirect = $this->gen_url(array('app' => 'seller', 'ctl' => 'site_store', 'act' => 'setting'));
+        $post['store']['store_id'] = $this->store['store_id'];
+        if(!$this->mStore->save($post['store'])){
+            $this->splash('error', $redirect, '修改失败');
+        }
+        $this->splash('success', $redirect, '修改成功');
     }
     //评价
     public function appraisal($comment_type = 'all', $page = 1){

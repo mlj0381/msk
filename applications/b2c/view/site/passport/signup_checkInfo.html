@@ -34,8 +34,12 @@
               <div class="form-group">
                   <label for="" class="col-md-2 control-label"><span class="text-danger">*</span>客户地区：</label>
                   <div class="col-md-4 customer_address">
-                    <{input type=region name="pam_account[addon][company_area]"}><br>
-
+                    <{input type=region name="pam_account[addon][company_area]"}>
+                  </div>
+              </div>
+              <div class="form-group">
+                  <label for="" class="col-md-2 control-label"><span class="text-danger">*</span>客户地址：</label>
+                  <div class="col-md-4 customer_address">
                     <input type="text" required="true" name="pam_account[addon][company_addr]" class="form-control" id="" >
                   </div>
               </div>
@@ -216,29 +220,31 @@
               </div>
               <div class="form-group">
                   <label for="" class="col-md-2 control-label">习惯正常收货时间段：</label>
-                  <div class="col-md-2 date form_datetime">
+                  <div class="col-md-2">
                       <input type="text" required="true" name="pam_account[addon][receipt_date_early]" class="form-control" id="" placeholder="起始时间" >
-                      <span class="add-on"><i class="icon-th"></i></span>
+                      <span class="add-on"></span>
+                      如：15：00
                   </div>
                   <div class="col-md-2 date form_datetime">
                       <input type="text" required="true" name="pam_account[addon][receipt_date_late]" class="form-control" id="" placeholder="截止时间">
-                      <span class="add-on"><i class="icon-th"></i></span>
+                      <!-- <span class="add-on"><i class="icon-th"></i></span> -->
                   </div>
               </div>
               <div class="form-group">
                   <label for="" class="col-md-2 control-label">习惯收货最早时间要求：</label>
-                  <div class="col-md-4 date form_datetime">
+                  <div class="col-md-4">
+                       <!-- date form_datetime -->
                     <input type="text" required="true" name="pam_account[addon][receipt_early]" class="form-control" id="" >
-                    <span class="add-on"><i class="icon-th"></i></span>
+                    <!-- <span class="add-on"><i class="icon-th"></i></span> -->
                   </div>
 
               </div>
 
               <div class="form-group">
                   <label for="" class="col-md-2 control-label">习惯收货最晚时间要求：</label>
-                  <div class="col-md-4 date form_datetime">
+                  <div class="col-md-4">
                     <input type="text" required="true" name="pam_account[addon][receipt_early]" class="form-control" id="" >
-                    <span class="add-on"><i class="icon-th"></i></span>
+                    <!-- <span class="add-on"><i class="icon-th"></i></span> -->
                   </div>
               </div>
               <div class="form-group">
@@ -449,12 +455,12 @@
      * 日历插件
      */
 
-    $(".form_datetime").datetimepicker({
-        format: "yyyy-mm-dd hh:ii",    //时间格式
-        autoclose: true,
-        todayBtn: true,
-        pickerPosition: "bottom-left",
-        language:"zh-CN"              //设置中文
-    });
+    // $(".form_datetime").datetimepicker({
+    //     format: "yyyy-mm-dd hh:ii",    //时间格式
+    //     autoclose: true,
+    //     todayBtn: true,
+    //     pickerPosition: "bottom-left",
+    //     language:"zh-CN"              //设置中文
+    // });
 
 </script>

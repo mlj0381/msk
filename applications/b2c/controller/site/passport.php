@@ -144,6 +144,7 @@ class b2c_ctl_site_passport extends b2c_frontpage
     //注册页面--审核信息
     public function signup_checkInfo($forward)
     {
+        $this->verify_member();
         $this->page('site/passport/signup_checkInfo.html');
     }
     //注册页面--注册完成
@@ -357,6 +358,7 @@ class b2c_ctl_site_passport extends b2c_frontpage
         }
         $uvcode_obj = vmc::singleton('b2c_user_vcode');
         $vcode = $uvcode_obj->set_vcode($mobile, $type , $msg);
+        $this->splash('success', $vcode, '短信已发送');
         if ($vcode) {
             //发送验证码 发送短信
             $data['vcode'] = $vcode;

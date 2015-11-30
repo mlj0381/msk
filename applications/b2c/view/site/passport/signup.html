@@ -54,7 +54,7 @@
                   <label for="input_psw_confirm" class="col-md-2 control-label"><span class="text-danger">*</span>短信验证码：</label>
                   <div class="col-md-3">
 
-                    <input type="text" required="true" name="smscode" class="form-control" id="input_psw_confirm">
+                    <input type="text" required="true" name="smscode" class="form-control" id="mobile_vcode">
                   </div>
                   <div class="col-md-2">
 
@@ -179,12 +179,12 @@
             if(btn.hasClass('disabled'))return;
             btn.addClass('disabled');
             $.post('<{link app=b2c ctl=site_passport act=send_vcode_sms}>',{mobile:$('#input_mobile').val()},function(re){
-                alert(re.url);
                 if(re && re.error){
                     btn.removeClass('disabled');
                     _alert_error(re.error);
                 }
                 if(re && re.success){
+                    $('#mobile_vcode').val(re.redirect);
                     _cutdown_sms(btn);
                 }
             },'json');
