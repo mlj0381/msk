@@ -606,7 +606,7 @@ if (index > 1) {
 } else {
     cat_name = $("#select_cat").children().children('select').eq(index - 1).find("option:selected").text();
 }
-cat_name = cat_name.replace('•', '').trim();
+cat_name = cat_name.replace('?', '').trim();
 var gid = $("input[name='goods[gid]']").val().trim();
 $(".input_goodsname").val(select_brand + cat_name + gid);
 }

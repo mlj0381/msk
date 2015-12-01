@@ -513,3 +513,10 @@ nav.navbar ul.nav li .category-container .category .tab-pane .tab-pane-brand {
 	overflow: hidden;
 	cursor: pointer;
 } */
+.pro_img_item {
+  width: 120px;
+  height: 120px;
+  display: inline-block;
+  overflow: hidden;
+  border: 1px solid #ddd;
+}
