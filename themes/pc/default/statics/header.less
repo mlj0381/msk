@@ -26,6 +26,11 @@
 	color:#e93428;
 }
 
+.w1200{
+	width:1200px;
+	margin:0 auto;
+}
+
 
 body{
 	padding-top:0px;
@@ -154,7 +159,7 @@ header{
 			}
 		}
 		.searchbox{
-			width:375px;
+			width:475px;
 			padding:0;
 			padding-top:10px;
 
@@ -177,7 +182,7 @@ header{
 				display: inline-block;
 				.search_txt input{
 					display: inline-block;
-					width:305px;
+					width:405px;
 					.height(34px);
 					border: none;
 					padding:0;
@@ -270,7 +275,7 @@ nav.navbar{
 	ul.nav{
 
 		li{
-			margin:0 38px 0 20px;
+			margin:0 30px 0 20px;
 
 			a{
 				font-size: 16px;
@@ -421,7 +426,7 @@ nav.navbar{
 
 
 
-
+//页面底部样式
 
 .footerbox{
 	width:100%;
@@ -430,11 +435,111 @@ nav.navbar{
 	background: #fff;
 
 	footer{
-		width:1200px;
+		width:100%;
 		margin:0 auto;
 
 		.partner{
+			ul{
+				li{
+					.fl;
+					width:200px;
+					height:143px;
+					span{
+						display: block;
+						height:82px;
+						width:200px;
 
+						img{
+							display: block;
+							max-height: 100%;
+							margin-left:auto;
+							margin-right:auto;
+						}
+					}
+					i{
+						display: block;
+						text-align: center;
+						margin-top:10px;
+						font-weight: bold;
+					}
+				}
+			}
+		}
+
+		.footer_link{
+			width:1000px;
+			margin:0 auto;
+			dl{
+				.fl;
+				width:140px;
+				margin:0 30px;
+
+				dt{
+					font-size: 18px;
+					height:40px;
+					line-height: 40px;
+					margin-bottom:10px;
+					span{
+						margin-right:10px;
+					}
+				}
+				dd{
+					margin-left:15px;
+					border-left:1px dotted #ddd;
+					height:24px;
+					line-height: 24px;
+					padding-left:25px;
+					a{
+						
+						&:hover{
+							color:@basecolor;
+						}
+					}
+				}
+			}
+		}
+
+		.footer_nav{
+			width:100%;
+			background: #222;
+			color:#fff;
+			height:100px;
+			margin:20px auto;
+
+			p{
+				width:1200px;
+				margin:0 auto;
+				text-align: center;
+				a{
+					color:#fff;
+				}
+			}
+			p.p1{
+				font-size: 18px;
+				padding-top:20px;
+				a{
+					font-size: 18px;
+					display:inline-block;
+					margin:0 15px;
+
+				}
+			}
+			p.p2{
+				font-size: 14px;
+				padding-top:15px;
+
+				a{
+					display: inline-block;
+					margin:0 15px;
+				}
+			}
+		}
+
+		.copyright{
+			width:1200px;
+			margin:0 auto;
+			text-align: center;
+			padding-bottom:20px;
 		}
 	}
 }

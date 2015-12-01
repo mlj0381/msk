@@ -18,6 +18,10 @@
 .basecolor {
   color: #e93428;
 }
+.w1200 {
+  width: 1200px;
+  margin: 0 auto;
+}
 body {
   padding-top: 0px;
   font-size: 12px;
@@ -134,7 +138,7 @@ header .searchbar .searchbar_con .logo {
   margin: 0 auto;
 }
 header .searchbar .searchbox {
-  width: 375px;
+  width: 475px;
   padding: 0;
   padding-top: 10px;
 }
@@ -157,7 +161,7 @@ header .searchbar .searchbox .search_form {
 }
 header .searchbar .searchbox .search_form .search_txt input {
   display: inline-block;
-  width: 305px;
+  width: 405px;
   height: 34px;
   line-height: 34px;
   border: none;
@@ -240,7 +244,7 @@ nav.navbar .container {
   padding: 0;
 }
 nav.navbar ul.nav li {
-  margin: 0 38px 0 20px;
+  margin: 0 30px 0 20px;
 }
 nav.navbar ul.nav li a {
   font-size: 16px;
@@ -373,8 +377,96 @@ nav.navbar ul.nav li .category-container .category .tab-pane .tab-pane-brand {
   background: #fff;
 }
 .footerbox footer {
+  width: 100%;
+  margin: 0 auto;
+}
+.footerbox footer .partner ul li {
+  float: left;
+  width: 200px;
+  height: 143px;
+}
+.footerbox footer .partner ul li span {
+  display: block;
+  height: 82px;
+  width: 200px;
+}
+.footerbox footer .partner ul li span img {
+  display: block;
+  max-height: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+.footerbox footer .partner ul li i {
+  display: block;
+  text-align: center;
+  margin-top: 10px;
+  font-weight: bold;
+}
+.footerbox footer .footer_link {
+  width: 1000px;
+  margin: 0 auto;
+}
+.footerbox footer .footer_link dl {
+  float: left;
+  width: 140px;
+  margin: 0 30px;
+}
+.footerbox footer .footer_link dl dt {
+  font-size: 18px;
+  height: 40px;
+  line-height: 40px;
+  margin-bottom: 10px;
+}
+.footerbox footer .footer_link dl dt span {
+  margin-right: 10px;
+}
+.footerbox footer .footer_link dl dd {
+  margin-left: 15px;
+  border-left: 1px dotted #ddd;
+  height: 24px;
+  line-height: 24px;
+  padding-left: 25px;
+}
+.footerbox footer .footer_link dl dd a:hover {
+  color: #e93428;
+}
+.footerbox footer .footer_nav {
+  width: 100%;
+  background: #222;
+  color: #fff;
+  height: 100px;
+  margin: 20px auto;
+}
+.footerbox footer .footer_nav p {
   width: 1200px;
   margin: 0 auto;
+  text-align: center;
+}
+.footerbox footer .footer_nav p a {
+  color: #fff;
+}
+.footerbox footer .footer_nav p.p1 {
+  font-size: 18px;
+  padding-top: 20px;
+}
+.footerbox footer .footer_nav p.p1 a {
+  font-size: 18px;
+  display: inline-block;
+  margin: 0 15px;
+}
+.footerbox footer .footer_nav p.p2 {
+  font-size: 14px;
+  padding-top: 15px;
+}
+.footerbox footer .footer_nav p.p2 a {
+  display: inline-block;
+  margin: 0 15px;
+}
+.footerbox footer .copyright {
+  width: 1200px;
+  margin: 0 auto;
+  text-align: center;
+  padding-bottom: 20px;
 }
 .filebox {
   position: relative;

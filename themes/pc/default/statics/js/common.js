@@ -51,7 +51,9 @@ $(function(){
 
 
 
-//首页楼层滚动效果
+/**
+ *首页楼层滚动效果
+ */
 $(function(){
     $(window).scroll(function(){
         var scrollTop=$(this).scrollTop();        //获取滚动条滚动的距离
@@ -70,8 +72,18 @@ $(function(){
     $('.fixed_floorNav li').click(function(){
         var index=$('.fixed_floorNav li').index(this);
         var val=$('.floor').eq(index).offset().top
-        $("html,body").animate({scrollTop:val},1000);
+        $("html,body").stop().animate({scrollTop:val},1000);
 
     })  
 
+})
+
+
+/*
+ *首页返回顶部
+ */
+$(function(){
+    $('.gotoTop').click(function(){
+        $("html,body").stop().animate({scrollTop:0},1000);
+    })
 })
