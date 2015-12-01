@@ -53,12 +53,18 @@
                     <div class="form-group">
                         <label class="col-xs-2 control-label"><span>产品相册</span></label>
                         <div class="col-xs-5 pro_imgs">
+                            <textarea class="hidden pro_img_showbox">
+                                <div class="pro_img_item">
+                                    <input type="hidden" name="goods[images][]" value="{image_id}">
+                                    <img src="{url}" width="120" height="120" />
+                                </div>
+                            </textarea>
                             <div class="filebox">
                                 <input type="hidden" value="<{$goods.image_default_id}>" name="goods[image_default_id]">
                                 <input type="file" data-url="<{link app=image ctl=site_upload act=index}>" accept="image/*" class="file_input">
                                 <div class="showImg">
                                     <img src="<{if $goods.image_default_id}><{$goods.image_default_id|storager:'xs'}><{else}><{$base_url}>/themes/pc/default/statics/images/file_add.jpg<{/if}>">
-                                </div> 
+                                </div>   
                             </div>
                         </div>
                     </div>
@@ -197,6 +203,7 @@
                                         <th>条码</th>
                                         <th>销售价</th>
                                         <th>重量</th>
+                                        <th>库存</th>
                                         <th>单位</th>
                                         <th width="50px;">上架</th>
                                     </tr>
@@ -237,14 +244,17 @@
                         <td>
                             <input type="text" data-map="price" class="form-control input-sm" name="goods[product][{key}][price]" value="">
                         </td>
-                        <td>
+                        <!-- <td>
                             <input type="text" data-map="mktprice" class="form-control input-sm" name="goods[product][{key}][mktprice]" value="">
-                        </td>
+                        </td> -->
                         <td>
                             <input type="text" data-map="weight" name="goods[product][{key}][weight]" class="form-control input-sm input-xsmall" value="" placeholder="克">
                         </td>
                         <td>
-                            <input type="text" data-map="unit" name="goods[product][{key}][unit]" class="form-control input-sm input-xsmall" value="">
+                            <input type="text" data-map="quantity" name="goods[product][{key}][quantity]" class="form-control input-sm input-xsmall" value="">
+                        </td>
+                        <td>
+                            <input type="text" data-map="unit" name="goods[product][{key}][unit]" class="form-control input-sm input-xsmall" value="" style="width:40px;">
                         </td>
                         <td>
                             <input type="checkbox" name="goods[product][{key}][marketable]" value="true" checked>
@@ -606,7 +616,7 @@ if (index > 1) {
 } else {
     cat_name = $("#select_cat").children().children('select').eq(index - 1).find("option:selected").text();
 }
-cat_name = cat_name.replace('?', '').trim();
+cat_name = cat_name.replace('•', '').trim();
 var gid = $("input[name='goods[gid]']").val().trim();
 $(".input_goodsname").val(select_brand + cat_name + gid);
 }
@@ -693,6 +703,12 @@ $(function() {
 
 <script>
 $(function() {
+    var substitute = function(str,obj){
+        return str.replace(/\\?\{([^{}]+)\}/g, function(match, name){
+           if (match.charAt(0) == '\\') return match.slice(1);
+           return (obj[name] != undefined) ? obj[name] : '';
+        });
+    }
     $('input[type="file"]').fileupload({
 
         add: function(e, data) {
@@ -704,17 +720,8 @@ $(function() {
         done: function(e, data) {
             var re = $.parseJSON(data.result);
             var input = e.target || e.srcElement;
-            $(input).prev('input[type="hidden"]').attr('value', re.image_id);
-            $(input).next('.showImg').find('img').attr('src',re.url);
-            $(input).parents('.pro_imgs').append(
-                '<div class="filebox">'
-                    +'<input type="hidden" value="<{$goods.image_default_id}>" name="goods[image_default_id]">'
-                    +'<input type="file" data-url="<{link app=image ctl=site_upload act=index}>" accept="image/*" class="file_input">'
-                    +'<div class="showImg">'
-                        +'<img src="<{if $goods.image_default_id}><{$goods.image_default_id|storager:'xs'}><{else}><{$base_url}>/themes/pc/default/statics/images/file_add.jpg<{/if}>">'
-                    +'</div>' 
-                +'</div>')
-
+            var content=$('.pro_img_showbox').val();
+            $('.filebox').before(substitute(content, re));
         }
     });
 });
