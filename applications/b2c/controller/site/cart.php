@@ -117,7 +117,7 @@ class b2c_ctl_site_cart extends b2c_frontpage
         $this->set_tmpl('addtocart');
         $this->page('site/cart/addtocart.html');
     }
-    public function fastbuy($product_id, $num)
+    public function fastbuy($product_id, $store_id, $num)
     {
         $this->verify_member();
         $params = $this->_request->get_params(true);
@@ -133,6 +133,7 @@ class b2c_ctl_site_cart extends b2c_frontpage
             'goods' => array(
                 'product_id' => $product_id,
                 'num' => $num,
+                'store_id' => $store_id,
             ),
         );
         $ident = $this->cart_stage->add('goods', $object, $msg, true); //fastbuy

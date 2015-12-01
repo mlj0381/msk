@@ -90,8 +90,11 @@
                     单位
                 </th>
                 <th>
+                   价格区间
+               </th>
+                <!-- <th>
                     设置
-                </th>
+                </th> -->
             </tr>
         </thead>
         <tbody class="exist-products">
@@ -134,6 +137,20 @@
                         <input type="text" data-map="unit" name="goods[product][<{$key}>][unit]" class="form-control input-sm input-xsmall" value="<{$product.unit}>">
                     </td>
                     <td>
+                        <div class="input-group input-group-sm">
+                            <span class="input-group-addon">区间:</span>
+                            <input type="text" data-map="bn" class="form-control" name="goods[product][<{$key}>][price_interval]" value="<{$product.price_interval}>">
+                        </div>
+                        <div class="input-group input-group-sm">
+                            <span class="input-group-addon">上行:</span>
+                        <input type="text" data-map="barcode" class="form-control" name="goods[product][<{$key}>][price_up]" value="<{$product.price_up}>">
+                        </div>
+                        <div class="input-group input-group-sm">
+                            <span class="input-group-addon">下行:</span>
+                        <input type="text" data-map="barcode" class="form-control" name="goods[product][<{$key}>][price_dn]" value="<{$product.price_dn}>">
+                        </div>
+                    </td>
+                    <!-- <td>
                         <label>
                             <input type="checkbox" name="goods[product][<{$key}>][marketable]" value="true" <{if $product.marketable!='false' }>checked
                             <{/if}>>
@@ -149,7 +166,7 @@
                             <{/if}>>
                             默认货品
                         </label>
-                    </td>
+                    </td> -->
                 </tr>
                 <{/foreach}>
         </tbody>

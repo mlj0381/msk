@@ -156,6 +156,11 @@ class b2c_ctl_site_checkout extends b2c_frontpage
             'ctl' => 'site_member',
             'act' => 'orders',
         ));
+        if($this->app->model('orders')->update(array('pay_status' => '1'), array('order_id' => $order_id))){
+            $this->splash('success', $redirect, '支付成功');
+        }
+        $this->splash('error', $redirect, '支付失败');
+
         $obj_bill = vmc::singleton('ectools_bill');
         $mdl_bills = app::get('ectools')->model('bills');
         $order = $this->app->model('orders')->dump($order_id);

@@ -223,6 +223,7 @@ class b2c_ctl_site_order extends b2c_frontpage
                 break;
             }
         }
+
         //$this->pagedata['menu'] = $this->get_menu();
         $this->pagedata['_PAGE_'] = 'site/order/detail.html';
         $this->output();
@@ -240,5 +241,18 @@ class b2c_ctl_site_order extends b2c_frontpage
         } else {
             $this->splash('success', null, $tracker_log);
         }
+    }
+
+    //取消订单
+    public function abolish(){
+        if($_POST){
+            $redirect = $this->gen_url(array('app' => 'b2c', 'ctl' => 'site_member', 'act' => 'orders', 'args0' => 's1'));
+            $data = $_POST;
+            if(!app::get('b2c')->model('orders')->save($data)){
+                $this->splash('error', $redirect, '取消失败');
+            }
+            $this->splash('success', $redirect, '取消成功');
+        }
+        $this->splash('error', $redirect, '非法请求');
     }
 }

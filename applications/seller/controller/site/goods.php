@@ -89,6 +89,7 @@ class seller_ctl_site_goods extends seller_frontpage
     //添加商品
     public function add($goods_id){
         $this->pagedata['goods'] = $this->mGoods->dump($goods_id, '*', 'default');
+        print_r($this->pagedata['goods']);
         $this->pagedata['_PAGE_'] = 'from.html';
         $this->_editor();
         $this->output();
