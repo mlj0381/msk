@@ -32,19 +32,26 @@ class b2c_ctl_site_list extends b2c_frontpage
             if($value['parent_id'] == $params['cat_id']){
                 if($value['cat_lv'] == 2){
                     $cat_title = '二级分类';
-                }else if($value['cat_lv'] == 3){
-                    $cat_title = '三级分类';
                 }
                 $this->pagedata['cat_title'] = $cat_title;
-                break;
+                //break;
+            }
+            if($value['id'] == $params['cat_id'] && $value['cat_lv'] == '1'){
+                $cat_id = $value['id'];
             }
         }
+
+
         $this->pagedata['cat'] = $cat_setting;
         $this->pagedata['cat_id'] = $params['cat_id'];
         $query_str = $this->_query_str($params);
         $this->pagedata['query'] = $this->_query_str($params, 0);
         $params = $this->_params_decode($params);
         $filter = $params['filter'];
+        if($cat_id){
+            $filter['parent_id'] = $cat_id;
+            unset($filter['cat_id']);
+        }
         // if (!$fix_brand && $filter['cat_id']) {
         //     $mdl_cat = $this->app->model('goods_cat');
         //     $cat_info = $mdl_cat->dump($filter['cat_id']);
