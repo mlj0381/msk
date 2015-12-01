@@ -52,17 +52,13 @@
                     </div>
                     <div class="form-group">
                         <label class="col-xs-2 control-label"><span>产品相册</span></label>
-                        <div class="col-xs-5">
+                        <div class="col-xs-5 pro_imgs">
                             <div class="filebox">
                                 <input type="hidden" value="<{$goods.image_default_id}>" name="goods[image_default_id]">
                                 <input type="file" data-url="<{link app=image ctl=site_upload act=index}>" accept="image/*" class="file_input">
                                 <div class="showImg">
-                                    <img src="<{$base_url}>/themes/pc/default/statics/images/file_add.jpg">
-                                </div>
-                                <span class="file_ctr">
-                                    <a href="#">查看</a>
-                                    <a href="#">删除</a>
-                                </span>
+                                    <img src="<{if $goods.image_default_id}><{$goods.image_default_id|storager:'xs'}><{else}><{$base_url}>/themes/pc/default/statics/images/file_add.jpg<{/if}>">
+                                </div> 
                             </div>
                         </div>
                     </div>
@@ -273,47 +269,10 @@
                 </div>
                 <div role="tabpanel" class="tab-pane" id="tuwen">
                     <div class="editerbox">
-                    此处是编辑器
-                    <script charset="utf-8">
-                        $('#editor_e2407d').summernote({
-                            height: 600,
-                            lang:'zh-CN',
-                            toolbar: [
-                                        ['style',['style']],
-                                        ['color', ['color']],
-                                        ['height', ['height']],
-                                        ['style',['bold', 'italic', 'underline', 'clear']],
-                                        ['para', ['ul', 'ol', 'paragraph']],
-                                        ['insert',['link','picture','table']],
-                                        ['misc',['fullscreen','codeview']]
-                                ],
-                            onImageUpload: function(files, editor, editable) {
-                                    var data = new FormData();
-                                    var file = files[0];
-                                    data.append('file',file);
-                                    $.ajax({
-                                        data: data,
-                                        type: "POST",
-                                        url: "/index.php/console/index.php?app=image&ctl=admin_manage&act=wysiswyg_upload",
-                                        cache: false,
-                                        contentType: false,
-                                        processData: false,
-                                        success: function(re) {
-                                            try{
-                                                re = $.parseJSON(re);
-                                            }catch(e){
-
-                                            }
-                                            if(re.url)
-                                            editor.insertImage(editable, re.url);
-                                        }
-                                    });
-                                },onChange:function(){
-                                    $('#editor_e2407d').html($('#editor_e2407d').code());
-                                }
-                            });
-
-                    </script>
+                        <div class="edit_tools">
+                            <img src="<{$base_url}>/themes/pc/default/statics/images/edit_tools.png" />
+                        </div>
+                        <textarea></textarea>
                     </div>
 
                 </div>
@@ -387,7 +346,7 @@
         </div>
 
         <div class="form_action">
-            <a href="/index.php/merchant-goodslist.html">返回商品列表</a>
+            <!-- <a href="/index.php/merchant-goodslist.html">返回商品列表</a> -->
             <a href='javascript:;' class="save_goods" data-redirect="<{link app=seller ctl=site_goods act=save}>&p[0]={goods_id}">保存</a>
             <a href='javascript:;' class="save_goods" data-redirect="<{link app=seller ctl=site_goods act=save}>&p[0]={goods_id}">保存并添加商品</a>
         </div>
@@ -597,37 +556,33 @@ var product_items_change = function() {
 </script>
 <script>
 $(function() {
-$(".goods_add_imgs").change(function() {
-    var _this = $(this);
-    //创建FormData对象
-    var data = new FormData();
-    //为FormData对象添加数据
-    $.each($(this)[0].files, function(i, file) {
+    $(".goods_add_imgs").change(function() {
+        var _this = $(this);
+        //创建FormData对象
+        var data = new FormData();
+        //为FormData对象添加数据
+        $.each($(this)[0].files, function(i, file) {
 
-        data.append('files', file);
+            data.append('files', file);
+        });
+
+        $.ajax({
+            url: 'image-gimages_upload.html',
+            type: 'POST',
+            data: data,
+            cache: false,
+            contentType: false, //不可缺
+            processData: false, //不可缺
+            success: function(data) {
+                data = eval("(" + data + ")");
+
+                $("#image_default").val(data['image_id']);
+                _this.next().find('img').attr('src', data['url']);
+                _this.next().append('<input type="hidden" value="' + data['image_id'] + '" name="goods[images][]">');
+
+            }
+        });
     });
-
-    $.ajax({
-        url: 'image-gimages_upload.html',
-        type: 'POST',
-        data: data,
-        cache: false,
-        contentType: false, //不可缺
-        processData: false, //不可缺
-        success: function(data) {
-            data = eval("(" + data + ")");
-
-            $("#image_default").val(data['image_id']);
-            //_this.next().html("");
-            _this.next().find('img').attr('src', data['url']);
-            _this.next().append('<input type="hidden" value="' + data['image_id'] + '" name="goods[images][]">');
-
-            /*$("#showimage").append('<img src="'+data['url']+'" alt="">');
-            $("#showimage").append('<input type="hidden" value="'+data['image_id']+'" name="goods[images][]">');*/
-
-        }
-    });
-});
 });
 String.prototype.trim = function() {
 return this.replace(/(^\s*)|(\s*$)/g, '');
@@ -740,19 +695,27 @@ $(function() {
 $(function() {
     $('input[type="file"]').fileupload({
 
-    add: function(e, data) {
-        if (!data.files[0]['type'].match(/^image/)) {
-            alert('非法上传，不是图片类型');
-        }
-        data.submit();
-    },
-    done: function(e, data) {
-        var re = $.parseJSON(data.result);
-        var input = e.target || e.srcElement;
-        $(input).prev('input[type="hidden"]').attr('value', re.image_id);
-        $(input).next('.showImg').find('img').attr('src',re.url);
+        add: function(e, data) {
+            if (!data.files[0]['type'].match(/^image/)) {
+                alert('非法上传，不是图片类型');
+            }
+            data.submit();
+        },
+        done: function(e, data) {
+            var re = $.parseJSON(data.result);
+            var input = e.target || e.srcElement;
+            $(input).prev('input[type="hidden"]').attr('value', re.image_id);
+            $(input).next('.showImg').find('img').attr('src',re.url);
+            $(input).parents('.pro_imgs').append(
+                '<div class="filebox">'
+                    +'<input type="hidden" value="<{$goods.image_default_id}>" name="goods[image_default_id]">'
+                    +'<input type="file" data-url="<{link app=image ctl=site_upload act=index}>" accept="image/*" class="file_input">'
+                    +'<div class="showImg">'
+                        +'<img src="<{if $goods.image_default_id}><{$goods.image_default_id|storager:'xs'}><{else}><{$base_url}>/themes/pc/default/statics/images/file_add.jpg<{/if}>">'
+                    +'</div>' 
+                +'</div>')
 
-    }
-});
+        }
+    });
 });
 </script>

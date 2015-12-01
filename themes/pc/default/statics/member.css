@@ -1258,6 +1258,23 @@ ol {
   color: #fff;
   border: 1px solid #222;
 }
+.buyer_container .addgoods_form .editerbox {
+  width: 100%;
+}
+.buyer_container .addgoods_form .editerbox .edit_tools {
+  width: 100%;
+  background: #f5f5f5;
+  border: 1px solid #ddd;
+}
+.buyer_container .addgoods_form .editerbox textarea {
+  width: 100%;
+  border: 1px solid #ddd;
+  min-height: 400px;
+  min-width: 100%;
+  max-width: 100%;
+  padding: 10px;
+  outline: none;
+}
 .buyer_container .goods_sell .page-title {
   border-bottom: 1px solid #ddd;
   padding-bottom: 15px;

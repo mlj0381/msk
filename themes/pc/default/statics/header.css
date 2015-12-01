@@ -372,9 +372,10 @@ nav.navbar ul.nav li .category-container .category .tab-pane .tab-pane-brand {
 }
 .footerbox {
   width: 100%;
-  padding: 0px;
-  margin: 0px;
+  padding: 10px 0 0 0;
+  margin: 20px 0 0 0;
   background: #fff;
+  border-top: 1px solid #ddd;
 }
 .footerbox footer {
   width: 100%;
@@ -469,8 +470,10 @@ nav.navbar ul.nav li .category-container .category .tab-pane .tab-pane-brand {
   padding-bottom: 20px;
 }
 .filebox {
+  display: inline-block;
   position: relative;
   height: 120px;
+  width: 120px;
 }
 .filebox .file_input {
   position: absolute;
@@ -501,3 +504,12 @@ nav.navbar ul.nav li .category-container .category .tab-pane .tab-pane-brand {
   display: block;
   font-size: 14px;
 }
+/* .file_add{
+	position: relative;
+	width:120px;
+	height:120px;
+	border:1px solid #ddd;
+	display: inline-block;
+	overflow: hidden;
+	cursor: pointer;
+} */
