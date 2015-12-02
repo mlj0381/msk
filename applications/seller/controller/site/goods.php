@@ -97,6 +97,7 @@ class seller_ctl_site_goods extends seller_frontpage
 
     public function save()
 	{
+        print_r($_POST);exit;
         $redirect_url = $this->gen_url(array('app' => 'seller', 'ctl' => 'site_goods', 'act' => 'index'));
         if(!$_POST) $this->splash(false, $redirect_url, '非法请求');
         $goods_data = vmc::singleton('seller_goods_data');
