@@ -101,10 +101,12 @@ class b2c_ctl_site_order extends b2c_frontpage
             $this->logger->fail('create', '没有可结算商品', $params);
             $this->splash('error', $redirect_cart, '没有可结算商品');
         }
-        if ($params['cart_md5'] != utils::array_md5($cart_result)) {
-            $this->logger->fail('create', '购物车发生变化', $params);
-            $this->splash('error', $redirect_cart, '购物车发生变化');
-        }
+
+        //2015、12、2演示过后修改
+        // if ($params['cart_md5'] != utils::array_md5($cart_result)) {
+        //     $this->logger->fail('create', '购物车发生变化', $params);
+        //     $this->splash('error', $redirect_cart, '购物车发生变化');
+        // }
         $db = vmc::database();
         //开启事务
         $this->transaction_status = $db->beginTransaction();

@@ -24,7 +24,8 @@ class store_finder_store{
 
     public function detail_basic($store_id){
         $render = $this->app->render();
-        $render->pagedata['store_info'] = $this->app->model('store')->getRow('*', array('soter_id' => $store_id));
-        return $render->fetch('site/finder/store_basic.html');
+        $render->pagedata['store_info'] = $this->app->model('store')->getRow('*', array('store_id' => $store_id));
+
+        return $render->fetch('admin/finder/store_basic.html');
     }
 }

@@ -94,10 +94,9 @@ class seller_ctl_site_goods extends seller_frontpage
         $this->output();
     }
 
-    public function save()
+    public function save($type = null)
 	{
-
-        $redirect_url = $this->gen_url(array('app' => 'seller', 'ctl' => 'site_goods', 'act' => 'index'));
+        $redirect_url = $this->gen_url(array('app' => 'seller', 'ctl' => 'site_goods', 'act' => $type ? 'add' : 'index'));
         if(!$_POST) $this->splash(false, $redirect_url, '非法请求');
         $goods_data = vmc::singleton('seller_goods_data');
         //检查是否填写了商品编号没有生成有检查是否重复

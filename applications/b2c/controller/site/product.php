@@ -38,7 +38,6 @@ class b2c_ctl_site_product extends b2c_frontpage
         $this->pagedata['store_id'] = $params[1];
         $store_obj = vmc::singleton('store_store_object');
         $this->pagedata['store_info'] = $store_obj->store_info($params[1]);
-
         //设置模板
         if ($data_detail['goods_setting']['site_template']) {
             //设置模板页

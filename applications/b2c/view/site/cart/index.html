@@ -63,7 +63,7 @@
                           </div>
                     </div>
                 </div>
-                <div class="col-xs-1 c-ci-price" data-bind="item/product/buy_price"><{$object.item.product.buy_price|cur}></div>
+                <div class="col-xs-1 c-ci-price" data-interval="<{$object.item.product.price_interval}>" data-up="<{$object.item.product.price_up}>" data-dn="<{$object.item.product.price_dn}>" data-bind="item/product/buy_price"><{$object.item.product.buy_price|cur}></div>
                 <div class="col-xs-2 c-ci-quantity">
                     <div class="product-quantity input-group input-group-sm"  data-minibuy="<{$data_detail.minibuy}>">
                         <div class="spinner-buttons input-group-btn">
@@ -80,8 +80,9 @@
                     </div>
                 </div>
                 <div class="col-xs-2 c-ci-amount">
-                    <strong data-bind="amount"><{$object.item.product.buy_price*$object.quantity|cur}></strong>
+                    <strong data-bind="amount"></strong>
                 </div>
+                <!-- <{$object.item.product.buy_price*$object.quantity|cur}> -->
                 <div class="col-xs-2 c-ci-opt">
                     <ul class="list-unstyled">
                         <li><a href="javascript:;" data-remove=".cart-body input:text[data-ident='<{$object.obj_ident}>']" class="btn btn-link btn-xs">删除</a></li>
@@ -238,6 +239,19 @@
  * @version 1.150528
  */
 void function(){
+    $('.c-ci-price').each(function(index){
+        var interval = parseInt($(this).attr('data-interval')), price_up = parseFloat($(this).attr('data-up')), price_dn = parseFloat($(this).attr('data-dn'));
+        var input_obj = $('.c-ci-quantity input[type=text]').eq(index);
+        var buy_price = $('.c-ci-amount strong').eq(index);
+        var num = parseInt(input_obj.val());
+        if(interval > 0 && num > interval){
+            $(this).text(price_up.toFixed(2));
+            buy_price.text(num * price_up);
+            $('.c-cf-amount strong').text(num * price_up);
+        }else{
+            buy_price.text(num * parseFloat($(this).text()));
+        }
+    })
     var _alert = function(msg,target_el){
         $(target_el).popover({
             content:msg,
@@ -406,7 +420,7 @@ void function(){
              }
              _alert(re.error,target_el);
          }
-         
+
          if(re.success && re.data){
              checkbox_all_status();//更新全选状态
              //location = re.redirect;
