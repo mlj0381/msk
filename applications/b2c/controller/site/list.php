@@ -63,7 +63,9 @@ class b2c_ctl_site_list extends b2c_frontpage
         // } elseif($fix_brand) {
         //     $filter['brand_id'] = $fix_brand;
         // }
+
          $goods_list = $this->_list($filter, $params['page'], $params['orderby'], $keywords);
+
          $store_obj = vmc::singleton('store_store_object');
          foreach ($goods_list['data'] as $key => $value) {
              $goods_list['data'][$key]['store_info'] = $store_obj->store_info($value['store_id']);
@@ -120,7 +122,6 @@ class b2c_ctl_site_list extends b2c_frontpage
         }
         $obj_goods_stage->gallery($goods_list); //引用传递
         $total = $mdl_goods->count($filter);
-
         $return  = array(
             'data' => $goods_list,
             'count' => count($goods_list) ,
@@ -131,6 +132,7 @@ class b2c_ctl_site_list extends b2c_frontpage
             ),
         );
         cachemgr::set($cache_key, $return, cachemgr::co_end());
+        //print_r($return['data']);
         return $return;
     }
     private function _query_str($params, $nopage = true)

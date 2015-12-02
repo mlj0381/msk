@@ -81,7 +81,7 @@
                             '1', '5',//product_id  store_id
                         ),
                     ),
-                    'image_id' => '611aaf5d05e41a4e43df0212d3671046',
+                    'image_id' => 'f7c5a5b54e1ce5cd0fc0c61deaa8eb91',
                     'price' => '9.00',
                     'name' => '鸡爪',
                 ),
@@ -94,7 +94,7 @@
                             '4', '5',//product_id  store_id
                         ),
                     ),
-                    'image_id' => '611aaf5d05e41a4e43df0212d3671046',
+                    'image_id' => '1ed82a9cfc269873c808f2b337fd8bfe',
                     'price' => '22.00',
                     'name' => '鸡大腿',
                 ),
@@ -107,7 +107,7 @@
                             '7', '5',//product_id  store_id
                         ),
                     ),
-                    'image_id' => '611aaf5d05e41a4e43df0212d3671046',
+                    'image_id' => 'd086b765bb50d049d845e5de4267a8b9',
                     'price' => '22.00',
                     'name' => '鸡大胸',
                 ),
@@ -120,7 +120,7 @@
                             '10', '5',//product_id  store_id
                         ),
                     ),
-                    'image_id' => '611aaf5d05e41a4e43df0212d3671046',
+                    'image_id' => 'e08e630a0aa3db2d1367d1576315d7f9',
                     'price' => '18.00',
                     'name' => '鸡翅',
                 ),
@@ -133,7 +133,7 @@
                             '13', '5',//product_id  store_id
                         ),
                     ),
-                    'image_id' => '611aaf5d05e41a4e43df0212d3671046',
+                    'image_id' => '766c25ae515fa9fa4b939c3f27bdcd56',
                     'price' => '22.00',
                     'name' => '鸡心',
                 ),
@@ -146,7 +146,7 @@
                             '16', '5',//product_id  store_id
                         ),
                     ),
-                    'image_id' => '611aaf5d05e41a4e43df0212d3671046',
+                    'image_id' => '2a33b9c510f7a641a25ea1b45e9cbb63',
                     'price' => '31.00',
                     'name' => '鸡杂',
                 ),
@@ -159,7 +159,7 @@
                             '2', '5',//product_id  store_id
                         ),
                     ),
-                    'image_id' => '611aaf5d05e41a4e43df0212d3671046',
+                    'image_id' => '6c6a87a3e0b0af6d8bdbfda714f4ba39',
                     'price' => '17.00',
                     'name' => '鸡爪',
                 ),
@@ -172,7 +172,7 @@
                             '17', '5',//product_id  store_id
                         ),
                     ),
-                    'image_id' => '611aaf5d05e41a4e43df0212d3671046',
+                    'image_id' => '2a33b9c510f7a641a25ea1b45e9cbb63',
                     'price' => '63.00',
                     'name' => '鸡杂',
                 ),
@@ -185,7 +185,7 @@
                             '11', '5',//product_id  store_id
                         ),
                     ),
-                    'image_id' => '611aaf5d05e41a4e43df0212d3671046',
+                    'image_id' => 'e08e630a0aa3db2d1367d1576315d7f9',
                     'price' => '34.00',
                     'name' => '鸡翅',
                 ),
@@ -612,7 +612,7 @@
                      'score' => '',
                      'brief' => '',
                      'goods_type' => 'normal',
-                     'image_default_id' => 'b91965a7cfd13c5d4c4680f6745e70a6',
+                     'image_default_id' => 'f7c5a5b54e1ce5cd0fc0c61deaa8eb91',
                      'intro' => '<p><br></p>',
                      'min_buy' => '',
                      'nostore_sell' => '0',
