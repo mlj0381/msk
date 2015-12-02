@@ -7,7 +7,7 @@
         <permission id="seo" display='true' workground='site.wrokground'>搜索引擎优化</permission>
     </permissions>
 
-    <workground name="电脑PC前台" icon="icon-screen-desktop" id="site.wrokground" app="site" controller="admin_module" action="index" order="70">
+    <workground name="站点设置" icon="icon-screen-desktop" id="site.wrokground" app="site" controller="admin_module" action="index" order="70">
         <menugroup name="模板管理">
             <menu controller='admin_theme_manage' action='index' permission='theme' display='true' order="5">模板管理</menu>
         </menugroup>

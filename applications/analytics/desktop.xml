@@ -1,7 +1,8 @@
 <desktop>
     <permissions>
-        <permission display='true' id="show_analytics">报表分析</permission>
+        <permission display='false' id="show_analytics">报表分析</permission>
     </permissions>
+    <!--
     <workground icon="icon-bar-chart" id="wrokground.analytics" name="报表" order='65'>
         <menugroup name="经营概况">
             <menu action='index' controller='admin_analytics' display='true' order='10' permission='show_analytics'>销售情况</menu>
@@ -17,4 +18,5 @@
             <menu action='index5' controller='admin_analytics' display='true' order='15' permission='show_analytics'>营销成本统计</menu>
         </menugroup>
     </workground>
+    -->
 </desktop>

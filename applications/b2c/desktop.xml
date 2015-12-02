@@ -32,9 +32,9 @@
         <permission display='true' id="comment">会员评价</permission>
         <permission display='true' id="member_msg">会员消息</permission>
 <!--营销-->
-        <permission display='true' id="sales">订单促销</permission>
-        <permission display='true' id="salesgood">商品促销</permission>
-        <permission display='true' id="salescoupon">优惠券</permission>
+        <permission display='false' id="sales">订单促销</permission>
+        <permission display='false' id="salesgood">商品促销</permission>
+        <permission display='false' id="salescoupon">优惠券</permission>
     </permissions>
     <widgets id="b2c_desktop_widgets_stats" order='30'>业务概览</widgets>
     <widgets id="b2c_desktop_widgets_workcount" order='30'>待处理事项</widgets>
@@ -75,21 +75,23 @@
     </workground>
     <workground icon="icon-basket-loaded" id="b2c.wrokground.order" name="订单" order="20">
         <menugroup name="订单管理">
+            <!--
             <menu action='index' controller='admin_order' display='true' order='20' permission='order_list'>订单列表</menu>
             <menu action='index' params='p[0]:s1' controller='admin_order' display='true' order='21' permission='order_list'>待付款</menu>
             <menu action='index' params='p[0]:s2' controller='admin_order' display='true' order='22' permission='order_list'>待发货</menu>
             <menu action='index' params='p[0]:s3' controller='admin_order' display='true' order='23' permission='order_list'>已发货</menu>
-            <menu action='index' params='p[0]:s4' controller='admin_order' display='true' order='24' permission='order_list'>已作废</menu>
-            <menu action='index' params='p[0]:s7' controller='admin_order' display='true' order='25' permission='order_list'>已完成</menu>
+            <menu action='index' params='p[0]:s4' controller='admin_order' display='false' order='24' permission='order_list'>已完成</menu>
+            <menu action='index' params='p[0]:s7' controller='admin_order' display='false' order='25' permission='order_list'>已结算</menu>
             <menu action='detail' controller='admin_order' display='false' order='11' permission='order_detail'>处理订单</menu>
             <menu action='edit' controller='admin_order' display='false' order='12' permission='order_edit'>订单编辑</menu>
             <menu action='discount' controller='admin_order' display='false' order='12' permission='order_discount'>订单减价</menu>
+            -->
         </menugroup>
     </workground>
     <workground icon="fa  fa-truck" id="b2c.wrokground.delivery" name="物流" order="21">
         <menugroup name="物流管理">
-            <menu action='index' controller='admin_delivery' display='true' order='40' permission='order_delivery'>发货单</menu>
-            <menu action='index' controller='admin_reship' display='true' order='60' permission='order_delivery'>退货单</menu>
+            <menu action='index' controller='admin_delivery' display='false' order='40' permission='order_delivery'>发货单</menu>
+            <menu action='index' controller='admin_reship' display='false' order='60' permission='order_delivery'>退货单</menu>
         </menugroup>
     </workground>
 
@@ -99,17 +101,18 @@
             <menu action='detail' controller='admin_member' display='false' order='10' permission='member'>会员详情</menu>
             <menu action='add_page' controller='admin_member' display='false' order='10' permission='addmember'>添加会员</menu>
             <menu action='index' controller='admin_member' display='false' order='24' params='action:detail|finderview:detail_edit' permission='editmember'>编辑会员</menu>
-            <menu action='index' controller='admin_member_lv' display='true' order='30' permission='memberlv'>会员等级</menu>
+            <menu action='index' controller='admin_member_lv' display='false' order='30' permission='memberlv'>会员等级</menu>
             <menu action='addnew' controller='admin_member_lv' display='false' order='10' permission='memberlv'>会员等级编辑</menu>
         </menugroup>
         <menugroup name="咨询评价">
             <menu action='index' controller='admin_member_comment' display='true' order='110' permission='comment'>评价列表</menu>
-            <menu action='index' controller='admin_member_msg' display='true' order='150' permission='member_msg'>消息列表</menu>
+            <menu action='index' controller='admin_member_msg' display='false' order='150' permission='member_msg'>消息列表</menu>
         </menugroup>
     </workground>
+    <!--
     <workground icon="icon-present" id="b2c.wrokground.sale" name="营销" order="40">
         <menugroup name="促销">
-            <menu action='index' controller='admin_sales_order' display='true' order='1' permission='sales'>订单促销</menu>
+            <menu action='index' controller='admin_sales_order' display='false' order='1' permission='sales'>订单促销</menu>
             <menu action='add' controller='admin_sales_order' display='false' permission='sales'>添加订单促销规则</menu>
             <menu action='edit' controller='admin_sales_order' display='false' permission='sales'>编辑订单促销规则</menu>
             <menu action='index' controller='admin_sales_goods' display='true' order='30' permission='salesgood'>商品促销</menu>
@@ -124,4 +127,5 @@
             <menu action='issue_list' controller='admin_sales_coupon' display='false' permission='salescoupon'>已发行优惠券列表</menu>
         </menugroup>
     </workground>
+    -->
 </desktop>
