@@ -20,7 +20,6 @@ class seller_ctl_site_aftersales extends seller_frontpage
     }
 
     public function order($type = 'all'){
-
         $limit = 10;
         $mdl_as_request = app::get('aftersales')->model('request');
         $mdl_products = app::get('b2c')->model('products');
@@ -46,6 +45,10 @@ class seller_ctl_site_aftersales extends seller_frontpage
         }
         $count = $mdl_as_request->count($filter);
         $request_list = $mdl_as_request->getList('*', $filter, ($page - 1) * $limit, $limit);
+        $mdl_member = app::get('pam')->model('members');
+        foreach ($request_list as $key => $value) {
+            $request_list[$key]['member_info'] = $mdl_member->getRow('member_id, login_account');
+        }
         foreach ($request_list as $key => &$item) {
             if ($item['product']['product_id']) {
                 $item['product']['info'] = $mdl_products->dump($item['product']['product_id']);

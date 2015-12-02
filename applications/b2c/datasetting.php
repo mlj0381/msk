@@ -78,77 +78,12 @@
                         'ctl' => 'site_product',
                         'act' => 'index',
                         'args' => array(
-                            '25', '5',//product_id  store_id
-                        ),
-                    ),
-                    'image_id' => '611aaf5d05e41a4e43df0212d3671046',
-                    'price' => '99.00',
-                    'name' => '神龙客精品五花肉',
-                ),
-                array(
-                    'url' => array(
-                        'app' => 'b2c',
-                        'ctl' => 'site_product',
-                        'act' => 'index',
-                        'args' => array(
-                            '45', '5',//product_id  store_id
-                        ),
-                    ),
-                    'image_id' => '611aaf5d05e41a4e43df0212d3671046',
-                    'price' => '99.00',
-                    'name' => '神龙客精品五花肉',
-                ),
-                array(
-                    'url' => array(
-                        'app' => 'b2c',
-                        'ctl' => 'site_product',
-                        'act' => 'index',
-                        'args' => array(
-                            '37', '5',//product_id  store_id
-                        ),
-                    ),
-                    'image_id' => '611aaf5d05e41a4e43df0212d3671046',
-                    'price' => '419.00',
-                    'name' => '神龙客精品五花肉',
-                ),
-                array(
-                    'url' => array(
-                        'app' => 'b2c',
-                        'ctl' => 'site_product',
-                        'act' => 'index',
-                        'args' => array(
-                            '37', '5',//product_id  store_id
-                        ),
-                    ),
-                    'image_id' => '611aaf5d05e41a4e43df0212d3671046',
-                    'price' => '99.00',
-                    'name' => '神龙客精品五花肉',
-                ),
-                array(
-                    'url' => array(
-                        'app' => 'b2c',
-                        'ctl' => 'site_product',
-                        'act' => 'index',
-                        'args' => array(
-                            '25', '5',//product_id  store_id
-                        ),
-                    ),
-                    'image_id' => '611aaf5d05e41a4e43df0212d3671046',
-                    'price' => '680.00',
-                    'name' => '神龙客精品五花肉',
-                ),
-                array(
-                    'url' => array(
-                        'app' => 'b2c',
-                        'ctl' => 'site_product',
-                        'act' => 'index',
-                        'args' => array(
                             '1', '5',//product_id  store_id
                         ),
                     ),
                     'image_id' => '611aaf5d05e41a4e43df0212d3671046',
-                    'price' => '4988.00',
-                    'name' => '神龙客精品五花肉',
+                    'price' => '9.00',
+                    'name' => '鸡爪',
                 ),
                 array(
                     'url' => array(
@@ -156,12 +91,12 @@
                         'ctl' => 'site_product',
                         'act' => 'index',
                         'args' => array(
-                            '46', '5',//product_id  store_id
+                            '4', '5',//product_id  store_id
                         ),
                     ),
                     'image_id' => '611aaf5d05e41a4e43df0212d3671046',
-                    'price' => '2999.00',
-                    'name' => '神龙客精品五花肉',
+                    'price' => '22.00',
+                    'name' => '鸡大腿',
                 ),
                 array(
                     'url' => array(
@@ -169,12 +104,12 @@
                         'ctl' => 'site_product',
                         'act' => 'index',
                         'args' => array(
-                            '125', '5',//product_id  store_id
+                            '7', '5',//product_id  store_id
                         ),
                     ),
                     'image_id' => '611aaf5d05e41a4e43df0212d3671046',
-                    'price' => '149.00',
-                    'name' => '神龙客精品五花肉',
+                    'price' => '22.00',
+                    'name' => '鸡大胸',
                 ),
                 array(
                     'url' => array(
@@ -182,12 +117,77 @@
                         'ctl' => 'site_product',
                         'act' => 'index',
                         'args' => array(
-                            '126', '5',//product_id  store_id
+                            '10', '5',//product_id  store_id
                         ),
                     ),
                     'image_id' => '611aaf5d05e41a4e43df0212d3671046',
-                    'price' => '239.00',
-                    'name' => 'Gap多选色全棉纯色舒适休闲短裤',
+                    'price' => '18.00',
+                    'name' => '鸡翅',
+                ),
+                array(
+                    'url' => array(
+                        'app' => 'b2c',
+                        'ctl' => 'site_product',
+                        'act' => 'index',
+                        'args' => array(
+                            '13', '5',//product_id  store_id
+                        ),
+                    ),
+                    'image_id' => '611aaf5d05e41a4e43df0212d3671046',
+                    'price' => '22.00',
+                    'name' => '鸡心',
+                ),
+                array(
+                    'url' => array(
+                        'app' => 'b2c',
+                        'ctl' => 'site_product',
+                        'act' => 'index',
+                        'args' => array(
+                            '16', '5',//product_id  store_id
+                        ),
+                    ),
+                    'image_id' => '611aaf5d05e41a4e43df0212d3671046',
+                    'price' => '31.00',
+                    'name' => '鸡杂',
+                ),
+                array(
+                    'url' => array(
+                        'app' => 'b2c',
+                        'ctl' => 'site_product',
+                        'act' => 'index',
+                        'args' => array(
+                            '2', '5',//product_id  store_id
+                        ),
+                    ),
+                    'image_id' => '611aaf5d05e41a4e43df0212d3671046',
+                    'price' => '17.00',
+                    'name' => '鸡爪',
+                ),
+                array(
+                    'url' => array(
+                        'app' => 'b2c',
+                        'ctl' => 'site_product',
+                        'act' => 'index',
+                        'args' => array(
+                            '17', '5',//product_id  store_id
+                        ),
+                    ),
+                    'image_id' => '611aaf5d05e41a4e43df0212d3671046',
+                    'price' => '63.00',
+                    'name' => '鸡杂',
+                ),
+                array(
+                    'url' => array(
+                        'app' => 'b2c',
+                        'ctl' => 'site_product',
+                        'act' => 'index',
+                        'args' => array(
+                            '11', '5',//product_id  store_id
+                        ),
+                    ),
+                    'image_id' => '611aaf5d05e41a4e43df0212d3671046',
+                    'price' => '34.00',
+                    'name' => '鸡翅',
                 ),
             ),
         ),

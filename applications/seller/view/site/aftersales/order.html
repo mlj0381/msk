@@ -66,8 +66,8 @@
 			<{foreach from=$request_list item=item}>
 			<tr>
 				<td><{$item.request_id}></td>
-				<td><a class="text-muted" href="<{link app=b2c ctl=site_order act=detail arg0=$item.order_id}>" target="_blank"><{$item.order_id}></a></td>
-				<td>东海</td>
+				<td><a class="text-muted" href="<{link app=seller ctl=site_order act=detail arg0=$item.order_id}>" target="_blank"><{$item.order_id}></a></td>
+				<td><{$item.member_info.login_account}></td>
 				<td>￥<{$item.product.info.price|cur}></td>
 				<td>￥<{$item.product.info.price|cur}></td>
 				<td><{$item.createtime|cdate}></td>

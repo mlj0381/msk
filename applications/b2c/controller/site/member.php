@@ -391,6 +391,7 @@ class b2c_ctl_site_member extends b2c_frontpage
         ));
         $order_items_group = utils::array_change_key($order_items, 'order_id', true);
         $order_count = $mdl_order->count($filter);
+        $this->pagedata['type'] = 'orders';
         $this->pagedata['current_status'] = $status;
         $this->pagedata['status_map'] = $status_filter;
         $this->pagedata['order_list'] = $order_list;

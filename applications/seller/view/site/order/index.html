@@ -55,10 +55,12 @@
             <{/if}>><a href="<{link app=seller ctl=site_order act=index args0=s3}>">待收货</a></li>
         <li <{if $current_status=='s4' }>class="active"
             <{/if}>><a href="<{link app=seller ctl=site_order act=index args0=s4}>">待评价</a></li>
-            <li><a href="#">已关闭</a></li>
+        <li <{if $current_status=='s5' }> class="active" <{/if}>>
+            <a href="<{link app=seller ctl=site_order act=index args0=s5}>">已关闭</a>
+        </li>
     </ul>
      <{if $order_list}>
-    
+
 <{/if}>
 </div>
  <{if $order_list}>

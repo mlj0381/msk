@@ -61,6 +61,13 @@ class seller_ctl_site_order extends seller_frontpage
                     '0',
                 ),
             ),
+            's5' => array(
+                'store_id' => $this->store['store_id'],
+                'status|in' => array('dead', 'active'),
+                'pay_status'=>array(
+                    '-1',
+                ),
+            ),
         );
         if ($filter = $status_filter[$status]) {
         } else {
@@ -125,6 +132,33 @@ class seller_ctl_site_order extends seller_frontpage
 
     //订单详细信息
     public function detail($order_id){
+        $mdl_order = app::get('b2c')->model('orders');
+        $mdl_order_log = app::get('b2c')->model('order_log');
+        $order = $mdl_order->dump($order_id, '*', array(
+            'items' => array(
+                '*',
+            ),
+            'promotions' => array(
+                '*',
+            ),
+            ':dlytype' => array(
+                '*',
+            ),
+            // 'store_info' => array(
+            //     'store_name, store_id',
+            // ),
+        ));
+        $store_obj = vmc::singleton('store_store_object');
+        $order['store_info'] = $store_obj->store_info($order['store_id'], 'store_id, store_name');
+        foreach ($mdl_order_log->getList('behavior,log_time', array(
+            'order_id' => $order['order_id'],
+            'result' => 'success',
+            //会员端只显示成功日志
+
+        )) as $log) {
+            $order['process'][$log['behavior']] = $log['log_time'];
+        }
+        $this->pagedata['order'] = $order;
         $this->output();
     }
 
