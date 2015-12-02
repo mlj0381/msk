@@ -59,8 +59,14 @@
                                     <img src="{url}" width="120" height="120" />
                                 </div>
                             </textarea>
+                            <{foreach from=$goods.images item=item}>
+                            <div class="pro_img_item">
+                                <input type="hidden" name="goods[images][]" value="<{$item.image_id}>">
+                                <img src="<{$item.image_id|storager:'xs'}>" width="120" height="120" />
+                            </div>
+                            <{/foreach}>
                             <div class="filebox">
-                                <input type="hidden" value="<{$goods.image_default_id}>" name="goods[image_default_id]">
+                                <input type="hidden" value="69443bbc9329413cddc5080ef5d5bb59" name="image_default">
                                 <input type="file" data-url="<{link app=image ctl=site_upload act=index}>" accept="image/*" class="file_input">
                                 <div class="showImg">
                                     <img src="<{$base_url}>/themes/pc/default/statics/images/file_add.jpg">
@@ -89,8 +95,8 @@
                     <div class="form-group">
                         <label class="col-xs-2 control-label"><span>是否上架销售</span></label>
                         <div class="col-xs-5">
-                            <span style="margin-right:20px;"><input type="radio" name="goods[marketable]" value="true">是</span>
-                            <span style="margin-right:20px;"><input type="radio" name="goods[marketable]" value="false">否</span>
+                            <span style="margin-right:20px;"><input type="radio" name="goods[marketable]" <{if $goods.marketable eq 'true'}>checked<{/if}> value="true">是</span>
+                            <span style="margin-right:20px;"><input type="radio" name="goods[marketable]" <{if $goods.marketable eq 'false'}>checked<{/if}> value="false">否</span>
                             <span class="text-danger">商品下架操作同时影响货品</span>
                         </div>
                     </div>
@@ -206,6 +212,7 @@
 
                                         <th>销售价</th>
                                         <th>重量</th>
+                                        <th width="7%">单位</th>
                                         <th>库存</th>
                                         <th>价格区间</th>
                                         <th width="8%;">上架</th>
@@ -239,11 +246,12 @@
                                         </td>
                                          <td style="vertical-align:middle">
                                              <input type="text" data-map="weight" name="goods[product][<{$key}>][weight]" class="form-control input-sm input-xsmall" value="<{$product.weight|number_format:'0':'':''}>" placeholder="克">
-                                             <input type="hidden" data-map="unit" name="goods[product][<{$key}>][unit]" class="form-control input-sm input-xsmall" value="<{$product.unit}>">
                                         </td>
                                         <td style="vertical-align:middle">
-                                            <input type="text" data-map="mktprice" class="form-control input-sm" name="goods[product][21][mktprice]" value="">
-
+                                            <input type="text" data-map="unit" name="goods[product][<{$key}>][unit]" class="form-control input-sm input-xsmall" value="<{$product.unit}>">
+                                        </td>
+                                        <td style="vertical-align:middle">
+                                            <input type="text" data-map="mktprice" class="form-control input-sm" name="goods[stock][<{$key}>][quantity]" value="">
                                         </td>
                                         <td>
                                             <div class="input-group input-group-sm">
@@ -260,7 +268,7 @@
                                             </div>
                                         </td>
                                         <td>
-                                            <input type="checkbox"  name="goods[product][21][marketable]" value="true" checked>
+                                            <input type="checkbox"  name="goods[product][<{$key}>][marketable]" value="true" checked>
                                         </td>
                                     </tr>
                                     <{/foreach}>
@@ -322,7 +330,9 @@
         </td>
         <td>
             <input type="text" data-map="weight" name="goods[product][{key}][weight]" class="form-control input-sm input-xsmall" value="" placeholder="克">
-            <input type="hidden" data-map="unit" name="goods[product][{key}][unit]" class="form-control input-sm input-xsmall" value="">
+        </td>
+        <td style="vertical-align:middle">
+            <input type="text" data-map="unit" name="goods[product][<{$key}>][unit]" class="form-control input-sm input-xsmall" value="<{$product.unit}>">
         </td>
         <td>
             <div class="input-group input-group-sm">
@@ -343,53 +353,7 @@
         </td>
     </tr>
 </textarea>
-                <!-- <textarea class="product-item-tpl hide">
-                    <tr>
-                        <td>
-                            <input type="text" name="goods[product][{key}][spec_info]" class="form-control input-sm spec-info" value="{spec_info}" readonly=true>
-                            <input type="hidden" name="goods[product][{key}][spec_desc]" class="spec-desc" value="{spec_desc}">
-                        </td>
-                        <td>
-                            <input type="text" required="true" data-map="bn" class="form-control input-sm" name="goods[product][{key}][bn]" value="">
-                        </td>
-                        <td>
-                            <input type="text" data-map="barcode" class="form-control input-sm" name="goods[product][{key}][barcode]" value="">
-                        </td>
-                        <td>
-                            <input type="text" data-map="price" class="form-control input-sm" name="goods[product][{key}][price]" value="">
-                        </td>
-                        <td>
-                            <input type="text" data-map="mktprice" class="form-control input-sm" name="goods[product][{key}][mktprice]" value="">
-                        </td>
-                        <td>
-                            <input type="text" data-map="weight" name="goods[product][{key}][weight]" class="form-control input-sm input-xsmall" value="" placeholder="克">
-                        </td>
-                        <td>
-                            <input type="text" data-map="quantity" name="goods[product][{key}][quantity]" class="form-control input-sm input-xsmall" value="">
-                        </td>
-                        <td>
-                            <input type="text" data-map="unit" name="goods[product][{key}][unit]" class="form-control input-sm input-xsmall" value="" style="width:40px;">
-                        </td>
-                        <td>
-                            <input type="checkbox" name="goods[product][{key}][marketable]" value="true" checked>
-                        </td>
-                    </tr>
-                </textarea> -->
-                <!-- <textarea class="spec-item-tpl hide">
-                    <tr>
-                        <td>
-                            <div class="input-group">
-                                <input class="form-control spec-t" name="goods[spec_desc][t][]" type="text" value="" placeholder="规格名称">
-                            </div>
-                        </td>
-                        <td>
-                            <input class='form-control spec-v' name="goods[spec_desc][v][]" type="text" value="">
-                        </td>
-                        <td>
-                            <button type=button class="btn btn-sm spec-del default"><i class="glyphicon glyphicon-trash"></i></button>
-                        </td>
-                    </tr>
-                </textarea> -->
+
                 </div>
                 <div role="tabpanel" class="tab-pane" id="tuwen">
                     <div class="editerbox">
