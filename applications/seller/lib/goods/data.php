@@ -29,6 +29,12 @@ class seller_goods_data
         } else {
             $goods['image_default_id'] = null;
         }
+        foreach ($goods['product'] as $key => $value) {
+            if($value['marketable'] == 'true'){
+                $goods['marketable'] = 'true';
+                break;
+            }
+        }
         if (isset($goods['spec_desc']) && isset($goods['spec_desc']['v']) && is_array($goods['spec_desc']['v'])) {
             foreach ($goods['spec_desc']['v'] as $key => $value) {
                 if (is_array($goods['spec_desc']['vplus']) && $goods['spec_desc']['vplus'][$key]) {
@@ -171,7 +177,6 @@ class seller_goods_data
         if (!$goods['marketable']) {
             $goods['marketable'] = 'false';
         }
-
         return $goods;
     }
 

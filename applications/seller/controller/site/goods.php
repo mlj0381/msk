@@ -89,7 +89,6 @@ class seller_ctl_site_goods extends seller_frontpage
     //添加商品
     public function add($goods_id){
         $this->pagedata['goods'] = $this->mGoods->dump($goods_id, '*', 'default');
-        print_r($this->pagedata['goods']);
         $this->pagedata['_PAGE_'] = 'from.html';
         $this->_editor();
         $this->output();
@@ -97,20 +96,20 @@ class seller_ctl_site_goods extends seller_frontpage
 
     public function save()
 	{
-        print_r($_POST);exit;
+
         $redirect_url = $this->gen_url(array('app' => 'seller', 'ctl' => 'site_goods', 'act' => 'index'));
         if(!$_POST) $this->splash(false, $redirect_url, '非法请求');
         $goods_data = vmc::singleton('seller_goods_data');
         //检查是否填写了商品编号没有生成有检查是否重复
         $goods = $goods_data->_prepare_goods_data($_POST);
         $return = $goods_data->checkin($goods);
+
         if($return){
             $this->splash('error', '',$return);
         }
         //$this->_price($_POST);
         $goods['seller_id'] = $this->seller['seller_id'];
         $goods['checkin'] = '1';
-        $goods['marketable'] = 'false';
         $goods['store_id'] = $this->store['store_id'];
         if(!$this->mGoods->save($goods)){
             $this->splash('error', $redirect_url, '商品添加失败');
