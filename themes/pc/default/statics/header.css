@@ -253,7 +253,7 @@ nav.navbar ul.nav li a {
 nav.navbar ul.nav li a:hover {
   color: #e93428;
 }
-nav.navbar ul.nav li a.focus {
+nav.navbar ul.nav li a:focus {
   color: #e93428;
 }
 nav.navbar ul.nav li a.active {
