@@ -52,14 +52,14 @@
                         <div class="col-xs-5 pro_imgs">
                             <{foreach from=$goods.images item=item}>
                                 <div class="pro_img_item">
-
+                                
                                     <div class="item_panel">
-
-                                        <span class="default <{if $item.image_id eq $goods.image_default_id}> selected<{/if}>">默认图</span>
-
+                                    
+                                        <span class="default <{if $item.image_id eq $goods.image_default_id}>selected<{/if}>">默认图</span>
+                                     
                                         <span class="glyphicon glyphicon-trash"></span>
                                     </div>
-
+                                    
                                     <div class="item_con">
                                         <input type="hidden" name="goods[images][]" value="<{$item.image_id}>">
                                         <img src="<{$item.image_id|storager:'xs'}>" width="120" height="120" />
@@ -90,28 +90,19 @@
                     <div class="form-group">
                         <label class="col-xs-2 control-label"><span>分类</span></label>
                         <div class="col-xs-5">
-                            <{input type="category" name="goods[category][cat_id]" value=$goods.category.cat_id}>
-                            <!-- <select class="form-control" name="goods[category][cat_id]">
+                            <select class="form-control" name="goods[category][cat_id]">
                                 <option value="1">无</option>
-                            </select> -->
+                            </select>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-xs-2 control-label"><span>扩展分类</span></label>
-                        <div class="col-md-5">
-                            <ul class="list-unstyled">
-                                <{if $goods.extended_cat}>
-                                <{foreach from=$goods.extended_cat item=item}>
-                                <li class="margin-bottom-10"><{input type="category" name="goods[extended_cat][]" value=$item}></li>
-                                <{/foreach}>
-                                <{else}>
-                                <li><{input type="category" name="goods[extended_cat][]"}></li>
-                                <{/if}>
-
-                            </ul>
-                            <span class="help-block">扩展分类使商品可同时属于多个分类</span>
+                        <div class="col-xs-5">
+                            <select class="form-control" name="goods[extended_cat][]">
+                                <option>无</option>
+                                <option>鸡肉类</option>
+                            </select>
                         </div>
-
                     </div>
                     <div class="form-group">
                         <label class="col-xs-2 control-label"><span>是否上架销售</span></label>
@@ -456,9 +447,9 @@
             </div>
         </div>
         <div class="form_action">
-            <a href="<{link app=seller ctl=site_goods act=index}>">返回商品列表</a>
+            <!-- <a href="/index.php/merchant-goodslist.html">返回商品列表</a> -->
             <a href='javascript:;' class="save_goods" data-redirect="<{link app=seller ctl=site_goods act=save}>&p[0]={goods_id}">保存</a>
-            <!-- <a href='javascript:;' class="save_goods" data-redirect="<{link app=seller ctl=site_goods act=save}>&p[0]={goods_id}">保存并添加商品</a> -->
+            <a href='javascript:;' class="save_goods" data-redirect="<{link app=seller ctl=site_goods act=save}>&p[0]={goods_id}">保存并添加商品</a>
         </div>
     </form>
 </div>
@@ -736,11 +727,11 @@ $(".save_goods").click(function() {
     //     alert('品类不可为空');
     //     return;
     // }
-    // var cat_val = $("select[name='goods[category][cat_id]']").val();
-    // if (!cat_val || cat_val == 0) {
-    //     alert('品名不可为空');
-    //     return;
-    // }
+    var cat_val = $("select[name='goods[category][cat_id]']").val();
+    if (!cat_val || cat_val == 0) {
+        alert('品名不可为空');
+        return;
+    }
     // if (!$("#select_brand").val()) {
     //     alert('品牌不可为空');
     //     return;
@@ -824,6 +815,13 @@ $(function() {
             var input = e.target || e.srcElement;
             var content = $('.pro_img_showbox').val();
             $('.filebox').before(substitute(content, re));
+
+            if($('.pro_imgs .pro_img_item').size()==1){
+                $('.pro_imgs .pro_img_item').find('.default').addClass('selected');
+                var default_val=$('.pro_imgs .pro_img_item:first-child').find('input[type="hidden"]').val();
+                $('#images_add').attr('value',default_val);
+            }
+
         }
     });
     //图片删除
@@ -840,16 +838,12 @@ $(function() {
                var default_val=$('.pro_imgs .pro_img_item .item_con').find('input[type="hidden"]').val();
                $('#images_add').attr('value',default_val);
             }
-
+            
 
         }
     })
 
     //设置默认图片
-    var selected=$('.pro_imgs .pro_img_item .default').hasClass('selected');
-    if(!selected){
-        $('.pro_imgs .pro_img_item:first-child').find('.default').addClass('selected');
-    }
 
     $('.pro_imgs').on('click','.item_panel',function(){
         $(this).children('.default').addClass('selected');
@@ -858,6 +852,6 @@ $(function() {
         var default_val=$(this).siblings('.item_con').find('input[type="hidden"]').val();
         $('#images_add').attr('value',default_val);
     })
-
+    
 });
 </script>

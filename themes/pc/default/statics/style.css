@@ -96,47 +96,49 @@ ol {
 }
 .glist-container .goods-list {
   margin-top: 20px;
+  /* .heading_rt{
+			width:30%;
+			.fr;
+			.toggleSpan{
+				margin-top:5px;
+				span{
+					display: inline-block;
+					width:60px;
+					height: 30px;
+					line-height: 30px;
+					text-align: center;
+					.fl;
+					margin-left:-1px;
+					background: #fff;
+					cursor:pointer;
+					&.active{
+						background: @basecolor;
+						color: #fff;
+					}
+				}
+		
+			}
+			.pageNav{
+				height: 30px;
+				line-height: 30px;
+				text-align: right;
+				margin-top:5px;
+		
+				a{
+					display: inline-block;
+					width:30px;
+					height:30px;
+					line-height: 30px;
+					border: 1px solid #ddd;
+					text-align: center;
+					background: #fff;
+				}
+			}
+		} */
 }
 .glist-container .goods-list .form-inline {
   width: 50%;
   float: left;
-}
-.glist-container .goods-list .heading_rt {
-  width: 30%;
-  float: right;
-}
-.glist-container .goods-list .heading_rt .toggleSpan {
-  margin-top: 5px;
-}
-.glist-container .goods-list .heading_rt .toggleSpan span {
-  display: inline-block;
-  width: 60px;
-  height: 30px;
-  line-height: 30px;
-  text-align: center;
-  float: left;
-  margin-left: -1px;
-  background: #fff;
-  cursor: pointer;
-}
-.glist-container .goods-list .heading_rt .toggleSpan span.active {
-  background: #e93428;
-  color: #fff;
-}
-.glist-container .goods-list .heading_rt .pageNav {
-  height: 30px;
-  line-height: 30px;
-  text-align: right;
-  margin-top: 5px;
-}
-.glist-container .goods-list .heading_rt .pageNav a {
-  display: inline-block;
-  width: 30px;
-  height: 30px;
-  line-height: 30px;
-  border: 1px solid #ddd;
-  text-align: center;
-  background: #fff;
 }
 .product-container {
   margin: 20px auto;
