@@ -25,7 +25,7 @@
             <menu app='seller' controller='site_goods' action='index' display='true' order="60">在售中的商品</menu>
 			<menu app='seller' controller='site_goods' action='storage' display='true' order="60">仓库中的商品</menu>
 			<menu app='seller' controller='site_stock' action='index' display='false' order="60">库存管理</menu>
-			<menu app='seller' controller='site_brand' action='index' display='true' order="60">商品品牌管理</menu>
+			<menu app='seller' controller='site_brand' action='index' display='false' order="60">商品品牌管理</menu>
         </menugroup>
 
 
@@ -34,6 +34,6 @@
             <!-- <menu app='aftersales' controller='site_store' action='price' display='true' order="60">退款管理</menu> -->
 			<menu app='seller' controller='site_aftersales' action='order' display='true' order="60">售后管理</menu>
             <menu app='seller' controller='site_store' action='complaints' display='false' order="60">举报管理</menu>
-			<menu app='seller' controller='site_store' action='appraisal' display='fa;se' order="60">咨询回复</menu>
+			<menu app='seller' controller='site_store' action='appraisal' display='false' order="60">咨询回复</menu>
         </menugroup>
 </menus>

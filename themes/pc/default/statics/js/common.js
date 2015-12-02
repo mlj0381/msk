@@ -56,7 +56,16 @@ $(function(){
  */
 $(function(){
     $(window).scroll(function(){
+        
         var scrollTop=$(this).scrollTop();        //获取滚动条滚动的距离
+
+        if(scrollTop>340&&scrollTop<3460){
+            $('.fixed_floorNav').removeClass('hidden');
+        }else{
+            $('.fixed_floorNav').addClass('hidden');
+        }
+        //console.log(scrollTop)
+
         $('.floor').each(function(){
             var offsetTop=$(this).offset().top;    //获取每个区块距离页面顶部的距离
             var index=$('.floor').index(this);
@@ -75,6 +84,8 @@ $(function(){
         $("html,body").stop().animate({scrollTop:val},1000);
 
     })  
+
+
 
 })
 
