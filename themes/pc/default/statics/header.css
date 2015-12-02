@@ -514,9 +514,40 @@ nav.navbar ul.nav li .category-container .category .tab-pane .tab-pane-brand {
 	cursor: pointer;
 } */
 .pro_img_item {
+  position: relative;
   width: 120px;
   height: 120px;
   display: inline-block;
   overflow: hidden;
   border: 1px solid #ddd;
+}
+.pro_img_item .item_panel {
+  position: absolute;
+  z-index: 10;
+  width: 100%;
+  height: 100%;
+}
+.pro_img_item .item_panel .default {
+  background: #f3565d;
+  color: #fff;
+  padding: 2px 3px;
+  display: none;
+}
+.pro_img_item .item_panel .default.selected {
+  display: inline-block;
+}
+.pro_img_item .item_panel .glyphicon-trash {
+  display: inline-block;
+  color: #f3565d;
+  position: absolute;
+  right: 10px;
+  margin-top: 100px;
+  cursor: pointer;
+}
+.pro_img_item .item_panel .glyphicon-trash:hover {
+  color: red;
+}
+.pro_img_item .item_con {
+  position: absolute;
+  z-index: 9;
 }
