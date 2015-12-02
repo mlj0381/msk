@@ -176,6 +176,7 @@ class b2c_cart_stage
         $f1 = app::get('ectools')->getConf('site_decimal_digit_count'); //小数位数
         $f2 = app::get('ectools')->getConf('site_decimal_type_count'); //进位方式
         $ecmath = vmc::singleton('ectools_math');
+        $mdl_product = app::get('b2c')->model('products');
         foreach ($cart_result as $i => $v1) {
             switch ($i) {
                 case 'cart_amount':
@@ -201,13 +202,20 @@ class b2c_cart_stage
                                 break;
                             }
                         }
+
+                        $price_interval = $mdl_product->getRow('price_interval, price_up', array('product_id' => $cart_result['objects']['goods'][$j]['params']['item']['product_id']));
+                        if($price_interval['price_interval'] > 0 && $cart_result['objects']['goods'][$j]['quantity'] > $price_interval['price_interval']){
+                            $cart_result['objects']['goods'][$j]['item']['product']['buy_price'] = number_format($price_interval['price_up'], 2);
+                        }
                         $cart_result['objects']['goods'][$j]['amount'] = $ecmath->formatNumber($cart_result['objects']['goods'][$j]['item']['product']['buy_price'] * $cart_result['objects']['goods'][$j]['quantity'], $f1, $f2);
+                        $price[$j] = $cart_result['objects']['goods'][$j]['amount'];
+
                     }
                 break;
             }
         }
+        $cart_result['cart_amount'] = array_sum($price);
         $cart_result['finally_cart_amount'] = $ecmath->formatNumber($cart_result['cart_amount'] - $cart_result['member_discount_amount'] - $cart_result['promotion_discount_amount'], $f1, $f2);
-
         return $cart_result;
     }
     /**

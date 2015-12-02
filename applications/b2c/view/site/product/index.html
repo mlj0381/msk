@@ -94,7 +94,7 @@
                                         </span>
                                         <i class="check glyphicon glyphicon-ok-sign"></i>
                                         <{else}>
-                                        <a href="<{if $option.marketable!='true'}>javascript:;<{else}><{link app=b2c ctl=site_product args0=$option.product_id}><{/if}>">
+                                        <a href="<{if $option.marketable!='true'}>javascript:;<{else}><{link app=b2c ctl=site_product act=index args0=$option.product_id args1=$store_info.store_id}><{/if}>">
                                             <{if $option.p_image_id}>
                                                 <img  src="<{$option.p_image_id|storager:'xs'}>">
                                             <{/if}>
@@ -393,6 +393,9 @@
     * @version 1.150620
     */
 $(function(){
+    //计算价格
+
+
     //模板填充
     var substitute = function(str, obj) {
         return str.replace(/\\?\{([^{}]+)\}/g, function(match, name) {
@@ -432,6 +435,11 @@ $(function(){
 
     //修改数量时，影响购买按钮数量参数
     $('.product-quantity .spinner-input').on('_change',function(e,cur_val){
+        var price_interval = parseInt('<{$data_detail.product.price_interval}>');
+        if(price_interval > 0){
+            var price_up = parseFloat('<{$data_detail.product.price_up}>'), price_dn = parseFloat('<{$data_detail.product.price_dn}>');
+            $('.price-availability-block strong').text(parseInt(cur_val) > price_interval ? price_up.toFixed(2) : price_dn.toFixed(2));
+        }
         $.each($('.btn-buy'),function(i,a){
             a.href = a.href.replace(/([\s\S]*?)-([\d]+?)-([\d]+?)\.html/,function(){
                 var args = arguments;
