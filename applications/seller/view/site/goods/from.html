@@ -55,7 +55,7 @@
                                 
                                     <div class="item_panel">
                                     
-                                        <span class="default <{if $item.image_id eq $goods.image_default_id}> selected<{/if}>">默认图</span>
+                                        <span class="default <{if $item.image_id eq $goods.image_default_id}>selected<{/if}>">默认图</span>
                                      
                                         <span class="glyphicon glyphicon-trash"></span>
                                     </div>
@@ -815,6 +815,13 @@ $(function() {
             var input = e.target || e.srcElement;
             var content = $('.pro_img_showbox').val();
             $('.filebox').before(substitute(content, re));
+
+            if($('.pro_imgs .pro_img_item').size()==1){
+                $('.pro_imgs .pro_img_item').find('.default').addClass('selected');
+                var default_val=$('.pro_imgs .pro_img_item:first-child').find('input[type="hidden"]').val();
+                $('#images_add').attr('value',default_val);
+            }
+
         }
     });
     //图片删除
@@ -837,10 +844,6 @@ $(function() {
     })
 
     //设置默认图片
-    var selected=$('.pro_imgs .pro_img_item .default').hasClass('selected');
-    if(!selected){
-        $('.pro_imgs .pro_img_item:first-child').find('.default').addClass('selected');
-    }
 
     $('.pro_imgs').on('click','.item_panel',function(){
         $(this).children('.default').addClass('selected');

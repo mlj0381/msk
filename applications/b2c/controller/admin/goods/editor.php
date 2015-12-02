@@ -36,7 +36,7 @@ class b2c_ctl_admin_goods_editor extends desktop_controller
     }
 
     public function save()
-    {print_r($_POST);exit;
+    {
         $this->begin($_POST['redirect']);
         $mdl_goods = $this->app->model('goods');
         $mdl_products = $this->app->model('products');
