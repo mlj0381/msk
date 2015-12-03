@@ -119,11 +119,12 @@ class b2c_ctl_site_cart extends b2c_frontpage
                 $value['item']['product']['buy_price'] = $value['item']['product']['price_up'];
             }
         }
-
-        $count_price = array_sum($price);
-        $exist_cart['gain_score'] = $count_price;
-        $exist_cart['cart_amount'] = $count_price;
-        $exist_cart['finally_cart_amount'] = $count_price;
+        if($price){
+            $count_price = array_sum($price);
+            $exist_cart['gain_score'] = $count_price;
+            $exist_cart['cart_amount'] = $count_price;
+            $exist_cart['finally_cart_amount'] = $count_price;
+        }
         //>>
         $this->pagedata['cart_result'] = $exist_cart;
         $this->pagedata['last_add'] = $ident;

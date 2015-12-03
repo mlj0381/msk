@@ -41,7 +41,7 @@
                 </p> -->
 
                  <div class="pref_info">
-                 <p><span>采购数量</span><span>&lt;<{$data_detail.product.price_interval}>箱</span><span>&gt;<{$data_detail.product.price_interval}>箱</span></p>
+                 <p><span>采购数量</span><span>&gt;<{$data_detail.product.price_interval}>箱</span><span>&lt;<{$data_detail.product.price_interval}>箱</span></p>
                  <p><span>价格</span><span>￥<{$data_detail.product.price_up|cur}>/箱</span><span>￥<{$data_detail.product.price_dn|cur}>/箱</span></p>
                  </div>
 
@@ -352,6 +352,7 @@
                             <{/if}>
                             <div class="description">
                                 <{$data_detail.description}>
+                                <img src="<{$base_url}>/themes/pc/default/statics/images/details.jpg" />
                             </div>
                         </div>
                         <div class="tab-pane fade" id="comment">
