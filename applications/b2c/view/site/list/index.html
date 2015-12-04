@@ -16,7 +16,7 @@
             <{/if}>
             <{/foreach}>
             <{else}>
-            <li class="active">全部商品（<span><{$all_count}></span>）</li>
+            <li class="active"><a href="<{link app=b2c ctl=site_list act=index}>">全部商品</a></li>
             <{/if}>
             <li class="search_li">
                 <form class="goods_search" action="<{link app=b2c ctl=site_list act=index}>" mothod="post">

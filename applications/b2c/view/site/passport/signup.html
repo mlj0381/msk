@@ -121,8 +121,26 @@
             }
         });
 
+        var _input_checkin = function(obj, length, type){
+            type = type ? type : false;
+            if(obj.val().length < length){
+                obj.popover({content : '最少位'+length+'字符', placement : 'right', container : 'body'});
+                obj.popover('show');
+                return false;
+            }
+            var re = type ? /^(?=.*[0-9]+)(?=.*[A-Za-z]+)[A-Za-z0-9]+$/ : /^[A-Za-z0-9_]+$/;
+            if(!re.test(obj.val())){
+                var val = type ? '包含非法字符或必须有两种组合' : '包含非法字符';
+                obj.popover({content : val, placement : 'right', container : 'body'});
+                obj.popover('show');
+                return false;
+            }
+            return true;
+        }
+
         $('#input_login_name').on('blur',function(e){
             var ipt = $(this);
+            if(!_input_checkin(ipt, 6)) return;
             $.post('<{link app=b2c ctl=site_passport act=check_login_name}>',{'pam_account[login_name]':ipt.val()},function(re){
                 if(re.error){
                     ipt.popover({content:re.error,placement:'right',trigger:'click',container:'body'});
@@ -140,6 +158,24 @@
                 }
 
             },'json');
+        });
+        $('#input_login_password').on('blur', function(e){
+            if(!_input_checkin($(this), 8, true)) return false;
+            $(this).closest('.form-group').removeClass('has-error').addClass('has-success');
+        });
+        $('#input_psw_confirm').on('blur', function(e){
+            if($('#input_login_password').val() != $(this).val()){
+                $(this).popover({content : '确认密码输入不正确',placement:'right',trigger:'click',container:'body'});
+                $(this).popover('show');
+                return;
+            }
+            $(this).closest('.form-group').removeClass('has-error').addClass('has-success');
+        });
+        $('#input_psw_confirm').on('focus',function(e){
+            $(this).popover('destroy');
+        });
+        $('#input_login_password').on('focus',function(e){
+            $(this).popover('destroy');
         });
         $('#input_login_name').on('focus',function(e){
             $(this).popover('destroy');
@@ -188,11 +224,6 @@
                     _cutdown_sms(btn);
                 }
             },'json');
-
-
         });
-
-
-
     }($('#member_signup_form'));
 </script>

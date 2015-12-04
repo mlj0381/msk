@@ -127,15 +127,15 @@ $(function() {
      * 迷你购物车
      */
     //购物车数量加载
-    $.getJSON('<{$base_url}>/openapi/cart/count', function(re) {
-        try {
-            if (re.data.count > 0) {
-                $('.cart-count').removeClass('hidden').text(re.data.count);
-            }
-        } catch (e) {
-
-        }
-    });
+    // $.getJSON('<{$base_url}>/openapi/cart/count', function(re) {
+    //     try {
+    //         if (re.data.count > 0) {
+    //             $('.cart-count').removeClass('hidden').text(re.data.count);
+    //         }
+    //     } catch (e) {
+    //
+    //     }
+    // });
     //购物车项
     var load_minicart = function(e) {
         if ($(this).find('.cart-count').text() == '') return false;
