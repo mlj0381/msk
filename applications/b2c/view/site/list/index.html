@@ -5,7 +5,7 @@
     <div class="row breadcrumb_row">
         <{if !$brand}>
         <ol class="breadcrumb col-md-10">
-            <li><a>您当前的位置：</a></li>
+            <li><a href="<{link app=b2c ctl=site_list act=index}>">全部商品</a></li>
             <{if $cat_path}>
             <li><a href="<{link app=b2c ctl=site_list act=index}>">全部</a></li>
             <{foreach from=$cat_path item=cat name=cp}>
@@ -16,7 +16,9 @@
             <{/if}>
             <{/foreach}>
             <{else}>
-            <li class="active"><a href="<{link app=b2c ctl=site_list act=index}>">全部商品</a></li>
+            <{foreach from=$search_info item=item}>
+                <li><a href="<{link app=b2c ctl=site_list act=index}>?cat_id=<{$item.cat_id}>"><{$item.cat_name}></a></li>
+            <{/foreach}>
             <{/if}>
             <li class="search_li">
                 <form class="goods_search" action="<{link app=b2c ctl=site_list act=index}>" mothod="post">
@@ -38,7 +40,7 @@
                   <ul>
                   <{foreach from=$cat item=item}>
 
-                    <{if $item.parent_id == $cat_id}>
+                    <{if $item.parent_id == $params.cat_id}>
                     <li>
                        <a href="<{link app=b2c ctl=site_list act=index}>?cat_id=<{$item.id}>"><{$item.name}></a>
                        </li>
@@ -51,25 +53,25 @@
           <tr>
               <td>品牌</td>
               <td>
-                   <{WIDGET_B2C_GOODS_LIST_FILTER target=brand filter=$query}>
+                   <{WIDGET_B2C_GOODS_LIST_FILTER target=brand filter=$query active=$params.brand_id}>
               </td>
           </tr>
           <tr>
               <td>价格</td>
               <td>
-                <{WIDGET_B2C_GOODS_LIST_FILTER target=price filter=$query}>
+                <{WIDGET_B2C_GOODS_LIST_FILTER target=price filter=$query active=$params.price_id}>
               </td>
           </tr>
           <tr>
               <td>产地</td>
               <td>
-                 <{WIDGET_B2C_GOODS_LIST_FILTER target=origin filter=$query}>
+                 <{WIDGET_B2C_GOODS_LIST_FILTER target=origin filter=$query active=$params.origin_id}>
               </td>
           </tr>
           <tr>
               <td>重量</td>
               <td>
-                 <{WIDGET_B2C_GOODS_LIST_FILTER target=weight filter=$query}>
+                 <{WIDGET_B2C_GOODS_LIST_FILTER target=weight filter=$query active=$params.weight_id}>
               </td>
           </tr>
       </table>

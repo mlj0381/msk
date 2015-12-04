@@ -85,6 +85,8 @@ class b2c_view_widget
     {
         $render = new base_render(app::get('b2c'));
         $render->pagedata['filter'] = vmc::service('view_datasetting')->goods_list_filter($params);
+        // print_r($params);
+        // print_r($render->pagedata['filter'] );
 		return $render->fetch('widget/list.filter.html');
     }
     //商品列表分类

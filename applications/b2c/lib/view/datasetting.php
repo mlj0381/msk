@@ -124,6 +124,7 @@
              if($key == $params['target'])
              {
                  $value['filter'] = $params['filter'];
+                 $value['active'] = $params['active'];
                  return $value;
              }
          }

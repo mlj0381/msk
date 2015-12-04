@@ -1,5 +1,24 @@
-<ul>
+<ul id="<{$filter.type}>">
+    <li><a href="<{link app=b2c ctl=site_list act=index}>?<{$filter.filter|merge_query:$filter.type:$item.id}>">不限</a></li>
     <{foreach from=$filter.item item=item}>
-    <li><a href="<{link app=b2c ctl=site_list act=index}>?<{$filter.filter|merge_query:$filter.type:$item.id}>"><{$item.name}></a></li>
+    <li><a <{if $filter.active eq $item.id}>class="activea"<{/if}>
+        href="<{link app=b2c ctl=site_list act=index}>?<{$filter.filter|merge_query:$filter.type:$item.id}>"><{$item.name}></a></li>
     <{/foreach}>
 </ul>
+<script>
+    $(function(e){
+        $('#<{$filter.type}> li a').each(function(idx){
+            if($(this).hasClass('activea')){
+                $('#<{$filter.type}> li a').eq(0).removeClass('activea');
+                return false;
+            }
+            $('#<{$filter.type}> li a').eq(0).addClass('activea');
+        });
+    });
+</script>
+<style>
+    .activea{
+        border:2px solid red;
+        padding:3px 8px;
+    }
+</style>
