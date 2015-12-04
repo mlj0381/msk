@@ -23,7 +23,7 @@
                             </a>
 
                         </li>
-                        <li class="cart"><a href="<{link app=b2c ctl=site_cart act=index}>"><i class="icon-shopping-cart"></i> 购物车</a></li>
+                        <li class="cart"><a href="<{link app=b2c ctl=site_cart act=index}>"><i class="icon-shopping-cart"></i> 购物车 <span style="color:red;"> ( 0 )</span></a></li>
                         <li class="userCenter"><a href="<{link app=b2c ctl=site_member act=index}>">会员中心</a></li>
                         <li class="favorite"><a target="_blank" href="<{link app=b2c ctl=site_member act=favorite}>"><i class="icon-star"></i> 收藏夹</a></li>
                         <li>|</li>
@@ -127,11 +127,14 @@ $(function() {
      * 迷你购物车
      */
     //购物车数量加载
-    $.getJSON('<{$base_url}>/openapi/cart/count', function(re) {
-
+    $.getJSON('<{link app=b2c ctl=site_cart act=index}>', function(re) {
         try {
-            if (re.data.count > 0) {
-                $('.cart-count').removeClass('hidden').text(re.data.count);
+            var cart_count = 0;
+            if (re.data.objects.goods.length > 0) {
+                for(var index in re.data.objects.goods){
+                    cart_count += parseInt(re.data.objects.goods[index].quantity);
+                }
+                $('.cart span').text('('+ cart_count +')')
             }
         } catch (e) {
 

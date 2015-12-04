@@ -116,16 +116,26 @@
          }
          return $this->setting['webnav'];
      }
-
-     public function goods_list_filter($params)
+     /**
+      * 获取商品属性
+      * @param $params 属性类型
+      */
+     public function goods_list_filter($params, $type = true)
      {
          foreach($this->setting['filter'] as $key => $value)
          {
-             if($key == $params['target'])
-             {
-                 $value['filter'] = $params['filter'];
-                 $value['active'] = $params['active'];
-                 return $value;
+             if($key == $params['target']){
+                 if($type){
+                     $value['filter'] = $params['filter'];
+                     $value['active'] = $params['active'];
+                     return $value;
+                 }else{
+                     foreach ($value['item'] as $k => $v) {
+                         if($v['id'] == $params['id']){
+                             return $v;
+                         }
+                     }
+                 }
              }
          }
      }
@@ -155,4 +165,23 @@
          return $return;
      }
 
+     //商品列表页按属性搜索获取单个属性值
+     public function list_search(&$search_info, $params){
+         $search_filter = array(
+            'brand_id'  => '品牌',
+            'price_id'  => '价格',
+            'origin_id' => '产地',
+            'weight_id' => '重量'
+        );
+        $search_filter = array_intersect_key($search_filter, $params);
+        unset($params['cat_id']);
+         foreach ($params as $key => $value) {
+             $args = array(
+                 'target'=> substr($key, 0, (strpos($key, '_'))),
+                 'id'   => $value,
+             );
+             $search_info['prop'][$key] = $this->goods_list_filter($args, false);
+             $search_info['prop'][$key]['type_name'] = $search_filter[$key];
+         }
+     }
  }

@@ -3,9 +3,8 @@
 <{/if}>
 <div class="glist-container">
     <div class="row breadcrumb_row">
-        <{if !$brand}>
-        <ol class="breadcrumb col-md-10">
-            <li><a href="<{link app=b2c ctl=site_list act=index}>">全部商品</a></li>
+        <ol class="breadcrumb col-xs-10">
+            <li><a href="<{link app=b2c ctl=site_list act=index}>">全部商品：</a></li>
             <{if $cat_path}>
             <li><a href="<{link app=b2c ctl=site_list act=index}>">全部</a></li>
             <{foreach from=$cat_path item=cat name=cp}>
@@ -16,8 +15,8 @@
             <{/if}>
             <{/foreach}>
             <{else}>
-            <{foreach from=$search_info item=item}>
-                <li><a href="<{link app=b2c ctl=site_list act=index}>?cat_id=<{$item.cat_id}>"><{$item.cat_name}></a></li>
+            <{foreach from=$search_info.cat item=item}>
+                <li><a href="<{link app=b2c ctl=site_list act=index}>?cat_id=<{$item.id}>"><{$item.name}></a></li>
             <{/foreach}>
             <{/if}>
             <li class="search_li">
@@ -28,10 +27,22 @@
                 </form>
             </li>
         </ol>
-        <{/if}>
-        <div class="col-md-2 about_goods_total">共<span><{$all_count}></span>件相关商品  </div>
+
+        <div class="col-xs-2 about_goods_total">共<span><{$all_count}></span>件相关商品  </div>
     </div>
 
+    <{if $search_info.prop}>
+    <div class="glist-container">
+        <div class="row breadcrumb_row" style="margin-top:0">
+            <ol class="breadcrumb col-xs-10">
+                <li><a>选择条件：</a></li>
+                <{foreach from=$search_info.prop item=item}>
+                    <li><{$item.type_name}>：<a href="<{link app=b2c ctl=site_list act=index}>?<{$query|merge_query:$filter.type}>"><{$item.name}></a></li>
+                <{/foreach}>
+            </ol>
+
+        </div>
+    <{/if}>
     <div class="panel panel-default gfilter">
       <table class="gfilter_tab">
            <tr>
@@ -50,30 +61,38 @@
                   </ul>
               </td>
           </tr>
+          <{if !$search_info.prop.brand_id}>
           <tr>
               <td>品牌</td>
               <td>
                    <{WIDGET_B2C_GOODS_LIST_FILTER target=brand filter=$query active=$params.brand_id}>
               </td>
           </tr>
+          <{/if}>
+          <{if !$search_info.prop.price_id}>
           <tr>
               <td>价格</td>
               <td>
                 <{WIDGET_B2C_GOODS_LIST_FILTER target=price filter=$query active=$params.price_id}>
               </td>
           </tr>
+          <{/if}>
+          <{if !$search_info.prop.origin_id}>
           <tr>
               <td>产地</td>
               <td>
                  <{WIDGET_B2C_GOODS_LIST_FILTER target=origin filter=$query active=$params.origin_id}>
               </td>
           </tr>
+          <{/if}>
+          <{if !$search_info.prop.weight_id}>
           <tr>
               <td>重量</td>
               <td>
                  <{WIDGET_B2C_GOODS_LIST_FILTER target=weight filter=$query active=$params.weight_id}>
               </td>
           </tr>
+          <{/if}>
       </table>
     </div>
 

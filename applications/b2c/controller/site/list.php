@@ -41,18 +41,19 @@ class b2c_ctl_site_list extends b2c_frontpage
             if($value['id'] == $params['cat_id']){
                 foreach ($cat_setting as $k => $v) {
                     if($value['parent_id'] == $v['id']){
-                        $search_info[] = array(
-                        'cat_id' => $v['id'],
-                        'cat_name' => $v['name']);
+                        $search_info['cat'][] = array(
+                        'id' => $v['id'],
+                        'name' => $v['name']);
                         break;
                         }
                 }
-                $search_info[] = array(
-                    'cat_id' => $value['id'],
-                    'cat_name' => $value['name']);
+                $search_info['cat'][] = array(
+                    'id' => $value['id'],
+                    'name' => $value['name']);
                 break;
             }
         }
+        $datasetting->list_search($search_info, $params);
         $this->pagedata['search_info'] = $search_info;
         $this->pagedata['cat'] = $cat_setting;
         $this->pagedata['params'] = $params;
