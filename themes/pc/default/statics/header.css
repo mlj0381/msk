@@ -293,6 +293,11 @@ header .searchbar .kefu .hotLine b {
   color: #e93428;
   display: block;
 }
+@media screen and (max-width: 768px) {
+  .navbar-nav {
+    margin-top: 0px;
+  }
+}
 nav.navbar {
   background-color: #fff;
   border: none;
@@ -300,11 +305,12 @@ nav.navbar {
   border-bottom: 2px solid #e93428;
   height: 50px !important;
   line-height: 50px !important;
-  margin-bottom: 0px;
+  margin: 0px;
 }
 nav.navbar .container {
   padding: 0;
   width: 1200px;
+  height: 50px;
 }
 nav.navbar ul.nav {
   margin-bottom: 0px;
@@ -332,6 +338,8 @@ nav.navbar ul.nav li.default {
   margin-left: 0px;
   margin-right: 0px;
   margin-bottom: 0px;
+  height: 50px;
+  line-height: 50px;
 }
 nav.navbar ul.nav li.default a {
   color: #fff;
