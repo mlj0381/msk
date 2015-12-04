@@ -2,7 +2,9 @@
 <{css app=desktop href="../com/global/plugins/jquery-tags-input/jquery.tagsinput.css" }>
 <{css app=desktop href="../com/global/plugins/bootstrap-summernote/summernote.css" }>
 <{script app=desktop src="../com/global/plugins/bootstrap-summernote/summernote.min.js" }>
+<{script app=desktop src="../com/global/plugins/bootstrap-summernote/lang/summernote-zh-CN.js" }>
 <{script app=desktop src="../com/global/scripts/metronic.js" }>
+
 <div class="page-seller">
     <div class="page-header">
         <h1><{if $goods}>编辑商品<{else}>添加商品<{/if}><small>Add goods</small></h1>
@@ -371,10 +373,9 @@
                 </div>
                 <div role="tabpanel" class="tab-pane" id="tuwen">
                     <div class="editerbox">
-                        <div class="edit_tools">
-                            <img src="<{$base_url}>/themes/pc/default/statics/images/edit_tools.png" />
-                        </div>
-                        <textarea></textarea>
+
+                        <{input type="html" height=600  name="edit_con" value=$goods.description}>
+     
                     </div>
                 </div>
                 <div role="tabpanel" class="tab-pane" id="param">
