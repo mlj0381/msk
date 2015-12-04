@@ -13,4 +13,5 @@ config/example.config.php
 tmp/
 data/
 logs/
+demodata/image.rar
 mobile_test_case
