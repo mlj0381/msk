@@ -96,7 +96,11 @@ ol {
 }
 .glist-container .goods-list {
   margin-top: 20px;
-  /* .heading_rt{
+  /*.form-inline{
+			width:50%;
+			.fl;
+		}
+		 .heading_rt{
 			width:30%;
 			.fr;
 			.toggleSpan{
@@ -136,9 +140,12 @@ ol {
 			}
 		} */
 }
-.glist-container .goods-list .form-inline {
-  width: 50%;
-  float: left;
+.glist-container .goods-list .goods-item .gi-image-wrapper {
+  padding: 10px 0;
+  height: 256px;
+}
+.glist-container .goods-list .goods-item .gi-image-wrapper img {
+  max-height: 100%;
 }
 .product-container {
   margin: 20px auto;
