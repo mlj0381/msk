@@ -37,11 +37,14 @@ class b2c_ctl_site_list extends b2c_frontpage
                 //break;
             }
             if($value['id'] == $params['cat_id'] && $value['cat_lv'] == '1'){
-                $cat_id = $value['id'];
+                $search_info = array(
+                    'cat_id' => $value['id'],
+                    'cat_name' => $value['name']);
             }
+
         }
 
-
+var_dump($cat_info);
         $this->pagedata['cat'] = $cat_setting;
         $this->pagedata['cat_id'] = $params['cat_id'];
         $query_str = $this->_query_str($params);
