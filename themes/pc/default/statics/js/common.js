@@ -21,8 +21,16 @@ $(function(){
     })
 
     
-    
+    /**
+     * 所在城市
+     */
+     $('.location ul li').click(function(){
 
+        $(this).addClass('active').siblings().removeClass('active');
+
+        var provName=$(this).children('a').text();
+        $('#cityPlan small').text(provName);
+     })
 
     /**
      * 滑动门tab切换
