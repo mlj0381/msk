@@ -37,7 +37,7 @@
             <ol class="breadcrumb col-xs-10">
                 <li><a>选择条件：</a></li>
                 <{foreach from=$search_info.prop item=item}>
-                    <li><{$item.type_name}>：<a href="<{link app=b2c ctl=site_list act=index}>?<{$query|merge_query:$filter.type}>"><{$item.name}></a></li>
+                    <li><{$item.type_name}>：<a href="<{link app=b2c ctl=site_list act=index}>?<{$item.url}>"><{$item.name}></a></li>
                 <{/foreach}>
             </ol>
 

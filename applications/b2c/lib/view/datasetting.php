@@ -176,12 +176,15 @@
         $search_filter = array_intersect_key($search_filter, $params);
         unset($params['cat_id']);
          foreach ($params as $key => $value) {
+             $tmp = $params;
              $args = array(
                  'target'=> substr($key, 0, (strpos($key, '_'))),
                  'id'   => $value,
              );
              $search_info['prop'][$key] = $this->goods_list_filter($args, false);
              $search_info['prop'][$key]['type_name'] = $search_filter[$key];
+             unset($tmp[$key]);
+             $search_info['prop'][$key]['url'] = http_build_query($tmp);
          }
      }
  }
