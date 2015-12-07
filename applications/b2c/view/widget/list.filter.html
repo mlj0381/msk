@@ -1,5 +1,6 @@
-<ul>
+<ul id="<{$filter.type}>">
     <{foreach from=$filter.item item=item}>
-    <li><a href="<{link app=b2c ctl=site_list act=index}>?<{$filter.filter|merge_query:$filter.type:$item.id}>"><{$item.name}></a></li>
+    <li><a <{if $filter.active eq $item.id}>class="activea"<{/if}>
+        href="<{link app=b2c ctl=site_list act=index}>?<{$filter.filter|merge_query:$filter.type:$item.id}>"><{$item.name}></a></li>
     <{/foreach}>
 </ul>
