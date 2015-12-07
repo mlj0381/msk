@@ -50,6 +50,7 @@ header .container-fulid .topbar {
   border-bottom: 1px solid #e0e0e0;
   height: 39px;
   line-height: 39px;
+  min-width: 1200px;
 }
 header .container-fulid .topbar .top {
   width: 1200px;
@@ -370,7 +371,7 @@ nav.navbar ul.nav li .category-container .category ul.list-group li.list-group-i
   font-size: 16px;
   position: relative;
   display: block;
-  padding: 0 15px;
+  padding: 0px;
   background-color: #cc0116;
   border: 0px;
   margin: 0;
@@ -383,6 +384,11 @@ nav.navbar ul.nav li .category-container .category ul.list-group li.list-group-i
   padding: 0;
   background: none;
   font-size: 14px;
+  display: block;
+  width: 100%;
+  height: 36px;
+  line-height: 36px;
+  padding: 0 15px;
 }
 nav.navbar ul.nav li .category-container .category ul.list-group li.list-group-item i {
   color: #FFF;

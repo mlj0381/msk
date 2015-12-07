@@ -2,11 +2,11 @@
 <ul class="list-group category-root">
     <{foreach from=$category_tree item=cat key=ck}>
     <li class="list-group-item <{if $cat.has_children=='true'}> has-children <{/if}>" data-catid="<{$cat.id}>" >
-        <a href="<{link app=b2c ctl=site_list act=index}>?cat_id=<{$cat.id}>"  href="#subCat<{$cat.id}>"><{$cat.name}></a>
-        <!-- <a href="#subCat<{$cat.id}>" href="<{link app=b2c ctl=site_list act=index}>?cat_id=<{$cat.id}>"  ><{$cat.name}></a> -->
-        <{if $cat.has_children=='true'}>
+        <a href="<{link app=b2c ctl=site_list act=index}>?cat_id=<{$cat.id}>"  href="#subCat<{$cat.id}>"><{$cat.name}>
+            <{if $cat.has_children=='true'}>
             <i class="glyphicon glyphicon-menu-right pull-right"></i>
-        <{/if}>
+            <{/if}>
+        </a>       
     </li>
     <{/foreach}>
 </ul>
@@ -16,11 +16,6 @@
         <div class="tab-pane-cat">
         <{foreach from=$one_cat.items item=two_item}>
             <a href="<{link app=b2c ctl=site_list act=index}>?cat_id=<{$two_item.id}>"><span><{$two_item.name}></span></a>
-
-            <!-- <foreach from=$two_item.items item=three_item>
-                <$three_item.name>
-            </foreach> -->
-
         <{/foreach}>
         </div>
         <div class="tab-pane-brand">
@@ -37,9 +32,6 @@ $(function(){
         $('.category-root li').removeClass('open');
         $(".category .tab-content").hide();
     });
-    // $(".category-root li a").click(function(){
-    //     location = $(this).attr('href');
-    // });
     $(".category-root li").hover(
         function(){
             var cat = $(this).attr('data-catid');

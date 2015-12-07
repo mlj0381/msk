@@ -33,6 +33,7 @@
   margin: 0 auto;
   padding: 0;
   margin: 0;
+  min-width: 1200px;
 }
 .index_page .firstContainer .sliderbox {
   position: relative;

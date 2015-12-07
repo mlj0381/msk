@@ -32,7 +32,7 @@ ol {
 .glist-container .breadcrumb_row .breadcrumb {
   margin-bottom: 0px;
   height: 56px;
-  padding: 0 10px;
+  padding: 0 15px;
 }
 .glist-container .breadcrumb_row .breadcrumb li {
   padding: 0;
@@ -62,10 +62,65 @@ ol {
   height: 56px;
   line-height: 56px;
   font-size: 14px;
+  text-align: right;
 }
 .glist-container .breadcrumb_row .about_goods_total span {
   color: #e93428;
   padding: 0 5px;
+}
+.glist-container .gfilter_condition {
+  width: 1200px;
+  margin: 0 auto;
+  background: #fff;
+  padding: 10px 0;
+}
+.glist-container .gfilter_condition .conditions {
+  padding: 0;
+  margin: 0;
+}
+.glist-container .gfilter_condition .conditions a {
+  border: 1px solid #ddd;
+  background: #f1f1f1;
+  display: inline-block;
+  height: 24px;
+  line-height: 22px;
+  padding: 0 0 0 5px;
+  box-sizing: border-box;
+  overflow: hidden;
+  margin-right: 5px;
+}
+.glist-container .gfilter_condition .conditions a i {
+  float: right;
+  display: inline-block;
+  margin-left: 5px;
+  height: 24px;
+  width: 24px;
+  line-height: 24px;
+  text-align: center;
+}
+.glist-container .gfilter_condition .conditions a:hover {
+  color: #666;
+  border: 1px solid #e93428;
+  background: #fff;
+}
+.glist-container .gfilter_condition .conditions a:hover i {
+  color: #fff;
+  background: #e93428;
+}
+.glist-container .gfilter_condition .cond_reset {
+  text-align: right;
+  font-size: 12px;
+}
+.glist-container .gfilter_condition .cond_reset a {
+  cursor: pointer;
+}
+.glist-container .gfilter_condition .cond_reset i {
+  font-size: 13px;
+  margin-right: 5px;
+}
+.glist-container .gfilter_condition .cond_reset:hover a,
+.glist-container .gfilter_condition .cond_reset:hover i {
+  color: #e93428;
 }
 .glist-container .panel-body {
   padding: 0px;
@@ -79,7 +134,6 @@ ol {
   width: 100%;
 }
 .glist-container .gfilter table.gfilter_tab td {
-  padding: 5px 0;
   border-bottom: 1px solid #ddd;
   text-align: center;
   vertical-align: middle;
