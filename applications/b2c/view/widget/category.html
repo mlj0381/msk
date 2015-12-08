@@ -1,7 +1,8 @@
 <{assign var=children value=array()}>
 <ul class="list-group category-root">
     <{foreach from=$category_tree item=cat key=ck}>
-    <li class="list-group-item <{if $cat.has_children=='true'}> has-children <{/if}>" data-catid="<{$cat.id}>" >
+    <li class="list-group-item <{if $cat.has_children=='true'}> has-children <{/if}>"
+    data-toggle="tab" data-catid="<{$cat.id}>" >
         <a href="<{link app=b2c ctl=site_list act=index}>?cat_id=<{$cat.id}>"  href="#subCat<{$cat.id}>"><{$cat.name}>
             <{if $cat.has_children=='true'}>
             <i class="glyphicon glyphicon-menu-right pull-right"></i>

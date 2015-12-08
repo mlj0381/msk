@@ -1,9 +1,13 @@
 <{script app=desktop src="../com/global/plugins/jquery-tags-input/jquery.tagsinput.min.js" }>
 <{css app=desktop href="../com/global/plugins/jquery-tags-input/jquery.tagsinput.css" }>
-<{css app=desktop href="../com/global/plugins/bootstrap-summernote/summernote.css" }>
-<{script app=desktop src="../com/global/plugins/bootstrap-summernote/summernote.min.js" }>
-<{script app=desktop src="../com/global/plugins/bootstrap-summernote/lang/summernote-zh-CN.js" }>
 <{script app=desktop src="../com/global/scripts/metronic.js" }>
+
+<link rel="stylesheet" type="text/css" href="<{$base_url}>/themes/pc/default/statics/css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css" href="<{$base_url}>/themes/pc/default/statics/js/summernote/summernote.css">
+
+<script type="text/javascript" src="<{$base_url}>/themes/pc/default/statics/js/summernote/summernote.min.js"></script>
+<script type="text/javascript" src="<{$base_url}>/themes/pc/default/statics/js/summernote/lang/summernote-zh-CN.js"></script>
+
 
 <div class="page-seller">
     <div class="page-header">
@@ -114,14 +118,7 @@
                             <span class="text-danger">商品下架操作同时影响货品</span>
                         </div>
                     </div>
-                    <!-- <div class="form-group">
-    <label class="col-xs-2 control-label"><span>是否忽略库存</span></label>
-    <div class="col-xs-5">
-        <span style="margin-right:20px;"><input type="radio" name="goods[nostore_sell]" value="1">是</span>
-        <span style="margin-right:20px;"><input type="radio" name="goods[nostore_sell]" value="0">否</span>
-        <span class="text-danger">无库存也可以下单</span>
-    </div>
-</div> -->
+
                     <{if !$goods.spec_desc && !count($goods.spec_desc)> 0}>
                         <div class="form-group">
                             <label class="col-xs-2 control-label"><span>商品信息</span></label>
@@ -178,48 +175,35 @@
                                                 </thead>
                                                 <tbody>
                                                     <{if !$goods.spec_desc && !count($goods.spec_desc)> 0}>
-                                                        <tr>
-                                                            <td>
-                                                                <div class="input-group">
-                                                                    <input class="form-control spec-t" name="goods[spec_desc][t][]" value="<{$item}>" type="text" placeholder="如:颜色">
-                                                                </div>
-                                                            </td>
-                                                            <td>
-                                                                <input class='form-control spec-v' name="goods[spec_desc][v][]" type="text" value="<{$goods.spec_desc.v[$key]}>" id="color_input">
-                                                            </td>
-                                                            <td>
-                                                                <button type=button class="btn btn-sm default hide"><i class="glyphicon glyphicon-trash"></i></button>
-                                                            </td>
-                                                        </tr>
-                                                        <{/if}>
-                                                            <{foreach from=$goods.spec_desc.t key=key item=item}>
-                                                                <tr>
-                                                                    <td>
-                                                                        <div class="input-group">
-                                                                            <input class="form-control spec-t" name="goods[spec_desc][t][]" value="<{$item}>" type="text" placeholder="如:颜色">
-                                                                        </div>
-                                                                    </td>
-                                                                    <td>
-                                                                        <input class='form-control spec-v' name="goods[spec_desc][v][]" type="text" value="<{$goods.spec_desc.v[$key]}>" id="color_input">
-                                                                    </td>
-                                                                    <td>
-                                                                        <button type=button class="btn btn-sm default hide"><i class="glyphicon glyphicon-trash"></i></button>
-                                                                    </td>
-                                                                </tr>
-                                                                <{/foreach}>
-                                                                    <!-- <tr>
-                    <td>
-                        <div class="input-group">
-                            <input class="form-control spec-t" name="goods[spec_desc][t][]" type="text" value="" placeholder="如:尺码">
-                        </div>
-                    </td>
-                    <td>
-                        <input class='form-control spec-v' width="100px" name="goods[spec_desc][v][]" type="text" value="">
-                    </td>
-                    <td>
-                        <button type=button class="btn btn-sm default spec-del"><i class="glyphicon glyphicon-trash"></i></button>
-                    </td>
-                </tr> -->
+                                                    <tr>
+                                                        <td>
+                                                            <div class="input-group">
+                                                                <input class="form-control spec-t" name="goods[spec_desc][t][]" value="<{$item}>" type="text" placeholder="如:颜色">
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <input class='form-control spec-v' name="goods[spec_desc][v][]" type="text" value="<{$goods.spec_desc.v[$key]}>" id="color_input">
+                                                        </td>
+                                                        <td>
+                                                            <button type=button class="btn btn-sm default hide"><i class="glyphicon glyphicon-trash"></i></button>
+                                                        </td>
+                                                    </tr>
+                                                    <{/if}>
+                                                    <{foreach from=$goods.spec_desc.t key=key item=item}>
+                                                    <tr>
+                                                        <td>
+                                                            <div class="input-group">
+                                                                <input class="form-control spec-t" name="goods[spec_desc][t][]" value="<{$item}>" type="text" placeholder="如:颜色">
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <input class='form-control spec-v' name="goods[spec_desc][v][]" type="text" value="<{$goods.spec_desc.v[$key]}>" id="color_input">
+                                                        </td>
+                                                        <td>
+                                                            <button type=button class="btn btn-sm default hide"><i class="glyphicon glyphicon-trash"></i></button>
+                                                        </td>
+                                                    </tr>
+                                                    <{/foreach}>
                                                 </tbody>
                                                 <tfoot>
                                                     <tr>
@@ -323,12 +307,6 @@
                                         <input type="text" name="goods[product][{key}][spec_info]" class="form-control input-sm spec-info" value="{spec_info}" readonly=true>
                                         <input type="hidden" name="goods[product][{key}][spec_desc]" class="spec-desc" value="{spec_desc}">
                                     </td>
-                                    <!-- <td>
-<div class="product-image-select btn-xs btn" data-target="#product_image_select_modal" data-toggle="modal" data-specinfo="{spec_info}">
-<img width=40 src="<{$product.image_id|default:$goods.image_default_id|storager:'xs'}>" class="img-thumbnail" />
-<input type="hidden" name="goods[product][{key}][image_id]" value="<{$product.image_id|default:$goods.image_default_id}>">
-</div>
-</td> -->
                                     <td>
                                         <div class="input-group input-group-sm">
                                             <span class="input-group-addon">货号:</span>
@@ -373,9 +351,7 @@
                 </div>
                 <div role="tabpanel" class="tab-pane" id="tuwen">
                     <div class="editerbox">
-
-                        <{input type="html" height=600  name="edit_con" value=$goods.description}>
-     
+                        <textarea id="summernote" name="image"></textarea>
                     </div>
                 </div>
                 <div role="tabpanel" class="tab-pane" id="param">
@@ -450,10 +426,13 @@
         <div class="form_action">
             <!-- <a href="/index.php/merchant-goodslist.html">返回商品列表</a> -->
             <a class="save_goods" href="<{link app=seller ctl=site_goods act=index}>">返回商品列表</a>
-            <a href='javascript:;' class="save_goods" data-redirect="<{link app=seller ctl=site_goods act=save}>&p[0]={goods_id}">保存</a>
+            <a href='javascript:;' class="save_goods" data-redirect="<{link app=seller ctl=site_goods act=save}>&p[0]={goods_id}">保存<{link app=image ctl=site_upload act=index}></a>
         </div>
     </form>
 </div>
+
+
+<script type="text/javascript" src="<{$base_url}>/themes/pc/default/statics/js/summernot_set.js"></script>
 <script>
 $(function() {
 
@@ -856,3 +835,46 @@ $(function() {
 
 });
 </script>
+
+<script type="text/javascript">
+    
+$('#summernote').summernote({
+height:400,
+lang:'zh-CN',
+toolbar: [
+            ['style',['style']],
+            ['color', ['color']],
+            ['height', ['height']],
+            ['style',['bold', 'italic', 'underline', 'clear']],
+            ['para', ['ul', 'ol', 'paragraph']],
+            ['insert',['link','picture','table']],
+            ['misc',['fullscreen','codeview']]
+    ],
+onImageUpload: function(files, editor, editable) {
+        var data = new FormData();
+        var file = files[0];
+        data.append('file',file);
+        $.ajax({
+            data: data,
+            type: "POST",
+            url: "<{link app=image ctl=site_upload act=wysiswyg_upload}>",
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function(re) {
+                try{
+                    re = $.parseJSON(re);
+                }catch(e){
+
+                }
+                if(re.url)
+                    
+                editor.insertImage(editable, re.url);
+            }
+        });
+    },onChange:function(){
+        $('#summernote').html($('#summernote').code());
+    }
+});
+</script>
+

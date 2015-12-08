@@ -307,6 +307,7 @@ nav.navbar {
   height: 50px !important;
   line-height: 50px !important;
   margin: 0px;
+  min-width: 1200px;
 }
 nav.navbar .container {
   padding: 0;
@@ -462,6 +463,7 @@ nav.navbar ul.nav li .category-container .category .tab-pane .tab-pane-brand {
   margin: 20px 0 0 0;
   background: #fff;
   border-top: 1px solid #ddd;
+  min-width: 1200px;
 }
 .footerbox footer {
   width: 100%;
