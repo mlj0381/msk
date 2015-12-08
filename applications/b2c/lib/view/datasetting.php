@@ -132,7 +132,7 @@
                  }else{
                      foreach ($value['item'] as $k => $v) {
                          if($v['id'] == $params['id']){
-                             return $v;
+                             return $v['name'];
                          }
                      }
                  }
@@ -166,25 +166,16 @@
      }
 
      //商品列表页按属性搜索获取单个属性值
-     public function list_search(&$search_info, $params){
-         $search_filter = array(
-            'brand_id'  => '品牌',
-            'price_id'  => '价格',
-            'origin_id' => '产地',
-            'weight_id' => '重量'
-        );
-        $search_filter = array_intersect_key($search_filter, $params);
-        unset($params['cat_id']);
-         foreach ($params as $key => $value) {
-             $tmp = $params;
-             $args = array(
-                 'target'=> substr($key, 0, (strpos($key, '_'))),
-                 'id'   => $value,
-             );
-             $search_info['prop'][$key] = $this->goods_list_filter($args, false);
-             $search_info['prop'][$key]['type_name'] = $search_filter[$key];
-             unset($tmp[$key]);
-             $search_info['prop'][$key]['url'] = http_build_query($tmp);
-         }
+     public function list_search(&$search_info, $params)
+     {
+        foreach ($params as $key => $id) {
+            $query = $params;
+            unset($query[$key]);
+            $target = array_shift(explode('_', $key));
+            $label = $this->goods_list_filter(compact('target', 'id'), false);
+            $url = http_build_query($query);
+            $search_info['prop'][$target] = compact('id', 'label' ,'url');
+        }
+        unset($search_info['prop']['cat']);
      }
  }

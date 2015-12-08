@@ -22,8 +22,12 @@ class b2c_ctl_site_list extends b2c_frontpage
     }
     public function index($fix_brand = false)
     {
-        if(isset($_POST['keywords']) && !empty($_POST['keywords'])) $keywords = $_POST['keywords'];
         $params = utils::_filter_input($_GET);
+        if(isset($_POST['keywords']) && !empty($_POST['keywords'])){
+            $keywords = $_POST['keywords'];
+            $params['keywords'] = $keywords;
+        }
+        $this->handle_params($params);
         $datasetting = vmc::singleton('b2c_view_datasetting');
         $cat_setting = $datasetting->goods_list_cat();
         $params['cat_id'] = $params['cat_id'] ? $params['cat_id'] : 0;
@@ -32,6 +36,7 @@ class b2c_ctl_site_list extends b2c_frontpage
             if($value['parent_id'] == $params['cat_id']){
                 if($value['cat_lv'] == 2){
                     $cat_title = '二级分类';
+                    $cat_id = $params['cat_id'];
                 }
                 $this->pagedata['cat_title'] = $cat_title;
                 break;
@@ -59,11 +64,19 @@ class b2c_ctl_site_list extends b2c_frontpage
         $this->pagedata['params'] = $params;
         $query_str = $this->_query_str($params);
         $this->pagedata['query'] = $this->_query_str($params, 0);
+
+        $this->pagedata['selector'] = array(
+            'cat' => '分类',
+            'brand'  => '品牌',
+            'price'  => '价格',
+            'origin' => '产地',
+            'weight' => '重量'
+        );
         $params = $this->_params_decode($params);
         $filter = $params['filter'];
         if($cat_id){
             $filter['parent_id'] = $cat_id;
-            unset($filter['cat_id']);
+            unset($filter['cat_id']);//一级分类下显示所属子分类的全部商品
         }
         // if (!$fix_brand && $filter['cat_id']) {
         //     $mdl_cat = $this->app->model('goods_cat');
@@ -76,7 +89,6 @@ class b2c_ctl_site_list extends b2c_frontpage
         // } elseif($fix_brand) {
         //     $filter['brand_id'] = $fix_brand;
         // }
-
          $goods_list = $this->_list($filter, $params['page'], $params['orderby'], $keywords);
 
          $store_obj = vmc::singleton('store_store_object');
@@ -110,6 +122,20 @@ class b2c_ctl_site_list extends b2c_frontpage
         // $this->generate_seo_data();
         $this->page('site/list/index.html');
     }
+
+    //商品列表页筛选参数处理
+    private function handle_params($params)
+    {
+        $filter = array(
+            'cat_id'    => '',
+            'brand_id'  => '',
+            'price_id'  => '',
+            'weight_id' => '',
+            'origin_id' => '',
+        );
+        return array_merge($filter, $params);
+    }
+
     //获取商品列表，包装商品列表
     private function _list($filter, $page, $orderby, $keywords)
     {
