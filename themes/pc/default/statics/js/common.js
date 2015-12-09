@@ -1,16 +1,6 @@
 
 $(function(){
 
-	/**
-     *手机版扫码入口 
-     */
-
-    $('.kefu .mobile').hover(function(){
-        $('.wxcode').removeClass('hidden');
-    },function(){
-        $('.wxcode').addClass('hidden');
-    })
-
 
     /**
      * 全站导航
@@ -22,7 +12,7 @@ $(function(){
 
     
     /**
-     * 所在城市
+     * 城市选择
      */
      $('.location ul li').click(function(){
 
@@ -105,3 +95,47 @@ $(function(){
         $("html,body").stop().animate({scrollTop:0},1000);
     })
 })
+
+
+
+
+/**
+ * 单个图片上传功能
+ */
+$(function(){
+    $('.filebox input[type="file"]').fileupload({
+
+      add: function(e, data) {
+          if (!data.files[0]['type'].match(/^image/)) {
+              alert('非法上传，不是图片类型');
+              //e.stopPropagation();
+              return false;
+          }
+          data.submit();
+      },
+      progress:function(e){
+          var inputfile = e.target || e.srcElement;
+          $(inputfile).siblings('.showImg').find('.loading').removeClass('hidden');
+          $(inputfile).siblings('.showImg').find('img').addClass('hidden');
+      },
+      done: function(e, data) {
+          var inputfile = e.target || e.srcElement;
+          function loadinghide(){
+              $(inputfile).siblings('.showImg').find('.loading').addClass('hidden');
+              $(inputfile).siblings('.showImg').find('img').removeClass('hidden');
+          }
+          setTimeout(loadinghide,100);
+          var re = $.parseJSON(data.result);
+          var input = e.target || e.srcElement;
+          
+          $(input).prev('input[type="hidden"]').attr('value', re.image_id);
+          $(input).next('.showImg').find('img').attr('src',re.url);
+      }
+    });
+
+    function loading(){
+      $('.filebox .showImg').append('<span class="loading hidden icon-spinner icon-spin"></span>');
+    }
+    loading();
+    
+});

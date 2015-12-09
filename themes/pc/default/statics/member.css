@@ -30,6 +30,7 @@ ol {
 }
 .buyer_container {
   width: 1200px;
+  min-height: 500px;
 }
 .buyer_container .my-main .row {
   margin: 0;
@@ -355,39 +356,6 @@ ol {
 .buyer_container .my-main .my-page .perInfo_nav ul li.active a {
   color: #e93428;
 }
-.buyer_container .my-main .my-page .m-baseInfo_form .filebox {
-  position: relative;
-  height: 120px;
-}
-.buyer_container .my-main .my-page .m-baseInfo_form .filebox .file_input {
-  position: absolute;
-  z-index: 10;
-  width: 120px;
-  height: 120px;
-  opacity: 0;
-  cursor: pointer;
-}
-.buyer_container .my-main .my-page .m-baseInfo_form .filebox .showImg {
-  z-index: 5;
-  position: absolute;
-  width: 118px;
-  height: 118px;
-  overflow: hidden;
-  border: 1px solid #ccc;
-}
-.buyer_container .my-main .my-page .m-baseInfo_form .filebox .showImg img {
-  width: 118px;
-  height: 118px;
-}
-.buyer_container .my-main .my-page .m-baseInfo_form .filebox .file_ctr {
-  position: absolute;
-  margin-left: 130px;
-  top: 40px;
-}
-.buyer_container .my-main .my-page .m-baseInfo_form .filebox .file_ctr a {
-  display: block;
-  font-size: 14px;
-}
 .buyer_container .my-main .my-page .radio_group {
   display: inline-block;
 }
@@ -443,14 +411,17 @@ ol {
   max-width: 100%;
   min-height: 80px;
 }
-.jumbotron {
+.cart_page {
+  min-height: 500px;
+}
+.cart_page .jumbotron {
   background: none;
 }
-.jumbotron .shoping_btn {
+.cart_page .jumbotron .shoping_btn {
   background: #e93428;
   color: #fff;
 }
-.jumbotron .shoping_btn:hover {
+.cart_page .jumbotron .shoping_btn:hover {
   color: #fff;
   background: #bd0101;
 }
@@ -744,45 +715,6 @@ ol {
   font-size: 14px;
   font-weight: 700;
   padding: 10px;
-}
-.buyer_container .settled_container .settled_main .settled_company_form .form-group .filebox,
-.buyer_container .settled_container .settled_main .settled_shop_form .form-group .filebox {
-  position: relative;
-  height: 120px;
-}
-.buyer_container .settled_container .settled_main .settled_company_form .form-group .filebox .file_input,
-.buyer_container .settled_container .settled_main .settled_shop_form .form-group .filebox .file_input {
-  position: absolute;
-  z-index: 10;
-  width: 120px;
-  height: 120px;
-  opacity: 0;
-  cursor: pointer;
-}
-.buyer_container .settled_container .settled_main .settled_company_form .form-group .filebox .showImg,
-.buyer_container .settled_container .settled_main .settled_shop_form .form-group .filebox .showImg {
-  z-index: 5;
-  position: absolute;
-  width: 118px;
-  height: 118px;
-  overflow: hidden;
-  border: 1px solid #ccc;
-}
-.buyer_container .settled_container .settled_main .settled_company_form .form-group .filebox .showImg img,
-.buyer_container .settled_container .settled_main .settled_shop_form .form-group .filebox .showImg img {
-  width: 118px;
-  height: 118px;
-}
-.buyer_container .settled_container .settled_main .settled_company_form .form-group .filebox .file_ctr,
-.buyer_container .settled_container .settled_main .settled_shop_form .form-group .filebox .file_ctr {
-  position: absolute;
-  margin-left: 130px;
-  top: 40px;
-}
-.buyer_container .settled_container .settled_main .settled_company_form .form-group .filebox .file_ctr a,
-.buyer_container .settled_container .settled_main .settled_shop_form .form-group .filebox .file_ctr a {
-  display: block;
-  font-size: 14px;
 }
 .buyer_container .settled_container .settled_main .settled_company_form .form-group .form_datetime,
 .buyer_container .settled_container .settled_main .settled_shop_form .form-group .form_datetime {

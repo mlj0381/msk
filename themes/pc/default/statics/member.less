@@ -39,6 +39,7 @@ ul,ol{
 // 买家中心
 .buyer_container{
 	width:1200px;
+	min-height: 500px;
 	
 	.my-main{
 		.row{
@@ -441,39 +442,7 @@ ul,ol{
 			}
 
 			.m-baseInfo_form{
-				.filebox{
-					position: relative;
-					height:120px;
-					.file_input{
-						position:absolute;
-						z-index: 10;
-						width:120px;
-						height:120px;
-						opacity: 0;
-						cursor:pointer;
-					}
-					.showImg{
-						z-index: 5;
-						position: absolute;
-						width:118px;
-						height:118px;
-						overflow: hidden;
-						border:1px solid #ccc;
-						img{
-							width:118px;
-							height:118px;
-						}
-					}
-					.file_ctr{
-						position: absolute;
-						margin-left:130px;
-						top:40px;
-						a{
-							display: block;
-							font-size: 14px;
-						}
-					}
-				}
+				
 			}
 
 
@@ -544,18 +513,22 @@ ul,ol{
 
 
 //购物车
-.jumbotron{
-	background: none;
+.cart_page{
+	min-height: 500px;
+	.jumbotron{
+		background: none;
 
-	.shoping_btn{
-		background: @basecolor;
-		color:#fff;
-		&:hover{
+		.shoping_btn{
+			background: @basecolor;
 			color:#fff;
-			background: #bd0101;
+			&:hover{
+				color:#fff;
+				background: #bd0101;
+			}
 		}
 	}
 }
+
 
 
 .cart-html{
@@ -924,40 +897,7 @@ ul,ol{
 					font-weight: 700;
 					padding:10px;
 				}
-				.form-group{
-					.filebox{
-						position: relative;
-						height:120px;
-						.file_input{
-							position:absolute;
-							z-index: 10;
-							width:120px;
-							height:120px;
-							opacity: 0;
-							cursor:pointer;
-						}
-						.showImg{
-							z-index: 5;
-							position: absolute;
-							width:118px;
-							height:118px;
-							overflow: hidden;
-							border:1px solid #ccc;
-							img{
-								width:118px;
-								height:118px;
-							}
-						}
-						.file_ctr{
-							position: absolute;
-							margin-left:130px;
-							top:40px;
-							a{
-								display: block;
-								font-size: 14px;
-							}
-						}
-					}
+				 .form-group{
 					.form_datetime{
 						position: relative;
 						.add-on{
