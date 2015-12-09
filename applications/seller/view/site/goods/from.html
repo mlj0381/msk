@@ -845,7 +845,7 @@ $(function() {
 </script>
 
 <script type="text/javascript">
-    
+
 $('#summernote').summernote({
 height:400,
 lang:'zh-CN',
@@ -858,7 +858,7 @@ toolbar: [
             ['insert',['link','picture','table']],
             ['misc',['fullscreen','codeview']]
     ],
-onImageUpload: function(files, editor, editable) {
+onImageUpload: function(files, editor, editable) {alert('');
         var data = new FormData();
         var file = files[0];
         data.append('file',file);
@@ -876,7 +876,7 @@ onImageUpload: function(files, editor, editable) {
 
                 }
                 if(re.url)
-                    
+
                 editor.insertImage(editable, re.url);
             }
         });
@@ -885,4 +885,3 @@ onImageUpload: function(files, editor, editable) {
     }
 });
 </script>
-

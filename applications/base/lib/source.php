@@ -25,19 +25,13 @@ class base_source
 
 	private $agent = '';
 
-    public function __construct($params)
-    {
-		foreach($params as $key => $val)
-		{
-			$this->$key = $val;
-		}
-    }
 
-    public function get($params)   
-    { 
+    public function get($params)
+    {
 		$key = $this->get_key();
 		$path = $this->_cache_path . $this->app->app_id;
 		base_kvstore::instance($path)->fetch($key, $vcode);
+        return $vcode;
     }
 
     public function set($key, $data)
@@ -51,26 +45,32 @@ class base_source
 		return md5(json_encode($this->params));
 	}
 
+    public function init($params)
+    {
+        foreach($params as $key => $val)
+		{
+			$this->$key = $val;
+		}
+    }
+
 	public function remote()
 	{
-		$ch = curl_init();		
+		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_URL, $this->host);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 		curl_setopt($ch, CURLOPT_HEADER, 0);
 		if($this->method == 'post')
 		{
-			curl_setopt($ch, CURLOPT_POST, 1);		
+			curl_setopt($ch, CURLOPT_POST, 1);
 			curl_setopt($ch, CURLOPT_POSTFIELDS, $this->params);
 		}
-		curl_setopt($ch, CURLOPT_HTTPHEADER, array('Expect:')); 
+		curl_setopt($ch, CURLOPT_HTTPHEADER, array('Expect:'));
 		curl_setopt($ch, CURLOPT_TIMEOUT, $this->_timeout);
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);		
-		curl_setopt($ch, CURLOPT_COOKIEJAR, $this->_cookieFileLocation); 
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($ch, CURLOPT_COOKIEJAR, $this->_cookieFileLocation);
 		curl_setopt($ch, CURLOPT_COOKIEFILE, $this->_cookieFileLocation);
-		return curl_exec($ch);		
+		$return = curl_exec($ch);
 		curl_close($ch);
+        return $return;
 	}
-
-
 }
-

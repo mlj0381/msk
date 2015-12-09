@@ -78,6 +78,9 @@
      }
      public function floor($params)
      {
+         $mdl_goods = app::get('b2c')->model('goods');
+         $mdl_goods->response_goods($params);
+         
          foreach ($this->setting['floor'] as $key => $value) {
              if($value['type'] == $params['type'])
              {

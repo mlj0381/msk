@@ -32,7 +32,13 @@
     </div>
 <script>
     $(function(){
+        var prop = {
 
+        };
+        $('[data-toggle="rollback"]').bind('click', function(e){
+            var obj = e.target || e.srcElement;
+            alert($(obj).text())
+        })
     });
 </script>
 
@@ -41,7 +47,7 @@
             <div class="col-xs-1">选择条件：</div>
             <div class="col-xs-10 conditions">
                 <{foreach from=$search_info.prop key=key item=item}>
-                <a href="<{link app=b2c ctl=site_list act=index}>?<{$item.url}>" data-url="<{$item.id}>"><{$selector[$key]}>：<span><{$item.label}></span><i class="icon-remove"></i></a>
+                <a data-toggle="rollback" href="<{link app=b2c ctl=site_list act=index}>?<{$item.url}>" data-url="<{$item.id}>"><{$selector[$key]}>：<span><{$item.label}></span><i class="icon-remove"></i></a>
                 <{/foreach}>
             </div>
             <div class="col-xs-1 cond_reset"><a><i class="icon-trash"></i>清空条件</a></div>
