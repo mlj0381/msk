@@ -1,25 +1,38 @@
 
 $(function(){
 
-
     /**
      * 全站导航
      */
-
-    $('.site_nav').click(function(){
-        $('.website_menu').slideToggle();
-    })
-
+    var siteNav=$('.site_nav')[0];
+    var webMenu=$('.website_menu')[0];
+    webMenu.onmouseover=siteNav.onmouseover=function(){
+        webMenu.style.display="block";
+        $('.site_nav a i').attr('class','icon-angle-up');
+    }
+    webMenu.onmouseout=siteNav.onmouseout=function(){
+        webMenu.style.display="none";
+        $('.site_nav a i').attr('class','icon-angle-down');
+    }
     
+
     /**
      * 城市选择
-     */
-     $('.location ul li').click(function(){
+    */
+    $('.location').hover(
+        function(){
+            $(this).find('i').attr('class','icon-angle-up');
+        },
+        function(){
+            $(this).find('i').attr('class','icon-angle-down')
+        }
+    )
+    $('.location ul li').click(function(){
 
         $(this).addClass('active').siblings().removeClass('active');
         var provName=$(this).children('a').text();
         $('#cityPlan small').text(provName);
-     })
+    })
 
     /**
      * 滑动门tab切换
@@ -43,7 +56,7 @@ $(function(){
     tabslider('.fav_nav span a','.gl_item_box','active');   //我的收藏调用
 
     tabslider('.like_menu span a','.like_con > ul','active');   //购物车浏览记录
-    
+
 })
 
 

@@ -2,11 +2,11 @@
 <{css app=desktop href="../com/global/plugins/jquery-tags-input/jquery.tagsinput.css" }>
 <{script app=desktop src="../com/global/scripts/metronic.js" }>
 
-<link rel="stylesheet" type="text/css" href="<{$base_url}>/themes/pc/default/statics/css/font-awesome.min.css">
-<link rel="stylesheet" type="text/css" href="<{$base_url}>/themes/pc/default/statics/js/summernote/summernote.css">
+<link rel="stylesheet" type="text/css" href="<{$base_url}>/public/stylesheets/font-awesome.min.css">
+<link rel="stylesheet" type="text/css" href="<{$base_url}>/public/stylesheets/summernote.css">
 
-<script type="text/javascript" src="<{$base_url}>/themes/pc/default/statics/js/summernote/summernote.min.js"></script>
-<script type="text/javascript" src="<{$base_url}>/themes/pc/default/statics/js/summernote/lang/summernote-zh-CN.js"></script>
+<script type="text/javascript" src="<{$base_url}>/public/javascripts/summernote/summernote.min.js"></script>
+<script type="text/javascript" src="<{$base_url}>/public/javascripts/summernote/lang/summernote-zh-CN.js"></script>
 
 
 <div class="page-seller">
@@ -437,7 +437,7 @@
 </div>
 
 
-<script type="text/javascript" src="<{$base_url}>/themes/pc/default/statics/js/summernot_set.js"></script>
+<script type="text/javascript" src="<{$base_url}>/public/javascripts/summernote/summernot_set.js"></script>
 <script>
 
 
@@ -794,6 +794,7 @@ $(function() {
         add: function(e, data) {
             if (!data.files[0]['type'].match(/^image/)) {
                 alert('非法上传，不是图片类型');
+                return false;
             }
             data.submit();
         },
