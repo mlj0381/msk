@@ -426,7 +426,7 @@
         <div class="form_action">
             <!-- <a href="/index.php/merchant-goodslist.html">返回商品列表</a> -->
             <a class="save_goods" href="<{link app=seller ctl=site_goods act=index}>">返回商品列表</a>
-            <a href='javascript:;' class="save_goods" data-redirect="<{link app=seller ctl=site_goods act=save}>&p[0]={goods_id}">保存<{link app=image ctl=site_upload act=index}></a>
+            <a href='javascript:;' class="save_goods" data-redirect="<{link app=seller ctl=site_goods act=save}>&p[0]={goods_id}">保存</a>
         </div>
     </form>
 </div>
@@ -837,7 +837,7 @@ $(function() {
 </script>
 
 <script type="text/javascript">
-    
+
 $('#summernote').summernote({
 height:400,
 lang:'zh-CN',
@@ -850,7 +850,7 @@ toolbar: [
             ['insert',['link','picture','table']],
             ['misc',['fullscreen','codeview']]
     ],
-onImageUpload: function(files, editor, editable) {
+onImageUpload: function(files, editor, editable) {alert('');
         var data = new FormData();
         var file = files[0];
         data.append('file',file);
@@ -868,7 +868,7 @@ onImageUpload: function(files, editor, editable) {
 
                 }
                 if(re.url)
-                    
+
                 editor.insertImage(editable, re.url);
             }
         });
@@ -877,4 +877,3 @@ onImageUpload: function(files, editor, editable) {
     }
 });
 </script>
-
