@@ -1,8 +1,9 @@
-
-$('#summernote').summernote({
-height:400,
-lang:'zh-CN',
-toolbar: [
+var optionHtml = {
+    id : 'summernote',
+    height : 400,
+    lang:'zh-CN',
+    url : '/',
+    toolbar: [
             ['style',['style']],
             ['color', ['color']],
             ['height', ['height']],
@@ -11,14 +12,17 @@ toolbar: [
             ['insert',['link','picture','table']],
             ['misc',['fullscreen','codeview']]
     ],
-onImageUpload: function(files, editor, editable) {
+    onChange : function(){
+        $('#' + optionHtml.id).html($('#' + optionHtml.id).code());
+    },
+    onImageUpload: function(files, editor, editable) {
         var data = new FormData();
         var file = files[0];
         data.append('file',file);
         $.ajax({
             data: data,
             type: "POST",
-            url: "<{link app=image ctl=site_upload act=index}>",
+            url: optionHtml.url,
             cache: false,
             contentType: false,
             processData: false,
@@ -28,12 +32,9 @@ onImageUpload: function(files, editor, editable) {
                 }catch(e){
 
                 }
-                if(re.url)
-                    
-                editor.insertImage(editable, re.url);
+                if(re.url){}
+                    editor.insertImage(editable, re.url);
             }
         });
-    },onChange:function(){
-        $('#summernote').html($('#summernote').code());
     }
-});
+}

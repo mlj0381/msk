@@ -24,6 +24,7 @@
                 <li role="presentation"><a href="#seo" aria-controls="seo" role="tab" data-toggle="tab">SEO相关</a></li>
             </ul>
             <!-- Tab panes -->
+
             <div class="tab-content">
                 <div role="tabpanel" class="tab-pane active" id="baseinfo">
                     <input name="goods[goods_id]" value="<{$goods.goods_id}>" type="hidden" />
@@ -434,6 +435,8 @@
 
 <script type="text/javascript" src="<{$base_url}>/themes/pc/default/statics/js/summernot_set.js"></script>
 <script>
+
+
 $(function() {
 
     /**
@@ -837,43 +840,10 @@ $(function() {
 </script>
 
 <script type="text/javascript">
-
-$('#summernote').summernote({
-height:400,
-lang:'zh-CN',
-toolbar: [
-            ['style',['style']],
-            ['color', ['color']],
-            ['height', ['height']],
-            ['style',['bold', 'italic', 'underline', 'clear']],
-            ['para', ['ul', 'ol', 'paragraph']],
-            ['insert',['link','picture','table']],
-            ['misc',['fullscreen','codeview']]
-    ],
-onImageUpload: function(files, editor, editable) {alert('');
-        var data = new FormData();
-        var file = files[0];
-        data.append('file',file);
-        $.ajax({
-            data: data,
-            type: "POST",
-            url: "<{link app=image ctl=site_upload act=wysiswyg_upload}>",
-            cache: false,
-            contentType: false,
-            processData: false,
-            success: function(re) {
-                try{
-                    re = $.parseJSON(re);
-                }catch(e){
-
-                }
-                if(re.url)
-
-                editor.insertImage(editable, re.url);
-            }
-        });
-    },onChange:function(){
-        $('#summernote').html($('#summernote').code());
-    }
-});
+var htmlEditor = {
+    'id' : 'summernote',
+    'url' : '<{link app=image ctl=site_upload act=wysiswyg_upload}>'
+}
+jQuery.extend(optionHtml, htmlEditor);
+$('#summernote').summernote(optionHtml);
 </script>

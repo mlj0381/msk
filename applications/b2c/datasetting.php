@@ -10,6 +10,15 @@
 // | Author: Shanghai ChenShang Software Technology Co., Ltd.
 // +----------------------------------------------------------------------
 
+
+$goods = array(
+    'goods_id',
+    'name',
+    'store_id',
+    'image_id',
+    'price',
+    'product_id',
+);
 /**
  *  外来数据配置
  */
