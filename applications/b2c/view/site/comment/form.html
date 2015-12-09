@@ -113,6 +113,7 @@
                     <label  class="col-xs-2 control-label">晒一晒</label>
                     <div class="col-xs-10">
                         <{input type="file" class="comment-image"  name="comment[{$item.product_id}][]"}>
+                        <!-- <input type="file" class="comment-image"  name="comment[{$item.product_id}][]"> -->
                         <span class="help-block">最多上传5张,每张大小不能超过<span class="text-danger"><{$env.conf.b2c.comment_image_size}>MB</span>,支持bmp,gif,jpg,png,jpeg</span>
                     </div>
                 </div>

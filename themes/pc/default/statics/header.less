@@ -654,15 +654,22 @@ nav.navbar{
 		cursor:pointer;
 	}
 	.showImg{
-		z-index: 5;
-		position: absolute;
 		width:118px;
 		height:118px;
 		overflow: hidden;
 		border:1px solid #ccc;
+		vertical-align: middle;
+		display: table-cell;
+		text-align: center;
 		img{
-			width:118px;
-			height:118px;
+			display:block;
+			margin:auto;
+			max-height:118px;
+			max-width: 118px;	
+		}
+		.loading{
+			font-size: 30px;
+
 		}
 	}
 	.file_ctr{

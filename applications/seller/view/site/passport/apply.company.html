@@ -1,4 +1,4 @@
-<div class="passport-signup-container settled_container">
+`<div class="passport-signup-container settled_container">
     <div class="settled_menu">
         <dl>
             <dt>商家入驻</dt>
@@ -92,12 +92,8 @@
                         <input type="hidden" value="<{$company.legal_idcard_image}>" name="seller[legal_idcard_image]"/>
                         <input type="file" data-url="<{link app=image ctl=site_upload act=index}>" accept="image/*" class="file_input" />
                         <div class="showImg">
-                            <img src="<{if $company.legal_idcard_image eq ''}>./../../themes/pc/default/statics/images/file_add.jpg<{else}><{$company.legal_idcard_image|storager:'xs'}><{/if}>">
+                            <img src="<{if $company.legal_idcard_image eq ''}><{$base_url}>/themes/pc/default/statics/images/file_add.jpg<{else}><{$company.legal_idcard_image|storager:'xs'}><{/if}>">
                         </div>
-                        <span class="file_ctr">
-                            <a href="#">查看</a>
-                            <a href="#">删除</a>
-                        </span>
                     </div>
                 </div>
             </div>
@@ -150,12 +146,8 @@
                         <input type="hidden" value="<{$company.business_license_image}>" name="seller[business_license_image]"/>
                         <input type="file" data-url="<{link app=image ctl=site_upload act=index}>" accept="image/*" class="file_input" />
                         <div class="showImg">
-                            <img src="<{$company.business_license_image|storager:'xs'}><{if $company.business_license_image eq ''}>./../../themes/pc/default/statics/images/file_add.jpg<{/if}>">
+                             <img src="<{if $company.business_license_image eq ''}><{$base_url}>/themes/pc/default/statics/images/file_add.jpg<{else}><{$company.business_license_image|storager:'xs'}><{/if}>">    
                         </div>
-                        <span class="file_ctr">
-                            <a href="#">查看</a>
-                            <a href="#">删除</a>
-                        </span>
                     </div>
                 </div>
             </div>
@@ -214,12 +206,10 @@
                         <input type="hidden" value="<{$company.organization_image}>" name="seller[organization_image]"/>
                         <input type="file" data-url="<{link app=image ctl=site_upload act=index}>" accept="image/*" class="file_input" />
                         <div class="showImg">
-                            <img src="<{$company.organization_image|storager:'xs'}><{if $company.organization_image eq ''}>./../../themes/pc/default/statics/images/file_add.jpg<{/if}>">
+                            
+
+                            <img src="<{if $company.organization_image eq ''}><{$base_url}>/themes/pc/default/statics/images/file_add.jpg<{else}><{$company.organization_image|storager:'xs'}><{/if}>">    
                         </div>
-                        <span class="file_ctr">
-                            <a href="#">查看</a>
-                            <a href="#">删除</a>
-                        </span>
                     </div>
                 </div>
             </div>
@@ -245,12 +235,9 @@
                                 <input type="hidden" value="<{$company.extra.butcher_report_image}>" name="seller[extra][butcher_report_image]"/>
                                 <input type="file" data-url="<{link app=image ctl=site_upload act=index}>" accept="image/*"  class="file_input" />
                                 <div class="showImg">
-                                    <img src="<{$company.extra.butcher_report_image|storager:'xs'}><{if $company.extra.butcher_report_image eq ''}>./../../themes/pc/default/statics/images/file_add.jpg<{/if}>">
+                                    <img src="<{if $company.extra.butcher_report_image eq ''}><{$base_url}>/themes/pc/default/statics/images/file_add.jpg<{else}><{$company.extra.butcher_report_image|storager:'xs'}><{/if}>">
+
                                 </div>
-                                <span class="file_ctr">
-                            <a href="#">查看</a>
-                            <a href="#">删除</a>
-                        </span>
                             </div>
                         </div>
                     </div>
@@ -261,12 +248,8 @@
                                 <input type="hidden" value="<{$company.extra.beijing_image}>" name="seller[extra][beijing_image]"/>
                                 <input type="file" data-url="<{link app=image ctl=site_upload act=index}>" accept="image/*"  class="file_input" />
                                 <div class="showImg">
-                                    <img src="<{$company.extra.beijing_image|storager:'xs'}><{if $company.extra.beijing_image eq ''}>./../../themes/pc/default/statics/images/file_add.jpg<{/if}>">
+                                    <img src="<{if $company.extra.beijing_image eq ''}><{$base_url}>/themes/pc/default/statics/images/file_add.jpg<{else}><{$company.extra.beijing_image|storager:'xs'}><{/if}>">
                                 </div>
-                                <span class="file_ctr">
-                            <a href="#">查看</a>
-                            <a href="#">删除</a>
-                        </span>
                             </div>
                         </div>
                     </div>
@@ -277,12 +260,8 @@
                                 <input type="hidden" value="<{$company.extra.shanghai_image}>" name="seller[extra][shanghai_image]"/>
                                 <input type="file" data-url="<{link app=image ctl=site_upload act=index}>" accept="image/*" class="file_input" />
                                 <div class="showImg">
-                                    <img src="<{$company.extra.shanghai_image|storager:'xs'}><{if $company.extra.shanghai_image eq ''}>./../../themes/pc/default/statics/images/file_add.jpg<{/if}>">
+                                    <img src="<{if $company.extra.shanghai_image eq ''}><{$base_url}>/themes/pc/default/statics/images/file_add.jpg<{else}><{$company.extra.shanghai_image|storager:'xs'}><{/if}>">
                                 </div>
-                                <span class="file_ctr">
-                            <a href="#">查看</a>
-                            <a href="#">删除</a>
-                        </span>
                             </div>
                         </div>
                     </div>
@@ -293,12 +272,8 @@
                                 <input type="hidden" value="<{$company.extra.other_image}>" name="seller[extra][other_image]"/>
                                 <input type="file" data-url="<{link app=image ctl=site_upload act=index}>" accept="image/*"  class="file_input" />
                                 <div class="showImg">
-                                    <img src="<{$company.extra.other_image|storager:'xs'}><{if $company.extra.other_image eq ''}>./../../themes/pc/default/statics/images/file_add.jpg<{/if}>">
+                                    <img src="<{if $company.extra.other_image eq ''}><{$base_url}>/themes/pc/default/statics/images/file_add.jpg<{else}><{$company.extra.other_image|storager:'xs'}><{/if}>">
                                 </div>
-                                <span class="file_ctr">
-                            <a href="#">查看</a>
-                            <a href="#">删除</a>
-                        </span>
                             </div>
                         </div>
                     </div>
@@ -311,12 +286,8 @@
                                 <input type="hidden" value="<{$company.extra.industry_licence_image}>" name="seller[extra][industry_licence_image]"/>
                                 <input type="file" data-url="<{link app=image ctl=site_upload act=index}>" accept="image/*"  class="file_input" />
                                 <div class="showImg">
-                                    <img src="<{$company.extra.industry_licence_image|storager:'xs'}><{if $company.extra.industry_licence_image eq ''}>./../../themes/pc/default/statics/images/file_add.jpg<{/if}>">
+                                    <img src="<{if $company.extra.industry_licence_image eq ''}><{$base_url}>/themes/pc/default/statics/images/file_add.jpg<{else}><{$company.extra.industry_licence_image|storager:'xs'}><{/if}>">
                                 </div>
-                                <span class="file_ctr">
-                            <a href="#">查看</a>
-                            <a href="#">删除</a>
-                        </span>
                             </div>
                         </div>
                     </div>
@@ -333,12 +304,8 @@
                                 <input type="hidden" value="<{$company.extra.third}>" name="seller[extra][third]" />
                                 <input type="file" data-url="<{link app=image ctl=site_upload act=index}>" accept="image/*" class="file_input" />
                                 <div class="showImg">
-                                    <img src="<{$company.extra.third|storager:'xs'}><{if $company.extra.third eq ''}>./../../themes/pc/default/statics/images/file_add.jpg<{/if}>">
+                                    <img src="<{if $company.extra.third eq ''}><{$base_url}>/themes/pc/default/statics/images/file_add.jpg<{else}><{$company.extra.third|storager:'xs'}><{/if}>">
                                 </div>
-                                <span class="file_ctr">
-                            <a href="#">查看</a>
-                            <a href="#">删除</a>
-                        </span>
                             </div>
                         </div>
                     </div>
@@ -351,12 +318,8 @@
                                 <input type="hidden" value="<{$company.extra.circulate}>" name="seller[extra][circulate]"/>
                                 <input type="file" data-url="<{link app=image ctl=site_upload act=index}>" accept="image/*" class="file_input" />
                                 <div class="showImg">
-                                    <img src="<{$company.extra.circulate|storager:'xs'}><{if $company.extra.circulate eq ''}>./../../themes/pc/default/statics/images/file_add.jpg<{/if}>">
+                                    <img src="<{if $company.extra.circulate eq ''}><{$base_url}>/themes/pc/default/statics/images/file_add.jpg<{else}><{$company.extra.circulate|storager:'xs'}><{/if}>">
                                 </div>
-                                <span class="file_ctr">
-                            <a href="#">查看</a>
-                            <a href="#">删除</a>
-                        </span>
                             </div>
                         </div>
                     </div>
@@ -367,12 +330,8 @@
                                 <input type="hidden" value="<{$company.extra.third_party}>" name="seller[extra][third_party]"/>
                                 <input type="file" data-url="<{link app=image ctl=site_upload act=index}>" accept="image/*"  class="file_input" />
                                 <div class="showImg">
-                                    <img src="<{$company.extra.third_party|storager:'xs'}><{if $company.extra.third_party eq ''}>./../../themes/pc/default/statics/images/file_add.jpg<{/if}>">
+                                    <img src="<{if $company.extra.third_party eq ''}><{$base_url}>/themes/pc/default/statics/images/file_add.jpg<{else}><{$company.extra.third_party|storager:'xs'}><{/if}>">
                                 </div>
-                                <span class="file_ctr">
-                            <a href="#">查看</a>
-                            <a href="#">删除</a>
-                        </span>
                             </div>
                         </div>
                     </div>
@@ -383,12 +342,8 @@
                                 <input type="hidden" value="<{$company.extra.quarantine}>" name="seller[extra][quarantine]" />
                                 <input type="file" data-url="<{link app=image ctl=site_upload act=index}>" accept="image/*" class="file_input" />
                                 <div class="showImg">
-                                    <img src="<{$company.extra.quarantine|storager:'xs'}><{if $company.extra.quarantine eq ''}>./../../themes/pc/default/statics/images/file_add.jpg<{/if}>">
+                                    <img src="<{if $company.extra.quarantine eq ''}><{$base_url}>/themes/pc/default/statics/images/file_add.jpg<{else}><{$company.extra.quarantine|storager:'xs'}><{/if}>">
                                 </div>
-                                <span class="file_ctr">
-                            <a href="#">查看</a>
-                            <a href="#">删除</a>
-                        </span>
                             </div>
                         </div>
                     </div>
@@ -399,12 +354,8 @@
                                 <input type="hidden" value="<{$company.extra.maker}>" name="seller[extra][maker]"/>
                                 <input type="file" data-url="<{link app=image ctl=site_upload act=index}>" accept="image/*"  class="file_input" />
                                 <div class="showImg">
-                                    <img src="<{$company.extra.maker|storager:'xs'}><{if $company.extra.maker eq ''}>./../../themes/pc/default/statics/images/file_add.jpg<{/if}>">
+                                    <img src="<{if $company.extra.maker eq ''}><{$base_url}>/themes/pc/default/statics/images/file_add.jpg<{else}><{$company.extra.maker|storager:'xs'}><{/if}>">
                                 </div>
-                                <span class="file_ctr">
-                            <a href="#">查看</a>
-                            <a href="#">删除</a>
-                        </span>
                             </div>
                         </div>
                     </div>
@@ -415,12 +366,8 @@
                                 <input type="hidden" value="<{$company.extra.web}>" name="seller[extra][web]"/>
                                 <input type="file" data-url="<{link app=image ctl=site_upload act=index}>" accept="image/*"  class="file_input" />
                                 <div class="showImg">
-                                    <img src="<{$company.extra.web|storager:'xs'}><{if $company.extra.web eq ''}>./../../themes/pc/default/statics/images/file_add.jpg<{/if}>">
+                                    <img src="<{if $company.extra.web eq ''}><{$base_url}>/themes/pc/default/statics/images/file_add.jpg<{else}><{$company.extra.web|storager:'xs'}><{/if}>">
                                 </div>
-                                <span class="file_ctr">
-                            <a href="#">查看</a>
-                            <a href="#">删除</a>
-                        </span>
                             </div>
                         </div>
                     </div>
@@ -435,12 +382,8 @@
                         <input type="hidden" value="<{$company.extra.harmless}>" name="seller[extra][harmless]"/>
                         <input type="file" data-url="<{link app=image ctl=site_upload act=index}>" accept="image/*" class="file_input" />
                         <div class="showImg">
-                            <img src="<{$company.extra.harmless|storager:'xs'}><{if $company.extra.harmless eq ''}>./../../themes/pc/default/statics/images/file_add.jpg<{/if}>">
+                            <img src="<{if $company.extra.harmless eq ''}><{$base_url}>/themes/pc/default/statics/images/file_add.jpg<{else}><{$company.extra.harmless|storager:'xs'}><{/if}>">
                         </div>
-                        <span class="file_ctr">
-                            <a href="#">查看</a>
-                            <a href="#">删除</a>
-                        </span>
                     </div>
                 </div>
             </div>
@@ -451,12 +394,8 @@
                         <input type="hidden" value="<{$company.extra.landmark}>" name="seller[extra][landmark]"/>
                         <input type="file" data-url="<{link app=image ctl=site_upload act=index}>" accept="image/*"  class="file_input" />
                         <div class="showImg">
-                            <img src="<{$company.extra.landmark|storager:'xs'}><{if $company.extra.landmark eq ''}>./../../themes/pc/default/statics/images/file_add.jpg<{/if}>">
+                            <img src="<{if $company.extra.landmark eq ''}><{$base_url}>/themes/pc/default/statics/images/file_add.jpg<{else}><{$company.extra.landmark|storager:'xs'}><{/if}>">
                         </div>
-                        <span class="file_ctr">
-                            <a href="#">查看</a>
-                            <a href="#">删除</a>
-                        </span>
                     </div>
                 </div>
             </div>
@@ -467,12 +406,8 @@
                         <input type="hidden" value="<{$company.extra.green}>" name="seller[extra][green]"/>
                         <input type="file" data-url="<{link app=image ctl=site_upload act=index}>" accept="image/*"  class="file_input" />
                         <div class="showImg">
-                            <img src="<{$company.extra.green|storager:'xs'}><{if $company.extra.green eq ''}>./../../themes/pc/default/statics/images/file_add.jpg<{/if}>">
+                            <img src="<{if $company.extra.green eq ''}><{$base_url}>/themes/pc/default/statics/images/file_add.jpg<{else}><{$company.extra.green|storager:'xs'}><{/if}>">
                         </div>
-                        <span class="file_ctr">
-                            <a href="#">查看</a>
-                            <a href="#">删除</a>
-                        </span>
                     </div>
                 </div>
             </div>
@@ -483,12 +418,8 @@
                         <input type="hidden" value="<{$company.extra.organic}>" name="seller[extra][organic]"/>
                         <input type="file" data-url="<{link app=image ctl=site_upload act=index}>" accept="image/*"  class="file_input" />
                         <div class="showImg">
-                            <img src="<{$company.extra.organic|storager:'xs'}><{if $company.extra.organic eq ''}>./../../themes/pc/default/statics/images/file_add.jpg<{/if}>">
+                            <img src="<{if $company.extra.organic eq ''}><{$base_url}>/themes/pc/default/statics/images/file_add.jpg<{else}><{$company.extra.organic|storager:'xs'}><{/if}>">
                         </div>
-                        <span class="file_ctr">
-                            <a href="#">查看</a>
-                            <a href="#">删除</a>
-                        </span>
                     </div>
                 </div>
             </div>
@@ -499,12 +430,8 @@
                         <input type="hidden" value="<{$company.extra.iso}>" name="seller[extra][iso]"/>
                         <input type="file" data-url="<{link app=image ctl=site_upload act=index}>" accept="image/*"  class="file_input" />
                         <div class="showImg">
-                            <img src="<{$company.extra.iso|storager:'xs'}><{if $company.extra.iso eq ''}>./../../themes/pc/default/statics/images/file_add.jpg<{/if}>">
+                            <img src="<{if $company.extra.iso eq ''}><{$base_url}>/themes/pc/default/statics/images/file_add.jpg<{else}><{$company.extra.iso|storager:'xs'}><{/if}>">
                         </div>
-                        <span class="file_ctr">
-                            <a href="#">查看</a>
-                            <a href="#">删除</a>
-                        </span>
                     </div>
                 </div>
             </div>
@@ -542,12 +469,8 @@
                         <input type="hidden" value="<{$company.tax_image}>" name="seller[tax_image]"/>
                         <input type="file"  data-url="<{link app=image ctl=site_upload act=index}>" accept="image/*" class="file_input" />
                         <div class="showImg">
-                            <img src="<{$company.tax_image|storager:'xs'}><{if $company.tax_image eq ''}>./../../themes/pc/default/statics/images/file_add.jpg<{/if}>">
+                            <img src="<{if $company.tax_image eq ''}><{$base_url}>/themes/pc/default/statics/images/file_add.jpg<{else}><{$company.tax_image|storager:'xs'}><{/if}>">
                         </div>
-                        <span class="file_ctr">
-                            <a href="#">查看</a>
-                            <a href="#">删除</a>
-                        </span>
                     </div>
                 </div>
             </div>
@@ -559,12 +482,8 @@
                         <input type="file" input-name="seller[extra][tax_status]" data-url="<{link app=image ctl=site_upload act=index}>" accept="image/*" class="file_input" />
 
                         <div class="showImg">
-                            <img src="<{$company.extra.tax_status|storager:'xs'}><{if $company.extra.tax_status eq ''}>./../../themes/pc/default/statics/images/file_add.jpg<{/if}>">
+                            <img src="<{if $company.tax_status eq ''}><{$base_url}>/themes/pc/default/statics/images/file_add.jpg<{else}><{$company.tax_status|storager:'xs'}><{/if}>">
                         </div>
-                        <span class="file_ctr">
-                            <a href="#">查看</a>
-                            <a href="#">删除</a>
-                        </span>
                     </div>
                 </div>
             </div>
@@ -606,12 +525,8 @@
                         <input type="hidden" value="<{$company.extra.bank_image}>" name="seller[extra][bank_image]"/>
                         <input type="file" data-url="<{link app=image ctl=site_upload act=index}>" accept="image/*" class="file_input" />
                         <div class="showImg">
-                            <img src="<{$company.extra.bank_image|storager:'xs'}><{if $company.extra.bank_image eq ''}>./../../themes/pc/default/statics/images/file_add.jpg<{/if}>">
+                            <img src="<{if $company.bank_image eq ''}><{$base_url}>/themes/pc/default/statics/images/file_add.jpg<{else}><{$company.bank_image|storager:'xs'}><{/if}>">
                         </div>
-                        <span class="file_ctr">
-                            <a href="#">查看</a>
-                            <a href="#">删除</a>
-                        </span>
                     </div>
                 </div>
             </div>
@@ -688,7 +603,7 @@ void function(signup_form) {
     });
 }($('#company_signup_form'));
 
-$(function() {
+/*$(function() {
     $('input[type="file"]').fileupload({
 
         add: function(e, data) {
@@ -705,7 +620,7 @@ $(function() {
 
         }
     });
-});
+});*/
 
 //获得短信验证码
     var _cutdown_sms = function(btn) {

@@ -572,16 +572,22 @@ nav.navbar ul.nav li .category-container .category .tab-pane .tab-pane-brand {
   cursor: pointer;
 }
 .filebox .showImg {
-  z-index: 5;
-  position: absolute;
   width: 118px;
   height: 118px;
   overflow: hidden;
   border: 1px solid #ccc;
+  vertical-align: middle;
+  display: table-cell;
+  text-align: center;
 }
 .filebox .showImg img {
-  width: 118px;
-  height: 118px;
+  display: block;
+  margin: auto;
+  max-height: 118px;
+  max-width: 118px;
+}
+.filebox .showImg .loading {
+  font-size: 30px;
 }
 .filebox .file_ctr {
   position: absolute;

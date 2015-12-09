@@ -89,10 +89,6 @@
                         <div class="showImg">
                             <img src="<{if $store.store_setting.legal_idcard_image eq ''}><{$base_url}>/themes/pc/default/statics/images/file_add.jpg<{else}><{$store.store_setting.legal_idcard_image|storager:'xs'}><{/if}>">
                         </div>
-                        <span class="file_ctr">
-                            <a href="#">查看</a>
-                            <a href="#">删除</a>
-                        </span>
                     </div>
                 </div>
             </div>
@@ -108,23 +104,7 @@
     </div>
 </div>
 <script>
-$(function() {
-    $('input[type="file"]').fileupload({
-        add: function(e, data) {
-            if (!data.files[0]['type'].match(/^image/)) {
-                alert('非法上传，不是图片类型');
-            }
-            data.submit();
-        },
-        done: function(e, data) {
-            var re = $.parseJSON(data.result);
-            var input = e.target || e.srcElement;
-            $(input).prev('input[type="hidden"]').attr('value', re.image_id);
-            $(input).next('.showImg').find('img').attr('src',re.url);
 
-        }
-    });
-});
 void function(signup_form) {
     var _alert_error = function(msg) {
         signup_form.find('.alert-error').remove();
