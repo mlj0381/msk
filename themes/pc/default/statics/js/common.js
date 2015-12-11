@@ -62,14 +62,14 @@ $(function(){
 
     tabslider('.like_menu span a','.like_con > ul','active');   //购物车浏览记录
 
-})
 
 
 
-/**
- *首页楼层滚动效果
- */
-$(function(){
+
+    /**
+     *首页楼层滚动效果
+     */
+
     $(window).scroll(function(){
         
         var scrollTop=$(this).scrollTop();        //获取滚动条滚动的距离
@@ -102,17 +102,86 @@ $(function(){
 
 
 
-})
 
 
-/*
- *首页返回顶部
- */
-$(function(){
-    $('.gotoTop').click(function(){
-        $("html,body").stop().animate({scrollTop:0},1000);
+    /*
+     *首页返回顶部
+     */
+    $(function(){
+        $('.gotoTop').click(function(){
+            $("html,body").stop().animate({scrollTop:0},1000);
+        })
     })
+
+
+
+    /**
+     * 去除a,button点击后的虚线框
+     */
+
+    $("a,button").bind("focus", function(){
+        if(this.blur){
+            this.blur();
+        }
+    });
+
+
+
+    /**
+     * 单个图片上传功能
+     */
+
+    $('.filebox input[type="file"]').fileupload({
+
+        add: function(e, data) {
+          
+          /*console.log(!data.files[0]['name'].match(/.jpg/))
+          if (!data.files[0]['name'].match(/.jpg/)) {
+              alert('非法上传，不是图片类型');
+              return false;
+          }*/
+            if (!data.files[0]['type'].match(/^image/)) {
+                alert('非法上传，不是图片类型');
+                return false;
+            }
+            data.submit();
+        },
+        progress:function(e){
+            var inputfile = e.target || e.srcElement;
+            $(inputfile).siblings('.showImg').find('.loading').removeClass('hidden');
+            $(inputfile).siblings('.showImg').find('img').addClass('hidden');
+        },
+        done: function(e, data) {
+
+            var inputfile = e.target || e.srcElement;
+            function loadinghide(){
+                $(inputfile).siblings('.showImg').find('.loading').addClass('hidden');
+                $(inputfile).siblings('.showImg').find('img').removeClass('hidden');
+            }
+            setTimeout(loadinghide,100);
+            var re = $.parseJSON(data.result);
+            var input = e.target || e.srcElement;
+            $(input).prev('input[type="hidden"]').attr('value', re.image_id);
+            $(input).next('.showImg').find('img').attr('src',re.url);
+        }
+    });
+    
+    loading();
+    function loading(){
+        $('.filebox .showImg').append('<span class="loading hidden icon-spinner icon-spin"></span>');
+    }
+    
+
+
+
 })
+
+
+
+
+
+
+
 
 
 
