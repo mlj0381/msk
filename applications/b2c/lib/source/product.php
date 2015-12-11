@@ -1,5 +1,4 @@
 <?php
-
 // +----------------------------------------------------------------------
 // | VMCSHOP [V M-Commerce Shop]
 // +----------------------------------------------------------------------
@@ -9,20 +8,19 @@
 // +----------------------------------------------------------------------
 // | Author: Shanghai ChenShang Software Technology Co., Ltd.
 // +----------------------------------------------------------------------
-class b2c_source_goods extends base_source {
-
+class b2c_source_product extends base_source
+{
     protected $host = 'http://localhost/mskapi/goods.php';
     protected $params = array();
     protected $method = 'post';
     protected $schema = 'http';
-    protected $path = '';
     private $args = array(
         'label' => '',
         'num' => '',
         'addr' => '',
     );
-
-    public function __construct($app) {
+    public function __construct($app)
+    {
         $this->app = $app;
         $this->params = array(
             'app' => $this->app,
@@ -32,97 +30,18 @@ class b2c_source_goods extends base_source {
         );
     }
 
-    public function request($params) {
+    public function request($params)
+    {
         $this->set_config($this->path);
         $params = $this->init_request_args($params);
         $this->params['params'] = $params;
         $this->init($this->params);
-        if ($this->get($params)) {
+        if($this->get($params)){
             return $this->get($params);
         }
         $data = $this->remote();
         $this->set($params, $data);
         $this->response($data);
-    }
-
-    /*
-     * 首页楼层
-     * @param $params array()
-     * return array()
-     */
-
-    public function floor($params) {
-        
-    }
-
-    /*
-     * 商品列表
-     * @param $params array()
-     * return array()
-     */
-
-    public function good_list($params) {
-        
-    }
-
-    /*
-     * 商品详情
-     * @param $params array()
-     * return array()
-     */
-
-    public function good_detalis($params) {
-        
-    }
-
-    /*
-     * 商品评价
-     * @param $params array()
-     * return true/false
-     */
-
-    public function comment($params) {
-        
-    }
-
-    /*
-     * 售后管理
-     * @param $params array()
-     * return true/false
-     */
-
-    public function aftersales($params) {
-        
-    }
-
-    /*
-     * 退货管理
-     * @param $params array()
-     * return true/false
-     */
-
-    public function price_aftersales($params) {
-        
-    }
-
-    /*
-     * 退款管理
-     * @param $params array()
-     * return true/false
-     */
-
-    public function goods_aftersales($params) {
-        
-    }
-
-    /*
-     * 撤消售后
-     * @param $params array()
-     * return true/false
-     */
-
-    public function del_aftersales($params) {
-        
     }
 
 }

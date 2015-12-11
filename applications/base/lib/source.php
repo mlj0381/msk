@@ -25,6 +25,7 @@ class base_source
 
 	private $agent = '';
 
+    protected $config = '';
 
     public function get($params)
     {
@@ -73,4 +74,21 @@ class base_source
 		curl_close($ch);
         return $return;
 	}
+
+    public function set_config($path)
+    {
+        $this->config = '';
+    }
+
+    public function init_request_args($params)
+    {
+        $params = utils::_filter_input($params);
+        $data = array_merge($this->config, $params);
+        return array_intersect_key($data, $params);
+    }
+
+    public function response($data)
+    {
+        return $data;
+    }
 }

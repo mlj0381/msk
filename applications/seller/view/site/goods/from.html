@@ -1,12 +1,14 @@
-<{script app=desktop src="../com/global/plugins/jquery-tags-input/jquery.tagsinput.min.js" }>
 <{css app=desktop href="../com/global/plugins/jquery-tags-input/jquery.tagsinput.css" }>
-<{script app=desktop src="../com/global/scripts/metronic.js" }>
-
 <link rel="stylesheet" type="text/css" href="<{$base_url}>/themes/pc/default/statics/css/font-awesome.min.css">
 <link rel="stylesheet" type="text/css" href="<{$base_url}>/themes/pc/default/statics/js/summernote/summernote.css">
 
+
+<!-- <script type="text/javascript" src="http://dev.msk.com/public/desktop/javascripts/desktop-script.min.js"></script> -->
 <script type="text/javascript" src="<{$base_url}>/themes/pc/default/statics/js/summernote/summernote.min.js"></script>
 <script type="text/javascript" src="<{$base_url}>/themes/pc/default/statics/js/summernote/lang/summernote-zh-CN.js"></script>
+<{script app=desktop src="../com/global/plugins/jquery-tags-input/jquery.tagsinput.min.js" }>
+<{script app=desktop src="../com/global/scripts/metronic.js" }>
+<script type="text/javascript" src="<{$base_url}>/themes/pc/default/statics/js/summernot_set.js"></script>
 
 
 <div class="page-seller">
@@ -26,406 +28,22 @@
             <!-- Tab panes -->
 
             <div class="tab-content">
-                <div role="tabpanel" class="tab-pane active" id="baseinfo">
-                    <input name="goods[goods_id]" value="<{$goods.goods_id}>" type="hidden" />
-                    <div class="form-group">
-                        <label class="col-xs-2 control-label"><span>商品编号</span></label>
-                        <div class="col-xs-5">
-                            <input type="text" value="<{$goods.gid}>" name="goods[gid]" placeholder="请输入商品编号" class="form-control">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-xs-2 control-label"><span>商品名称</span></label>
-                        <div class="col-xs-5">
-                            <input type="text" name="goods[name]" value="<{$goods.name}>" placeholder="请输入商品名称" class="form-control">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-xs-2 control-label"><span>文字描述</span></label>
-                        <div class="col-xs-5">
-                            <input type="text" value="<{$goods.brief}>" name="goods[brief]" placeholder="请输文字描述" class="form-control">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-xs-2 control-label"><span>关键词</span></label>
-                        <div class="col-xs-5">
-                            <div class="goods_keywords_box">
-                                <input type="text" id="goods_keywords_input" name="keywords" value="" style="display: none;">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-xs-2 control-label"><span>产品相册</span></label>
-                        <div class="col-xs-5 pro_imgs">
-                            <{foreach from=$goods.images item=item}>
-                                <div class="pro_img_item">
-
-                                    <div class="item_panel">
-
-                                        <span class="default <{if $item.image_id eq $goods.image_default_id}>selected<{/if}>">默认图</span>
-
-                                        <span class="glyphicon glyphicon-trash"></span>
-                                    </div>
-
-                                    <div class="item_con">
-                                        <input type="hidden" name="goods[images][]" value="<{$item.image_id}>">
-                                        <img src="<{$item.image_id|storager:'xs'}>" width="120" height="120" />
-                                    </div>
-                                </div>
-                            <{/foreach}>
-                            <div class="filebox">
-                                <input type="hidden" id="images_add" value="" name="image_default">
-                                <input type="file" data-url="<{link app=image ctl=site_upload act=index}>" accept="image/*" class="file_input">
-                                <div class="showImg">
-                                    <img src="<{$base_url}>/themes/pc/default/statics/images/file_add.jpg">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item_progress hidden">
-                            <i class="icon-spinner icon-spin"></i>
-                        </div>
-                        <textarea class="hidden pro_img_showbox">
-                            <div class="pro_img_item">
-                                
-                                <div class="item_panel">
-                                    <span class="default">默认图</span>
-                                    <span class="glyphicon glyphicon-trash"></span>
-                                </div>
-                                <div class="item_con">
-                                    <input type="hidden" name="goods[images][]" value="{image_id}">
-                                    <img src="{url}" width="120" height="120" />
-                                </div>
-                            </div>
-                        </textarea>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-xs-2 control-label"><span>分类</span></label>
-                        <div class="col-xs-5">
-                            <select class="form-control" name="goods[category][cat_id]">
-                                <option value="1">无</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-xs-2 control-label"><span>扩展分类</span></label>
-                        <div class="col-xs-5">
-                            <select class="form-control" name="goods[extended_cat][]">
-                                <option>无</option>
-                                <option>鸡肉类</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-xs-2 control-label"><span>是否上架销售</span></label>
-                        <div class="col-xs-5">
-                            <span style="margin-right:20px;"><input type="radio" name="goods[marketable]" <{if $goods.marketable eq 'true'}>checked<{/if}> value="true">是</span>
-                            <span style="margin-right:20px;"><input type="radio" name="goods[marketable]" <{if $goods.marketable eq 'false'}>checked<{/if}> value="false">否</span>
-                            <span class="text-danger">商品下架操作同时影响货品</span>
-                        </div>
-                    </div>
-
-                    <{if !$goods.spec_desc && !count($goods.spec_desc)> 0}>
-                        <div class="form-group">
-                            <label class="col-xs-2 control-label"><span>商品信息</span></label>
-                            <div class="col-xs-5">
-                                <div class="goods_infobox" id="no_spec">
-                                    <dl>
-                                        <dd><span class="text-danger">*</span>货号</dd>
-                                        <!--商品编号 SKC-->
-                                        <dt>
-                                            <input type="text" id="goods_gid" data-map='bn' value="<{$goods.product.bn}>" name="goods[product][new_0][bn]" class="form-control input_bianhao">
-                                        </dt>
-                                    </dl>
-                                    <input type="hidden" name="goods[product][new_0][marketable]" value="true">
-                                    <dl>
-                                        <dd>条码</dd>
-                                        <!-- SKU-->
-                                        <dt>
-                                            <input class="form-control form-control" value="<{$product.barcode}>" name="goods[product][new_0][barcode]" data-map='barcode' required="1" type="text">
-                                        </dt>
-                                    </dl>
-                                    <p class="clearfix"></p>
-                                    <div class="row">
-                                        <div class="col-xs-4">
-                                            销售价
-                                            <input type="text" class=" form-control input_xsj" data-map='price' value="<{$product.mktprice}>" name="goods[product][new_0][mktprice]">
-                                        </div>
-                                        <div class="col-xs-4">
-                                            重量
-                                            <input type="text" class="form-control input_weight" data-map='weight' type="text" value="<{$product.weight}>" name="goods[product][new_0][weight]">
-                                        </div>
-                                        <div class="col-xs-4">
-                                            单位
-                                            <input type="text" class="form-control input_danwei" data-map='unit' value="<{$product.unit|default:'件'}>" name="goods[product][new_0][unit]">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <{/if}>
-                            <div class="row guige_add_box" id="spec_edit_pane">
-                                <{if !$goods.spec_desc && !count($goods.spec_desc)> 0}>
-                                    <div class="checker guige_yanse">
-                                        <span class="checked"><input type="checkbox"  class="checkbox_gg" ></span>有多种规格 如：多个尺码。
-                                    </div>
-                                    <{/if}>
-                                        <div class="spec-edit">
-                                            <table class="table spec_add_table">
-                                                <thead>
-                                                    <tr>
-                                                        <th width="25%">规格名称</th>
-                                                        <th>规格项 <i class="fa fa-lightbulb-o"></i><small>每输入一个规格项后，回车确认</small></th>
-                                                        <th width="10%"></th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <{if !$goods.spec_desc && !count($goods.spec_desc)> 0}>
-                                                    <tr>
-                                                        <td>
-                                                            <div class="input-group">
-                                                                <input class="form-control spec-t" name="goods[spec_desc][t][]" value="<{$item}>" type="text" placeholder="如:颜色">
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            <input class='form-control spec-v' name="goods[spec_desc][v][]" type="text" value="<{$goods.spec_desc.v[$key]}>" id="color_input">
-                                                        </td>
-                                                        <td>
-                                                            <button type=button class="btn btn-sm default hide"><i class="glyphicon glyphicon-trash"></i></button>
-                                                        </td>
-                                                    </tr>
-                                                    <{/if}>
-                                                    <{foreach from=$goods.spec_desc.t key=key item=item}>
-                                                    <tr>
-                                                        <td>
-                                                            <div class="input-group">
-                                                                <input class="form-control spec-t" name="goods[spec_desc][t][]" value="<{$item}>" type="text" placeholder="如:颜色">
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            <input class='form-control spec-v' name="goods[spec_desc][v][]" type="text" value="<{$goods.spec_desc.v[$key]}>" id="color_input">
-                                                        </td>
-                                                        <td>
-                                                            <button type=button class="btn btn-sm default hide"><i class="glyphicon glyphicon-trash"></i></button>
-                                                        </td>
-                                                    </tr>
-                                                    <{/foreach}>
-                                                </tbody>
-                                                <tfoot>
-                                                    <tr>
-                                                        <td colspan=3>
-                                                            <button type=button class="btn btn-sm blue-madison new-spec-item"><i class="fa fa-plus"></i> 新增其他名称</button>
-                                                            <button type=button class="btn btn-sm green-meadow create-product-items"><i class="fa fa-cogs"></i> 根据以上信息生成多规格货品</button>
-                                                        </td>
-                                                    </tr>
-                                                </tfoot>
-                                            </table>
-                                        </div>
-                                        <div class="col-md-12 product-items">
-                                            <table class="table table-striped  table-hover">
-                                                <thead>
-                                                    <tr>
-                                                        <th width="15%">规格</th>
-                                                        <th width="25%">货号/条码</th>
-                                                        <th width="10%">销售价</th>
-                                                        <th width="10%">重量</th>
-                                                        <th width="10%">单位</th>
-                                                        <th width="10%">库存</th>
-                                                        <th width="15%">价格区间</th>
-                                                        <th width="5%">上架</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <{foreach from=$goods.product key=key item=product}>
-                                                        <tr>
-                                                            <td style="vertical-align:middle">
-                                                                <input type="hidden" name="goods[product][<{$key}>][product_id]" value="<{$product.product_id}>">
-                                                                <input type="hidden" name="goods[product][<{$key}>][spec_info]" class="form-control input-sm spec-info" value="<{$product.spec_info}>">
-                                                                <span class="text-nowrap">
-                            <{$product.spec_info}>
-                        </span>
-                                                                <input type="hidden" name="goods[product][<{$key}>][spec_desc]" class="spec-desc" value="<{$product.spec_desc}>">
-                                                            </td>
-                                                            <td style="vertical-align:middle">
-                                                                <div class="input-group input-group-sm">
-                                                                    <span class="input-group-addon">货号:</span>
-                                                                    <input type="text" required="true" data-map="bn" class="form-control" name="goods[product][<{$key}>][bn]" value="<{$product.bn}>">
-                                                                </div>
-                                                                <div class="input-group input-group-sm">
-                                                                    <span class="input-group-addon">条码:</span>
-                                                                    <input type="text" data-map="barcode" class="form-control" name="goods[product][<{$key}>][barcode]" value="<{$product.barcode}>">
-                                                                </div>
-                                                            </td>
-                                                            <td style="vertical-align:middle">
-                                                                <input type="text" data-map="price" class="form-control input-sm" name="goods[product][<{$key}>][price]" value="<{$product.price|number_format:'2':'.':''}>">
-                                                            </td>
-                                                            <td style="vertical-align:middle">
-                                                                <input type="text" data-map="weight" name="goods[product][<{$key}>][weight]" class="form-control input-sm input-xsmall" value="<{$product.weight|number_format:'0':'':''}>" placeholder="克">
-                                                            </td>
-                                                            <td style="vertical-align:middle">
-                                                                <input type="text" data-map="unit" name="goods[product][<{$key}>][unit]" class="form-control input-sm input-xsmall" value="<{$product.unit}>">
-                                                            </td>
-                                                            <td style="vertical-align:middle">
-                                                                <input type="text" data-map="mktprice" class="form-control input-sm" name="goods[stock][<{$key}>][quantity]" value="">
-                                                            </td>
-                                                            <td>
-                                                                <div class="input-group input-group-sm">
-                                                                    <span class="input-group-addon">区间:</span>
-                                                                    <input type="text" data-map="price_interval" class="form-control" name="goods[product][<{$key}>][price_interval]" value="<{$product.price_interval}>">
-                                                                </div>
-                                                                <div class="input-group input-group-sm">
-                                                                    <span class="input-group-addon">上行:</span>
-                                                                    <input type="text" data-map="price_up" class="form-control" name="goods[product][<{$key}>][price_up]" value="<{$product.price_up}>">
-                                                                </div>
-                                                                <div class="input-group input-group-sm">
-                                                                    <span class="input-group-addon">下行:</span>
-                                                                    <input type="text" data-map="price_dn" class="form-control" name="goods[product][<{$key}>][price_dn]" value="<{$product.price_dn}>">
-                                                                </div>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" name="goods[product][<{$key}>][marketable]" value="true" checked>
-                                                            </td>
-                                                        </tr>
-                                                        <{/foreach}>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                            </div>
-                            <!-- 结束 -->
-                            <textarea class="spec-item-tpl hide">
-                                <tr>
-                                    <td>
-                                        <div class="input-group">
-                                            <input class="form-control spec-t" name="goods[spec_desc][t][]" type="text" value="" placeholder="规格名称">
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <input class='form-control spec-v' name="goods[spec_desc][v][]" type="text" value="">
-                                    </td>
-                                    <td>
-                                        <button type=button class="btn btn-sm spec-del default"><i class="glyphicon glyphicon-trash"></i></button>
-                                    </td>
-                                </tr>
-                            </textarea>
-                            <textarea class="product-item-tpl hide">
-                                <tr>
-                                    <td>
-                                        <input type="text" name="goods[product][{key}][spec_info]" class="form-control input-sm spec-info" value="{spec_info}" readonly=true>
-                                        <input type="hidden" name="goods[product][{key}][spec_desc]" class="spec-desc" value="{spec_desc}">
-                                    </td>
-                                    <td>
-                                        <div class="input-group input-group-sm">
-                                            <span class="input-group-addon">货号:</span>
-                                            <input type="text" required="true" data-map="bn" class="form-control" name="goods[product][{key}][bn]">
-                                        </div>
-                                        <div class="input-group input-group-sm">
-                                            <span class="input-group-addon">条码:</span>
-                                            <input type="text" data-map="barcode" class="form-control" name="goods[product][{key}][barcode]">
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <input type="text" data-map="price" class="form-control input-sm" name="goods[product][{key}][price]" value="">
-                                    </td>
-                                    <td>
-                                        <input type="text" data-map="weight" class="form-control input-sm" name="goods[product][{key}][weight]" value="">
-                                    </td>
-                                    <td>
-                                        <input type="text" data-map="unit" name="goods[product][{key}][unit]" class="form-control input-sm input-xsmall" value="" placeholder="克">
-                                    </td>
-                                    <td style="vertical-align:middle">
-                                        <input type="text" data-map="quantity" name="goods[stock][{key}][quantity]" class="form-control input-sm input-xsmall" value="<{$product.unit}>">
-                                    </td>
-                                    <td>
-                                        <div class="input-group input-group-sm">
-                                            <span class="input-group-addon">区间:</span>
-                                            <input type="text" data-map="price_interval" class="form-control" name="goods[product][{key}][price_interval]" value="">
-                                        </div>
-                                        <div class="input-group input-group-sm">
-                                            <span class="input-group-addon">上行:</span>
-                                            <input type="text" data-map="price_up" class="form-control" name="goods[product][{key}][price_up]">
-                                        </div>
-                                        <div class="input-group input-group-sm">
-                                            <span class="input-group-addon">下行:</span>
-                                            <input type="text" data-map="price_dn" class="form-control" name="goods[product][{key}][price_dn]">
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <input type="checkbox" name="goods[product][{key}][marketable]" value="true" checked>
-                                    </td>
-                                </tr>
-                            </textarea>
-                </div>
+                <!-- 商品基本信息 -->
+                <{include file="site/goods/detail/basic.html"}>
+                <!-- 图文介绍 -->
                 <div role="tabpanel" class="tab-pane" id="tuwen">
                     <div class="editerbox">
-                        <textarea id="summernote" name="image"></textarea>
+                        <textarea id="summernote" name="goods[description]"></textarea>
+                        <{*input type=html name="goods[description]" remote=site*}>
+
                     </div>
                 </div>
-                <div role="tabpanel" class="tab-pane" id="param">
-                    <div class="form-body">
-                        <div class="form-group">
-                            <label class="col-xs-2 control-label">
-                                <span>类型</span>
-                            </label>
-                            <div class="col-xs-5">
-                                <select name="goods[type][type_id]" class="form-control">
-                                    <option value='0'>普通商品类型</option>
-                                    <{foreach from=$gtype item=type}>
-                                        <option value='<{$type.type_id}>' <{if $type.type_id==$goods_prototype.type_id}>selected
-                                            <{/if}>>
-                                                <{$type.name}>
-                                        </option>
-                                        <{/foreach}>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-xs-2 control-label">
-                                <span>品牌</span>
-                            </label>
-                            <div class="col-xs-5">
-                                <{input class="form-control" type="select" name="goods[brand][brand_id]" nulloption="1" rows=$brandList valueColumn="brand_id" labelColumn="brand_name" value=$goods.brand.brand_id}>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div role="tabpanel" class="tab-pane" id="moban">
-                    <div class="form-body">
-                        <div class="form-group">
-                            <label class="col-xs-2 control-label">
-                                <span>PC页面模板</span>
-                            </label>
-                            <div class="col-xs-5">
-                                <select class="form-control">
-                                    <option value="default.html">[默认] default.html</option>
-                                    <option value="item1.html">[默认商品详情页] item1.html</option>
-                                    <option value="item1.html">[特别的商品详情页] item1.html</option>
-                                    <option value="item2.html">[大促中的商品详情页] item2.html</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div role="tabpanel" class="tab-pane" id="seo">
-                    <div class="form-body">
-                        <div class="form-group">
-                            <label class="col-md-2 control-label">标题 <span class="badge badge-default">Title</span> </label>
-                            <div class="col-md-5">
-                                <input type="text" name='goods[seo_info][seo_title]' value='<{$seo_info.seo_title}>' class="form-control">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-md-2 control-label">关键词 <span class="badge badge-default">Keyword</span> </label>
-                            <div class="col-md-5">
-                                <input type="text" name='goods[seo_info][seo_keywords]' value='<{$seo_info.seo_keywords}>' class="form-control">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-md-2 control-label">简介 <span class="badge badge-default">Description</span> </label>
-                            <div class="col-md-5">
-                                <input type="text" name='goods[seo_info][seo_description]' value='<{$seo_info.seo_description}>' class="form-control">
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <!-- 属性参数 -->
+                <{include file="site/goods/detail/params.html"}>
+                <!-- 展示模板 -->
+                <{include file="site/goods/detail/template.html"}>
+                <!-- seo相关 -->
+                <{include file="site/goods/detail/seo.html"}>
             </div>
         </div>
         <div class="form_action">
@@ -437,10 +55,8 @@
 </div>
 
 
-<script type="text/javascript" src="<{$base_url}>/themes/pc/default/statics/js/summernot_set.js"></script>
+
 <script>
-
-
 $(function() {
 
     /**
@@ -618,11 +234,7 @@ $(function() {
             }
             $(n).val(val);
         });
-
-
-
     };
-
     var timer_delay = 0;
     $('#spec_edit_pane .create-product-items').on('click', function(e) {
         e.stopPropagation();
@@ -642,35 +254,6 @@ $(function() {
 //
 </script>
 <script>
-$(function() {
-    $(".goods_add_imgs").change(function() {
-        var _this = $(this);
-        //创建FormData对象
-        var data = new FormData();
-        //为FormData对象添加数据
-        $.each($(this)[0].files, function(i, file) {
-
-            data.append('files', file);
-        });
-
-        $.ajax({
-            url: 'image-gimages_upload.html',
-            type: 'POST',
-            data: data,
-            cache: false,
-            contentType: false, //不可缺
-            processData: false, //不可缺
-            success: function(data) {
-                data = eval("(" + data + ")");
-
-                $("#image_default").val(data['image_id']);
-                _this.next().find('img').attr('src', data['url']);
-                _this.next().append('<input type="hidden" value="' + data['image_id'] + '" name="goods[images][]">');
-
-            }
-        });
-    });
-});
 String.prototype.trim = function() {
     return this.replace(/(^\s*)|(\s*$)/g, '');
 };
@@ -741,21 +324,6 @@ $(".save_goods").click(function() {
 
 
 $(function() {
-    // $('#goods_prototype').change(function() {
-    //     var data = {
-    //         'type_id': $(this).val()
-    //     };
-    //     $.ajax({
-    //         url: '/index.php/merchant-prototype.html',
-    //         type: 'GET',
-    //         data: data,
-    //         success: function(data) {
-    //             $("#params").children('div').remove();
-    //             $("#params").append(data);
-    //         }
-    //     });
-    // });
-
     /*分类树逻辑*/
     (function() {
         var empty_nbsp = '&nbsp&nbsp&nbsp&nbsp&nbsp';
@@ -766,91 +334,20 @@ $(function() {
                 var pid = $(this).data('pid');
                 $(this).insertAfter($('#select_cat option[value=' + pid + ']'));
             }
-
             while (step > 1) {
                 $(n).html(empty_nbsp + $(n).html());
                 step--;
             }
         });
     })();
-
-});
-</script>
-
-
-<script>
-/**
- *产品图片添加
- */
-$(function() {
-    var substitute = function(str, obj) {
-        return str.replace(/\\?\{([^{}]+)\}/g, function(match, name) {
-            if (match.charAt(0) == '\\') return match.slice(1);
-            return (obj[name] != undefined) ? obj[name] : '';
-        });
-    }
-    $('input[type="file"]').fileupload({
-
-        add: function(e, data) {
-            if (!data.files[0]['type'].match(/^image/)) {
-                alert('非法上传，不是图片类型');
-            }
-            data.submit();
-        },
-        progress:function(e){
-            
-        },
-        done: function(e, data) {
-
-            var re = $.parseJSON(data.result);
-            var input = e.target || e.srcElement;
-            var content = $('.pro_img_showbox').val();
-            $('.filebox').before(substitute(content, re));
-
-            if($('.pro_imgs .pro_img_item').size()==1){
-                $('.pro_imgs .pro_img_item').find('.default').addClass('selected');
-                var default_val=$('.pro_imgs .pro_img_item:first-child').find('input[type="hidden"]').val();
-                $('#images_add').attr('value',default_val);
-            }
-
-        }
-    });
-    //图片删除
-    $('.pro_imgs').on('click','.glyphicon-trash',function(e){
-        e.stopPropagation();
-        var _parent=$(this).parents('.pro_img_item');
-        if(!confirm('确认删除？')){
-            return;
-        }else{
-            _parent.remove();
-            var len=$('.pro_imgs .pro_img_item').size();
-            if(len==1){
-               $('.pro_imgs .pro_img_item').find('.default').addClass('selected');
-               var default_val=$('.pro_imgs .pro_img_item .item_con').find('input[type="hidden"]').val();
-               $('#images_add').attr('value',default_val);
-            }
-
-
-        }
-    })
-
-    //设置默认图片
-
-    $('.pro_imgs').on('click','.item_panel',function(){
-        $(this).children('.default').addClass('selected');
-        $(this).parents('.pro_img_item').siblings().find('.default').removeClass('selected');
-
-        var default_val=$(this).siblings('.item_con').find('input[type="hidden"]').val();
-        $('#images_add').attr('value',default_val);
-    })
-
 });
 </script>
 
 <script type="text/javascript">
 var htmlEditor = {
     'id' : 'summernote',
-    'url' : '<{link app=image ctl=site_upload act=wysiswyg_upload}>'
+    'url' : '<{link app=image ctl=site_upload act=wysiswyg_upload}>',
+    'name' : ''
 }
 jQuery.extend(optionHtml, htmlEditor);
 $('#summernote').summernote(optionHtml);

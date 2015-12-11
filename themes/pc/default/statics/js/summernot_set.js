@@ -15,7 +15,7 @@ var optionHtml = {
     onChange : function(){
         $('#' + optionHtml.id).html($('#' + optionHtml.id).code());
     },
-    onImageUpload: function(files, editor, editable) {
+    onImageUpload: function(files, editor, $editable) {
         var data = new FormData();
         var file = files[0];
         data.append('file',file);
@@ -32,8 +32,12 @@ var optionHtml = {
                 }catch(e){
 
                 }
-                if(re.url){}
-                    editor.insertImage(editable, re.url);
+                if(re.url){
+                    //editor.insertImage($editable, re.url);
+                    // var img = '<img src="'+re.url+'" />';
+                    console.log(editor, $editable);
+                }
+
             }
         });
     }

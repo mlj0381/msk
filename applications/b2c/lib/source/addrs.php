@@ -9,7 +9,8 @@
 // +----------------------------------------------------------------------
 // | Author: Shanghai ChenShang Software Technology Co., Ltd.
 // +----------------------------------------------------------------------
-class b2c_source_goods extends base_source {
+
+class b2c_source_addrs extends base_source {
 
     protected $host = 'http://localhost/mskapi/goods.php';
     protected $params = array();
@@ -46,83 +47,52 @@ class b2c_source_goods extends base_source {
     }
 
     /*
-     * 首页楼层
-     * @param $params array()
-     * return array()
+     * 收货地址添加
+     * @params $params 地址参数
+     * return true/false     
      */
 
-    public function floor($params) {
+    public function addrs_add($params) {
         
     }
 
     /*
-     * 商品列表
-     * @param $params array()
-     * return array()
+     * 收货地址编辑
+     * @params $params 地址参数
+     * return true/false     
      */
 
-    public function good_list($params) {
+    public function addrs_edit($params) {
         
     }
 
     /*
-     * 商品详情
-     * @param $params array()
-     * return array()
+     * 收货地址删除
+     * @params $params 地址参数
+     * return true/false     
      */
 
-    public function good_detalis($params) {
+    public function addrs_del($params) {
         
     }
 
     /*
-     * 商品评价
-     * @param $params array()
-     * return true/false
+     * 收货地址查看
+     * @params $params 地址参数
+     * return true/false     
      */
 
-    public function comment($params) {
+    public function addrs_read($params) {
         
     }
 
     /*
-     * 售后管理
-     * @param $params array()
-     * return true/false
+     * 收货地址查看
+     * @params $params 地址参数
+     * return true/false     
      */
 
-    public function aftersales($params) {
+    public function addrs_default($params) {
         
     }
-
-    /*
-     * 退货管理
-     * @param $params array()
-     * return true/false
-     */
-
-    public function price_aftersales($params) {
-        
-    }
-
-    /*
-     * 退款管理
-     * @param $params array()
-     * return true/false
-     */
-
-    public function goods_aftersales($params) {
-        
-    }
-
-    /*
-     * 撤消售后
-     * @param $params array()
-     * return true/false
-     */
-
-    public function del_aftersales($params) {
-        
-    }
-
 }
