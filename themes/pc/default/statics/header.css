@@ -25,6 +25,7 @@
 body {
   padding-top: 0px;
   font-size: 12px;
+  -ms-overflow-style: scrollbar;
 }
 body ul {
   margin: 0;
@@ -69,28 +70,28 @@ header .container-fulid .topbar .top .topLeft .location {
   border: 1px solid #fafafa;
   border-bottom: none;
   border-top: none;
+  height: 38px;
+  line-height: 38px;
 }
 header .container-fulid .topbar .top .topLeft .location small {
   font-size: 12px;
 }
-header .container-fulid .topbar .top .topLeft .location .icon-angle-down {
-  -webkit-transition: -webkit-transform 0.1s;
-  /* For Safari 3.1 to 6.0 */
-  transition: transform .1s;
+header .container-fulid .topbar .top .topLeft .location i {
+  color: #666;
 }
 header .container-fulid .topbar .top .topLeft .location:hover {
+  height: 39px;
+  line-height: 39px;
   background: #fff;
   border: 1px solid #ddd;
-  border-bottom: none;
+  border-bottom: #fff;
   border-top: none;
 }
 header .container-fulid .topbar .top .topLeft .location:hover .location-menu {
   display: block;
 }
-header .container-fulid .topbar .top .topLeft .location:hover .icon-angle-down {
-  -webkit-transform: rotate(180deg);
-  /* Chrome, Safari, Opera */
-  transform: rotate(180deg);
+header .container-fulid .topbar .top .topLeft .location:hover a {
+  color: #666;
 }
 header .container-fulid .topbar .top .topLeft .location a {
   cursor: pointer;
@@ -167,7 +168,7 @@ header .container-fulid .topbar .top .topRight ul li ul li {
   margin: 0;
   width: 100%;
 }
-header .container-fulid .topbar .top .topRight ul li.site_nav .icon-angle-down {
+header .container-fulid .topbar .top .topRight ul li.site_nav i {
   color: #e93428;
 }
 header .container-fulid .topbar .website_menu {
@@ -183,6 +184,28 @@ header .container-fulid .topbar .website_menu .menu_con {
   width: 1200px;
   margin: 0 auto;
   color: #333;
+  padding: 10px 0;
+}
+header .container-fulid .topbar .website_menu .menu_con dl {
+  width: 200px;
+  padding-left: 20px;
+  border-right: 1px solid #f5f5f5;
+  float: left;
+}
+header .container-fulid .topbar .website_menu .menu_con dl dt {
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+header .container-fulid .topbar .website_menu .menu_con dl dd {
+  font-size: 12px;
+  height: 24px;
+  line-height: 24px;
+}
+header .container-fulid .topbar .website_menu .menu_con dl dd a:hover {
+  color: #e93428;
+}
+header .container-fulid .topbar .website_menu .menu_con dl:last-child {
+  border-right: none;
 }
 header .searchbar {
   margin: 0;
@@ -569,6 +592,7 @@ nav.navbar ul.nav li .category-container .category .tab-pane .tab-pane-brand {
   width: 120px;
   height: 120px;
   opacity: 0;
+  filter: alpha(opacity=0);
   cursor: pointer;
 }
 .filebox .showImg {
@@ -644,4 +668,71 @@ nav.navbar ul.nav li .category-container .category .tab-pane .tab-pane-brand {
 .pro_img_item .item_con {
   position: absolute;
   z-index: 9;
+}
+#quickLogin {
+  top: 50%;
+  margin-top: -220px;
+}
+#quickLogin .modal-content {
+  width: 480px;
+  margin: 0 auto;
+  height: 380px;
+  border-radius: 0px;
+}
+#quickLogin .modal-header {
+  background: #B6000C;
+  color: #fff;
+}
+#quickLogin .modal-header small {
+  padding-left: 10px;
+  color: #fff;
+}
+#quickLogin .modal-body {
+  height: 273px;
+  padding: 0 60px;
+}
+#quickLogin .modal-body ul {
+  margin: 20px auto;
+  height: 40px;
+}
+#quickLogin .modal-body ul li {
+  float: left;
+  width: 50%;
+  border-bottom: 1px solid #ddd;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  cursor: pointer;
+  font-size: 14px;
+}
+#quickLogin .modal-body .form-group .form-control {
+  border-radius: 0px;
+  box-shadow: none;
+}
+#quickLogin .modal-body .rmb_pwd input {
+  margin-right: 5px;
+}
+#quickLogin .modal-body .forget_pwd {
+  float: right;
+  margin-top: 6px;
+}
+#quickLogin .modal-body .input-group-addon {
+  border-radius: 0px;
+}
+#quickLogin .modal-body .login_btn {
+  width: 100%;
+  background: #B6000C;
+  border-radius: 0px;
+  height: 40px;
+}
+#quickLogin .modal-footer {
+  height: 50px;
+  background: #f5f5f5;
+}
+#quickLogin .modal-footer p {
+  font-size: 12px;
+}
+#quickLogin .modal-footer p a {
+  color: #B6000C;
+  padding: 0 5px;
 }

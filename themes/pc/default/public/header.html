@@ -35,7 +35,7 @@
                             <li><a>云南</a></li>
                             <li><a>西藏</a></li>
                             <li><a>陕西</a></li>
-                            <li><a>甘肃></a></li>
+                            <li><a>甘肃</a></li>
                             <li><a>青海</a></li>
                             <li><a>宁夏</a></li>
                             <li><a>新疆</a></li>
@@ -47,17 +47,16 @@
                         </ul>
                     </div>
                     <div class="loginStatus">
-                    <span>您好，请<a href="<{link app=b2c ctl=site_passport act=login}>">登录</a></span>|<a href="<{link app=b2c ctl=site_passport act=signup args0=$forward}>" class="freeReg">免费注册</a>
+                        <span>您好，请<a href="<{link app=b2c ctl=site_passport act=login}>">登录</a></span>|<a href="<{link app=b2c ctl=site_passport act=signup args0=$forward}>" class="freeReg">免费注册</a>
                     </div>
                 </div>
                 <div class="topRight">
                     <ul>
                         <li class="seller dropdown">
-                            <a id="mySnk" class="dropdown-toggle"  href="<{link app=b2c ctl=site_member act=index}>">我的美侍客
+                            <a id="mySnk" class="dropdown-toggle" href="<{link app=b2c ctl=site_member act=index}>">我的美侍客
                             </a>
-
                         </li>
-                        <li class="cart"><a href="<{link app=b2c ctl=site_cart act=index}>"><i class="icon-shopping-cart"></i> 购物车 <span style="color:red;"> ( 0 )</span></a></li>
+                        <li class="cart"><a href="javascript:;" data-toggle="modal" data-target="#quickLogin"><i class="icon-shopping-cart"></i> 购物车 <span style="color:red;"> ( 0 )</span></a></li>
                         <li class="userCenter"><a href="<{link app=b2c ctl=site_member act=index}>">会员中心</a></li>
                         <li class="favorite"><a target="_blank" href="<{link app=b2c ctl=site_member act=favorite}>"><i class="icon-star"></i> 收藏夹</a></li>
                         <li>|</li>
@@ -77,7 +76,6 @@
                     <{WIDGET_B2C_GOODS_INDEX_WEB_NAV target=index}>
                 </div>
             </div>
-
         </div>
     </div>
     <!-- Search Box -->
@@ -89,7 +87,7 @@
             <div class="searchbox col-xs-5">
                 <div class="search_label">
                     <span class="active">商品</span>
-                    <span >店铺</span>
+                    <span>店铺</span>
                 </div>
                 <form class="search_form" action="<{link app=b2c ctl=site_list act=index}>" method="post">
                     <span class="search_txt"><input type="text" name="keywords" value="" placeholder="请输入您要查找的商品"/></span>
@@ -115,6 +113,57 @@
             </div>
         </div>
     </div>
+    <!-- 快捷登录弹层 -->
+    <form method="post" action="">
+        <div class="modal fade" id="quickLogin">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">美侍客会员登录<small>Login</small></h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="login_panel">
+                            <ul>
+                                <li>账户密码登录</li>
+                                <li>快速登录</li>
+                            </ul>
+                            <div class="login_cont">
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="icon-user"></i></div>
+                                      <input type="text" class="form-control" placeholder="手机号/用户名/邮箱">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class=" icon-lock"></i></div>
+                                      <input type="password" class="form-control" placeholder="密码">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <span class="rmb_pwd">
+                                        <input type="checkbox">记住密码
+                                    </span>
+                                    <a href="#" class="forget_pwd">忘记密码？</a>
+                                </div>
+                                <div class="form-group">
+                                    <button type="button" class="btn btn-danger login_btn">登 录</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <p>还没有账号？快来<a href="">注册</a>吧!</p>
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+        <!-- /.modal -->
+    </form>
+    <!--END 快捷登录弹层 -->
 </header>
 <script type="text/template" id="minicart_item_tpl">
     <li class="mc-item">
@@ -165,10 +214,10 @@ $(function() {
         try {
             var cart_count = 0;
             if (re.data.objects.goods.length > 0) {
-                for(var index in re.data.objects.goods){
+                for (var index in re.data.objects.goods) {
                     cart_count += parseInt(re.data.objects.goods[index].quantity);
                 }
-                $('.cart span').text('('+ cart_count +')')
+                $('.cart span').text('(' + cart_count + ')')
             }
         } catch (e) {
 
@@ -224,38 +273,37 @@ $(function() {
 
 });
 </script>
-
 <script type="text/javascript">
-    /**
-     * 顶部商品或店铺搜索
-     */
-    $('.search_label span').click(function(){
-        $(this).addClass('active').siblings().removeClass('active');
-        var index = $('.search_label span').index(this);
-        var url_list="<{link app=b2c ctl=site_list act=index}>";
-        var url_store="<{link app=seller ctl=site_store act=index}>";
-        if(index=="0"){
-            $('.search_form').attr('action',url_list);
-            $('.search_form .search_txt input').attr('value','');
-            $('.search_form .search_txt input').attr('placeholder','请输入你要查找的商品');
-        }else{
+/**
+ * 顶部商品或店铺搜索
+ */
+$('.search_label span').click(function() {
+    $(this).addClass('active').siblings().removeClass('active');
+    var index = $('.search_label span').index(this);
+    var url_list = "<{link app=b2c ctl=site_list act=index}>";
+    var url_store = "<{link app=seller ctl=site_store act=index}>";
+    if (index == "0") {
+        $('.search_form').attr('action', url_list);
+        $('.search_form .search_txt input').attr('value', '');
+        $('.search_form .search_txt input').attr('placeholder', '请输入你要查找的商品');
+    } else {
 
-            $('.search_form').attr('action',url_store);
-            $('.search_form .search_txt input').attr('value','');
-            $('.search_form .search_txt input').attr('placeholder','请输入你要查找的店铺名');
-        }
-    })
+        $('.search_form').attr('action', url_store);
+        $('.search_form .search_txt input').attr('value', '');
+        $('.search_form .search_txt input').attr('placeholder', '请输入你要查找的店铺名');
+    }
+})
 
-    /*$('.search_btn').click(function(){
-        var keyword = $('.search_form .search_txt input').val();
-        var tips="亲，您还没输入关键词";
+/*$('.search_btn').click(function(){
+    var keyword = $('.search_form .search_txt input').val();
+    var tips="亲，您还没输入关键词";
 
-        if(!keyword||keyword==tips){
-            $('.search_form .search_txt input').attr('value',tips);
-            $('.search_form .search_txt input').focus(function(){
-                $(this).attr('value','');
-            })
-            return false;
-        }
-    })*/
+    if(!keyword||keyword==tips){
+        $('.search_form .search_txt input').attr('value',tips);
+        $('.search_form .search_txt input').focus(function(){
+            $(this).attr('value','');
+        })
+        return false;
+    }
+})*/
 </script>

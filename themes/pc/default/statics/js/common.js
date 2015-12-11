@@ -1,25 +1,43 @@
 
 $(function(){
 
-
     /**
      * 全站导航
      */
-
-    $('.site_nav').click(function(){
-        $('.website_menu').slideToggle();
-    })
-
+    var siteNav=$('.site_nav')[0];
+    var webMenu=$('.website_menu')[0];
+    var timer=null;
+    webMenu.onmouseover=siteNav.onmouseover=function(){
+        clearInterval(timer);
+        webMenu.style.display="block";
+        $('.site_nav a i').attr('class','icon-angle-up');
+    }
+    webMenu.onmouseout=siteNav.onmouseout=function(){
+        timer=setTimeout(hide,100);
+        function hide(){
+            webMenu.style.display="none";
+        }
+        $('.site_nav a i').attr('class','icon-angle-down');
+    }
     
+
     /**
      * 城市选择
-     */
-     $('.location ul li').click(function(){
+    */
+    $('.location').hover(
+        function(){
+            $(this).find('i').attr('class','icon-angle-up');
+        },
+        function(){
+            $(this).find('i').attr('class','icon-angle-down')
+        }
+    )
+    $('.location ul li').click(function(){
 
         $(this).addClass('active').siblings().removeClass('active');
         var provName=$(this).children('a').text();
         $('#cityPlan small').text(provName);
-     })
+    })
 
     /**
      * 滑动门tab切换
@@ -43,7 +61,7 @@ $(function(){
     tabslider('.fav_nav span a','.gl_item_box','active');   //我的收藏调用
 
     tabslider('.like_menu span a','.like_con > ul','active');   //购物车浏览记录
-    
+
 })
 
 
@@ -106,9 +124,14 @@ $(function(){
     $('.filebox input[type="file"]').fileupload({
 
       add: function(e, data) {
+          
+          /*console.log(!data.files[0]['name'].match(/.jpg/))
+          if (!data.files[0]['name'].match(/.jpg/)) {
+              alert('非法上传，不是图片类型');
+              return false;
+          }*/
           if (!data.files[0]['type'].match(/^image/)) {
               alert('非法上传，不是图片类型');
-              //e.stopPropagation();
               return false;
           }
           data.submit();
@@ -119,6 +142,7 @@ $(function(){
           $(inputfile).siblings('.showImg').find('img').addClass('hidden');
       },
       done: function(e, data) {
+
           var inputfile = e.target || e.srcElement;
           function loadinghide(){
               $(inputfile).siblings('.showImg').find('.loading').addClass('hidden');
@@ -127,7 +151,6 @@ $(function(){
           setTimeout(loadinghide,100);
           var re = $.parseJSON(data.result);
           var input = e.target || e.srcElement;
-          
           $(input).prev('input[type="hidden"]').attr('value', re.image_id);
           $(input).next('.showImg').find('img').attr('src',re.url);
       }
