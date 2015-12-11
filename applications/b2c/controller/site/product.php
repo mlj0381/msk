@@ -29,6 +29,9 @@ class b2c_ctl_site_product extends b2c_frontpage
     {
         //获取参数 货品ID
         $params = $this->_request->get_params();
+        //调用接口 2015/12/9
+        $data_detail = $this->app->model('products')->goods_detail($params[0]);
+        //>>
         $data_detail = $this->goods_stage->detail($params[0], $msg); //引用传递
         if (!$data_detail) {
             vmc::singleton('site_router')->http_status(404);

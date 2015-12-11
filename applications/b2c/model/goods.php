@@ -257,7 +257,7 @@ class b2c_mdl_goods extends dbeav_model
      {
          $b2c_api = vmc::singleton('b2c_source_goods');
          if(method_exists($b2c_api, 'request_params')){
-             return $b2c_api->request_params($params);
+             return $b2c_api->request($params);
          }else{
              //没定义接口调用本地数据
          }

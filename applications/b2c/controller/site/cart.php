@@ -10,16 +10,15 @@
 // | Author: Shanghai ChenShang Software Technology Co., Ltd.
 // +----------------------------------------------------------------------
 
-
 /**
  * PC端 购物车控制器类
  * 主要完成购物车相关操作及操作结果的反馈,页面间引导.
  */
-class b2c_ctl_site_cart extends b2c_frontpage
-{
+class b2c_ctl_site_cart extends b2c_frontpage {
+
     public $title = '我的购物车';
-    public function __construct(&$app)
-    {
+
+    public function __construct(&$app) {
         parent::__construct($app);
         $this->_response->set_header('Cache-Control', 'no-store');
         vmc::singleton('base_session')->start();
@@ -34,16 +33,42 @@ class b2c_ctl_site_cart extends b2c_frontpage
             $this->cart_stage->set_member_id($this->app->member_id);
         }
     }
+
     //购物车主页
-    public function index()
-    {
+    public function index() {
+        $cat_api = vmc::singleton('b2c_source_cat');
+        $goods_api = vmc::singleton('b2c_source_goods');
+        $params = array(
+            'member_id' => $this->member['member_id'],
+            'label' => '', //购物车大促会，全部商品
+            );
+        $cat_list = $cat_api->request($params); //购物车中的商品
+        /*
+         * 掌柜热卖
+         * 商家推荐
+         */
+        $params = array(
+            'label' => '',
+            'num' => '',
+            'store_id' => '',
+            );
+        $hot_goods = $goods_api->request($params);
+          /*
+         * 最近浏览
+         * 猜你喜欢
+         */
+        $params = array(
+            'label' => '',
+            'num' => '',
+            'store_id' => '',
+            );
         $result = $this->cart_stage->result();
         if ($this->cart_stage->is_empty($result)) {
             $this->splash('error', $this->blank_url);
         }
         if ($this->_request->is_ajax()) {
             //迷你购物车使用
-            $this->splash('success','',$result);
+            $this->splash('success', '', $result);
         }
         $store_obj = vmc::singleton('store_store_object');
         foreach ($result['objects']['goods'] as $key => $value) {
@@ -53,15 +78,15 @@ class b2c_ctl_site_cart extends b2c_frontpage
         $this->set_tmpl('cart');
         $this->page('site/cart/index.html');
     }
+
     //空购物车提示页
-    public function blank()
-    {
+    public function blank() {
         $this->set_tmpl('cart');
         $this->page('site/cart/blank.html');
     }
+
     //向购物车添加商品
-    public function add($product_id, $store_id, $num)
-    {
+    public function add($product_id, $store_id, $num) {
         $params = $this->_request->get_params(true);
         $product_id = ($product_id ? $product_id : $params['product_id']);
         $store_id = ($store_id ? $store_id : $params['store_id']);
@@ -97,9 +122,9 @@ class b2c_ctl_site_cart extends b2c_frontpage
         }
         $this->splash('success', $forward);
     }
+
     //成功加入购物车后
-    public function addtocart($ident)
-    {
+    public function addtocart($ident) {
         $exist_cart = $this->cart_stage->result();
         if ($this->cart_stage->is_empty($exist_cart)) {
             $this->splash('error', $this->blank_url, '购物车为空！');
@@ -114,12 +139,12 @@ class b2c_ctl_site_cart extends b2c_frontpage
         }
         //日后修改
         foreach ($exist_cart['objects']['goods'] as $key => &$value) {
-            if($value['item']['product']['price_interval'] && $value['quantity'] > $value['item']['product']['price_interval']){
+            if ($value['item']['product']['price_interval'] && $value['quantity'] > $value['item']['product']['price_interval']) {
                 $price[$key] = $value['quantity'] * $value['item']['product']['price_up'];
                 $value['item']['product']['buy_price'] = $value['item']['product']['price_up'];
             }
         }
-        if($price){
+        if ($price) {
             $count_price = array_sum($price);
             $exist_cart['gain_score'] = $count_price;
             $exist_cart['cart_amount'] = $count_price;
@@ -131,8 +156,8 @@ class b2c_ctl_site_cart extends b2c_frontpage
         $this->set_tmpl('addtocart');
         $this->page('site/cart/addtocart.html');
     }
-    public function fastbuy($product_id, $store_id, $num)
-    {
+
+    public function fastbuy($product_id, $store_id, $num) {
         $this->verify_member();
         $params = $this->_request->get_params(true);
         $product_id = ($product_id ? $product_id : $params['product_id']);
@@ -161,9 +186,9 @@ class b2c_ctl_site_cart extends b2c_frontpage
         ));
         $this->splash('success', $forward);
     }
+
     //更新购物车
-    public function update($ident, $num)
-    {
+    public function update($ident, $num) {
         $params = $this->_request->get_params(true);
         $obj_ident = ($ident ? $ident : $params['ident']);
         $num = ($num ? $num : $params['num']);
@@ -178,13 +203,14 @@ class b2c_ctl_site_cart extends b2c_frontpage
         $cart_result = $this->cart_stage->currency_result($filter = null, $cart_result);
         $this->splash('success', $forward, $cart_result);
     }
+
     //编辑购物车商品项
-    public function edit()
-    {
+    public function edit() {
+
     }
+
     // 删除&购物车商品、清空购物车
-    public function remove($ident = false)
-    {
+    public function remove($ident = false) {
         $params = $this->_request->get_params(true);
         $obj_ident = ($ident ? $ident : $params['ident']);
         if (is_array($obj_ident)) {
@@ -204,9 +230,9 @@ class b2c_ctl_site_cart extends b2c_frontpage
         ));
         $this->splash('success', $forward, $cart_result);
     }
+
     // 移到收藏夹
-    public function mv2fav($arg_ident = false)
-    {
+    public function mv2fav($arg_ident = false) {
         $params = $this->_request->get_params(true);
         $obj_ident = ($arg_ident ? $arg_ident : $params['ident']);
         if (!is_array($obj_ident)) {
@@ -218,7 +244,7 @@ class b2c_ctl_site_cart extends b2c_frontpage
             if (app::get('b2c')->model('member_goods')->add_fav($this->app->member_id, $product['goods_id'])) {
                 $this->cart_stage->delete($ot, $ident);
             } else {
-                $this->splash('error', array('app' => 'b2c', 'ctl' => 'site_cart'), '移到收藏夹失败!'.$msg);
+                $this->splash('error', array('app' => 'b2c', 'ctl' => 'site_cart'), '移到收藏夹失败!' . $msg);
             }
         }
         $cart_result = $this->cart_stage->currency_result();
@@ -227,9 +253,9 @@ class b2c_ctl_site_cart extends b2c_frontpage
         }
         $this->splash('success', array('app' => 'b2c', 'ctl' => 'site_cart'), $cart_result);
     }
+
     //使用优惠券
-    public function use_coupon($is_fastbuy = false)
-    {
+    public function use_coupon($is_fastbuy = false) {
         $params = $this->_request->get_params(true);
         $added_obj_ident = $this->cart_stage->add('coupon', array('coupon' => $params['coupon']), $msg, $is_fastbuy);
         if (!$added_obj_ident) {
@@ -261,9 +287,9 @@ class b2c_ctl_site_cart extends b2c_frontpage
 
         $this->splash('success', '', $cart_result);
     }
+
     //移除优惠券
-    public function remove_coupon($is_fastbuy = false)
-    {
+    public function remove_coupon($is_fastbuy = false) {
         if ($is_fastbuy) {
             $filter['is_fastbuy'] = 'true'; //在立即购买结算流程中使用优惠券
         } else {
@@ -283,9 +309,9 @@ class b2c_ctl_site_cart extends b2c_frontpage
         }
         $this->splash('success', '', $cart_result);
     }
+
     //禁用购物车项
-    public function disabled($ident = false)
-    {
+    public function disabled($ident = false) {
         $params = $this->_request->get_params(true);
         if ($ident && !isset($params['ident'])) {
             $params['ident'] = $ident;
@@ -298,9 +324,9 @@ class b2c_ctl_site_cart extends b2c_frontpage
         $cart_result = $this->cart_stage->currency_result();
         $this->splash('success', $forward, $cart_result);
     }
+
     //激活购物车项
-    public function enabled($ident = false)
-    {
+    public function enabled($ident = false) {
         $params = $this->_request->get_params(true);
         if ($ident && !isset($params['ident'])) {
             $params['ident'] = $ident;
@@ -313,4 +339,5 @@ class b2c_ctl_site_cart extends b2c_frontpage
         $cart_result = $this->cart_stage->currency_result();
         $this->splash('success', $forward, $cart_result);
     }
+
 }
