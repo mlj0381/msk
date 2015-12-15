@@ -96,4 +96,11 @@ class b2c_view_widget
     //     $render->pagedata['cat'] = vmc::service('view_datasetting')->goods_list_cat($params);
 	// 	return $render->fetch('widget/list.cat.html');
     // }
+    
+    //网站底部内容管理
+    public function function_WIDGET_B2C_GOODS_INDEX_FOOTER($params, &$smarty){
+        $render = new base_render(app::get('b2c'));
+        $render->pagedata['content'] = vmc::service('view_datasetting')->index_footer($params);
+	return $render->fetch('widget/index.footer.html');
+    }
 }

@@ -181,4 +181,24 @@
         }
         unset($search_info['prop']['cat']);
      }
+     
+     //网页底部内容管理
+     public function index_footer(){
+        $mdl_content = app::get('content')->model('article_nodes');
+        $data = $mdl_content->fetch_all();
+        $return = array();
+        $items = array();
+        foreach($data as $value){
+            $items[$value['node_id']] = $value;
+        }
+        unset($data);
+        foreach($items as  $item){
+            if(isset($items[$item['parent_id']])){
+                $items[$item['parent_id']]['son'][] = &$items[$item['node_id']];
+            }else{
+                $return[] = &$items[$item['node_id']];
+            }
+        }
+        return $return;
+     }
  }
