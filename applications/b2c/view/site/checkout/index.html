@@ -55,6 +55,26 @@
 </div>
 <div class="row">
     <div class="col-xs-5">
+        <div data-flowindex=2 class="panel panel-default checkout-payment">
+            <div class="panel-heading clearfix">
+                <h3 class="panel-title">支付方式</h3>
+            </div>
+            <ul class="list-group">
+                <{foreach from=$paymentapps key=k item=papp}>
+                    <li  class="list-group-item <{if $papp.selected}>active<{/if}> clearfix">
+                        <input type="radio" <{if $papp.selected}>checked<{/if}> name="payapp_id" value="<{$papp.app_id}>">
+                        <span class="payapp-name"><{$papp.display_name|default:$papp.name}></span>
+                        <{if $papp.description}>
+                        <i  data-toggle="popover" class="glyphicon glyphicon-question-sign"></i>
+                        <p class="hide">
+                            <{$papp.description}>
+                        </p>
+                        <{/if}>
+                    </li>
+                <{/foreach}>
+            </ul>
+        </div>
+        
         <div data-flowindex=1 class="panel panel-default checkout-dlytype">
             <div class="panel-heading clearfix">
                 <h3 class="panel-title">配送方式</h3>
@@ -88,25 +108,7 @@
                 <li><span>23:00-02:00</span></li>
             </ul>
         </div>
-        <div data-flowindex=2 class="panel panel-default checkout-payment">
-            <div class="panel-heading clearfix">
-                <h3 class="panel-title">支付方式</h3>
-            </div>
-            <ul class="list-group">
-                <{foreach from=$paymentapps key=k item=papp}>
-                    <li  class="list-group-item <{if $papp.selected}>active<{/if}> clearfix">
-                        <input type="radio" <{if $papp.selected}>checked<{/if}> name="payapp_id" value="<{$papp.app_id}>">
-                        <span class="payapp-name"><{$papp.display_name|default:$papp.name}></span>
-                        <{if $papp.description}>
-                        <i  data-toggle="popover" class="glyphicon glyphicon-question-sign"></i>
-                        <p class="hide">
-                            <{$papp.description}>
-                        </p>
-                        <{/if}>
-                    </li>
-                <{/foreach}>
-            </ul>
-        </div>
+        
     </div>
     <div class="col-xs-7">
         <div class="panel panel-default checkout-cart">
@@ -285,34 +287,41 @@
       <div class="modal-body">
           <div class="form-horizontal">
               <div class="form-group">
-                <label for="maddr_name" class="col-sm-2 control-label">姓名<em class="text-danger">*</em></label>
+                <label for="maddr_name" class="col-sm-2 control-label"><em class="text-danger">*</em>姓名</label>
                 <div class="col-sm-5">
                   <input type="text" required="true" name="maddr[name]" class="form-control" id="maddr_name" placeholder="收货人姓名">
                 </div>
               </div>
+              
               <div class="form-group">
-                <label for="maddr_mobile" class="col-sm-2 control-label">手机<em class="text-danger">*</em></label>
-                <div class="col-sm-5">
-                  <input type="text" required="true" name="maddr[mobile]" class="form-control" id="maddr_mobile" placeholder="手机号码">
-                </div>
-              </div>
-              <div class="form-group">
-                <label for="maddr_area"  class="col-sm-2 control-label">收货地区<em class="text-danger">*</em></label>
+                <label for="maddr_area"  class="col-sm-2 control-label"><em class="text-danger">*</em>收货地区</label>
                 <div class="col-sm-10">
                   <{input type=region name="maddr[area]" id="maddr_region"}>
                 </div>
               </div>
               <div class="form-group">
-                <label for="maddr_addr" class="col-sm-2 control-label">收货地址<em class="text-danger">*</em></label>
+                <label for="maddr_addr" class="col-sm-2 control-label"><em class="text-danger">*</em>收货地址</label>
                 <div class="col-sm-10">
                     <input type="text" required="true" name="maddr[addr]" class="form-control" id="maddr_addr" placeholder="街道\门牌号码">
                 </div>
               </div>
+               <div class="form-group">
+                <label for="maddr_addr" class="col-sm-2 control-label"><em class="text-danger">*</em>距离门店最近停车距离</label>
+                <div class="col-sm-10">
+                    <input type="text"  name="" class="form-control" id="maddr_addr">
+                </div>
+              </div>
               <hr>
               <div class="form-group">
-                <label for="maddr_zip" class="col-sm-2 control-label">邮编</label>
+                <label for="maddr_zip" class="col-sm-2 control-label"><em class="text-danger">*</em>邮编</label>
                 <div class="col-sm-3">
                     <input type="text" name="maddr[zip]" class="form-control input-sm" id="maddr_zip" placeholder="邮政编码">
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="maddr_mobile" class="col-sm-2 control-label"><em class="text-danger">*</em>手机</label>
+                <div class="col-sm-5">
+                  <input type="text" required="true" name="maddr[mobile]" class="form-control" id="maddr_mobile" placeholder="手机号码">
                 </div>
               </div>
               <div class="form-group">
@@ -325,6 +334,12 @@
                 <label for="maddr_tel" class="col-sm-2 control-label">Email</label>
                 <div class="col-sm-5">
                     <input type="email" name="maddr[email]" class="form-control input-sm" id="maddr_tel" placeholder="填写此项可接收订单状态通知" >
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="maddr_tel" class="col-sm-2 control-label">单次配送规模</label>
+                <div class="col-sm-5">
+                    <input type="text" name="" class="form-control input-sm" id="maddr_tel" >
                 </div>
               </div>
           </div>
