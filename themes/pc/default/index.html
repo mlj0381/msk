@@ -15,6 +15,15 @@
         <link rel="stylesheet" href="statics/index.css">
         <script type="text/javascript" src="statics/js/jquery.shopScroll.js"></script>
         <script type="text/javascript" src="statics/js/common.js"></script>
+        <script type="text/javascript" src="statics/js/jquery.lazyload.js"></script>
+        <script type="text/javascript">
+        $(function() {
+            $("img").lazyload({
+                placeholder: "<{$base_url}>/themes/pc/default/statics/images/loading.gif",
+                effect: "fadeIn"
+            });
+        });
+        </script>
         <style>
             nav.mainNav ul.nav_ul li .category-container{display:block;}
         </style>
