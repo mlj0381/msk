@@ -18,14 +18,14 @@
             <div class="col-xs-5">
                 <div class="product-main-image" style="position: relative; overflow: hidden; width:450px; height:450px; margin-top:15px;">
                     <a href="<{$data_detail.image_default_id|storager:'l'}>" target="_blank">
-                        <img src="<{$data_detail.image_default_id|storager:'m'}>" alt="<{$data_detail.name}>" width="450px" height="450px" >
+                        <img src="<{$base_url}>/themes/pc/default/statics/images/loading.gif" data-original="<{$data_detail.image_default_id|storager:'m'}>" alt="<{$data_detail.name}>" width="450px" height="450px" >
                     </a>
                 </div>
                 <ul class="product-other-images list-inline">
                     <{foreach from=$data_detail.images item=image name=poi}>
                     <li <{if $data_detail.image_default_id == $image.image_id}>class="current"<{/if}>>
                         <a href="<{$image.image_id|storager:'l'}>" data-middlesrc="<{$image.image_id|storager:'m'}>" target="_blank">
-                            <img height=50 width="50" src="<{$image.image_id|storager:'s'}>" />
+                            <img height=50 width="50" src="<{$base_url}>/themes/pc/default/statics/images/loading.gif" data-original="<{$image.image_id|storager:'s'}>" />
                         </a>
                     </li>
                     <{/foreach}>
@@ -167,31 +167,31 @@
                  <li>
                      <a href="#">
                          <p><span>￥:128.00</span><span>神农客精选五花肉01</span></p>
-                         <img src="<{$baseurl}>/themes/pc/default/statics/images/customer_04.jpg">
+                         <img src="<{$base_url}>/themes/pc/default/statics/images/loading.gif" data-original="<{$baseurl}>/themes/pc/default/statics/images/customer_04.jpg">
                      </a>
                  </li>
                  <li>
                      <a href="#">
                          <p><span>￥:128.00</span><span>神农客精选五花肉01</span></p>
-                         <img src="<{$baseurl}>/themes/pc/default/statics/images/customer_04.jpg">
+                         <img src="<{$base_url}>/themes/pc/default/statics/images/loading.gif" data-original="<{$baseurl}>/themes/pc/default/statics/images/customer_04.jpg">
                      </a>
                  </li>
                  <li>
                      <a href="#">
                          <p><span>￥:128.00</span><span>神农客精选五花肉01</span></p>
-                         <img src="<{$baseurl}>/themes/pc/default/statics/images/customer_04.jpg">
+                         <img src="<{$base_url}>/themes/pc/default/statics/images/loading.gif" data-original="<{$baseurl}>/themes/pc/default/statics/images/customer_04.jpg">
                      </a>
                  </li>
                  <li>
                      <a href="#">
                          <p><span>￥:128.00</span><span>神农客精选五花肉01</span></p>
-                         <img src="<{$baseurl}>/themes/pc/default/statics/images/customer_04.jpg">
+                         <img src="<{$base_url}>/themes/pc/default/statics/images/loading.gif" data-original="<{$baseurl}>/themes/pc/default/statics/images/customer_04.jpg">
                      </a>
                  </li>
                  <li>
                      <a href="#">
                          <p><span>￥:128.00</span><span>神农客精选五花肉01</span></p>
-                         <img src="<{$baseurl}>/themes/pc/default/statics/images/customer_04.jpg">
+                         <img src="<{$base_url}>/themes/pc/default/statics/images/loading.gif" data-original="<{$baseurl}>/themes/pc/default/statics/images/customer_04.jpg">
                      </a>
                  </li>
              </ul>
@@ -241,7 +241,7 @@
                         <li>
                             <div class="goods_img">
                                 <a href="#">
-                                    <img src="<{$baseurl}>/themes/pc/default/statics/images/proimg.jpg">
+                                    <img src="<{$base_url}>/themes/pc/default/statics/images/loading.gif" data-original="<{$baseurl}>/themes/pc/default/statics/images/proimg.jpg">
                                 </a>
                             </div>
                             <div class="goods_info">
@@ -253,7 +253,7 @@
                         <li>
                             <div class="goods_img">
                                 <a href="#">
-                                    <img src="<{$baseurl}>/themes/pc/default/statics/images/proimg.jpg">
+                                    <img src="<{$base_url}>/themes/pc/default/statics/images/loading.gif" data-original="<{$baseurl}>/themes/pc/default/statics/images/proimg.jpg">
                                 </a>
                             </div>
                             <div class="goods_info">

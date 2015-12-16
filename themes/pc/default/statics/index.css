@@ -171,12 +171,14 @@
   text-align: center;
 }
 .index_page .shop_show .bd ul li .pic {
+  width: 180px;
+  height: 90px;
   text-align: center;
 }
 .index_page .shop_show .bd ul li .pic img {
-  width: 180px;
-  height: 90px;
   display: block;
+  max-width: 180px;
+  max-height: 90px;
   padding: 2px;
 }
 .index_page .shop_show .bd ul li .pic a:hover img {
