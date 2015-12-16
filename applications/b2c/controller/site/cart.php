@@ -87,6 +87,7 @@ class b2c_ctl_site_cart extends b2c_frontpage {
 
     //向购物车添加商品
     public function add($product_id, $store_id, $num) {
+        $this->verify_member();
         $params = $this->_request->get_params(true);
         $product_id = ($product_id ? $product_id : $params['product_id']);
         $store_id = ($store_id ? $store_id : $params['store_id']);

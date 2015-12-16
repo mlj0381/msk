@@ -132,8 +132,8 @@
                         </span>
                     </div>
                     <hr>
-                    <a class="btn btn-danger btn-lg btn-buy" href="<{link app=b2c ctl=site_cart act=add args0=$data_detail.product.product_id args1=$store_info.store_id args2=1 }>">加入购物车</a>
-                    <a class="btn btn-success btn-lg btn-buy" href="<{link app=b2c ctl=site_cart act=fastbuy args0=$data_detail.product.product_id args1=$store_info.store_id args2=1 }>">立即购买</a>
+                    <a class="btn cart btn-danger btn-lg btn-buy" data-url="<{link app=b2c ctl=site_cart act=add args0=$data_detail.product.product_id args1=$store_info.store_id args2=1 }>" href="javascript:;">加入购物车</a>
+                    <a class="btn cart btn-success btn-lg btn-buy" data-url="<{link app=b2c ctl=site_cart act=fastbuy args0=$data_detail.product.product_id args1=$store_info.store_id args2=1 }>" href="javascript:;">立即购买</a>
                     <a class="btn btn-link btn-lg favorite-button" href='<{link app=b2c ctl=site_member act=favorite args0=add args1=$data_detail.goods_id args2=goods}>'>
                         <i class="glyphicon glyphicon-heart-empty"></i>
                         <small>Favorite<em></em></small>
@@ -388,6 +388,42 @@
 <script type="text/javascript" src="<{$base_url}>/openapi/goods/counter/goods_id/<{$data_detail.goods_id}>/view_count/1/uv.js"></script>
 <{script src="jquery.zoom.js"}>
 <script charset="utf-8">
+    
+    //快速登录  data-toggle="modal" data-target="#quickLogin"
+   $('.cart').click(function(e){
+       var _self = $(this);
+       $.post('<{link app=b2c ctl=site_passport act=check_login}>', '', function(re){
+           if(re.success){
+                var url = $(_self).attr('data-url') ? $(_self).attr('data-url') : '<{link app=b2c ctl=site_cart act=index}>';
+                location = url;
+           }else{
+               $('#quickLogin').modal('show');
+           }
+       });
+   });
+   $('.quickLogin').on('click', 'button', function(e){
+        var login_form = $('.quickLogin');
+        login_form.find('button[type=submit]').button('loading');
+        $.post(login_form.prop('action'), login_form.serialize(), function(re) {
+            if (re.error) {
+                login_form.find('.alert-error').remove();
+                if($('.quickLogin .alert').length <= 0){
+                    $('.login_cont').append($('<div class="alert alert-danger">' + re.error + '</div>'));
+                }
+                alert_timer = setTimeout(function() {
+                    clearTimeout(alert_timer);
+                    login_form.find('.alert-danger').fadeOut('fast', function() {
+                        $(this).remove();
+                    });
+                }, 3000);
+            }
+            if (re.success) {
+                location = window.location.href;
+            }
+            login_form.find('button[type=submit]').button('reset');
+        }, 'json');
+        return false;
+   });
     /*
     * 商品详情页脚本
     * @author vmcshop.com
