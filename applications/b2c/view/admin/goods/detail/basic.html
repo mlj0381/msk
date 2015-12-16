@@ -196,9 +196,9 @@ $('#goods_keywords_input').tagsInput({
     $('#goods_images_fileupload').fileupload({
         add:function(e,data){
             var file_obj = data.files[0];
-            if(!file_obj['type'].match(/^image/)){
+            /*if(!file_obj['type'].match(/^image/)){
                 return toastr.warning(data.files[0]['name']+'不是允许的图片类型','类型错误');
-            }
+            }*/
             data.context = $($('.gimage-box-process-tpl').val());
             data.context.find('.number')
             .html("<small>"+Math.round(parseFloat(file_obj.size/1024/1024)*100)/100+'MB</small>');

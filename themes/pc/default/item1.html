@@ -15,6 +15,15 @@
 <script type="text/javascript" src="statics/js/bootstrap-datetimepicker.js"></script>
 <script type="text/javascript" src="statics/js/bootstrap-datetimepicker.zh-CN.js"></script>
 <script type="text/javascript" src="statics/js/common.js"></script>
+<script type="text/javascript" src="statics/js/jquery.lazyload.js"></script>
+<script type="text/javascript">
+	$(function() {
+	    $(".product-page img").lazyload({
+	        placeholder: "<{$base_url}>/themes/pc/default/statics/images/loading.gif",
+	        effect: "fadeIn"
+	    });
+	});
+</script>
 </head>
 <body>
 <{require file="public/header.html"}>

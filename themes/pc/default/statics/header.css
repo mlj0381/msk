@@ -211,7 +211,7 @@ header .searchbar {
   margin: 0;
   padding: 0;
   width: 100%;
-  height: 100px;
+  height: 105px;
 }
 header .searchbar .searchbar_con {
   width: 1200px;
@@ -737,4 +737,38 @@ nav.mainNav ul.nav_ul li .category-container .category .tab-pane .tab-pane-brand
 #quickLogin .modal-footer p a {
   color: #B6000C;
   padding: 0 5px;
+}
+form .form-control {
+  box-shadow: none;
+  border-radius: 0;
+}
+form .form-control:focus {
+  box-shadow: none;
+}
+form .data_par.active .form-control {
+  border: 1px #32BC61 solid;
+  background-color: #fff;
+}
+form .data_par.error .form-control {
+  border: 1px #d9534f solid;
+  background-color: #fff;
+}
+form .valid_message {
+  color: #5cb85c;
+}
+form .error .valid_message {
+  color: #d9534f;
+}
+form .success .valid_message {
+  position: absolute;
+  display: inline-block;
+  background: url(images/sucess.png) no-repeat;
+  left: auto;
+  right: 20px;
+  top: 8px;
+  width: 16px;
+  height: 16px;
+}
+form .none {
+  display: none;
 }

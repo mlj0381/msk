@@ -12,6 +12,15 @@
 <link rel="stylesheet" href="statics/style.css">
 <link rel="stylesheet" href="statics/font-awesome.min.css">
 <script type="text/javascript" src="statics/js/common.js"></script>
+<script type="text/javascript" src="statics/js/jquery.lazyload.js"></script>
+<script type="text/javascript">
+	$(function() {
+	    $(".glist-container img").lazyload({
+	        placeholder: "<{$base_url}>/themes/pc/default/statics/images/loading.gif",
+	        effect: "fadeIn"
+	    });
+	});
+</script>
 <script type="text/javascript">
 	$(function(){
 		$('.category-container').css('display','none')

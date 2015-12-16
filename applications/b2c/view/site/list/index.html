@@ -160,7 +160,7 @@
                 <div class="thumbnail goods-item">
                     <div class="gi-image-wrapper">
                         <a href="<{link app=b2c ctl=site_product args0=$item.product.product_id args1=$item.store_id}>">
-                            <img src="<{$item.image_default_id|storager:'s'}>" alt="<{$item.name}>">
+                            <img src="<{$base_url}>/themes/pc/default/statics/images/loading.gif" data-original="<{$item.image_default_id|storager:'s'}>" alt="<{$item.name}>">
                         </a>
                     </div>
                   <div class="caption">
@@ -191,7 +191,7 @@
                       <div class="thumbnail goods-item">
                           <div class="gi-image-wrapper">
                               <a href="<{link app=b2c ctl=site_product args0=$item2.product_id}>">
-                                  <img src="<{$item2.image_id|storager:'s'}>" alt="<{$item.name}><{$item2.spec_info}>">
+                                  <img src="<{$base_url}>/themes/pc/default/statics/images/loading.gif" data-original="<{$item2.image_id|storager:'s'}>" alt="<{$item.name}><{$item2.spec_info}>">
                               </a>
                           </div>
                         <div class="caption">
