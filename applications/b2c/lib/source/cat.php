@@ -41,7 +41,7 @@ class b2c_source_cat extends base_source {
             return $this->get($params);
         }
         $data = $this->remote();
-        $this->set($params, $data);
+       // $this->set($params, $data);
         $this->response($data);
     }
 }

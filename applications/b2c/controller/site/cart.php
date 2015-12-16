@@ -52,7 +52,7 @@ class b2c_ctl_site_cart extends b2c_frontpage {
             'num' => '',
             'store_id' => '',
             );
-        $hot_goods = $goods_api->request($params);
+        //$hot_goods = $goods_api->request($params);
           /*
          * 最近浏览
          * 猜你喜欢

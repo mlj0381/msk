@@ -15,7 +15,7 @@ class b2c_source_goods extends base_source {
     protected $params = array();
     protected $method = 'post';
     protected $schema = 'http';
-    protected $path = '';
+    protected $config_path = '';
     private $args = array(
         'label' => '',
         'num' => '',
@@ -29,11 +29,12 @@ class b2c_source_goods extends base_source {
             'method' => $this->method,
             'schema' => $this->schema,
             'host' => $this->host,
+            'config_path' => $this->config_path,
         );
     }
 
     public function request($params) {
-        $this->set_config($this->path);
+        
         $params = $this->init_request_args($params);
         $this->params['params'] = $params;
         $this->init($this->params);
