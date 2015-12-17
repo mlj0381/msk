@@ -262,4 +262,20 @@ class b2c_ctl_site_list extends b2c_frontpage
         $this->setSeo('site_list', 'index', $seo_data);
     }
 
+    
+    /**
+     * 相关商品
+     */
+    public function goods_rate(){
+        $goods_api = vmc::singleton('b2c_source_goods');
+        return $goods_api->goods_rate($_GET);
+    }
+    
+    /**
+     * 商品促销
+     */
+    public function promotions(){
+        $goods_api = vmc::singleton('b2c_source_goods');
+        return $goods_api->promotions($_GET);
+    }
 }

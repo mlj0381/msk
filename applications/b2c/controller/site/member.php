@@ -457,6 +457,7 @@ class b2c_ctl_site_member extends b2c_frontpage
                 break;
             case 'add':
                 if (!$mdl_member_goods->add_fav($member_id, $gid, $obj_type)) {
+                    
                     $this->splash('error', '', '加入收藏失败!');
                 } else {
                     $this->splash('success', '', '加入收藏成功!');
@@ -473,6 +474,21 @@ class b2c_ctl_site_member extends b2c_frontpage
         }
     }
 
+    /**
+     * ajax检查商品、店铺收藏     
+     */
+    public function check_favorite(){
+        $member_api = vmc::singleton('b2c_source_member');
+        $return = $member_api->favorite_read($_GET);
+        if (empty($return)) {
+            $this->splash('error', '', '没有收藏');
+        } else {
+            $this->splash('success', '', $return);
+        }
+    }
+            
+    
+    
     /**
      * 消息中心.
      */

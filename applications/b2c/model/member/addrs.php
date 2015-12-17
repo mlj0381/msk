@@ -50,4 +50,5 @@ class b2c_mdl_member_addrs extends dbeav_model
 
         return $this->save($sdf);
     }
+    
 }

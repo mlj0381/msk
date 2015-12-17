@@ -126,4 +126,32 @@ class b2c_source_goods extends base_source {
         
     }
 
+    /**
+     * 相关商品
+     * @param $params goodsId
+     */
+    public function goods_rate($params){
+        $mdl_rate = app::get('b2c')->model('goods_rate');
+        $goods_list = $mdl_rate->getList('*', array('goods_1' => $params['goods_id']));
+        return $this->good_list($goods_list);
+    }
+    
+    /**
+     * 商品促销
+     * @param $params goodsId
+     */
+    
+    public function promotions($params){
+        
+    }
+    
+    /**
+     * 猜你商品
+     * @param $params goodsId
+     */
+    
+    public function love_goods($params){
+        
+    }
+    
 }

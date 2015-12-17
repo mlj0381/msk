@@ -43,6 +43,21 @@ class b2c_source_member extends base_source {
     }
 
     /*
+     * 查看我的收藏
+     * @param $params array()
+     * return array() list
+     */
+
+    public function favorite_read($params) {
+        $params['member_id'] = $params['member_id'] ? $params['member_id'] : vmc::singleton('b2c_user_object')->get_member_id();
+        $mdl_member_goods = app::get('b2c')->model('member_goods');
+        $return['goods'] = $mdl_member_goods->getRow('goods_id', array('member_id' => $params['member_id'], 'goods_id' => $params['goods_id'], 'type' => 'fav', 'object_type' => 'goods'));
+        $return['store'] = $mdl_member_goods->getRow('goods_id', array('member_id' => $params['member_id'], 'goods_id' => $params['store_id'], 'type' => 'fav', 'object_type' => 'store'));
+        $store['store_id'] = $return['store']['goods_id'];
+        return array_merge($store, $return['goods']);
+    }
+
+    /*
      * 删除我的收藏
      * @param $params array()
      * return true/false
@@ -56,10 +71,19 @@ class b2c_source_member extends base_source {
      * 最近访问 商品/店铺
      * @param $params array()
      * return $data 商品/店铺
-     */ 
+     */
 
     public function lately_visit($params) {
         
     }
+    
+    /*
+     * 首页基础数据，我的收藏
+     * @params $params member_id
+     * return array() List    
+     */
 
+    public function basic($params) {
+        return $this->favorite_read($params);
+    }
 }
