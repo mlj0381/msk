@@ -134,7 +134,7 @@
                     <hr>
                     <a class="btn cart btn-danger btn-lg btn-buy" data-url="<{link app=b2c ctl=site_cart act=add args0=$data_detail.product.product_id args1=$store_info.store_id args2=1 }>" href="javascript:;">加入购物车</a>
                     <a class="btn cart btn-success btn-lg btn-buy" data-url="<{link app=b2c ctl=site_cart act=fastbuy args0=$data_detail.product.product_id args1=$store_info.store_id args2=1 }>" href="javascript:;">立即购买</a>
-                    <a class="btn btn-link btn-lg favorite-button" href='<{link app=b2c ctl=site_member act=favorite args0=add args1=$data_detail.goods_id args2=goods}>'>
+                    <a class="btn btn-link btn-lg favorite-button" data-url="<{link app=b2c ctl=site_member act=favorite args0=add args1=$data_detail.goods_id args2=goods}>" href='javascript:;'>
                         <i class="glyphicon glyphicon-heart-empty"></i>
                         <small>Favorite<em></em></small>
                     </a>
@@ -222,8 +222,8 @@
                         <span>物流<small>4.9<i class="icon-arrow-up"></i></small></span>
                    </div>
                    <div class="shop_ctr">
-                        <a href="<{link app=store ctl=site_store act=index args0=$store_info.store_id}>" class="btn btn-danger">进入店铺</a>
-                        <a href="<{link app=b2c ctl=site_member act=favorite args0=add args1=$store_info.store_id args2=store}>" class="btn btn-default">收藏店铺</a>
+                        <a href="<{link app=store ctl=site_store act=index args0=$store_info.store_id}>" class="btn btn-danger" target="_blank">进入店铺</a>
+                        <a data-url="<{link app=b2c ctl=site_member act=favorite args0=add args1=$store_info.store_id args2=store}>" href="javascript:;" class="btn favorite-button btn-default">收藏店铺<small><em></em></small></a>
                    </div>
                </div>
 
@@ -273,7 +273,6 @@
                     </ul>
                     <div  class="tab-content">
                         <div class="tab-pane fade in active" id="desc">
-                            <!-- data:image/gif;base64,R0lGODlhAQABAIAAAO/v7////yH5BAAHAP8ALAAAAAABAAEAAAICRAEAOw== -->
                             <table class="table">
                                 <thead>
                                     <tr>
@@ -388,6 +387,9 @@
 <script type="text/javascript" src="<{$base_url}>/openapi/goods/counter/goods_id/<{$data_detail.goods_id}>/view_count/1/uv.js"></script>
 <{script src="jquery.zoom.js"}>
 <script charset="utf-8">
+    //收藏店铺/商品
+    $('')
+    
     
     //快速登录  data-toggle="modal" data-target="#quickLogin"
    $('.cart').click(function(e){
@@ -510,9 +512,10 @@ $(function(){
 
     /**商品 openapi 调用**/
     var goods_id = "<{$data_detail.goods_id}>";
+    var store_id = "<{$store_info.store_id}>";
 
     //商品促销
-    var goods_promotions_api = "<{$base_url}>/openapi/goods/promotion/goods_id/<{$data_detail.goods_id}>/price/<{$data_detail.product.buy_price}>";
+    var goods_promotions_api = "<{link app=b2c ctl=site_list act=promotions}>?goods_id=<{$data_detail.goods_id}>&price=<{$data_detail.product.buy_price}>";
 
     $.getJSON(goods_promotions_api,function(recv){
         var phtml = '';
@@ -558,7 +561,7 @@ $(function(){
     <{/if}>
 
     //相关商品openAPI
-    var related_api = "<{$base_url}>/openapi/goods/related/";
+    var related_api = "<{link app=b2c ctl=site_goods act=goods_rate}>";
     $.getJSON(related_api,{goods_id:goods_id},function(recv){
         try{
             $.each(recv.data,function(k,v){
@@ -575,27 +578,25 @@ $(function(){
         }
     });
     //喜欢收藏openAPI
-    var check_fav_api = "<{$base_url}>/openapi/goods/check_fav/";
-    $.getJSON(check_fav_api,{member_id:$.cookie('MEMBER_IDENT'),'goods_id':goods_id},function(recv){
+    var check_fav_api = "<{link app=b2c ctl=site_member act=check_favorite}>";
+    $.getJSON(check_fav_api,{member_id:$.cookie('MEMBER_IDENT'),'goods_id':goods_id, 'store_id' : store_id},function(recv){
         try{
             data = recv.data;
-            if(data.is_fav && data.is_fav>0){
+            if(data.goods_id && data.goods_id > 0){
                 $('.favorite-button i').removeClass('glyphicon-heart-empty').addClass('glyphicon-heart');
                 $('.favorite-button').addClass('disabled');
             }
-            $('.favorite-button em').text(' ('+data.fav_count+')');
+            $('.favorite-button em').text('已收藏');
 
         }catch(e){
         }
-
-
-
     });
     $('.favorite-button').on('click',function(e){
         e.stopPropagation();
         var _this = $(this);
-        $.get(_this.prop('href'),function(re){
-            if(re && re.success){
+        $.get(_this.attr('data-url'),function(re){
+            console.log(re);
+        if(re && re.success){
                 _this.fadeOut(function(){
                     _this.find('i').removeClass('glyphicon-heart-empty').addClass('glyphicon-heart');
                     var current_count = parseInt(_this.find('em').text().replace(/[\(|\)]/g,''));
@@ -605,10 +606,8 @@ $(function(){
                     _this.addClass('disabled');
                 });
             }else{
-                _this.find('small').text(re.error);
-
-                if(re.redirect){
-                    location = re.redirect;
+                if(re.error == '未登录'){
+                    $('#quickLogin').modal('show');
                 }
             }
         },'json');

@@ -87,12 +87,22 @@ class b2c_source_addrs extends base_source {
     }
 
     /*
-     * 收货地址查看
-     * @params $params 地址参数
+     * 设为默认地址
+     * @params $params 地址Id
      * return true/false     
      */
 
     public function addrs_default($params) {
+        
+    }
+    
+    /*
+     * 所在地区获取、查看
+     * @params $params 地址Id
+     * return true/false     
+     */
+
+    public function basic($params) {
         
     }
 }

@@ -306,7 +306,6 @@ class b2c_mdl_members extends dbeav_model
         $columns = array_merge($columns, array(
             'login_account' => ('登录账号'),
         ));
-
         return $columns;
     }
 

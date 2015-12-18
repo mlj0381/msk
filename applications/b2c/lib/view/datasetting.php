@@ -201,4 +201,25 @@
         }
         return $return;
      }
+     
+     /*
+      * 获取基础数据
+      */
+     public function basic($params){
+         $params['member_id'] = vmc::singleton('b2c_user_object')->get_member_id();
+         $return = array();
+         foreach(vmc::servicelist('index_basic_api') as $k => $object){
+             $return[end(explode('_', $k))] = $object->basic($params);
+         }
+         return $return;
+     }
+     
+     /*
+      * 获取广告数据
+      */
+     public function advertising($params){
+         $advertising_api = vmc::singleton('b2c_source_advertising');
+         return $advertising_api->read_advertising($params);
+     }
+     
  }
