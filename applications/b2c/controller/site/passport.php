@@ -173,6 +173,7 @@ class b2c_ctl_site_passport extends b2c_frontpage {
 
     //注册的时，检查用户名
     public function check_login_name() {
+        
         if ($this->passport_obj->check_signup_account(trim($_POST['pam_account']['login_name']), $msg)) {
             if ($msg == 'mobile') { //用户名为手机号码
                 $this->splash('success', null, array(

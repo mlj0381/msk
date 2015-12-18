@@ -48,11 +48,11 @@ class b2c_user_passport
         $login_type = $this->get_login_account_type($login_name);
         switch ($login_type) {
             case 'local':
-                if (strlen(trim($login_name)) < 4) {
+                if (strlen(trim($login_name)) < 6) {
                     $msg = $this->app->_('登录账号最少4个字符');
 
                     return false;
-                } elseif (strlen($login_name) > 100) {
+                } elseif (strlen($login_name) > 18) {
                     $msg = $this->app->_('登录账号过长，请换一个重试');
                 }
                 if (is_numeric($login_name)) {

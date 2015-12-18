@@ -1,4 +1,4 @@
-﻿//====================================================================================================
+//====================================================================================================
 // [插件名称] jQuery formValidator
 //----------------------------------------------------------------------------------------------------
 // [描    述] jQuery formValidator表单验证插件，它是基于jQuery类库，实现了js脚本于页面的分离。对一个表
@@ -386,10 +386,25 @@ $.formValidator =
 		}
 		//获取要传递的参数
 		var initConfig = $('body').data(settings[0].validatorgroup);
-		var parm = $.param($(initConfig.ajaxobjectids).serializeArray());
-		parm = "clientid=" + id + (parm.length > 0 ? "&" + parm : "");
-		ls_url = ls_url + (ls_url.indexOf("?") > -1 ? ("&" + parm) : ("?" + parm));
-		//发送ajax请求
+		//var parm = $.param($(initConfig.ajaxobjectids).serializeArray());		
+		
+		var formData = $(srcjo).val();		
+		if(setting.type == 'get')
+		{
+			if(ls_url.indexOf("?") > -1) ls_url += "?";
+			ls_url += ("&" + id + "=" + formData);
+		}else{
+			var thisdata = (setting.data ? setting.data : {});
+			var name = $(srcjo).attr('name');
+			thisdata[name] = formData;
+			setting.data = thisdata;
+		}
+		//console.log(setting);
+		// parm = "clientid=" + id + (parm.length > 0 ? "&" + parm : "");
+		// ls_url = ls_url + (ls_url.indexOf("?") > -1 ? ("&" + parm) : ("?" + parm));
+		//发送ajax请求	
+		//		
+		//		
 		$.ajax(
 		{	
 			type : setting.type, 
@@ -419,6 +434,7 @@ $.formValidator =
 				//再服务器没有返回数据之前，先回调提交按钮
 				if(setting.buttons && setting.buttons.length > 0){setting.buttons.attr({"disabled":true})};
 				var isvalid = setting.beforesend(XMLHttpRequest);
+				console.log(XMLHttpRequest);
 				if(isvalid)
 				{
 					setting.isvalid = false;		//如果前面ajax请求成功了，再次请求之前先当作错误处理
@@ -432,10 +448,10 @@ $.formValidator =
 			    setting.isvalid = false;
 				setting.error(XMLHttpRequest, textStatus, errorThrown);
 			},
-			processData : setting.processdata 
+			//processData : setting.processdata 
 		});
 	},
-
+	
 	//对正则表达式进行校验（目前只针对input和textarea）
 	regexValid : function(returnObj)
 	{
