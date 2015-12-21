@@ -83,8 +83,14 @@ class seller_ctl_site_passport extends seller_frontpage
         $this->splash('success', $forward, '登录成功');
     } //end function
 
-
-
+    /**
+     * 新需求卖家注册项
+     */
+    
+    public function new_signup(){
+        $this->set_tmpl('passport');
+        $this->page('site/passport/new_signup.html');
+    }
 
     //注册页面
     public function signup($step)

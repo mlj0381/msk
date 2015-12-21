@@ -2,6 +2,8 @@
     <permissions>
         <permission display='true' id="shipment">配送设置</permission>
         <permission display='true' id="printstylesetting">单据打印样式配置</permission>
+        
+        <permission display='true' id="shop">商城设置</permission>
 <!--商品-->
         <permission display='true' id="goods">查看商品</permission>
         <permission display='true' id="addgoods">添加商品</permission>
@@ -49,26 +51,33 @@
     <adminpanel action='index' controller='admin_member_attr' display='true' group="desktop_setting" order="40" permission="shopsetting">会员注册项</adminpanel>
     <adminpanel action='index' controller='admin_member_messenger' display='true' group="desktop_setting" order="30" permission="shopsetting">消息通知设置</adminpanel>
     <adminpanel action="showPrintStyle" controller="admin_order" display="true" group="desktop_setting" order='50' permission="printstylesetting">单据打印样式配置</adminpanel>
+    
+  <workground icon="icon-diamond" id="b2c.wrokground.shop" name="商城管理" order="10">
+        <menugroup name="商城管理">
+            <menu action="index" controller="admin_setting" display="true" order='1' permission='shop'>商城配置</menu>
+            <menu app="desktop" action="index" controller="cachestage" display='true' oreder='2' permission="shop">缓存</menu>
+        </menugroup>
+    </workground>
     <workground icon="icon-diamond" id="b2c.wrokground.goods" name="商品" order="10">
         <menugroup name="商品管理">
             <menu action='add' controller='admin_goods_editor' display='false' order='10' permission='addgoods'>添加商品</menu>
             <menu action='edit' controller='admin_goods_editor' display='false' order='11' permission='editgoods'>编辑商品</menu>
-            <menu action='index' controller='admin_goods' display='true' order='20' permission='goods'>商品列表</menu>
+            <menu action='index' controller='admin_goods' display='false' order='20' permission='goods'>商品列表</menu>
             <menu action='index' controller='admin_goods' display='false' order='21' params='action:import' permission='importgoods'>商品列表导入</menu>
             <menu action='import' controller='admin_goods' display='false' permission='importgoods'>商品导入</menu>
             <menu action='index' controller='admin_goods' display='false' order='23' params='action:export' permission='exportgoods'>商品列表导出</menu>
             <menu action='index' controller='admin_goods' display='false' order='24' params='action:dorecycle' permission='deletegoods'>商品删除</menu>
         </menugroup>
         <menugroup name="商品配置">
-            <menu action='index' controller='admin_goods_type' display='true' order='40' permission='typegoods'>商品类型</menu>
+            <menu action='index' controller='admin_goods_type' display='false' order='40' permission='typegoods'>商品类型</menu>
             <menu action='add' controller='admin_goods_type' display='false' order='50' permission='typegoods'>添加类型</menu>
             <menu action='set' controller='admin_goods_type' display='false' order='50' permission='typegoods'>编辑类型</menu>
-            <menu action='index' controller='admin_goods_cat' display='true' order='30' permission='catgoods'>商品分类</menu>
+            <menu action='index' controller='admin_goods_cat' display='false' order='30' permission='catgoods'>商品分类</menu>
             <menu action='addnew' controller='admin_goods_cat' display='false' order='90' permission='catgoods'>添加分类</menu>
             <menu action='create' controller='admin_brand' display='false' order='130' permission='brandgoods'>添加品牌</menu>
             <menu action='edit' controller='admin_brand' display='false' order='130' permission='brandgoods'>编辑品牌</menu>
-            <menu action='index' controller='admin_brand' display='true' order='140' permission='brandgoods'>商品品牌</menu>
-            <menu action='index' controller='admin_stock' display='true' order='150' permission='stock'>商品库存</menu>
+            <menu action='index' controller='admin_brand' display='false' order='140' permission='brandgoods'>商品品牌</menu>
+            <menu action='index' controller='admin_stock' display='false' order='150' permission='stock'>商品库存</menu>
             <menu action='stock_batch_save' controller='admin_stock' display='false' order='150' permission='stock'>商品库存批量编辑</menu>
             <menu action='stock_quick_update' controller='admin_stock' display='false' order='150' permission='stock'>商品库存快速编辑</menu>
         </menugroup>
@@ -97,7 +106,7 @@
 
     <workground icon="icon-users" id="b2c.wrokground.member" name="会员" order='30'>
         <menugroup name="会员管理">
-            <menu action='index' controller='admin_member' display='true' order='20' permission='member'>会员列表</menu>
+            <menu action='index' controller='admin_member' display='false' order='20' permission='member'>会员列表</menu>
             <menu action='detail' controller='admin_member' display='false' order='10' permission='member'>会员详情</menu>
             <menu action='add_page' controller='admin_member' display='false' order='10' permission='addmember'>添加会员</menu>
             <menu action='index' controller='admin_member' display='false' order='24' params='action:detail|finderview:detail_edit' permission='editmember'>编辑会员</menu>
@@ -105,7 +114,7 @@
             <menu action='addnew' controller='admin_member_lv' display='false' order='10' permission='memberlv'>会员等级编辑</menu>
         </menugroup>
         <menugroup name="咨询评价">
-            <menu action='index' controller='admin_member_comment' display='true' order='110' permission='comment'>评价列表</menu>
+            <menu action='index' controller='admin_member_comment' display='false' order='110' permission='comment'>评价列表</menu>
             <menu action='index' controller='admin_member_msg' display='false' order='150' permission='member_msg'>消息列表</menu>
         </menugroup>
     </workground>

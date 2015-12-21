@@ -40,4 +40,12 @@ class b2c_source_advertising extends base_source {
     public function read_advertising($params){
         
     }
+    
+    /**
+     * 基本信息
+     * return array()
+     */
+    public function basic($params){
+        
+    }
 }
