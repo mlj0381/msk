@@ -55,9 +55,8 @@ class b2c_user_passport
                 } elseif (strlen($login_name) > 18) {
                     $msg = $this->app->_('登录账号过长，请换一个重试');
                 }
-                if (is_numeric($login_name)) {
-                    $msg = $this->app->_('登录账号不能全为数字');
-
+                if (is_numeric($login_name) && !preg_match('/^1[3578]\d{9}$/', $login_name)) {
+                    $msg = $this->app->_('请填写正确的手机号码');
                     return false;
                 }
                 if (!preg_match('/^[^\x00-\x2d^\x2f^\x3a-\x3f]+$/i', trim($login_name))) {

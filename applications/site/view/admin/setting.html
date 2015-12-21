@@ -1,24 +1,49 @@
 <h3 class="page-title">
-        站点设置
+    站点设置
 </h3>
 <hr>
 <form action="index.php?app=site&ctl=admin_setting&act=index" method="post" class="form" >
     <div class="form-horizontal">
         <div class="form-body">
             <{foreach from=$setting item=item key=key}>
-                <div class="form-group">
-                    <label class="col-md-3 control-label"><{$item.desc}></label>
-                    <div class="col-md-4">
-                        <{if $item.required}>
-                        <{input required=true type=$item.type name=$key value=$item.value|default:$item.default options=$item.options }>
-                        <{else}>
-                        <{input type=$item.type name=$key value=$item.value|default:$item.default options=$item.options }>
-                        <{/if}>
-                    </div>
-                    <{if $item.helpinfo}>
-                        <span class="help-block"><{$item.helpinfo}></span>
+            <div class="form-group">
+                <{if $key neq 'site_map'}>
+                <label class="col-xs-2 control-label"><{$item.desc}></label>
+                <{/if}>
+                <div class="col-xs-4">
+                    <{if $item.required}>
+                    <{input required=true type=$item.type name=$key value=$item.value|default:$item.default options=$item.options }>
+                    <{elseif $key neq 'site_map'}>
+                    <{input type=$item.type name=$key value=$item.value|default:$item.default options=$item.options }>
                     <{/if}>
                 </div>
+                <{if $item.helpinfo}>
+                <span class="help-block"><{$item.helpinfo}></span>
+                <{/if}>
+            </div>
+            <{if $key eq 'site_map'}>
+            <div class='form-group'>
+                <h3 class="col-xs-12"><span>站点地图</span><button data-target="#map_edit" data-toggle="modal" class="btn btn-xs btn-default" href="index.php?app=site&ctl=admin_setting&act=site_map&parent_id=<{$item.node_id}>" type="button" class="btn-success" style="float:right; border:none;">添加</button></h3>
+                <div class="col-xs-12">
+                    <table style="width:100%; border-collapse:collapse; border:1px solid #ddd;">
+                        <tr style="background:#ddd">
+                            <th>分类</th>
+                            <th>标题</th>
+                            <th>URL</th>
+                            <th>排序</th>
+                            <th>操作</th>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <{/if}>
             <{/foreach}>
             <div class="form-actions">
                 <div class="row">
@@ -30,3 +55,9 @@
         </div>
     </div>
 </form>
+<div class="modal fade" id="map_edit" role="dialog" aria-hidden="true">
+              <div class="modal-dialog modal-lg">
+                      <div class="modal-content">
+                      </div>
+              </div>
+</div>

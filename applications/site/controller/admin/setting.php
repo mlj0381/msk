@@ -32,6 +32,9 @@ class site_ctl_admin_setting extends desktop_controller
         //vmc::dump($this->app->app_dir,$this->pagedata['setting']);
         $this->page('admin/setting.html');
     }
-
+    
+    public function site_map($map_id){
+        $this->display('admin/add_map.html');
+    }
 
 }//End Class

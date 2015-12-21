@@ -52,5 +52,10 @@ $setting = array(
         'type' => 'textarea',
         'default' => '',
         'desc' => '默认网站简介',
+    ) ,  
+     'site_map' => array(
+        'type' => 'serialize',
+        'default' => '',
+        'desc' => '站点地图',
     ) ,
 );
