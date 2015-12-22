@@ -207,6 +207,18 @@ header .container-fulid .topbar .website_menu .menu_con dl dd a:hover {
 header .container-fulid .topbar .website_menu .menu_con dl:last-child {
   border-right: none;
 }
+header .topAdv {
+  width: 1200px;
+  margin: 0 auto;
+  height: 90px;
+  overflow-y: hidden;
+  margin-bottom: 15px;
+}
+header .topAdv img {
+  width: 1200px;
+  hieght: 90px;
+  display: block;
+}
 header .searchbar {
   margin: 0;
   padding: 0;
