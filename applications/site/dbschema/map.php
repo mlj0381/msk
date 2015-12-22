@@ -1,57 +1,51 @@
 <?php
-
-// +----------------------------------------------------------------------
-// | VMCSHOP [V M-Commerce Shop]
-// +----------------------------------------------------------------------
-// | Copyright (c) vmcshop.com All rights reserved.
-// +----------------------------------------------------------------------
-// | Licensed ( http://www.vmcshop.com/licensed)
-// +----------------------------------------------------------------------
-// | Author: Shanghai ChenShang Software Technology Co., Ltd.
-// +----------------------------------------------------------------------
-
-
-
-$db['map'] = array(
+$db['map']=array (
     'columns' =>
-    array(
-        'id' => array(
-            'type' => 'number',
-            'label' => '地图id',
-            'comment' => '地图id',
+    array (
+        'id' =>
+        array (
+            'type' => 'int unsigned',
             'required' => true,
             'pkey' => true,
             'extra' => 'auto_increment',
-            'in_list' => true,
-            'default_in_list' => true,
+            'comment' => '地图id',
         ),
-        'title' => array(
+        'title' =>
+        array (
             'type' => 'varchar(50)',
-            'in_list' => true,
-            'default_in_list' => true,
+            'required' => true,
             'label' => '标题',
             'comment' => '标题',
         ),
-        'url' => array(
-            'type' => 'varchar(50)',
-            'in_list' => true,
-            'default_in_list' => true,
-            'label' => '链接',
-            'comment' => '链接',
+        'url' =>
+        array (
+            'type' => 'varchar(100)',
+            'default' => '',
+            'label' => '地址',
+            'comment' => '地址',
         ),
-        'status' => array(
-            'type' => ('bool'),
+        'ordernum' =>
+        array (
+            'type' => 'int unsigned',
+            'default' => 0,
+            'label' => '排序',
+            'comment' => '排序',
+        ),
+        'pid' =>
+        array (
+            'type' => 'int unsigned',
             'required' => true,
-            'default' => true,
-            'in_list' => true,
-            'default_in_list' => true,
-            'label' => '是否启用',
-            'comment' => '是否启用',
+            'default' => 0,
+            'label' => '父id',
+            'comment' => '父id',
         ),
-        'createtime' => array(
+        'createtime' =>
+        array (
             'type' => 'time',
             'comment' => '更新时间',
         ),
     ),
-    'comment' => ('站点地图表'),
+    'comment' => '站点地图表',
 );
+
+
