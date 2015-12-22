@@ -3,10 +3,11 @@
         <permission display='true' id="shipment">配送设置</permission>
         <permission display='true' id="printstylesetting">单据打印样式配置</permission>
         
-        <permission display='true' id="shop">商城设置</permission>
+        <permission display='false' id="shop">商城设置</permission>
+        
 <!--商品-->
         <permission display='true' id="goods">查看商品</permission>
-        <permission display='true' id="addgoods">添加商品</permission>
+        <permission display='false' id="addgoods">添加商品</permission>
         <permission display='true' id="editgoods">编辑商品</permission>
         <permission display='true' id="importgoods">商品导入</permission>
         <permission display='true' id="exportgoods">商品导出</permission>
@@ -54,10 +55,11 @@
     
   <workground icon="icon-diamond" id="b2c.wrokground.shop" name="商城管理" order="10">
         <menugroup name="商城管理">
-            <menu action="index" controller="admin_setting" display="true" order='1' permission='shop'>商城配置</menu>
+            <menu action="index" controller="admin_setting" display="true" order='1' permission='shop'>商城设置</menu>
             <menu app="desktop" action="index" controller="cachestage" display='true' oreder='2' permission="shop">缓存</menu>
         </menugroup>
     </workground>
+    
     <workground icon="icon-diamond" id="b2c.wrokground.goods" name="商品" order="10">
         <menugroup name="商品管理">
             <menu action='add' controller='admin_goods_editor' display='false' order='10' permission='addgoods'>添加商品</menu>
