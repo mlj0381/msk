@@ -468,8 +468,8 @@ class b2c_ctl_site_member extends b2c_frontpage
             $this->pagedata['member_lv_name'] = $this->member['levelname'];
             $this->pagedata['member_lv_discount'] = $this->member['lv_discount'];
             $this->pagedata['data'] = $list;
-            $this->output();
-            //$this->page('site/member/action/favorite.html');
+            //$this->output();
+            $this->page('site/member/action/favorite.html');
             break;
         }
     }

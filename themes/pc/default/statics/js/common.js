@@ -40,25 +40,27 @@ $(function() {
     })
 
     /**
-     * 滑动门tab切换
+     * tab选项卡切换
      * tabmenu  菜单项
      * tabcon   内容项
-     * className    选中菜单的class名
+     * activeClass    选中菜单的class名
      */
 
-    function tabslider(tabmenu, tabcon, className) {
+    function tabslider(tabmenu, tabcon, activeClass) {
 
         $(tabcon).hide();
         $(tabcon).first().show(); //默认第一个内容显示
         $(tabmenu).each(function(index, el) {
             $(this).click(function() {
-                $(this).addClass(className).siblings().removeClass(className);
+                $(this).addClass(activeClass).siblings().removeClass(activeClass);
                 $(tabcon).eq(index).show().siblings().hide();
             })
         });
     }
 
-    tabslider('.fav_nav span a', '.gl_item_box', 'active'); //我的收藏调用
+    tabslider('.fav_nav span a', '.fav_con > div', 'active'); //我的收藏调用
+
+    tabslider('.fav_goods .fav_g_nav ul li', '.fav_g_con > div', 'active'); //我的收藏-商品收藏调用
 
     tabslider('.like_menu span a', '.like_con > ul', 'active'); //购物车浏览记录
 
