@@ -114,10 +114,16 @@
 
      public function web_nav($params)
      {
-         foreach ($this->setting['webnav'] as $key => $value) {
-             $this->setting['webnav'][$key]['url'] = $this->router->gen_url($value['url']);
-         }
-         return $this->setting['webnav'];
+        $return = app::get('site')->model('map')->get_list('*');
+        foreach ($return as $key => &$value){
+            $order[$key] = $value['ordernum'];
+            foreach($value['son'] as $k => $v){
+                $son_order[$k] = $v['ordernum'];
+            }
+            array_multisort($son_order, SORT_ASC, $value['son']);
+        }
+        array_multisort($order, SORT_ASC, $return);
+        return $return;
      }
      /**
       * 获取商品属性
@@ -171,6 +177,9 @@
      //商品列表页按属性搜索获取单个属性值
      public function list_search(&$search_info, $params)
      {
+        if($params['keywords'])  unset($params['keywords']);
+        unset($params['type']);
+        unset($params['having']);
         foreach ($params as $key => $id) {
             $query = $params;
             unset($query[$key]);

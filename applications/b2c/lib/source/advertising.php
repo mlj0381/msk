@@ -46,6 +46,6 @@ class b2c_source_advertising extends base_source {
      * return array()
      */
     public function basic($params){
-        
+        return $this->read_advertising($params);
     }
 }

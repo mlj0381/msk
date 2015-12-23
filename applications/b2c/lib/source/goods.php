@@ -154,4 +154,12 @@ class b2c_source_goods extends base_source {
         
     }
     
+    /**
+     * 根据商品搜索店铺
+     * @param $params products_id
+     */
+    
+    public function store_goods($params){
+        
+    }
 }

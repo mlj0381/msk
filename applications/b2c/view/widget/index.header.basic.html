@@ -8,7 +8,7 @@
                             <span>所在城市：<small>上海</small></span> <i class="icon-angle-down"></i>
                         </a>
                         <ul class="location-menu clearfix">
-                            <li class="active"><a href="">北京</a></li>
+                            <li class="active"><a href="javascript:;" data-url="<{link app=site ctl=index act=index args0=1}>">北京</a></li>
                             <li><a>上海</a></li>
                             <li><a>天津</a></li>
                             <li><a>重庆</a></li>
@@ -95,8 +95,9 @@
                     <span>店铺</span>
                 </div>
                 <form class="search_form" action="<{link app=b2c ctl=site_list act=index}>" method="post">
-                    <span class="search_txt"><input type="text" name="keywords" value="" placeholder="请输入您要查找的商品"/></span>
-                    <button type="submit" class="search_btn">搜索</button>
+                    <input type="hidden" name="search_type" value="goods"/>
+                    <span class="search_txt"><input type="text" name="keywords" value="<{$keywords}>" placeholder="请输入您要查找的商品"/></span>
+                    <button type="button" class="search_btn">搜索</button>
                 </form>
                 <ul class="hotSearch">
                     <li><a href="">鸡腿</a></li>
@@ -212,6 +213,16 @@ $(function() {
         $('.loginStatus span').text('你好，' + $.cookie('UNAME'));
         $('.loginStatus > a').text('注销').attr('href', '<{link app=seller ctl=site_passport act=logout}>');
     }
+    
+    //地区切换
+    $('.location-menu a').click(function(e){
+        var url = $(this).attr('data-url');
+        $.getJSON(url, function(re){
+            if(re.success){
+                location = window.location.href;
+            }
+        });
+    });
     /**
      * 迷你购物车
      */
@@ -278,8 +289,8 @@ $(function() {
     });
 
 });
-</script>
-<script type="text/javascript">
+
+  
    //快速登录  data-toggle="modal" data-target="#quickLogin"
    $('.cart').click(function(e){
        var _self = $(this);
@@ -319,22 +330,38 @@ $(function() {
 /**
  * 顶部商品或店铺搜索
  */
+$('.search_btn').click(function(){
+    var keywords = $('.search_form input[type="text"]').val() ? $('.search_form input[type="text"]').val() : '牛肉';
+    var url = '<{link app=b2c ctl=site_list act=index}>?';
+    url += 'keywords='+  keywords;
+    url += '&type='+ $('.search_form input[type="hidden"]').val();
+    location = url;
+});
+(function(){
+    var searchbox = $('.searchbox span');
+    $(searchbox).removeClass('active');
+    if('<{$type}>' == 'goods'){
+        $(searchbox).eq(0).addClass('active');
+        return ;
+    }
+    $(searchbox).eq(1).addClass('active');  
+})();
 $('.search_label span').click(function() {
     $(this).addClass('active').siblings().removeClass('active');
     var index = $('.search_label span').index(this);
-    var url_list = "<{link app=b2c ctl=site_list act=index}>";
-    var url_store = "<{link app=seller ctl=site_store act=index}>";
+//    var url_list = "<{link app=b2c ctl=site_list act=index}>";
+//    var url_store = "<{link app=seller ctl=site_store act=index}>";
     if (index == "0") {
-        $('.search_form').attr('action', url_list);
+        $('.search_form input[type="hidden"]').attr('value', 'goods');
         $('.search_form .search_txt input').attr('value', '');
         $('.search_form .search_txt input').attr('placeholder', '请输入你要查找的商品');
     } else {
 
-        $('.search_form').attr('action', url_store);
+        $('.search_form input[type="hidden"]').attr('value', 'store');
         $('.search_form .search_txt input').attr('value', '');
         $('.search_form .search_txt input').attr('placeholder', '请输入你要查找的店铺名');
     }
-})
+});
 
 /*$('.search_btn').click(function(){
     var keyword = $('.search_form .search_txt input').val();

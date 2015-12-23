@@ -105,4 +105,14 @@ class b2c_source_addrs extends base_source {
     public function basic($params) {
         
     }
+    
+    /*
+     * 页面顶部设置所在地区
+     * @params $params 地址Id 会员id
+     * return true/false     
+     */
+
+    public function set_addr($params) {
+        
+    }
 }

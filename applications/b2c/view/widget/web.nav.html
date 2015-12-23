@@ -1,53 +1,11 @@
-<!-- <ul>
-
-    <{foreach from=$web_nav item=item}>
-    <li><a href="<{$item.url}>"><{$item.name}></a></li>
+<{foreach from=$web_nav item=item}>
+<dl>
+    <dt><{$item.title}></dt>
+    <{foreach from=$item.son item=son}>
+    <dd><a href="<{$son.url}>"><{$son.title}></a></dd>
     <{/foreach}>
+</dl>
+<{/foreach}>
 
-
-</ul> -->
-
-<dl>
-	<dt>分类一</dt>
-	<dd><a href="#">菜单01</a></dd>
-	<dd><a href="#">菜单01</a></dd>
-	<dd><a href="#">菜单01</a></dd>
-	<dd><a href="#">菜单01</a></dd>
-</dl>
-<dl>
-	<dt>分类二</dt>
-	<dd><a href="#">菜单01</a></dd>
-	<dd><a href="#">菜单01</a></dd>
-	<dd><a href="#">菜单01</a></dd>
-	<dd><a href="#">菜单01</a></dd>
-</dl>
-<dl>
-	<dt>分类三</dt>
-	<dd><a href="#">菜单01</a></dd>
-	<dd><a href="#">菜单01</a></dd>
-	<dd><a href="#">菜单01</a></dd>
-	<dd><a href="#">菜单01</a></dd>
-</dl>
-<dl>
-	<dt>分类四</dt>
-	<dd><a href="#">菜单01</a></dd>
-	<dd><a href="#">菜单01</a></dd>
-	<dd><a href="#">菜单01</a></dd>
-	<dd><a href="#">菜单01</a></dd>
-</dl>
-<dl>
-	<dt>分类五</dt>
-	<dd><a href="#">菜单01</a></dd>
-	<dd><a href="#">菜单01</a></dd>
-	<dd><a href="#">菜单01</a></dd>
-	<dd><a href="#">菜单01</a></dd>
-</dl>
-<dl>
-	<dt>分类六</dt>
-	<dd><a href="#">菜单01</a></dd>
-	<dd><a href="#">菜单01</a></dd>
-	<dd><a href="#">菜单01</a></dd>
-	<dd><a href="#">菜单01</a></dd>
-</dl>
 
 

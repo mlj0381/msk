@@ -3,6 +3,7 @@
         <h3 class="modal-title"><{if $map.id}>编辑<{else}>添加<{/if}>站点分类</h3>
 </div>
 <form method="post" action="index.php?app=site&ctl=admin_setting&act=add_map" id='node_edit_form' class="form">
+    <input type="hidden" name="id" value="<{$map.id}>"/>
     <div class="modal-body">
         <div class="row">
             <div class="col-md-8">

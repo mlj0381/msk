@@ -113,9 +113,9 @@
         <ul>
             <li data-toggle="tooltip" data-placement="left" title="神农客商城"><a href="#"><i class="icon-certificate" ></i></a></li>
             <li data-toggle="tooltip" data-placement="left" title="在线客服"><a href="#"><i class="icon-comment-alt" ></i></a></li>
-            <li><a href="<{link app=b2c ctl=site_cart act=index}>"><i class="icon-shopping-cart"></i> 购物车3</a></li>
-            <li data-toggle="tooltip" data-placement="left" title="我的收藏"><a href="#"><i class="icon-star-empty" ></i></a></li>
-            <li data-toggle="tooltip" data-placement="left" title="我的足迹"><a href="#"><i class="icon-eye-open"></i></a></li>
+            <li><a class="cart" href="javascript:;"><i class="icon-shopping-cart"></i> 购物车<span>0</span></a></li>
+            <li data-toggle="tooltip" data-placement="left" title="我的收藏"><a class="cart" data-url="<{link app=b2c ctl=site_member act=favorite}>" href="javascript:;"><i class="icon-star-empty" ></i></a></li>
+            <li data-toggle="tooltip" data-placement="left" title="我的足迹"><a class="cart" data-url="<{link app=b2c ctl=site_member act=sleuth}>" href="javascript:;"><i class="icon-eye-open"></i></a></li>
             <li data-toggle="tooltip" data-placement="left" title="我要充值"><a href="#"><i class="icon-credit-card"></i></a></li>
             <li data-toggle="tooltip" data-placement="left" title="用户反馈"><i class="icon-file-alt"></i></li>
             <li class="gotoTop" data-toggle="tooltip" data-placement="left" title="返回顶部"><a href="#"><i class="icon-arrow-up"></i></a></li>
@@ -141,3 +141,43 @@
 </body>
 
 </html>
+
+    <script type="text/javascript">
+   //快速登录  data-toggle="modal" data-target="#quickLogin"
+   $('.cart').click(function(e){
+       var _self = $(this);
+       $.post('<{link app=b2c ctl=site_passport act=check_login}>', '', function(re){
+           if(re.success){
+                var url = $(_self).attr('data-url') ? $(_self).attr('data-url') : '<{link app=b2c ctl=site_cart act=index}>';
+                location = url;
+           }else{
+               $('#quickLogin').modal('show');
+           }
+       });
+   });
+   $('.quickLogin').on('click', 'button', function(e){
+        var login_form = $('.quickLogin');
+        login_form.find('button[type=submit]').button('loading');
+        $.post(login_form.prop('action'), login_form.serialize(), function(re) {
+            if (re.error) {
+                login_form.find('.alert-error').remove();
+                if($('.quickLogin .alert').length <= 0){
+                    $('.login_cont').append($('<div class="alert alert-danger">' + re.error + '</div>'));
+                }
+                alert_timer = setTimeout(function() {
+                    clearTimeout(alert_timer);
+                    login_form.find('.alert-danger').fadeOut('fast', function() {
+                        $(this).remove();
+                    });
+                }, 3000);
+            }
+            if (re.success) {
+                location = window.location.href;
+            }
+            login_form.find('button[type=submit]').button('reset');
+        }, 'json');
+        return false;
+   });
+    
+    
+</script>
