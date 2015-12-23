@@ -62,6 +62,8 @@ $(function() {
 
     tabslider('.fav_goods .fav_g_nav ul li', '.fav_g_con > div', 'active'); //我的收藏-商品收藏调用
 
+    tabslider('.fav_shop .fav_s_nav ul li', '.fav_s_con > div', 'active'); //我的收藏-商品收藏调用
+
     tabslider('.like_menu span a', '.like_con > ul', 'active'); //购物车浏览记录
 
 
