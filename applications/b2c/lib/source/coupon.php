@@ -42,5 +42,15 @@ class b2c_source_coupon extends base_source {
     public function read($params) {
         
     }
+    
+    /*
+     * 优惠券使用
+     * @params $params 地址参数
+     * return true/false     
+     */
+
+    public function edit($params) {
+        
+    }
 
 }

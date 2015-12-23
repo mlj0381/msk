@@ -55,7 +55,27 @@ class seller_source_goods extends base_source {
     }
 
     /*
-     * 库存管理
+     * 商品编辑
+     * @param $params array()
+     * return true/false
+     */
+
+    public function edit($params) {
+        
+    }
+    
+    /*
+     * 商品添加
+     * @param $params array()
+     * return true/false
+     */
+
+    public function add($params) {
+        
+    }
+    
+    /*
+     * 库存编辑
      * @param $params array()
      * return true/false
      */

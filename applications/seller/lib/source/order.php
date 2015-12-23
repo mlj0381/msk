@@ -9,13 +9,13 @@
 // +----------------------------------------------------------------------
 // | Author: Shanghai ChenShang Software Technology Co., Ltd.
 // +----------------------------------------------------------------------
-class b2c_source_brand extends base_source {
+class b2c_source_order extends base_source {
 
     protected $host = 'http://localhost/mskapi/goods.php';
     protected $params = array();
     protected $method = 'post';
     protected $schema = 'http';
-    protected $config_path = '';
+    protected $path = '';
     private $args = array(
         'label' => '',
         'num' => '',
@@ -29,17 +29,24 @@ class b2c_source_brand extends base_source {
             'method' => $this->method,
             'schema' => $this->schema,
             'host' => $this->host,
-            'config_path' => $this->config_path,
         );
     }
     
     /**
-     * 获取所有品牌
-     * @param $params member_id
-     * return array cartList
+     * 订单结算申请
+     * @param $params
+     * return array()
      */
+    public function clearing($params){
+        
+    }
     
-    public function read_brand($params){
+    /**
+     * 订单结算查询
+     * @param $params
+     * return array()
+     */
+    public function clearing_read($params){
         
     }
 }

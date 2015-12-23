@@ -43,6 +43,26 @@ class b2c_source_cart extends base_source {
         
     }
     
+    /**
+     * 删除
+     * @param $params member_id
+     * return true
+     */
+    
+    public function del_cart($params){
+        
+    }
+    
+    /**
+     * 更新
+     * @param $params member_id
+     * return true
+     */
+    
+    public function edit_cart($params){
+        
+    }
+    
      /**
      * 首页购物车基础数据
      * @param $params member_id

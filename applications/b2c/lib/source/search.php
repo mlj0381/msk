@@ -42,4 +42,24 @@ class b2c_source_search extends base_source {
     public function basic($params){
         
     }
+    
+    /**
+     * 查询商品
+     * @param $params 
+     * return array() list
+     */
+    
+    public function goods_list($params){
+        
+    }
+    
+    /**
+     * 查询店铺
+     * @param $params 
+     * return array() list
+     */
+    
+    public function store_list($params){
+        
+    }
 }
