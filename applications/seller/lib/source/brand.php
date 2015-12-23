@@ -1,4 +1,5 @@
 <?php
+
 // +----------------------------------------------------------------------
 // | VMCSHOP [V M-Commerce Shop]
 // +----------------------------------------------------------------------
@@ -8,40 +9,48 @@
 // +----------------------------------------------------------------------
 // | Author: Shanghai ChenShang Software Technology Co., Ltd.
 // +----------------------------------------------------------------------
-class b2c_source_product extends base_source
-{
+class b2c_source_brand extends base_source {
+
     protected $host = 'http://localhost/mskapi/goods.php';
     protected $params = array();
     protected $method = 'post';
     protected $schema = 'http';
+    protected $config_path = '';
     private $args = array(
         'label' => '',
         'num' => '',
         'addr' => '',
     );
-    public function __construct($app)
-    {
+
+    public function __construct($app) {
         $this->app = $app;
         $this->params = array(
             'app' => $this->app,
             'method' => $this->method,
             'schema' => $this->schema,
             'host' => $this->host,
+            'config_path' => $this->config_path,
         );
     }
-
-    public function request($params)
-    {
-        $this->set_config($this->path);
-        $params = $this->init_request_args($params);
-        $this->params['params'] = $params;
-        $this->init($this->params);
-        if($this->get($params)){
-            return $this->get($params);
-        }
-        $data = $this->remote();
-        $this->set($params, $data);
-        $this->response($data);
+    
+    /**
+     * 获取所有品牌
+     * @param $params member_id
+     * return array cartList
+     */
+    
+    public function read_brand($params){
+        
     }
-
+    
+    /**
+     * 获取品牌 基础数据
+     * @param $params member_id
+     * return array cartList
+     */
+    
+    public function basic($params){
+        $this->read_brand($params);
+    }
+    
 }

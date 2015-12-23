@@ -86,46 +86,6 @@ class b2c_source_goods extends base_source {
         
     }
 
-    /*
-     * 售后管理
-     * @param $params array()
-     * return true/false
-     */
-
-    public function aftersales($params) {
-        
-    }
-
-    /*
-     * 退货管理
-     * @param $params array()
-     * return true/false
-     */
-
-    public function price_aftersales($params) {
-        
-    }
-
-    /*
-     * 退款管理
-     * @param $params array()
-     * return true/false
-     */
-
-    public function goods_aftersales($params) {
-        
-    }
-
-    /*
-     * 撤消售后
-     * @param $params array()
-     * return true/false
-     */
-
-    public function del_aftersales($params) {
-        
-    }
-
     /**
      * 相关商品
      * @param $params goodsId
@@ -154,4 +114,12 @@ class b2c_source_goods extends base_source {
         
     }
     
+    /**
+     * 根据商品搜索店铺
+     * @param $params products_id
+     */
+    
+    public function store_goods($params){
+        
+    }
 }

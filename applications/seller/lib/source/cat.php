@@ -44,4 +44,40 @@ class b2c_source_cat extends base_source {
        // $this->set($params, $data);
         $this->response($data);
     }
+    
+    /**
+     * 添加商品分类
+     * @param $params
+     * return true/false
+     */
+    public function add($params){
+        
+    }
+    
+    /**
+     * 修改商品分类
+     * @param $params
+     * return true/false
+     */
+    public function edit($params){
+        
+    }
+    
+    /**
+     * 查看商品分类
+     * @param $params
+     * return true/false
+     */
+    public function read($params){
+        
+    }
+    
+    /**
+     * 删除商品分类
+     * @param $params
+     * return true/false
+     */
+    public function del($params){
+        
+    }
 }

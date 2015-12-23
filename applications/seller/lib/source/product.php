@@ -8,21 +8,19 @@
 // +----------------------------------------------------------------------
 // | Author: Shanghai ChenShang Software Technology Co., Ltd.
 // +----------------------------------------------------------------------
-
-class b2c_source_advertising extends base_source {
-
+class b2c_source_product extends base_source
+{
     protected $host = 'http://localhost/mskapi/goods.php';
     protected $params = array();
     protected $method = 'post';
     protected $schema = 'http';
-    protected $path = '';
     private $args = array(
         'label' => '',
         'num' => '',
         'addr' => '',
     );
-
-    public function __construct($app) {
+    public function __construct($app)
+    {
         $this->app = $app;
         $this->params = array(
             'app' => $this->app,
@@ -30,22 +28,56 @@ class b2c_source_advertising extends base_source {
             'schema' => $this->schema,
             'host' => $this->host,
         );
-    }  
-    
+    }
+
+    public function request($params)
+    {
+        $this->set_config($this->path);
+        $params = $this->init_request_args($params);
+        $this->params['params'] = $params;
+        $this->init($this->params);
+        if($this->get($params)){
+            return $this->get($params);
+        }
+        $data = $this->remote();
+        $this->set($params, $data);
+        $this->response($data);
+    }
+
     /**
-     * 获取广告，广告位
-     * @param $params array(page页面, type类型, area位置, num数量)
+     * 货品查询
+     * @param $params
      * return array()
      */
-    public function read_advertising($params){
+    public function read($params){
+        
+    }
+    
+    
+    /**
+     * 货品添加
+     * @param $params
+     * return array()
+     */
+    public function add($params){
         
     }
     
     /**
-     * 基本信息
+     * 货品编辑
+     * @param $params
      * return array()
      */
-    public function basic($params){
-        return $this->read_advertising($params);
+    public function edit($params){
+        
+    }
+    
+    /**
+     * 货品删除
+     * @param $params
+     * return array()
+     */
+    public function del($params){
+        
     }
 }

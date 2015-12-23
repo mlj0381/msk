@@ -1,4 +1,5 @@
 <?php
+
 // +----------------------------------------------------------------------
 // | VMCSHOP [V M-Commerce Shop]
 // +----------------------------------------------------------------------
@@ -8,14 +9,13 @@
 // +----------------------------------------------------------------------
 // | Author: Shanghai ChenShang Software Technology Co., Ltd.
 // +----------------------------------------------------------------------
-
-class b2c_source_advertising extends base_source {
+class b2c_source_brand extends base_source {
 
     protected $host = 'http://localhost/mskapi/goods.php';
     protected $params = array();
     protected $method = 'post';
     protected $schema = 'http';
-    protected $path = '';
+    protected $config_path = '';
     private $args = array(
         'label' => '',
         'num' => '',
@@ -29,23 +29,34 @@ class b2c_source_advertising extends base_source {
             'method' => $this->method,
             'schema' => $this->schema,
             'host' => $this->host,
+            'config_path' => $this->config_path,
         );
-    }  
+    }
     
     /**
-     * 获取广告，广告位
-     * @param $params array(page页面, type类型, area位置, num数量)
+     * 店铺基本信息查询
+     * @param $params
      * return array()
      */
-    public function read_advertising($params){
+    public function read($params){
         
     }
     
     /**
-     * 基本信息
+     * 店铺基本信息修改
+     * @param $params
      * return array()
      */
-    public function basic($params){
-        return $this->read_advertising($params);
+    public function edit($params){
+        
+    }
+    
+    /**
+     * 店铺推荐
+     * @param $params
+     * return array()
+     */
+    public function store_recommend($params){
+        
     }
 }

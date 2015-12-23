@@ -1,3 +1,6 @@
+<style>
+    .toggleSpan span.active{background:#ff0000; color: #FFFFFF; cursor: pointer; text-align: center}
+</style>
 <{if $brand}>
     <{include file='site/brand/inlist.html'}>
 <{/if}>
@@ -20,28 +23,16 @@
             <{/foreach}>
             <{/if}>
             <li class="search_li">
-                <form class="goods_search" action="<{link app=b2c ctl=site_list act=index}>" mothod="post">
+                <form class="goods_search"  mothod="post">
                     <input type="hidden" name="goods[filter]" value="<{$query}>"/>
-                    <input class="" type="text" name="goods[keywords]" placeholder="在当前条件下搜索">
-                    <button type="submit"><i class="icon-search"></i></button>
+                    <input class="" type="text" name="goods[keywords]" value="<{$search_having}>" placeholder="在当前条件下搜索">
+                    <button class="search_keywords" type="button"><i class="icon-search"></i></button>
                 </form>
             </li>
         </ol>
 
         <div class="col-xs-2 about_goods_total">共<span><{$all_count}></span>件相关商品  </div>
     </div>
-<script>
-    $(function(){
-        var prop = {
-
-        };
-        $('[data-toggle="rollback"]').bind('click', function(e){
-            var obj = e.target || e.srcElement;
-            alert($(obj).text())
-        })
-    });
-</script>
-
     <{if $search_info.prop}>
         <div class="gfilter_condition clearfix">
             <div class="col-xs-1">选择条件：</div>
@@ -64,7 +55,7 @@
 
                     <{if $item.parent_id == $params.cat_id}>
                     <li>
-                       <a href="<{link app=b2c ctl=site_list act=index}>?cat_id=<{$item.id}>"><{$item.name}></a>
+                       <a href="<{link app=b2c ctl=site_list act=index}>?<{$query|merge_query:'cat_id'}>&cat_id=<{$item.id}>"><{$item.name}></a>
                        </li>
                     <{/if}>
 
@@ -72,7 +63,7 @@
                   </ul>
               </td>
           </tr>
-          <{if !$search_info.prop.brand_id}>
+          <{if !$search_info.prop.brand}>
           <tr>
               <td>品牌</td>
               <td>
@@ -80,7 +71,7 @@
               </td>
           </tr>
           <{/if}>
-          <{if !$search_info.prop.price_id}>
+          <{if !$search_info.prop.price}>
           <tr>
               <td>价格</td>
               <td>
@@ -88,7 +79,7 @@
               </td>
           </tr>
           <{/if}>
-          <{if !$search_info.prop.origin_id}>
+          <{if !$search_info.prop.origin}>
           <tr>
               <td>产地</td>
               <td>
@@ -96,7 +87,7 @@
               </td>
           </tr>
           <{/if}>
-          <{if !$search_info.prop.weight_id}>
+          <{if !$search_info.prop.weight}>
           <tr>
               <td>重量</td>
               <td>
@@ -110,7 +101,7 @@
     <div class="goods-list">
         <div class="panel panel-default">
           <div class="panel-heading clearfix">
-                  <div class="form-inline" role="search">
+                  <div class="form-inline col-xs-9">
                       <div class="btn-group order-btn btn-sm" role="group" aria-label="...">
                           <a class="btn  btn-sm <{if !$env.get.orderby}>btn-danger<{else}>btn-default<{/if}>" href="<{link app=b2c ctl=site_list act=index}>?<{$query|merge_query:'orderby'}>">
                               综合排序
@@ -131,26 +122,26 @@
                               评价数
                               <i class="glyphicon glyphicon-sort-by-order-alt"></i>
                           </a>
-                          <a class="btn  btn-sm <{if $env.get.orderby=='uptime-desc'}>btn-danger<{else}>btn-default<{/if}>" href="<{link app=b2c ctl=site_list act=index}>?<{$query|merge_query:'orderby':'uptime-desc'}>">
+<!--                          <a class="btn  btn-sm <{if $env.get.orderby=='uptime-desc'}>btn-danger<{else}>btn-default<{/if}>" href="<{link app=b2c ctl=site_list act=index}>?<{$query|merge_query:'orderby':'uptime-desc'}>">
                               上架时间
                               <i class="glyphicon glyphicon-sort-by-order-alt"></i>
-                           </a>
+                           </a>-->
                       </div>
-                        <input type="text" id="input_keyword" class="form-control input-sm input-small" placeholder="在结果中搜索">
-                        <button type="button" data-action="<{link app=b2c ctl=site_list act=index}>?<{$query|merge_query:'keyword'}>" onclick="location=$(this).attr('data-action')+'&keyword='+$('#input_keyword').val()" class="btn btn-sm btn-default">确定</button>
+                        <input type="text" id="input_keyword" value="<{$search_having}>" class="form-control input-sm input-small" placeholder="在结果中搜索">
+                        <button type="button" class="btn btn-sm btn-default">确定</button>
                   </div>
 
-                  <!-- <div class="heading_rt row">
-                      <div class="col-sm-6 toggleSpan">
+                   <div class="heading_rt col-xs-3" style="height:40px; line-height:40px;">
+                      <div class="col-xs-6 toggleSpan">
                             <span class="active"><i></i>店铺</span>
                             <span class=""><i></i>商品</span>
                       </div>
-                      <div class="col-sm-6 pageNav">
+                      <div class="co-xs-6 pageNav">
                           <span href=""><b>1</b>/2</span>
                           <a href="" class="prevBtn"><i class="icon-chevron-left"></i></a>
                           <a href="" class="prevBtn"><i class="icon-chevron-right"></i></a>
                       </div>
-                  </div> -->
+                  </div> 
             </div>
         </div>
 
@@ -212,6 +203,63 @@
               <{/if}>
             <{/foreach}>
         </div>
+        <div style="width:100%;" class="clearfix">
+            <div>
+                <div style="height:80px;">
+                    <img class="fl" src="" title="" style="margin:0 30px 0 10px; width: 120px; height: 80px;"/>
+                    <dl class="fl" style="width:270px;">
+                        <dt style="margin:10px 0;">美侍客工厂店</dt>
+                        <dd>主营品牌</dd>
+                        <dd>所在地区</dd>
+                    </dl>
+                    <dl class="fl">
+                        <dt style="margin:10px 0;">店铺综合评分</dt>
+                        <dd style="text-align:center;"><span>6.4</span>分</dd>
+                    </dl>
+                    <dl class="fr">
+                        <dd style="margin:10px 0;"><input style="width:95px; height: 25px;" type="button" value="进店逛逛"/></dd>
+                        <dd><input style="width:95px; height: 25px;"  type="button" value="5件相关商品"/></dd>
+                    </dl>
+                    
+                </div>
+                <div style="padding:20px 13px;width:1000px;height: 290px;border:1px solid #666666;" class="fr">
+                    <div>
+                    <dl class="fl" style="border:1px solid #666666; width: 180px;height: 240px; margin:0 7px;">
+                        <dt>图片</dt>
+                        <dd>商品名称</dd>
+                    </dl>
+                    <dl class="fl" style="border:1px solid #666666; width: 180px;height: 240px;margin:0 7px;">
+                        <dt>图片</dt>
+                        <dd>商品名称</dd>
+                    </dl>
+                    <dl class="fl" style="border:1px solid #666666; width: 180px;height: 240px;margin:0 7px;">
+                        <dt>图片</dt>
+                        <dd>商品名称</dd>
+                    </dl>
+                    <dl class="fl" style="border:1px solid #666666; width: 180px;height: 240px;margin:0 7px;">
+                        <dt>图片</dt>
+                        <dd>商品名称</dd>
+                    </dl>
+
+                    </div>
+                    <p style="clear:both; text-align:right;"><a href="#">更多相关商品</a></p>
+                </div>
+            </div>
+        </div>
         <{pagers data=$pager}>
     </div>
 </div>
+<script>
+    $(function(e){
+        $('[type="button"]').click(function(){
+            var input = $(this).prev();
+            if(!$(input).val() || $(input).val() == "请输入关键词"){
+                $(input).val('请输入关键词');
+                reutrn;
+            }
+            var url = "<{link app=b2c ctl=site_list act=index}>?<{$query|merge_query:'having'}>"; 
+            url += '&having=' + $(input).val();
+            location = url;
+        });
+    });
+</script>

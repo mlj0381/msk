@@ -33,12 +33,32 @@ class b2c_source_member extends base_source {
     }
 
     /*
-     * 我的收藏
+     * 基本信息修改
      * @param $params array()
-     * return $data  店铺/商品
+     * return true/false
      */
 
-    public function favorites($params) {
+    public function edit_info($params) {
+        
+    }
+    
+    /*
+     * 修改、找回密码
+     * @param $params array()
+     * return true/alse
+     */
+
+    public function edit_pwd($params) {
+        
+    }
+    
+    /*
+     * 加入收藏
+     * @param $params array()
+     * return true/false
+     */
+
+    public function favorites_add($params) {
         
     }
 

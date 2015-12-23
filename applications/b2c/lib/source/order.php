@@ -84,5 +84,74 @@ class b2c_source_order extends base_source {
         
     }
 
+    /*
+     * 售后申请
+     * @param $params array()
+     * return true/false
+     */
 
+    public function aftersales($params) {
+        
+    }
+
+    /*
+     * 售后列表
+     * @param $params array()
+     * return array()
+     */
+
+    public function aftersales_list($params) {
+        
+    }
+    
+    /*
+     * 售后详情
+     * @param $params array()
+     * return array()
+     */
+
+    public function aftersales_detalis($params) {
+        
+    }
+    
+    /*
+     * 退款管理
+     * @param $params array()
+     * return true/false
+     */
+
+    public function price_aftersales($params) {
+        
+    }
+
+    /*
+     * 退货管理
+     * @param $params array()
+     * return true/false
+     */
+
+    public function goods_aftersales($params) {
+        
+    }
+
+    /*
+     * 撤消售后
+     * @param $params array()
+     * return true/false
+     */
+
+    public function del_aftersales($params) {
+        
+    }
+
+    
+    /*
+     * 订单提醒
+     * @param $params array()
+     * return array()各种订单状态下的订单数据
+     */
+
+    public function order_remind($params) {
+        
+    }
 }
