@@ -52,11 +52,20 @@ class b2c_source_brand extends base_source {
     }
     
     /**
-     * 店铺推荐
+     * 店铺推荐商品
      * @param $params
      * return array()
      */
     public function store_recommend($params){
+        
+    }
+    
+    /**
+     * 推荐店铺
+     * @param $params
+     * return array()
+     */
+    public function store_goods($params){
         
     }
 }

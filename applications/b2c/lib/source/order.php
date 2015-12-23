@@ -32,6 +32,16 @@ class b2c_source_order extends base_source {
         );
     }
 
+     /*
+     * 订单基础数据
+     * @param $params array()
+     * return array() 购物车商品，收货地址，付款方式，运费计算，配送方式
+     */
+
+    public function basic($params) {
+        
+    }
+    
     /*
      * 订单创建
      * @param $params array()
@@ -152,6 +162,16 @@ class b2c_source_order extends base_source {
      */
 
     public function order_remind($params) {
+        
+    }
+    
+    /*
+     * 订单付款
+     * @param $params array()
+     * return true/false
+     */
+
+    public function payment($params) {
         
     }
 }
