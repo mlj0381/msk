@@ -9,7 +9,7 @@
 // +----------------------------------------------------------------------
 // | Author: Shanghai ChenShang Software Technology Co., Ltd.
 // +----------------------------------------------------------------------
-class b2c_source_seller extends base_source {
+class seller_source_seller extends base_source {
 
     protected $host = 'http://localhost/mskapi/goods.php';
     protected $params = array();

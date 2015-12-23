@@ -130,7 +130,7 @@ class content_article_detail
 
 	/**
 	* body 数据
-	* @param int $article_id文章ID
+	* @param int $article_id 文章ID
 	* @param bool $kvstore 是否KV
 	* @return string
 	*/

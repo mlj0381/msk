@@ -122,4 +122,13 @@ class b2c_source_goods extends base_source {
     public function store_goods($params){
         
     }
+    
+    /**
+     * 获取商品列表页基本数据 （属性）
+     * @param $params
+     * return array()
+     */
+    public function basic($params){
+        
+    }
 }

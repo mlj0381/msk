@@ -33,6 +33,17 @@ class b2c_source_cart extends base_source {
         );
     }
     
+    
+    /**
+     * 加入购物车
+     * @param $params 
+     * return true/false
+     */
+    
+    public function add_cart($params){
+        
+    }
+    
     /**
      * 查看购物车
      * @param $params member_id

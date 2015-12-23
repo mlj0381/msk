@@ -36,13 +36,13 @@ class b2c_ctl_site_cart extends b2c_frontpage {
 
     //购物车主页
     public function index() {
-        $cat_api = vmc::singleton('b2c_source_cat');
+        $cart_api = vmc::singleton('b2c_source_cart');
         $goods_api = vmc::singleton('b2c_source_goods');
         $params = array(
             'member_id' => $this->member['member_id'],
             'label' => '', //购物车大促会，全部商品
             );
-        $cat_list = $cat_api->request($params); //购物车中的商品
+        $cart_list = $cart_api->request($params); //购物车中的商品
         /*
          * 掌柜热卖
          * 商家推荐
