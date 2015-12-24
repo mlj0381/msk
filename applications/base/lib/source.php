@@ -44,6 +44,7 @@ class base_source {
     }
 
     public function init($params) {
+        
         foreach ($params as $key => $val) {
             $this->$key = $val;
         }

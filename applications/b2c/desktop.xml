@@ -3,7 +3,7 @@
         <permission display='true' id="shipment">配送设置</permission>
         <permission display='true' id="printstylesetting">单据打印样式配置</permission>
         
-        <permission display='false' id="shop">商城设置</permission>
+        <permission display='false' workground="b2c.wrokground.shop" id="shop">商城设置</permission>
         
 <!--商品-->
         <permission display='true' id="goods">查看商品</permission>
