@@ -42,7 +42,7 @@ class b2c_ctl_site_cart extends b2c_frontpage {
             'member_id' => $this->member['member_id'],
             'label' => '', //购物车大促会，全部商品
             );
-        $cart_list = $cart_api->request($params); //购物车中的商品
+        $cart_list = $cart_api->read_cart($params); //购物车中的商品
         /*
          * 掌柜热卖
          * 商家推荐

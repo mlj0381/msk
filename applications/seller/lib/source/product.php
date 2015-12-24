@@ -14,6 +14,7 @@ class seller_source_product extends base_source
     protected $params = array();
     protected $method = 'post';
     protected $schema = 'http';
+    protected $path = '';
     private $args = array(
         'label' => '',
         'num' => '',

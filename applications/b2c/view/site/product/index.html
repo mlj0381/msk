@@ -581,16 +581,21 @@ $(function(){
     var check_fav_api = "<{link app=b2c ctl=site_member act=check_favorite}>";
     $.getJSON(check_fav_api,{member_id:$.cookie('MEMBER_IDENT'),'goods_id':goods_id, 'store_id' : store_id},function(recv){
         try{
-            data = recv.data;
+            var data = recv.data;
             if(data.goods_id && data.goods_id > 0){
-                $('.favorite-button i').removeClass('glyphicon-heart-empty').addClass('glyphicon-heart');
-                $('.favorite-button').addClass('disabled');
+                $('.favorite-button i').eq(0).removeClass('glyphicon-heart-empty').eq(0).addClass('glyphicon-heart');
+                $('.favorite-button').eq(0).addClass('disabled');
+                $('.favorite-button em').eq(0).text('已收藏');
             }
-            $('.favorite-button em').text('已收藏');
-
+            if(data.store_id && data.store_id > 0){
+                $('.favorite-button i').eq(1).removeClass('glyphicon-heart-empty').eq(1).addClass('glyphicon-heart');
+                $('.favorite-button').eq(1).addClass('disabled');
+                $('.favorite-button em').eq(1).text('已收藏');
+            }
         }catch(e){
         }
     });
+    
     $('.favorite-button').on('click',function(e){
         e.stopPropagation();
         var _this = $(this);

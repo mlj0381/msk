@@ -20,8 +20,8 @@
     
     <workground icon="icon-diamond" id="site.wrokground.ad" name="广告管理" order="50">
         <menugroup name="广告管理">
-            <menu action="index" controller="admin_ad_position" display="true" order='1' permission='ad'>广告位列表</menu>
-            <menu action="index" controller="admin_ad" display='true' oreder='2' permission="ad">广告列表</menu>
+            <menu action="index" controller="admin_ad_position" display="false" order='1' permission='ad'>广告位列表</menu>
+            <menu action="index" controller="admin_ad" display='false' oreder='2' permission="ad">广告列表</menu>
         </menugroup>
     </workground>
     

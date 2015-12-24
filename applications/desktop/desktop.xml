@@ -4,7 +4,7 @@
         <permission id="setting" display='true'>数据管理</permission>
         <permission id="performance" display='true'>系统管理</permission>
         <permission id="users" display='true'>权限管理</permission>
-        <permission id="syssetting" display='true'>系统设置</permission>
+        <permission id="syssetting" workground="sys.wrokground.setting" display='true'>系统设置</permission>
     </permissions>
 
     <panelgroup id="setting" icon="icon-home" order="10">商店</panelgroup>
@@ -27,11 +27,9 @@
     <!-- <adminpanel group="desktop_system" permission="shopsetting" controller="appcenter" display='true' order="20">应用中心</adminpanel> -->
     <adminpanel group="desktop_system" permission="setting" controller="tags" action="remove" display='false' order="20">标签删除</adminpanel>
 
-    <workground icon="icon-diamond" id="sys.wrokground.setting" name="系统设置" order="10">
+    <workground icon="icon-settings" id="sys.wrokground.setting" name="系统设置" order="100">
         <menugroup name="系统设置">
-            <menu action="index" controller="admin_setting" display="true" order='1' permission='syssetting'>帐号管理</menu>
+            <menu action="index" controller="profile" display="true" order='1' permission='syssetting'>帐号管理</menu>
         </menugroup>
     </workground>
-
-
 </desktop>
