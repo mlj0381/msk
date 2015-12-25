@@ -8,6 +8,17 @@
         <a href="<{link app=b2c ctl=site_passport act=login}>" class="btn btn-xs btn-danger">立即登录</a>
     </div>
     <{/if}>
+    <div class="row itemnav">
+        <div class="nav_item">
+            <span class="active">全部商品<small>(2)</small></span>
+            <span class="">大促会商品<small>(2)</small></span>
+            <span class="">神农客商品<small>(2)</small></span>
+        </div>
+        <div class="nav_right c-cf-amount">
+            <p>已选 <em data-bind="goods_count"><{$cart_result.goods_count}></em> 商品（不含运费)<small><{$cart_result.finally_cart_amount|cur}></small> <a href="<{link app=b2c ctl=site_checkout}>" class="checkout-btn btn btn-danger <{if $cart_result.goods_count<1}>disabled<{/if}>" >去结算</a></p>
+        </div> 
+    </div>
+
     <div class="row cart-header">
         <div class="col-xs-1 c-ch-check">
             <label class="control-label">
@@ -148,41 +159,43 @@
     <div class="cart_like">
         <div class="like_menu">
             <span>
-                <a class="active">最近浏览过</a>
-                <a>最近收藏</a>
+                <a class="active">掌柜热卖</a>
+                <a>商家推荐</a>
+                <a>最近浏览</a>
+                <a>猜你喜欢</a>
             </span>
-            <a class="sc_btan" href="#">进入我的收藏</a>
+           <!--  <a class="sc_btan" href="#">进入我的收藏</a> -->
         </div>
         <div class="like_con">
             <ul>
                 <li>
                     <a href="#">
                         <p><span>￥:128.00</span><span>神农客精选五花肉</span></p>
-                        <img src="<{$baseurl}>/themes/pc/default/statics/images/customer_04.jpg">
+                        <img src="<{$baseurl}>/themes/pc/default/statics/images/bestsellers.jpg">
                     </a>
                 </li>
                 <li>
                     <a href="#">
                         <p><span>￥:128.00</span><span>神农客精选五花肉</span></p>
-                        <img src="<{$baseurl}>/themes/pc/default/statics/images/customer_04.jpg">
+                        <img src="<{$baseurl}>/themes/pc/default/statics/images/bestsellers_01.jpg">
                     </a>
                 </li>
                 <li>
                     <a href="#">
                         <p><span>￥:128.00</span><span>神农客精选五花肉</span></p>
-                        <img src="<{$baseurl}>/themes/pc/default/statics/images/customer_04.jpg">
+                        <img src="<{$baseurl}>/themes/pc/default/statics/images/bestsellers_02.jpg">
                     </a>
                 </li>
                 <li>
                     <a href="#">
                         <p><span>￥:128.00</span><span>神农客精选五花肉</span></p>
-                        <img src="<{$baseurl}>/themes/pc/default/statics/images/customer_04.jpg">
+                        <img src="<{$baseurl}>/themes/pc/default/statics/images/bestsellers_03.jpg">
                     </a>
                 </li>
                 <li>
                     <a href="#">
                         <p><span>￥:128.00</span><span>神农客精选五花肉</span></p>
-                        <img src="<{$baseurl}>/themes/pc/default/statics/images/customer_04.jpg">
+                        <img src="<{$baseurl}>/themes/pc/default/statics/images/bestsellers_04.jpg">
                     </a>
                 </li>
 
@@ -193,34 +206,40 @@
                 <li>
                     <a href="#">
                         <p><span>￥:128.00</span><span>神农客精选五花肉01</span></p>
-                        <img src="<{$baseurl}>/themes/pc/default/statics/images/customer_04.jpg">
+                        <img src="<{$baseurl}>/themes/pc/default/statics/images/bestsellers_01.jpg">
                     </a>
                 </li>
                 <li>
                     <a href="#">
                         <p><span>￥:128.00</span><span>神农客精选五花肉01</span></p>
-                        <img src="<{$baseurl}>/themes/pc/default/statics/images/customer_04.jpg">
+                        <img src="<{$baseurl}>/themes/pc/default/statics/images/bestsellers_02.jpg">
                     </a>
                 </li>
                 <li>
                     <a href="#">
                         <p><span>￥:128.00</span><span>神农客精选五花肉01</span></p>
-                        <img src="<{$baseurl}>/themes/pc/default/statics/images/customer_04.jpg">
+                        <img src="<{$baseurl}>/themes/pc/default/statics/images/bestsellers_03.jpg">
                     </a>
                 </li>
                 <li>
                     <a href="#">
                         <p><span>￥:128.00</span><span>神农客精选五花肉01</span></p>
-                        <img src="<{$baseurl}>/themes/pc/default/statics/images/customer_04.jpg">
+                        <img src="<{$baseurl}>/themes/pc/default/statics/images/bestsellers_04.jpg">
                     </a>
                 </li>
                 <li>
                     <a href="#">
                         <p><span>￥:128.00</span><span>神农客精选五花肉01</span></p>
-                        <img src="<{$baseurl}>/themes/pc/default/statics/images/customer_04.jpg">
+                        <img src="<{$baseurl}>/themes/pc/default/statics/images/bestsellers.jpg">
                     </a>
                 </li>
+            </ul>
 
+            <ul>
+                <li>最近浏览暂无记录</li>
+            </ul>
+            <ul>
+                <li>猜你喜欢暂无记录</li>
             </ul>
         </div>
     </div>
