@@ -23,47 +23,7 @@
             </div>
 
             <{/foreach}>
-            <div class='form-group'>
-                <h3 class="col-xs-12"><span>站点地图</span><button data-target="#map_edit" data-toggle="modal" class="btn btn-xs btn-default" href="index.php?app=site&ctl=admin_setting&act=cat_map&parent_id=<{$item.node_id}>" type="button" class="btn-success" style="float:right; border:none;">添加分类</button></h3>
-                <div class="col-xs-12">
-                    <table style="width:100%; border-collapse:collapse; border:1px solid #ddd;">
-                        <tr style="background:#ddd">
-                            <th>名称</th>
-                            <th>URL</th>
-                            <th>排序</th>
-                            <th>操作</th>
-                        </tr>
-                        <{foreach from=$setting.site_map item=item}>
-                        <tr>
-                            
-
-                            <td><{$item.title}></td>
-                            <td><{$item.url}></td>
-                            <td><input class="form-control input-xsmall input-sm" type="number"  name="ordernum[<{$item.id}>]" value="<{$item.ordernum|default:0}>" /></td>
-                            <td><a data-target="#map_edit" data-toggle="modal" class="btn btn-xs btn-default"  href="index.php?app=site&ctl=admin_setting&act=cat_map&p[0]=<{$item.id}>">编辑</a>
-                                <a target="_command" data-confirm="确定删除 <{$item.title|t:'content'}>？" class="del" href="index.php?app=site&ctl=admin_setting&act=remove&p[0]=<{$item.id}>&p[1]=cat">删除</a>
-                            <a data-target="#map_edit" data-toggle="modal" class="btn btn-xs btn-default"  href="index.php?app=site&ctl=admin_setting&act=site_map&p[0]=<{$item.id}>">添加站点</a>
-                            </td>
-                            
-                        </tr>
-                        <tr>
-                            <{foreach from=$item.son item=map}>
-                            <td><{$item.title}>>><{$map.title}></td>
-                            <td><{$map.url}></td>
-                            <td>
-                            <input class="form-control input-xsmall input-sm" type="number"  name="ordernum[<{$map.id}>]" value="<{$map.ordernum|default:0}>" />
-                            </td>
-                            <td><a data-target="#map_edit" data-toggle="modal" class="btn btn-xs btn-default"  href="index.php?app=site&ctl=admin_setting&act=site_map&p[0]=<{$map.id}>">编辑</a>
-                                <a target="_command" data-confirm="确定删除 <{$map.title|t:'content'}>？" class="del" href="index.php?app=site&ctl=admin_setting&act=remove&p[0]=<{$map.id}>">删除</a>
-                            
-                            </td>
-                        </tr>
-                            <{/foreach}>
-                        <{/foreach}>
-
-                    </table>
-                </div>
-            </div>
+            
             <div class="form-actions">
                 <div class="row">
                     <div class="col-md-offset-3 col-md-9">

@@ -40,7 +40,7 @@ class b2c_source_search extends base_source {
      */
     
     public function basic($params){
-        
+        return app::get('b2c')->model('setting')->getList('*', array('status' => 'true', 'setting_type' => '0'));
     }
     
     /**

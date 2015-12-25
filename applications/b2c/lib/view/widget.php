@@ -27,7 +27,7 @@ class b2c_view_widget {
     // Nav
     public function function_WIDGET_B2C_PUBLIC_NAV($params, &$smarty) {
         $render = new base_render(app::get('b2c'));
-
+        $render->pagedata['nva'] = app::get('b2c')->model('setting')->get_nav();
         return $render->fetch('widget/nav.html');
     }
 
@@ -61,7 +61,7 @@ class b2c_view_widget {
     //楼层店铺
     public function function_WIDGET_B2C_GOODS_INDEX_SHOP_SHOW($params, &$smaryt) {
         $render = new base_render(app::get('b2c'));
-        $render->pagedata['store'] = vmc::service('view_datasetting')->show_store($params);
+        $render->pagedata['store'] = app::get('b2c')->model('ad')->ad_shop();
         return $render->fetch('widget/index.shop.show.html');
     }
 
@@ -140,10 +140,17 @@ class b2c_view_widget {
     }
 
     //我的收藏
-    public function function_WIDGET_B2C_FAVORITE($params, &$smaryt) {
+    public function function_WIDGET_B2C_FAVORITE($params, &$smarty) {
         $render = new base_render(app::get('b2c'));
         $render->pagedata['advertising'] = vmc::service('b2c_source_member')->favorite_read($params);
         return $render->fetch('widget/advertising/login.left.html');
+    }
+    
+    //广告
+    public function function_WIDGET_AD($params, &$smarty){
+        $render = new base_render(app::get($params['app']));
+        $render->pagedata['ad'] = app::get('b2c')->model('ad')->option_ad($params);
+        return $render->fetch('widget/ad/index.top.html');
     }
 
 }

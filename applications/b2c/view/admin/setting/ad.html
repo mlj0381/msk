@@ -1,0 +1,77 @@
+<h3 class="page-title">
+    页面管理
+</h3>
+
+<form  action="index.php?app=b2c&ctl=admin_setting&act=update" method="post">
+    <div class="table-scrollable">
+        <table class="table  table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>名称</th>
+                    <th>位置</th>
+                    <th width="5%">同级排名<button class="btn btn-xs default" type="submit"><i class="fa fa-refresh"></i> 更新排名</button></th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody id="node_list">
+                <{foreach from=$list item=item}>
+
+                <tr>
+                    <td>
+                        <{$item.title}>
+                    </td>
+                    <td>
+                        <{$item.position}>
+                    </td>
+                    <td>
+                        <input class="form-control input-xsmall input-sm" type="number"  name="ordernum[<{$item.id}>]" value="<{$item.ordernum|default:0}>" />
+                    </td>
+                    <td>
+
+                        <a data-target="#node_edit" data-toggle="modal" class="btn btn-xs btn-default" href="index.php?app=b2c&ctl=admin_setting&act=ad_edit&p[0]=<{$item.id}>">
+                            <i class="fa fa-edit"></i> 编辑</a>
+                        <label><input class="status" <{if $item.status eq 'true'}>checked<{/if}> type="checkbox" data-aid="<{$son.id}>"> 是否启用</label>
+                    </td>
+                </tr>
+                <{foreach from=$item.son item=son}>
+                <tr>
+                    <td style="color:#CCC;">
+                        <{$item.title}>
+                    </td>
+                    <td>
+                        <{$son.position}>
+                    </td>
+                    <td>
+                        <input class="form-control input-xsmall input-sm" type="number"  name="ordernum[<{$son.id}>]" value="<{$son.ordernum|default:0}>" />
+                    </td>
+                    <td>
+                        <a data-target="#node_edit" data-toggle="modal" class="btn btn-xs btn-default" href="index.php?app=b2c&ctl=admin_setting&act=ad_content&p[0]=<{$son.id}>">
+                            <i class="fa fa-edit"></i> 编辑</a>
+                            <label><input class="status" data-aid="<{$son.id}>" <{if $son.status eq 'true'}>checked<{/if}> type="checkbox"> 是否启用</label>
+                    </td>
+                </tr>
+                <{/foreach}>
+                <{/foreach}>
+            </tbody>
+        </table>
+    </div>
+</form>
+
+
+<div class="modal fade" id="node_edit" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function(){
+        $('.status').click(function(){
+            var url = 'index.php?app=b2c&ctl=admin_setting&act=publish&p[0]=' + $(this).prop('checked') +'&p[1]=' + $(this).attr('data-aid');
+            $.getJSON(url, function(re){
+                
+            });
+        });
+    });
+</script>
