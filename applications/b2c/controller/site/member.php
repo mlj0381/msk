@@ -188,6 +188,7 @@ class b2c_ctl_site_member extends b2c_frontpage
         $redirect_member_index = array('app' => 'b2c','ctl' => 'site_member');
         $redirect_here = array('app' => 'b2c','ctl' => 'site_member','act' => 'set_pam_mobile');
         $pam_data = $user_obj->get_pam_data('*', $this->member['member_id']);
+        unset($pam_data['memberData']);//2015/12/25
         if($pam_data['mobile']){
             $this->splash('success',$redirect_member_index,'已绑定手机');
         }
@@ -217,6 +218,7 @@ class b2c_ctl_site_member extends b2c_frontpage
         $redirect_member_index = array('app' => 'b2c','ctl' => 'site_member');
         $redirect_here = array('app' => 'b2c','ctl' => 'site_member','act' => 'set_pam_email');
         $pam_data = $user_obj->get_pam_data('*', $this->member['member_id']);
+        unset($pam_data['memberData']);//2015/12/25
         if($pam_data['email']){
             $this->splash('success',$redirect_member_index,'已绑定邮箱');
         }
@@ -261,7 +263,9 @@ class b2c_ctl_site_member extends b2c_frontpage
             $pam_data = $user_obj->get_pam_data('*', $this->member['member_id']);
             $this->pagedata['pam_data'] = $pam_data;
             $this->page('site/member/active_email.html');
+            //$this->output();
         }
+
 
     }
 
