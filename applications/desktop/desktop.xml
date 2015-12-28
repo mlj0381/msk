@@ -1,8 +1,8 @@
 <desktop>
     <permissions>
-    	<permission id="shopsetting" display='false'>商店设置</permission>
+<!--    	<permission id="shopsetting" display='false'>商店设置</permission>
         <permission id="setting" display='false'>数据管理</permission>
-        <permission id="performance" display='false'>系统管理</permission>
+        <permission id="performance" display='false'>系统管理</permission>-->
         <permission id="users" display='true'>权限管理</permission>
         <permission id="performance" workground="sys.wrokground.setting" display='true'>系统设置</permission>
     </permissions>
@@ -29,8 +29,8 @@
             <menu action="index" controller="cachestage" display='true' oreder='60' permission="performance">缓存管理</menu>
             <menu action="index" controller="users" display="true" order='20' permission='users'>操作员管理</menu>
             <menu action="index" controller="roles" display="true" order='30' permission='users'>角色及权限</menu>
-            <menu action='setting' controller="email"  display="true" order='40' permission='shopsetting'>邮件发送配置</menu>
-            <menu action='setting' controller="sms" display="true" order='50' permission='shopsetting'>短信平台配置</menu>
+            <menu action='setting' controller="email"  display="true" order='40' permission='performance'>邮件发送配置</menu>
+            <menu action='setting' controller="sms" display="true" order='50' permission='performance'>短信平台配置</menu>
         </menugroup>
     </workground>
 </desktop>

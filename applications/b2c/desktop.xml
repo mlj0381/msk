@@ -1,9 +1,9 @@
 <desktop>
     <permissions>
-        <permission display='flase' id="shipment">配送设置</permission>
-        <permission display='flase' id="printstylesetting">单据打印样式配置</permission>
+<!--        <permission display='flase' id="shipment">配送设置</permission>
+        <permission display='flase' id="printstylesetting">单据打印样式配置</permission>-->
         
-        <permission display='true' workground="b2c.wrokground.shop" id="shop">商城设置</permission>
+        <permission display='true' workground="b2c.wrokground.shop" id="shopsetting">商城设置</permission>
         
 <!--商品-->
 <!--        <permission display='flase' id="goods">查看商品</permission>
@@ -21,23 +21,23 @@
         <permission display='flase' id="editmktprice">市场价</permission>
         <permission display='flase' id="editprice">销售价</permission>-->
 <!--订单-->
-        <permission display='flase' id="order_list">订单列表</permission>
+<!--        <permission display='flase' id="order_list">订单列表</permission>
         <permission display='flase' id="order_detail">订单详情</permission>
         <permission display='flase' id="order_edit">订单减价</permission>
         <permission display='flase' id="order_discount">订单编辑</permission>
-        <permission display='flase' id="order_delivery">发\退货单据管理</permission>
+        <permission display='flase' id="order_delivery">发\退货单据管理</permission>-->
 
 <!--会员-->
-        <permission display='flase' id="member">查看会员列表</permission>
+<!--        <permission display='flase' id="member">查看会员列表</permission>
         <permission display='flase' id="addmember">添加会员</permission>
         <permission display='flase' id="editmember">编辑会员</permission>
         <permission display='flase' id="memberlv">会员等级</permission>
         <permission display='flase' id="comment">会员评价</permission>
-        <permission display='flase' id="member_msg">会员消息</permission>
+        <permission display='flase' id="member_msg">会员消息</permission>-->
 <!--营销-->
-        <permission display='flase' id="sales">订单促销</permission>
+<!--        <permission display='flase' id="sales">订单促销</permission>
         <permission display='false' id="salesgood">商品促销</permission>
-        <permission display='false' id="salescoupon">优惠券</permission>
+        <permission display='false' id="salescoupon">优惠券</permission>-->
     </permissions>
 <!--    <widgets id="b2c_desktop_widgets_stats" order='30'>业务概览</widgets>
     <widgets id="b2c_desktop_widgets_workcount" order='30'>待处理事项</widgets>
@@ -56,9 +56,10 @@
   <workground icon="icon-diamond" id="b2c.wrokground.shop" name="商城管理" order="10">
         <menugroup name="商城管理">
             <menu action="index" controller="admin_setting" display="true" order='10' permission='shopsetting'>商城设置</menu>
-            <menu action="hot_keywords" controller="admin_setting" display="true" order='20' permission='shop'>热门关键词</menu>
-            <menu action="nav_manage" controller="admin_setting" display="true" order='30' permission='shop'>导航管理</menu>
-            <menu action="page_manage" controller="admin_setting" display="true" order='40' permission='shop'>页面管理</menu>
+            <menu action="hot_keywords" controller="admin_setting" display="true" order='20' permission='shopsetting'>热门关键词</menu>
+            <menu action="nav_manage" controller="admin_setting" display="true" order='30' permission='shopsetting'>导航管理</menu>
+            <menu action="page_manage" controller="admin_setting" display="true" order='40' permission='shopsetting'>页面管理</menu>
+            <menu app="site" controller='admin_setting' action='website' permission='shopsetting' display='true' order="55">站点地图</menu>
         </menugroup>
     </workground>
     

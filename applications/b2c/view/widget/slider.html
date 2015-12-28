@@ -8,9 +8,9 @@
     </ol>
     <!-- Wrapper for slides -->
     <div class="carousel-inner" role="listbox">
-        <{foreach from=$slider item=item}>
+        <{foreach from=$slider.ad_content.title key=key item=item}>
         <div class="item">
-            <img src="<{$item|storager}>" alt="...">
+            <a href="<{$slider.ad_content.url[$key]}>"><img src="<{$slider.ad_content.image[$key]|storager}>" alt="<{$slider.ad_content.title[$key]}>"></a>
         </div>
         <{/foreach}>
     </div>

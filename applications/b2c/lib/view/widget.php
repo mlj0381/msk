@@ -33,8 +33,8 @@ class b2c_view_widget {
 
     // 首页-幻灯
     public function function_WIDGET_B2C_INDEX_SLIDER($params, &$smarty) {
-        $render = new base_render(app::get('b2c'));
-        $render->pagedata['slider'] = vmc::service('view_datasetting')->slider($params);
+        $render = new base_render(app::get($params['app']));
+        $render->pagedata['slider'] = app::get('b2c')->model('ad')->getRow('*', array('page_id' => $params['page'], 'ad_type' => $params['type']));
         return $render->fetch('widget/slider.html');
     }
 
@@ -68,6 +68,7 @@ class b2c_view_widget {
     // 首页-楼层
     public function function_WIDGET_B2C_GOODS_INDEX_GOOD_FLOOR($params, &$smarty) {
         $render = new base_render(app::get('b2c'));
+        $render->pagedata['window'] = $params['window'];
         $render->pagedata['goods'] = vmc::service('view_datasetting')->floor($params);
         return $render->fetch('widget/good.floor.html');
     }
@@ -151,6 +152,13 @@ class b2c_view_widget {
         $render = new base_render(app::get($params['app']));
         $render->pagedata['ad'] = app::get('b2c')->model('ad')->option_ad($params);
         return $render->fetch('widget/ad/index.top.html');
+    }
+    
+    //楼层测试
+    public function function_WIDGET_B2C_GOODS_INDEX_GOOD_FLOOR_TEST($params, &$smarty){
+        $render = new base_render(app::get($params['app']));
+        $render->pagedata['floor'] = vmc::singleton('b2c_source_goods')->floor($params);
+        return $render->fetch('widget/floor.test.html');
     }
 
 }
