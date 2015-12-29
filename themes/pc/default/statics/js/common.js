@@ -66,6 +66,8 @@ $(function() {
 
     tabslider('.like_menu span a', '.like_con > ul', 'active'); //购物车浏览记录
 
+    tabslider('.clearing_tab .clearing_menu li', '.clearing_con > table', 'active'); //卖家中心结算管理
+
 
 
 

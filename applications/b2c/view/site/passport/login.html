@@ -1,6 +1,6 @@
 <div class="passport-login-container clearfix">
     <div class="login_panel_lt">
-        <img src="./../themes/pc/default/statics/images/login_adv.png">
+        <img src="<{$base_url}>/themes/pc/default/statics/images/login_adv.png">
     </div>
     <div class="login_panel_rt">
         <div class="panel panel-default login-panel">
@@ -119,36 +119,8 @@
                     </div>
 
                 </form>
-
-
-                
-                <!-- 快速登录 -->
-                <!-- <div class="wx_login_panel hidden">
-                    <dl>
-                        <dt><img src="./../themes/pc/default/statics/images/wxcode.png"></dt>
-                        <dd>用微信扫码，安全登录</dd>
-                    </dl>
-                </div> -->
-                <!--END 快速登录 -->
             </div>
-            <!-- <div class="panel-footer">
-                <div class="form-group">
-                    <a class="btn btn-warning btn-xs pull-right" href="<{link app=b2c ctl=site_passport act=signup args0=$forward}>">立即注册成为会员&raquo;</a>
-                </div>
-            </div> -->
-            <!-- <{if $toauth}>
-            <div class="panel-footer">
-                <ul class="list-inline oauth-login-list">
-                    <{foreach from=$toauth item=item}>
-                        <li>
-                            <a class="btn btn-xs btn-default btn-<{$item.login_type}>" href="<{$item.authorize_url|toauth_forward:$forward}>">
-                                <{$item.display_name}>
-                            </a>
-                        </li>
-                        <{/foreach}>
-                </ul>
-            </div>
-            <{/if}> -->
+            
         </div>
     </div>
 </div>
