@@ -643,6 +643,7 @@ ul,ol{
 							}
 						}
 						.shop_about{
+							width:228px;
 							.fl;
 							margin-left:10px;
 
@@ -652,7 +653,68 @@ ul,ol{
 								color:#000;
 								margin-bottom:10px;
 							}
+							.add_remarks, .add_shopTag{
+								margin-bottom:10px;
+								span{
+									cursor: pointer;
+								}
+							}
+							.add_shopTag{
+								position: relative;
+								.creat_tagbox{
+									background: #fff;
+									position:absolute;
+									z-index: 10;
+									width:100%;
+									border:1px solid #ddd;
+									h4{
+										height:30px;
+										background: #f2f2f2;
+										font-size: 12px;
+										line-height: 30px;
+										padding:0 10px;
+										margin:0;
+										border-bottom:1px solid #ddd;
+										i{
+											margin-right:5px;
+										}
+									}
+									ul{
+
+										list-style: none;
+										li{
+											list-style: none;
+											padding:0 10px;
+											height:30px;
+											line-height: 30px;
+											input{
+												margin-right:10px;
+											}
+											&:hover{
+												background: #f2f2f2;
+											}
+										}
+									}
+								}
+								.creat_class{
+									padding:0 10px;
+									height:30px;
+									margin:0;
+									cursor: pointer;
+									line-height: 30px;
+									i{
+										margin-right:5px;
+									}
+								}
+								form{
+									margin:2px;
+								}
+							}
 						}
+					}
+
+					.btn-danger{
+						margin:5px 0;
 					}
 				}
 			}
@@ -781,6 +843,57 @@ ul,ol{
 	.cart-container{
 		width:100%;
 		background: #fff;
+
+		.itemnav{
+			margin-bottom:15px;
+			border-bottom:1px solid #ddd;
+			.nav_item{
+				span{
+					display: inline-block;
+					padding:0 25px;
+					height:44px;
+					line-height: 44px;
+					font-size:16px;
+					text-align: center;
+					position: relative;
+					cursor: pointer;
+					color:#727171;
+					border:1px solid #ddd;
+					border-bottom:none;
+					background: #f2f2f2;
+					margin-right:10px;
+					.fl;
+					&.active{
+						background: @basecolor;
+						color: #fff;
+						border:1px solid @basecolor;
+						border-bottom:none;
+						small{
+							color:#fff;
+						}
+					}
+					small{
+						color:@basecolor;
+						padding:0 3px;
+						display: inline-block;
+						width:14px;
+						height:14px;
+						line-height: 14px;
+
+					}
+				}
+			}
+			.nav_right{
+				.fr;
+				small{
+					color:@basecolor;
+					font-size: 14px;
+					padding:0 5px;
+				}
+				a{
+				}
+			}
+		}
 		.itembox{
 			width:100%;
 			.shop_name{
@@ -814,6 +927,7 @@ ul,ol{
 
 				span{
 					display: inline-block;
+					cursor: pointer;
 					a{
 						display:inline-block;
 						height:40px;
@@ -1201,7 +1315,7 @@ ul,ol{
 	.settled_indexpage{
 		width:100%;
 		background: #fff;
-		padding: 20px;
+		padding: 20px 0;
 		border-top:1px solid #ddd;
 
 		.side_left{
@@ -2044,3 +2158,94 @@ ul,ol{
 	margin:20px auto;
 }
 //END店铺设置
+
+//店员设置
+.clerk_setting_page{
+	.table{
+		border:1px solid #ddd;
+		th{
+			background: #ddd;
+			text-align: center;
+		}
+		td{
+			vertical-align: middle;
+			text-align: center;
+			.img-thumbnail{
+				width:64px;
+				height:64px;
+
+			}
+		}
+
+	}
+}
+
+
+//结算管理
+.seller_clearing_page{
+
+	.clearing_tab{
+
+		ul.clearing_menu{
+			border-bottom:1px solid #ddd;
+			height:40px;
+			margin-bottom:40px;
+			li{
+				padding:0 30px;
+				height:40px;
+				line-height: 40px;
+				cursor: pointer;
+				.fl;
+				font-size: 14px;
+				&.active{
+					background: @basecolor;
+					color:#fff;
+				}
+			}
+		}
+		.clearing_con{
+			
+			table{
+				border:1px solid #ddd;
+				th{
+					background: #ddd;
+					text-align: center;
+				}
+				td{
+					text-align: center;
+					vertical-align: middle;
+				}
+			}
+		}
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

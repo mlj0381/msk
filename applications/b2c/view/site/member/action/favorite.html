@@ -128,8 +128,33 @@
                                 </a>
                                 <div class="shop_about">
                                     <a href="#" class="shop_name">涝河桥店铺</a>
-                                    <p class="add_remarks"><a href="">添加备注 <i class="icon-pencil"></i></a></p>
-                                    <a href="add_shopTag">添加店铺标签 <i class="icon-plus"></i></a>
+                                    <div class="add_remarks">
+                                        <span><i class="icon-pencil"></i>添加备注</span>
+                                        <form class="hide">
+                                            <div class="input-group">
+                                                <input type="text" class="form-control" placeholder="输入备注">
+                                                <span class="input-group-btn">
+                                                    <button class="btn btn-default" type="button">确定</button>
+                                                </span>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="add_shopTag">
+                                        <span><i class="icon-plus"></i>添加店铺标签 </span>
+                                        <div class="creat_tagbox hide">
+                                            <h4><i class="icon-folder-open"></i>分类到</h4>
+                                            <ul></ul>
+                                            <p class="creat_class"><i class="icon-plus"></i>新建分类</p>
+                                            <form class="hide">
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control" placeholder="请输入分类名称">
+                                                    <span class="input-group-btn">
+                                                        <button class="btn btn-default" type="button">创建</button>
+                                                    </span>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
 
                                 </div>
                             </div>
@@ -151,8 +176,33 @@
                                 </a>
                                 <div class="shop_about">
                                     <a href="#" class="shop_name">涝河桥店铺</a>
-                                    <p class="add_remarks"><a href="">添加备注 <i class="icon-pencil"></i></a></p>
-                                    <a href="add_shopTag">添加店铺标签 <i class="icon-plus"></i></a>
+                                    <div class="add_remarks">
+                                        <span><i class="icon-pencil"></i>添加备注</span>
+                                        <form class="hide">
+                                            <div class="input-group">
+                                                <input type="text" class="form-control" placeholder="输入备注">
+                                                <span class="input-group-btn">
+                                                    <button class="btn btn-default" type="button">确定</button>
+                                                </span>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="add_shopTag">
+                                        <span><i class="icon-plus"></i>添加店铺标签 </span>
+                                        <div class="creat_tagbox hide">
+                                            <h4><i class="icon-folder-open"></i>分类到</h4>
+                                            <ul></ul>
+                                            <p class="creat_class"><i class="icon-plus"></i>新建分类</p>
+                                            <form class="hide">
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control" placeholder="请输入分类名称">
+                                                    <span class="input-group-btn">
+                                                        <button class="btn btn-default" type="button">创建</button>
+                                                    </span>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
 
                                 </div>
                             </div>
@@ -458,6 +508,76 @@
            $(this).attr('data-check','false');
         }
     })
+
+
+
+
+    //输入框点确定后获取值
+    function getVal(obj){
+        var $obj = $(obj);
+        var val = null;
+        $obj.parents('form').attr('class', 'hide');
+        val =  $obj.parents('form').find('input[type="text"]').val();
+        return val;  
+    }
+
+
+
+    //店铺添加备注
+    $('.add_remarks > span').bind('click',function(e){
+        var elem = e.target || e.srcElement;
+        if((elem+'').match('Span')==null){
+            elem = $(elem).parent('span');
+        }
+        var text = null;
+        var _par = $(elem).parents('.add_remarks');
+        $(elem).attr('class','hide').siblings('form').removeClass('hide');
+        _par.find('.input-group-btn button').bind('click',function(){
+            text =$.trim(getVal(this));
+            if(text==''){
+                $(elem).html('添加备注 <i class="icon-pencil"></i>').removeClass('hide').siblings('form').addClass('hide');
+            }else{
+                $(elem).removeClass('hide').html(text+' <i class="icon-pencil"></i>');
+            }
+            
+            
+        })
+
+    });
+
+    //店铺添加标签
+
+    $('.add_shopTag > span').bind('click',function(e){
+        var elem = e.target || e.srcElement;
+        if((elem+'').match('Span')==null){
+            elem = $(elem).parent('span');
+        };
+        var text = null;
+        $('.creat_class').removeClass('hide');
+        $(elem).attr('class','hide').siblings('.creat_tagbox').removeClass('hide');
+        var _par = $(elem).parents('.add_shopTag');
+        _par.find('.input-group-btn button').bind('click',function(){
+            text =$.trim(getVal(this));
+            if(text==''){
+                $(elem).html('添加店铺标签 <i class="icon-plus"></i>').removeClass('hide');
+                $(elem).siblings('.creat_tagbox').addClass('hide');
+            }else{
+                appendTag(text,_par);
+                $(elem).removeClass('hide').html(text+';').siblings('.creat_tagbox').addClass('hide');
+
+            } 
+        })
+
+
+    });
+    $('.creat_class').bind('click',function(){
+        $(this).addClass('hide').siblings('form').removeClass('hide'); 
+    })
+
+    function appendTag(tagName,obj){
+        var oUl = $('.creat_tagbox ul');
+        obj.find(oUl).append('<li><input type="checkbox" checked>'+tagName+'</li>');
+    }
 
 
 

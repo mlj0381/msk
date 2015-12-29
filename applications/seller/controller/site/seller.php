@@ -26,6 +26,7 @@ class seller_ctl_site_seller extends seller_frontpage
 		$this->output();
 	}
 
+    //账户信息
     public function account()
     {
         $this->pagedata['company'] = $this->get_company();
@@ -42,6 +43,20 @@ class seller_ctl_site_seller extends seller_frontpage
         }
         $this->output();
     }
+
+    //消息中心
+    public function message()
+    {        
+        $this->output();
+    }
+
+    //结算管理
+    public function clearing()
+    {
+        $this->output();
+    }
+
+
 	public function company()
 	{
         $this->user_manage('manage');
