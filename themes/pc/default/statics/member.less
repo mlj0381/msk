@@ -655,15 +655,42 @@ ul,ol{
 							}
 							.add_remarks, .add_shopTag{
 								margin-bottom:10px;
-								span{
+								span.add_bz_btn{
 									cursor: pointer;
+									padding-left:5px;
+								}	
+							}
+							.add_remarks{
+								position:relative;
+								form{
+									position: absolute;
+									z-index: 10;
+									top:0;
+									left:0;
 								}
 							}
 							.add_shopTag{
 								position: relative;
+								span.add_tag_btn{
+									padding-left:5px;
+									cursor: pointer;
+									div{
+										display: inline-block;
+										padding:2px 5px;
+										border:1px solid #ddd;
+										background: #fff;
+										text-align: center;
+										color:#333;
+										margin:1px;
+										i{
+											margin-left:3px;
+										}
+									}
+								}
 								.creat_tagbox{
 									background: #fff;
 									position:absolute;
+									top:0;
 									z-index: 10;
 									width:100%;
 									border:1px solid #ddd;
@@ -2219,6 +2246,112 @@ ul,ol{
 		}
 	}
 }
+
+
+//购买过的店铺
+.buyStore_page{
+	.buyStore_tab{
+		.tabMenu{
+			heihgt:40px;
+			border-bottom:1px solid #ddd;
+			ul{
+				.fl;
+				li{
+					.fl;
+					height:40px;
+					line-height: 40px;
+					padding:0px 30px;
+					font-size: 14px;
+					cursor: pointer;
+					&.active{
+						background: @basecolor;
+						color:#fff;
+					}
+					&.last{
+						height:auto;
+						line-height: auto;
+					}
+				}
+			}
+			form.store_search{
+				width:260px;
+				.fr;
+			}
+			
+		}
+		.tabCon{
+			padding:15px 0;
+			table{
+				border:1px solid #ddd;
+				tr{
+					border-bottom:1px solid #ddd;
+					td{
+						height:110px;
+						vertical-align: middle;
+					}
+				}
+
+				.shop_info{
+					margin-left:10px;
+					.shop_logoimg{
+						.fl;
+						display: inline-block;
+						width:80px;
+						height:80px;
+						overflow: hidden;
+						img{
+							width:80px;
+							height:80px;
+						}
+					}
+					.shop_about{
+						width:228px;
+						.fl;
+						margin-left:10px;
+
+						.shop_name{
+							display: block;
+							font-size: 14px;
+							color:#000;
+							margin-bottom:10px;
+						}
+		
+					}
+
+				}
+				.store_ctrl{
+					text-align: right;
+					button{
+						margin:5px auto;
+						width:80px;
+						font-size: 12px;
+					}
+				}
+			}
+		}
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

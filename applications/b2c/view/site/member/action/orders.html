@@ -16,6 +16,9 @@
         <{/if}>><a href="<{link app=b2c ctl=site_member act=orders args0=s3}>">待收货</a></li>
     <li <{if $current_status=='s4' }>class="active"
         <{/if}>><a href="<{link app=b2c ctl=site_member act=orders args0=s4}>">待评价</a></li>
+    <li><a href="#">交易成功</a></li>
+    <li><a href="#">交易关闭</a></li>
+    <li><a href="#">订单回收站</a></li>
     <li class="last_li">
         <form action="<{link app=b2c ctl=site_member act=orders}>" method="post">
             <div class="form-group">
@@ -83,6 +86,7 @@
                                 </li>
                                 <li><a href="<{link app=store ctl=site_store act=index args0=$order.store_id}>"><{$order.store_name}></a></li>
                                 <li><a href="#"><img src="<{$baseurl}>/themes/pc/default/statics/images/customer_03.jpg"></a></li>
+                                <li style="float: right; margin-top:-20px;"><a href="#">删除</a></li>
                             </ul>
                         </th>
                     </tr>

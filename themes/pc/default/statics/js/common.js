@@ -68,6 +68,8 @@ $(function() {
 
     tabslider('.clearing_tab .clearing_menu li', '.clearing_con > table', 'active'); //卖家中心结算管理
 
+    tabslider('.buyStore_tab .tabMenu li', '.tabCon > div', 'active'); //卖家中心结算管理
+
 
 
 
