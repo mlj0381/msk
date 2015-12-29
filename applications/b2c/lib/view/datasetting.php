@@ -98,11 +98,6 @@
          }
      }
 
-     public function slider($params)
-     {
-         $image = $this->app->getConf($params['target']);
-         return $image;
-     }
 
      public function show_store($params)
      {

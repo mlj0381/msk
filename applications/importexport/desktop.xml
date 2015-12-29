@@ -1,4 +1,4 @@
-<desktop>
+<!--<desktop>
   <permissions>
     <permission id="importexport" display='true' parent='0' workground='importexport'>导入导出任务</permission>
   </permissions>
@@ -8,4 +8,4 @@
 <adminpanel group="importexport_iesys" permission="importexport" controller="admin_import" action="queue_import" display='true'>导入任务队列</adminpanel>
 
 
-</desktop>
+</desktop>-->

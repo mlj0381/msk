@@ -68,7 +68,8 @@ class desktop_ctl_roles extends desktop_controller {
             #$sdf = $menus->dump($v);
             $menuname = $menus->getList('*', array(
                 'menu_type' => 'menu',
-                'permission' => $v
+                'permission' => $v,
+                'display' => 'true',
             ));
             if($menuname){
                 foreach ($menuname as $val) {
@@ -93,7 +94,8 @@ class desktop_ctl_roles extends desktop_controller {
         }
 
         $widgets = app::get('desktop')->model('menus')->getList('*', array(
-            'menu_type' => 'widgets'
+            'menu_type' => 'widgets',
+            'display' => 'true',
         ));
         if($widgets){
             foreach ($widgets as $key => $widget) {

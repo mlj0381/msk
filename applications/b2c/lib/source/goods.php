@@ -51,10 +51,39 @@ class b2c_source_goods extends base_source {
      * @param $params array()
      * return array()
      */
-
-    public function floor($params) {
-        
+    public function floor ($params){
+        $mdl_ad = app::get('b2c')->model('ad');
+        $goods_list = $mdl_ad->getList('*', array('page_id' => 12, 'ad_type' => 3));
+        foreach($goods_list as $key => &$value){
+            $value['son'] = $mdl_ad->getList('*', array('page_id' => $value['id'], 'ad_type' => 3));
+        }
+        return $goods_list;
     }
+
+//    public function floor($params) {
+//        $mdl_ad = app::get('b2c')->model('ad');
+//        $tmp = array();
+//        $tmp_floor_ad = array();
+//        $tmp_window = array();
+//        $floor = $mdl_ad->getList('*', array('page_id' => $params['page'], 'ad_type' => $params['type']));
+//        foreach ($floor as  &$v) {
+//            $tmp[] = $v['ordernum'];
+//            $v['ad_setting']['floor_ad'] = $mdl_ad->getList('*', array('id|in' => $v['ad_setting']['floor_ad'], 'status' => 'true'));
+//            foreach($v['ad_setting']['floor_ad'] as &$ad){
+//                //$ad['ad_content'] = unserialize($ad['ad_content']);
+//                $tmp_floor_ad[] = $ad['ordernum'];
+//            }
+//            $v['ad_setting']['floor_window'] = $mdl_ad->getList('*', array('id|in' => $v['ad_setting']['floor_window'], 'status' => 'true'));
+//            foreach($v['ad_setting']['floor_window'] as &$win){
+//               //$win['ad_content'] = unserialize($win['ad_content']);
+//                $tmp_window[] = $win['ordernum'];
+//            }
+//            array_multisort($tmp_window, SORT_ASC, $v['ad_setting']['floor_window']);
+//            array_multisort($tmp_floor_ad, SORT_ASC, $v['ad_setting']['floor_ad']);
+//        }
+//        array_multisort($tmp, SORT_ASC, $floor);
+//        return $floor;
+//    }
 
     /*
      * 商品列表

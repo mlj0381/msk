@@ -32,9 +32,14 @@ class site_ctl_admin_setting extends desktop_controller
                 $this->pagedata['setting'][$key]['value'] = $this->app->getConf($key);
             }
         }
-        $this->pagedata['setting']['site_map'] = $this->app->model('map')->get_list('*');
+        
         //vmc::dump($this->app->app_dir,$this->pagedata['setting']);
         $this->page('admin/setting.html');
+    }
+    
+    public function website(){
+        $this->pagedata['setting']['site_map'] = $this->app->model('map')->get_list('*');
+        $this->page('admin/website.html');
     }
     
     public function site_map($map_id){

@@ -78,11 +78,7 @@
             </div>
         </div>
     </div>
-    <div class="container-fulid">
-        <div class="topAdv">
-            <a href="#"><img src="<{$base_url}>/themes/pc/default/statics/images/topadv.png"></a>
-        </div>
-    </div>
+    <{WIDGET_AD app=b2c page=1 type=2 position=1}>
     <!-- Search Box -->
     <div class="container-fulid searchbar">
         <div class="row searchbar_con">
@@ -100,10 +96,9 @@
                     <button type="button" class="search_btn">搜索</button>
                 </form>
                 <ul class="hotSearch">
-                    <li><a href="">鸡腿</a></li>
-                    <li><a href="">鸡翅</a></li>
-                    <li><a href="">鸭腿</a></li>
-                    <li><a href="">三黄鸡</a></li>
+                    <{foreach from=$basic.search item=item}>
+                    <li><a href="<{$item.url}>"><{$item.title}></a></li>
+                    <{/foreach}>
                 </ul>
             </div>
             <div class="col-xs-3 kefu">

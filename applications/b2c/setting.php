@@ -20,28 +20,62 @@ $setting = array(
     'coupon_code_count_len' => array(
         'default' => 5,
     ) ,
-    'index_slider' => array(
-        'type' => 'imagearray',
-        'desc' => '首页幻灯',
-    ),
     'shop_logo' => array(
         'type' => 'image',
         'desc' => '商店LOGO' ,
     ) ,
-    'order_invoice' => array(
-        'type' => 'select',
-        'options' => array(
-            'false' => '不启用',
-            'true' => '启用',
-        ),
+    
+    'base_site_params_separator' => array(
+        'default' => '-',
+    ) ,
+    'base_site_page_cache' => array(
         'default' => 'true',
-        'desc' => ('是否启用发票？'),
     ) ,
-    'order_invoice_tax' => array(
+    'base_enable_site_uri_expanded' => array(
+        'default' => 'true',
+    ) ,
+    'base_site_uri_expanded_name' => array(
+        'default' => 'html',
+    ) ,
+    'base_check_uri_expanded_name' => array(
+        'default' => 'true',
+    ) ,
+    'site_name' => array(
         'type' => 'text',
-        'default' => '0',
-        'desc' => ('发票税率'),
+        'default' => 'YOUR SHOP NAME' ,
+        'required' => true,
+        'desc' => '网站名称' ,
     ) ,
+    'page_default_title' => array(
+        'type' => 'text',
+        'default' => '',
+        'desc' => '默认网站标题',
+    ) ,
+    'page_default_keywords' => array(
+        'type' => 'text',
+        'default' => '',
+        'desc' => '默认网站关键字',
+    ) ,
+    'page_default_description' => array(
+        'type' => 'textarea',
+        'default' => '',
+        'desc' => '默认网站简介',
+    ) , 
+    
+//    'order_invoice' => array(
+//        'type' => 'select',
+//        'options' => array(
+//            'false' => '不启用',
+//            'true' => '启用',
+//        ),
+//        'default' => 'true',
+//        'desc' => ('是否启用发票？'),
+//    ) ,
+//    'order_invoice_tax' => array(
+//        'type' => 'text',
+//        'default' => '0',
+//        'desc' => ('发票税率'),
+//    ) ,
     'score_convert' => array(
         'type' => 'text',
         'default' => '1',
@@ -54,15 +88,15 @@ $setting = array(
         'desc' => '会员头像上传大小限制(单位：MB)',
         'helpinfo'=>(get_cfg_var('upload_max_filesize') ? '<span class="text-danger">服务器当前限制'.get_cfg_var('upload_max_filesize').'</span>' : '')
     ),
-    'member_signup_show_attr' => array(
-        'type' => 'select',
-        'default' => 'false',
-        'options' => array(
-                'true' => '展示',
-                'false' => '隐藏',
-        ),
-        'desc' => '是否在会员注册表单展示完整注册项？',
-    ),
+//    'member_signup_show_attr' => array(
+//        'type' => 'select',
+//        'default' => 'false',
+//        'options' => array(
+//                'true' => '展示',
+//                'false' => '隐藏',
+//        ),
+//        'desc' => '是否在会员注册表单展示完整注册项？',
+//    ),
     'order_autocancel_time'=>array(
         'type' => 'number',
         'default' => 86400,
@@ -81,6 +115,4 @@ $setting = array(
         'default'=>get_cfg_var('upload_max_filesize')?intval(get_cfg_var('upload_max_filesize')):2,
         'helpinfo'=>(get_cfg_var('upload_max_filesize') ? '<span class="text-danger">服务器当前限制'.get_cfg_var('upload_max_filesize').'</span>' : '')
     ) ,
-
-
 );

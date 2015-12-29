@@ -392,6 +392,22 @@ class utils
         return false;
     }
 
+     public static function son($tmp, $id, $pid){
+        $map_list = array();
+        foreach($tmp as $value){
+            $map_list[$value[$id]] = $value;
+        }
+        $map = array();
+        foreach($map_list as $value){
+            if(isset($map_list[$value[$pid]])){
+                $map_list[$value[$pid]]['son'][] = &$map_list[$value[$id]];
+            } else {
+                $map[] = &$map_list[$value[$id]];
+            }
+        }
+        return $map;
+    }
+    
     //配送公式验算function
     public static function cal_fee($exp, $weight, $totalmoney, $first_price, $continue_price, $defPrice = 0)
     {
