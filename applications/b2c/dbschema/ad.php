@@ -23,6 +23,7 @@ $db['ad'] = array(
             'label' => ('id'),
             'comment' => ('id'),
         ),
+        
         'ad_name' => array(
             'type' => 'varchar(50)',
             'required' => true,
@@ -30,15 +31,17 @@ $db['ad'] = array(
             'label' => ('广告名称'),
             'comment' => ('广告名称'),
         ),
+        
         'page_id' => array(
             'type' => 'number',
-            'default' => 0,
+            'default' => '0',
             'label' => ('所属页面'),
             'comment' => ('所属页面'),
         ),
 
         'position_id' => array(
             'type' => 'number',
+            'default' => '0',
             'required' => true,
             'label' => ('位置ID'),
             'comment' => ('位置ID'),
@@ -46,6 +49,7 @@ $db['ad'] = array(
         'ad_type' => array(
             'type' => 'number',
             'required' => true,
+            'default' => '0',
             'label' => ('广告类型'),
             'comment' => ('广告类型'),
         ),
@@ -77,14 +81,6 @@ $db['ad'] = array(
             'label' => ('排序'),
             'comment' => ('排序'),
             'default' => '0',
-            'required' => true,
-            'in_list' => true,
-            'default_in_list' => true,
-        ),
-        'createtime' => array(
-            'type' => 'time',
-            'label' => ('添加时间'),
-            'comment' => ('添加时间'),
             'required' => true,
             'in_list' => true,
             'default_in_list' => true,

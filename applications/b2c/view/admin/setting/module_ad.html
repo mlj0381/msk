@@ -1,10 +1,10 @@
 <h3 class="page-title">
-    页面管理
+    <{$parent.ad_name}> <{$ad.ad_name}>管理  <small>选择其它页面<{input type=select name="ad_type" rows=$pgae_list valueColumn="id" labelColumn="ad_name" value=$parent.id}></small>
 </h3>
 <div class="table-toolbar">
     <div class="btn-group">
-        <a class="btn green" label="页面配置" icon="fa-plus" data-target="#node_edit" data-toggle="modal" class="btn btn-xs btn-default" href="index.php?app=b2c&ctl=admin_setting&act=add_page&p[0]=<{$item.id}>">
-            页面配置&nbsp;<i class="fa fa-plus"></i>
+        <a class="btn green" label="添加模块" icon="fa-plus" class="btn btn-xs btn-default" href="index.php?app=b2c&ctl=admin_setting&act=add_ad&p[0]=<{$ad.id}>">
+            添加广告&nbsp;<i class="fa fa-plus"></i>
         </a>
     </div>
 </div>
@@ -14,22 +14,22 @@
             <thead>
                 <tr>
                     <th>名称</th>
-                    <th>页面</th>
-                    <th>位置</th>
+                    
+<!--                    <th>位置</th>-->
                     <th>类型</th>
                     <th width="5%">同级排名<button class="btn btn-xs default" type="submit"><i class="fa fa-refresh"></i> 更新排名</button></th>
                     <th>操作</th>
                 </tr>
             </thead>
             <tbody id="node_list">
-                <{foreach from=$list item=item}>
+                <{foreach from=$ad_list item=item}>
 
                 <tr>
                     <td>
                         <{$item.ad_name}>
                     </td>
-                    <td><{$item.page_name}></td>
-                    <td><{$item.position_name}></td>
+                    
+<!--                    <td><{$item.position_name}></td>-->
                     <td>
                         <{$item.type_name}>
                     </td>
@@ -38,9 +38,9 @@
                     </td>
                     <td>
 
-                        <a data-target="#node_edit" data-toggle="modal" class="btn btn-xs btn-default" href="index.php?app=b2c&ctl=admin_setting&act=add_page&p[0]=<{$item.id}>">
-                            <i class="fa fa-edit"></i> 编辑</a>
-                            <a class="btn btn-xs btn-default" href="index.php?app=b2c&ctl=admin_setting&act=del_page&p[0]=<{$item.id}>">
+                        <a class="btn btn-xs btn-default" href="index.php?app=b2c&ctl=admin_setting&act=add_ad&p[0]=<{$item.id}>">
+                            <i class="fa fa-edit"></i> 编辑模块广告</a>
+                            <a class="btn btn-xs btn-default" href="index.php?app=b2c&ctl=admin_setting&act=add_modele&p[0]=<{$item.id}>&p[1]=<{$parent_id}>">
                             <i class="fa fa-edit"></i> 刪除</a>
                         <label><input class="status" <{if $item.status eq 'true'}>checked<{/if}> type="checkbox" data-aid="<{$item.id}>"> 是否启用</label>
                     </td>
@@ -66,6 +66,12 @@
             $.getJSON(url, function(re){
                 
             });
+        });
+        
+        $('.page-title select').change(function(){
+            var id = $(this).val();
+            if(!id) return false;   
+            location = 'index.php?app=b2c&ctl=admin_setting&act=modules&p[0]='+id;
         });
     });
 </script>

@@ -13,12 +13,12 @@
 
 class b2c_mdl_ad extends dbeav_model{
     
-    public function ad_shop(){
+    public function ad_shop($params){
         return $this->getRow('*', array('page_id' => '楼层广告'));
     }
     
     public function option_ad($params){
-        return $this->getRow('*', array('title' => $params['title'], 'position' => '顶部'));
+        return $this->getRow('*', array('page_id' => $params['page'], 'ad_type' => $params['type'], 'position_id' => $params['position']));
     }
 }
 

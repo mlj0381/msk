@@ -58,35 +58,37 @@
             <menu action="index" controller="admin_setting" display="true" order='10' permission='shopsetting'>商城设置</menu>
             <menu action="hot_keywords" controller="admin_setting" display="true" order='20' permission='shopsetting'>热门关键词</menu>
             <menu action="nav_manage" controller="admin_setting" display="true" order='30' permission='shopsetting'>导航管理</menu>
-            <menu action="page_manage" controller="admin_setting" display="true" order='40' permission='shopsetting'>页面管理</menu>
+            <menu action="page_list" controller="admin_setting" display="true" order='40' permission='shopsetting'>页面管理</menu>
             <menu app="site" controller='admin_setting' action='website' permission='shopsetting' display='true' order="55">站点地图</menu>
         </menugroup>
-    </workground>
-    
-<!--    <workground icon="icon-diamond" id="b2c.wrokground.goods" name="商品" order="10">
+  </workground>
+    <workground icon="icon-diamond" id="b2c.wrokground.goods" name="商品" order="10">
         <menugroup name="商品管理">
             <menu action='add' controller='admin_goods_editor' display='false' order='10' permission='addgoods'>添加商品</menu>
             <menu action='edit' controller='admin_goods_editor' display='false' order='11' permission='editgoods'>编辑商品</menu>
-            <menu action='index' controller='admin_goods' display='false' order='20' permission='goods'>商品列表</menu>
+            <menu action='index' controller='admin_goods' display='true' order='20' permission='goods'>商品列表</menu>
             <menu action='index' controller='admin_goods' display='false' order='21' params='action:import' permission='importgoods'>商品列表导入</menu>
             <menu action='import' controller='admin_goods' display='false' permission='importgoods'>商品导入</menu>
             <menu action='index' controller='admin_goods' display='false' order='23' params='action:export' permission='exportgoods'>商品列表导出</menu>
             <menu action='index' controller='admin_goods' display='false' order='24' params='action:dorecycle' permission='deletegoods'>商品删除</menu>
         </menugroup>
         <menugroup name="商品配置">
-            <menu action='index' controller='admin_goods_type' display='false' order='40' permission='typegoods'>商品类型</menu>
-            <menu action='add' controller='admin_goods_type' display='false' order='50' permission='typegoods'>添加类型</menu>
+            <menu action='index' controller='admin_goods_type' display='true' order='40' permission='typegoods'>商品类型</menu>
+            
+            
+            <menu action='add' controller='admin_goods_type' display='true' order='50' permission='typegoods'>添加类型</menu>
+            
             <menu action='set' controller='admin_goods_type' display='false' order='50' permission='typegoods'>编辑类型</menu>
             <menu action='index' controller='admin_goods_cat' display='false' order='30' permission='catgoods'>商品分类</menu>
             <menu action='addnew' controller='admin_goods_cat' display='false' order='90' permission='catgoods'>添加分类</menu>
             <menu action='create' controller='admin_brand' display='false' order='130' permission='brandgoods'>添加品牌</menu>
             <menu action='edit' controller='admin_brand' display='false' order='130' permission='brandgoods'>编辑品牌</menu>
-            <menu action='index' controller='admin_brand' display='false' order='140' permission='brandgoods'>商品品牌</menu>
-            <menu action='index' controller='admin_stock' display='false' order='150' permission='stock'>商品库存</menu>
+            <menu action='index' controller='admin_brand' display='true' order='140' permission='brandgoods'>商品品牌</menu>
+            <menu action='index' controller='admin_stock' display='true' order='150' permission='stock'>商品库存</menu>
             <menu action='stock_batch_save' controller='admin_stock' display='false' order='150' permission='stock'>商品库存批量编辑</menu>
             <menu action='stock_quick_update' controller='admin_stock' display='false' order='150' permission='stock'>商品库存快速编辑</menu>
         </menugroup>
-    </workground>-->
+    </workground>
 <!--    <workground icon="icon-basket-loaded" id="b2c.wrokground.order" name="订单" order="20">
         <menugroup name="订单管理">-->
             <!--
