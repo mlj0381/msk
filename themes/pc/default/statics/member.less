@@ -1063,24 +1063,64 @@ ul,ol{
 		}
 
 		.checkout-dlytime{
-			ul{
-				padding:10px 15px;
+			.timespan{
+				display: inline-block;
+				padding:3px 5px;
+				border:1px solid #ddd;
+				background: #fff;
+			}
+			.timespan.active{
+				border:1px solid #dbaf00;
+				background: #faf2d2;
+			}
+			.time_text{
+				width:160px;
+				display: inline-block;
+				height:28px;
+				line-height: 28px;
+			}
+		}
 
+		.checkout_djz{
+			font-weight: bold;
+			margin:0 0 20px 0;
+			label{
+				color:#999;
+				font-weight: normal;
+				margin-left:20px;
+			}
+			input{
+				margin-right:5px;
+			}
+		}
+
+		.checkout_ps{
+			.ps_list_title{
+				width:100%;
+				background: #f2f2f2;
+				th{
+					height:40px;
+					line-height: 40px;
+				}
+			}
+			ul{
 				li{
-					display: inline-block;
-					width:95px;
-					height:30px;
-					line-height: 30px;
-					border:1px solid #ddd;
-					font-size: 14px;
-					text-align: center;
-					margin:5px 10px 5px 0;
-					cursor: pointer;
-					&.active{
-						width:95px;
-						height:30px;
-						line-height: 30px;
-						border:1px solid @basecolor;
+					
+					.goods_info{
+						.img-thumbnail{
+							width:64px;
+							height:64px;
+							.fl;
+						}
+						.goods_name{
+							width:245px;
+							.fl;
+							margin-left:15px;
+						}
+					}
+					.total_money{
+						font-size: 16px;
+						color:#c13e2c;
 					}
 				}
 			}

@@ -62,13 +62,15 @@ $(function() {
 
     tabslider('.fav_goods .fav_g_nav ul li', '.fav_g_con > div', 'active'); //我的收藏-商品收藏调用
 
-    tabslider('.fav_shop .fav_s_nav ul li', '.fav_s_con > div', 'active'); //我的收藏-商品收藏调用
+    tabslider('.fav_shop .fav_s_nav ul li', '.fav_s_con > div', 'active'); //我的收藏-店铺收藏调用
 
     tabslider('.like_menu span a', '.like_con > ul', 'active'); //购物车浏览记录
 
     tabslider('.clearing_tab .clearing_menu li', '.clearing_con > table', 'active'); //卖家中心结算管理
 
-    tabslider('.buyStore_tab .tabMenu li', '.tabCon > div', 'active'); //卖家中心结算管理
+    tabslider('.buyStore_tab .tabMenu li', '.tabCon > div', 'active'); //购买过的店铺
+
+    tabslider('.goods-listbox .tab_toggle span', '.list_maincon > div', 'btn-danger'); //购买过的店铺
 
 
 
