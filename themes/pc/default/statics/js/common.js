@@ -72,6 +72,7 @@ $(function() {
 
     tabslider('.goods-listbox .tab_toggle span', '.list_maincon > div', 'btn-danger'); //购买过的店铺
 
+    tabslider('.cart-container .nav_item span', '.cart_maincon > div', 'active'); //购物车列表
 
 
 

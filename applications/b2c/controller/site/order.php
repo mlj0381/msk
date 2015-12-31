@@ -22,6 +22,7 @@ class b2c_ctl_site_order extends b2c_frontpage
         $this->cart_stage = vmc::singleton('b2c_cart_stage');
         $this->cart_stage->set_member_id($this->app->member_id);
         $this->logger = vmc::singleton('b2c_order_log');
+        $this->mOrders = $this->app->model('orders');
     }
     //PC端前台会员创建订单
     public function create($fastbuy = false)
@@ -250,11 +251,46 @@ class b2c_ctl_site_order extends b2c_frontpage
         if($_POST){
             $redirect = $this->gen_url(array('app' => 'b2c', 'ctl' => 'site_member', 'act' => 'orders', 'args0' => 's1'));
             $data = $_POST;
-            if(!app::get('b2c')->model('orders')->save($data)){
+            if(!$this->mOrders->save($data)){
                 $this->splash('error', $redirect, '取消失败');
             }
             $this->splash('success', $redirect, '取消成功');
         }
         $this->splash('error', $redirect, '非法请求');
+    }
+    
+    //订单确认收货
+    public function confirm($order_id){
+        if(!is_numeric($order_id)){
+            $this->splash('error', $redirect, '非法请求');
+        }
+        $data = array('order_id' => $order_id, 'confirm' => 'Y');
+        $this->save($data);
+    }
+    
+    //订单更新
+    private function save($data, $redirect = ''){
+        if($this->mOrders->save($data)){
+            $this->splash('success', $redirect, '操作成功');
+        }
+        $this->splash('error', $redirect, '操作失败');
+    }
+    
+    //订单删除
+    public function del($order_id){
+        if(!is_numeric($order_id)){
+            $this->splash('error', $redirect, '非法请求');
+        }
+        $data = array('order_id' => $order_id, 'status' => 'del');
+        $this->save($data);
+    }
+    
+    //订单还原
+    public function restore($order_id){
+        if(!is_numeric($order_id)){
+            $this->splash('error', $redirect, '非法请求');
+        }
+        $data = array('order_id' => $order_id, 'status' => 'active');
+        $this->save($data);
     }
 }

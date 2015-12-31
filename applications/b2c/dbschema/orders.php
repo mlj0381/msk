@@ -46,6 +46,7 @@ $db['orders'] = array(
                 'active' => ('活动订单') ,
                 'dead' => ('已作废') ,
                 'finish' => ('已完成') ,
+                'del' => ('已删除')
             ) ,
             'filtertype' => 'normal',
             'default' => 'active',
