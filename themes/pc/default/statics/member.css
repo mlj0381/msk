@@ -33,6 +33,9 @@ ol {
   width: 1200px;
   min-height: 500px;
 }
+.buyer_container .breadcrumb {
+  margin: 20px auto;
+}
 .buyer_container .my-main .row {
   margin: 0;
 }
@@ -1680,68 +1683,183 @@ ol {
 .buyer_container .goods_sell .table-scrollable td {
   vertical-align: middle;
 }
-.buyer_container .appraisal_page .appra_box .appra_nav li {
-  display: inline-block;
+.buyer_container .appraisal_page .rowfirst {
+  margin-bottom: 50px;
+}
+.buyer_container .appraisal_page .rowfirst .personal_info {
+  width: 180px;
+  border: 1px solid #ddd;
+}
+.buyer_container .appraisal_page .rowfirst .personal_info dl {
+  margin-bottom: 0px;
+}
+.buyer_container .appraisal_page .rowfirst .personal_info dt {
+  background: #f2f2f2;
   height: 30px;
+  display: block;
   line-height: 30px;
+  padding: 0 10px;
+}
+.buyer_container .appraisal_page .rowfirst .personal_info dd {
+  padding: 0 10px;
+  height: 40px;
+  line-height: 40px;
+  color: #666;
+}
+.buyer_container .appraisal_page .rowfirst .personal_info dd label {
+  font-weight: normal;
+}
+.buyer_container .appraisal_page .rowfirst .rating {
+  width: 748px;
+  border: 1px solid #ddd;
+}
+.buyer_container .appraisal_page .rowfirst .rating dl {
+  margin-bottom: 0px;
+}
+.buyer_container .appraisal_page .rowfirst .rating dt {
+  background: #f2f2f2;
+  height: 30px;
+  display: block;
+  line-height: 30px;
+  padding: 0 10px;
+}
+.buyer_container .appraisal_page .rowfirst .rating dd {
+  padding: 0 10px;
+  height: 40px;
+  line-height: 40px;
+}
+.buyer_container .appraisal_page .rowfirst .rating dd label {
+  display: inline-block;
+  width: 135px;
+  font-weight: normal;
+  color: #666;
+}
+.buyer_container .appraisal_page .rowfirst .rating dd span.star_group i {
+  display: inline-block;
+  margin: 0 23px;
+  font-size: 18px;
+  color: #ffc73f;
+}
+.buyer_container .appraisal_page .rowfirst .rating .rating_foot {
+  padding: 0 10px;
+  background: #f2f2f2;
+  height: 40px;
+}
+.buyer_container .appraisal_page .rowfirst .rating .rating_foot label {
+  display: inline-block;
+  width: 135px;
+  float: left;
+  font-weight: normal;
+  color: #666;
+  margin-top: 10px;
+  margin-right: 2px;
+}
+.buyer_container .appraisal_page .rowfirst .rating .rating_foot span {
+  display: inline-block;
+  width: 63px;
+  text-align: center;
+  margin-top: 3px;
+}
+.buyer_container .appraisal_page .rowfirst .rating .rating_foot span small {
+  display: block;
+  font-size: 12px;
+  text-align: center;
+}
+.buyer_container .appraisal_page .appra_box .appra_navbox {
+  border-bottom: 1px solid #ddd;
+}
+.buyer_container .appraisal_page .appra_box .appra_navbox .appra_nav {
+  width: 400px;
+  float: left;
+}
+.buyer_container .appraisal_page .appra_box .appra_navbox .appra_nav li {
+  display: inline-block;
+  height: 40px;
+  line-height: 40px;
   margin-right: 10px;
   padding: 0 10px;
   font-size: 14px;
   cursor: pointer;
 }
-.buyer_container .appraisal_page .appra_box .appra_nav li.active {
+.buyer_container .appraisal_page .appra_box .appra_navbox .appra_nav li.active {
   border-bottom: 2px solid #e93428;
 }
-.buyer_container .appraisal_page .appra_box .appra_items {
-  margin: 20px auto;
+.buyer_container .appraisal_page .appra_box .appra_navbox .nav_right {
+  width: 245px;
+  float: right;
+  text-align: right;
 }
-.buyer_container .appraisal_page .appra_box .appra_items .appra_item {
-  border-bottom: 1px solid #ddd;
+.buyer_container .appraisal_page .appra_box .appra_navbox .nav_right span {
+  display: inline-block;
+  margin: 10px 15px 0 15px;
 }
-.buyer_container .appraisal_page .appra_box .appra_items table {
-  width: 100%;
-  border-collapse: collapse;
-}
-.buyer_container .appraisal_page .appra_box .appra_items table th {
-  background: #f5f5f5;
-  height: 40px;
-  padding: 0 15px;
-}
-.buyer_container .appraisal_page .appra_box .appra_items table th select {
-  height: 24px;
-  line-height: 24px;
-  width: 100px;
-}
-.buyer_container .appraisal_page .appra_box .appra_items table td {
-  padding: 10px 15px;
-}
-.buyer_container .appraisal_page .appra_box .appra_items table td span.appra_status {
+.buyer_container .appraisal_page .appra_box .appra_navbox .nav_right span .appra_status {
   display: inline-block;
   width: 20px;
   height: 20px;
   overflow: hidden;
+  margin-right: 5px;
 }
-.buyer_container .appraisal_page .appra_box .appra_items table td span.good {
+.buyer_container .appraisal_page .appra_box .appra_navbox .nav_right span .good {
   background: url(images/apprabg.png) no-repeat left bottom;
 }
-.buyer_container .appraisal_page .appra_box .appra_items table td span.medium {
+.buyer_container .appraisal_page .appra_box .appra_navbox .nav_right span .medium {
   background: url(images/apprabg.png) no-repeat left center;
 }
-.buyer_container .appraisal_page .appra_box .appra_items table td span.poor {
+.buyer_container .appraisal_page .appra_box .appra_navbox .nav_right span .poor {
   background: url(images/apprabg.png) no-repeat left top;
 }
-.buyer_container .appraisal_page .appra_box .appra_items .replyShow {
-  padding: 10px 0;
+.buyer_container .appraisal_page .appra_box .appra_itemcon {
+  margin-top: 10px;
 }
-.buyer_container .appraisal_page .appra_box .appra_items .replyShow form {
+.buyer_container .appraisal_page .appra_box .appra_itemcon .appra_items table {
   width: 100%;
 }
-.buyer_container .appraisal_page .appra_box .appra_items .replyShow textarea {
-  max-width: 100%;
+.buyer_container .appraisal_page .appra_box .appra_itemcon .appra_items table th {
+  background: #f2f2f2;
+  height: 40px;
 }
-.buyer_container .appraisal_page .appra_box .appra_items .replyShow .btn {
-  margin: 20px 0;
+.buyer_container .appraisal_page .appra_box .appra_itemcon .appra_items table td {
+  padding: 10px 15px;
+}
+.buyer_container .appraisal_page .appra_box .appra_itemcon .appra_items table td .appra_status {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  overflow: hidden;
+  float: left;
+}
+.buyer_container .appraisal_page .appra_box .appra_itemcon .appra_items table td .good {
+  background: url(images/apprabg.png) no-repeat left bottom;
+}
+.buyer_container .appraisal_page .appra_box .appra_itemcon .appra_items table td .medium {
+  background: url(images/apprabg.png) no-repeat left center;
+}
+.buyer_container .appraisal_page .appra_box .appra_itemcon .appra_items table td .poor {
+  background: url(images/apprabg.png) no-repeat left top;
+}
+.buyer_container .appraisal_page .appra_box .appra_itemcon .appra_items table td ul.plcon {
+  width: 320px;
   float: right;
+}
+.buyer_container .appraisal_page .appra_box .appra_itemcon .appra_items table td ul.plcon li {
+  margin: 5px 0;
+}
+.buyer_container .appraisal_page .appra_box .appra_itemcon .appra_items table td ul.plcon li p {
+  margin-bottom: 5px;
+}
+.buyer_container .appraisal_page .appra_box .appra_itemcon .appra_items table td ul.plcon li p span {
+  color: #999;
+  margin-right: 5px;
+}
+.buyer_container .appraisal_page .appra_box .appra_itemcon .appra_items table td ul.plcon li span.pl_time {
+  color: #999;
+}
+.buyer_container .appraisal_page .reply_form textarea {
+  width: 100%;
+  max-width: 100%;
+  min-height: 100px;
+  border: 1px solid #ddd;
 }
 .buyer_container .aftersales_page {
   width: 100%;
@@ -2093,4 +2211,82 @@ ol {
   margin: 5px auto;
   width: 80px;
   font-size: 12px;
+}
+.comment-container .pl_form .form-group .star_group {
+  display: inline-block;
+  margin-top: 5px;
+}
+.comment-container .pl_form .form-group .star_group i {
+  font-size: 22px;
+  color: #ddd;
+  cursor: pointer;
+}
+.comment-container .pl_form .form-group .star_group i.bright {
+  color: #ffc73f;
+}
+.comment-container .pl_form .form-group .star_group i.gray {
+  color: #ddd;
+}
+.comment-container .pl_form .form-group .pl_num {
+  margin-left: 10px;
+  color: #666;
+}
+.comment-container .pl_form .form-group .pl_num small {
+  padding-left: 3px;
+  color: #666;
+}
+.comment-container .pl_form .form-group .comment-image {
+  margin-bottom: 5px;
+}
+.comment-container .pl_form .goods_item .img-thumbnail {
+  width: 80px;
+  height: 80px;
+  float: left;
+}
+.comment-container .pl_form .goods_item .goods_info {
+  float: left;
+  margin-left: 15px;
+  width: 180px;
+}
+.comment-container .pl_form .goods_item .goods_info .text-muted {
+  display: inline-block;
+  max-height: 30px;
+  line-height: 15px;
+  overflow-y: hidden;
+  margin-top: 5px;
+}
+.comment-container .pl_form .goods_item .goods_info .g_price {
+  display: block;
+  margin: 5px 0;
+}
+.receiver_addrpage .list-group .list-group-item {
+  padding: 0;
+}
+.receiver_addrpage .list-group .list-group-item:hover {
+  background: #f2f2f2;
+}
+.receiver_addrpage .list-group .list-group-item dl {
+  margin: 15px 0;
+}
+.receiver_addrpage .list-group .list-group-item dl dt {
+  font-size: 14px;
+  font-weight: normal;
+  color: #000;
+}
+.receiver_addrpage .list-group .list-group-item dl dd {
+  color: #666;
+}
+.receiver_addrpage .list-group .list-group-item dl dd .label-danger {
+  padding: 2px 10px;
+  font-size: 12px;
+}
+.receiver_addrpage .list-group .list-group-item .addr_ctr {
+  display: table-cell;
+  text-align: center;
+  vertical-align: middle;
+  padding: 0;
+  margin: 15px 0;
+}
+.receiver_addrpage .list-group .list-group-item .addr_ctr btn {
+  margin: 3px auto;
 }

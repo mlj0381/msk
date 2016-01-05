@@ -41,7 +41,9 @@ ul,ol{
 .buyer_container{
 	width:1200px;
 	min-height: 500px;
-	
+	.breadcrumb{
+		margin:20px auto;
+	}
 	.my-main{
 		.row{
 			margin:0;
@@ -1870,75 +1872,195 @@ ul,ol{
 
 	//评价列表
 	.appraisal_page{
-		.appra_box{
-			.appra_nav{
-				li{
-					display: inline-block;
+
+		.rowfirst{
+			margin-bottom:50px;
+			.personal_info{
+				width:180px;
+				border:1px solid #ddd;
+				dl{
+					margin-bottom:0px;
+				}
+				dt{
+					background: #f2f2f2;
 					height:30px;
+					display: block;
 					line-height: 30px;
-					margin-right:10px;
 					padding:0 10px;
-					font-size: 14px;
-					cursor: pointer;
-					&.active{
-						border-bottom:2px solid @basecolor;
+				}
+				dd{
+					padding:0 10px;
+					height:40px;
+					line-height: 40px;
+					color:#666;
+					label{
+						font-weight: normal;	
 					}
 				}
 			}
-			.appra_items{
-				margin:20px auto;
-
-				.appra_item{
-					border-bottom:1px solid #ddd;
+			.rating{
+				width:748px;
+				border:1px solid #ddd;
+				dl{
+					margin-bottom:0px;
 				}
-				table{
-					width:100%;
-					border-collapse: collapse;
-					th{
-						background: #f5f5f5;
-						height:40px;
-						padding:0 15px;
-						
-						select{
-							height: 24px;
-							line-height: 24px;
-							width:100px;
-						}
-
+				dt{
+					background: #f2f2f2;
+					height:30px;
+					display: block;
+					line-height: 30px;
+					padding:0 10px;
+				}
+				dd{
+					padding:0 10px;
+					height:40px;
+					line-height: 40px;
+					label{
+						display: inline-block;
+						width:135px;
+						font-weight: normal;
+						color:#666;
 					}
-					td{
-						padding:10px 15px;
-						span.appra_status{
+					span.star_group{
+						i{
+							display: inline-block;
+							margin:0 23px;
+							font-size:18px;
+							color:#ffc73f;
+						}
+					}
+				}
+				.rating_foot{
+					padding:0 10px;
+					background: #f2f2f2;
+					height:40px;
+					label{
+						display: inline-block;
+						width:135px;
+						.fl;
+						font-weight: normal;
+						color:#666;
+						margin-top:10px;
+						margin-right:2px;
+					}
+					span{
+						display: inline-block;
+						width:63px;
+						text-align: center;
+						margin-top:3px;
+						small{
+							display: block;
+							font-size:12px;
+							text-align: center;
+						}
+					}
+				}
+			}
+		}
+		.appra_box{
+			.appra_navbox{
+				border-bottom:1px solid #ddd;
+				.appra_nav{
+					width:400px;
+					.fl;
+					li{
+						display: inline-block;
+						height:40px;
+						line-height: 40px;
+						margin-right:10px;
+						padding:0 10px;
+						font-size: 14px;
+						cursor: pointer;
+						&.active{
+							border-bottom:2px solid @basecolor;
+						}
+					}
+				}
+				.nav_right{
+					width:245px;
+					.fr;
+					text-align: right;
+					span{
+						display: inline-block;
+						margin:10px 15px 0 15px;
+						.appra_status{
 							display: inline-block;
 							width:20px;
 							height:20px;
 							overflow: hidden;
+							margin-right:5px;
 						}
-						span.good{
+						.good{
 							background: url(images/apprabg.png) no-repeat left bottom;
 						}
-						span.medium{
+						.medium{
 							background: url(images/apprabg.png) no-repeat left center;
 						}
-						span.poor{
+						.poor{
 							background: url(images/apprabg.png) no-repeat left top;
 						}
 					}
+					
 				}
-
-				.replyShow{
-					padding:10px 0;
-					form{
+				
+			}
+			.appra_itemcon{
+				margin-top:10px;
+				.appra_items{
+					table{
 						width:100%;
-					}
-					textarea{
-						max-width: 100%;
-					}
-					.btn{
-						margin:20px 0;
-						.fr;
+						th{
+							background: #f2f2f2;
+							height:40px;
+						}
+						td{
+							padding:10px 15px;
+							.appra_status{
+								display: inline-block;
+								width:20px;
+								height:20px;
+								overflow: hidden;
+								.fl;
+							}
+							.good{
+								background: url(images/apprabg.png) no-repeat left bottom;
+							}
+							.medium{
+								background: url(images/apprabg.png) no-repeat left center;
+							}
+							.poor{
+								background: url(images/apprabg.png) no-repeat left top;
+							}
+							ul.plcon{
+								width:320px;
+								.fr;
+								li{
+									margin:5px 0;
+									p{
+										margin-bottom:5px;
+										span{
+											color:#999;
+											margin-right:5px;
+										}
+									}
+									span.pl_time{
+										color:#999;
+									}
+								}
+							}
+						}
 					}
 				}
+			}
+		}
+
+		.reply_form{
+
+			textarea{
+				width:100%;
+				max-width:100%;
+				min-height: 100px;
+				border:1px solid #ddd;
 			}
 		}
 
@@ -2372,9 +2494,104 @@ ul,ol{
 	}
 }
 
+//商品评价
+.comment-container{
+	.pl_form{
+		.form-group{
+			.star_group{
+				display: inline-block;
+				margin-top:5px;
+				i{
+					font-size: 22px;
+					color:#ddd;
+					cursor: pointer;
+					&.bright{
+						color:#ffc73f;
+					}
+					&.gray{
+						color:#ddd;
+					}
+				}
+			}
+			.pl_num{
+				
+				margin-left:10px;
+				color:#666;
+				small{
+					padding-left:3px;
+					color:#666;
+				}
+			}
+			.comment-image{
+				margin-bottom:5px;
+			}
+		}
+		.goods_item{
+			.img-thumbnail{
+				width:80px;
+				height:80px;
+				.fl;
+			}
+			.goods_info{
+				.fl;
+				margin-left:15px;
+				width:180px;
+				.text-muted{
+					display: inline-block;
+					max-height:30px;
+					line-height: 15px;
+					overflow-y: hidden;
+					margin-top:5px;
+				}
+				.g_price{
+					display: block;
+					margin:5px 0;
+				}
+			}
+		}
+		
+	}
+}
 
 
+//我的收获地址
+.receiver_addrpage{
+	.list-group{
+		.list-group-item{
+			padding:0;
+			&:hover{
+				background: #f2f2f2;
+			}
+			dl{
+				margin:15px 0;
+				dt{
+					font-size: 14px;
+					font-weight: normal;
+					color:#000;
+				}
+				dd{
+					color:#666;
+					.label-danger{
+						padding:2px 10px;
+						font-size: 12px;
+					}
+				}
+			}
+			.addr_ctr{
+				display:table-cell;
+				text-align: center;
+				vertical-align: middle;
+				padding:0;
+				margin:15px 0;
+	
+				btn{
+					margin:3px auto;
+				}
+			}
+		}
+	}
 
+}
 
 
 

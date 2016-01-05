@@ -72,7 +72,7 @@ $(function() {
 
     tabslider('.goods-listbox .tab_toggle span', '.list_maincon > div', 'btn-danger'); //购买过的店铺
 
-
+    tabslider('.appra_box .appra_nav li', '.appra_itemcon > div.appra_items', 'active'); //我的评价
 
 
 
@@ -189,3 +189,51 @@ $(function() {
 
 
 })
+
+
+
+/**
+ * 星星等级评分
+ */
+;(function($){
+    $.fn.starRating = function(options){
+        var defaults = {
+            //各种参数默认值
+            numbox:'span',
+            childElem:'i',
+            brightClass:'bright',
+            grayClass:'gray'
+        }
+
+        var options = $.extend({},defaults,options);
+
+        this.each(function(index, el) {
+
+            var _this = $(this);   
+            var num = 5;
+            _this.find(options.childElem).bind('click',function(){
+                //承载星星的dom元素
+                var star = _this.find(options.childElem); 
+                //星星的个数  
+                var starLen = star.size(); 
+                //被点击星星的索引    
+                var selfIndex = star.index(this);
+                //星星是否选中  
+                var status = $(this).hasClass(options.brightClass);
+                //选中星的个数 
+                var selectStar;
+
+                star.removeClass(options.brightClass);
+                for(var i = 0; i <= selfIndex; i++){
+                    star.eq(i).addClass(options.brightClass);
+                    selectStar = _this.find(options.childElem+'.'+options.brightClass).size();
+                    
+                }
+                num = selectStar;
+                $(this).parent().siblings(options.numbox).text(num);
+            });
+        });
+
+        return this;
+    }
+})(jQuery);

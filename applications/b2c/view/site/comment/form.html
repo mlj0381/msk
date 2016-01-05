@@ -1,14 +1,94 @@
 <div class="comment-container">
-    <!-- <ol class="breadcrumb">
+    <ol class="breadcrumb">
+      <li>您当前的位置：</li>
       <li><a href="<{link app=site ctl=index}>">首页</a></li>
       <li><a href="<{link app=b2c ctl=site_member}>">会员中心</a></li>
       <li><a href="<{link app=b2c ctl=site_member act=orders}>">我的订单</a></li>
       <li class="active">评价 #<{$order.order_id}> 商品</li>
-    </ol> -->
+    </ol>
     <div class="page-header">
       <h1>商品评价 <small>Comment</small></h1>
     </div>
-    <form class="form-horizontal" target="comment_frame" enctype="multipart/form-data" action="<{link app=b2c ctl=site_comment act=save args0=comment}>" method="post" id="comment_form">
+    <form class="form-horizontal pl_form">
+        <div class="form-group">
+            <label class="col-xs-2 control-label">商品与描述相符度：</label>
+            <div class="col-xs-5 ">
+                <span class="star_group">
+                    <i class="icon-star bright"></i>
+                    <i class="icon-star bright"></i>
+                    <i class="icon-star bright"></i>
+                    <i class="icon-star bright"></i>
+                    <i class="icon-star bright"></i>
+                </span>
+                <span class="pl_num">5</span>分
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-xs-2 control-label">卖家服务态度：</label>
+            <div class="col-xs-5 ">
+                <span class="star_group">
+                    <i class="icon-star bright"></i>
+                    <i class="icon-star bright"></i>
+                    <i class="icon-star bright"></i>
+                    <i class="icon-star bright"></i>
+                    <i class="icon-star bright"></i>
+                </span>
+                <span class="pl_num">5</span>分
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-xs-2 control-label">发货与物流：</label>
+            <div class="col-xs-5 ">
+                <span class="star_group">
+                    <i class="icon-star bright"></i>
+                    <i class="icon-star bright"></i>
+                    <i class="icon-star bright"></i>
+                    <i class="icon-star bright"></i>
+                    <i class="icon-star bright"></i>
+                </span>
+                <span class="pl_num">5</span>分
+            </div>
+        </div>
+        <div class="form-group">
+            <label  class="col-xs-2 control-label">说两句：</label>
+            <div class="col-xs-5">
+                <input type="hidden" name="store_id" value="<{$order.store_info.store_id}>">
+                <textarea class="form-control"  name="comment[word][<{$item.goods_id}>][<{$item.product_id}>]" rows="2"></textarea>
+            </div>
+        </div>
+        <div class="form-group">
+            <label  class="col-xs-2 control-label">晒一晒：</label>
+            <div class="col-xs-5">
+                <input type="file" class="comment-image"  name="comment[{$item.product_id}][]">
+                <span class="help-block">最多上传5张,每张大小不能超过<span class="text-danger"><{$env.conf.b2c.comment_image_size}>MB</span>,支持bmp,gif,jpg,png,jpeg</span>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-xs-5 col-xs-offset-2">
+                <button class="btn btn-md btn-danger">提交评论</button>
+            </div>
+        </div>
+
+        <table class="table">
+            <tr>
+                <td class="col-xs-3>">
+                    <div class="goods_item">
+                        <a href="<{link app=b2c ctl=site_product act=index args0=$item.product_id}>">
+                            <img class="img-thumbnail" src="<{$base_url}>/themes/pc/default/statics/images/bestsellers.jpg" alt="<{$item.name}>" />
+                        </a>
+                        <div class="goods_info">
+                            <a class="text-muted" href="<{link app=b2c ctl=site_product act=index args0=$item.product_id}>">正宗宁夏滩羊肉<{if $item.spec_info}><br><small><{$item.spec_info}></small><{/if}></a>
+                            <span class="g_price"><small>￥</small><{$item.buy_price|cur}> x <{$item.nums}></span>
+                            <div><a href="<{link app=store ctl=site_store act=index args0=$order.store_info.store_id}>">店铺：<{$order.store_info.store_name}></a></div>
+                        </div>
+                    </div>
+                </td>
+                <td class="col-xs-1"></td>
+                <td class="col-xs-8"></td>
+            </tr>
+        </table>
+    </form>
+    <!-- <form class="form-horizontal" target="comment_frame" enctype="multipart/form-data" action="<{link app=b2c ctl=site_comment act=save args0=comment}>" method="post" id="comment_form">
         <input type="hidden" name="order_id" value="<{$order.order_id}>">
     <{foreach from=$order.items item=item name=oig}>
         <div class="row <{if $env.foreach.oig.last}>last<{/if}>">
@@ -57,7 +137,7 @@
                                     <{/foreach}>
                                 </div>
                             <{/if}>
-
+    
                             <{foreach from=$i['reply'] item=j}>
                                     <div class="media">
                                         <div class="media-left" style="width:10%;">
@@ -79,12 +159,6 @@
                         </div>
                     </div>
                 <{/foreach}>
-                <!-- <div class="form-group">
-                    <label  class="col-xs-2 control-label">追加评价</label>
-                    <div class="col-xs-10">
-                        <textarea class="form-control" required="true" name="comment[word][<{$item.goods_id}>][<{$item.product_id}>]" rows="2"></textarea>
-                    </div>
-                </div> -->
                 <{else}>
                 <div class="form-group">
                     <label  class="col-xs-2 control-label">满意度</label>
@@ -113,7 +187,7 @@
                     <label  class="col-xs-2 control-label">晒一晒</label>
                     <div class="col-xs-10">
                         <{input type="file" class="comment-image"  name="comment[{$item.product_id}][]"}>
-                        <!-- <input type="file" class="comment-image"  name="comment[{$item.product_id}][]"> -->
+                        <input type="file" class="comment-image"  name="comment[{$item.product_id}][]">
                         <span class="help-block">最多上传5张,每张大小不能超过<span class="text-danger"><{$env.conf.b2c.comment_image_size}>MB</span>,支持bmp,gif,jpg,png,jpeg</span>
                     </div>
                 </div>
@@ -128,7 +202,7 @@
           <button type="submit" class="btn btn-lg btn-primary">提交评价</button>
         </div>
     </div>
-    </form>
+    </form> -->
 </div>
 
 <iframe src="about:blank" class="hide" name="comment_frame"></iframe>
@@ -186,4 +260,64 @@ $('#comment_form').on('submit',function(){
 
     });
 });
+</script>
+
+
+<script type="text/javascript">
+/**
+ * 商品星星评分
+ */
+;(function($){
+    $.fn.starRating = function(options){
+        var defaults = {
+            //各种参数默认值
+            numbox:'span',
+            childElem:'i',
+            brightClass:'bright',
+            grayClass:'gray'
+        }
+
+        var options = $.extend({},defaults,options);
+
+        this.each(function(index, el) {
+
+            var _this = $(this);   
+            var num = 5;
+            _this.find(options.childElem).bind('click',function(){
+                //承载星星的dom元素
+                var star = _this.find(options.childElem); 
+                //星星的个数  
+                var starLen = star.size(); 
+                //被点击星星的索引    
+                var selfIndex = star.index(this);
+                //星星是否选中  
+                var status = $(this).hasClass(options.brightClass);
+                //选中星的个数 
+                var selectStar;
+
+                star.removeClass(options.brightClass);
+                for(var i = 0; i <= selfIndex; i++){
+                    star.eq(i).addClass(options.brightClass);
+                    selectStar = _this.find(options.childElem+'.'+options.brightClass).size();
+                    
+                }
+                num = selectStar;
+                $(this).parent().siblings(options.numbox).text(num);
+            });
+        });
+
+        return this;
+    }
+})(jQuery);
+
+    
+</script>
+
+<script type="text/javascript">
+    $(function(){
+        $('.star_group').starRating({
+            brightClass:'bright',
+            numbox:'.pl_num'
+        })
+    })
 </script>
