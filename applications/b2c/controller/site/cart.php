@@ -70,11 +70,18 @@ class b2c_ctl_site_cart extends b2c_frontpage {
             //迷你购物车使用
             $this->splash('success', '', $result);
         }
-        $store_obj = vmc::singleton('store_store_object');
-        foreach ($result['objects']['goods'] as $key => $value) {
-            $result['objects']['goods'][$key]['store_info'] = $store_obj->store_info($value['store_id']);
+        
+        //添加大促会，神龙客商品
+        $cart_all = array(
+            'beauty' => $result,//美侍客
+            'big' => array(),//大促会
+            'god' => array(),//神龙客
+        );
+        foreach($cart_all as $value){
+            $cart_all['cart_count'] += (int)$value['goods_count'];
+            $cart_all['finally_cart_amount'] += (int)$value['finally_cart_amount'];
         }
-        $this->pagedata['cart_result'] = $result;
+        $this->pagedata['cart_all'] = $cart_all;
         $this->set_tmpl('cart');
         $this->page('site/cart/index.html');
     }

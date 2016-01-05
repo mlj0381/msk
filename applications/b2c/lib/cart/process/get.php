@@ -32,7 +32,6 @@ class b2c_cart_process_get implements b2c_interface_cart_process {
         if(empty($cart_result)) {
             $this->_cart_init($filter,$cart_result,$config);
         }
-
         if(!$filter['is_fastbuy'] && $filter['disabled_ident']){
             //非立即购买 & 有禁用项
             foreach($cart_result['objects']['goods'] as $k=>$item){

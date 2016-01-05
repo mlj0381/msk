@@ -95,7 +95,7 @@ class seller_ctl_site_passport extends seller_frontpage
     //注册页面
     public function signup($step)
     {
-        $this->title = '注册成为会员';
+        $this->title = '注册成为商家';
         $this->set_tmpl('passport');
         //检查是否登录，如果已登录则直接跳转到会员中心
         //$this->check_login();

@@ -336,48 +336,10 @@ class b2c_ctl_site_member extends b2c_frontpage
     public function orders($status = 'all', $page = 1)
     {
         $limit = 5;
-        $status_filter = array(
-            'all' => array(
-                'member_id' => $this->member['member_id'],
-            ) ,
-            's1' => array(
-                'member_id' => $this->member['member_id'],
-                'status' => 'active',
-                'pay_status' => array(
-                    '0',
-                    '3',
-                    '5',
-                ),
-            ) ,
-            's2' => array(
-                'member_id' => $this->member['member_id'],
-                'status' => 'active',
-                'pay_status' => array(
-                    '1',
-                    '2',
-                ) ,
-                'ship_status|notin' => array(
-                    '1',
-                ),
-            ) ,
-            's3' => array(
-                'member_id' => $this->member['member_id'],
-                'status' => 'active',
-                'ship_status' => array(
-                    '1',
-                    '2',
-                ),
-            ) ,
-            's4' => array(
-                'member_id' => $this->member['member_id'],
-                'status|notin' => array('dead'),
-                'ship_status|notin'=>array(
-                    '0',
-                ),
-            ),
-        );
-        if ($filter = $status_filter[$status]) {
-        } else {
+        $status_filter = $this->filter();
+        $this->pagedata['status'] = $status;
+        $filter = $status_filter[$status];
+        if (!$filter) {
             $filter = array(
                 'member_id' => $this->member['member_id'],
             );
@@ -386,8 +348,11 @@ class b2c_ctl_site_member extends b2c_frontpage
         $mdl_order_items = $this->app->model('order_items');
         $order_list = $mdl_order->getList('*', $filter, ($page - 1) * $limit, $limit);
         foreach ($order_list as $key => $value) {
+            //所属店铺信息
             $store_info = vmc::singleton('store_store_object')->store_info($value['store_id'], 'store_id, store_name');
             $order_list[$key]['store_name'] = $store_info['store_name'];
+            //查询订单是否评价
+            $order_list[$key]['comment'] = $this->app->model('member_comment')->getRow('comment_id', array('order_id' => $value['order_id']));
         }
         $oids = array_keys(utils::array_change_key($order_list, 'order_id'));
         $order_items = $mdl_order_items->getList('*', array(
@@ -418,6 +383,62 @@ class b2c_ctl_site_member extends b2c_frontpage
         $this->output();
     }
 
+    //会员订单筛选条组合
+    public function filter(){
+        return array(
+            'all' => array(
+                'member_id' => $this->member['member_id'],
+            ) ,
+            's1' => array(
+                'member_id' => $this->member['member_id'],
+                'status' => 'active',
+                'pay_status' => array(
+                    '0',
+                    '3',
+                    '5',
+                ),
+            ) ,
+            's2' => array(
+                'member_id' => $this->member['member_id'],
+                'status' => 'active',
+                'pay_status' => array(
+                    '1',
+                    '2',
+                ) ,
+                'ship_status|notin' => array(
+                    '1',
+                ),
+            ) ,
+            's3' => array(
+                'member_id' => $this->member['member_id'],
+                'status' => 'active',
+                'ship_status' => array(
+                    '1',
+                    '2',
+                ),
+                'confirm' => 'N'
+            ) ,
+            's4' => array(
+                'member_id' => $this->member['member_id'],
+                'status' => 'active',
+                'confirm'=> 'Y',
+            ),
+            's5' => array(
+                'member_id' => $this->member['member_id'],
+                'status' => 'active',
+                'confirm'=> 'Y',
+            ),
+            's6' => array(
+                'member_id' => $this->member['member_id'],
+                'status' => 'dead',
+            ),
+            's7' => array(
+                'member_id' => $this->member['member_id'],
+                'status' => 'del',
+            ),
+        );
+    }
+    
     //购买过的店铺
     public function buy_store(){
         $this->output();

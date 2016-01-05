@@ -161,4 +161,10 @@ class b2c_view_widget {
         return $render->fetch('widget/floor.test.html');
     }
 
+    //商家推荐、最近浏览、热卖单品、猜你喜欢
+    public function function_WIDGET_B2C_GOOD_HOT($params, &$smarty){
+        $render = new base_render(app::get($params['app']));
+        return $render->fetch('widget/hot.goods.html');
+    }
+    
 }

@@ -14,7 +14,7 @@
                     <!-- 登陆后跳转地址 -->
                     <input type="hidden" name="forward" value="<{$forward}>">
                     <div class="reg_link">
-                           <a href="#">立即注册 <i class="icon-circle-arrow-right"></i></a>                      
+                           <a href="<{link app=b2c ctl=site_passport act=signup}>">立即注册 <i class="icon-circle-arrow-right"></i></a>                      
                     </div>
                     <div class="form-group">
                         <div class="col-md-12">
@@ -65,11 +65,11 @@
 
                 </form>
 
-                <form id="member_login_form" class="form-horizontal hidden" action="<{link app=b2c ctl=site_passport act=post_login}>" method="post">
+                <form id="member_login_form" class="form-horizontal hidden" action="<{link app=seller ctl=site_passport act=post_login}>" method="post">
                     <!-- 登陆后跳转地址 -->
                     <input type="hidden" name="forward" value="<{$forward}>">
                     <div class="reg_link">
-                           <a href="#">立即注册 <i class="icon-circle-arrow-right"></i></a>                      
+                        <a href="<{link app=seller ctl=site_passport act=signup}>">立即注册 <i class="icon-circle-arrow-right"></i></a>                      
                     </div>
                     <div class="form-group">
                         <div class="col-md-12">
@@ -104,12 +104,12 @@
                         <div class="col-md-6">
                             <div class="checkbox">
                                 <label>
-                                    <input type="checkbox" class="autologin-checkbox"> 自动登录
+                                    <input type="checkbox" name="auto" class="autologin-checkbox"> 自动登录
                                 </label>
                             </div>
                         </div>
                         <div class="col-md-6 text-right">
-                            <a href="<{link app=b2c ctl=site_passport act=reset_password}>">忘记密码?</a>
+                            <a href="<{link app=seller ctl=site_passport act=reset_password}>">忘记密码?</a>
                         </div>
                     </div>
                     <div class="form-group">
