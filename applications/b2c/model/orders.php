@@ -258,4 +258,15 @@ class b2c_mdl_orders extends dbeav_model {
         return $dorder;
     }
 
+    //订单各状态数量统计
+    public function type_count(){
+        $member_id = vmc::singleton('b2c_user_object')->get_member_id(); 
+        $return = array();
+        $return['no_pay'] = $this->getRow('count(order_id) as no_pay', array('member_id' => $member_id, 'pay_status' => '0'));
+        $return['no_ship'] = $this->getRow('count(order_id) as no_ship', array('member_id' => $member_id, 'ship_status' => '0'));
+        $return['confirm'] = $this->getRow('count(order_id) as confirm', array('member_id' => $member_id, 'confirm' => 'N'));
+        $return['comment'] = $this->getRow('count(order_id) as comment', array('member_id' => $member_id, 'comment' => 'false'));
+        return $return;
+    }
+    
 }

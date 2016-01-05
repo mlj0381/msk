@@ -248,10 +248,11 @@ class b2c_ctl_site_order extends b2c_frontpage
 
     //取消订单
     public function abolish(){
+        
         if($_POST){
             $redirect = $this->gen_url(array('app' => 'b2c', 'ctl' => 'site_member', 'act' => 'orders', 'args0' => 's1'));
             $data = $_POST;
-            if(!$this->mOrders->save($data)){
+            if(!$this->mOrders->save($data)){die('11');
                 $this->splash('error', $redirect, '取消失败');
             }
             $this->splash('success', $redirect, '取消成功');

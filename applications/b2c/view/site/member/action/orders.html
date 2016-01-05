@@ -192,7 +192,7 @@
                         <{else}>
                         <{if $order.status=='active' && $order.is_cod!='Y' && $order.pay_status|in_array:$status_map.s1.pay_status}>
                         <a href="<{link app=b2c ctl=site_checkout act=payment args0=$order.order_id}>" class="btn_link btn-block">订单付款</a>
-                        <a class="btn_link btn-block"  data-orderid="<{$order.order_id}>" data-toggle="modal" data-target="#cancel_order" href="#">取消订单</a>
+                        <a class="btn_link btn-block abolish"  data-orderid="<{$order.order_id}>" data-toggle="modal" data-target="#cancel_order" href="#">取消订单</a>
                         <{/if}>
                         <a href="<{link app=b2c ctl=site_order act=detail args0=$order.order_id}>" class="btn_link btn-block">订单详情</a>
                         <!--                                <{*if $order.ship_status|in_array:$status_map.s3.ship_status*}>-->
@@ -241,7 +241,7 @@
                         <label class="col-xs-4 control-label">请选择取消订单的理由：</label>
                         <div class="col-xs-6">
                             <input type="hidden" name="order_id" value=""/>
-                            <input type="hidden" name="pay_status" value="-1"/>
+                            <input type="hidden" name="status" value="dead"/>
                             <select class="form-control" name="abolish_why" >
                                 <option value='-1'>请选择关闭理由</option>
                                 <option value='0'>我不想买了</option>
@@ -261,7 +261,7 @@
             </div>
         </div>
     </div>
-</from>
+</form>
 <script type="text/javascript">
     $(function (e) {
         $('.abolish').click(function () {
