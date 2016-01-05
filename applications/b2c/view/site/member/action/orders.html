@@ -96,11 +96,13 @@
                         <{/if}>
                     </ul>
                 </th>
+
             </tr>
         </thead>
         <tbody>
             <tr>
-                <td width="76%">
+                <td>
+                    <div style="width:704px">
                     <{foreach from=$order_items_group[$order.order_id] item=item name=oig}>
                     <div class="row mo-item <{if $env.foreach.oig.last}>last<{/if}>">
                         <div class="col-xs-2">
@@ -153,6 +155,7 @@
                         </div>
                     </div>
                     <{/foreach}>
+                    </div>
                 </td>
 
 
