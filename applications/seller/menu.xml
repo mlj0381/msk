@@ -14,7 +14,6 @@
         </menugroup>
         <menugroup name="交易管理">
             <menu app='seller' controller='site_order' action='index' display='true' order="60">已卖出的商品</menu>
-            <menu app='seller' controller='site_logistics' action='index' display='true' order="60">评价管理</menu>
             <menu app='seller' controller='site_store' action='appraisal' display='true' order="60">评价管理</menu>
         </menugroup>
         <menugroup name="物流管理">

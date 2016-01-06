@@ -92,7 +92,7 @@
                         <{if $status eq 's7'}>
                         <li style="float: right; margin-top:-20px;">共有(<{$order_items_group[$order.order_id]|order_count}>)商品</li>
                         <{else}>
-                        <li style="float: right; margin-top:-20px;"><a class="confirm" href="javascript:;" data-url="<{link app=b2c ctl=site_order act=del args0=$order.order_id}>">删除</a></li>
+                       <!--  <li style="float: right; margin-top:-20px;"><a class="confirm" href="javascript:;" data-url="<{link app=b2c ctl=site_order act=del args0=$order.order_id}>">删除</a></li> -->
                         <{/if}>
                     </ul>
                 </th>

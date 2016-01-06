@@ -2474,7 +2474,9 @@ ol {
 }
 .request_list_page table th {
   background: #f2f2f2;
+  text-align: center;
 }
 .request_list_page table td {
   background: #fff;
+  text-align: center;
 }
