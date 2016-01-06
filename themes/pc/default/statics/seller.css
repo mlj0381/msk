@@ -1,0 +1,32 @@
+.navbar-inverse {
+  background-color: #fff;
+  border-bottom: 1px solid #080808;
+  border-top: medium none;
+  border-right: medium none;
+  min-height: 36px;
+}
+.navbar-inverse .nav li {
+  color: #000333;
+  font-size: 16px;
+  cursor: pointer;
+  height: 36px;
+  width: 104px;
+  border-left: 1px solid #080808;
+  border-top: 1px solid #080808;
+}
+.navbar-inverse .nav li a {
+  padding: 0px;
+  text-align: center;
+  line-height: 36px;
+  color: #000333;
+}
+.navbar-inverse .nav li a:hover {
+  color: #080808;
+}
+.navbar-inverse .nav li a.active {
+  background-color: #ff0000;
+  color: #fff;
+}
+.navbar-inverse .nav li:last-child {
+  border-right: 1px solid #080808;
+}
