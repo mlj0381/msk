@@ -116,7 +116,7 @@ $db['orders'] = array(
             'label' => ('发货状态') ,
             'filtertype' => 'normal',
         ) ,
-        'comment' => array(
+        'comment_type' => array(
             'type' => 'bool',
             'default' => 'false',
             'label' => ('评价状态'),

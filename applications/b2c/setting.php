@@ -115,4 +115,24 @@ $setting = array(
         'default'=>get_cfg_var('upload_max_filesize')?intval(get_cfg_var('upload_max_filesize')):2,
         'helpinfo'=>(get_cfg_var('upload_max_filesize') ? '<span class="text-danger">服务器当前限制'.get_cfg_var('upload_max_filesize').'</span>' : '')
     ) ,
+    'main_products' => array(
+            'default' => array(
+                0 => '常规鸡鸭产品',
+                1 => '卤味熟食',
+                2 => '猪产品',
+                3 => '牛羊产品',
+                4 => '海产品(含冷冻河产品)',
+                5 => '丸肠水发品',
+                6 => '腌腊产品',
+                7 => '冰品(指冰鲜产品)',
+                8 => '速冻点心与速冻蔬菜',
+                9 => '方便菜',
+                10 => '粮油产品',
+                11 => '调味品',
+                12 => '干货产品',
+                13 => '小菜(指腌菜、咸菜及其加工品)',
+                14 => '儿童食品(包括饼干、膨化食品等)',
+                15 => '调理水煮包与方便菜',
+            ),
+        ),
 );

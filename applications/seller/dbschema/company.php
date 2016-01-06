@@ -1,4 +1,5 @@
 <?php
+
 // +----------------------------------------------------------------------
 // | VMCSHOP [V M-Commerce Shop]
 // +----------------------------------------------------------------------
@@ -19,7 +20,7 @@ $db['company'] = array(
             'pkey' => true,
             'extra' => 'auto_increment',
             'in_list' => true,
-			'comment' => '公司ID',
+            'comment' => '公司ID',
         ),
         'company_contacts' => array(
             'type' => 'varchar(100)',
@@ -35,23 +36,23 @@ $db['company'] = array(
             'in_list' => true,
             'comment' => '紧急联系人电话',
         ),
-		'company_name' => array(
+        'company_name' => array(
             'type' => 'varchar(100)',
             'required' => true,
             'label' => '公司名称',
             'in_list' => true,
-			'default_in_list' => true,
-			'comment' => '公司名称',
+            'default_in_list' => true,
+            'comment' => '公司名称',
         ),
-		'company_addr' => array(
+        'company_addr' => array(
             'type' => 'varchar(200)',
             'required' => true,
             'label' => '公司地址',
             'in_list' => false,
-			'comment' => '公司地址',
+            'comment' => '公司地址',
         ),
-		'company_area' => array(
-            'label' => ('地区') ,
+        'company_area' => array(
+            'label' => ('地区'),
             'type' => 'region',
             'sdfpath' => 'contact/area',
             'filtertype' => 'yes',
@@ -60,65 +61,65 @@ $db['company'] = array(
             'default_in_list' => true,
         ),
         'company_product' => array(
-            'label' => ('经营产品') ,
+            'label' => ('经营产品'),
             'type' => array(
-                1 => ('鸡肉类') ,
-                2 => ('猪肉类') ,
-                3 => ('牛肉类') ,
-				4 => ('其他') ,
-            ) ,
+                1 => ('鸡肉类'),
+                2 => ('猪肉类'),
+                3 => ('牛肉类'),
+                4 => ('其他'),
+            ),
             'filtertype' => 'yes',
             'filterdefault' => 'true',
             'in_list' => false,
             'default_in_list' => false,
-			'comment' => '经营产品',
+            'comment' => '经营产品',
         ),
-		'company_prototype' => array(
-            'label' => ('公司性质') ,
+        'company_prototype' => array(
+            'label' => ('公司性质'),
             'type' => array(
-                1 => ('政府机关/事业单位') ,
-                2 => ('国营') ,
-                3 => ('私营') ,
-                4 => ('中外合资') ,
-                5 => ('外资') ,
-				6 => ('其他') ,
-            ) ,
+                1 => ('政府机关/事业单位'),
+                2 => ('国营'),
+                3 => ('私营'),
+                4 => ('中外合资'),
+                5 => ('外资'),
+                6 => ('其他'),
+            ),
             'filtertype' => 'yes',
             'filterdefault' => 'true',
             'in_list' => true,
             'default_in_list' => false,
-			'comment' => '公司性质',
+            'comment' => '公司性质',
         ),
         // 法人
         'legal_person' => array(
             'type' => 'varchar(50)',
             'default' => '',
             'label' => '法人',
-			'comment' => '公司名称',
+            'comment' => '公司名称',
         ),
         'legal_mobile' => array(
             'type' => 'varchar(50)',
             'default' => '',
             'label' => '手机',
-            'comment' => ('手机') ,
-        ) ,
+            'comment' => ('手机'),
+        ),
         'legal_idcard' => array(
             'type' => 'varchar(50)',
             'default' => '',
             'label' => '手机',
-            'comment' => ('身份证') ,
-        ) ,
+            'comment' => ('身份证'),
+        ),
         'legal_idcard_image' => array(
             'type' => 'serialize',
             'default' => '',
             'label' => '身份证',
-            'comment' => ('身份证') ,
-        ) ,
+            'comment' => ('身份证'),
+        ),
         // 营业执照
         'business_license_number' => array(
             'type' => 'varchar(200)',
             'label' => '营业执照注册号',
-			      'comment' => '营业执照注册号',
+            'comment' => '营业执照注册号',
         ),
         'business_license_area' => array(
             'type' => 'region',
@@ -137,20 +138,20 @@ $db['company'] = array(
             'type' => 'serialize',
             'default' => '',
             'label' => '营业执照图片',
-            'comment' => ('营业执照图片') ,
+            'comment' => ('营业执照图片'),
         ),
         // 组织机构
         'organization_number' => array(
             'type' => 'varchar(200)',
             'default' => '',
             'label' => '组织机构代码',
-			'comment' => '组织机构代码',
+            'comment' => '组织机构代码',
         ),
         'organization_outtime' => array(
             'type' => 'time',
             'default' => 0,
-            'comment' => ('代码有效期') ,
-            'label' => ('代码有效期') ,
+            'comment' => ('代码有效期'),
+            'label' => ('代码有效期'),
         ),
         'organization_image' => array(
             'type' => 'serialize',
@@ -163,13 +164,13 @@ $db['company'] = array(
             'type' => 'varchar(200)',
             'default' => '',
             'label' => '纳税人识别号',
-			'comment' => '纳税人识别号',
+            'comment' => '纳税人识别号',
         ),
         'tax_number' => array(
             'type' => 'varchar(200)',
             'default' => '',
             'label' => '税务登记证号',
-			'comment' => '税务登记证号',
+            'comment' => '税务登记证号',
         ),
         'tax_image' => array(
             'type' => 'serialize',
@@ -182,18 +183,18 @@ $db['company'] = array(
             'type' => 'varchar(200)',
             'default' => '',
             'label' => '银行开户名',
-			'comment' => '银行开户名',
+            'comment' => '银行开户名',
         ),
         'bank_account_number' => array(
             'type' => 'varchar(200)',
             'label' => '银行开户账号',
-			'comment' => '银行开户账号',
+            'comment' => '银行开户账号',
         ),
         'bank_name' => array(
             'type' => 'varchar(200)',
             'default' => '',
             'label' => '开户行名称',
-			'comment' => '开户行名称',
+            'comment' => '开户行名称',
         ),
         'bank_area' => array(
             'type' => 'region',
@@ -217,13 +218,13 @@ $db['company'] = array(
         'seller_id' => array(
             'type' => 'number',
             'required' => true,
-			         'default' => 0,
+            'default' => 0,
             'label' => '商家',
-			'searchtype' => 'has',
+            'searchtype' => 'has',
             'in_list' => true,
             'default_in_list' => true,
             'order' => '1',
-			'comment' => '商家',
+            'comment' => '商家',
         ),
         'status' => array(
             'type' => array(
@@ -237,15 +238,15 @@ $db['company'] = array(
             'in_list' => true,
             'default_in_list' => true,
         ),
-	),
-	'index' => array(
-	'ind_name' => array(
-		'columns' => array(
-			0 => 'company_name',
-		) ,
-		'prefix' => 'unique',
-	) ,
-    ) ,
+    ),
+    'index' => array(
+        'ind_name' => array(
+            'columns' => array(
+                0 => 'company_name',
+            ),
+            'prefix' => 'unique',
+        ),
+    ),
     'version' => '$Rev$',
-    'comment' => '公司表' ,
+    'comment' => '公司表',
 );

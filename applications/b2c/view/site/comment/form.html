@@ -1,15 +1,16 @@
 <div class="comment-container">
     <ol class="breadcrumb">
-      <li>您当前的位置：</li>
-      <li><a href="<{link app=site ctl=index}>">首页</a></li>
-      <li><a href="<{link app=b2c ctl=site_member}>">会员中心</a></li>
-      <li><a href="<{link app=b2c ctl=site_member act=orders}>">我的订单</a></li>
-      <li class="active">评价 #<{$order.order_id}> 商品</li>
+        <li>您当前的位置：</li>
+        <li><a href="<{link app=site ctl=index}>">首页</a></li>
+        <li><a href="<{link app=b2c ctl=site_member}>">会员中心</a></li>
+        <li><a href="<{link app=b2c ctl=site_member act=orders}>">我的订单</a></li>
+        <li class="active">评价 #<{$order.order_id}> 商品</li>
     </ol>
     <div class="page-header">
-      <h1>商品评价 <small>Comment</small></h1>
+        <h1>商品评价 <small>Comment</small></h1>
     </div>
-    <form class="form-horizontal pl_form">
+    <form class="form-horizontal pl_form" action="<{link app=b2c ctl=site_comment act=save args0=comment}>" method="post" >
+        <input type="hidden" name="order_id" value="<{$order.order_id}>">
         <div class="form-group">
             <label class="col-xs-2 control-label">商品与描述相符度：</label>
             <div class="col-xs-5 ">
@@ -21,6 +22,7 @@
                     <i class="icon-star bright"></i>
                 </span>
                 <span class="pl_num">5</span>分
+                <input type="hidden" name="serve" value="5"/>
             </div>
         </div>
         <div class="form-group">
@@ -34,6 +36,7 @@
                     <i class="icon-star bright"></i>
                 </span>
                 <span class="pl_num">5</span>分
+                <input type="hidden" name="attitude" value="5"/>
             </div>
         </div>
         <div class="form-group">
@@ -47,6 +50,7 @@
                     <i class="icon-star bright"></i>
                 </span>
                 <span class="pl_num">5</span>分
+                <input type="hidden" name="carriage" value="5"/>
             </div>
         </div>
         <div class="form-group">
@@ -59,13 +63,15 @@
         <div class="form-group">
             <label  class="col-xs-2 control-label">晒一晒：</label>
             <div class="col-xs-5">
-                <input type="file" class="comment-image"  name="comment[{$item.product_id}][]">
+<!--                <input type="file" class="comment-image"  name="comment[{$item.product_id}][]">-->
+<input type="hidden" name="ad_content[image][]" value="<{}>"/>
+                <input type="file" data-url="<{link app=image ctl=site_upload act=upload}>" accept="image/*" /><span class="hide">上传成功</span>
                 <span class="help-block">最多上传5张,每张大小不能超过<span class="text-danger"><{$env.conf.b2c.comment_image_size}>MB</span>,支持bmp,gif,jpg,png,jpeg</span>
             </div>
         </div>
         <div class="form-group">
             <div class="col-xs-5 col-xs-offset-2">
-                <button class="btn btn-md btn-danger">提交评论</button>
+                <button class="btn btn-md btn-danger" type="submit">提交评论</button>
             </div>
         </div>
 
@@ -208,116 +214,135 @@
 <iframe src="about:blank" class="hide" name="comment_frame"></iframe>
 <script type="text/javascript">
 //图片选择输入框自动复制
-$('.comment-image').on('change',function(){
-    $(this).off('change',arguments.callee);
-    var images_length = $('.comment-image').length;
-    if(images_length>4)return;
-    var file_ipt_clone = $($(this).clone());
-    file_ipt_clone.insertAfter($(this));
-    file_ipt_clone.on('change',arguments.callee);
-});
-//提交处理
-$('#comment_form').on('submit',function(){
-    var sub_btn = $(this).find('button[type=submit]');
-    sub_btn.attr('data-loading-text','正在提交...').button('loading');
-    $('iframe[name=comment_frame]').on('load',function(){
-        $(this).off('load',arguments.callee);
-        sub_btn.button('reset');
-        try{
-            var response = $(this.contentWindow.document.body.innerHTML).text();
-            response = $.parseJSON(response);
-        }catch(e){
-            try{
-                var response = this.contentWindow.document.body.innerHTML;
-                    response = $.parseJSON(response);
-            }catch(e){
-
-            }
-        }
-        if(typeof(response)!='object'){
-            alert('提交失败!请稍后重试');
-            return ;
-        }
-        if('fipt_idx' in response){
-            //上传错误
-            var error_info = $('<span class="span-info dropup text-danger"><span class="caret"></span>'+response.error+'</span>'),ipt = $('.comment-image').eq(response.fipt_idx);
-            error_info.insertAfter(ipt);
-            ipt.focus();
-            return setTimeout(function(){
-                error_info.fadeOut(function(){
-                    error_info.remove();
-                });
-            },5000);
-        }
-        if('error' in response){
-            //其他异常
-            alert('提交失败!'+response.error);
+    $('.comment-image').on('change', function () {
+        $(this).off('change', arguments.callee);
+        var images_length = $('.comment-image').length;
+        if (images_length > 4)
             return;
-        }
-        if('success' in response){
-            location.href = location.href;
-        }
-
+        var file_ipt_clone = $($(this).clone());
+        file_ipt_clone.insertAfter($(this));
+        file_ipt_clone.on('change', arguments.callee);
     });
-});
-</script>
+//提交处理
+    $('#comment_form').on('submit', function () {
+        var sub_btn = $(this).find('button[type=submit]');
+        sub_btn.attr('data-loading-text', '正在提交...').button('loading');
+        $('iframe[name=comment_frame]').on('load', function () {
+            $(this).off('load', arguments.callee);
+            sub_btn.button('reset');
+            try {
+                var response = $(this.contentWindow.document.body.innerHTML).text();
+                response = $.parseJSON(response);
+            } catch (e) {
+                try {
+                    var response = this.contentWindow.document.body.innerHTML;
+                    response = $.parseJSON(response);
+                } catch (e) {
 
-
-<script type="text/javascript">
-/**
- * 商品星星评分
- */
-;(function($){
-    $.fn.starRating = function(options){
-        var defaults = {
-            //各种参数默认值
-            numbox:'span',
-            childElem:'i',
-            brightClass:'bright',
-            grayClass:'gray'
-        }
-
-        var options = $.extend({},defaults,options);
-
-        this.each(function(index, el) {
-
-            var _this = $(this);   
-            var num = 5;
-            _this.find(options.childElem).bind('click',function(){
-                //承载星星的dom元素
-                var star = _this.find(options.childElem); 
-                //星星的个数  
-                var starLen = star.size(); 
-                //被点击星星的索引    
-                var selfIndex = star.index(this);
-                //星星是否选中  
-                var status = $(this).hasClass(options.brightClass);
-                //选中星的个数 
-                var selectStar;
-
-                star.removeClass(options.brightClass);
-                for(var i = 0; i <= selfIndex; i++){
-                    star.eq(i).addClass(options.brightClass);
-                    selectStar = _this.find(options.childElem+'.'+options.brightClass).size();
-                    
                 }
-                num = selectStar;
-                $(this).parent().siblings(options.numbox).text(num);
-            });
+            }
+            if (typeof (response) != 'object') {
+                alert('提交失败!请稍后重试');
+                return;
+            }
+            if ('fipt_idx' in response) {
+                //上传错误
+                var error_info = $('<span class="span-info dropup text-danger"><span class="caret"></span>' + response.error + '</span>'), ipt = $('.comment-image').eq(response.fipt_idx);
+                error_info.insertAfter(ipt);
+                ipt.focus();
+                return setTimeout(function () {
+                    error_info.fadeOut(function () {
+                        error_info.remove();
+                    });
+                }, 5000);
+            }
+            if ('error' in response) {
+                //其他异常
+                alert('提交失败!' + response.error);
+                return;
+            }
+            if ('success' in response) {
+                location.href = location.href;
+            }
+
         });
+    });
+</script>
 
-        return this;
-    }
-})(jQuery);
 
-    
+<script type="text/javascript">
+    /**
+     * 商品星星评分
+     */
+    ;
+    (function ($) {
+        $.fn.starRating = function (options) {
+            var defaults = {
+                //各种参数默认值
+                numbox: 'span',
+                childElem: 'i',
+                brightClass: 'bright',
+                grayClass: 'gray'
+            }
+
+            var options = $.extend({}, defaults, options);
+
+            this.each(function (index, el) {
+
+                var _this = $(this);
+                var num = 5;
+                _this.find(options.childElem).bind('click', function () {
+                    //承载星星的dom元素
+                    var star = _this.find(options.childElem);
+                    //星星的个数  
+                    var starLen = star.size();
+                    //被点击星星的索引    
+                    var selfIndex = star.index(this);
+                    //星星是否选中  
+                    var status = $(this).hasClass(options.brightClass);
+                    //选中星的个数 
+                    var selectStar;
+
+                    star.removeClass(options.brightClass);
+                    for (var i = 0; i <= selfIndex; i++) {
+                        star.eq(i).addClass(options.brightClass);
+                        selectStar = _this.find(options.childElem + '.' + options.brightClass).size();
+
+                    }
+                    num = selectStar;
+                    $(this).parent().siblings(options.numbox).text(num);
+                });
+            });
+
+            return this;
+        }
+    })(jQuery);
+
+
 </script>
 
 <script type="text/javascript">
-    $(function(){
+    $(function () {
         $('.star_group').starRating({
-            brightClass:'bright',
-            numbox:'.pl_num'
-        })
-    })
+            brightClass: 'bright',
+            numbox: '.pl_num'
+        });
+        var fileObj = {
+        add: function (e, data) {
+            if (!data.files[0]['type'].match(/^image/)) {
+                alert('非法上传，不是图片类型');
+            }
+            data.submit();
+        },
+        done: function (e, data) {
+            var re = $.parseJSON(data.result);
+            var input = e.target || e.srcElement;
+            $(input).prev('input[type="hidden"]').attr('value', re.image_id);
+            $(input).next('span').removeClass('hide');
+
+        }
+    };
+    $('input[type="file"]').fileupload(fileObj);
+    });
+    
 </script>

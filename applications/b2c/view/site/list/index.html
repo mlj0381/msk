@@ -41,7 +41,7 @@
                 <a data-toggle="rollback" href="<{link app=b2c ctl=site_list act=index}>?<{$item.url}>" data-url="<{$item.id}>"><{$selector[$key]}>：<span><{$item.label}></span><i class="icon-remove"></i></a>
                 <{/foreach}>
             </div>
-            <div class="col-xs-1 cond_reset"><a><i class="icon-trash"></i>清空条件</a></div>
+            <div class="col-xs-1 cond_reset"><a href="<{link app=b2c ctl=site_list act=index}>"><i class="icon-trash"></i>清空条件</a></div>
         </div>
     <{/if}>
 
