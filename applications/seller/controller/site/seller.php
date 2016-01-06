@@ -18,11 +18,16 @@ class seller_ctl_site_seller extends seller_frontpage
     {
         parent::__construct($app);
         $this->verify();
+        $this->mPam_seller = app::get('pam')->model('sellers');
+        $this->mSeller = $this->app->model('sellers');
     }
 
 	// 商家首页
 	public function index()
 	{
+        $this->pagedata['sellers'] = $this->mPam_seller->getRow('*', array(
+            'seller_id' => $this->seller['seller_id']
+        ));
 		$this->output();
 	}
 
@@ -72,6 +77,42 @@ class seller_ctl_site_seller extends seller_frontpage
         $this->pagedata['company'] = $company;
         $this->output();
 	}
+
+    // 公司信息提交
+    private function _company_post()
+    {
+        extract($post);
+        $this->begin($this->gen_url(array(
+            'app' => 'seller',
+            'ctl' => 'site_seller',
+            'act' => 'company'
+        )));
+        try{
+            // 更新seller_company
+            $mdl_company = $this->app->model('company');
+            $update_company_data = compact('company_name', 'company_area', 'company_addr');
+            if(!$mdl_company->update($update_company_data, array('company_id' => $company_id, 'seller_id' => $this->seller['seller_id'])))
+            {
+                throw new Exception('公司信息更新失败');
+            }
+            // 更新seller
+            $update_seller_data = compact('area', 'addr', 'avatar');
+            if(!$this->mSeller->update($update_seller_data, array('seller_id' => $this->seller['seller_id'])))
+            {
+                throw new Exception('商家信息更新失败');
+            }
+            // 更新contact
+            $update_seller_data = compact('name', 'tel');
+            $mdl_contact = $this->app->model('contact');
+            if(!$mdl_contact->update($update_seller_data, array('company_id' => $contact_id, 'seller_id' => $this->seller['seller_id'])))
+            {
+                throw new Exception('联系人信息更新失败');
+            }
+        }catch(Exception $e){
+            $this->end(false, $e->getMessage());
+        }
+        $this->end(true, '成功');
+    }
     //安全设置
     public function securitycenter(){
         $user_obj = vmc::singleton('seller_user_object');
