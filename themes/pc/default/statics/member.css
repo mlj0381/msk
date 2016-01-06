@@ -29,6 +29,41 @@ ol {
   clear: both;
 }
 /* .hidden{ display: none;} */
+.navbar {
+  border-radius: 0px;
+}
+.navbar-inverse {
+  border-radius: 0px;
+  background-color: #fff;
+  border: none;
+  border-bottom: 1px solid #080808;
+  min-height: 36px;
+}
+.navbar-inverse .nav li {
+  color: #000333;
+  font-size: 16px;
+  cursor: pointer;
+  height: 36px;
+  width: 104px;
+  border-left: 1px solid #080808;
+  border-top: 1px solid #080808;
+}
+.navbar-inverse .nav li a {
+  padding: 0px;
+  text-align: center;
+  line-height: 36px;
+  color: #000333;
+}
+.navbar-inverse .nav li a:hover {
+  color: #080808;
+}
+.navbar-inverse .nav li a.active {
+  background-color: #ff0000;
+  color: #fff;
+}
+.navbar-inverse .nav li:last-child {
+  border-right: 1px solid #080808;
+}
 .buyer_container {
   width: 1200px;
   min-height: 500px;
@@ -80,13 +115,10 @@ ol {
   border: none;
   height: 200px;
   padding-top: 30px;
-  border-top-left-radius: 100px;
-  border-bottom-left-radius: 100px;
   margin-bottom: 15px;
 }
 .buyer_container .my-main .my-page .alert-warning .m-baseinfo {
-  width: 300px;
-  margin-left: 30px;
+  border-right: 1px dashed #ccc;
 }
 .buyer_container .my-main .my-page .alert-warning .m-baseinfo dl {
   width: 100%;
@@ -96,6 +128,7 @@ ol {
 .buyer_container .my-main .my-page .alert-warning .m-baseinfo dl dt {
   width: 100px;
   height: 100px;
+  margin-left: 20px;
   float: left;
   -webkit-border-radius: 50%;
   -moz-border-radius: 50%;
@@ -127,41 +160,47 @@ ol {
   opacity: 0.8;
 }
 .buyer_container .my-main .my-page .alert-warning .m-baseinfo dl dd {
+  width: 120px;
   float: left;
-  margin-left: 40px;
+  margin-left: 20px;
 }
 .buyer_container .my-main .my-page .alert-warning .m-baseinfo dl dd h4 {
   margin-top: 15px;
   height: 30px;
   line-height: 30px;
   margin-bottom: 0px;
+  width: 120px;
+  overflow: hidden;
+  text-align: center;
 }
 .buyer_container .my-main .my-page .alert-warning .m-baseinfo dl dd ul {
   margin-top: 10px;
 }
-.buyer_container .my-main .my-page .alert-warning .m-baseinfo dl dd ul span.label-warning {
+.buyer_container .my-main .my-page .alert-warning .m-baseinfo dl dd ul li {
   width: 100%;
-  height: 20px;
-  line-height: 20px;
-  -webkit-border-radius: 10px;
-  -moz-border-radius: 10px;
-  -ms-border-radius: 10px;
-  -o-border-radius: 10px;
-  border-radius: 10px;
+}
+.buyer_container .my-main .my-page .alert-warning .m-baseinfo dl dd ul span.label-warning {
+  display: block;
+  width: 100%;
+  height: 26px;
+  line-height: 22px;
+  -webkit-border-radius: 13px;
+  -moz-border-radius: 13px;
+  -ms-border-radius: 13px;
+  -o-border-radius: 13px;
+  border-radius: 13px;
   background: #e93428;
+  font-size: 12px;
 }
 .buyer_container .my-main .my-page .alert-warning .order_status_list {
-  width: 360px;
   box-sizing: border-box;
-  border-right: 1px dashed #ccc;
-  border-left: 1px dashed #ccc;
   margin-left: 20px;
 }
 .buyer_container .my-main .my-page .alert-warning .order_status_list li {
-  width: 130px;
+  width: 50%;
   float: left;
   height: 50px;
-  margin: 10px 0 10px 25px;
+  margin: 10px 0 10px 0px;
 }
 .buyer_container .my-main .my-page .alert-warning .order_status_list li span.status_icon {
   display: inline-block;
@@ -176,11 +215,15 @@ ol {
   background: #abcdef;
   float: left;
 }
+.buyer_container .my-main .my-page .alert-warning .order_status_list li span.status_icon img {
+  width: 50px;
+  height: 50px;
+  display: block;
+}
 .buyer_container .my-main .my-page .alert-warning .order_status_list li span {
   display: inline-block;
   height: 50px;
   line-height: 50px;
-  width: 60px;
   float: left;
   margin-left: 5px;
   font-size: 14px;
@@ -204,6 +247,50 @@ ol {
   color: #e93428;
   display: block;
   font-size: 14px;
+}
+.buyer_container .my-main .my-page .last_active {
+  width: 100%;
+}
+.buyer_container .my-main .my-page .last_active h4 {
+  height: 40px;
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 25px;
+}
+.buyer_container .my-main .my-page .last_active h4 span {
+  display: block;
+  width: 150px;
+  height: 40px;
+  line-height: 40px;
+  color: #fff;
+  text-align: center;
+  font-size: 16px;
+  background: #e93428;
+  float: left;
+}
+.buyer_container .my-main .my-page .last_active h4 a {
+  float: right;
+  font-size: 12px;
+  margin-top: 10px;
+}
+.buyer_container .my-main .my-page .last_active .active_item .goods_item .item_pic {
+  display: block;
+  height: 200px;
+  text-align: center;
+  width: 100%;
+}
+.buyer_container .my-main .my-page .last_active .active_item .goods_item .item_pic img {
+  height: 100%;
+  display: block;
+}
+.buyer_container .my-main .my-page .last_active .active_item .goods_item .caption a {
+  display: block;
+  height: 30px;
+  line-height: 30px;
+  overflow: hidden;
+  font-weight: bold;
+}
+.buyer_container .my-main .my-page .last_active .active_item .goods_item .caption span {
+  display: block;
 }
 .buyer_container .my-main .my-page .my-orders-nav li.last_li {
   width: 200px;
@@ -285,27 +372,6 @@ ol {
 }
 .buyer_container .my-main .my-page .list-group .list-group-item .goods_imgbox {
   padding: 0;
-}
-.buyer_container .my-main .my-page .receiver_form .region {
-  width: 100%;
-}
-.buyer_container .my-main .my-page .receiver_form .region input {
-  width: 33.33333%;
-}
-.buyer_container .my-main .my-page .receiver_form .region select {
-  width: 33.33333%;
-}
-.buyer_container .my-main .my-page .receiver_form button.btn-primary {
-  width: 120px;
-  padding: 0;
-  height: 34px;
-  line-height: 34px;
-  background: #e93428;
-  color: #fff;
-  border: none;
-}
-.buyer_container .my-main .my-page .list-group ul.list-inline {
-  margin: 10px 0;
 }
 .buyer_container .my-main .my-page .perInfo_nav {
   width: 100%;
@@ -1034,6 +1100,33 @@ ol {
   background: none;
   border: 1px solid #ddd;
 }
+.buyer_container .activity_con {
+  border-top: 1px solid #ddd;
+  padding-top: 50px;
+}
+.buyer_container .activity_con h2 {
+  margin: 0px;
+}
+.buyer_container .activity_con h2 span {
+  display: inline-block;
+  height: 40px;
+  width: 150px;
+  line-height: 40px;
+  padding: 0 10px;
+  background: #e93428;
+  color: #fff;
+  font-size: 16px;
+}
+.buyer_container .activity_con ul {
+  background: #f2f2f2;
+  padding: 15px;
+}
+.buyer_container .activity_con ul li {
+  height: 30px;
+  line-height: 30px;
+  font-size: 14px;
+  color: #333;
+}
 .buyer_container .reg_progress {
   width: 100%;
   text-align: center;
@@ -1244,35 +1337,38 @@ ol {
   width: 100%;
   background: #fff;
   padding: 20px 0;
-  border-top: 1px solid #ddd;
-}
-.buyer_container .settled_indexpage .side_left {
-  width: 200px;
-  box-sizing: border-box;
-  border: 1px solid #ddd;
-  float: left;
-}
-.buyer_container .settled_indexpage .side_left dl dt.menu_root {
-  width: 100%;
-  background: #f5f5f5;
-  height: 34px;
-  line-height: 34px;
-  padding: 0 10px;
-  font-size: 16px;
-  margin-bottom: 10px;
-}
-.buyer_container .settled_indexpage .side_left dl dd.menu_item {
-  width: 100%;
-  padding: 0 10px;
-  height: 34px;
-  line-height: 34px;
-  font-size: 14px;
-}
-.buyer_container .settled_indexpage .side_left dl dd.menu_item.active {
-  background: #e93428;
-}
-.buyer_container .settled_indexpage .side_left dl dd.menu_item.active a {
-  color: #fff;
+  /* .side_left{
+			width:200px;
+			box-sizing: border-box;
+			border:1px solid #ddd;
+			.fl;
+		
+			dl{
+				dt.menu_root{
+					width:100%;
+					background: #f5f5f5;
+					height:34px;
+					line-height: 34px;
+					padding:0 10px;
+					font-size:16px;
+					margin-bottom:10px;
+				}
+				dd.menu_item{
+					width:100%;
+					padding:0 10px;
+					height: 34px;
+					line-height: 34px;
+					font-size: 14px;
+			
+					&.active{
+						background: @basecolor;
+						a{
+							color:#fff;
+						}
+					}
+				}
+			}
+		} */
 }
 .buyer_container .settled_indexpage .maincon_right {
   width: 940px;
@@ -2289,4 +2385,98 @@ ol {
 }
 .receiver_addrpage .list-group .list-group-item .addr_ctr btn {
   margin: 3px auto;
+}
+.receiver_addrpage .receiver_form .region {
+  width: 100%;
+}
+.receiver_addrpage .receiver_form .region input {
+  width: 33.33333%;
+}
+.receiver_addrpage .receiver_form .region select {
+  width: 33.33333%;
+}
+.receiver_addrpage .receiver_form button.btn-primary {
+  width: 120px;
+  padding: 0;
+  height: 34px;
+  line-height: 34px;
+  background: #e93428;
+  color: #fff;
+  border: none;
+}
+.receiver_addrpage .list-group ul.list-inline {
+  margin: 10px 0;
+}
+.receiver_addrpage .form-group .time_period input {
+  width: 200px;
+  display: inline-block;
+}
+.newrequest_page .order-process-bar .well {
+  box-shadow: none;
+}
+.newrequest_page .order-process-bar div.active .well {
+  background: #ac3727;
+  border: none;
+}
+.newrequest_page .newrequest_main {
+  border: 1px solid #ddd;
+  margin-bottom: 25px;
+  margin-top: 25px;
+}
+.newrequest_page .newrequest_main .newrequest_left {
+  padding: 0;
+  border-right: 1px solid #ddd;
+}
+.newrequest_page .newrequest_main .newrequest_left form {
+  padding: 10px;
+}
+.newrequest_page .newrequest_main .order_info {
+  padding: 0;
+}
+.newrequest_page .newrequest_main .order_info h5 {
+  height: 40px;
+  line-height: 40px;
+  background: #f2f2f2;
+  padding: 0 10px;
+  margin: 0;
+}
+.newrequest_page .newrequest_main .order_info dl {
+  padding: 0 10px;
+  margin: 15px 0;
+}
+.newrequest_page .newrequest_main .order_info dl dt {
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+  font-weight: normal;
+}
+.newrequest_page .newrequest_main .order_info dl dt .img-thumbnail {
+  width: 64px;
+  height: 64px;
+  vertical-align: middle;
+  margin-right: 5px;
+}
+.newrequest_page .newrequest_main .order_info dl dd {
+  height: 30px;
+  line-height: 30px;
+}
+.services_page .order-process-bar .well {
+  box-shadow: none;
+}
+.services_page .order-process-bar div.active .well {
+  background: #ac3727;
+  border: none;
+}
+.request_list_page table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid #ddd;
+}
+.request_list_page table th {
+  background: #f2f2f2;
+  text-align: center;
+}
+.request_list_page table td {
+  background: #fff;
+  text-align: center;
 }
