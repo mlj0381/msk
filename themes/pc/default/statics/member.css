@@ -29,6 +29,41 @@ ol {
   clear: both;
 }
 /* .hidden{ display: none;} */
+.navbar {
+  border-radius: 0px;
+}
+.navbar-inverse {
+  border-radius: 0px;
+  background-color: #fff;
+  border: none;
+  border-bottom: 1px solid #080808;
+  min-height: 36px;
+}
+.navbar-inverse .nav li {
+  color: #000333;
+  font-size: 16px;
+  cursor: pointer;
+  height: 36px;
+  width: 104px;
+  border-left: 1px solid #080808;
+  border-top: 1px solid #080808;
+}
+.navbar-inverse .nav li a {
+  padding: 0px;
+  text-align: center;
+  line-height: 36px;
+  color: #000333;
+}
+.navbar-inverse .nav li a:hover {
+  color: #080808;
+}
+.navbar-inverse .nav li a.active {
+  background-color: #ff0000;
+  color: #fff;
+}
+.navbar-inverse .nav li:last-child {
+  border-right: 1px solid #080808;
+}
 .buyer_container {
   width: 1200px;
   min-height: 500px;
@@ -36,8 +71,12 @@ ol {
 .buyer_container .breadcrumb {
   margin: 20px auto;
 }
+.buyer_container .my-main .row {
+  margin: 0;
+}
 .buyer_container .my-main .row .member_left {
   margin: 0;
+  padding: 0;
 }
 .buyer_container .my-main .row .member_left .my-menu {
   width: 100%;
@@ -175,6 +214,11 @@ ol {
   overflow: hidden;
   background: #abcdef;
   float: left;
+}
+.buyer_container .my-main .my-page .alert-warning .order_status_list li span.status_icon img {
+  width: 50px;
+  height: 50px;
+  display: block;
 }
 .buyer_container .my-main .my-page .alert-warning .order_status_list li span {
   display: inline-block;
@@ -328,27 +372,6 @@ ol {
 }
 .buyer_container .my-main .my-page .list-group .list-group-item .goods_imgbox {
   padding: 0;
-}
-.buyer_container .my-main .my-page .receiver_form .region {
-  width: 100%;
-}
-.buyer_container .my-main .my-page .receiver_form .region input {
-  width: 33.33333%;
-}
-.buyer_container .my-main .my-page .receiver_form .region select {
-  width: 33.33333%;
-}
-.buyer_container .my-main .my-page .receiver_form button.btn-primary {
-  width: 120px;
-  padding: 0;
-  height: 34px;
-  line-height: 34px;
-  background: #e93428;
-  color: #fff;
-  border: none;
-}
-.buyer_container .my-main .my-page .list-group ul.list-inline {
-  margin: 10px 0;
 }
 .buyer_container .my-main .my-page .perInfo_nav {
   width: 100%;
@@ -1077,6 +1100,33 @@ ol {
   background: none;
   border: 1px solid #ddd;
 }
+.buyer_container .activity_con {
+  border-top: 1px solid #ddd;
+  padding-top: 50px;
+}
+.buyer_container .activity_con h2 {
+  margin: 0px;
+}
+.buyer_container .activity_con h2 span {
+  display: inline-block;
+  height: 40px;
+  width: 150px;
+  line-height: 40px;
+  padding: 0 10px;
+  background: #e93428;
+  color: #fff;
+  font-size: 16px;
+}
+.buyer_container .activity_con ul {
+  background: #f2f2f2;
+  padding: 15px;
+}
+.buyer_container .activity_con ul li {
+  height: 30px;
+  line-height: 30px;
+  font-size: 14px;
+  color: #333;
+}
 .buyer_container .reg_progress {
   width: 100%;
   text-align: center;
@@ -1287,35 +1337,38 @@ ol {
   width: 100%;
   background: #fff;
   padding: 20px 0;
-  border-top: 1px solid #ddd;
-}
-.buyer_container .settled_indexpage .side_left {
-  width: 200px;
-  box-sizing: border-box;
-  border: 1px solid #ddd;
-  float: left;
-}
-.buyer_container .settled_indexpage .side_left dl dt.menu_root {
-  width: 100%;
-  background: #f5f5f5;
-  height: 34px;
-  line-height: 34px;
-  padding: 0 10px;
-  font-size: 16px;
-  margin-bottom: 10px;
-}
-.buyer_container .settled_indexpage .side_left dl dd.menu_item {
-  width: 100%;
-  padding: 0 10px;
-  height: 34px;
-  line-height: 34px;
-  font-size: 14px;
-}
-.buyer_container .settled_indexpage .side_left dl dd.menu_item.active {
-  background: #e93428;
-}
-.buyer_container .settled_indexpage .side_left dl dd.menu_item.active a {
-  color: #fff;
+  /* .side_left{
+			width:200px;
+			box-sizing: border-box;
+			border:1px solid #ddd;
+			.fl;
+		
+			dl{
+				dt.menu_root{
+					width:100%;
+					background: #f5f5f5;
+					height:34px;
+					line-height: 34px;
+					padding:0 10px;
+					font-size:16px;
+					margin-bottom:10px;
+				}
+				dd.menu_item{
+					width:100%;
+					padding:0 10px;
+					height: 34px;
+					line-height: 34px;
+					font-size: 14px;
+			
+					&.active{
+						background: @basecolor;
+						a{
+							color:#fff;
+						}
+					}
+				}
+			}
+		} */
 }
 .buyer_container .settled_indexpage .maincon_right {
   width: 940px;
@@ -2332,6 +2385,31 @@ ol {
 }
 .receiver_addrpage .list-group .list-group-item .addr_ctr btn {
   margin: 3px auto;
+}
+.receiver_addrpage .receiver_form .region {
+  width: 100%;
+}
+.receiver_addrpage .receiver_form .region input {
+  width: 33.33333%;
+}
+.receiver_addrpage .receiver_form .region select {
+  width: 33.33333%;
+}
+.receiver_addrpage .receiver_form button.btn-primary {
+  width: 120px;
+  padding: 0;
+  height: 34px;
+  line-height: 34px;
+  background: #e93428;
+  color: #fff;
+  border: none;
+}
+.receiver_addrpage .list-group ul.list-inline {
+  margin: 10px 0;
+}
+.receiver_addrpage .form-group .time_period input {
+  width: 200px;
+  display: inline-block;
 }
 .newrequest_page .order-process-bar .well {
   box-shadow: none;

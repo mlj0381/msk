@@ -4,36 +4,26 @@
             <dl class="clearfix">
                 <dt>
                     <a href="<{link app=seller ctl=site_seller act=account}>">
-                        <span>编辑资料</span>
                         <img width=50 height=50  class="img-circle" src="<{$member.avatar|storager:'avatar'}>" alt="<{$member.uname}>头像" />
 
                     </a>
                 </dt>
                 <dd>
                     <h4>
-                        <a href="<{link app=b2c ctl=site_member act=setting}>"><{$member.uname}></a>
-                        <span class="btn-group">
-                            <{if !$pam_data.local}>
-                            <!-- <a class="btn btn-xs btn-default" href="<{link app=b2c ctl=site_member act=set_pam_uname}>">设置昵称</a> -->
-                            <{/if}>
-                            <{if $pam_data.email && $pam_data.email.disabled=='true'}>
-                            <a class="btn btn-xs btn-default" href="<{link app=b2c ctl=site_member act=active_pam_email}>">验证邮箱  <{$pam_data.email.login_account}></a>
-                            <{/if}>
-                        </span>
+                        <a href="<{link app=b2c ctl=site_member act=setting}>">卖家名称</a>
                     </h4>
                     <ul class="list-inline">
-                        <li><span class="label label-warning"><{$member.levelname}>
-                            <{if $member.lv_discount<1}>(<{$member.lv_discount*10}>折)<{/if}></span></li>
+                        <li><span class="label label-warning">卖家用户</span></li>
                     </ul>
                 </dd>
             </dl>
         </div>
-        <div class="col-xs-4 order_status_list">
+        <div class="col-xs-6 order_status_list">
             <ul class="clearfix">
                 <li>
                     <a href="#">
                         <span class="status_icon">
-                            <img src="./../themes/pc/default/statics/images/customer_01.jpg">
+                            <img src="<{$base_url}>/themes/pc/default/statics/images/customer_01.jpg">
                         </span>
                         <span>待付款<small>0</small></span>
                     </a>
@@ -41,7 +31,7 @@
                 <li>
                     <a href="#">
                         <span class="status_icon">
-                            <img src="./../themes/pc/default/statics/images/customer_01.jpg">
+                            <img src="<{$base_url}>/themes/pc/default/statics/images/customer_01.jpg">
                         </span>
                         <span>待发货<small>0</small></span>
                     </a>
@@ -49,7 +39,7 @@
                 <li>
                     <a href="#">
                         <span class="status_icon">
-                            <img src="./../themes/pc/default/statics/images/customer_01.jpg">
+                            <img src="<{$base_url}>/themes/pc/default/statics/images/customer_01.jpg">
                         </span>
                         <span>待收货<small>0</small></span>
                     </a>
@@ -57,7 +47,7 @@
                 <li>
                     <a href="#">
                         <span class="status_icon">
-                            <img src="./../themes/pc/default/statics/images/customer_01.jpg">
+                            <img src="<{$base_url}>/themes/pc/default/statics/images/customer_01.jpg">
                         </span>
                         <span>待评价<small>0</small></span>
                     </a>
@@ -69,5 +59,30 @@
                 <!-- <span>会员卡余额<small>￥:1500.0</small></span> -->
             </p>
         </div>
+    </div>
+</div>
+
+
+
+<div class="activity_con">
+    <div class="col-xs-6 act_store">
+        <h2><span>店铺推广活动</span></h2>
+        <ul>
+            <li><a href="#">首单满一百送10元代金券</a></li>
+            <li><a href="#">首单满一百送10元代金券</a></li>
+            <li><a href="#">首单满一百送10元代金券</a></li>
+            <li><a href="#">首单满一百送10元代金券</a></li>
+            <li><a href="#">首单满一百送10元代金券</a></li>
+        </ul>
+    </div>
+    <div class="col-xs-6 act_official">
+        <h2><span>官方活动</span></h2>
+        <ul>
+            <li><a href="#">首单满一百送10元代金券</a></li>
+            <li><a href="#">首单满一百送10元代金券</a></li>
+            <li><a href="#">首单满一百送10元代金券</a></li>
+            <li><a href="#">首单满一百送10元代金券</a></li>
+            <li><a href="#">首单满一百送10元代金券</a></li>
+        </ul>
     </div>
 </div>

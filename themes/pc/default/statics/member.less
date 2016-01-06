@@ -37,6 +37,50 @@ ul,ol{
 @basecolor:#e93428;
 
 
+//买家中心导航
+.navbar{
+	border-radius:0px;
+}
+.navbar-inverse{
+	border-radius:0px;
+	background-color: #fff;
+	border:none;
+	border-bottom: 1px solid #080808;
+	min-height: 36px; 
+
+	.nav{
+		 li{
+		 	color: #000333;
+    		font-size: 16px;
+    		cursor: pointer;
+    		height: 36px;
+    		width: 104px;
+    		border-left: 1px solid #080808;
+    		border-top: 1px solid #080808;
+    		a{
+	    		padding:0px;
+	    		text-align:center;
+	    		line-height: 36px;
+	    		color:#000333;
+
+    			&:hover{
+				  	color: #080808;   			
+				  }
+				&.active{
+				  background-color: #ff0000;
+				  color: #fff;
+	    		}
+    			
+			 }
+			
+		
+		 }
+		 li:last-child{
+		 	border-right:1px solid #080808;
+		 	}
+	}
+}
+
 // 买家中心
 .buyer_container{
 	width:1200px;
@@ -46,12 +90,12 @@ ul,ol{
 	}
 	.my-main{
 		.row{
-			//margin:0;
+			margin:0;
 
 			//会员左侧菜单
 			.member_left{
 				margin:0;
-				//padding:0;
+				padding:0;
 				.my-menu{
 					width:100%;
 					padding: 0;
@@ -198,6 +242,11 @@ ul,ol{
 							overflow: hidden;
 							background: #abcdef;
 							.fl;
+							img{
+								width:50px;
+								height:50px;
+								display: block;
+							}
 						}
 						span{
 							display: inline-block;
@@ -401,39 +450,6 @@ ul,ol{
 				
 			}
 			//END 订单详情
-
-
-			//收货地址
-			.receiver_form{
-
-				.region{
-					width:100%;
-					input{
-						width:33.33333%;
-					}
-					select{
-						width:33.33333%;
-					}
-				}
-
-				button.btn-primary{
-					width:120px;
-					padding:0;
-					height:34px;
-					line-height: 34px;
-					background: @basecolor;
-					color:#fff;
-					border:none;
-				}
-			}
-
-			.list-group{
-				ul.list-inline{
-					margin:10px 0;
-				}
-			}
-			//END 收货地址
-			
 
 			//个人资料
 			.perInfo_nav{
@@ -1206,7 +1222,35 @@ ul,ol{
 
 //卖家中心
 .buyer_container{
-	
+
+	//卖家中心首页
+	.activity_con{
+		border-top:1px solid #ddd;
+		padding-top:50px;
+		h2{
+			margin:0px;
+			span{
+				display: inline-block;
+				height:40px;
+				width:150px;
+				line-height: 40px;
+				padding:0 10px;
+				background:@basecolor;
+				color:#fff;
+				font-size: 16px;
+			}
+		}
+		ul{
+			background: #f2f2f2;
+			padding:15px;
+			li{
+				height:30px;
+				line-height: 30px;
+				font-size: 14px;
+				color:#333;
+			}
+		}
+	}
 
 	//卖家注册
 	.reg_progress{
@@ -1441,14 +1485,12 @@ ul,ol{
 		width:100%;
 		background: #fff;
 		padding: 20px 0;
-		border-top:1px solid #ddd;
-
-		.side_left{
+		/* .side_left{
 			width:200px;
 			box-sizing: border-box;
 			border:1px solid #ddd;
 			.fl;
-
+		
 			dl{
 				dt.menu_root{
 					width:100%;
@@ -1465,7 +1507,7 @@ ul,ol{
 					height: 34px;
 					line-height: 34px;
 					font-size: 14px;
-	
+			
 					&.active{
 						background: @basecolor;
 						a{
@@ -1474,7 +1516,7 @@ ul,ol{
 					}
 				}
 			}
-		}
+		} */
 		.maincon_right{
 			width:940px;
 			.fr;
@@ -2612,6 +2654,7 @@ ul,ol{
 
 //我的收获地址
 .receiver_addrpage{
+
 	.list-group{
 		.list-group-item{
 			padding:0;
@@ -2647,6 +2690,47 @@ ul,ol{
 		}
 	}
 
+}
+
+
+//新增收货地址
+.receiver_addrpage{
+	.receiver_form{
+
+		.region{
+			width:100%;
+			input{
+				width:33.33333%;
+			}
+			select{
+				width:33.33333%;
+			}
+		}
+
+		button.btn-primary{
+			width:120px;
+			padding:0;
+			height:34px;
+			line-height: 34px;
+			background: @basecolor;
+			color:#fff;
+			border:none;
+		}
+	}
+	.list-group{
+		ul.list-inline{
+			margin:10px 0;
+		}
+	}
+
+	.form-group{
+		.time_period{
+			input{
+				width:200px;
+				display: inline-block;
+			}
+		}
+	}
 }
 
 
@@ -2707,7 +2791,7 @@ ul,ol{
 	}
 }
 
-
+//售后服务
 .services_page{
 
 	.order-process-bar{
