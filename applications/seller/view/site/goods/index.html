@@ -41,36 +41,44 @@
         <table class="table table-striped table-hover">
             <thead>
                 <tr>
-                    <th width="15%">上架时间</th>
+                    <!-- <th width="15%">上架时间</th>
                     <th width="10%">商品编号</th>
                     <th width="25%">商品名称</th>
-                    <!-- <th width="10%">规格</th> -->
                     <th width="15%">所属分类</th>
                     <th width="10%">库存数量</th>
                     <th width="10%">销量</th>
-                    <th width="15%">操作</th>
-
+                    <th width="15%">操作</th> -->
+                    <th class="col-xs-1">商品图片</th>
+                    <th class="col-xs-2">商品编号</th>
+                    <th class="col-xs-3">商品名称</th>
+                    <th class="col-xs-2">所属分类</th>
+                    <th class="col-xs-3">价格</th>
+                    <!-- <th class="col-xs-1">销量</th> -->
+                    <th class="col-xs-1">操作</th>
                 </tr>
             </thead>
         <tbody id="cat_list">
             <{if $goodList}>
             <{foreach from=$goodList item=item name="item"}>
                 <tr>
-                    <td><{$item.uptime|cdate}></td>
+                    <td>
+                        <a href="" class="thumbnail"><img src="<{$base_url}>/themes/pc/default/statics/images/bestsellers.jpg"></a>
+                    </td>
                     <td><{$item.gid}></td>
                     <td><{$item.name|cut:50:'...'}></td>
-                    <!-- <td>5*2kg</td> -->
                     <td><{$item.cat_id}></td>
-                    <td><{$item.stock}></td>
-                    <td><{$item.buy_count}></td>
+                    <td>
+                        ￥：100.0（小于10箱）<br>
+                        ￥：98.00（大于10箱）
+                    </td>
                         <td>
                              <{if $type eq 'storage'}>
-                                <a href="<{link app=seller ctl=site_goods act=marketable args0=$item.goods_id args1=up}>" class="btn btn-default">上架</a>
+                                <a href="<{link app=seller ctl=site_goods act=marketable args0=$item.goods_id args1=up}>" class="btn btn-xs btn-block btn-default">上架</a>
                             <{else}>
-                                <a href="<{link app=seller ctl=site_goods act=marketable args0=$item.goods_id args1=dn}>" class="btn btn-default">下架</a>
+                                <a href="<{link app=seller ctl=site_goods act=marketable args0=$item.goods_id args1=dn}>" class="btn btn-xs btn-block btn-default">下架</a>
                             <{/if}>
 
-                        <a href="<{link app=seller ctl=site_goods act=add args0=$item.goods_id}>" class="btn btn-default"><i class="fa fa-edit"></i>编辑</a>
+                        <a href="<{link app=seller ctl=site_goods act=add args0=$item.goods_id}>" class="btn btn-xs btn-block btn-default"><i class="fa fa-edit"></i>编辑</a>
                     </td>
                 </tr>
             <{/foreach}>

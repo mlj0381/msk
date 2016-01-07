@@ -189,7 +189,7 @@ ol {
   -ms-border-radius: 13px;
   -o-border-radius: 13px;
   border-radius: 13px;
-  background: #e93428;
+  background: #a40001;
   font-size: 12px;
 }
 .buyer_container .my-main .my-page .alert-warning .order_status_list {
@@ -229,7 +229,7 @@ ol {
   font-size: 14px;
 }
 .buyer_container .my-main .my-page .alert-warning .order_status_list li span small {
-  color: #e93428;
+  color: #a40001;
   font-size: 14px;
   padding-left: 5px;
 }
@@ -244,7 +244,7 @@ ol {
   font-size: 14px;
 }
 .buyer_container .my-main .my-page .alert-warning .m-balance small {
-  color: #e93428;
+  color: #a40001;
   display: block;
   font-size: 14px;
 }
@@ -264,7 +264,7 @@ ol {
   color: #fff;
   text-align: center;
   font-size: 16px;
-  background: #e93428;
+  background: #a40001;
   float: left;
 }
 .buyer_container .my-main .my-page .last_active h4 a {
@@ -393,10 +393,10 @@ ol {
   font-size: 14px;
 }
 .buyer_container .my-main .my-page .perInfo_nav ul li.active {
-  border-bottom: 2px solid #e93428;
+  border-bottom: 2px solid #a40001;
 }
 .buyer_container .my-main .my-page .perInfo_nav ul li.active a {
-  color: #e93428;
+  color: #a40001;
 }
 .buyer_container .my-main .my-page .radio_group {
   display: inline-block;
@@ -470,7 +470,7 @@ ol {
   background: #eaeaea;
 }
 .glist-container .fav_nav a.active {
-  background: #e93428;
+  background: #a40001;
   color: #fff;
 }
 .glist-container .fav_nav p {
@@ -479,7 +479,7 @@ ol {
   padding: 0 15px;
 }
 .glist-container .fav_nav p small {
-  color: #e93428;
+  color: #a40001;
   font-weight: 700;
   padding: 0 5px;
 }
@@ -518,7 +518,7 @@ ol {
 .glist-container .fav_con .fav_shop .fav_g_nav ul li.active,
 .glist-container .fav_con .fav_goods .fav_s_nav ul li.active,
 .glist-container .fav_con .fav_shop .fav_s_nav ul li.active {
-  border-bottom: 3px solid #e93428;
+  border-bottom: 3px solid #a40001;
 }
 .glist-container .fav_con .fav_goods .fav_g_nav .fav_g_ctr,
 .glist-container .fav_con .fav_shop .fav_g_nav .fav_g_ctr,
@@ -787,7 +787,7 @@ ol {
 .glist-container .best_sellers .hd span.lm_title,
 .glist-container .cnxh .hd span.lm_title {
   font-size: 16px;
-  background: #e93428;
+  background: #a40001;
   color: #fff;
   display: inline-block;
   width: 120px;
@@ -864,7 +864,7 @@ ol {
   background: none;
 }
 .cart_page .jumbotron .shoping_btn {
-  background: #e93428;
+  background: #a40001;
   color: #fff;
 }
 .cart_page .jumbotron .shoping_btn:hover {
@@ -881,7 +881,7 @@ ol {
 }
 .cart-html .cart_page .cart-header h1 a {
   float: right;
-  color: #e93428;
+  color: #a40001;
   font-size: 14px;
   text-decoration: underline;
   margin-top: 10px;
@@ -911,16 +911,16 @@ ol {
   float: left;
 }
 .cart-html .cart-container .itemnav .nav_item span.active {
-  background: #e93428;
+  background: #a40001;
   color: #fff;
-  border: 1px solid #e93428;
+  border: 1px solid #a40001;
   border-bottom: none;
 }
 .cart-html .cart-container .itemnav .nav_item span.active small {
   color: #fff;
 }
 .cart-html .cart-container .itemnav .nav_item span small {
-  color: #e93428;
+  color: #a40001;
   padding: 0 3px;
   display: inline-block;
   width: 14px;
@@ -931,7 +931,7 @@ ol {
   float: right;
 }
 .cart-html .cart-container .itemnav .nav_right small {
-  color: #e93428;
+  color: #a40001;
   font-size: 14px;
   padding: 0 5px;
 }
@@ -948,7 +948,7 @@ ol {
 }
 .cart-html .cart-container .itembox .shop_name a {
   margin-left: 10px;
-  color: #e93428;
+  color: #a40001;
 }
 .cart-html .cart-container .cart_like {
   width: 100%;
@@ -974,11 +974,11 @@ ol {
   color: #000;
 }
 .cart-html .cart-container .cart_like .like_menu span a.active {
-  border-bottom: 2px solid #e93428;
+  border-bottom: 2px solid #a40001;
 }
 .cart-html .cart-container .cart_like .like_menu a.sc_btan {
   float: right;
-  color: #e93428;
+  color: #a40001;
 }
 .cart-html .cart-container .cart_like .like_con {
   width: 100%;
@@ -1100,6 +1100,25 @@ ol {
   background: none;
   border: 1px solid #ddd;
 }
+.buyer_container {
+  /* .reg_progress{
+		width:100%;
+		text-align: center;
+		height:50px;
+		line-height: 50px;
+		ol{
+			padding: 0;
+			margin:0;
+			text-align: center;
+			li{
+				display: inline-block;
+				width:160px;
+				
+				
+			}
+		}	
+	} */
+}
 .buyer_container .activity_con {
   border-top: 1px solid #ddd;
   padding-top: 50px;
@@ -1113,7 +1132,7 @@ ol {
   width: 150px;
   line-height: 40px;
   padding: 0 10px;
-  background: #e93428;
+  background: #a40001;
   color: #fff;
   font-size: 16px;
 }
@@ -1126,21 +1145,6 @@ ol {
   line-height: 30px;
   font-size: 14px;
   color: #333;
-}
-.buyer_container .reg_progress {
-  width: 100%;
-  text-align: center;
-  height: 50px;
-  line-height: 50px;
-}
-.buyer_container .reg_progress ol {
-  padding: 0;
-  margin: 0;
-  text-align: center;
-}
-.buyer_container .reg_progress ol li {
-  display: inline-block;
-  width: 160px;
 }
 .buyer_container .seller_reg_tab {
   width: 100%;
@@ -1157,7 +1161,7 @@ ol {
   width: 120px;
 }
 .buyer_container .seller_reg_tab ul li.active {
-  background: #e93428;
+  background: #a40001;
 }
 .buyer_container .seller_reg_tab ul li a {
   font-size: 14px;
@@ -1182,7 +1186,7 @@ ol {
   margin: 0;
 }
 .buyer_container .settled_container .settled_menu dl dt {
-  background: #e93428;
+  background: #a40001;
   height: 36px;
   line-height: 36px;
   padding-left: 10px;
@@ -1203,7 +1207,7 @@ ol {
   padding-left: 15px;
 }
 .buyer_container .settled_container .settled_menu dl dd.active a {
-  border-left: 3px solid #e93428;
+  border-left: 3px solid #a40001;
 }
 .buyer_container .settled_container .settled_main {
   width: 960px;
@@ -1246,7 +1250,7 @@ ol {
   float: left;
 }
 .buyer_container .settled_container .settled_main .settled_warning dl dd a {
-  color: #e93428;
+  color: #a40001;
 }
 .buyer_container .settled_container .settled_main .settled_company_form h2.area_heading,
 .buyer_container .settled_container .settled_main .settled_shop_form h2.area_heading {
@@ -1315,7 +1319,7 @@ ol {
   height: 40px;
   line-height: 40px;
   font-size: 14px;
-  background: #e93428;
+  background: #a40001;
   color: #fff;
   text-align: center;
   -webkit-border-radius: 5px;
@@ -1394,12 +1398,12 @@ ol {
   font-size: 22px;
 }
 .buyer_container .settled_indexpage .maincon_right .advbox span a.settled_btn {
-  background: #e93428;
+  background: #a40001;
   color: #fff;
 }
 .buyer_container .settled_indexpage .maincon_right .advbox span a.settled_progress_btn {
   background: #fff;
-  color: #e93428;
+  color: #a40001;
   margin-left: 10px;
 }
 .buyer_container .settled_indexpage .maincon_right .settled_process {
@@ -1463,11 +1467,11 @@ ol {
   color: #727171;
 }
 .buyer_container .settled_indexpage .maincon_right .settled_process .process_items .process_item:hover {
-  border: 2px solid #e93428;
+  border: 2px solid #a40001;
 }
 .buyer_container .settled_indexpage .maincon_right .settled_process .process_items .process_item:hover span {
-  border: 2px solid #e93428;
-  color: #e93428;
+  border: 2px solid #a40001;
+  color: #a40001;
 }
 .buyer_container .settled_statuspage {
   width: 100%;
@@ -1525,7 +1529,7 @@ ol {
   background: #222;
 }
 .buyer_container .settled_statuspage ul.status_process li.active span {
-  background: #e93428;
+  background: #a40001;
 }
 .buyer_container .settled_statuspage .return_btn,
 .buyer_container .settled_statuspage .return_index {
@@ -1533,7 +1537,7 @@ ol {
   height: 40px;
   line-height: 40px;
   text-align: center;
-  background: #e93428;
+  background: #a40001;
   color: #fff;
   font-size: 16px;
   display: block;
@@ -1759,6 +1763,65 @@ ol {
   padding: 10px;
   outline: none;
 }
+.buyer_container #sepcInfo ul li {
+  cursor: pointer;
+  display: inline-block;
+  height: 30px;
+  line-height: 30px;
+  border: 2px solid #ddd;
+  padding: 0 20px;
+}
+.buyer_container #sepcInfo ul li.sect {
+  border-color: #a40001;
+}
+.buyer_container #sepcInfo table {
+  border: 1px solid #ddd;
+}
+.buyer_container #sepcInfo table th {
+  text-align: center;
+  background: #ddd;
+  border-bottom: 1px solid #ccc;
+}
+.buyer_container #sepcInfo table td {
+  text-align: center;
+  vertical-align: middle;
+}
+.buyer_container #sepcInfo table td .price_area span {
+  margin: 0 5px;
+  display: inline-block;
+}
+.buyer_container #sepcInfo table td .price_area input {
+  width: 80px;
+}
+.buyer_container .price_page .goods_info .thumbnail {
+  width: 84px;
+  height: 84px;
+  margin-right: 10px;
+  float: left;
+}
+.buyer_container .price_page .goods_info div .goods_name {
+  font-size: 14px;
+  font-weight: bold;
+  color: #333;
+  display: inline-block;
+}
+.buyer_container .price_page .goods_info .edit_record {
+  margin-top: 20px;
+}
+.buyer_container .price_page table.goods_list {
+  border: 1px solid #ddd;
+}
+.buyer_container .price_page table.goods_list th {
+  background: #ddd;
+  text-align: center;
+}
+.buyer_container .price_page table.goods_list td {
+  text-align: center;
+  vertical-align: middle;
+}
+.buyer_container .goods_sell {
+  padding-bottom: 20px;
+}
 .buyer_container .goods_sell .page-title {
   border-bottom: 1px solid #ddd;
   padding-bottom: 15px;
@@ -1773,11 +1836,25 @@ ol {
   display: inline-block;
   margin-right: 5px;
 }
+.buyer_container .goods_sell .table-scrollable {
+  border: 1px solid #ddd;
+}
+.buyer_container .goods_sell .table-scrollable .table {
+  margin: 0;
+}
 .buyer_container .goods_sell .table-scrollable th {
   background: #ddd;
+  text-align: center;
 }
 .buyer_container .goods_sell .table-scrollable td {
   vertical-align: middle;
+  text-align: center;
+}
+.buyer_container .goods_sell .table-scrollable td a.thumbnail {
+  display: block;
+  width: 60px;
+  height: 60px;
+  margin-bottom: 0px;
 }
 .buyer_container .appraisal_page .rowfirst {
   margin-bottom: 50px;
@@ -1878,7 +1955,7 @@ ol {
   cursor: pointer;
 }
 .buyer_container .appraisal_page .appra_box .appra_navbox .appra_nav li.active {
-  border-bottom: 2px solid #e93428;
+  border-bottom: 2px solid #a40001;
 }
 .buyer_container .appraisal_page .appra_box .appra_navbox .nav_right {
   width: 245px;
@@ -1983,7 +2060,7 @@ ol {
   cursor: pointer;
 }
 .buyer_container .aftersales_page .aftersales_nav li.active {
-  border-bottom: 2px solid #e93428;
+  border-bottom: 2px solid #a40001;
 }
 .buyer_container .aftersales_page .aftersales_list {
   margin: 20px auto;
@@ -2043,7 +2120,7 @@ ol {
   z-index: 10;
   top: 0;
   right: 0;
-  background: #e93428;
+  background: #a40001;
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
   -ms-border-radius: 5px;
@@ -2131,7 +2208,7 @@ ol {
   line-height: 48px;
   background: url(images/store_bar.jpg) no-repeat center top;
   text-align: center;
-  color: #e93428;
+  color: #a40001;
   margin: 0 auto;
 }
 .store_probox .store_pro_floor ul li {
@@ -2176,7 +2253,7 @@ ol {
   color: #aaa;
 }
 .store_probox .store_pro_floor ul li span small {
-  color: #e93428;
+  color: #a40001;
   display: inline-block;
   margin-right: 10px;
 }
@@ -2221,7 +2298,7 @@ ol {
   font-size: 14px;
 }
 .seller_clearing_page .clearing_tab ul.clearing_menu li.active {
-  background: #e93428;
+  background: #a40001;
   color: #fff;
 }
 .seller_clearing_page .clearing_tab .clearing_con table {
@@ -2251,7 +2328,7 @@ ol {
   cursor: pointer;
 }
 .buyStore_page .buyStore_tab .tabMenu ul li.active {
-  background: #e93428;
+  background: #a40001;
   color: #fff;
 }
 .buyStore_page .buyStore_tab .tabMenu ul li.last {
@@ -2400,7 +2477,7 @@ ol {
   padding: 0;
   height: 34px;
   line-height: 34px;
-  background: #e93428;
+  background: #a40001;
   color: #fff;
   border: none;
 }
