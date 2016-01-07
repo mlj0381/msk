@@ -1,0 +1,72 @@
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">关闭</button>
+    <h3 class="modal-title"><{if $position.position_id}>编辑<{else}>添加<{/if}>广告位置</h3>
+</div>
+<form method="post" action="index.php?app=b2c&ctl=admin_pages_position&act=save" id='position_edit_form' class="form">
+    <input type="hidden" name="position_id" value="<{$position.position_id}>">
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-md-9">
+                <div class="form-horizontal">
+                   <div class="form-body">
+                        <div class="form-group ">
+                           <label class="col-md-4 control-label">位置名称
+                                <span class="required">*</span>
+                           </label>
+                            <div class="col-md-8">
+                                <{input required='true' type='text' name='position[name]' value=$position.name }>
+                            </div>
+                        </div>         
+                        
+                        <div class="form-group" id="pages">
+                           <label class="col-md-4 control-label">所属页面
+                                <span class="required">*</span>
+                           </label>
+                            <div class="col-md-5">
+                                <{input required='true' type='select' name='position[pages_id]' rows=$pages value=$pageObject.pages_id valueColumn='pages_id' labelColumn='name'}>
+                            </div>
+                        </div>   
+                    
+                        <div class="form-group ">
+                           <label class="col-md-4 control-label">所属平台
+                                <span class="required">*</span>
+                           </label>
+                            <div class="col-md-6">
+                                <{input type='select' name='position[plat]' options=$plats value=$position.plat required='true'}>
+                            </div>
+                        </div>                        
+                    
+                        <div class="form-group ">
+                           <label class="col-md-4 control-label">类型
+                                <span class="required">*</span>
+                           </label>
+                            <div class="col-md-5">
+                                <{input type='select' name='position[type]' options=$types value=$position.type required='true'}>
+                            </div>
+                        </div>                        
+                        <div class="form-group ">
+                            <label class="col-md-4 control-label">是否多个 </label>
+                            <div class="col-md-3">
+                                <label class="radio-inline"><input  type="checkbox" name="position[multi]" value="true" <{if !$position || $position.multi == 1 }>checked<{/if}>>是</label>
+                            </div>
+                        </div>
+                        <div class="form-group ">
+                           <label class="col-md-4 control-label">个数
+                                <span class="required">*</span>
+                           </label>
+                            <div class="col-md-3">
+                                <{input type='text' name='position[count]' value=$position.count|default:1 required='true' }>
+                            </div>
+                        </div>                        
+                    </div>
+
+                </div>
+
+            </div>            
+        </div>
+    </div>
+<div class="modal-footer">
+        <button type="button" class="btn default" data-dismiss="modal">关闭</button>
+        <button type="submit" class="btn blue">保存</button>
+</div>
+</form>
