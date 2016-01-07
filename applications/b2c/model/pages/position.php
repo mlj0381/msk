@@ -11,15 +11,18 @@
 
 
 
-class b2c_finder_brand
-{
-	
-	public $column_control = '操作';
+class b2c_mdl_pages_position extends dbeav_model{
 
-    var $column_edit = '编辑';
-    function column_edit($row){
-		exit;
-        return '<a class="btn btn-default btn-xs" href="index.php?app=b2c&ctl=admin_brand&act=edit&p[0]='.$row['brand_id'].'" ><i class="fa fa-edit"></i> '.('编辑').'</a>';
+    
+
+    public function modifier_ordernum($col,$row)
+    {
+        $pkey = $row['position_id'];
+
+        $_return = <<<HTML
+            <input class='form-control edit-col input-sm input-xsmall' name="ordernum" type='text' data-pkey='$pkey' value='$col'>
+HTML;
+        return $_return;
     }
-
 }
+?>
