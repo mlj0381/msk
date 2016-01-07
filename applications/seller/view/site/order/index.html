@@ -55,6 +55,9 @@
             <{/if}>><a href="<{link app=seller ctl=site_order act=index args0=s3}>">待收货</a></li>
         <li <{if $current_status=='s4' }>class="active"
             <{/if}>><a href="<{link app=seller ctl=site_order act=index args0=s4}>">待评价</a></li>
+        <li <{if $current_status=='' }> class="active" <{/if}>>
+            <a href="<{link app=seller ctl=site_order act=index args0=s5}>">交易成功</a>
+        </li>
         <li <{if $current_status=='s5' }> class="active" <{/if}>>
             <a href="<{link app=seller ctl=site_order act=index args0=s5}>">已关闭</a>
         </li>
@@ -115,7 +118,8 @@
                 <tbody>
                     <tr>
                         <td width="76%">
-                            <{foreach from=$order_items_group[$order.order_id] item=item name=oig}>
+                            <div style="width:704px">
+                                <{foreach from=$order_items_group[$order.order_id] item=item name=oig}>
                                 <div class="row mo-item <{if $env.foreach.oig.last}>last<{/if}>">
                                     <div class="col-xs-2">
                                         <a href="<{link app=b2c ctl=site_product act=index args0=$item.product_id}>">
@@ -151,6 +155,7 @@
                                     </div>
                                 </div>
                                 <{/foreach}>
+                            </div>
                         </td>
                         <td class="text-center" width="12%">
                                 <div><{$order.pay_status|order_pay_status}></div>

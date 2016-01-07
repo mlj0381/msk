@@ -3,10 +3,9 @@
 /**
  * 登录注册流程/逻辑处理类.
  */
-class b2c_user_passport
-{
-    public function __construct(&$app)
-    {
+class b2c_user_passport {
+
+    public function __construct(&$app) {
         $this->app = $app;
         $this->user_obj = vmc::singleton('b2c_user_object');
         vmc::singleton('base_session')->start();
@@ -18,8 +17,8 @@ class b2c_user_passport
      * @params $login_account 登录账号
      * @return $account_type
      * */
-    public function get_login_account_type($login_account)
-    {
+
+    public function get_login_account_type($login_account) {
         $login_type = 'local';
         if ($login_account && strpos($login_account, '@')) {
             $login_type = 'email';
@@ -33,12 +32,14 @@ class b2c_user_passport
         }
 
         return $login_type;
-    } //end function
+    }
+
+//end function
     /*
      * 检查注册账号合法性
      * */
-    public function check_signup_account($login_name, &$msg)
-    {
+
+    public function check_signup_account($login_name, &$msg) {
         if (empty($login_name)) {
             $msg = ('请输入用户名');
 
@@ -64,8 +65,8 @@ class b2c_user_passport
 
                     return false;
                 }
-                $exists_msg = $this->app->_('用户名'.$login_name.'已经被占用，请换一个重试');
-            break;
+                $exists_msg = $this->app->_('用户名' . $login_name . '已经被占用，请换一个重试');
+                break;
             case 'email':
                 if (!preg_match('/^(?:[a-z\d]+[_\-\+\.]?)*[a-z\d]+@(?:([a-z\d]+\-?)*[a-z\d]+\.)+([a-z]{2,})+$/i', trim($login_name))) {
                     $msg = $this->app->_('邮件格式不正确');
@@ -73,10 +74,10 @@ class b2c_user_passport
                     return false;
                 }
                 $exists_msg = $this->app->_('该邮箱已被注册，请更换一个');
-            break;
+                break;
             case 'mobile':
                 $exists_msg = $this->app->_('该手机号已被注册，请更换一个');
-            break;
+                break;
         }
         //判断账号是否存在
         if ($this->is_exists_login_name($login_name)) {
@@ -87,12 +88,26 @@ class b2c_user_passport
         $msg = $login_type;
 
         return true;
-    } //end function
+    }
+
+//end function
+    //用户注册过滤 2016、1、4
+    public function check_input($post) {
+        $schema = new base_application_dbtable();
+        $dbinfo = $schema->detect($this->app, 'members')->load();
+        foreach ($dbinfo['columns'] as $key => $value) {
+            if ($value['required'] == true && !$post[$key]) {
+                $this->splash('error', '', '非法操作');
+                break;
+            }
+        }
+    }
+
     /*
      * 判断前台用户名是否存在
      * */
-    public function is_exists_login_name($login_account)
-    {
+
+    public function is_exists_login_name($login_account) {
         if (empty($login_account)) {
             return false;
         }
@@ -103,11 +118,11 @@ class b2c_user_passport
 
         return $flag ? true : false;
     }
+
     /**
-     *组织注册需要的数据.
+     * 组织注册需要的数据.
      */
-    public function pre_signup_process($data)
-    {
+    public function pre_signup_process($data) {
         if ($data['pam_account']) {
             $accountData = $this->pre_account_signup_process($data['pam_account']);
         }
@@ -167,8 +182,7 @@ class b2c_user_passport
     /**
      * 检查会员注册数据合法性.
      */
-    public function check_signup($data, &$msg)
-    {
+    public function check_signup($data, &$msg) {
 
         //检查注册账号合法性
         if (!$this->check_signup_account(trim($data['pam_account']['login_name']), $msg)) {
@@ -195,14 +209,14 @@ class b2c_user_passport
         }
 
         return true;
-    }//end function
+    }
 
+//end function
 
     /**
      * 注册pam_members 表数据结构.
      */
-    public function pre_account_signup_process($accountData, $password_account = null)
-    {
+    public function pre_account_signup_process($accountData, $password_account = null) {
         $login_account = strtolower($accountData['login_name']);
         $password_account = $password_account ? $password_account : $login_account;
         $use_pass_data['login_name'] = $password_account;
@@ -227,8 +241,8 @@ class b2c_user_passport
      * @params $member_id int
      * @params $data array
      * */
-    public function save_security($member_id, $data, &$msg)
-    {
+
+    public function save_security($member_id, $data, &$msg) {
         $pamMembersModel = app::get('pam')->model('members');
         $pamData = $pamMembersModel->getList('login_password,password_account,createtime', array(
             'member_id' => $member_id,
@@ -258,14 +272,16 @@ class b2c_user_passport
         //TODO $obj_account->fireEvent('chgpass', $aData, $member_id);
         return true;
     }
+
     /*
      * 根据会员ID 修改用户密码
-     **/
-    public function reset_password($member_id,$password){
-        return $this->reset_passport($member_id,$password);
+     * */
+
+    public function reset_password($member_id, $password) {
+        return $this->reset_passport($member_id, $password);
     }
-    public function reset_passport($member_id, $password)
-    {
+
+    public function reset_passport($member_id, $password) {
         $pamMembersModel = app::get('pam')->model('members');
         $pamData = $pamMembersModel->getList('login_account,password_account,createtime', array(
             'member_id' => $member_id,
@@ -277,10 +293,10 @@ class b2c_user_passport
             $use_pass_data['createtime'] = $row['createtime'];
             $login_password = pam_encrypt::get_encrypted_password(trim($password), 'member', $use_pass_data);
             if (!$pamMembersModel->update(array(
-                'login_password' => $login_password,
-            ), array(
-                'login_account' => $row['login_account'],
-            ))) {
+                        'login_password' => $login_password,
+                            ), array(
+                        'login_account' => $row['login_account'],
+                    ))) {
                 $db->rollBack();
 
                 return false;
@@ -292,8 +308,7 @@ class b2c_user_passport
     }
 
     //设置当前用户名
-    public function set_local_uname($local_uname, &$msg)
-    {
+    public function set_local_uname($local_uname, &$msg) {
         $local_uname = strtolower($local_uname);
         $member_id = $this->user_obj->get_member_id();
         if (!$member_id) {
@@ -312,7 +327,7 @@ class b2c_user_passport
         }
         if ($msg != 'local') {
             $type = ($msg == 'mobile') ? ('手机号') : ('邮箱');
-            $msg = ('用户名不能为').$type;
+            $msg = ('用户名不能为') . $type;
 
             return false;
         }
@@ -339,8 +354,7 @@ class b2c_user_passport
     }
 
     //设置绑定手机号
-    public function set_mobile($mobile, &$msg)
-    {
+    public function set_mobile($mobile, &$msg) {
         $member_id = $this->user_obj->get_member_id();
         if (!$member_id) {
             $msg = ('页面已过期，请重新登录，到会员中心设置');
@@ -384,8 +398,7 @@ class b2c_user_passport
     }
 
     //设置绑定邮箱
-    public function set_email($email, &$msg)
-    {
+    public function set_email($email, &$msg) {
         $member_id = $this->user_obj->get_member_id();
         if (!$member_id) {
             $msg = ('页面已过期，请重新登录，到会员中心设置');
@@ -429,8 +442,7 @@ class b2c_user_passport
     }
 
     //获取会员注册项加载
-    public function get_signup_attr($member_id = null)
-    {
+    public function get_signup_attr($member_id = null) {
         if ($member_id) {
             $member_model = $this->app->model('members');
             $mem = $member_model->dump($member_id);
@@ -451,7 +463,7 @@ class b2c_user_passport
                     $name = array_shift($a_temp);
                     if (count($a_temp)) {
                         foreach ($a_temp as $value) {
-                            $name .= '['.$value.']';
+                            $name .= '[' . $value . ']';
                         }
                     }
                 }
@@ -462,34 +474,34 @@ class b2c_user_passport
                 switch ($attr[$key]['attr_column']) {
                     case 'area':
                         $attr[$key]['attr_value'] = $mem['contact']['area'];
-                    break;
+                        break;
                     case 'birthday':
                         $attr[$key]['attr_value'] = $mem['profile']['birthday'];
-                    break;
+                        break;
                     case 'name':
                         $attr[$key]['attr_value'] = $mem['contact']['name'];
-                    break;
+                        break;
                     case 'mobile':
                         $attr[$key]['attr_value'] = $mem['contact']['phone']['mobile'];
-                    break;
+                        break;
                     case 'tel':
                         $attr[$key]['attr_value'] = $mem['contact']['phone']['telephone'];
-                    break;
+                        break;
                     case 'zip':
                         $attr[$key]['attr_value'] = $mem['contact']['zipcode'];
-                    break;
+                        break;
                     case 'addr':
                         $attr[$key]['attr_value'] = $mem['contact']['addr'];
-                    break;
+                        break;
                     case 'sex':
                         $attr[$key]['attr_value'] = $mem['profile']['gender'];
-                    break;
+                        break;
                     case 'pw_answer':
                         $attr[$key]['attr_value'] = $mem['account']['pw_answer'];
-                    break;
+                        break;
                     case 'pw_question':
                         $attr[$key]['attr_value'] = $mem['account']['pw_question'];
-                    break;
+                        break;
                 }
             }
             if ($item['attr_group'] == 'contact' || $item['attr_group'] == 'input' || $item['attr_group'] == 'select') {
@@ -511,14 +523,16 @@ class b2c_user_passport
         }
 
         return $attr;
-    } //end function
+    }
+
+//end function
 
     /*
      * 保存会员信息members表和注册扩展项数据
      *
-     **/
-    public function save_members($saveData, &$msg)
-    {
+     * */
+
+    public function save_members($saveData, &$msg) {
         $saveData = vmc::singleton('b2c_site_filter')->check_input($saveData);
         $member_model = $this->app->model('members');
         $db = vmc::database();
@@ -541,4 +555,5 @@ class b2c_user_passport
 
         return $member_id;
     }
+
 }

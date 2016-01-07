@@ -190,6 +190,11 @@ class b2c_cart_object_goods implements b2c_interface_cart_object
             $filter['member_id'] = $this->member_id;
         }
         $cart_objects = $this->mdl_cartobjects->getList('*', $filter);
+        
+        $store_obj = vmc::singleton('store_store_object');
+        foreach ($cart_objects as &$value) {
+            $value['store_info'] = $store_obj->store_info($value['store_id']);
+        }
         if (!$rich) {
             return $cart_objects;
         }

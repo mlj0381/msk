@@ -177,7 +177,7 @@ ul,ol{
 	
 
 	//商品列表板块
-	.goods-list{
+	.goods-listbox{
 		margin-top:20px;
 		
 		.goods-item{
@@ -191,49 +191,139 @@ ul,ol{
 			}
 		}
 
-		/*.form-inline{
+		.form-inline{
 			width:50%;
 			.fl;
 		}
 		 .heading_rt{
 			width:30%;
 			.fr;
-			.toggleSpan{
+
+			.tab_toggle{
 				margin-top:5px;
 				span{
 					display: inline-block;
-					width:60px;
-					height: 30px;
-					line-height: 30px;
-					text-align: center;
-					.fl;
-					margin-left:-1px;
-					background: #fff;
-					cursor:pointer;
-					&.active{
-						background: @basecolor;
-						color: #fff;
-					}
+					height:30px;
+					border-radius: 0px;
 				}
-		
 			}
+			
 			.pageNav{
-				height: 30px;
-				line-height: 30px;
 				text-align: right;
 				margin-top:5px;
-		
-				a{
+
+				.page_num{
 					display: inline-block;
-					width:30px;
 					height:30px;
 					line-height: 30px;
-					border: 1px solid #ddd;
-					text-align: center;
-					background: #fff;
+					margin-right:10px;
+					//margin-top:10px;
+					.fr;
+				}
+				
+				nav{
+					display: inline;
+					height:30px;
+					.fr;
+					ul{
+						margin:0;
+					}
+				}
+				
+			}
+		}
+
+		.store_list{
+			.store_item{
+				border:1px solid #ddd;
+				padding:10px 0;
+				margin-bottom:15px;
+				.store_bar{
+					height:80px;
+					overflow:hidden;
+
+					img.thumbnail{
+						width:80px;
+						height:80px;
+						.fl;
+						margin-bottom:0px;
+					}
+					.store_info{
+						.fl;
+						width:255px;
+						margin-left:15px;
+						a{
+							display: block;
+							font-size: 14px;
+							font-weight: bold;
+							color:#333;
+							margin-top:5px;
+						}
+						p{
+							margin:5px 0;
+							color:#767676;
+						}
+					}
+					.pingfen{
+						margin-top:5px;
+						font-size: 14px;
+						color:#333;
+						font-weight: bold;
+
+						span{
+							color:@basecolor;
+							display: block;
+							margin-top:10px;
+						}
+					}
+					.store_ctr{
+						text-align: right;
+						button{
+							width:100px;
+							height:28px;
+							margin:5px auto;
+						}
+					}
+				}
+				.store_goods{
+					margin:15px 0;
+					overflow:hidden;
+					display: none;
+					ul{ 
+						margin-left:95px;
+						width:1200px;
+						overflow:hidden;
+						li{ 
+							margin-right:30px;
+							float:left; 
+							_display:inline; 
+							overflow:hidden; 
+							text-align:center;  
+							position: relative;
+							.pic{ 
+								text-align:center;
+								img{ 
+									width:190px; 
+									height:190px; 
+									display:block;  
+								} 
+							}
+							.title{
+								position: absolute;
+								width:100%;
+								height:30px;
+								line-height: 30px;
+								bottom:0px;
+								background: rgba(0,0,0,0.8);
+								a{
+									color:#fff;
+								}
+							}
+						}
+					}
 				}
 			}
-		} */
+		}
 	}
 
 	//END 商品列表板块

@@ -106,6 +106,11 @@ $db['member_goods']=array (
 
       'in_list' => true,
     ),
+    'tag' => array(
+        'type' => 'serialize',
+        'default' => '',
+        'label' => ('标签'),
+    ),
     'disabled' => array (
       'type' => 'bool',
       'default'=>'false',

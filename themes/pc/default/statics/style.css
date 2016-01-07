@@ -148,58 +148,137 @@ ol {
   font-size: 14px;
   font-weight: 700;
 }
-.glist-container .goods-list {
+.glist-container .goods-listbox {
   margin-top: 20px;
-  /*.form-inline{
-			width:50%;
-			.fl;
-		}
-		 .heading_rt{
-			width:30%;
-			.fr;
-			.toggleSpan{
-				margin-top:5px;
-				span{
-					display: inline-block;
-					width:60px;
-					height: 30px;
-					line-height: 30px;
-					text-align: center;
-					.fl;
-					margin-left:-1px;
-					background: #fff;
-					cursor:pointer;
-					&.active{
-						background: @basecolor;
-						color: #fff;
-					}
-				}
-		
-			}
-			.pageNav{
-				height: 30px;
-				line-height: 30px;
-				text-align: right;
-				margin-top:5px;
-		
-				a{
-					display: inline-block;
-					width:30px;
-					height:30px;
-					line-height: 30px;
-					border: 1px solid #ddd;
-					text-align: center;
-					background: #fff;
-				}
-			}
-		} */
 }
-.glist-container .goods-list .goods-item .gi-image-wrapper {
+.glist-container .goods-listbox .goods-item .gi-image-wrapper {
   padding: 10px 0;
   height: 256px;
 }
-.glist-container .goods-list .goods-item .gi-image-wrapper img {
+.glist-container .goods-listbox .goods-item .gi-image-wrapper img {
   max-height: 100%;
+}
+.glist-container .goods-listbox .form-inline {
+  width: 50%;
+  float: left;
+}
+.glist-container .goods-listbox .heading_rt {
+  width: 30%;
+  float: right;
+}
+.glist-container .goods-listbox .heading_rt .tab_toggle {
+  margin-top: 5px;
+}
+.glist-container .goods-listbox .heading_rt .tab_toggle span {
+  display: inline-block;
+  height: 30px;
+  border-radius: 0px;
+}
+.glist-container .goods-listbox .heading_rt .pageNav {
+  text-align: right;
+  margin-top: 5px;
+}
+.glist-container .goods-listbox .heading_rt .pageNav .page_num {
+  display: inline-block;
+  height: 30px;
+  line-height: 30px;
+  margin-right: 10px;
+  float: right;
+}
+.glist-container .goods-listbox .heading_rt .pageNav nav {
+  display: inline;
+  height: 30px;
+  float: right;
+}
+.glist-container .goods-listbox .heading_rt .pageNav nav ul {
+  margin: 0;
+}
+.glist-container .goods-listbox .store_list .store_item {
+  border: 1px solid #ddd;
+  padding: 10px 0;
+  margin-bottom: 15px;
+}
+.glist-container .goods-listbox .store_list .store_item .store_bar {
+  height: 80px;
+  overflow: hidden;
+}
+.glist-container .goods-listbox .store_list .store_item .store_bar img.thumbnail {
+  width: 80px;
+  height: 80px;
+  float: left;
+  margin-bottom: 0px;
+}
+.glist-container .goods-listbox .store_list .store_item .store_bar .store_info {
+  float: left;
+  width: 255px;
+  margin-left: 15px;
+}
+.glist-container .goods-listbox .store_list .store_item .store_bar .store_info a {
+  display: block;
+  font-size: 14px;
+  font-weight: bold;
+  color: #333;
+  margin-top: 5px;
+}
+.glist-container .goods-listbox .store_list .store_item .store_bar .store_info p {
+  margin: 5px 0;
+  color: #767676;
+}
+.glist-container .goods-listbox .store_list .store_item .store_bar .pingfen {
+  margin-top: 5px;
+  font-size: 14px;
+  color: #333;
+  font-weight: bold;
+}
+.glist-container .goods-listbox .store_list .store_item .store_bar .pingfen span {
+  color: #e93428;
+  display: block;
+  margin-top: 10px;
+}
+.glist-container .goods-listbox .store_list .store_item .store_bar .store_ctr {
+  text-align: right;
+}
+.glist-container .goods-listbox .store_list .store_item .store_bar .store_ctr button {
+  width: 100px;
+  height: 28px;
+  margin: 5px auto;
+}
+.glist-container .goods-listbox .store_list .store_item .store_goods {
+  margin: 15px 0;
+  overflow: hidden;
+  display: none;
+}
+.glist-container .goods-listbox .store_list .store_item .store_goods ul {
+  margin-left: 95px;
+  width: 1200px;
+  overflow: hidden;
+}
+.glist-container .goods-listbox .store_list .store_item .store_goods ul li {
+  margin-right: 30px;
+  float: left;
+  _display: inline;
+  overflow: hidden;
+  text-align: center;
+  position: relative;
+}
+.glist-container .goods-listbox .store_list .store_item .store_goods ul li .pic {
+  text-align: center;
+}
+.glist-container .goods-listbox .store_list .store_item .store_goods ul li .pic img {
+  width: 190px;
+  height: 190px;
+  display: block;
+}
+.glist-container .goods-listbox .store_list .store_item .store_goods ul li .title {
+  position: absolute;
+  width: 100%;
+  height: 30px;
+  line-height: 30px;
+  bottom: 0px;
+  background: rgba(0, 0, 0, 0.8);
+}
+.glist-container .goods-listbox .store_list .store_item .store_goods ul li .title a {
+  color: #fff;
 }
 .product-container {
   margin: 20px auto;

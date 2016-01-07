@@ -16,46 +16,54 @@
             <dl>
                 <dt><span><img src="<{$base_url}>/themes/pc/default/statics/images/u2371_24.jpg"></span>购物指南</dt>
                 <dd><a href="<{link app=b2c ctl=site_passport act=signup}>" target="_blank">免费注册</a></dd>
-                <{foreach from=$content item=item}>
+                <{foreach from=$content item=items}>
+                <{foreach from=$items.son item=item}>
                     <{if $item.node_name eq '购物指南'}>
                         <{foreach from=$item.son item=son}>
                         <dd><a href="<{$son.url}>"><{$son.node_name}></a></dd>
                         <{/foreach}>
                         <{break}>
                     <{/if}>
+                    <{/foreach}>
                 <{/foreach}>
             </dl>
             <dl>
                 <dt><span><img src="<{$base_url}>/themes/pc/default/statics/images/u2371_27.jpg"></span>支付方式</dt>
-                <{foreach from=$content item=item}>
+                <{foreach from=$content item=items}>
+                <{foreach from=$items.son item=item}>
                     <{if $item.node_name eq '支付方式'}>
                         <{foreach from=$item.son item=son}>
                         <dd><a href="<{$son.url}>"><{$son.node_name}></a></dd>
                         <{/foreach}>
                         <{break}>
                     <{/if}>
+                    <{/foreach}>
                 <{/foreach}>
             </dl>
             <dl>
                 <dt><span><img src="<{$base_url}>/themes/pc/default/statics/images/u2371_30.jpg"></span>配送方式</dt>
-                <{foreach from=$content item=item}>
+                <{foreach from=$content item=items}>
+                <{foreach from=$items.son item=item}>
                     <{if $item.node_name eq '配送方式'}>
                         <{foreach from=$item.son item=son}>
                         <dd><a href="<{$son.url}>"><{$son.node_name}></a></dd>
                         <{/foreach}>
                         <{break}>
                     <{/if}>
+                    <{/foreach}>
                 <{/foreach}>
             </dl>
             <dl>
                 <dt><span><img src="<{$base_url}>/themes/pc/default/statics/images/u2371_18.jpg"></span>售后服务</dt>
-                <{foreach from=$content item=item}>
+                <{foreach from=$content item=items}>
+                <{foreach from=$items.son item=item}>
                     <{if $item.node_name eq '售后服务'}>
                         <{foreach from=$item.son item=son}>
                         <dd><a href="<{$son.url}>"><{$son.node_name}></a></dd>
                         <{/foreach}>
                         <{break}>
                     <{/if}>
+                    <{/foreach}>
                 <{/foreach}>
                 <dd><a href="<{link app=b2c ctl=site_member act=index}>">退换货</a></dd>
                 <dd><a href="<{link app=b2c ctl=site_member act=index}>">取消订单</a></dd>
@@ -64,13 +72,15 @@
                 <dt><span><img src="<{$base_url}>/themes/pc/default/statics/images/u2371_21.jpg"></span>商家服务</dt>
                 <dd><a href="<{link app=seller ctl=site_seller act=index}>">商家中心</a></dd>
                 <dd><a href="<{link app=seller ctl=site_passport act=settled_index}>">商家入驻</a></dd>
-                <{foreach from=$content item=item}>
+                <{foreach from=$content item=items}>
+                <{foreach from=$items.son item=item}>
                     <{if $item.node_name eq '商家服务'}>
                         <{foreach from=$item.son item=son}>
                         <dd><a href="<{$son.url}>"><{$son.node_name}></a></dd>
                         <{/foreach}>
                         <{break}>
                     <{/if}>
+                    <{/foreach}>
                 <{/foreach}>
             </dl>
         </div>

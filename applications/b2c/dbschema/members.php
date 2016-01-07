@@ -85,6 +85,11 @@ $db['members'] = array(
             'in_list' => true,
             'default_in_list' => false,
         ) ,
+        'member_setting' => array(
+            'type' => 'serialize',
+            'default' => '',
+            'comment' => '会员帐号设置'
+        ),
         'tel' => array(
             'type' => 'varchar(50)',
             'label' => ('固定电话') ,

@@ -1,4 +1,5 @@
 <?php
+
 // +----------------------------------------------------------------------
 // | VMCSHOP [V M-Commerce Shop]
 // +----------------------------------------------------------------------
@@ -12,30 +13,41 @@
 
 
 
-class b2c_mdl_orders extends dbeav_model{
+class b2c_mdl_orders extends dbeav_model {
+
     var $has_tag = true;
-    var $defaultOrder = array('createtime','DESC');
+    var $defaultOrder = array('createtime', 'DESC');
     var $has_many = array(
-        'items'=>'order_items',
-        'promotions'=>'order_pmt',
-        //'store_info' => 'store@store:append:store_id^store_id'
+        'items' => 'order_items',
+        'promotions' => 'order_pmt',
+        'store_info' => 'store@store:append:store_id^store_id',
+        'comment' => 'member_comment:replace:order_id^order_id'
     );
-
-
+    public $has_one = array();
+    public $subSdf = array(
+        'default' => array(
+            'store_info' => array(
+                'store_id',
+                'store_name'
+            ),
+            'comment' => array(
+                'comment_id'
+            ),
+        ),
+    );
 
     /**
      *
      * @params null
      * @return string 订单编号
      */
-    public function apply_id()
-    {
+    public function apply_id() {
         $tb = $this->table_name(1);
-        do{
-            $i = substr(mt_rand() , -5);
-            $new_order_id = (date('y')+date('m')+date('d')).date('His').$i;
-            $row = $this->db->selectrow('SELECT order_id from '.$tb.' where order_id ='.$new_order_id);
-        }while($row);
+        do {
+            $i = substr(mt_rand(), -5);
+            $new_order_id = (date('y') + date('m') + date('d')) . date('His') . $i;
+            $row = $this->db->selectrow('SELECT order_id from ' . $tb . ' where order_id =' . $new_order_id);
+        } while ($row);
 
         return $new_order_id;
     }
@@ -45,134 +57,116 @@ class b2c_mdl_orders extends dbeav_model{
      * @params array - standard data format
      * @params boolean 是否必须强制保存
      */
-    public function save(&$sdf,$mustUpdate = null,$mustInsert=false)
-    {
-		$info_object = vmc::service('sensitive_information');
-		if(is_object($info_object)) $info_object->opinfo($sdf,'b2c_mdl_orders',__FUNCTION__);
-        $is_save = parent::save($sdf, $mustUpdate,$mustInsert);
+    public function save(&$sdf, $mustUpdate = null, $mustInsert = false) {
+        $info_object = vmc::service('sensitive_information');
+        if (is_object($info_object))
+            $info_object->opinfo($sdf, 'b2c_mdl_orders', __FUNCTION__);
+        $is_save = parent::save($sdf, $mustUpdate, $mustInsert);
         return $is_save;
     }
-
 
     /**
      * 返回订单字段的对照表
      * @params string 状态
      * @params string key value
      */
-    public function trasform_status($type='status', $val)
-    {
-        switch($type){
+    public function trasform_status($type = 'status', $val) {
+        switch ($type) {
             case 'status':
                 $tmpArr = array(
-                            'active' => ('活动'),
-                            'finish' => ('完成'),
-                            'dead' => ('死单'),
+                    'active' => ('活动'),
+                    'finish' => ('完成'),
+                    'dead' => ('死单'),
                 );
                 return $tmpArr[$val];
-            break;
+                break;
             case 'pay_status':
                 $tmpArr = array(
-                            0 => ('未付款'),
-                            1 => ('已付款'),
-                            2 => ('付款至担保方'),
-                            3 => ('部分付款'),
-                            4 => ('部分退款'),
-                            5 => ('已退款'),
+                    0 => ('未付款'),
+                    1 => ('已付款'),
+                    2 => ('付款至担保方'),
+                    3 => ('部分付款'),
+                    4 => ('部分退款'),
+                    5 => ('已退款'),
                 );
                 return $tmpArr[$val];
-            break;
+                break;
             case 'ship_status':
                 $tmpArr = array(
-                            0 => ('未发货'),
-                            1 => ('已发货'),
-                            2 => ('部分发货'),
-                            3 => ('部分退货'),
-                            4 => ('已退货'),
+                    0 => ('未发货'),
+                    1 => ('已发货'),
+                    2 => ('部分发货'),
+                    3 => ('部分退货'),
+                    4 => ('已退货'),
                 );
                 return $tmpArr[$val];
-            break;
+                break;
         }
     }
-
-
-
 
     /**
      * 重写getList方法
      */
-    public function getList($cols='*', $filter=array(), $offset=0, $limit=-1, $orderType=null)
-    {
-        $arr_list = parent::getList($cols,$filter,$offset,$limit,$orderType);
+    public function getList($cols = '*', $filter = array(), $offset = 0, $limit = -1, $orderType = null) {
+        $arr_list = parent::getList($cols, $filter, $offset, $limit, $orderType);
         $obj_extends_order_service = vmc::serviceList('b2c_order_extends_actions');
-        if ($obj_extends_order_service)
-        {
+        if ($obj_extends_order_service) {
             foreach ($obj_extends_order_service as $obj)
                 $obj->extend_list($arr_list);
         }
-		$info_object = vmc::service('sensitive_information');
-		if(is_object($info_object)) $info_object->opinfo($arr_list,'b2c_mdl_orders',__FUNCTION__);
+        $info_object = vmc::service('sensitive_information');
+        if (is_object($info_object))
+            $info_object->opinfo($arr_list, 'b2c_mdl_orders', __FUNCTION__);
         return $arr_list;
     }
 
-
-
-
-    public function modifier_pay_app($col)
-    {
+    public function modifier_pay_app($col) {
         $mdl_papp = app::get('ectools')->model('payment_applications');
         $papp = $mdl_papp->dump($col);
         return $papp['name'] ? $papp['name'] : $col;
     }
 
-    public function modifier_member_id($row)
-    {
-        if ($row === 0 || $row == '0'){
+    public function modifier_member_id($row) {
+        if ($row === 0 || $row == '0') {
             return ('非会员顾客');
-        }
-        else{
-            return vmc::singleton('b2c_user_object')->get_member_name(null,$row);
+        } else {
+            return vmc::singleton('b2c_user_object')->get_member_name(null, $row);
         }
     }
 
-    public function modifier_need_invoice($col)
-    {
-        $_return =  $col=='true'?'<span>是</span>':'<span class="text-muted">否</span>';
+    public function modifier_need_invoice($col) {
+        $_return = $col == 'true' ? '<span>是</span>' : '<span class="text-muted">否</span>';
         return $_return;
     }
 
-
-    function _filter($filter,$tableAlias=null,$baseWhere=null){
-        if (isset($filter) && $filter && is_array($filter) && array_key_exists('member_login_name', $filter))
-        {
+    function _filter($filter, $tableAlias = null, $baseWhere = null) {
+        if (isset($filter) && $filter && is_array($filter) && array_key_exists('member_login_name', $filter)) {
             $obj_pam_account = app::get('pam')->model('members');
             $pam_filter = array(
-                'login_account|has'=>$filter['member_login_name'],
+                'login_account|has' => $filter['member_login_name'],
             );
-            $row_pam = $obj_pam_account->getList('*',$pam_filter);
+            $row_pam = $obj_pam_account->getList('*', $pam_filter);
             $arr_member_id = array();
-            if ($row_pam)
-            {
-                foreach ($row_pam as $str_pam)
-                {
+            if ($row_pam) {
+                foreach ($row_pam as $str_pam) {
                     $arr_member_id[] = $str_pam['member_id'];
                 }
                 $filter['member_id|in'] = $arr_member_id;
+            } else {
+                if ($filter['member_login_name'] == ('非会员顾客'))
+                    $filter['member_id'] = 0;
             }
-			else
-			{
-				if ($filter['member_login_name'] == ('非会员顾客'))
-					$filter['member_id'] = 0;
-			}
             unset($filter['member_login_name']);
         }
 
-        foreach(vmc::servicelist('b2c_mdl_orders.filter') as $k=>$obj_filter){
-            if(method_exists($obj_filter,'extend_filter')){
+        foreach (vmc::servicelist('b2c_mdl_orders.filter') as $k => $obj_filter) {
+            if (method_exists($obj_filter, 'extend_filter')) {
                 $obj_filter->extend_filter($filter);
             }
         }
-		$info_object = vmc::service('sensitive_information');
-		if(is_object($info_object)) $info_object->opinfo($filter,'b2c_mdl_orders',__FUNCTION__);
+        $info_object = vmc::service('sensitive_information');
+        if (is_object($info_object))
+            $info_object->opinfo($filter, 'b2c_mdl_orders', __FUNCTION__);
         $filter = parent::_filter($filter);
         return $filter;
     }
@@ -182,22 +176,21 @@ class b2c_mdl_orders extends dbeav_model{
      * @param null
      * @return null
      */
-    public function searchOptions(){
+    public function searchOptions() {
         $columns = array();
-        foreach($this->_columns() as $k=>$v){
-            if(isset($v['searchtype']) && $v['searchtype']){
+        foreach ($this->_columns() as $k => $v) {
+            if (isset($v['searchtype']) && $v['searchtype']) {
                 $columns[$k] = $v['label'];
             }
         }
-        /** 添加用户名搜索 **/
+        /** 添加用户名搜索 * */
         $columns['member_login_name'] = ('会员用户名');
-        /** end **/
-
-        /** 添加额外的搜索列 **/
+        /** end * */
+        /** 添加额外的搜索列 * */
         $arr_extends_options = array();
-        foreach (vmc::servicelist('b2c.order.searchOptions.addExtends') as $object)
-        {
-            if (!isset($object) || !is_object($object)) continue;
+        foreach (vmc::servicelist('b2c.order.searchOptions.addExtends') as $object) {
+            if (!isset($object) || !is_object($object))
+                continue;
             if (method_exists($object, 'get_order'))
                 $index = $object->get_order();
             else
@@ -205,16 +198,13 @@ class b2c_mdl_orders extends dbeav_model{
 
             $arr_extends_options[$index] = $object;
         }
-        if ($arr_extends_options)
-        {
+        if ($arr_extends_options) {
             ksort($arr_extends_options);
-            foreach ($arr_extends_options as $obj)
-            {
+            foreach ($arr_extends_options as $obj) {
                 $obj->get_extends_cols($columns);
             }
         }
-        /** end **/
-
+        /** end * */
         return $columns;
     }
 
@@ -223,17 +213,14 @@ class b2c_mdl_orders extends dbeav_model{
      * @param array post
      * @return boolean
      */
-    public function suf_recycle($filter=array())
-    {
+    public function suf_recycle($filter = array()) {
         if (!$filter)
             $filter = $_GET['p'][0];
 
         $is_update = true;
         $obj_suf_recycles = vmc::servicelist('b2c.order.after_delete');
-        if ($obj_suf_recycles)
-        {
-            foreach ($obj_suf_recycles as $obj_suf)
-            {
+        if ($obj_suf_recycles) {
+            foreach ($obj_suf_recycles as $obj_suf) {
                 $is_update = $obj_suf->dorecycle($filter);
             }
         }
@@ -246,14 +233,11 @@ class b2c_mdl_orders extends dbeav_model{
      * @param array post
      * @return boolean
      */
-    public function suf_restore($filter=array())
-    {
+    public function suf_restore($filter = array()) {
         $is_update = true;
         $obj_suf_restores = vmc::servicelist('b2c.order.after_restore');
-        if ($obj_suf_restores)
-        {
-            foreach ($obj_suf_restores as $obj_suf)
-            {
+        if ($obj_suf_restores) {
+            foreach ($obj_suf_restores as $obj_suf) {
                 $is_update = $obj_suf->dorestore($filter);
             }
         }
@@ -261,20 +245,28 @@ class b2c_mdl_orders extends dbeav_model{
         return $is_update;
     }
 
-
     /**
      * 获得相邻订单
      */
+    public function get_border($order_id) {
+        $table = $this->table_name(1);
+        $sql = "(SELECT order_id FROM $table WHERE order_id<$order_id ORDER BY order_id DESC LIMIT 1) UNION (SELECT order_id FROM $table WHERE order_id>$order_id ORDER BY order_id ASC LIMIT 1) ORDER BY order_id DESC";
+        $dorder = $this->db->select($sql);
+        if (count($dorder) < 2) {
+            array_unshift($dorder, array('order_id' => null));
+        }
+        return $dorder;
+    }
 
-     public function get_border($order_id){
-         $table = $this->table_name(1);
-         $sql = "(SELECT order_id FROM $table WHERE order_id<$order_id ORDER BY order_id DESC LIMIT 1) UNION (SELECT order_id FROM $table WHERE order_id>$order_id ORDER BY order_id ASC LIMIT 1) ORDER BY order_id DESC";
-         $dorder = $this->db->select($sql);
-         if(count($dorder)<2){
-             array_unshift($dorder,array('order_id'=>null));
-         }
-         return $dorder;
-     }
-
-
+    //订单各状态数量统计
+    public function type_count(){
+        $member_id = vmc::singleton('b2c_user_object')->get_member_id(); 
+        $return = array();
+        $return['no_pay'] = $this->getRow('count(order_id) as no_pay', array('member_id' => $member_id, 'pay_status' => '0'));
+        $return['no_ship'] = $this->getRow('count(order_id) as no_ship', array('member_id' => $member_id, 'ship_status' => '0'));
+        $return['confirm'] = $this->getRow('count(order_id) as confirm', array('member_id' => $member_id, 'confirm' => 'N'));
+        $return['comment'] = $this->getRow('count(order_id) as comment', array('member_id' => $member_id, 'comment' => 'false'));
+        return $return;
+    }
+    
 }

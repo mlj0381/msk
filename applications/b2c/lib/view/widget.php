@@ -34,7 +34,7 @@ class b2c_view_widget {
     // 首页-幻灯
     public function function_WIDGET_B2C_INDEX_SLIDER($params, &$smarty) {
         $render = new base_render(app::get($params['app']));
-        $render->pagedata['slider'] = app::get('b2c')->model('ad')->getRow('*', array('page_id' => $params['page'], 'ad_type' => $params['type']));
+        $render->pagedata['slider'] = app::get('b2c')->model('ad')->getList('*', array('page_id' => 34, 'ad_type' => 1, 'status' => 'true',));
         return $render->fetch('widget/slider.html');
     }
 
@@ -161,4 +161,10 @@ class b2c_view_widget {
         return $render->fetch('widget/floor.test.html');
     }
 
+    //商家推荐、最近浏览、热卖单品、猜你喜欢
+    public function function_WIDGET_B2C_GOOD_HOT($params, &$smarty){
+        $render = new base_render(app::get($params['app']));
+        return $render->fetch('widget/hot.goods.html');
+    }
+    
 }

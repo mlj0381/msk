@@ -46,6 +46,7 @@ $db['orders'] = array(
                 'active' => ('活动订单') ,
                 'dead' => ('已作废') ,
                 'finish' => ('已完成') ,
+                'del' => ('已删除')
             ) ,
             'filtertype' => 'normal',
             'default' => 'active',
@@ -66,7 +67,6 @@ $db['orders'] = array(
                 3 => ('部分付款') ,
                 4 => ('部分退款') ,
                 5 => ('全额退款') ,
-                '-1' => ('已取消'),
             ) ,
             'default' => '0',
             'required' => true,
@@ -116,6 +116,11 @@ $db['orders'] = array(
             'label' => ('发货状态') ,
             'filtertype' => 'normal',
         ) ,
+        'comment_type' => array(
+            'type' => 'bool',
+            'default' => 'false',
+            'label' => ('评价状态'),
+        ),
         'pay_app' => array(
             'type' => 'varchar(100)',
             'label' => ('支付方式') ,

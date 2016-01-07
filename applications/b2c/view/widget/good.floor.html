@@ -5,6 +5,7 @@
 <div class="list_con clearfix">
     <{*WIDGET_B2C_INDEX_LEFT_GOOD target=index type=china_food*}>
 <{foreach from=$window item=items}>
+<{if $items}>
 <{foreach from=$items.ad_content.title key=key item=item}>
     <div class="list_lt">
         <div class="list_item">
@@ -21,6 +22,7 @@
     </div>
 <{/foreach}>
 <{break}>
+<{/if}>
 <{/foreach}>
     <ul class="list_rt">
         <{foreach from=$goods.item item=item}>

@@ -34,6 +34,11 @@ class seller_ctl_site_store extends seller_frontpage
         $this->pagedata['store_info'] = app::get('store')->model('store')->getRow('*', array('store_id' => $this->store['store_id']));
         $this->output();
     }
+    //店铺模板管理
+    public function modal_merg(){
+        $this->output();
+    }
+    
     //修改基本信息
     private function _setting($post){
         $redirect = $this->gen_url(array('app' => 'seller', 'ctl' => 'site_store', 'act' => 'setting'));
@@ -114,6 +119,7 @@ class seller_ctl_site_store extends seller_frontpage
         $this->splash('success',$redirect_url, '提交成功');
     }
 
+    //店员设置
     public function clerk_setting(){
         $this->output();
     }

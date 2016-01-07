@@ -26,26 +26,217 @@
     <div class="page-header">
         <h1>评价列表</h1>
     </div>
+    <div class="rowfirst clearfix">
+        <div class="personal_info fl">
+            <dl>
+                <dt>个人信息</dt>
+                <dd>
+                    <label>会员名：</label><{$member_inof.local_uname}>
+                </dd>
+                <dd>
+                    <label>站内信：</label><a href="#">发送站内信</a>
+                </dd>
+                <dd>
+                    <label>地址：</label>上海
+                </dd>
+                <dd>
+                    <label>认证信息：</label>认证信息
+                </dd>
+            </dl>
+        </div>
+        <div class="rating fr">
+            <dl>
+                <dt>商品好评度组成</dt>
+                <dd>
+                    <label>商品与描述相符</label>
+                    <span class="star_group">
+                        <i class="icon-star"></i>
+                        <i class="icon-star"></i>
+                        <i class="icon-star"></i>
+                        <i class="icon-star"></i>
+                        <i class="icon-star"></i>
+                    </span>
+                </dd>
+                <dd>
+                    <label>卖家服务态度</label>
+                    <span class="star_group">
+                        <i class="icon-star"></i>
+                        <i class="icon-star"></i>
+                        <i class="icon-star"></i>
+                        <i class="icon-star"></i>
+                        <i class="icon-star"></i>
+                    </span>
+                </dd>
+                <dd>
+                    <label>发货与物流</label>
+                    <span class="star_group">
+                        <i class="icon-star"></i>
+                        <i class="icon-star"></i>
+                        <i class="icon-star"></i>
+                        <i class="icon-star"></i>
+                        <i class="icon-star"></i>
+                    </span>
+                </dd>
+            </dl>
+            <div class="rating_foot">
+                <label>备注</label>
 
+                <span>1分<small>非常不满</small></span>
+                <span>2分<small>不满意</small></span>
+                <span>3分<small>一般般</small></span>
+                <span>4分<small>满意</small></span>
+                <span>5分<small>非常满意</small></span>
+            </div>
+        </div>
+    </div>
+    
     <div class="appra_box">
-        <ul class="appra_nav">
-            <li <{if $comment_type eq 'all'}>class="active" <{/if}>><a href="<{link app=b2c ctl=site_comment act=show_list args0=all}>">全部评价</a></li>
-            <li <{if $comment_type eq '5'}>class="active" <{/if}>><a href="<{link app=b2c ctl=site_comment act=show_list args0=5}>">好评</a></li>
-            <li <{if $comment_type eq '4'}>class="active" <{/if}>><a href="<{link app=b2c ctl=site_comment act=show_list args0=4}>">中评</a></li>
-            <li <{if $comment_type eq '3'}>class="active" <{/if}>><a href="<{link app=b2c ctl=site_comment act=show_list args0=3}>">差评</a></li>
-        </ul>
+        <div class="appra_navbox clearfix">
+            <ul class="appra_nav">
+                <li class="active"><a href="javascript:;">我给卖家的评价</a></li>
+                <li><a href="javascript:;">卖家给我的回复</a></li>
+            </ul>
+            <div class="nav_right">
+                <span><i class="appra_status good"></i>好评</span>
+                <span><i class="appra_status medium"></i>中评</span>
+                <span><i class="appra_status poor"></i>差评</span>
+            </div>
+        </div>
+
+        <div class="appra_itemcon">
+            <div class="appra_items">
+                <table>
+                    <tr>
+                        <th class="col-xs-5">
+                            <select>
+                                <option value="">全部评价</option>
+                                <option value="">好评</option>
+                                <option value="">中评</option>
+                                <option value="">差评</option>
+                            </select>
+                        </th>
+                        <th class="col-xs-3">被评价人</th>
+                        <th class="col-xs-3">商品信息</th>
+                        <th class="col-xs-1">操作</th>
+                    </tr>
+                    <{foreach from=$order item=item}>
+                    <{foreach from=$item.items item=i}>
+                    <tr>
+                        <td>
+                            <span class="appra_status good"></span>
+                            <ul class="plcon">
+                                <li>
+                                    <p>很不多呢，果断好评</p>
+                                    <span class="pl_time">2015-08-05</span>
+                                </li>
+                                <li>
+                                    <p><span>[追加评论]</span>用了一个月还是那么好！</p>
+                                    <span class="pl_time">确认收货后 31 天追加评论</span>
+                                </li>
+                            </ul>
+                        </td>
+                        <td>
+                            商家：多鲜乐食品商场
+                        </td>
+                        <td>
+                        <a href="#">商品名称</a>
+                        </td>
+                        <td>
+                            <button class="btn btn-xs btn-danger">追加评论</button>
+                        </td>
+                    </tr>
+                     <{/foreach}>
+                    <{/foreach}>
+                </table>
+            </div>
+
+            <div class="appra_items">
+                <table>
+                    <tr>
+                        <th class="col-xs-5">
+                            <select>
+                                <option value="">全部评价</option>
+                                <option value="">好评</option>
+                                <option value="">中评</option>
+                                <option value="">差评</option>
+                            </select>
+                        </th>
+                        <th class="col-xs-3">评价人</th>
+                        <th class="col-xs-3">商品信息</th>
+                        <th class="col-xs-1">操作</th>
+                    </tr>
+                    <{foreach from=$order item=item}>
+                    <{foreach from=$item.items item=i}>
+                    <tr>
+                        <td>
+                            <span class="appra_status good"></span>
+                            <ul class="plcon">
+                                <li>
+                                    <p>很不多呢，果断好评</p>
+                                    <span class="pl_time">2015-08-05</span>
+                                </li>
+                                <li>
+                                    <p><span>[追加评论]</span>用了一个月还是那么好！</p>
+                                    <span class="pl_time">确认收货后 31 天追加评论</span>
+                                </li>
+                            </ul>
+                        </td>
+                        <td>
+                            商家：多鲜乐食品商场
+                        </td>
+                        <td>
+                        <a href="#">商品名称</a>
+                        </td>
+                        <td>
+                            <button class="btn btn-xs btn-danger" data-toggle="modal" data-target="#reply_modal">回复</button>
+                        </td>
+                    </tr>
+                     <{/foreach}>
+                    <{/foreach}>
+                </table>
+            </div>
+
+        </div>
+    </div>   
+
+
+<form class="reply_form">
+    <div class="modal fade" id="reply_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">回复评论</h4>
+          </div>
+          <div class="modal-body">
+                <textarea>123</textarea>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary">提交</button>
+          </div>
+        </div>
+      </div>
+    </div> 
+</form>
+
+
+</div>
+
+
+
+    <!-- <div class="appra_box">
         <div class="appra_items">
             <dl>
                 <dt>
                     <table>
                         <tr>
                             <th colspan="2" width="40%">
-                                <!-- <select>
+                                <select>
                                     <option>评价</option>
                                     <option>好评</option>
                                     <option>中评</option>
                                     <option>差评</option>
-                                </select> -->
+                                </select>
                                 评价
                             </th>
                             <th width="15%">评价人</th>
@@ -61,7 +252,7 @@
                                 <table>
                                     <tbody>
                                         <tr>
-                                            <!-- good  medium -->
+                                            good  medium
                                             <{foreach from=$comment[$i.product_id] item=mark}>
                                                 <td width="5%"><span class="appra_status <{if $mark.mark.mark_star eq 5}>good<{elseif $mark.mark.mark_star eq 4}>medium<{else}>poor<{/if}> "></span></td>
                                                 <td colspan="2" width="35%">
@@ -84,7 +275,7 @@
                     <{/foreach}>
                 <{/foreach}>
             </dl>
-
+    
         </div>
-    </div>
-</div>
+    </div> -->
+

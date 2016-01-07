@@ -63,6 +63,39 @@ $db['member_addrs'] = array(
 
             'comment' => ('邮箱') ,
         ) ,
+        
+        'habit_normal_time' => array(
+            'type' => 'serialize',
+            'default' => '',
+            'label' => '正常收货时间段',
+            'comment' =>  '正常收货时间段',
+        ),
+        'habit_normal_first' => array(
+            'type' => 'varchar(20)',
+            'default' => '',
+            'label' => '习惯最早收货时间',
+            'comment' => '习惯最早收货时间'
+        ),
+        
+        'habit_normal_last' => array(
+            'type' => 'varchar(20)',
+            'required' => true,
+            'label' => '习惯最晚收货时间',
+            'comment' => '习惯最晚收货时间'
+        ),
+        
+        'cart_stop_distance' => array(
+            'type' => 'varchar(20)',
+            'required' => true,
+            'label' => '最近停车距离',
+            'comment' => '最近停车距离'
+        ),
+        'delivery_scale' => array(
+            'type' => 'varchar(20)',
+            'default' => '',
+            'label' => '单次配送规模',
+            'comment' => '单次配送规模'
+        ),
         'day' => array(
             'type' => 'varchar(255)',
             'default' => ('任意日期') ,

@@ -95,7 +95,7 @@ class seller_ctl_site_passport extends seller_frontpage
     //注册页面
     public function signup($step)
     {
-        $this->title = '注册成为会员';
+        $this->title = '注册成为商家';
         $this->set_tmpl('passport');
         //检查是否登录，如果已登录则直接跳转到会员中心
         //$this->check_login();
@@ -153,48 +153,48 @@ class seller_ctl_site_passport extends seller_frontpage
 
     //入驻首页
     public function settled_index(){
-        $this->set_tmpl('passport');
+        $this->set_tmpl('seller_settled');
         $this->page('site/passport/settled/settled.html');
     }
     //入驻流程
     public function settled_process(){
-        $this->set_tmpl('passport');
+        $this->set_tmpl('seller_settled');
         $this->page('site/passport/settled/settled_process.html');
     }
 
     //招商标准
     public function insvestment(){
-        $this->set_tmpl('passport');
+        $this->set_tmpl('seller_settled');
         $this->page('site/passport/settled/insvestment.html');
     }
 
     //资质要求
     public function aptitudes(){
-        $this->set_tmpl('passport');
+        $this->set_tmpl('seller_settled');
         $this->page('site/passport/settled/aptitudes.html');
     }
 
     //资费标准
     public function tariff(){
-        $this->set_tmpl('passport');
+        $this->set_tmpl('seller_settled');
         $this->page('site/passport/settled/tariff.html');
     }
 
     //联系方式
     public function contact(){
-        $this->set_tmpl('passport');
+        $this->set_tmpl('seller_settled');
         $this->page('site/passport/settled/contact.html');
     }
 
     //注意事项
     public function payAttention(){
-        $this->set_tmpl('passport');
+        $this->set_tmpl('seller_settled');
         $this->page('site/passport/settled/payAttention.html');
     }
 
     //关于美侍客
     public function aboutmsk(){
-        $this->set_tmpl('passport');
+        $this->set_tmpl('seller_settled');
         $this->page('site/passport/settled/aboutmsk.html');
     }
 

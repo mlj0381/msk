@@ -41,8 +41,8 @@ class b2c_ctl_site_comment extends b2c_frontpage
         $this->title = '评价#'.$order['order_id'].' 商品';
         $this->set_tmpl('comment_form');
         $this->pagedata['_PAGE_'] = 'site/comment/form.html';
-        $this->output();
-        //$this->page('site/comment/form.html');
+        //$this->output();
+        $this->page('site/comment/form.html');
     }
 
     public function save($type = 'comment')
@@ -207,10 +207,12 @@ class b2c_ctl_site_comment extends b2c_frontpage
             $order_id = reset($value);
             $order[$key] = $mdl_order->dump($order_id['order_id'], '*', array('items' => array('*')));
         }
+        $this->pagedata['member_info'] = $this->member;
         $this->pagedata['comment_type'] = $comment_type;
         $this->pagedata['comment'] = $comment_list;
         $this->pagedata['order'] = $order;
         $this->pagedata['_PAGE_'] = 'site/comment/show_list.html';
+        
         $this->output();
     }
 

@@ -11,23 +11,21 @@
 // +----------------------------------------------------------------------
 
 
-class dbeav_model extends base_db_model
-{
+class dbeav_model extends base_db_model {
+
     //dbschema tableNameѡһ
     public $dbschema = null;
     public $api_id = null;
 
-    public function events()
-    {
+    public function events() {
+        
     }
 
-    public function _columns()
-    {
+    public function _columns() {
         return $this->schema['columns'];
     }
 
-    public function use_meta()
-    {
+    public function use_meta() {
         if (!$this->use_meta) {
             $meta_schema = dbeav_meta::get_meta_column($this->table_name(true));
             if (!is_array($meta_schema)) {
@@ -44,15 +42,13 @@ class dbeav_model extends base_db_model
         }
     }
 
-    public function count($filter = null)
-    {
-        $row = $this->db->select('SELECT count(*) as _count FROM `'.$this->table_name(1).'` WHERE '.$this->_filter($filter));
+    public function count($filter = null) {
+        $row = $this->db->select('SELECT count(*) as _count FROM `' . $this->table_name(1) . '` WHERE ' . $this->_filter($filter));
 
         return intval($row[0]['_count']);
     }
 
-    public function getList($cols = '*', $filter = array(), $offset = 0, $limit = -1, $orderType = null)
-    {
+    public function getList($cols = '*', $filter = array(), $offset = 0, $limit = -1, $orderType = null) {
         if (!isset($this->use_meta)) {
             $this->use_meta = false;
         }
@@ -60,15 +56,15 @@ class dbeav_model extends base_db_model
             $cols = $this->defaultCols;
         }
         if (!empty($this->appendCols)) {
-            $cols .= ','.$this->appendCols;
+            $cols .= ',' . $this->appendCols;
         }
         if ($this->use_meta) {
             $meta_info = $this->prepare_select($cols);
         }
         $orderType = $orderType ? $orderType : $this->defaultOrder;
-        $sql = 'SELECT '.$cols.' FROM `'.$this->table_name(true).'` WHERE '.$this->_filter($filter);
+        $sql = 'SELECT ' . $cols . ' FROM `' . $this->table_name(true) . '` WHERE ' . $this->_filter($filter);
         if ($orderType) {
-            $sql .= ' ORDER BY '.(is_array($orderType) ? implode($orderType, ' ') : $orderType);
+            $sql .= ' ORDER BY ' . (is_array($orderType) ? implode($orderType, ' ') : $orderType);
         }
         $data = $this->db->selectLimit($sql, $limit, $offset);
         $this->tidy_data($data, $cols);
@@ -82,8 +78,7 @@ class dbeav_model extends base_db_model
         return $data;
     }
 
-    public function getRow($cols = '*', $filter = array(), $orderType = null)
-    {
+    public function getRow($cols = '*', $filter = array(), $orderType = null) {
         $data = $this->getList($cols, $filter, 0, 1, $orderType);
         if ($data) {
             return $data['0'];
@@ -92,8 +87,7 @@ class dbeav_model extends base_db_model
         }
     }
 
-    public function _filter($filter, $tableAlias = null, $baseWhere = null)
-    {
+    public function _filter($filter, $tableAlias = null, $baseWhere = null) {
         if ($this->use_meta) {
             foreach (array_keys((array) $filter) as $col) {
                 if (in_array(strval($col), $this->metaColumn)) {
@@ -107,14 +101,13 @@ class dbeav_model extends base_db_model
         $dbeav_filter = vmc::singleton('dbeav_filter');
         $dbeav_filter_ret = $dbeav_filter->dbeav_filter_parser($filter, $tableAlias, $baseWhere, $this);
         if ($this->use_meta) {
-            return $dbeav_filter_ret.$meta_filter_ret;
+            return $dbeav_filter_ret . $meta_filter_ret;
         }
 
         return $dbeav_filter_ret;
     }
 
-    public function insert(&$data)
-    {
+    public function insert(&$data) {
         if ($ret = parent::insert($data)) {
             if ($this->use_meta) {
                 foreach ($this->metaColumn as $col) {
@@ -131,8 +124,7 @@ class dbeav_model extends base_db_model
         return $ret;
     }
 
-    public function delete($filter, $subSdf = 'delete')
-    {
+    public function delete($filter, $subSdf = 'delete') {
         if ($subSdf && !is_array($subSdf)) {
             $subSdf = $this->getSubSdf($subSdf);
         }
@@ -188,8 +180,7 @@ class dbeav_model extends base_db_model
         return parent::delete($filter);
     }
 
-    public function update($data, $filter = array(), $mustUpdate = null)
-    {
+    public function update($data, $filter = array(), $mustUpdate = null) {
         if ($this->use_meta) {
             $pk = $this->get_pk_list($filter);
             foreach ($this->metaColumn as $col) {
@@ -205,10 +196,9 @@ class dbeav_model extends base_db_model
         return parent::update($data, $this->_filter($filter), $mustUpdate);
     }
 
-    private function get_pk_list(&$filter)
-    {
+    private function get_pk_list(&$filter) {
         $rows = $this->getList($this->idColumn, $filter);
-        if(!$rows || !is_array($rows)){
+        if (!$rows || !is_array($rows)) {
             return array();
         }
         foreach ($rows as $row) {
@@ -228,13 +218,11 @@ class dbeav_model extends base_db_model
      *
      * @return bool
      */
-    public function meta_register($column)
-    {
+    public function meta_register($column) {
         return app::get('dbeav')->model('meta_register')->register($this->table_name(true), $this->idColumn, $column);
     }
 
-    public function meta_meta($col)
-    {
+    public function meta_meta($col) {
         return app::get('dbeav')->model('meta_register')->drop($this->table_name(true), $col);
     }
 
@@ -247,10 +235,9 @@ class dbeav_model extends base_db_model
      *
      * @return array
      */
-    public function prepare_select(&$cols)
-    {
+    public function prepare_select(&$cols) {
         $aCols = explode(',', $cols);
-        if ($aCols[0] == '*' or !$aCols) {
+        if ($aCols[0] == '*' or ! $aCols) {
             $ret['has_pk'] = true;
             $ret['metacols'] = $this->metaColumn;
 
@@ -275,18 +262,17 @@ class dbeav_model extends base_db_model
         return $ret;
     }
 
-    public function select($table_name = '')
-    {
+    public function select($table_name = '') {
         $table_name = ($talbe_name) ? $table_name : $this->table_name(true);
         $adapter = new dbeav_select_mysql();
         $obj = vmc::singleton('dbeav_select')->set_adapter($adapter);
 
         return $obj->set_model($this)->reset()->from($table_name);
-    }//End Function
+    }
 
+//End Function
 
-    public function save(&$data, $mustUpdate = null, $mustInsert = false)
-    {
+    public function save(&$data, $mustUpdate = null, $mustInsert = false) {
         // ִsave
         $this->_save_parent($data, $mustUpdate, $mustInsert);
         $plainData = $this->sdf_to_plain($data);
@@ -305,8 +291,7 @@ class dbeav_model extends base_db_model
         return true;
     }
 
-    public function _save_parent(&$data, $mustUpdate, $mustInsert = false)
-    {
+    public function _save_parent(&$data, $mustUpdate, $mustInsert = false) {
         foreach ((array) $this->has_parent as $k => $v) {
             if (!isset($data[$k])) {
                 continue;
@@ -315,9 +300,9 @@ class dbeav_model extends base_db_model
             $model = app::get($parentModel[1] ? $parentModel[1] : $this->app->app_id)->model($parentModel[0]);
             $model->save($data[$k], $mustUpdate, $mustInsert);
             foreach ($this->_columns() as $ck => $cv) {
-                if (in_array($cv['type'], array('table:'.$parentModel[0], 'table:'.$parentModel[0].'@'.($parentModel[1] ? $parentModel[1] : $this->app->app_id)))) {
+                if (in_array($cv['type'], array('table:' . $parentModel[0], 'table:' . $parentModel[0] . '@' . ($parentModel[1] ? $parentModel[1] : $this->app->app_id)))) {
                     if ($cv['sdfpath']) {
-                        eval('$data["'.implode('"]["', explode('/', $cv['sdfpath'])).'"] = $data[$k][$model->idColumn]; ');
+                        eval('$data["' . implode('"]["', explode('/', $cv['sdfpath'])) . '"] = $data[$k][$model->idColumn]; ');
                     } else {
                         $data[$ck] = $data[$k][$model->idColumn];
                     }
@@ -327,12 +312,11 @@ class dbeav_model extends base_db_model
         }
     }
 
-    public function _save_depends(&$data, $mustUpdate = null, $mustInsert = false)
-    {
+    public function _save_depends(&$data, $mustUpdate = null, $mustInsert = false) {
         foreach (array_merge((array) $this->has_many, (array) $this->has_one) as $mk => $mv) {
             $mkKeys = explode('/', $mk);
             $mkKey = array_pop($mkKeys);
-            eval(' $mkKeyExists = array_key_exists( $mkKey,(array)$data'.($mkKeys ? '["'.implode('"]["', $mkKeys).'"]' : '').' ); ');
+            eval(' $mkKeyExists = array_key_exists( $mkKey,(array)$data' . ($mkKeys ? '["' . implode('"]["', $mkKeys) . '"]' : '') . ' ); ');
             if ($mkKeyExists) {
                 $itemdata = utils::apath($data, explode('/', $mk));
                 $mv = explode(':', $mv);
@@ -363,11 +347,11 @@ class dbeav_model extends base_db_model
                     if (!empty($repId) && ($hasDefId = array_search($defaultDataId, $repId)) !== false) {
                         unset($repId[$hasDefId]);
                     }
-                    eval(' $subMustUpdate = $data'.($mkKeys ? '["'.implode('"]["', $mkKeys).'"]' : '').'["'.$mkKey.'"] ; ');
-                    $contrastSaveData[$mconk] = array($mconv,$subMustUpdate);
+                    eval(' $subMustUpdate = $data' . ($mkKeys ? '["' . implode('"]["', $mkKeys) . '"]' : '') . '["' . $mkKey . '"] ; ');
+                    $contrastSaveData[$mconk] = array($mconv, $subMustUpdate);
 //                    $obj->save($mconv,$subMustUpdate);
                 }
-                if($repId){
+                if ($repId) {
                     foreach ((array) $repId as $aRepId) {
                         $obj->delete($aRepId);
                     }
@@ -375,7 +359,7 @@ class dbeav_model extends base_db_model
                 if ($contrastSaveData) {
                     foreach ($contrastSaveData as $contrastSaveDatak => $contrastSaveDatav) {
                         $obj->save($contrastSaveDatav[0], $contrastSaveDatav[1], $mustInsert);
-                        eval(' $data["'.implode('"]["', explode('/', $mk)).'"][$contrastSaveDatak] = $contrastSaveDatav[0]; ');
+                        eval(' $data["' . implode('"]["', explode('/', $mk)) . '"][$contrastSaveDatak] = $contrastSaveDatav[0]; ');
                         if ($contrastSaveDatav[0]['default']) {
                             $this->set_default($data[$pkey['p']], $defaultDataId);
                         }
@@ -386,26 +370,44 @@ class dbeav_model extends base_db_model
         }
     }
 
-    public function dump($filter, $field = '*', $subSdf = null)
-    {
+    public function dumpList($filter, $field = '*', $subSdf = null) {
+        if (!$filter && !is_array($filter)) {
+            return;
+        }
+        $data = $this->getList($field, $filter);
+        if (!$data) {
+            return;
+        }
+        if ($subSdf && !is_array($subSdf)) {
+            $subSdf = $this->getSubSdf($subSdf);
+        }
+        if ($subSdf) {
+            foreach ($data as $value) {
+                $redata[] = $this->plain_to_sdf($value);
+                $this->_dump_depends($value, $subSdf, $redata[]);
+            }
+        }
+        return $redata;
+    }
+
+    public function dump($filter, $field = '*', $subSdf = null) {
+
         if (!$filter || (is_array($filter) && count($filter) == 1 && !current($filter))) {
+
             return;
         }
         //todo:ever need check
         if (!is_array($filter)) {
             $filter = array($this->idColumn => $filter);
         }
-
         $field = explode(':', $field);
         $unfield = $field[1];
         $field = $field[0];
-
         $data = $this->db_dump($filter, $field);
 
         if (!$data) {
             return;
         }
-
         $redata = $this->plain_to_sdf($data);
         if ($subSdf && !is_array($subSdf)) {
             $subSdf = $this->getSubSdf($subSdf);
@@ -419,7 +421,7 @@ class dbeav_model extends base_db_model
                 $v = trim($v);
                 if ($tCols[$v]) {
                     if ($tCols[$v]['sdfpath']) {
-                        eval('unset( $redata["'.str_replace('/', '"]["', $tCols[$v]['sdfpath']).'"]);');
+                        eval('unset( $redata["' . str_replace('/', '"]["', $tCols[$v]['sdfpath']) . '"]);');
                     } else {
                         unset($redata[$v]);
                     }
@@ -430,8 +432,7 @@ class dbeav_model extends base_db_model
         return $redata;
     }
 
-    public function _dump_depends(&$data, $subSdf, &$redata)
-    {
+    public function _dump_depends(&$data, $subSdf, &$redata) {
         $has_col = array_merge((array) $this->has_many, (array) $this->has_one);
         foreach ((array) $subSdf as $subSdfKey => $subSdfVal) {
             $filter = null;
@@ -447,9 +448,9 @@ class dbeav_model extends base_db_model
                 $pkey = $this->_getPkey($subInfo[0], $subInfo[2], $appId);
                 $filter[$pkey['c']] = $data[$pkey['p']];
 
-                if (method_exists($this, '_dump_depends_'.$subInfo[0])) {
-                    eval('$this->_dump_depends_'.$subInfo[0].'($data,$redata,$filter,$subSdfKey,$subSdfVal);');
-                //    $this->_dump_depends_.$subInfo[0]($data,$filter,$subSdf,$subSdfVal);
+                if (method_exists($this, '_dump_depends_' . $subInfo[0])) {
+                    eval('$this->_dump_depends_' . $subInfo[0] . '($data,$redata,$filter,$subSdfKey,$subSdfVal);');
+                    //    $this->_dump_depends_.$subInfo[0]($data,$filter,$subSdf,$subSdfVal);
                 } else {
                     $subObj = app::get($appId ? $appId : $this->app->app_id)->model($subInfo[0]);
                     $start = '0';
@@ -473,20 +474,20 @@ class dbeav_model extends base_db_model
                             $subDump = $subObj->dump($aIdArray, $subSdfVal[0], $subSdfVal[1]);
                             if ($this->has_many[$subSdfKey]) {
                                 switch (count($aIdArray)) {
-                                case 1:
-                                    $subSdfKeyChild = '["'.current($aIdArray).'"]';
-                                    break;
-                                case 2:
-                                    $subSdfKeyChild = '["'.current(array_diff_assoc($aIdArray, $filter)).'"]';
-                                    break;
-                                default:
-                                    $subSdfKeyChild = '[]';
-                                    break;
-                            }
+                                    case 1:
+                                        $subSdfKeyChild = '["' . current($aIdArray) . '"]';
+                                        break;
+                                    case 2:
+                                        $subSdfKeyChild = '["' . current(array_diff_assoc($aIdArray, $filter)) . '"]';
+                                        break;
+                                    default:
+                                        $subSdfKeyChild = '[]';
+                                        break;
+                                }
                             } else {
                                 $subSdfKeyChild = '';
                             }
-                            eval('$redata["'.strtr($subSdfKey, array('/' => '"]["')).'"]'.$subSdfKeyChild.' = $subDump; ');
+                            eval('$redata["' . strtr($subSdfKey, array('/' => '"]["')) . '"]' . $subSdfKeyChild . ' = $subDump; ');
                         }
                     }
                 }
@@ -507,7 +508,7 @@ class dbeav_model extends base_db_model
                 $subObj = app::get($appId ? $appId : $this->app->app_id)->model($tableName);
                 $tCols = $this->_columns();
                 foreach ($tCols as $tCol => $tVal) {
-                    if ($tVal['type'] == 'table:'.$tableName.($appId ? '@'.$appId : '')) {
+                    if ($tVal['type'] == 'table:' . $tableName . ($appId ? '@' . $appId : '')) {
                         $pkey = array(
                             'p' => $tCol,
                             'c' => $subObj->idColumn,
@@ -516,7 +517,7 @@ class dbeav_model extends base_db_model
                             if ($tVal['sdfpath']) {
                                 $subSdfKey = substr($tVal['sdfpath'], 0, strpos($tVal['sdfpath'], '/'));
                             } elseif ($tableName == $tCol) {
-                                $subSdfKey = '_'.$tableName;
+                                $subSdfKey = '_' . $tableName;
                             } else {
                                 $subSdfKey = $tableName;
                             }
@@ -532,20 +533,19 @@ class dbeav_model extends base_db_model
         }
     }
 
-    public function _getPkey($tableName, $cCol, $appId)
-    {
+    public function _getPkey($tableName, $cCol, $appId) {
         if ($cCol) {
             $pkey = explode('^', $cCol);
 
-            return array('p' => $pkey[0],'c' => $pkey[1]);
+            return array('p' => $pkey[0], 'c' => $pkey[1]);
         }
-        $basetable = 'table:'.$this->table_name();
+        $basetable = 'table:' . $this->table_name();
 
         $oDbTable = new base_application_dbtable();
         $itemdefine = $oDbTable->detect(($appId ? $appId : $this->app->app_id), $tableName)->load();
 
         foreach ($itemdefine['columns'] as $k => $v) {
-            if ($v['type'] == $basetable || $v['type'] == $basetable.'@'.$this->app->app_id) {
+            if ($v['type'] == $basetable || $v['type'] == $basetable . '@' . $this->app->app_id) {
                 $pk = substr($v['type'], strlen($v['type']));
                 $pkey = array(
                     'p' => $pk ? $pk : $this->idColumn,
@@ -558,17 +558,15 @@ class dbeav_model extends base_db_model
         return $pkey;
     }
 
-    public function set_default($parentId, $defaultDataId)
-    {
+    public function set_default($parentId, $defaultDataId) {
         return true;
     }
 
-    public function apply_pipe($action, &$data)
-    {
+    public function apply_pipe($action, &$data) {
+        
     }
 
-    public function sdf_to_plain($data, $appends = false)
-    {
+    public function sdf_to_plain($data, $appends = false) {
         foreach ($this->_columns() as $k => $v) {
             $map[$k] = $v['sdfpath'] ? $v['sdfpath'] : $k;
         }
@@ -587,8 +585,7 @@ class dbeav_model extends base_db_model
         return $return;
     }
 
-    public function plain_to_sdf($data, $appends = false)
-    {
+    public function plain_to_sdf($data, $appends = false) {
         foreach ($this->_columns() as $k => $v) {
             $map[$k] = isset($v['sdfpath']) ? $v['sdfpath'] : $k;
         }
@@ -606,8 +603,7 @@ class dbeav_model extends base_db_model
         return $return;
     }
 
-    public function getSubSdf($key)
-    {
+    public function getSubSdf($key) {
         if (array_key_exists($key, (array) $this->subSdf)) {
             return $this->subSdf[$key];
         } elseif ($this->subSdf['default']) {
@@ -621,8 +617,7 @@ class dbeav_model extends base_db_model
         return $subSdf ? $subSdf : null;
     }
 
-    public function batch_dump($filter, $field = '*', $subSdf = null, $start = 0, $limit = 20, $orderType = null)
-    {
+    public function batch_dump($filter, $field = '*', $subSdf = null, $start = 0, $limit = 20, $orderType = null) {
         $aId = $this->getList(implode(',', (array) $this->idColumn), $filter, $start, $limit, $orderType);
         $rs = array();
         foreach ($aId as $id) {
@@ -631,8 +626,8 @@ class dbeav_model extends base_db_model
 
         return $rs;
     }
-    public function searchOptions()
-    {
+
+    public function searchOptions() {
         $columns = array();
         foreach ($this->_columns() as $k => $v) {
             if (isset($v['searchtype']) && $v['searchtype']) {
@@ -642,4 +637,5 @@ class dbeav_model extends base_db_model
 
         return $columns;
     }
+
 }
