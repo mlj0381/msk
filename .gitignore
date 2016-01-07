@@ -9,7 +9,7 @@ config/certi.php
 config/config.php
 config/install.lock.php
 config/dev.zl
-config/example.config.php
+public/images
 tmp/
 data/
 logs/

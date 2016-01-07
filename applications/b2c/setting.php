@@ -115,4 +115,20 @@ $setting = array(
         'default'=>get_cfg_var('upload_max_filesize')?intval(get_cfg_var('upload_max_filesize')):2,
         'helpinfo'=>(get_cfg_var('upload_max_filesize') ? '<span class="text-danger">服务器当前限制'.get_cfg_var('upload_max_filesize').'</span>' : '')
     ) ,
+
+
+	'pages_plat_type' => array(
+		'default' => array(
+			0 => '商城',
+			1 => '店铺'
+		)
+	),
+
+	'pages_position_types' => array(
+		'default' => array(
+			'0' => ('普通'),
+			'1' => ('幻灯'),
+			'2' => ('商品'),
+		)
+	),
 );
