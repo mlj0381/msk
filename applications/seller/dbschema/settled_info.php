@@ -9,7 +9,7 @@
 // +----------------------------------------------------------------------
 // | Author: Shanghai ChenShang Software Technology Co., Ltd.
 // +----------------------------------------------------------------------
-$db['companys'] = array(
+$db['settled_info'] = array(
     'columns' => array(
         'company_id' => array(
             'type' => 'number',
@@ -662,62 +662,23 @@ $db['companys'] = array(
             'label' => '质量控制系统图',
             'comment' => '质量控制系统图',
         ),
-        
-        'company_people' => array(
-            'type' => 'serialize',
-            'required' => true,
-            'label' => '公司组织架构信息',
-            'comment' => '公司组织架构信息',
-        ),
-        
-        'e_business_people' => array(
-            'type' => 'serialize',
+
+        'people_info' => array(
+            'type' => 'number',
             'required' => true,
             'label' => '电商团队人员信息',
             'comment' => '电商团队人员信息',
         ),
-        
-        'brand_name' => array(
-            'type' => 'varchar(50)',
+        'seller_id' => array(
+            'type' => 'number',
             'required' => true,
-            'label' => '品牌名称',
-            'comment' => '品牌名称',
-        ),
-        'brand_register_image' => array(
-            'type' => 'varchar(50)',
-            'required' => true,
-            'label' => '品牌图片',
-            'comment' => '品牌图片',
-        ),
-        'brand_honor_num' => array(
-            'type' => 'varchar(50)',
-            'required' => true,
-            'label' => '品牌荣誉编号',
-            'comment' => '品牌荣誉编号',
-        ),
-        'brand_honor_time' => array(
-            'type' => 'varchar(50)',
-            'required' => true,
-            'label' => '品牌荣誉发证日期',
-            'comment' => '品牌荣誉发证日期',
-        ),
-        'brand_honor_unit' => array(
-            'type' => 'varchar(50)',
-            'required' => true,
-            'label' => '品牌荣誉发证机构',
-            'comment' => '品牌荣誉发证机构',
-        ),
-        'brand_honor_image' => array(
-            'type' => 'char(32)',
-            'required' => true,
-            'label' => '品牌荣誉图片',
-            'comment' => '品牌荣誉图片',
-        ),
-        'pack_image' => array(
-            'type' => 'varchar(50)',
-            'required' => true,
-            'label' => '包装图片',
-            'comment' => '包装图片',
+            'default' => 0,
+            'label' => '商家',
+            'searchtype' => 'has',
+            'in_list' => true,
+            'default_in_list' => true,
+            'order' => '1',
+            'comment' => '商家',
         ),
         'no_pass' => array(
             'type' => 'text',

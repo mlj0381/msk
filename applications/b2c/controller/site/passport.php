@@ -139,6 +139,7 @@ class b2c_ctl_site_passport extends b2c_frontpage {
         $this->title = '注册成为会员';
         //检查是否登录，如果已登录则直接跳转到会员中心
         $this->check_login();
+        
         $this->set_forward($forward); //设置登录成功后跳转
         //获取会员注册项
         if ($this->app->getConf('member_signup_show_attr') == 'true') {

@@ -69,8 +69,8 @@
     <div class="appra_box">
         <div class="appra_navbox clearfix">
             <ul class="appra_nav">
-                <li class="active"><a href="javascript:;">来自买家</a></li>
-                <li><a href="javascript:;">我的回复</a></li>
+                <li class="active"><a class="comment-tab" href="javascript:;">来自买家</a></li>
+                <li><a class="comment-tab" href="javascript:;">我的回复</a></li>
             </ul>
             <div class="nav_right">
                 <span><i class="appra_status good"></i>好评</span>
@@ -91,37 +91,47 @@
                                 <option value="">差评</option>
                             </select>
                         </th>
-                        <th class="col-xs-3">评价人</th>
+                        <th class="col-xs-3">被评价人</th>
                         <th class="col-xs-3">商品信息</th>
                         <th class="col-xs-1">操作</th>
                     </tr>
-                    <{foreach from=$order item=item}>
-                    <{foreach from=$item.items item=i}>
+                    <{foreach from=$comment_member key=key item=items}>
+                    
                     <tr>
                         <td>
                             <span class="appra_status good"></span>
+                            <{foreach from=$items key=key item=item}>
+                            <{if is_numeric($key)}>
+                            
                             <ul class="plcon">
+                                <{if $item.comment_num eq '1'}>
                                 <li>
-                                    <p>很不多呢，果断好评</p>
-                                    <span class="pl_time">2015-08-05</span>
+                                    <p><{$item.content}></p>
+                                    <span class="pl_time"><{$item.createtime}></span>
                                 </li>
+                                <{else $item.comment_num eq '2'}>
                                 <li>
-                                    <p><span>[追加评论]</span>用了一个月还是那么好！</p>
+                                    <p><span>[追加评论]</span><{$item.content}></p>
                                     <span class="pl_time">确认收货后 31 天追加评论</span>
                                 </li>
+                                <{/if}>
                             </ul>
+                            <{/if}>
+                            <{/foreach}>
                         </td>
                         <td>
-                            商家：多鲜乐食品商场
+                            商家：<{$items.store_info.store_name}>
                         </td>
                         <td>
-                        <a href="#">商品名称</a>
+                        <a href="#"><{$items.goods_info.name}></a>
                         </td>
                         <td>
-                            <button class="btn btn-xs btn-danger">追加评论</button>
+                            
+                            <a href="<{link app=b2c ctl=site_comment act=form args0=$items.goods_info.order_id args1=$items.goods_info.product_id args2=comment args3=reply}>" class="btn btn-xs btn-danger">回复</a>
+                            
                         </td>
                     </tr>
-                     <{/foreach}>
+                     
                     <{/foreach}>
                 </table>
             </div>
@@ -130,44 +140,50 @@
                 <table>
                     <tr>
                         <th class="col-xs-5">
-                            <select>
-                                <option value="">全部评价</option>
-                                <option value="">好评</option>
-                                <option value="">中评</option>
-                                <option value="">差评</option>
+                            
+                            <select class="comment-select">
+                                <option  href="<{link app=seller ctl=site_store act=appraisal args0=all}>" value="">全部评价</option>
+                                <option <{link app=seller ctl=site_store act=appraisal args0=1}>" value="" value="">好评</option>
+                                <option <{link app=seller ctl=site_store act=appraisal args0=2}>" value="" value="">中评</option>
+                                <option <{link app=seller ctl=site_store act=appraisal args0=3}>" value="" value="">差评</option>
                             </select>
                         </th>
-                        <th class="col-xs-3">评价人</th>
+                        <th class="col-xs-3">被评价人</th>
                         <th class="col-xs-3">商品信息</th>
                         <th class="col-xs-1">操作</th>
                     </tr>
-                    <{foreach from=$order item=item}>
-                    <{foreach from=$item.items item=i}>
+                    <{foreach from=$comment_seller key=key item=items}>
+                    
                     <tr>
                         <td>
                             <span class="appra_status good"></span>
+                            <{foreach from=$items key=key item=item}>
+                            <{if is_numeric($key)}>
+                            
                             <ul class="plcon">
+                                
                                 <li>
-                                    <p>很不多呢，果断好评</p>
-                                    <span class="pl_time">2015-08-05</span>
+                                    <p><{$item.content}></p>
+                                    <span class="pl_time"><{$item.createtime|cdate}></span>
                                 </li>
-                                <li>
-                                    <p><span>[追加评论]</span>用了一个月还是那么好！</p>
-                                    <span class="pl_time">确认收货后 31 天追加评论</span>
-                                </li>
+                                
                             </ul>
+                            <{/if}>
+                            <{/foreach}>
                         </td>
                         <td>
-                            商家：多鲜乐食品商场
+                            买家：<{$items.member_info.login_account}>
                         </td>
                         <td>
-                        <a href="#">商品名称</a>
+                        <a href="#"><{$items.goods_info.name}></a>
                         </td>
                         <td>
-                            <button class="btn btn-xs btn-danger" data-toggle="modal" data-target="#reply_modal">回复</button>
+                            
+                            <a href="<{link app=b2c ctl=site_comment act=form args0=$items.goods_info.order_id args1=$items.goods_info.product_id args2=comment args3=reply}>" class="btn btn-xs btn-danger">回复</a>
+                            
                         </td>
                     </tr>
-                     <{/foreach}>
+                     
                     <{/foreach}>
                 </table>
             </div>
