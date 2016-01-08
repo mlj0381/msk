@@ -16,7 +16,6 @@ class seller_ctl_site_passport extends seller_frontpage
     public function __construct(&$app){
         parent::__construct($app);
         $this->seller = $this->get_current_seller();
-        $this->pagedata['type'] = 'seller';
     }
 
     public function index(){
@@ -37,7 +36,6 @@ class seller_ctl_site_passport extends seller_frontpage
     }
     //登录方法
     public function login(){
-        
        $this->title = '商家登录';
        $this->check_login();
        $this->set_forward($forward);

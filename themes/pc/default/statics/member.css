@@ -1819,6 +1819,25 @@ ol {
   text-align: center;
   vertical-align: middle;
 }
+.buyer_container .modify_record_page .goods_num {
+  margin-top: 5px;
+  font-size: 16px;
+}
+.buyer_container .modify_record_page .goods_num span {
+  font-weight: bold;
+}
+.buyer_container .modify_record_page table.modify_list {
+  margin-top: 25px;
+  border: 1px solid #ddd;
+}
+.buyer_container .modify_record_page table.modify_list th {
+  background: #ddd;
+  text-align: center;
+}
+.buyer_container .modify_record_page table.modify_list td {
+  text-align: center;
+  vertical-align: middle;
+}
 .buyer_container .goods_sell {
   padding-bottom: 20px;
 }
