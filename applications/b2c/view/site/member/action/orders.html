@@ -87,7 +87,7 @@
                         <li>
                             <{$order.ship_status|order_ship_status}>
                         </li>
-                        <li><a href="<{link app=store ctl=site_store act=index args0=$order.store_id}>"><{$order.store_info.store_name}></a></li>
+                        <li><a href="<{link app=store ctl=site_store act=index args0=$order.store_id}>"><{$order.store_name}></a></li>
                         <li><a href="#"><img src="<{$baseurl}>/themes/pc/default/statics/images/customer_03.jpg"></a></li>
                         <{if $status eq 's7'}>
                         <li style="float: right; margin-top:-20px;">共有(<{$order_items_group[$order.order_id]|order_count}>)商品</li>
@@ -145,13 +145,16 @@
                             <{/if}>
                             
                             <{if $order.confirm eq 'Y' && $order.status eq 'active' }>             
-                            <{if $order.comment_type eq 'false'}>
+                            <{if $order.comment_type eq '0'}>
                             <a class="btn btn-xs btn-block btn-default" href="<{link app=b2c ctl=site_comment act=form args0=$order.order_id args1=$item.product_id}>">评价商品</a>
                             <{else}>
-                            <a class="btn btn-xs btn-block btn-default" href="<{link app=b2c ctl=site_comment act=form args0=$order.order_id args1=$item.product_id}>">追加评价</a>
+                            <a class="btn btn-xs btn-block btn-default" <{if $order.comment_type eq '2'}>disabled <{/if}> href="<{link app=b2c ctl=site_comment act=form args0=$order.order_id args1=$item.product_id}>">追加评价</a>
                             <{/if}>
                             <{/if}>
-                            <{if ($order.confirm eq 'Y' || $order.ship_status eq '1') && $order.status eq 'active'}>
+                            <{if $order.confirm eq 'N' && $order.ship_status eq '1' && $order.status eq 'active'}>
+                            <a class="btn btn-xs btn-block btn-default" href="<{link app=aftersales ctl=site_member act=newrequest args0=$order.order_id args1=$item.product_id args2=input args3=price}>">申请退款</a>
+                            <{/if}> 
+                            <{if ($order.confirm eq 'Y' && $order.ship_status eq '1') && $order.status eq 'active'}>
                             <a class="btn btn-xs btn-block btn-default" href="<{link app=aftersales ctl=site_member act=newrequest args0=$order.order_id args1=$item.product_id}>">申请售后</a>
                             <{/if}>       
                             <{/if}>
@@ -168,7 +171,7 @@
 
 
                 <td class="text-center" width="12%">
-                    <{if $order.pay_status eq '0'}>
+                    <{if $order.pay_status eq '0' && $order.status eq 'active'}>
                     待付款
                     <{/if}>
                     <{if $order.pay_status eq '1' &&$order.ship_status eq '0'}>
@@ -178,7 +181,7 @@
                     待收货
                     <{/if}>
                     
-                    <{if ($order.pay_status eq '1' || $order.is_cod eq 'Y') && $order.ship_status eq '1' && $order.confirm eq 'Y'}>
+                    <{if ($order.pay_status eq '1' || $order.is_cod eq 'Y') && $order.ship_status eq '1' && $order.confirm eq 'Y' && $order.comment_type eq '0'}>
                     待评价<br />
                     <{/if}>
                     

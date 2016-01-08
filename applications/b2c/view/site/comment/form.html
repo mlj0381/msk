@@ -7,10 +7,12 @@
         <li class="active">评价 #<{$order.order_id}> 商品</li>
     </ol>
     <div class="page-header">
-        <h1>商品评价 <small>Comment</small></h1>
+        <h1><{if $good_comment}>追加评论<{else}>商品评价<{/if}><small>Comment</small></h1>
     </div>
     <form class="form-horizontal pl_form" action="<{link app=b2c ctl=site_comment act=save args0=comment}>" method="post" >
-        <input type="hidden" name="order_id" value="<{$order.order_id}>">
+        <input type="hidden" name="comment[order_id]" value="<{$order.order_id}>">
+        <input type="hidden" name="comment_id" value="<{$good_comment.comment_id}>">
+        <input type="hidden" name="reply" value="<{$reply}>">
         <div class="form-group">
             <label class="col-xs-2 control-label">商品与描述相符度：</label>
             <div class="col-xs-5 ">
@@ -22,7 +24,7 @@
                     <i class="icon-star bright"></i>
                 </span>
                 <span class="pl_num">5</span>分
-                <input type="hidden" name="serve" value="5"/>
+                <input type="hidden" name="mark[goods_grade]" value="5"/>
             </div>
         </div>
         <div class="form-group">
@@ -36,7 +38,7 @@
                     <i class="icon-star bright"></i>
                 </span>
                 <span class="pl_num">5</span>分
-                <input type="hidden" name="attitude" value="5"/>
+                <input type="hidden" name="mark[serve_grade]" value="5"/>
             </div>
         </div>
         <div class="form-group">
@@ -50,22 +52,33 @@
                     <i class="icon-star bright"></i>
                 </span>
                 <span class="pl_num">5</span>分
-                <input type="hidden" name="carriage" value="5"/>
+                <input type="hidden" name="mark[logistics_grade]" value="5"/>
+            </div>
+            
+        </div>
+        <div class="form-group">
+            <label class="col-xs-2"></label>
+            <div class="col-xs-2">
+                <input type="radio" name="mark[mark_star]" value="3" /> 差评  
+                <span style="margin:0 5px;"><input type="radio" name="mark[mark_star]" value="2"/> 中评</span>
+                <input type="radio" name="mark[mark_star]" value="1" checked="checked"/> 好评  
             </div>
         </div>
         <div class="form-group">
             <label  class="col-xs-2 control-label">说两句：</label>
             <div class="col-xs-5">
-                <input type="hidden" name="store_id" value="<{$order.store_info.store_id}>">
-                <textarea class="form-control"  name="comment[word][<{$item.goods_id}>][<{$item.product_id}>]" rows="2"></textarea>
+                <input type="hidden" name="comment[store_id]" value="<{$order.store_info.store_id}>">
+                <input type="hidden" name="comment[member_id]" value="<{$order.member_id}>">
+                <textarea class="form-control"  name="comment[content]" rows="2"></textarea>
             </div>
         </div>
         <div class="form-group">
             <label  class="col-xs-2 control-label">晒一晒：</label>
             <div class="col-xs-5">
-<!--                <input type="file" class="comment-image"  name="comment[{$item.product_id}][]">-->
-<input type="hidden" name="ad_content[image][]" value="<{}>"/>
-                <input type="file" data-url="<{link app=image ctl=site_upload act=upload}>" accept="image/*" /><span class="hide">上传成功</span>
+                <!--                <input type="file" class="comment-image"  name="comment[{$item.product_id}][]">-->
+                <input type="hidden" name="comment[image_id][]" value="<{}>"/>
+                <input class="comment-image" type="file" data-url="<{link app=image ctl=site_upload act=upload}>" accept="image/*" />
+                <span class="hide">上传成功</span>
                 <span class="help-block">最多上传5张,每张大小不能超过<span class="text-danger"><{$env.conf.b2c.comment_image_size}>MB</span>,支持bmp,gif,jpg,png,jpeg</span>
             </div>
         </div>
@@ -74,16 +87,19 @@
                 <button class="btn btn-md btn-danger" type="submit">提交评论</button>
             </div>
         </div>
-
+        <{foreach from=$order.items item=item name=oig}>
+        <{if $product_id eq $item.product_id}>
+        <input type="hidden" name="comment[product_id]" value="<{$item.product_id}>">
+        <input type="hidden" name="goods_id" value="<{$item.goods_id}>">
         <table class="table">
             <tr>
                 <td class="col-xs-3>">
                     <div class="goods_item">
                         <a href="<{link app=b2c ctl=site_product act=index args0=$item.product_id}>">
-                            <img class="img-thumbnail" src="<{$base_url}>/themes/pc/default/statics/images/bestsellers.jpg" alt="<{$item.name}>" />
+                            <img class="img-thumbnail" src="<{$item.image_id|storager:'xs'}>" alt="<{$item.name}>" />
                         </a>
                         <div class="goods_info">
-                            <a class="text-muted" href="<{link app=b2c ctl=site_product act=index args0=$item.product_id}>">正宗宁夏滩羊肉<{if $item.spec_info}><br><small><{$item.spec_info}></small><{/if}></a>
+                            <a class="text-muted" href="<{link app=b2c ctl=site_product act=index args0=$item.product_id}>"><{$item.name}><{if $item.spec_info}><br><small><{$item.spec_info}></small><{/if}></a>
                             <span class="g_price"><small>￥</small><{$item.buy_price|cur}> x <{$item.nums}></span>
                             <div><a href="<{link app=store ctl=site_store act=index args0=$order.store_info.store_id}>">店铺：<{$order.store_info.store_name}></a></div>
                         </div>
@@ -93,6 +109,9 @@
                 <td class="col-xs-8"></td>
             </tr>
         </table>
+        <{break}>
+        <{/if}>
+        <{/foreach}>
     </form>
     <!-- <form class="form-horizontal" target="comment_frame" enctype="multipart/form-data" action="<{link app=b2c ctl=site_comment act=save args0=comment}>" method="post" id="comment_form">
         <input type="hidden" name="order_id" value="<{$order.order_id}>">
@@ -323,26 +342,30 @@
 
 <script type="text/javascript">
     $(function () {
-        $('.star_group').starRating({
-            brightClass: 'bright',
-            numbox: '.pl_num'
-        });
-        var fileObj = {
-        add: function (e, data) {
-            if (!data.files[0]['type'].match(/^image/)) {
-                alert('非法上传，不是图片类型');
-            }
-            data.submit();
-        },
-        done: function (e, data) {
-            var re = $.parseJSON(data.result);
-            var input = e.target || e.srcElement;
-            $(input).prev('input[type="hidden"]').attr('value', re.image_id);
-            $(input).next('span').removeClass('hide');
-
+        if (!'<{$good_comment}>') {
+            $('.star_group').starRating({
+                brightClass: 'bright',
+                numbox: '.pl_num'
+            });
         }
-    };
-    $('input[type="file"]').fileupload(fileObj);
+        var fileObj = {
+            add: function (e, data) {
+                if (!data.files[0]['type'].match(/^image/)) {
+                    alert('非法上传，不是图片类型');
+                }
+                data.submit();
+            },
+            done: function (e, data) {
+                var re = $.parseJSON(data.result);
+                var input = e.target || e.srcElement;
+                var image = $('<span>上传成功</span><input type="hidden" name="comment[image_id][]" value="'+re.image_id+'"/>');
+                $(input).insertBefore(image);
+                $(input).prev('input[type="hidden"]').attr('value', re.image_id);
+                $(input).next('span').removeClass('hide');
+
+            }
+        };
+        $('input[type="file"]').fileupload(fileObj);
     });
-    
+
 </script>

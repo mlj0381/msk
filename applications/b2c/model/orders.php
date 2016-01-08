@@ -21,18 +21,19 @@ class b2c_mdl_orders extends dbeav_model {
         'items' => 'order_items',
         'promotions' => 'order_pmt',
         'store_info' => 'store@store:append:store_id^store_id',
-        'comment' => 'member_comment:replace:order_id^order_id'
+        'comment' => 'member_comment:replace:order_id^order_id',
+        'goods' => 'goods:replace:goods_id^goods_id'
     );
     public $has_one = array();
     public $subSdf = array(
         'default' => array(
             'store_info' => array(
-                'store_id',
-                'store_name'
+                '*'
             ),
             'comment' => array(
                 'comment_id'
             ),
+            'goods' => array('*')
         ),
     );
 
@@ -269,4 +270,60 @@ class b2c_mdl_orders extends dbeav_model {
         return $return;
     }
     
+    //会员订单筛选条组合
+    public function filter(){
+        return array(
+            'all' => array(
+                
+            ) ,
+            's1' => array(
+               
+                'status' => 'active',
+                'pay_status' => array(
+                    '0',
+                    '3',
+                    '5',
+                ),
+            ) ,
+            's2' => array(
+                
+                'status' => 'active',
+                'pay_status' => array(
+                    '1',
+                    '2',
+                ) ,
+                'ship_status|notin' => array(
+                    '1',
+                ),
+            ) ,
+            's3' => array(
+                
+                'status' => 'active',
+                'ship_status' => array(
+                    '1',
+                    '2',
+                ),
+                'confirm' => 'N'
+            ) ,
+            's4' => array(
+                
+                'status' => 'active',
+                'confirm'=> 'Y',
+                'comment_type' => '0'
+            ),
+            's5' => array(
+               
+                'status' => 'active',
+                'confirm'=> 'Y',
+            ),
+            's6' => array(
+                
+                'status' => 'dead',
+            ),
+            's7' => array(
+                
+                'status' => 'del',
+            ),
+        );
+    }
 }

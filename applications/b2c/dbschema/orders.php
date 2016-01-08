@@ -117,8 +117,12 @@ $db['orders'] = array(
             'filtertype' => 'normal',
         ) ,
         'comment_type' => array(
-            'type' => 'bool',
-            'default' => 'false',
+            'type' => array(
+                '0' => '未评价',
+                '1' => '已评价',
+                '2' => '已追评',
+            ),
+            'default' => '0',
             'label' => ('评价状态'),
         ),
         'pay_app' => array(

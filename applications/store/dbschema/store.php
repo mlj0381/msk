@@ -30,6 +30,13 @@ $db['store'] = array(
             'in_list' => true,
             'default_in_list' => true,
         ),
+        'logo' => array(
+            'type' => 'char(32)',
+            'comment' => ('店铺logo'),
+            'label' => ('logo'),
+            'in_list' => true,
+            'default_in_list' => true,
+        ),
         'store_bn' => array(
             'type' => 'varchar(100)',
             'label' => ('店铺编号'),
@@ -53,7 +60,7 @@ $db['store'] = array(
             'comment' => ('详细地址/门牌'),
             'label' => ('详细地址/门牌'),
         ),
-        'store_contact' => array(
+        'principal_phone' => array(
             'type' => 'varchar(255)',
             'comment' => ('联系方式'),
             'label' => ('联系方式'),
@@ -61,12 +68,55 @@ $db['store'] = array(
             'in_list' => true,
             'default_in_list' => true,
         ),
-        'logo' => array(
-            'type' => 'char(32)',
-            'comment' => ('店铺logo'),
-            'label' => ('logo'),
+        'store_principal' => array(
+            'type' => 'varchar(255)',
+            'comment' => ('店铺负责人'),
+            'label' => ('店铺负责人'),
+            'searchtype' => 'has',
             'in_list' => true,
             'default_in_list' => true,
+        ),
+        'principal_email' => array(
+            'type' => 'varchar(255)',
+            'comment' => ('负责人邮箱'),
+            'label' => ('负责人邮箱'),
+            'searchtype' => 'has',
+            'in_list' => true,
+            'default_in_list' => true,
+        ),
+        'principal_qq' => array(
+            'type' => 'varchar(255)',
+            'comment' => ('负责人QQ'),
+            'label' => ('负责人QQ'),
+            'searchtype' => 'has',
+            'in_list' => true,
+            'default_in_list' => true,
+        ),
+        'principal_wechat' => array(
+            'type' => 'varchar(255)',
+            'comment' => ('负责人wechat'),
+            'label' => ('负责人wechat'),
+            'searchtype' => 'has',
+            'in_list' => true,
+            'default_in_list' => true,
+        ),
+        'quality_excel' => array(
+            'type' => 'varchar(255)',
+            'comment' => ('质量信息'),
+            'label' => ('质量信息'),
+            'required' => true,
+        ),
+        'sanitation_excel' => array(
+            'type' => 'varchar(255)',
+            'comment' => ('卫生信息'),
+            'label' => ('卫生信息'),
+            'required' => true,
+        ),
+        'pack_excel' => array(
+            'type' => 'varchar(255)',
+            'comment' => ('包装信息'),
+            'label' => ('包装信息'),
+            'required' => true,
         ),
         'template' => array(
             'type' => 'varchar(100)',
