@@ -1,3 +1,22 @@
-<div class="form-body">
-<{input type="textarea" height=600 rows=10  name="goods[description]" value=$goods.description}>
+<div>
+	<div class="form-group">
+        <label class="col-xs-2 control-label"><span>是否上架销售</span></label>
+        <div class="col-xs-5">
+            <span style="margin-right:20px;"><input type="radio" name="goods[marketable]" <{if $goods.marketable eq 'true'}>checked<{/if}> value="true">是</span>
+            <span style="margin-right:20px;"><input type="radio" name="goods[marketable]" <{if $goods.marketable eq 'false'}>checked<{/if}> value="false">否</span>
+            <span class="text-danger">商品下架操作同时影响货品</span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-xs-2 control-label">展示位置</label>
+        <div class="col-xs-3">
+            <select class="form-control">
+                <option>主力产品</option>
+                <option>本月新品</option>
+                <option>特价专区</option>
+                <option>销售专区</option>
+            </select>
+        </div>
+    </div>
+    <hr>
 </div>

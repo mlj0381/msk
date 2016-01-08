@@ -6,7 +6,7 @@
             <{if $custom_actions}>
             <{foreach from=$custom_actions item=item key=key}>
             <div class="btn-group">
-                    <a class="btn green<{if $item.group&&count($item.group)>0}> dropdown-toggle<{/if}>" <{if $item.group&&count($item.group)>0}> data-toggle="dropdown" aria-expanded="true"<{/if}>  <{foreach from=$item item=v key=k}> <{$k}>="<{if $k=='group'}>true<{else}><{$v}><{/if}>"<{/foreach}>>
+                    <a class="btn <{if $item.class}><{$item.class}><{else}>green<{/if}><{if $item.group&&count($item.group)>0}> dropdown-toggle<{/if}>" <{if $item.group&&count($item.group)>0}> data-toggle="dropdown" aria-expanded="true"<{/if}>  <{foreach from=$item item=v key=k}> <{$k}>="<{if $k=='group'}>true<{else}><{$v}><{/if}>"<{/foreach}>>
                             <{$item.label}>
                             <{if $item.icon}>&nbsp;<i class="fa <{$item.icon}>"></i><{/if}>
                             <{if $item.group&&count($item.group)>0}>

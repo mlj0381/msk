@@ -1,12 +1,12 @@
 <{css app=desktop href="../com/global/plugins/jquery-tags-input/jquery.tagsinput.css" }>
-<link rel="stylesheet" type="text/css" href="<{$base_url}>/themes/pc/default/statics/css/font-awesome.min.css">
+<!-- <link rel="stylesheet" type="text/css" href="<{$base_url}>/themes/pc/default/statics/css/font-awesome.min.css">
 <link rel="stylesheet" type="text/css" href="<{$base_url}>/themes/pc/default/statics/js/summernote/summernote.css">
-
-<script type="text/javascript" src="<{$base_url}>/themes/pc/default/statics/js/summernote/summernote.min.js"></script>
-<script type="text/javascript" src="<{$base_url}>/themes/pc/default/statics/js/summernote/lang/summernote-zh-CN.js"></script>
+ -->
+<script type="text/javascript" src="<{$base_url}>/public/javascripts/summernote/summernote.min.js"></script>
+<script type="text/javascript" src="<{$base_url}>/public/javascripts/summernote/lang/summernote-zh-CN.js"></script>
 <{script app=desktop src="../com/global/plugins/jquery-tags-input/jquery.tagsinput.min.js" }>
 <{script app=desktop src="../com/global/scripts/metronic.js" }>
-<script type="text/javascript" src="<{$base_url}>/themes/pc/default/statics/js/summernot_set.js"></script>
+<script type="text/javascript" src="<{$base_url}>/public/javascripts/summernote/summernot_set.js"></script>
 
 <{script app=desktop src="../com/global/scripts/metronic.js" }>
 
@@ -16,24 +16,19 @@
 
 <div class="page-seller">
     <div class="page-header">
-        <h1><{if $goods}>编辑商品<{else}>添加商品<{/if}><small>Add goods</small></h1>
+        <h1><{if $goods}>编辑商品<{else}>添加商品<{/if}></h1>
     </div>
     <form class="form-horizontal addgoods_form" action="<{link app=seller ctl=site_goods act=save}>" method="post" id="goods_edit_form">
         <div class="goods_tabbox">
-            <!-- Nav tabs -->
-            <ul class="nav nav-tabs" role="tablist">
-                <li role="presentation" class="active"><a href="#baseinfo" aria-controls="baseinfo" role="tab" data-toggle="tab">基本信息</a></li>
-                <li role="presentation"><a href="#tuwen" aria-controls="tuwen" role="tab" data-toggle="tab">图文介绍</a></li>
-                <li role="presentation"><a href="#param" aria-controls="param" role="tab" data-toggle="tab">属性参数</a></li>
-                <li role="presentation"><a href="#moban" aria-controls="moban" role="tab" data-toggle="tab">展示模板</a></li>
-                <li role="presentation"><a href="#seo" aria-controls="seo" role="tab" data-toggle="tab">SEO相关</a></li>
-            </ul>
-            <!-- Tab panes -->
 
-            <div class="tab-content">
-                <!-- 商品基本信息 -->
+            <!-- 商品基本信息 -->
                 <{include file="site/goods/detail/basic.html"}>
+                <!-- 属性参数 -->
+                <{include file="site/goods/detail/params.html"}>
+                <!-- 商品规格 -->
+                <{include file="site/goods/detail/spec.html"}>
                 <!-- 图文介绍 -->
+                <h4>图文介绍</h4>
                 <div role="tabpanel" class="tab-pane" id="tuwen">
                     <div class="editerbox">
                         <textarea id="summernote" name="goods[description]"></textarea>
@@ -41,16 +36,10 @@
 
                     </div>
                 </div>
-                <!-- 属性参数 -->
-                <{include file="site/goods/detail/params.html"}>
-                <!-- 展示模板 -->
-                <{include file="site/goods/detail/template.html"}>
-                <!-- seo相关 -->
-                <{include file="site/goods/detail/seo.html"}>
-            </div>
+                <{include file="site/goods/detail/content.html"}>
+
         </div>
         <div class="form_action">
-            <!-- <a href="/index.php/merchant-goodslist.html">返回商品列表</a> -->
             <a class="save_goods" href="<{link app=seller ctl=site_goods act=index}>">返回商品列表</a>
             <a href='javascript:;' class="save_goods" data-redirect="<{link app=seller ctl=site_goods act=save}>&p[0]={goods_id}">保存</a>
         </div>
@@ -390,7 +379,7 @@ $(function() {
         }
     });
     //图片删除
-    $('.pro_imgs').on('click','.glyphicon-trash',function(e){
+    /*$('.pro_imgs').on('click','.glyphicon-trash',function(e){
         e.stopPropagation();
         var _parent=$(this).parents('.pro_img_item');
         if(!confirm('确认删除？')){
@@ -406,7 +395,7 @@ $(function() {
 
 
         }
-    })
+    })*/
 
     //设置默认图片
 

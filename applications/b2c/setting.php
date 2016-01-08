@@ -135,4 +135,17 @@ $setting = array(
                 15 => '调理水煮包与方便菜',
             ),
         ),
+		'pages_plat_type' => array(
+			'default' => array(
+				0 => '商城',
+				1 => '店铺'
+			)
+		),
+
+		'pages_position_types' => array(
+			'default' => array(
+				'0' => ('普通'),				
+				'2' => ('商品'),
+			)
+		),
 );

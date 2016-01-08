@@ -51,7 +51,7 @@ class desktop_finder_builder_prototype
 
         list($object_app, $object_name) = vmc_('desktop', 'finder_split_model', $full_object_name);
 
-        $service_list = array();
+        $service_list = array();		
         foreach (vmc::servicelist('desktop_finder.'.$this->object_name) as $name => $object) {
             $service_list[$name] = $object;
         }
