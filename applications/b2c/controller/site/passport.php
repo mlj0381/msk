@@ -152,29 +152,42 @@ class b2c_ctl_site_passport extends b2c_frontpage {
     //注册页面--审核信息
     public function signup_checkInfo($forward) {
         $this->verify_member();
+        $this->set_tmpl('passport');
         $this->page('site/passport/signup_checkInfo.html');
     }
     
     //注册经营信息
     public function business_info(){
+        if ($_POST) {
+            $redirect = $this->gen_url(array(
+                'app' => 'b2c',
+                'ctl' => 'site_passport',
+                'act' => 'signup_checkInfo',
+            ));
+            $params = $_POST;
+            $params['pam_account']['member_id'] = $this->members['member_id'];
+            $db = vmc::database();
+            $db->beginTransaction();
+            if (!$this->app->model('members')->save($params['pam_account'])) {
+                $db->rollback();
+                //$this->splash('error', $redirect, '注册失败');
+            }
+            $params['contact']['contact_type'] = 1;
+            $params['contact']['seller_id'] = $this->members['member_id'];
+            if(!app::get('seller')->model('contact')->save($params['contact'])){
+                $db->rollback();
+                //$this->splash('error', $redirect, '注册失败');
+            }
+            $db->commit();
+        }
+        $this->set_tmpl('passport');
         $this->page('site/passport/business_info.html');
     }
 
 
     //注册页面--注册完成
     public function signup_complete($forward) {
-        if ($_POST) {
-            $redirect = $this->gen_url(array(
-                'app' => 'b2c',
-                'ctl' => 'site_passport',
-                'act' => 'signup_complete',
-            ));
-            $params = $_POST;
-            $params['member_id'] = $this->members['member_id'];
-            if (!$this->app->model('members')->save($params['pam_account'])) {
-                $this->splash('error', $redirect, '注册失败');
-            }
-        }
+        $this->set_tmpl('passport');
         $this->page('site/passport/signup_complete.html');
     }
 

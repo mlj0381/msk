@@ -14,7 +14,7 @@
 <div class="passport-signup-container">
     <div class="panel panel-default signup-panel">
         <div class="panel-body">
-            <form id="member_signup_checkInfo_form" class="form-horizontal" action="<{link app=b2c ctl=site_passport act=signup_complete}>" method="post">
+            <form id="member_signup_checkInfo_form" class="form-horizontal" action="<{link app=b2c ctl=site_passport act=business_info}>" method="post">
                 <h3>企业信息</h3>
                 <div class="form-group">
                     <label for="" class="col-md-2 control-label"><span class="text-danger">*</span> 企业名称：</label>
@@ -84,18 +84,7 @@
                         <div id="boss_nameTip"></div>
                     </div>
                 </div>
-                <!-- <div class="form-group">
-                    <label for="" class="col-md-2 control-label"><span class="text-danger">*</span>老板名片照：</label>
-                    <div class="col-md-4">
-                        <div class="filebox">
-                            <input type="hidden" name="pam_account[addon][boss_image]" value="" />
-                            <input type="file" data-url="<{link app=image ctl=site_upload act=index}>" accept="image/*" class="file_input" id="boss_card_photo" />
-                            <div class="showImg">
-                                <img src="<{if $pam_account[addon][boss_image] eq ''}>./../../themes/pc/default/statics/images/file_add.jpg<{else}><{$pam_account[addon][boss_image]|storager:'xs'}><{/if}>">
-                            </div> 
-                        </div>
-                    </div>
-                </div> -->
+                
                 <div class="form-group">
                     <label for="" class="col-md-2 control-label"><span class="text-danger">*</span>老板手机：</label>
                     <div class="col-md-4">
@@ -118,195 +107,30 @@
                 <div class="form-group">
                     <label for="" class="col-md-2 control-label"><span class="text-danger">*</span>有权联系人姓名：</label>
                     <div class="col-md-4">
-                        <input type="text" required="true" name="pam_account[addon][pressing_name]" class="form-control" id="pressing_name">
+                        <input type="text" required="true" name="contact[name]" class="form-control" id="pressing_name">
                         <div id="pressing_nameTip"></div>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="" class="col-md-2 control-label"><span class="text-danger">*</span>有权联系人电话：</label>
                     <div class="col-md-4">
-                        <input type="text" required="true" name="pam_account[addon][pressing_phone]" class="form-control" id="pressing_phone">
+                        <input type="text" required="true" name="contact[tel]" class="form-control" id="pressing_phone">
                         <div id="pressing_phoneTip"></div>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="" class="col-md-2 control-label">有权联系人QQ号：</label>
                     <div class="col-md-4">
-                        <input type="text" required="true" name="pam_account[addon][pressing_qq]" class="form-control" id="">
+                        <input type="text" required="true" name="contact[contact_qq]" class="form-control" id="">
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="" class="col-md-2 control-label">有权联系人微信号：</label>
                     <div class="col-md-4">
-                        <input type="text" required="true" name="pam_account[addon][pressing_wechat]" class="form-control" id="">
+                        <input type="text" required="true" name="contac[contact_wechat]" class="form-control" id="">
                     </div>
                 </div>
-                <!-- <div class="form-group">
-                    <label for="" class="col-md-2 control-label"><span class="text-danger">*</span>采购产品：</label>
-                    <div class="col-md-4">
-                        <{input type=select name="pam_account[addon][company_goods]" }>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="" class="col-md-2 control-label"><span class="text-danger">*</span>销售对象：</label>
-                    <div class="col-md-4">
-                        <input type="text" name="pam_account[addon][market_obj]" class="form-control" id="market_obj">
-                        <div id="market_objTip"></div>
-                    </div>
-                </div>
-                <h3>附件上传<small>所需要上传的电子版资质仅支持JPG、GIF、PNG大小格式的图片，大小不能超一M</small></h3>
-                <div class="form-group">
-                    <label for="" class="col-md-2 control-label"><span class="text-danger">*</span>企业营业执照或许可证：</label>
-                    <div class="col-md-4">
-                        <div class="filebox">
-                            <input type="hidden" name="pam_account[addon][company_license]" value="" />
-                            <input type="file" data-url="<{link app=image ctl=site_upload act=index}>" accept="image/*" class="file_input" />
-                            <div class="showImg">
-                                <img src="<{if $pam_account[addon][company_license] eq ''}>./../../themes/pc/default/statics/images/file_add.jpg<{else}><{$pam_account[addon][company_license]|storager:'xs'}><{/if}>">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="" class="col-md-2 control-label"><span class="text-danger">*</span>食品安全许可证：</label>
-                    <div class="col-md-4">
-                        <div class="filebox">
-                            <input type="hidden" name="pam_account[addon][company_license]" value="" />
-                            <input type="file" data-url="<{link app=image ctl=site_upload act=index}>" accept="image/*" class="file_input" />
-                            <div class="showImg">
-                                <img src="<{if $pam_account[addon][food_license] eq ''}>./../../themes/pc/default/statics/images/file_add.jpg<{else}><{$pam_account[addon][food_license]|storager:'xs'}><{/if}>">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="" class="col-md-2 control-label">经营场地门头照片：</label>
-                    <div class="col-md-4">
-                        <div class="filebox">
-                            <input type="hidden" name="pam_account[addon][place_image]" value="" />
-                            <input type="file" data-url="<{link app=image ctl=site_upload act=index}>" accept="image/*" class="file_input" />
-                            <div class="showImg">
-                                <img src="<{if $pam_account[addon][place_image] eq ''}>./../../themes/pc/default/statics/images/file_add.jpg<{else}><{$pam_account[addon][place_image]|storager:'xs'}><{/if}>">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="" class="col-md-2 control-label">菜单照片：</label>
-                    <div class="col-md-4">
-                        <div class="filebox">
-                            <input type="hidden" name="pam_account[addon][menu_image]" value="" />
-                            <input type="file" data-url="<{link app=image ctl=site_upload act=index}>" accept="image/*" class="file_input" />
-                            <div class="showImg">
-                                <img src="<{if $pam_account[addon][menu_image] eq ''}>./../../themes/pc/default/statics/images/file_add.jpg<{else}><{$pam_account[addon][menu_image]|storager:'xs'}><{/if}>">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <h3>企业经营信息</h3>
-                <div class="form-group">
-                    <label for="" class="col-md-2 control-label"><span class="text-danger">*</span>经营地面积：</label>
-                    <div class="col-md-4">
-                        <input type="text" name="pam_account[addon][operate_area]" class="form-control" id="operate_area" placeholder="m²">
-                        <div id="operate_areaTip"></div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="" class="col-md-2 control-label"><span class="text-danger">*</span>冻品存放地：</label>
-                    <div class="col-md-4">
-                        <input type="text" class="form-control" id="goods_stash">
-                        <div id="goods_stashTip"></div>
-                        name="pam_account[addon][goods_stash]"
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="" class="col-md-2 control-label"><span class="text-danger">*</span>冻品存放地照片：</label>
-                    <div class="col-md-4">
-                        <div class="filebox">
-                            <input type="hidden" name="pam_account[addon][goods_stash_image]" value="" />
-                            <input type="file" data-url="<{link app=image ctl=site_upload act=index}>" accept="image/*" class="file_input" />
-                            <div class="showImg">
-                                <img src="<{if $pam_account[addon][goods_stash_image] eq ''}>./../../themes/pc/default/statics/images/file_add.jpg<{else}><{$pam_account[addon][goods_stash_image]|storager:'xs'}><{/if}>">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="" class="col-md-2 control-label"><span class="text-danger">*</span>存放能力：</label>
-                    <div class="col-md-4">
-                        <input type="text" name="pam_account[addon][stash_ability]" class="form-control" id="stash_ability">
-                        <div id="stash_abilityTip"></div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="" class="col-md-2 control-label"><span class="text-danger">*</span>员工人数：</label>
-                    <div class="col-md-4">
-                        <input type="text" name="pam_account[addon][staff_num]" class="form-control" id="staff_num">
-                        <div id="staff_numTip"></div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="" class="col-md-2 control-label"><span class="text-danger">*</span>是否连锁：</label>
-                    <div class="col-md-4">
-                        <label class="radio-inline">
-                            <input type="radio" id="inlineCheckbox1" name="pam_account[addon][chain]" value="1"> 是
-                        </label>
-                        <label class="radio-inline">
-                            <input type="radio" id="inlineCheckbox2" name="pam_account[addon][chain]" value="0"> 否
-                        </label>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="" class="col-md-2 control-label"><span class="text-danger">*</span>连锁数量：</label>
-                    <div class="col-md-4">
-                        <input type="text" required="true" name="pam_account[addon][chain_num]" class="form-control" id="chain_num">
-                        <div id="chain_numTip"></div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="" class="col-md-2 control-label">习惯正常收货时间段：</label>
-                    <div class="col-md-2">
-                        <input type="text" required="true" name="pam_account[addon][receipt_date_early]" class="form-control" id="" placeholder="起始时间">
-                        <span class="add-on"></span> 如：15：00
-                    </div>
-                    <div class="col-md-2 date form_datetime">
-                        <input type="text" required="true" name="pam_account[addon][receipt_date_late]" class="form-control" id="" placeholder="截止时间">
-                        <span class="add-on"><i class="icon-th"></i></span>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="" class="col-md-2 control-label">习惯收货最早时间要求：</label>
-                    <div class="col-md-4">
-                        date form_datetime
-                        <input type="text" required="true" name="pam_account[addon][receipt_early]" class="form-control" id="">
-                        <span class="add-on"><i class="icon-th"></i></span>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="" class="col-md-2 control-label">习惯收货最晚时间要求：</label>
-                    <div class="col-md-4">
-                        <input type="text" required="true" name="pam_account[addon][receipt_early]" class="form-control" id="">
-                        <span class="add-on"><i class="icon-th"></i></span>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="" class="col-md-2 control-label">支付方式：</label>
-                    <div class="col-md-4">
-                        <input type="text" required="true" name="pam_account[addon][pay_menthod]" class="form-control" id="">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="" class="col-md-2 control-label">距离门店最近停车距离：</label>
-                    <div class="col-md-4">
-                        <input type="text" required="true" name="pam_account[addon][stop_distance]" class="form-control" id="">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="" class="col-md-2 control-label">单次配送规模：</label>
-                    <div class="col-md-4">
-                        <input type="text" required="true" name="pam_account[addon][one_distribution]" class="form-control" id="">
-                    </div>
-                </div> -->
+                
                 <div class="form-group">
                     <label for="" class="col-md-2 control-label"></label>
                     <div class="col-md-4">
