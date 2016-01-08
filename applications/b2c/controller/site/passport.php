@@ -154,6 +154,12 @@ class b2c_ctl_site_passport extends b2c_frontpage {
         $this->verify_member();
         $this->page('site/passport/signup_checkInfo.html');
     }
+    
+    //注册经营信息
+    public function business_info(){
+        $this->page('site/passport/business_info.html');
+    }
+
 
     //注册页面--注册完成
     public function signup_complete($forward) {
