@@ -108,12 +108,15 @@ class seller_ctl_site_passport extends seller_frontpage
         switch($step)
         {
             case '1':
-                $tpl = 'signup_companyInfo';
+                $tpl = 'signup_companyType';
                 break;
             case '2':
-                $tpl = 'signup_contactInfo';
+                $tpl = 'signup_companyInfo';
                 break;
             case '3':
+                $tpl = 'signup_storeInfo';
+                break;
+            case '4':
                 $tpl = 'signup_complete';
                 break;
             default:

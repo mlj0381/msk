@@ -621,7 +621,7 @@ ol {
 }
 .reg_progress ol li {
   display: inline-block;
-  margin: 0 50px;
+  margin: 0 30px;
   padding: 0 15px;
   text-align: center;
 }
