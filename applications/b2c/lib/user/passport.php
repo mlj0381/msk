@@ -50,7 +50,7 @@ class b2c_user_passport {
         switch ($login_type) {
             case 'local':
                 if (strlen(trim($login_name)) < 6) {
-                    $msg = $this->app->_('登录账号最少4个字符');
+                    $msg = $this->app->_('登录账号最少6个字符');
 
                     return false;
                 } elseif (strlen($login_name) > 18) {

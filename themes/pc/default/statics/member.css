@@ -1119,6 +1119,10 @@ ol {
 		}	
 	} */
 }
+.buyer_container .seller_regbox {
+  /*企业类型选择*/
+  /*公司信息提交*/
+}
 .buyer_container .seller_regbox .company_type_t {
   text-align: center;
   font-size: 24px;
@@ -1149,6 +1153,32 @@ ol {
 }
 .buyer_container .seller_regbox .company_btns a {
   margin: 0 10px;
+}
+.buyer_container .seller_regbox .settled_warning {
+  background: #fffdf0;
+  border: 1px solid #ffd119;
+  padding: 20px;
+}
+.buyer_container .seller_regbox .settled_warning dl {
+  width: 100%;
+  margin-bottom: 0;
+}
+.buyer_container .seller_regbox .settled_warning dl dt {
+  float: left;
+  font-size: 30px;
+  color: #ffcc00;
+  margin-left: 15px;
+  margin-right: 15px;
+  margin-top: 15px;
+}
+.buyer_container .seller_regbox .settled_warning dl dd {
+  float: left;
+}
+.buyer_container .seller_regbox .settled_warning dl dd a {
+  color: #a40001;
+}
+.buyer_container .seller_regbox .companyInfo_form h4 {
+  margin: 20px;
 }
 .buyer_container .activity_con {
   border-top: 1px solid #ddd;

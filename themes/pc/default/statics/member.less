@@ -1223,12 +1223,14 @@ ul,ol{
 //卖家中心
 .buyer_container{
 
-	//卖家注册
+	//卖家注册入驻
 	.seller_regbox{
 		.company_type_t{
 			text-align: center;
 			font-size:24px;
 		}
+
+		/*企业类型选择*/
 		.typebox{
 			width:696px;
 			margin:0 auto;
@@ -1258,9 +1260,41 @@ ul,ol{
 				margin:0 10px;
 			}
 		}
+
+		/*公司信息提交*/
+		.settled_warning{
+			background: #fffdf0;
+			border:1px solid #ffd119;
+			padding:20px;
+
+			dl{
+				width:100%;
+				margin-bottom:0;
+				dt{
+					.fl;
+					font-size: 30px;
+					color:#ffcc00;
+					margin-left:15px;
+					margin-right:15px;
+					margin-top:15px;
+				}
+				dd{
+					.fl;
+					a{
+						color:@basecolor;
+					}
+				}
+			}
+		}
+
+		.companyInfo_form{
+			h4{
+				margin:20px;
+			}
+		}
 	}
 
-	//END 卖家注册
+	//END 卖家注册入驻
  
 
 
