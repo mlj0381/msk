@@ -44,7 +44,9 @@ class seller_ctl_site_store extends seller_frontpage
     private function _setting($post){
         $redirect = $this->gen_url(array('app' => 'seller', 'ctl' => 'site_store', 'act' => 'setting'));
         $post['store']['store_id'] = $this->store['store_id'];
-        if(!$this->mStore->save($post['store'])){
+		$post['store']['seller_id'] = $this->seller['seller_id'];		
+        if(!$this->mStore->save($post['store']))
+		{			
             $this->splash('error', $redirect, '修改失败');
         }
         $this->splash('success', $redirect, '修改成功');

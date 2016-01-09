@@ -245,8 +245,8 @@ class b2c_ctl_admin_pages_content extends desktop_controller
 		}		
 		$this->pagedata['positions'] = $positions;		
 		$this->pagedata['pages'] = $this->mPages->getList('*');		
-		$this->pagedata['plats'] = $this->app->getConf('pages_plat_type');
-		$this->pagedata['types'] = $this->app->getConf('pages_position_types');
+		//$this->pagedata['plats'] = $this->app->getConf('pages_plat_type');
+		$this->pagedata['types'] = $this->app->getConf('pages_content_types');
 	}
 
 	private function _url($ctl='', $act='index', $filter=Array())
