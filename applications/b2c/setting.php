@@ -148,19 +148,5 @@ $setting = array(
 				'2' => ('商品'),
 			)
 		),
-		'member_extra_column' => array('comany', 'business_licence', 'contact', 'president')<<<<<<< .mine
-		'pages_content_types' => array(
-			'default' => array(
-				'0' => ('普通'),
-				'1' => ('商品'),
-			)
-		),
-=======
-
 		'member_extra_column' => array('comany', 'business_licence', 'contact', 'president')
-
-
-
-
->>>>>>> .theirs
 );
