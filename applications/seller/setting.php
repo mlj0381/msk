@@ -14,6 +14,7 @@
  *  getConf 默认值.
  */
 $setting = array(
+<<<<<<< HEAD
 	'avatar_max_size' => array(
 		'type' => 'number',
 		'default' => get_cfg_var('upload_max_filesize') ? intval(get_cfg_var('upload_max_filesize')) : '5',
@@ -75,6 +76,8 @@ $setting = array(
 			'brand_touted' => '品牌荣誉', // 证书编号,发证日期,发证单位
 		),
 	),
+=======
+>>>>>>> e49345713b65c6db32aeb1a7fd2b4f500167c472
 
     'avatar_max_size' => array(
         'type' => 'number',
@@ -118,7 +121,7 @@ $setting = array(
                 ),
             ),
             4 => array(
-                2 => array(
+                1 => array(
                     'food_business_licence', 'food_flow_licence', 'oem_auth_lesstion'
                 ),
             ),

@@ -11,7 +11,7 @@
 		<menu app='b2c' controller='site_member' action='coupon' display='true' order="60">我的优惠信息</menu>
 
         <menu app='b2c' controller='site_comment' action='show_list' display='true' order="60">我的评价</menu>
-		<menu app='aftersales' controller='site_member' action='order' display='true' order="60">退货与维权</menu>
+		<menu app='aftersales' controller='site_member' action='request' display='true' order="60">退货与维权</menu>
 		<menu app='b2c' controller='site_member' action='sleuth ' display='true' order="60">我的足迹</menu>
 		<menu app='b2c' controller='site_member' action='visit' display='true' order="60">最近访问</menu>
 		<menu app='b2c' controller='site_member' action='index' display='true' order="60">大促会</menu>

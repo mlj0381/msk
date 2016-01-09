@@ -1,30 +1,29 @@
-<div id="animal_certificate">
-	<h4>动物防疫条件合格证</h4>
+<div id="food_flow_licence">
+	<h4>食品流通许可证</h4>
 	<div class="form-group">
 		<label class="col-xs-2 control-label">
-			<span class="text-danger">*</span>动物防疫条件合格证代码编号：
+			许可证编号：
 		</label>
 		<div class="col-xs-4">
-			<input type="text" name="" class="form-control">
+			<input type="text" name="food_flow_licence" class="form-control">
 		</div>
 	</div>
-
 	<div class="form-group">
 		<label class="col-xs-2 control-label">
-			<span class="text-danger">*</span>年检日期：
+			有效期限：
 		</label>
 		<div class="col-xs-4">
-			<input type="text" name="" class="form-control">	
+			<input type="text" name="" class="form-control" style="width:175px; display: inline-block;"> 至 
+			<input type="text" name="" class="form-control"  style="width:175px; display: inline-block;">
 		</div>
 	</div>
-
 	<div class="form-group">
 		<label class="col-xs-2 control-label">
-			<span class="text-danger">*</span>动物防疫条件合格证电子版：
+			许可证电子版：
 		</label>
 		<div class="col-xs-4">
 			<div class="filebox">
-	            <input type="hidden" value="" name=""/>
+	            <input type="hidden" value="" name="food_flow_licence"/>
 	            <input type="file" data-url="<{link app=image ctl=site_upload act=index}>" accept="image/*" class="file_input" />
 	            <div class="showImg">
 	                 <img src="<{if $company.business_license_image eq ''}><{$base_url}>/themes/pc/default/statics/images/file_add.jpg<{else}><{$company.business_license_image|storager:'xs'}><{/if}>">    

@@ -34,9 +34,16 @@
                 <input type='hidden' name='identity' value='<{$identity}>'/>
                 <!-- 三证合一 -->
                 <{foreach from=$page key=key item=item}>
-                <{"site/passport/companyInfo/{$key}.html"}>
                     <{include file="site/passport/companyInfo/{$key}.html"}>
                 <{/foreach}>
+                <div class="form-group">
+                    <label class="col-xs-2"></label>
+                    <div class="col-xs-4">
+                        <a type="submit" data-loading-text="正在提交..." class="btn btn-default">返回上一步</a>
+                        <button type="submit" data-loading-text="正在提交..." class="btn btn-danger" style="margin-left: 20px;">保存并进行下一步</button>
+                    </div>
+                </div>
+                
             </form>
         </div>
     </div>

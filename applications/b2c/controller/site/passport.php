@@ -170,8 +170,15 @@ class b2c_ctl_site_passport extends b2c_frontpage {
             $db->beginTransaction();
             $extra_columns = $this->app->getConf('member_extra_column');
             $params = $_POST;
+            $params['company']['uid'] = $this->members['member_id'];
+            $params['company']['identity'] = 'member';
+            if ($params['company'] && !app::get('base')->model('company')->save($params['company'])) {
+                $db->rollback();
+                $this->splash('error', $redirect, '注册失败');
+            }
+
             foreach ($extra_columns as $col) {
-                if ($this->_extra_save($col, $params)) {
+                if (!$this->_extra_save($col, $params)) {
                     $db->rollback();
                     $this->splash('error', $redirect, '注册失败');
                 }
@@ -196,6 +203,16 @@ class b2c_ctl_site_passport extends b2c_frontpage {
     //注册页面--注册完成
     public function signup_complete($forward) {
         $this->set_tmpl('passport');
+        if ($_POST) {
+            $redirect = $this->gen_url(array('app' => 'b2c', 'ctl' => 'site_passport', 'act' => 'business_info'));
+            $params = $_POST;
+            $extra_columns = $this->app->getConf('member_extra_column');
+            foreach ($extra_columns as $col) {
+                if (!$this->_extra_save($col, $params)) {
+                    $this->splash('error', $redirect, '注册失败');
+                }
+            }
+        }
         $this->page('site/passport/signup_complete.html');
     }
 
