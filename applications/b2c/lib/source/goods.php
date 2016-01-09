@@ -52,11 +52,14 @@ class b2c_source_goods extends base_source {
      * return array()
      */
     public function floor ($params){
-        $mdl_ad = app::get('b2c')->model('ad');
+        /*
+		$mdl_ad = app::get('b2c')->model('ad');
         $goods_list = $mdl_ad->getList('*', array('page_id' => 12, 'ad_type' => 3));
         foreach($goods_list as $key => &$value){
             $value['son'] = $mdl_ad->getList('*', array('page_id' => $value['id'], 'ad_type' => 3));
         }
+		*/
+		$goods_list = array();
         return $goods_list;
     }
 

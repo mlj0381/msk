@@ -93,38 +93,13 @@ $db['sellers'] = array(
             'default' => '',
             'comment' => '卖家帐号设置'
         ),
-<<<<<<< HEAD
-        'ident_type' => array(
-            'type' => array(
-                0 => ('未选择'),
-                1 => ('自产型'),
-                2 => ('代理型'),
-                3 => ('自产型+代理型'),
-                4 => ('OEM型'),
-                5 => ('自产型+OEM型'),
-                6 => ('代理型+OEM型'),
-                7 => ('代理型+自产型+OEM型'),
-            ),
-            'label' => '商家身份类型',
-            'filtertype' => 'normal',
-            'default' => '1',
-            'comment' => '商家身份类型',
-        ),
-        'entry_plan' => array(
-           'type' => 'number',
-           'label' => '入驻进度',
-           'comment' => '入驻进度',
-           'required' => true,
-           'default' => 0,
-       ),
-=======
-        'type' => array(
-            'type' => 'number'
+        'ident' => array(
+            'type' => 'number',
             'label' => '商家类型',            
             'default' => 0,
-            'comment' => '商家类型(1生产型\2代理型\4OEM)',
+            'comment' => '身份类型(1生产型\2代理型\4OEM)',
         ),
->>>>>>> 07183017a79351f559ff64603a87b4dcba35da39
+
         'reg_ip' => array(
             'type' => 'varchar(16)',
             'label' => ('注册IP'),

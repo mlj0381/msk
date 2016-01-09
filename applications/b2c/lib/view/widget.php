@@ -34,7 +34,7 @@ class b2c_view_widget {
     // 首页-幻灯
     public function function_WIDGET_B2C_INDEX_SLIDER($params, &$smarty) {
         $render = new base_render(app::get($params['app']));
-        $render->pagedata['slider'] = app::get('b2c')->model('ad')->getList('*', array('page_id' => 34, 'ad_type' => 1, 'status' => 'true',));
+        //$render->pagedata['slider'] = app::get('b2c')->model('ad')->getList('*', array('page_id' => 34, 'ad_type' => 1, 'status' => 'true',));
         return $render->fetch('widget/slider.html');
     }
 
@@ -61,7 +61,7 @@ class b2c_view_widget {
     //楼层店铺
     public function function_WIDGET_B2C_GOODS_INDEX_SHOP_SHOW($params, &$smaryt) {
         $render = new base_render(app::get('b2c'));
-        $render->pagedata['store'] = app::get('b2c')->model('ad')->ad_shop();
+        //$render->pagedata['store'] = app::get('b2c')->model('ad')->ad_shop();
         return $render->fetch('widget/index.shop.show.html');
     }
 
@@ -150,7 +150,7 @@ class b2c_view_widget {
     //广告
     public function function_WIDGET_AD($params, &$smarty){
         $render = new base_render(app::get($params['app']));
-        $render->pagedata['ad'] = app::get('b2c')->model('ad')->option_ad($params);
+        //$render->pagedata['ad'] = app::get('b2c')->model('ad')->option_ad($params);
         return $render->fetch('widget/ad/index.top.html');
     }
     

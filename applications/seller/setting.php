@@ -14,86 +14,12 @@
  *  getConf 默认值.
  */
 $setting = array(
-<<<<<<< HEAD
 	'avatar_max_size' => array(
 		'type' => 'number',
 		'default' => get_cfg_var('upload_max_filesize') ? intval(get_cfg_var('upload_max_filesize')) : '5',
 		'desc' => '头像上传大小限制(单位：MB)',
 		'helpinfo'=>(get_cfg_var('upload_max_filesize') ? '<span class="text-danger">服务器当前限制'.get_cfg_var('upload_max_filesize').'</span>' : '')
 	),
-	// 店铺模板设置
-	'store_template' => array(
-		'default' => array(
-			'index' => array(
-				'label' => '首页',
-				'modules' => array(
-					0 => array(
-						'label' => '幻灯',
-						'type' => 'slider',
-						'size' => '1920,600',
-						'limit'=> 4,
-						'items' => array(),
-					),
-					1 => array(
-						'label' => '新品推荐',
-						'type' => 'goods',
-						'size' => '1920,600',
-						'limit'=> 8,
-						'items' => array(),
-					),
-					2 => array(
-						'label' => 'banner1',
-						'type' => 'image',
-						'size' => '1920,600',
-						'limit'=> 1,
-						'items' => array(),
-					),
-					3 => array(
-						'label' => '热门推荐',
-						'type' => 'goods',
-						'size' => '1920,600',
-						'limit'=> 8,
-						'items' => array(),
-					),
-					4 => array(
-						'label' => 'banner2',
-						'type' => 'image',
-						'size' => '1920,600',
-						'limit'=> 1,
-						'items' => array(),
-					),
-					5 => array(
-						'label' => '店铺推荐',
-						'type' => 'goods',
-						'size' => '1920,600',
-						'limit'=> 8,
-						'items' => array(),
-					),
-				),
-			),
-			'list' => array(
-				'label' => '列表页',
-				'modules' => array(
-					0 => array(
-						'label' => '横幅',
-						'type' => 'image',
-						'size' => '1920,600',
-						'limit'=> 4,
-						'items' => array(),
-					),
-					1 => array(
-						'label' => '新品推荐',
-						'type' => 'goods',
-						'size' => '1920,600',
-						'limit'=> 8,
-						'items' => array(),
-					),
-				),
-			),
-		),
-	),
-
-
 	'entered_column' => array(
 		'default' => array(
 			'business_licence' => '营业执照',	// 号、附件
@@ -149,7 +75,7 @@ $setting = array(
 			'brand_touted' => '品牌荣誉', // 证书编号,发证日期,发证单位
 		),
 	),
-=======
+
     'avatar_max_size' => array(
         'type' => 'number',
         'default' => get_cfg_var('upload_max_filesize') ? intval(get_cfg_var('upload_max_filesize')) : '5',
@@ -198,5 +124,4 @@ $setting = array(
             ),
         ),
     ),
->>>>>>> 42cf6fac974adf37ee65c30556888a7875d0c18a
 );
