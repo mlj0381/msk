@@ -18,7 +18,7 @@ class b2c_ctl_admin_setting extends desktop_controller {
     public function __construct($app) {
         parent::__construct($app);
         $this->app = $app;
-        $this->mAd = $this->app->model('ad');
+        //$this->mAd = $this->app->model('ad');
         $this->mSetting = $this->app->model('setting');
     }
 
