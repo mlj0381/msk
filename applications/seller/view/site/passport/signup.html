@@ -1,25 +1,24 @@
 <div class="reg_progress clearfix">
     <ol>
         <li class="active">
-            <a href="javascript:;"><i></i>填写账号信息</a>
+            <span><i>1</i>卖家账号填写</span>
         </li>
         <li>
-            <a href="javascript:;"><i></i>填写公司信息</a>
+            <span><i>2</i>企业类型选择</span>
         </li>
         <li>
-            <a href="javascript:;"><i></i>填写联系人信息</a>
+            <span><i>3</i>公司信息提交</span>
         </li>
         <li>
-            <a href="javascript:;"><i></i>完成注册</a>
+            <span><i>4</i>店铺信息提交</span>
+        </li>
+        <li>
+            <span><i>5</i>完成入驻</span>
         </li>
     </ol>
 </div>
-<div class="passport-signup-container">
+<div class="passport-signup-container seller_regbox">
     <div class="panel panel-default signup-panel">
-        <div class="panel-heading clearfix">
-            注册成为会员(卖家)
-            <!-- <a class="btn btn-danger btn-xs pull-right" href="<{link app=b2c ctl=site_passport act=login args0=$forward}>">立即登录&raquo;</a> -->
-        </div>
         <div class="panel-body">
             <form id="member_signup_form" class="form-horizontal" action="<{link app=seller ctl=site_passport act=signup args0=1}>" method="post">
                 <!-- 登陆后跳转地址 -->
@@ -50,7 +49,7 @@
                 </div>
                 <div class="form-group">
                     <label for="input_psw_confirm" class="col-md-2 control-label"><span class="text-danger">*</span>短信验证码：</label>
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                         <input type="text" required="true" name="smscode" class="form-control" id="input_vcode">
                     </div>
                     <div class="col-md-2">
@@ -61,7 +60,7 @@
                 </div>
                 <div class="form-group">
                     <label for="input_vcode" class="col-md-2 control-label">验证码<span class="text-danger">*</span></label>
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                         <input type="text" required="true" name="vcode" class="form-control" id="input_vcode">
                     </div>
                     <div class="col-md-2">
@@ -72,14 +71,44 @@
                     </div>
                 </div>
                 <div class="form-group">
+                    <label for="input_psw_confirm" class="col-md-2 control-label"></label>
+                    <div class="col-md-4">
+                        <input type="checkbox"> 我已阅读并同意
+                        <a href="#" class="text-danger" data-toggle="modal" data-target="#accordModal">《美侍客用户注册协议》</a>
+                        <a href="#" class="text-danger" data-toggle="modal" data-target="#accordModal">《美侍客服务条款》</a>
+                    </div>
+                </div>
+                <div class="form-group">
                     <div class="col-md-offset-2 col-md-4">
-                        <button type="submit" data-loading-text="正在提交..." class="btn btn-warning">下一步</button>
+                        <button type="submit" data-loading-text="正在提交..." class="btn btn-danger">立即注册</button>
                     </div>
                 </div>
             </form>
         </div>
     </div>
 </div>
+
+
+<!-- 注册协议Modal -->
+<div class="modal fade" id="accordModal">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">美侍客用户注册协议/美侍客服务条款</h4>
+      </div>
+      <div class="modal-body">
+        <p>注册协议内容</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">我知道了</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+
 <script>
 /*
  * 会员注册脚本

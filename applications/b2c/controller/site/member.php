@@ -273,24 +273,19 @@ class b2c_ctl_site_member extends b2c_frontpage
      */
     public function orders($status = 'all', $page = 1)
     {
-        $limit = 5;
-        $status_filter = $this->filter();
-        $this->pagedata['status'] = $status;
-        $filter = $status_filter[$status];
-        if (!$filter) {
-            $filter = array(
-                'member_id' => $this->member['member_id'],
-            );
-        }
         $mdl_order = $this->app->model('orders');
         $mdl_order_items = $this->app->model('order_items');
+        $limit = 5;
+        $status_filter = $mdl_order->filter();
+        
+        $this->pagedata['status'] = $status;
+        $filter = $status_filter[$status];
+        $filter['member_id'] = $this->member['member_id'];
         $order_list = $mdl_order->getList('*', $filter, ($page - 1) * $limit, $limit);
         foreach ($order_list as $key => $value) {
             //所属店铺信息
             $store_info = vmc::singleton('store_store_object')->store_info($value['store_id'], 'store_id, store_name');
             $order_list[$key]['store_name'] = $store_info['store_name'];
-            //查询订单是否评价
-            $order_list[$key]['comment'] = $this->app->model('member_comment')->getRow('comment_id', array('order_id' => $value['order_id']));
         }
         $oids = array_keys(utils::array_change_key($order_list, 'order_id'));
         $order_items = $mdl_order_items->getList('*', array(
@@ -360,6 +355,7 @@ class b2c_ctl_site_member extends b2c_frontpage
                 'member_id' => $this->member['member_id'],
                 'status' => 'active',
                 'confirm'=> 'Y',
+                'comment_type' => '0'
             ),
             's5' => array(
                 'member_id' => $this->member['member_id'],

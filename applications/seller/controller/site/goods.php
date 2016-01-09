@@ -158,8 +158,15 @@ class seller_ctl_site_goods extends seller_frontpage
     }
 
     //价格修改
-    private function _price(){
+    public function price(){
+        $this->output();
+        
+    }
 
+    //价格修改记录
+    public function modify_record(){
+        $this->output();
+        
     }
 
     private function _editor()

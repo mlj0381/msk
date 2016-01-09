@@ -1,0 +1,136 @@
+<div class="price_page">
+	<div class="page-header">
+		<h1>价格管理</h1>
+	</div>
+	<div class="goods_info">
+		<div class="col-xs-10">
+			<a href="#" class="thumbnail">
+				<img src="<{$base_url}>/themes/pc/default/statics/images/bestsellers.jpg">
+			</a>
+			<div>
+				<p><a href="#" class="goods_name">宁夏滩正宗羊肉</a></p>
+				<p>商品编号：2335353453</p>
+				<p>所属分类：羊肉类</p>
+			</div>
+		</div>
+		<div class="col-xs-2">
+			<a href="<{link app=seller ctl=site_goods act=modify_record}>" class="btn btn-danger edit_record">查看价格修改记录</a>
+		</div>
+	</div>
+	<table class="table table-hover goods_list">
+		<tr>
+			<th class="col-xs-3">货号</th>
+			<th class="col-xs-3">规格</th>
+			<th class="col-xs-4">价格</th>
+			<th class="col-xs-2">操作</th>
+		</tr>
+		<tr>
+			<td>34592348924-1</td>
+			<td>A1/箱</td>
+			<td>
+				<p>100.0(小于10箱)</p>
+				<p>98.0(大于10箱)</p>
+			</td>
+			<td>
+				<a href="#" class="btn btn-xs btn-danger" data-toggle="modal" data-target="#pricedit">修改价格</a>
+			</td>
+		</tr>
+		<tr>
+			<td>34592348924-1</td>
+			<td>A1/箱</td>
+			<td>
+				<p>100.0(小于10箱)</p>
+				<p>98.0(大于10箱)</p>
+			</td>
+			<td>
+				<a href="#" class="btn btn-xs btn-danger" data-toggle="modal" data-target="#pricedit">修改价格</a>
+			</td>
+		</tr>
+	</table>
+</div>
+
+
+<!-- 价格修改Modal -->
+<form class="pricedit_form">
+	<div class="modal fade" id="pricedit" >
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	        <h4 class="modal-title">价格修改</h4>
+	      </div>
+	      <div class="modal-body">
+			<div class="form-group clearfix">
+				<label class="col-xs-2">
+					<span class="text-danger">*</span>
+					货号
+				</label>
+				<div class="col-xs-5">
+					<input type="text" class="form-control">
+				</div>
+			</div>
+			<div class="form-group clearfix">
+				<label class="col-xs-2">
+					<span class="text-danger">*</span>
+					商品名称
+				</label>
+				<div class="col-xs-5">
+					<input type="text" class="form-control">
+				</div>
+			</div>
+			<div class="form-group clearfix">
+				<label class="col-xs-2">
+					<span class="text-danger">*</span>
+					商品图片
+				</label>
+				<div class="col-xs-5">
+					<div class="filebox">
+                        <input type="hidden" value="<{$company.legal_idcard_image}>" name="seller[legal_idcard_image]"/>
+                        <input type="file" data-url="<{link app=image ctl=site_upload act=index}>" accept="image/*" class="file_input" />
+                        <div class="showImg">
+                            <img src="<{if $company.legal_idcard_image eq ''}><{$base_url}>/themes/pc/default/statics/images/file_add.jpg<{else}><{$company.legal_idcard_image|storager:'xs'}><{/if}>">
+                        </div>
+                    </div>
+				</div>
+			</div>
+			<div class="form-group clearfix">
+				<label class="col-xs-2">
+					<span class="text-danger">*</span>
+					商品规格
+				</label>
+				<div class="col-xs-5">
+					<input type="text" class="form-control">
+				</div>
+			</div>
+			<div class="form-group clearfix">
+				<label class="col-xs-2">
+					<span class="text-danger">*</span>
+					临界值
+				</label>
+				<div class="col-xs-5">
+					<input type="text" class="form-control">
+				</div>
+			</div>
+			<div class="form-group clearfix">
+				<label class="col-xs-2">
+					<span class="text-danger">*</span>
+					商品价格
+				</label>
+				<div class="col-xs-5">
+					<div>小于10箱 <input type="text" class="form-control" ></div>
+					<div>大于10箱 <input type="text" class="form-control"></div>
+				</div>
+			</div>
+
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-primary">保存修改</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+</form>
+
+
+
+			

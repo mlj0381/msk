@@ -1,0 +1,108 @@
+<div class="reg_progress clearfix">
+    <ol>
+        <li>
+            <span><i>1</i>账户设置</span>
+        </li>
+        <li>
+            <span><i>2</i>基本资料</span>
+        </li>
+        <li class="active">
+            <span><i>3</i>经营信息</span>
+        </li>
+        <li>
+            <span><i>4</i>完成注册</span>
+        </li>
+    </ol>
+</div>
+
+<div class="passport-signup-container">
+	<div class="panel panel-default signup-panel">
+		<div class="panel-body">
+                    <form class="form-horizontal" action="<{link app=b2c ctl=site_possport act=signup_complete}>" name="" method="post">
+				<div class="form-group">
+                    <label class="col-md-2 control-label"><span class="text-danger">*</span>买家分类：</label>
+                    <div class="col-md-4">
+                        <select class="form-control" name="extra[member_tyep]">
+                        	<option value="1">分销买家</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-2 control-label"><span class="text-danger">*</span>使用方向：</label>
+                    <div class="col-md-4">
+                        <select class="form-control" name="">
+                        	<option value="1">菜场（含KA）</option>
+                        	<option value="2">团膳</option>
+                        	<option value="3">火锅</option>
+                        	<option value="4">中餐</option>
+                        	<option value="5">西餐</option>
+                        	<option value="6">小吃烧烤</option>
+                        	<option value="7">食品加工厂</option>
+                        </select>
+                    </div>
+                </div>
+				<div class="form-group">
+                    <label class="col-md-2 control-label"><span class="text-danger">*</span>主营品类：</label>
+                    <div class="col-md-4">
+                        <select class="form-control">
+                        	<option value="1">常规鸡鸭产品</option>
+                        	<option value="2">卤味熟食</option>
+                        	<option value="3">猪产品</option>
+                        	<option value="4">牛羊产品</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-2 control-label"><span class="text-danger">*</span>兼营品类：</label>
+                    <div class="col-md-4">
+                        <select class="form-control">
+                        	<option value="1">常规鸡鸭产品</option>
+                        	<option value="2">卤味熟食</option>
+                        	<option value="3">猪产品</option>
+                        	<option value="4">牛羊产品</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-2 control-label"><span class="text-danger">*</span>日均销售额：</label>
+                    <div class="col-md-4">
+                        <input type="text" name="" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-2 control-label"></label>
+                    <div class="col-md-4">
+                    <input type="checkbox"> 我已阅读并同意<a href="#" class="text-danger" data-toggle="modal" data-target="#mymodal">《美侍客用户注册协议》</a>
+                    </div>
+                </div>
+				<div class="form-group">
+                    <label class="col-md-2 control-label"></label>
+                    <div class="col-md-4">
+                    	<button class="btn btn-danger">提交信息</button>
+                    </div>
+                </div>
+			</form>
+		</div>
+	</div>
+</div>
+
+
+
+<div class="modal fade" id="mymodal">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">美侍客用户注册协议</h4>
+      </div>
+      <div class="modal-body">
+        <p>美侍客用户注册协议</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default btn-danger" data-dismiss="modal">我知道了</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+

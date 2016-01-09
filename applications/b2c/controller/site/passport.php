@@ -132,6 +132,7 @@ class b2c_ctl_site_passport extends b2c_frontpage {
         }
         $this->splash('success', $forward, '登录成功');
     }
+
 //end function
     //注册页面
 
@@ -139,6 +140,7 @@ class b2c_ctl_site_passport extends b2c_frontpage {
         $this->title = '注册成为会员';
         //检查是否登录，如果已登录则直接跳转到会员中心
         $this->check_login();
+
         $this->set_forward($forward); //设置登录成功后跳转
         //获取会员注册项
         if ($this->app->getConf('member_signup_show_attr') == 'true') {
@@ -151,29 +153,55 @@ class b2c_ctl_site_passport extends b2c_frontpage {
     //注册页面--审核信息
     public function signup_checkInfo($forward) {
         $this->verify_member();
+        $this->set_tmpl('passport');
         $this->page('site/passport/signup_checkInfo.html');
     }
 
-    //注册页面--注册完成
-    public function signup_complete($forward) {
+    //注册经营信息
+    public function business_info() {
+        $this->verify_member();
         if ($_POST) {
             $redirect = $this->gen_url(array(
                 'app' => 'b2c',
                 'ctl' => 'site_passport',
-                'act' => 'signup_complete',
+                'act' => 'signup_checkInfo',
             ));
+            $db = vmc::database();
+            $db->beginTransaction();
+            $extra_columns = $this->app->getConf('member_extra_column');
             $params = $_POST;
-            $params['member_id'] = $this->members['member_id'];
-            if (!$this->app->model('members')->save($params['pam_account'])) {
-                $this->splash('error', $redirect, '注册失败');
+            foreach ($extra_columns as $col) {
+                if ($this->_extra_save($col, $params)) {
+                    $db->rollback();
+                    $this->splash('error', $redirect, '注册失败');
+                }
             }
+            $db->commit();
         }
+        $this->set_tmpl('passport');
+        $this->page('site/passport/business_info.html');
+    }
+
+    private function _extra_save($key, $data) {
+        if (isset($data[$key]) && $result = $data[$key]) {
+            return app::get('base')->model('company_extra')->save(array_merge($result, array(
+                        'key' => $key,
+                        'identity' => 'member',
+                        'uid' => $this->members['member_id']
+            )));
+        }
+        return true;
+    }
+
+    //注册页面--注册完成
+    public function signup_complete($forward) {
+        $this->set_tmpl('passport');
         $this->page('site/passport/signup_complete.html');
     }
 
     //注册的时，检查用户名
     public function check_login_name() {
-        
+
         if ($this->passport_obj->check_signup_account(trim($_POST['pam_account']['login_name']), $msg)) {
             if ($msg == 'mobile') { //用户名为手机号码
                 $this->splash('success', null, array(
@@ -224,7 +252,6 @@ class b2c_ctl_site_passport extends b2c_frontpage {
             $this->splash('error', $signup_url, $msg);
         }
         $member_sdf_data = $this->passport_obj->pre_signup_process($params);
-
         if ($member_id = $this->passport_obj->save_members($member_sdf_data, $msg)) {
             $this->user_obj->set_member_session($member_id);
             $this->bind_member($member_id);

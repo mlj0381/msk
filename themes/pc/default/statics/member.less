@@ -34,7 +34,7 @@ ul,ol{
 
 /* .hidden{ display: none;} */
 
-@basecolor:#e93428;
+@basecolor:#a40001;
 
 
 //买家中心导航
@@ -1223,6 +1223,81 @@ ul,ol{
 //卖家中心
 .buyer_container{
 
+	//卖家注册入驻
+	.seller_regbox{
+		.company_type_t{
+			text-align: center;
+			font-size:24px;
+		}
+
+		/*企业类型选择*/
+		.typebox{
+			width:696px;
+			margin:0 auto;
+			overflow: hidden;
+
+			li{
+				width:200px;
+				height:200px;
+				line-height: 200px;
+				text-align: center;
+				font-size: 24px;
+				border:1px solid #333;
+				margin:30px 15px;
+				.fl;
+				cursor: pointer;
+
+				&.selected{
+					background: #f2f2f2;
+				}
+			}
+		}
+		.company_btns{
+			width:100%;
+			margin-top:35px;
+			text-align: center;
+			a{
+				margin:0 10px;
+			}
+		}
+
+		/*公司信息提交*/
+		.settled_warning{
+			background: #fffdf0;
+			border:1px solid #ffd119;
+			padding:20px;
+
+			dl{
+				width:100%;
+				margin-bottom:0;
+				dt{
+					.fl;
+					font-size: 30px;
+					color:#ffcc00;
+					margin-left:15px;
+					margin-right:15px;
+					margin-top:15px;
+				}
+				dd{
+					.fl;
+					a{
+						color:@basecolor;
+					}
+				}
+			}
+		}
+
+		.companyInfo_form{
+			h4{
+				margin:20px;
+			}
+		}
+	}
+
+	//END 卖家注册入驻
+ 
+
+
 	//卖家中心首页
 	.activity_con{
 		border-top:1px solid #ddd;
@@ -1253,7 +1328,7 @@ ul,ol{
 	}
 
 	//卖家注册
-	.reg_progress{
+	/* .reg_progress{
 		width:100%;
 		text-align: center;
 		height:50px;
@@ -1266,9 +1341,10 @@ ul,ol{
 				display: inline-block;
 				width:160px;
 				
+				
 			}
 		}	
-	}
+	} */
 
 	//END 卖家注册
 
@@ -1934,12 +2010,115 @@ ul,ol{
 		}
 	}	
 
+	#sepcInfo{
+		ul{
+			li{
+				cursor: pointer;
+				display: inline-block;
+				height:30px;
+				line-height: 30px;
+				border:2px solid #ddd;
+				padding:0 20px;
+				
+				&.sect{
+					border-color:@basecolor;
+				}
+			}
+		}
+		table{
+			border:1px solid #ddd;
+			th{
+				text-align: center;
+				background: #ddd;
+				border-bottom:1px solid #ccc;
+			}
+			td{
+				text-align: center;
+				vertical-align:middle;
+				.price_area{
+					span{
+						margin:0 5px;
+						display: inline-block;
+					}
+					input{
+						width:80px;
+					}
+				}
+			}
+		}
+	}
+
 	//END 商品添加
+	
+
+	//价格管理
+	.price_page{
+		.goods_info{
+			.thumbnail{
+				width:84px;
+				height:84px;
+				margin-right:10px;
+				.fl;
+			}
+			div{
+				.goods_name{
+					font-size: 14px;
+					font-weight:bold;
+					color:#333;
+					display: inline-block;
+				}
+			}
+			.edit_record{
+				margin-top:20px;
+			}
+
+		}
+		table.goods_list{
+			border:1px solid #ddd;
+			th{
+				background: #ddd;
+				text-align: center;
+			}
+			td{
+				text-align: center;
+				vertical-align: middle;
+			}
+		}
+	}
+	//END 价格管理
+
+	//价格修改记录
+	.modify_record_page{
+		.goods_num{
+			margin-top:5px;
+			font-size:16px;
+			span{
+				font-weight: bold;
+			}
+		}
+		table.modify_list{
+			margin-top:25px;
+			border:1px solid #ddd;
+			th{
+				background: #ddd;
+				text-align: center;
+			}
+			td{
+				text-align: center;
+				vertical-align: middle;
+			}
+		}
+	}
+
+
+	//END 价格修改记录
+
 
 
 
 	//在售商品
 	.goods_sell{
+		padding-bottom: 20px;
 		.page-title{
 			border-bottom:1px solid #ddd;
 			padding-bottom:15px;
@@ -1957,11 +2136,23 @@ ul,ol{
 			}
 		}
 		.table-scrollable{
+			border:1px solid #ddd;
+			.table{
+				margin:0;
+			}
 			th{
 				background: #ddd;
+				text-align: center;
 			}
 			td{
 				vertical-align: middle;
+				text-align: center;
+				a.thumbnail{
+					display: block;
+					width:60px;
+					height:60px;
+					margin-bottom:0px;
+				}
 			}
 		}
 	}

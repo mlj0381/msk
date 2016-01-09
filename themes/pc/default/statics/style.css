@@ -65,7 +65,7 @@ ol {
   text-align: right;
 }
 .glist-container .breadcrumb_row .about_goods_total span {
-  color: #e93428;
+  color: #a40001;
   padding: 0 5px;
 }
 .glist-container .gfilter_condition {
@@ -100,12 +100,12 @@ ol {
 }
 .glist-container .gfilter_condition .conditions a:hover {
   color: #666;
-  border: 1px solid #e93428;
+  border: 1px solid #a40001;
   background: #fff;
 }
 .glist-container .gfilter_condition .conditions a:hover i {
   color: #fff;
-  background: #e93428;
+  background: #a40001;
 }
 .glist-container .gfilter_condition .cond_reset {
   text-align: right;
@@ -120,7 +120,7 @@ ol {
 }
 .glist-container .gfilter_condition .cond_reset:hover a,
 .glist-container .gfilter_condition .cond_reset:hover i {
-  color: #e93428;
+  color: #a40001;
 }
 .glist-container .panel-body {
   padding: 0px;
@@ -231,7 +231,7 @@ ol {
   font-weight: bold;
 }
 .glist-container .goods-listbox .store_list .store_item .store_bar .pingfen span {
-  color: #e93428;
+  color: #a40001;
   display: block;
   margin-top: 10px;
 }
@@ -343,7 +343,7 @@ ol {
 }
 .product-container .product-page .product_firstRow .turnover_info ul li span {
   padding-left: 15px;
-  color: #e93428;
+  color: #a40001;
 }
 .product-container .product-page .product_firstRow .turnover_info ul li span small {
   padding-left: 5px;
@@ -459,7 +459,7 @@ ol {
 }
 .product-container .product-page .goods-detailRow .shop_info .server_info span small {
   display: block;
-  color: #e93428;
+  color: #a40001;
 }
 .product-container .product-page .goods-detailRow .shop_info .shop_ctr {
   text-align: center;
@@ -519,7 +519,7 @@ ol {
   line-height: 24px;
 }
 .product-container .product-page .goods-detailRow .shopkeeper_tj ul li .goods_info .goods_price {
-  color: #e93428;
+  color: #a40001;
   font-size: 16px;
 }
 .product-container .product-page .goods-detailRow .shopkeeper_tj ul li .goods_info .goods_name a {
@@ -530,7 +530,7 @@ ol {
   color: #ccc;
 }
 .product-container .product-page .goods-detailRow .shopkeeper_tj ul li .goods_info .sell_info span small {
-  color: #e93428;
+  color: #a40001;
   font-size: 16px;
   padding: 0 5px;
 }
@@ -566,7 +566,7 @@ ol {
   background: #eaeaea;
 }
 .passport-login-container .login_panel_rt .panel-heading span.active {
-  background: #e93428;
+  background: #a40001;
   color: #fff;
 }
 .passport-login-container .login_panel_rt .panel-body {
@@ -595,10 +595,10 @@ ol {
   padding: 0 3px;
 }
 .passport-login-container .login_panel_rt .panel-body .reg_link a i {
-  color: #e93428;
+  color: #a40001;
 }
 .passport-login-container .login_panel_rt .panel-body .reg_link a:hover {
-  color: #e93428;
+  color: #a40001;
 }
 .passport-login-container .login_panel_rt .login-panel {
   margin-left: 0px;
@@ -608,28 +608,58 @@ ol {
 }
 .reg_progress {
   width: 100%;
-  height: 50px;
-  line-height: 50px;
   margin: 20px 0;
-  background: #f5f5f5;
+  border-bottom: 2px solid #ddd;
 }
 .reg_progress ol {
   width: 100%;
   margin: 0;
   padding: 0;
   text-align: center;
+  height: 50px;
+  line-height: 50px;
 }
 .reg_progress ol li {
-  width: 160px;
+  display: inline-block;
+  margin: 0 30px;
+  padding: 0 15px;
   text-align: center;
 }
-.reg_progress ol li.active {
-  background: #e93428;
-  color: #fff;
-  cursor: pointer;
+.reg_progress ol li span {
+  height: 50px;
+  line-height: 50px;
+  display: block;
+  font-size: 14px;
+  font-weight: bold;
+  color: #999;
 }
-.reg_progress ol li.active a {
+.reg_progress ol li span i {
+  display: inline-block;
+  width: 30px;
+  line-height: 30px;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  border-radius: 50%;
   color: #fff;
+  text-align: center;
+  background: #ddd;
+  font-style: normal;
+  margin-right: 5px;
+}
+.reg_progress ol li.active {
+  border-bottom: 2px solid #a40001;
+  color: #fff;
+}
+.reg_progress ol li.active span {
+  color: #333;
+}
+.reg_progress ol li.active span i {
+  background: #a40001;
+}
+.passport-signup-container .signup-panel {
+  border: none;
+  box-shadow: none;
 }
 #member_signup_checkInfo_form .customer_address select {
   width: 123px;

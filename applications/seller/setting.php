@@ -14,6 +14,7 @@
  *  getConf 默认值.
  */
 $setting = array(
+<<<<<<< HEAD
 	'avatar_max_size' => array(
 		'type' => 'number',
 		'default' => get_cfg_var('upload_max_filesize') ? intval(get_cfg_var('upload_max_filesize')) : '5',
@@ -148,4 +149,51 @@ $setting = array(
 			'brand_touted' => '品牌荣誉', // 证书编号,发证日期,发证单位
 		),
 	),
+=======
+    'avatar_max_size' => array(
+        'type' => 'number',
+        'default' => get_cfg_var('upload_max_filesize') ? intval(get_cfg_var('upload_max_filesize')) : '5',
+        'desc' => '头像上传大小限制(单位：MB)',
+        'helpinfo' => (get_cfg_var('upload_max_filesize') ? '<span class="text-danger">服务器当前限制' . get_cfg_var('upload_max_filesize') . '</span>' : '')
+    ),
+    'seller_entry' => array(
+        'default' => array(
+            'comm' => array(
+                array(
+                    'three_lesstion', 'business_licence', 'tax_licence', 'organization_licence','bank_lesstion',
+                ),
+                
+                array(
+                    
+                ),
+                array(
+                ),
+                array(
+                ),
+                array(
+                ),
+                array(
+                )
+            ),
+            1 => array(
+                array(
+                    'food_business_licence',
+                ),
+                array('animal_certificate', 'iso9001_lesstion'),
+                array(
+                ),
+            ),
+            2 => array(
+                array(
+                    'food_business_licence',
+                ),
+            ),
+            3 => array(
+                array(
+                    'food_business_licence',
+                ),
+            ),
+        ),
+    ),
+>>>>>>> 42cf6fac974adf37ee65c30556888a7875d0c18a
 );

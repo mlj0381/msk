@@ -1,4 +1,5 @@
 <?php
+
 // +----------------------------------------------------------------------
 // | VMCSHOP [V M-Commerce Shop]
 // +----------------------------------------------------------------------
@@ -19,26 +20,25 @@ $db['contact'] = array(
             'pkey' => true,
             'extra' => 'auto_increment',
             'in_list' => true,
-			'comment' => '联系人ID',
+            'comment' => '联系人ID',
         ),
-		'name' => array(
+        'name' => array(
             'type' => 'varchar(100)',
             'required' => true,
             'label' => '姓名',
             'in_list' => true,
-			'default_in_list' => true,
-			'comment' => '姓名',
+            'default_in_list' => true,
+            'comment' => '姓名',
         ),
-
         'contact_addr' => array(
             'type' => 'varchar(200)',
-            'required' => true,
+            //'required' => true,
             'label' => '公司地址',
             'in_list' => false,
             'comment' => '公司地址',
         ),
         'contact_area' => array(
-            'label' => ('地区') ,
+            'label' => ('地区'),
             'type' => 'region',
             'sdfpath' => 'contact/area',
             'filtertype' => 'yes',
@@ -48,7 +48,7 @@ $db['contact'] = array(
         ),
         'tel' => array(
             'type' => 'varchar(50)',
-            'label' => ('固定电话') ,
+            'label' => ('固定电话'),
             'sdfpath' => 'contact/phone/telephone',
             'searchtype' => 'head',
             'editable' => true,
@@ -56,34 +56,55 @@ $db['contact'] = array(
             'filterdefault' => 'true',
             'in_list' => true,
             'default_in_list' => false,
-        ) ,
+        ),
         'email' => array(
             'type' => 'varchar(200)',
             'sdfpath' => 'consignor/email',
-            'label' => ('联系人Email') ,
-            'comment' => ('联系人Email') ,
-        ) ,
-
+            'label' => ('联系人Email'),
+            'comment' => ('联系人Email'),
+        ),
         'seller_id' => array(
             'type' => 'number',
             'required' => false,
-			'default' => 0,
+            'default' => 0,
             'label' => '商家',
-			'searchtype' => 'has',
+            'searchtype' => 'has',
             'in_list' => true,
             'default_in_list' => true,
             'order' => '1',
-			'comment' => '商家',
+            'comment' => '商家',
         ),
-	),
-	'index' => array(
-	'ind_name' => array(
-		'columns' => array(
-			0 => 'name',
-		) ,
-		'prefix' => 'unique',
-	) ,
-    ) ,
+        'contact_qq' => array(
+            'type' => 'varchar(20)',
+            'default' => '',
+            'label' => '联系人QQ',
+            'comment' => '联系人QQ',
+        ),
+        'contact_wechat' => array(
+            'type' => 'varchar(20)',
+            'default' => '',
+            'label' => '联系人wechat',
+            'comment' => '联系人wechat',
+        ),
+        'contact_type' => array(
+            'type' => array(
+                '0' => '商家',
+                '1' => '会员'
+            ),
+            'required' => true,
+            'default' => '0',
+            'label' => '联系人类型',
+            'comment' => '联系人类型',
+        ),
+    ),
+    'index' => array(
+        'ind_name' => array(
+            'columns' => array(
+                0 => 'name',
+            ),
+            'prefix' => 'unique',
+        ),
+    ),
     'version' => '$Rev$',
-    'comment' => '公司表' ,
+    'comment' => '联系人表',
 );

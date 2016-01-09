@@ -50,7 +50,7 @@ class b2c_user_passport {
         switch ($login_type) {
             case 'local':
                 if (strlen(trim($login_name)) < 6) {
-                    $msg = $this->app->_('登录账号最少4个字符');
+                    $msg = $this->app->_('登录账号最少6个字符');
 
                     return false;
                 } elseif (strlen($login_name) > 18) {
@@ -134,7 +134,7 @@ class b2c_user_passport {
         $data['currency'] = $arrDefCurrency['cur_code'];
         $data['reg_ip'] = base_request::get_remote_addr();
         $data['regtime'] = time();
-        $data['mobile'] = $data['pam_account']['addon']['mobile'];
+        $data['contact']['phone']['mobile'] = $data['pam_account']['mobile'];
 
         //--防止恶意修改
         foreach ($data as $key => $val) {
@@ -540,6 +540,8 @@ class b2c_user_passport {
         if ($member_model->save($saveData['b2c_members'])) {
             $member_id = $saveData['b2c_members']['member_id'];
             $saveData['pam_account']['member_id'] = $member_id;
+            $saveData['pam_account']['mobile'] = $saveData['b2c_members']['mobile'];
+            
             if (!app::get('pam')->model('members')->save($saveData['pam_account'])) {
                 $db->rollBack();
                 $msg = '账户数据保存异常!';

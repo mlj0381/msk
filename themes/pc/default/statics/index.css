@@ -17,7 +17,7 @@
   display: none;
 }
 .basecolor {
-  color: #e93428;
+  color: #a40001;
 }
 .index_page {
   position: relative;
@@ -59,7 +59,7 @@
   width: 100%;
   height: 60px;
   line-height: 60px;
-  background: #e93428;
+  background: #a40001;
   color: #fff;
   margin: 0;
 }
@@ -217,10 +217,10 @@
   color: #fff;
 }
 .index_page .fixed_slidebar ul li i.icon-shopping-cart {
-  color: #e93428;
+  color: #a40001;
 }
 .index_page .fixed_slidebar ul li:hover {
-  background: #e93428;
+  background: #a40001;
   color: #fff;
 }
 .index_page .fixed_slidebar ul li:hover i.icon-shopping-cart {
@@ -250,6 +250,6 @@
   cursor: pointer;
 }
 .index_page .fixed_floorNav ul li.active {
-  background: #e93428;
+  background: #a40001;
   color: #fff;
 }
