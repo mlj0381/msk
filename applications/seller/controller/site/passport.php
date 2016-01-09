@@ -374,14 +374,13 @@ class seller_ctl_site_passport extends seller_frontpage {
         if ($ident & 2) {
             $columns = array_merge($columns, array_flip($conf[2][1]));
         }
-        if ($indent & 4) {
+        if ($ident & 4) {
             $columns = array_merge($columns, array_flip($conf[4][1]));
         }
         $this->pagedata['page'] = $columns;
         $this->pagedata['identity'] = $ident;
         $this->pagedata['columns'] = $ident;
         $this->page('site/passport/signup_companyInfo.html');
-        //$page = //;
     }
 
     public function _entry() {
