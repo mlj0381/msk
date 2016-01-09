@@ -45,7 +45,7 @@
                 <div class="form-group">
                     <label for="input_psw_confirm" class="col-md-2 control-label"><span class="text-danger">*</span>验证手机：</label>
                     <div class="col-md-4">
-                        <input type="text" name="pam_account[addon][mobile]" class="form-control" id="input_mobile">
+                        <input type="text" name="pam_account[mobile]" class="form-control" id="input_mobile">
                         <div id="input_mobileTip"></div>
                     </div>
                 </div>
@@ -245,7 +245,7 @@ void function(signup_form){
             $(input).next('input').nextAll().removeClass('hide');
         }
     });
-/*
+
     var _input_checkin = function(obj, length, type){
         type = type ? type : false;
         if(obj.val().length < length){
@@ -253,7 +253,8 @@ void function(signup_form){
             obj.popover('show');
             return false;
         }
-        var re = type ? /^(?=.*[0-9]+)(?=.*[A-Za-z]+)[A-Za-z0-9]+$/ : /^[A-Za-z0-9_]+$/;
+    };
+       /* var re = type ? /^(?=.*[0-9]+)(?=.*[A-Za-z]+)[A-Za-z0-9]+$/ : /^[A-Za-z0-9_]+$/;
         if(!re.test(obj.val())){
             var val = type ? '包含非法字符或必须有两种组合' : '包含非法字符';
             obj.popover({content : val, placement : 'right', container : 'body'});

@@ -570,6 +570,7 @@ class dbeav_model extends base_db_model {
         foreach ($this->_columns() as $k => $v) {
             $map[$k] = $v['sdfpath'] ? $v['sdfpath'] : $k;
         }
+        
         if ($appends) {
             $map = array_merge($map, (array) $appends);
         }
@@ -581,7 +582,6 @@ class dbeav_model extends base_db_model {
                 $return[$k] = $ret;
             }
         }
-
         return $return;
     }
 

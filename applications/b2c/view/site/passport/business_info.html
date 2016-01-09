@@ -3,11 +3,14 @@
         <li>
             <span><i>1</i>账户设置</span>
         </li>
-        <li class="active">
+        <li>
             <span><i>2</i>基本资料</span>
         </li>
+        <li class="active">
+            <span><i>3</i>经营信息</span>
+        </li>
         <li>
-            <span><i>3</i>完成注册</span>
+            <span><i>4</i>完成注册</span>
         </li>
     </ol>
 </div>
@@ -15,26 +18,26 @@
 <div class="passport-signup-container">
 	<div class="panel panel-default signup-panel">
 		<div class="panel-body">
-			<form class="form-horizontal">
+                    <form class="form-horizontal" action="<{link app=b2c ctl=site_possport act=signup_complete}>" name="" method="post">
 				<div class="form-group">
-                    <label class="col-md-2 control-label"><span class="text-danger">*</span>卖家分类：</label>
+                    <label class="col-md-2 control-label"><span class="text-danger">*</span>买家分类：</label>
                     <div class="col-md-4">
-                        <select class="form-control">
-                        	<option>分销买家</option>
+                        <select class="form-control" name="extra[member_tyep]">
+                        	<option value="1">分销买家</option>
                         </select>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-md-2 control-label"><span class="text-danger">*</span>使用方向：</label>
                     <div class="col-md-4">
-                        <select class="form-control">
-                        	<option value="">菜场（含KA）</option>
-                        	<option value="">团膳</option>
-                        	<option value="">火锅</option>
-                        	<option value="">中餐</option>
-                        	<option value="">西餐</option>
-                        	<option value="">小吃烧烤</option>
-                        	<option value="">食品加工厂</option>
+                        <select class="form-control" name="">
+                        	<option value="1">菜场（含KA）</option>
+                        	<option value="2">团膳</option>
+                        	<option value="3">火锅</option>
+                        	<option value="4">中餐</option>
+                        	<option value="5">西餐</option>
+                        	<option value="6">小吃烧烤</option>
+                        	<option value="7">食品加工厂</option>
                         </select>
                     </div>
                 </div>
@@ -42,10 +45,10 @@
                     <label class="col-md-2 control-label"><span class="text-danger">*</span>主营品类：</label>
                     <div class="col-md-4">
                         <select class="form-control">
-                        	<option value="">常规鸡鸭产品</option>
-                        	<option value="">卤味熟食</option>
-                        	<option value="">猪产品</option>
-                        	<option value="">牛羊产品</option>
+                        	<option value="1">常规鸡鸭产品</option>
+                        	<option value="2">卤味熟食</option>
+                        	<option value="3">猪产品</option>
+                        	<option value="4">牛羊产品</option>
                         </select>
                     </div>
                 </div>
@@ -53,17 +56,17 @@
                     <label class="col-md-2 control-label"><span class="text-danger">*</span>兼营品类：</label>
                     <div class="col-md-4">
                         <select class="form-control">
-                        	<option value="">常规鸡鸭产品</option>
-                        	<option value="">卤味熟食</option>
-                        	<option value="">猪产品</option>
-                        	<option value="">牛羊产品</option>
+                        	<option value="1">常规鸡鸭产品</option>
+                        	<option value="2">卤味熟食</option>
+                        	<option value="3">猪产品</option>
+                        	<option value="4">牛羊产品</option>
                         </select>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-md-2 control-label"><span class="text-danger">*</span>日均销售额：</label>
                     <div class="col-md-4">
-                        <input type="text" class="form-control">
+                        <input type="text" name="" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">

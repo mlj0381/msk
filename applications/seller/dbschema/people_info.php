@@ -9,8 +9,7 @@
 // +----------------------------------------------------------------------
 // | Author: Shanghai ChenShang Software Technology Co., Ltd.
 // +----------------------------------------------------------------------
-// | 商家品牌申请、授权
-// +----------------------------------------------------------------------
+
 $db['people_info'] = array(
     'columns' => array(
         'id' => array(
@@ -68,6 +67,7 @@ $db['people_info'] = array(
             ),
             'label' => '信息类型',
             'comment' => '信息类型',
+            'default' => 'company',
             'required' => true,
         ),
         'seller_id' => array(

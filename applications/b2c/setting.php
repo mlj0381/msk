@@ -148,4 +148,6 @@ $setting = array(
 				'2' => ('商品'),
 			)
 		),
+
+		'member_extra_column' => array('comany', 'business_licence', 'contact', 'president')
 );
