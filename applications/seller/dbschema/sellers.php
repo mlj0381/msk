@@ -19,18 +19,7 @@ $db['sellers'] = array(
             'pkey' => true,
             'extra' => 'auto_increment',
             'in_list' => true,
-        ),
-        'company_id' => array(
-            'type' => 'number',
-            'required' => false,
-            'default' => 0,
-            'label' => '公司',
-            'searchtype' => 'has',
-            'in_list' => true,
-            'default_in_list' => true,
-            'order' => '1',
-            'comment' => '公司',
-        ),
+        ),       
         'name' => array(
             'type' => 'varchar(50)',
             'required' => false,
@@ -105,17 +94,10 @@ $db['sellers'] = array(
             'comment' => '卖家帐号设置'
         ),
         'type' => array(
-            'type' => array(
-                0 => ('商家'),
-                1 => ('线上分销商'),
-                2 => ('线上专营服务商'),
-                3 => ('授权销售商'),
-                4 => ('神家客自营商'),
-            ),
-            'label' => '商家类型',
-            'filtertype' => 'normal',
-            'default' => '1',
-            'comment' => '商家类型',
+            'type' => 'number'
+            'label' => '商家类型',            
+            'default' => 0,
+            'comment' => '商家类型(1生产型\2代理型\4OEM)',
         ),
         'reg_ip' => array(
             'type' => 'varchar(16)',
@@ -128,7 +110,6 @@ $db['sellers'] = array(
             'type' => 'time',
             'filtertype' => 'time',
             'in_list' => true,
-            'default_in_list' => true,
             'comment' => ('注册时间'),
         ),
         'disabled' => array(
@@ -141,22 +122,17 @@ $db['sellers'] = array(
             'required' => true,
         ),
         'experience' => array(
-            'label' => ('经验值'),
-            'type' => 'int(10)',
-            'in_list' => true,
+            'label' => ('经验值'),			
+            'type' => 'int(10)', 
+			'default' => 0,
         ),
         'status' => array(
             'label' => ('用户状态'),
-            'type' => array(
-                0 => ('新用户'),
-                1 => ('公司信息'),
-                2 => ('联系人'),
-                3 => ('基本资料'),
-                4 => ('生产资料'),
-            ),
-            'default' => '0',
-            'in_list' => false,
+            'type' => 'number',          
+            'default' => 0,
+            'in_list' => true,
             'default_in_list' => false,
+			'comment' => ('注册时间'),
         ),
         'checkin' => array(
             'label' => ('审核'),

@@ -25,17 +25,8 @@
                             <div class="col-md-5">
                                 <{input required='true' type='select' name='position[pages_id]' rows=$pages value=$pageObject.pages_id valueColumn='pages_id' labelColumn='name'}>
                             </div>
-                        </div>   
-                    
-                        <div class="form-group ">
-                           <label class="col-md-4 control-label">所属平台
-                                <span class="required">*</span>
-                           </label>
-                            <div class="col-md-6">
-                                <{input type='select' name='position[plat]' options=$plats value=$position.plat required='true'}>
-                            </div>
-                        </div>                        
-                    
+                        </div>
+
                         <div class="form-group ">
                            <label class="col-md-4 control-label">类型
                                 <span class="required">*</span>
@@ -47,7 +38,7 @@
                         <div class="form-group ">
                             <label class="col-md-4 control-label">是否多个 </label>
                             <div class="col-md-3">
-                                <label class="radio-inline"><input  type="checkbox" name="position[multi]" value="true" <{if !$position || $position.multi == 1 }>checked<{/if}>>是</label>
+                                <label class="radio-inline"><input  type="checkbox" name="position[multi]" value="1" <{if !$position || $position.multi == 1 }>checked<{/if}>>是</label>
                             </div>
                         </div>
                         <div class="form-group ">

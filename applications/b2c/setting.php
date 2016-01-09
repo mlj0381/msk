@@ -145,7 +145,14 @@ $setting = array(
 		'pages_position_types' => array(
 			'default' => array(
 				'0' => ('普通'),				
+				'1' => ('幻灯'),
 				'2' => ('商品'),
+			)
+		),
+		'pages_content_types' => array(
+			'default' => array(
+				'0' => ('普通'),
+				'1' => ('商品'),
 			)
 		),
 );
