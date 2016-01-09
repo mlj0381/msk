@@ -22,19 +22,99 @@ $db['company'] = array(
             'in_list' => true,
             'comment' => '公司ID',
         ),
+        'dobusiness_phone' => array(
+            'type' => 'varchar(100)',
+            'label' => '营业电话',
+            'default' => '',
+            'in_list' => true,
+            'comment' => '营业电话',
+        ),
         'company_contacts' => array(
             'type' => 'varchar(100)',
-            'required' => true,
-            'label' => '紧急联系人',
+            'label' => '联系人',
+            'default' => '',
             'in_list' => true,
-            'comment' => '紧急联系人',
+            'comment' => '联系人',
         ),
         'contacts_phone' => array(
             'type' => 'varchar(100)',
-            'required' => true,
-            'label' => '紧急联系人电话',
+            'label' => '联系人电话',
+            'default' => '',
             'in_list' => true,
-            'comment' => '紧急联系人电话',
+            'comment' => '联系人电话',
+        ),
+        'contact_qq' => array(
+            'type' => 'varchar(20)',
+            'default' => '',
+            'label' => '联系人QQ',
+            'comment' => '联系人QQ',
+        ),
+        'contact_wechat' => array(
+            'type' => 'varchar(20)',
+            'default' => '',
+            'label' => '联系人wechat',
+            'comment' => '联系人wechat',
+        ),
+        // 法人
+        'legal_person' => array(
+            'type' => 'varchar(50)',
+            'default' => '',
+            'label' => '法人',
+            'comment' => '法人',
+        ),
+        'legal_mobile' => array(
+            'type' => 'varchar(50)',
+            'default' => '',
+            'label' => '手机',
+            'comment' => ('手机'),
+        ),
+        'boss_name' => array(
+            'type' => 'varchar(50)',
+            'default' => '',
+            'label' => '老板姓名',
+            'comment' => '老板姓名',
+        ),
+        'boss_mobile' => array(
+            'type' => 'varchar(50)',
+            'default' => '',
+            'label' => '老板手机',
+            'comment' => ('老板手机'),
+        ),
+        'boss_qq' => array(
+            'type' => 'varchar(20)',
+            'default' => '',
+            'label' => '老板QQ',
+            'comment' => '老板QQ',
+        ),
+        'boss_wechat' => array(
+            'type' => 'varchar(20)',
+            'default' => '',
+            'label' => '老板wechat',
+            'comment' => '老板wechat',
+        ),
+        
+        
+        'legal_idcard' => array(
+            'type' => 'varchar(50)',
+            'default' => '',
+            'label' => '身份证',
+            'comment' => ('身份证'),
+        ),
+        
+        
+        'legal_idcard_image' => array(
+            'type' => 'serialize',
+            'default' => '',
+            'label' => '身份证',
+            'comment' => ('身份证'),
+        ),
+        'company_web' => array(
+            'type' => 'varchar(100)',
+            'label' => '公司网址',
+            'in_list' => true,
+            'default' => '',
+            'default_in_list' => true,
+            'comment' => '公司网址',
         ),
         'company_name' => array(
             'type' => 'varchar(100)',
@@ -54,10 +134,10 @@ $db['company'] = array(
         'company_area' => array(
             'label' => ('地区'),
             'type' => 'region',
-            'sdfpath' => 'contact/area',
             'filtertype' => 'yes',
             'filterdefault' => true,
             'in_list' => true,
+            'default' => '',
             'default_in_list' => true,
         ),
         'company_product' => array(
@@ -90,34 +170,40 @@ $db['company'] = array(
             'default_in_list' => false,
             'comment' => '公司性质',
         ),
-        // 法人
-        'legal_person' => array(
-            'type' => 'varchar(50)',
-            'default' => '',
-            'label' => '法人',
-            'comment' => '公司名称',
+        'register_money' => array(
+            'type' => 'number',
+            'default' => 0,
+            'label' => '注册资本',
+            'comment' => '注册资本',
         ),
-        'legal_mobile' => array(
-            'type' => 'varchar(50)',
-            'default' => '',
-            'label' => '手机',
-            'comment' => ('手机'),
+        'reality_money' => array(
+            'type' => 'number',
+            'default' => 0,
+            'label' => '实收资本',
+            'comment' => '实收资本',
         ),
-        'legal_idcard' => array(
-            'type' => 'varchar(50)',
+        'run_range' => array(
+            'type' => 'varchar(200)',
             'default' => '',
-            'label' => '手机',
-            'comment' => ('身份证'),
+            'label' => '经营范围',
+            'comment' => '经营范围',
         ),
-        'legal_idcard_image' => array(
+        'run_deadline' => array(
             'type' => 'serialize',
             'default' => '',
-            'label' => '身份证',
-            'comment' => ('身份证'),
+            'label' => '经营期限',
+            'comment' => '经营期限',
+        ),
+        'establish_time' => array(
+            'type' => 'varchar(200)',
+            'default' => '',
+            'label' => '成立日期',
+            'comment' => '成立日期',
         ),
         // 营业执照
         'business_license_number' => array(
             'type' => 'varchar(200)',
+            'default' => '',
             'label' => '营业执照注册号',
             'comment' => '营业执照注册号',
         ),
@@ -187,6 +273,7 @@ $db['company'] = array(
         ),
         'bank_account_number' => array(
             'type' => 'varchar(200)',
+            'default' => '',
             'label' => '银行开户账号',
             'comment' => '银行开户账号',
         ),
