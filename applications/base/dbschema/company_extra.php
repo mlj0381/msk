@@ -31,11 +31,11 @@ $db['company_extra'] = array(
         'identity' => array(
             'type' => array(
                 'member' => ('会员'),
-                'member' => ('商家'),
+                'seller' => ('商家'),
             ),
-            'label' => '所属类型',
+            'label' => '身份类型',
             'required' => true,
-            'comment' => '所属类型',
+            'comment' => '身份类型',
         ),
         'key' => array(
             'type' => 'varchar(20)',
@@ -46,11 +46,12 @@ $db['company_extra'] = array(
         'value' => array(
             'type' => 'serialize',
             'required' => true,
+			'default' => '',
             'label' => '属性值',
             'comment' => '属性值',
         ),
         'attach' => array(
-            'type' => 'char(32)',
+            'type' => 'varchar(200)',
             'default' => '',
             'label' => '图片id',
             'comment' => '图片id',
