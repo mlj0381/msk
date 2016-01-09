@@ -302,7 +302,7 @@ $db['company'] = array(
             'label' => '资质信息',
             'comment' => '资质信息',
         ),
-        'seller_id' => array(
+        'uid' => array(
             'type' => 'number',
             'required' => true,
             'default' => 0,
@@ -312,6 +312,14 @@ $db['company'] = array(
             'default_in_list' => true,
             'order' => '1',
             'comment' => '商家',
+        ),
+        'identity' => array(
+            'type' => array(
+                'member' => '会员',
+                'seller' => '商家'
+            ),
+            'label' => '企业注册类型',
+            'comment' => '企业注册类型',
         ),
         'status' => array(
             'type' => array(

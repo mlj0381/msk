@@ -57,7 +57,7 @@ $setting = array(
                 ),
             ),
             4 => array(
-                2 => array(
+                1 => array(
                     'food_business_licence', 'food_flow_licence', 'oem_auth_lesstion'
                 ),
             ),
