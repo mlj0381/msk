@@ -59,7 +59,7 @@
         <div class="col-md-4">
             <div class="filebox">
                 <input type="hidden" name="addon[boss_image]" value="<{$pam_data.memberData.addon.boss_image}>" />
-                <input type="file" data-url="<{link app=image ctl=site_upload act=index}>" accept="image/*" class="file_input" />
+                <input type="file" vtype='required' data-url="<{link app=image ctl=site_upload act=index}>" accept="image/*" class="file_input" />
                 <div class="showImg">
                     <img src="<{if $pam_data.memberData.addon.boss_image eq ''}>./../../themes/pc/default/statics/images/file_add.jpg<{else}><{$pam_data.memberData.addon.boss_image|storager:'xs'}><{/if}>">
                 </div>

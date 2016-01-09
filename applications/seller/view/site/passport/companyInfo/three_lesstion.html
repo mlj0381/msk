@@ -1,0 +1,120 @@
+<h4>三证合一营业执照（副本）<small class="text-danger">还没换证，填写旧版</small></h4>
+<div class="form-group">
+	<label class="col-xs-2 control-label">
+		<span class="text-danger">*</span>注册号：
+	</label>
+	<div class="col-xs-4">
+		<input type="text" class="form-control">
+	</div>
+</div>
+<div class="form-group">
+	<label class="col-xs-2 control-label">
+		<span class="text-danger">*</span>组织机构代码号:
+	</label>
+	<div class="col-xs-4">
+		<input type="text" class="form-control">
+	</div>
+</div>
+
+<div class="form-group">
+	<label class="col-xs-2 control-label">
+		<span class="text-danger">*</span>税务登记证号：
+	</label>
+	<div class="col-xs-4">
+		<input type="text" class="form-control">
+	</div>
+</div>
+<div class="form-group">
+	<label class="col-xs-2 control-label">
+		<span class="text-danger">*</span>名称：
+	</label>
+	<div class="col-xs-4">
+		<input type="text" class="form-control">
+	</div>
+</div>
+<div class="form-group">
+	<label class="col-xs-2 control-label">
+		<span class="text-danger">*</span>类型：
+	</label>
+	<div class="col-xs-4">
+		<select class="form-control">
+			<option value="">请选择</option>
+			<option value="">公司类型一</option>
+			<option value="">公司类型二</option>
+			<option value="">公司类型三</option>
+		</select>
+	</div>
+</div>
+<div class="form-group">
+	<label class="col-xs-2 control-label">
+		<span class="text-danger">*</span>住所：
+	</label>
+	<div class="col-xs-4">
+		<input type="text" class="form-control">
+	</div>
+</div>
+<div class="form-group">
+	<label class="col-xs-2 control-label">
+		<span class="text-danger">*</span>法定代表人：
+	</label>
+	<div class="col-xs-4">
+		<input type="text" class="form-control">
+	</div>
+</div>
+<div class="form-group">
+	<label class="col-xs-2 control-label">
+		<span class="text-danger">*</span>注册资本：
+	</label>
+	<div class="col-xs-4">
+		<input type="text" class="form-control">
+	</div>
+</div>
+<div class="form-group">
+	<label class="col-xs-2 control-label">
+		<span class="text-danger">*</span>成立日期：
+	</label>
+	<div class="col-xs-4">
+		<input type="text" class="form-control">
+	</div>
+</div>
+<div class="form-group">
+	<label class="col-xs-2 control-label">
+		<span class="text-danger">*</span>营业期限：
+	</label>
+	<div class="col-xs-4">
+		<input type="text" class="form-control" style="width:175px; display: inline-block;"> 至 
+		<input type="text" class="form-control" style="width:175px; display: inline-block;">
+	</div>
+</div>
+<div class="form-group">
+	<label class="col-xs-2 control-label">
+		<span class="text-danger">*</span>经营范围：
+	</label>
+	<div class="col-xs-4">
+		<input type="text" class="form-control">
+	</div>
+</div>
+<div class="form-group">
+	<label class="col-xs-2 control-label">
+		<span class="text-danger">*</span>营业执照电子版：
+	</label>
+	<div class="col-xs-4">
+		<div class="filebox">
+            <input type="hidden" value="<{$company.business_license_image}>" name="three_lesstion[attach]"/>
+            <input type="file" required="true" data-url="<{link app=image ctl=site_upload act=index}>" accept="image/*" class="file_input" />
+            <div class="showImg">
+                 <img src="<{if $company.business_license_image eq ''}><{$base_url}>/themes/pc/default/statics/images/file_add.jpg<{else}><{$company.business_license_image|storager:'xs'}><{/if}>">    
+            </div>
+        </div>
+	</div>
+</div>
+<div class="form-group">
+	<label class="col-xs-2 control-label">
+		<span class="text-danger">*</span>注册资本：
+	</label>
+	<div class="col-xs-4">
+		<input type="text" class="form-control">
+	</div>
+</div>
+
+<hr>
