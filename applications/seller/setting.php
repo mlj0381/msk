@@ -23,38 +23,41 @@ $setting = array(
     'seller_entry' => array(
         'default' => array(
             'comm' => array(
-                array(
-                    'three_lesstion', 'business_licence', 'tax_licence', 'organization_licence','bank_lesstion',
+                1 => array(
+                    'three_lesstion', 'business_licence', 'tax_licence', 'organization_licence', 'bank_lesstion',
                 ),
-                
-                array(
-                    
+                2 => array('animal_certificate', 'slaughter_lesstion', 'food_produce_lesstion', 'national_produce_lesstion', 'entry_lesstion', 'iso9001_lesstion', 'iso22000_lesstion', 'iso14001_lesstion', 'food_mosque_lesstion',
                 ),
-                array(
+                3 => array(
+                    'company_touted', 'factory',
                 ),
-                array(
+                4 => array(
+                    'workshop', 'storage',
                 ),
-                array(
+                5 => array(
+                    'laboratory', 'equipment', 'qa_department', 'quality_control_department'
                 ),
-                array(
-                )
+                6 => array(
+                    'president', 'general_manager', 'vice_general_manager', 'sale_manager', 'qa_manager', 'finance_manager'
+                ),
+                7 => array(
+                    'ec_group_manager', 'ec_group_employees'
+                ),
+                8 => array(
+                    'brand_lesstion', 'packing', 'brand_touted'
+                ),
             ),
             1 => array(
-                array(
-                    'food_business_licence',
-                ),
-                array('animal_certificate', 'iso9001_lesstion'),
-                array(
-                ),
+                1 => array(),
             ),
             2 => array(
-                array(
-                    'food_business_licence',
+                1 => array(
+                    'food_business_licence', 'food_flow_licence', 'agent_auth_lesstion'
                 ),
             ),
-            3 => array(
-                array(
-                    'food_business_licence',
+            4 => array(
+                2 => array(
+                    'food_business_licence', 'food_flow_licence', 'oem_auth_lesstion'
                 ),
             ),
         ),

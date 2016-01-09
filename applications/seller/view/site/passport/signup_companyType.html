@@ -29,10 +29,26 @@
 	        	</ul>
 	        	<div class="company_btns">
 	        		<a href="<{link app=seller ctl=site_passport act=signup}>" class="btn btn-default">返回上一步</a>
-	        		<a href="<{link app=seller ctl=site_passport act=signup args0=2}>" class="btn btn-danger">确定，继续入驻</a>
+	        		<a href="javascript:;" class="next btn btn-danger">确定，继续入驻</a>
 	        	</div>
         	</form>
         	
         </div>
     </div>
 </div>
+<script>
+    $(function(){
+        $('.next').click(function(){
+            var dataValue = 0;
+            $('.typebox li.selected').each(function(idx, obj){
+                dataValue += parseInt($(this).attr('data-type'));
+            });
+            var url = '<{link app=seller ctl=site_passport act=entry}>?ident=' + dataValue;
+            location = url;
+        });
+        $('.typebox li').click(function(){
+            $(this).toggleClass('selected');
+        });
+    });
+    
+</script>

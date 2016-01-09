@@ -31,10 +31,12 @@
                 </dl>
             </div>
             <form id="companyInfo_form" class="form-horizontal companyInfo_form" method="post">
+                <input type='hidden' name='identity' value='<{$identity}>'/>
                 <!-- 三证合一 -->
-                <{include file="site/passport/companyInfo/three_lesstion.html"}>
-                <!-- 营业执照信息（副本） -->
-                <{include file="site/passport/companyInfo/business_licence.html"}>
+                <{foreach from=$page key=key item=item}>
+                <{"site/passport/companyInfo/{$key}.html"}>
+                    <{include file="site/passport/companyInfo/{$key}.html"}>
+                <{/foreach}>
             </form>
         </div>
     </div>

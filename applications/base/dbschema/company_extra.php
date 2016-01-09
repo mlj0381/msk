@@ -28,7 +28,7 @@ $db['company_extra'] = array(
             'required' => true,
             'comment' => '所属人员',
         ),
-        'ident' => array(
+        'identity' => array(
             'type' => array(
                 'member' => ('会员'),
                 'member' => ('商家'),
@@ -49,7 +49,7 @@ $db['company_extra'] = array(
             'label' => '属性值',
             'comment' => '属性值',
         ),
-        'touch' => array(
+        'attach' => array(
             'type' => 'char(32)',
             'default' => '',
             'label' => '图片id',
