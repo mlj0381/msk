@@ -362,24 +362,27 @@ class seller_ctl_site_passport extends seller_frontpage {
     }
 
     // 入驻
-    public function entry($step = 1) {
+    public function entry($step = 0, $type) {
         $ident = $this->_request->get_get('ident');
         // 选择类型
         // $seller['type'],process
+        $setp <= 1 && $setp = 1;
+        $setp >= 8 && $setp = 8;
+        $step = $type == 'up' ? $step -1 : $step +1;
         $conf = $this->app->getConf('seller_entry');
         $columns = array_flip($conf['comm'][$step]);
-        if ($ident & 1) {
-            $columns = array_merge($columns, array_flip($conf[1][1]));
+        if ($ident & 1 && $conf[1][$step]) {
+            $columns = array_merge($columns, array_flip($conf[1][$step]));
         }
-        if ($ident & 2) {
-            $columns = array_merge($columns, array_flip($conf[2][1]));
+        if ($ident & 2 && $conf[2][$step]) {
+            $columns = array_merge($columns, array_flip($conf[2][$step]));
         }
-        if ($ident & 4) {
-            $columns = array_merge($columns, array_flip($conf[4][1]));
+        if ($ident & 4 && $conf[4][$step]) {
+            $columns = array_merge($columns, array_flip($conf[4][$step]));
         }
         $this->pagedata['page'] = $columns;
+        $this->pagedata['pageIndex'] = $step;
         $this->pagedata['identity'] = $ident;
-        $this->pagedata['columns'] = $ident;
         $this->page('site/passport/signup_companyInfo.html');
     }
 
