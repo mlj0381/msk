@@ -30,11 +30,10 @@
                     </dd>
                 </dl>
             </div>
-            <form id="companyInfo_form" class="form-horizontal companyInfo_form" method="post">
+            <form id="companyInfo_form" action="<{link app=b2c ctl=site_passport act=entry}>?ident=<{$identity}>" class="form-horizontal companyInfo_form" method="post">
                 <input type='hidden' name='identity' value='<{$identity}>'/>
                 <!-- 三证合一 -->
                 <{foreach from=$page key=key item=item}>
-                <{"site/passport/companyInfo/{$key}.html"}>
                     <{include file="site/passport/companyInfo/{$key}.html"}>
                 <{/foreach}>
                 <div class="form-group">

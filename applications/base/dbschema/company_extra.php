@@ -40,13 +40,14 @@ $db['company_extra'] = array(
         'key' => array(
             'type' => 'varchar(20)',
             'required' => true,
+            'default' => '',
             'label' => '字段名',
             'comment' => '字段名',
         ),
         'value' => array(
             'type' => 'serialize',
             'required' => true,
-			'default' => '',
+            'default' => '',
             'label' => '属性值',
             'comment' => '属性值',
         ),

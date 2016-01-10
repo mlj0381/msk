@@ -187,13 +187,12 @@ class b2c_ctl_site_passport extends b2c_frontpage {
                     $this->splash('error', $redirect, '注册失败');
                 }
             }
-            var_dump($params['business_licence']);
+            
             foreach ($extra_columns as $col) {
                 if (!$this->_extra_save($col, $params)) {
                     $db->rollback();
                     $this->splash('error', $redirect, '注册失败');
                 }
-                echo vmc::database()->last_query;
             }
             $db->commit();
         }

@@ -146,6 +146,6 @@ $setting = array(
         )
     ),
     'member_extra_column' => array(
-        'default' => array('business_licence', 'contact', 'member_manage_info')
+        'default' => array('business_licence', 'member_manage_info')
     )
 );

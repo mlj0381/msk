@@ -88,14 +88,6 @@ class seller_ctl_site_passport extends seller_frontpage {
 
 //end function
 
-    /**
-     * 新需求卖家注册项
-     */
-    public function new_signup() {
-        $this->set_tmpl('passport');
-        $this->page('site/passport/new_signup.html');
-    }
-
     //注册页面
     public function signup($step) {
         $this->title = '注册成为商家';
@@ -366,9 +358,9 @@ class seller_ctl_site_passport extends seller_frontpage {
         $ident = $this->_request->get_get('ident');
         // 选择类型
         // $seller['type'],process
-        $setp <= 1 && $setp = 1;
-        $setp >= 8 && $setp = 8;
         $step = $type == 'up' ? $step -1 : $step +1;
+        $step <= 1 && $step = 1;
+        $step >= 8 && $step = 8;
         $conf = $this->app->getConf('seller_entry');
         $columns = array_flip($conf['comm'][$step]);
         if ($ident & 1 && $conf[1][$step]) {
