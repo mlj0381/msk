@@ -43,8 +43,15 @@
             $('.typebox li.selected').each(function(idx, obj){
                 dataValue += parseInt($(this).attr('data-type'));
             });
-            var url = '<{link app=seller ctl=site_passport act=entry}>?ident=' + dataValue;
-            location = url;
+            var url = '<{link app=seller ctl=site_passport act=identity}>';
+            var redirect = '<{link app=seller ctl=site_passport act=entry}>';
+            $.post(url, {ident : dataValue}, function(re){
+                if(re.success){
+                    location = redirect;
+                }else{
+                    alert('操作失败');
+                }
+            });
         });
         $('.typebox li').click(function(){
             $(this).toggleClass('selected');

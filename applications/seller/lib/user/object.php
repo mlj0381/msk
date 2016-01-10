@@ -77,7 +77,7 @@ class seller_user_object{
         }
         $sellerFilter = array(
             'account' => 'seller_id,login_account,login_type',
-            'sellers'=> 'seller_id,avatar,email,mobile,name',//2015/9/17 bibin ,phone表字段里面没有
+            'sellers'=> 'seller_id,avatar,email,mobile,name, ident',//2015/9/17 bibin ,phone表字段里面没有
             'company'=> 'company_id,name',
         );
         $sellerData = $this->get_sellers_data($sellerFilter,$seller_id);
@@ -92,6 +92,7 @@ class seller_user_object{
             $this->seller_info['avatar'] = $seller_sdf['avatar'];
             $this->seller_info['email'] =  $seller_sdf['email'];
             $this->seller_info['mobile'] =  $seller_sdf['mobile'];
+            $this->seller_info['ident'] =  $seller_sdf['ident'];
         }
         return $this->seller_info;
     }

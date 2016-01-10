@@ -19,7 +19,7 @@ $db['sellers'] = array(
             'pkey' => true,
             'extra' => 'auto_increment',
             'in_list' => true,
-        ),       
+        ),
         'name' => array(
             'type' => 'varchar(50)',
             'required' => false,
@@ -95,11 +95,10 @@ $db['sellers'] = array(
         ),
         'ident' => array(
             'type' => 'number',
-            'label' => '商家类型',            
+            'label' => '商家类型',
             'default' => 0,
             'comment' => '身份类型(1生产型\2代理型\4OEM)',
         ),
-
         'reg_ip' => array(
             'type' => 'varchar(16)',
             'label' => ('注册IP'),
@@ -123,17 +122,17 @@ $db['sellers'] = array(
             'required' => true,
         ),
         'experience' => array(
-            'label' => ('经验值'),			
-            'type' => 'int(10)', 
-			'default' => 0,
+            'label' => ('经验值'),
+            'type' => 'int(10)',
+            'default' => 0,
         ),
         'status' => array(
             'label' => ('用户状态'),
-            'type' => 'number',          
+            'type' => 'number',
             'default' => 0,
             'in_list' => true,
             'default_in_list' => false,
-			'comment' => ('注册时间'),
+            'comment' => ('注册时间'),
         ),
         'checkin' => array(
             'label' => ('审核'),
