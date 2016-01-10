@@ -131,6 +131,10 @@ class b2c_view_helper extends b2c_view_widget
     {
         return app::get('b2c')->model('orders')->trasform_status('status', $v);
     }
+    
+    public function modifier_order_count($v){
+        return count($v);
+    }
     //积分变更原因
     public function modifier_integral_reason($v)
     {

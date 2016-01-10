@@ -5,7 +5,7 @@ body {
   padding-top: 60px;
 }
 .container {
-  width: 1200px;
+  width: 1200px !important;
 }
 .main-container {
   width: 1200px!important;
@@ -84,9 +84,10 @@ body {
   line-height: 18px;
   height: 36px;
   overflow: hidden;
+  margin: 0;
 }
 .glist-container .gi-image-wrapper {
-  height: 170px;
+  height: 267px;
   padding: 10px 0;
 }
 .glist-container .gi-image-wrapper img {

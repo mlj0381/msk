@@ -19,7 +19,7 @@
                 $.ajax({
                     data: data,
                     type: "POST",
-                    url: "<{link app=image ctl=admin_manage act=wysiswyg_upload}>",
+                    url: "<{$params.remote}>" == "site" ? "<{link app=image ctl=site_upload act=wysiswyg_upload}>" : "<{link app=image ctl=admin_manage act=wysiswyg_upload}>",
                     cache: false,
                     contentType: false,
                     processData: false,
@@ -30,10 +30,12 @@
 
                         }
                         if(re.url)
+                        console.log(editor, editable);
                         editor.insertImage(editable, re.url);
                     }
                 });
-            },onChange:function(){
+            },
+            onChange:function(){
                 $('#<{$id}>').html($('#<{$id}>').code());
             }
         });

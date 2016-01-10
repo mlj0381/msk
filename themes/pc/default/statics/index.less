@@ -22,10 +22,10 @@
 	line-height: @H;
 }
 
-@basecolor:#e93428;
+@basecolor:#a40001;
 
 .basecolor{
-	color:#e93428;
+	color:#a40001;
 }
 
 .index_page{
@@ -43,13 +43,14 @@
 		margin:0 auto; 
 		padding: 0;
 		margin:0;
+		min-width: 1200px;
 
 		.sliderbox{
 			position: relative;
 
 			.slide{
 				position: absolute;
-				z-index: 500;
+				z-index: 50;
 
 				.carousel-inner img{
 					width:100%;
@@ -78,7 +79,7 @@
 			background: @basecolor;
 			color: #fff;
 			margin: 0;
-			span.floor{
+			span.floor_name{
 				display: inline-block;
 				margin-left:15px;
 			}
@@ -90,8 +91,10 @@
 				width:299px;
 				height:570px;
 				border-right:1px solid #ccc;
-				background: #f5f5f5;
+				background: #fff;
 				padding:20px;
+				border-left:1px solid #ccc;
+				border-bottom:1px solid #ccc;
 				.fl;
 
 				.list_item{
@@ -142,7 +145,7 @@
 					a{
 						display: block;
 						width:225px;
-						height:285px;
+						height:265px;
 						padding:0 10px;
 						.goodsImgbox{
 							width:100%;
@@ -216,11 +219,14 @@
 	}
 	.shop_show .bd ul li .pic{ 
 		text-align:center; 
+		width:180px;
+		height:90px;
+		text-align: center;
 	}
 	.shop_show .bd ul li .pic img{ 
-		width:180px; 
-		height:90px; 
-		display:block;  
+		display: block;
+		max-width:180px; 
+		max-height:90px;  
 		padding:2px; 
 	}
 	.shop_show .bd ul li .pic a:hover img{ 
@@ -245,7 +251,7 @@
 		z-index: 999999;
 		.fr;
 		ul{
-			padding-top:200px;
+			padding-top:150px;
 			li{
 				width:36px;
 				text-align: center;
@@ -284,6 +290,31 @@
 		
 	}
 
+	//首页左侧楼层导航
+	.fixed_floorNav{
+		position: fixed;
+		left:50px;
+		top:50%;
+		z-index: 100000;
+		box-shadow: 0px 0px 2px #ddd;
+		ul{
+			li{
+				width:25px;
+				height:25px;
+				line-height: 25px;
+				border-bottom:1px dotted #ddd;
+				text-align: center;
+				background:#fff;
+				color:#000;
+				cursor: pointer;
+
+				&.active{
+					background: @basecolor;
+					color:#fff;
+				}
+			}
+		}
+	}
 
 	//END 首页固定边栏
 
@@ -291,6 +322,10 @@
 
 
 }
+
+
+
+
 
 
 

@@ -1,0 +1,355 @@
+<div class="reg_progress clearfix">
+    <ol>
+        <li class="active">
+            <span><i>1</i>账户设置</span>
+        </li>
+        <li>
+            <span><i>2</i>基本资料</span>
+        </li>
+        <li>
+            <span><i>3</i>完成注册</span>
+        </li>
+    </ol>
+</div>
+<div class="passport-signup-container">
+    <div class="panel panel-default signup-panel">
+        <!-- <div class="panel-heading clearfix">
+            注册成为会员(买家)
+            <a class="btn btn-danger btn-xs pull-right" href="<{link app=b2c ctl=site_passport act=login args0=$forward}>">立即登录&raquo;</a>
+        </div> -->
+        <div class="panel-body">
+            <form id="member_signup_form" class="form-horizontal" action="<{link app=b2c ctl=site_passport act=create}>" method="post">
+                <!-- 登陆后跳转地址 -->
+                <input type="hidden" name="forward" value="<{$forward}>">
+                <div class="form-group">
+                    <label for="input_login_name" class="col-md-2 control-label"><span class="text-danger">*</span>登录账号：</label>
+                    <div class="col-md-4">
+                        <input type="text" name="pam_account[login_name]" class="form-control" id="input_login_name" placeholder="请输入用户名" value="">
+                        <div id="input_login_nameTip"></div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="input_login_password" class="col-md-2 control-label"><span class="text-danger">*</span>登录密码：</label>
+                    <div class="col-md-4">
+                        <input type="password" name="pam_account[login_password]" class="form-control" id="input_login_password" placeholder="登录密码">
+                        <div id="input_login_passwordTip"></div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="input_psw_confirm" class="col-md-2 control-label"><span class="text-danger">*</span>确认密码：</label>
+                    <div class="col-md-4">
+                        <input type="password" name="pam_account[psw_confirm]" class="form-control" id="input_psw_confirm" placeholder="再次输入登录密码" equalTo="#input_login_password">
+                        <div id="input_psw_confirmTip"></div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="input_psw_confirm" class="col-md-2 control-label"><span class="text-danger">*</span>验证手机：</label>
+                    <div class="col-md-4">
+                        <input type="text" name="pam_account[mobile]" class="form-control" id="input_mobile">
+                        <div id="input_mobileTip"></div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="input_psw_confirm" class="col-md-2 control-label"><span class="text-danger">*</span>短信验证码：</label>
+                    <div class="col-md-2">
+                        <input type="text" name="smscode" class="form-control" id="mobile_vcode">
+                        <div id="mobile_vcodeTip"></div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="mobile-vcode">
+                            <button type="button" id="mobile-vcode-btn" data-loading-text="正在发送..." class="btn btn-default">获取短信验证码</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- <div class="form-group">
+                    <label for="input_vcode" class="col-md-2 control-label">验证码<span class="text-danger">*</span></label>
+                    <div class="col-md-3">
+                        <input type="text" name="vcode" class="form-control" id="input_vcode">
+                        <div id="input_vcodeTip"></div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="local-vcode">
+                            <img src="<{link app=site ctl=vcode act=index args0='passport'}>" alt="验证码" />
+                            <button type="button" class="btn btn-link btn-sm" onclick="$(this).prev().prop('src',$(this).attr('data-src')+'?'+new Date().getTime())" data-src="<{link app=site ctl=vcode act=index args0='passport'}>">更换验证码</button>
+                        </div>
+                    </div>
+                </div> -->
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-4">
+                        <button type="submit" data-loading-text="正在提交..." class="btn btn-warning">下一步</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * 表单验证
+ */
+$(function() {
+
+    $.formValidator.initConfig({
+        formid: "member_signup_form",
+        debug: false,
+        errorfocus: true,
+    });
+
+    $("#input_login_name").formValidator({
+            onfocus: "6~18个字符，可使用字母、数字、下划线组合",
+            oncorrect: "该用户名可以使用"
+        }).inputValidator({
+            min: 6,
+            max: 18,
+            onerror: "用户名长度必须为6-18个字符",
+        }).regexValidator({
+            regexp: "username",
+            datatype: "enum",
+            onerror: "用户名格式不正确"
+        })
+        /*.functionValidator({
+                fun: function() {
+                    var result = false;
+                    $.ajax({
+                        data: {
+                            'pam_account[login_name]': $('#input_login_name').val()
+                        },
+                        async : false,
+                        type: 'POST',
+                        datatype : 'json',
+                        url: "<{link app=b2c ctl=site_passport act=check_login_name}>",
+                        success: function(data) {  
+                            console.log(data)                          
+                            if (data.success) {                                
+                                result = true;
+                            }
+                        },
+                        error:function(data,){
+
+                        }
+                    });                   
+                    return result;
+                  },
+                  onerror: "该用户名已被占用，请更换用户名"
+          });*/
+
+    .ajaxValidator({
+        onerror: "",
+        onwait: "正在对用户名进行合法性校验，请稍候...",
+        datatype: "json",
+        type: 'post',
+        async: false,
+        url: "<{link app=b2c ctl=site_passport act=check_login_name}>",
+        success: function(data) {
+            if (data.success) return true;
+            this.onerror = data.error;
+            return false;
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown) {
+
+        }
+    });
+
+
+    $("#input_login_password").formValidator({
+        onshow: "",
+        onfocus: "6-20个字符,区分大小写",
+        oncorrect: "密码合法"
+    }).inputValidator({
+        min: 6,
+        max: 20,
+        empty: {
+            leftempty: false,
+            rightempty: false,
+            emptyerror: "密码两边不能有空符号"
+        },
+        onerror: "密码长度必须为6-20个字符"
+
+    });
+    $("#input_psw_confirm").formValidator({
+        onshow: "",
+        onfocus: "请再次输入密码",
+        oncorrect: "两次密码一致"
+    }).inputValidator({
+        min: 6,
+        max: 20,
+        empty: {
+            leftempty: false,
+            rightempty: false,
+            emptyerror: "密码两边不能有空符号"
+        },
+        onerror: "密码长度必须为6-20个字符"
+
+    }).compareValidator({
+        desid: "input_login_password",
+        operateor: "=",
+        onerror: "2次密码不一致,请确认"
+    });
+    $("#input_mobile").formValidator({
+        onshow: "",
+        onfocus: "请填写您的手机号码",
+        oncorrect: "手机号码正确"
+
+    }).inputValidator({
+        min: 11,
+        max: 11,
+        onerror: "手机号码必须是11位,请确认"
+    }).regexValidator({
+        regexp: "mobile",
+        datatype: "enum",
+        onerror: "你输入的手机号码格式不正确"
+    });
+    /*$("#input_vcode").formValidator({
+        onshow: "",
+        onfocus: "请填写验证码",
+        oncorrect: "验证码正确",
+    }).inputValidator({
+        min: 1,
+        onerrormin: "验证码不能为空",
+    });
+*/
+})
+
+
+
+
+/*
+ * 会员注册脚本
+ */
+
+void function(signup_form){
+
+    var alert_timer = 0;
+    var _alert_error = function(msg){
+        signup_form.find('.alert-error').remove();
+        signup_form.append($('<div class="alert alert-danger">'+msg+'</div>'));
+        alert_timer = setTimeout(function(){
+            clearTimeout(alert_timer);
+            signup_form.find('.alert-danger').fadeOut('fast',function(){
+                $(this).remove();
+            });
+        },3000);
+    }
+    $('input[type="file"]').fileupload({
+
+        add:function(e, data){
+            if(!data.files[0]['type'].match(/^image/)){
+                alert('非法上传，不是图片类型');
+            }
+            data.submit();
+        },
+        done:function(e, data){
+            var re = $.parseJSON(data.result);
+            var input= e.target || e.srcElement;
+            $(input).next('input').val(re.image_id);
+            $(input).next('input').nextAll().removeClass('hide');
+        }
+    });
+
+    var _input_checkin = function(obj, length, type){
+        type = type ? type : false;
+        if(obj.val().length < length){
+            obj.popover({content : '最少位'+length+'字符', placement : 'right', container : 'body'});
+            obj.popover('show');
+            return false;
+        }
+    };
+       /* var re = type ? /^(?=.*[0-9]+)(?=.*[A-Za-z]+)[A-Za-z0-9]+$/ : /^[A-Za-z0-9_]+$/;
+        if(!re.test(obj.val())){
+            var val = type ? '包含非法字符或必须有两种组合' : '包含非法字符';
+            obj.popover({content : val, placement : 'right', container : 'body'});
+            obj.popover('show');
+            return false;
+        }
+        return true;
+    }*/
+    $('#input_login_name').on('blur',function(e){
+        var ipt = $(this);
+        if(!_input_checkin(ipt, 6)) return;
+        $.post('<{link app=b2c ctl=site_passport act=check_login_name}>',{'pam_account[login_name]':ipt.val()},function(re){
+            if(re.error){
+                ipt.popover({content:re.error,placement:'right',trigger:'click',container:'body'});
+                ipt.popover('show');
+                ipt.closest('.form-group').removeClass('has-success').addClass('has-error');
+            }else if(re.success){
+                ipt.closest('.form-group').removeClass('has-error').addClass('has-success');
+                if(re.data && re.data.is_mobile){
+                    // $('.local-vcode').hide();
+                    // $('.mobile-vcode').show();
+                }else{
+                    // $('.local-vcode').show();
+                    // $('.mobile-vcode').hide();
+                }
+            }
+
+        },'json');
+    });
+    /*$('#input_login_password').on('blur', function(e){
+        if(!_input_checkin($(this), 8, true)) return false;
+        $(this).closest('.form-group').removeClass('has-error').addClass('has-success');
+    });
+    $('#input_psw_confirm').on('blur', function(e){
+        if($('#input_login_password').val() != $(this).val()){
+            $(this).popover({content : '确认密码输入不正确',placement:'right',trigger:'click',container:'body'});
+            $(this).popover('show');
+            return;
+        }
+        $(this).closest('.form-group').removeClass('has-error').addClass('has-success');
+    });
+    $('#input_psw_confirm').on('focus',function(e){
+        $(this).popover('destroy');
+    });
+    $('#input_login_password').on('focus',function(e){
+        $(this).popover('destroy');
+    });
+    $('#input_login_name').on('focus',function(e){
+        $(this).popover('destroy');
+    });*/
+
+
+    signup_form.on('submit',function(e){
+        e.stopPropagation();
+        //signup_form.find('button[type=submit]').button('loading');
+        $.post(signup_form.prop('action'),signup_form.serialize(),function(re){
+            if(re.error){
+                _alert_error(re.error);
+            }
+            if(re.success){
+                location = re.redirect;
+            }
+            signup_form.find('button[type=submit]').button('reset');
+        },'json');
+        return false;
+    });
+
+    //获得短信验证码
+    var _cutdown_sms = function(btn){
+        btn.addClass('disabled');
+        var cutdown = 120,btn_o_text = btn.text(),timer =
+        setInterval((function(){
+            btn.text('短信已发送,'+(cutdown--)+'秒后可重试');
+            if(cutdown<1){
+                clearInterval(timer);
+                btn.text(btn_o_text).removeClass('disabled');
+            }
+            return arguments.callee;
+        })(),1000);
+    };
+    signup_form.find('.mobile-vcode button').on('click',function(e){
+        var btn = $(this);
+        if(btn.hasClass('disabled'))return;
+        btn.addClass('disabled');
+        $.post('<{link app=b2c ctl=site_passport act=send_vcode_sms}>',{mobile:$('#input_mobile').val()},function(re){
+            if(re && re.error){
+                btn.removeClass('disabled');
+                _alert_error(re.error);
+            }
+            if(re && re.success){
+                $('#mobile_vcode').val(re.redirect);
+                _cutdown_sms(btn);
+            }
+        },'json');
+    });
+}($('#member_signup_form'));
+</script>
+

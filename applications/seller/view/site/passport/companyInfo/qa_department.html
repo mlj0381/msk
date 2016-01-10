@@ -1,0 +1,18 @@
+
+<div id="qa_departmen">
+	<h4>品控组织架构</h4>
+	<div class="form-group">
+		<label class="col-xs-2 control-label">
+			品控组织架构图：
+		</label>
+		<div class="col-xs-4">
+			<div class="filebox">
+	            <input type="hidden" value="<{$extra.qa_departmen.value.attach}>" name="qa_departmen[value][attach]"/>
+	            <input type="file" data-url="<{link app=image ctl=site_upload act=index}>" accept="image/*" class="file_input" />
+	            <div class="showImg">
+	                 <img src="<{if $company.business_license_image eq ''}><{$base_url}>/themes/pc/default/statics/images/file_add.jpg<{else}><{$company.business_license_image|storager:'xs'}><{/if}>">    
+	            </div>
+	        </div>
+		</div>
+	</div>
+</div>

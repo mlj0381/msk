@@ -1,5 +1,5 @@
 <h3 class="page-title">
-        购物流程设置
+        商城设置
 </h3>
 <form action="index.php?app=b2c&ctl=admin_setting&act=index" method="post" class="form" >
     <div class="form-horizontal">
@@ -19,6 +19,26 @@
                     </div>
                 </div>
             <{/foreach}>
+            <div class="form-group">
+                    <label class="col-md-3 control-label">收货时间</label>
+                    <div class="col-md-4">
+                        <div class="receiving">
+                            <{foreach from=$setting.receiving_time item=item}>
+                            <div>
+                                <input name="receiving_time[]" value="<{$item}>" class="time"/>
+                                <a href="javascript:;" class="fa fa-trash-o text-danger delete-image"></a>
+                            </div>
+                            <{/foreach}>
+                        </div>
+                        
+                        <span class="help-block">
+                            <span class="help-block">收货时间设置格式：08:00 - 09:00</span>
+                            <button type="button" class="btn green add-time">
+                                添加收货时间<i class="fa fa-plus"></i>
+                            </button>
+                        </span>
+                    </div>
+            </div>
             <div class="form-actions">
                 <div class="row">
                     <div class="col-md-offset-3 col-md-9">
@@ -45,110 +65,35 @@
         </div>
     </div>
 </textarea>
-<textarea class="hide gimage-box-done-tpl">
-    <div class="tile image bg-grey">
-        <input type="hidden" name="banner_images[]" value="{image_id}">
-        <div class="tile-body">
-            <img src="{url}" />
-        </div>
-        <div class="tile-object">
-            <div class="number">
-                <i class="fa fa-trash-o delete-image" data-image-id="{image_id}"></i>
-            </div>
-        </div>
-    </div>
+
+<textarea class="time-add hide">
+    <div>
+        <input name="receiving_time[]" value="" class="time" style=""/>
+        <a href="javascript:;" class="fa fa-trash-o text-danger delete-image"></a>                        </div>
 </textarea>
-<script>
-!function(){
-    /*商品相册上传选择逻辑*/
-    var substitute = function(str,obj){
-           return str.replace(/\\?\{([^{}]+)\}/g, function(match, name){
-               if (match.charAt(0) == '\\') return match.slice(1);
-               return (obj[name] != undefined) ? obj[name] : '';
-           });
-   }
-   /*相册拖动排序*/
-   $('.goods-images-pane').sortable({
-       cursor: "move",
-       items:'> .image'
-   });
-
-    var set_default = function(el_box){
-        $('.goods-images-pane .selected').removeClass('selected');
-        $(el_box).addClass('selected');
-        if($('.goods-images-pane .badge-danger').length){
-            $(el_box).append($('.goods-images-pane .badge-danger'));
-        }else{
-            $(el_box).append('<span class="badge badge-roundless badge-danger" style="position:absolute;top:0px;left:0px;">默认图</span>');
-        }
-        $('input[name="image_default"]').val($(el_box).find('input[name="goods[images][]"]').val());
+<style>
+    .time{
+        background-color: #fff;
+        border: 1px solid #e5e5e5;
+        box-shadow: none;
+        color: #333;
+        font-size: 14px;
+        font-weight: 400;
+        border-radius: 4px;
+        height: 34px;
+        padding: 6px 12px;
+        width: 90%;
+        margin: 5px 0;
     }
-    //var tmp_doc_title = document.title,timer = 0;
-    $('#goods_images_fileupload').fileupload({
-        add:function(e,data){
-            var file_obj = data.files[0];
-            if(!file_obj['type'].match(/^image/)){
-                return toastr.warning(data.files[0]['name']+'不是允许的图片类型','类型错误');
-            }
-            data.context = $($('.gimage-box-process-tpl').val());
-            data.context.find('.number')
-            .html("<small>"+Math.round(parseFloat(file_obj.size/1024/1024)*100)/100+'MB</small>');
-            data.context.insertBefore($('.goods-images-upload-pane'));
-            data.submit();
-        },
-        progress:function(e){
-            // (function(){
-            //     document.title = (document.title=='正在上传......')?'正在上传...':'正在上传......';
-            //     timer = setTimeout(arguments.callee,500);
-            // })();
-        },
-        progressall:function(e){
-
-        },
-        done:function(e,data){
-            // clearTimeout(timer);
-            // document.title = tmp_doc_title;
-            try{
-                var re = $.parseJSON(data.result);
-                data.context.replaceWith(substitute($('.gimage-box-done-tpl').val(),re));
-                if(!$('.goods-images-pane .selected').length){
-                    set_default($('.goods-images-pane .image:first'));
-                }
-            }catch(e){
-                $(data.context).fadeOut(function(){
-                    $(this).remove();
-                });
-            }
-
-        }
+</style>
+<script>
+    $(function(e){
+        $('.add-time').click(function(){
+            //alert($(this).closest('span').prev().html());
+            $(this).closest('span').prev().append($('.time-add').val());
+        });
+        $('.receiving ').on('click', '.text-danger', function () {
+            $(this).closest('div').remove();
+        });
     });
-
-    $('.goods-images-pane').on('click','.image',function(e){
-            set_default(this);
-            return;
-    });
-    $('.goods-images-pane').on('click','.delete-image',function(e){
-        e.stopPropagation();
-        if(!confirm('确认移除？'))return;
-        $(this).closest('.image').remove();
-        if(!$('.goods-images-pane .selected').length){
-            if($('.goods-images-pane .image:first')){
-                    set_default($('.goods-images-pane .image:first'));
-            }else{
-                    $('input[name="image_default"]').val('');
-            }
-        }
-
-    });
-
-    /*分类树逻辑*/
-    $.each($('.cat-tree option'),function(i,n){
-        var step = $(n).attr('data-step');
-        while(step>1){
-            $(n).html('&nbsp&nbsp&nbsp&nbsp'+$(n).html());
-            step--;
-        }
-    });
-}();
-
 </script>

@@ -1,59 +1,57 @@
 <div class="page-header">
-  <h1>头像设置 <small>My avatar</small></h1>
+    <h1>头像设置 <small>My avatar</small></h1>
 </div>
 <div class="perInfo_nav">
     <ul>
         <li><a href="<{link app=b2c ctl=site_member act=setting}>">基本信息</a></li>
         <li class="active"><a href="<{link app=b2c ctl=site_member act=avatar}>">头像照片</a></li>
+        <li><a href="<{link app=b2c ctl=site_member act=company}>">公司信息</a></li>
     </ul>
 </div>
 <div class="row">
-        <div class="col-xs-3">
-            <div class="panel panel-default">
-                <div class="panel-heading">头像可能展现的样式</div>
-                <div class="panel-body">
-                    <img class="img-thumbnail"  src="<{$member.avatar|storager:'avatar'}>" alt="<{$member.uname}>头像">
-                    <hr>
-                    <img class="img-responsive img-rounded"  src="<{$member.avatar|storager:'avatar'}>" alt="<{$member.uname}>头像">
-                    <hr>
-                    <img class="img-thumbnail img-circle" src="<{$member.avatar|storager:'avatar'}>" alt="<{$member.uname}>头像">
-                </div>
+    <div class="col-xs-3">
+        <div class="panel panel-default">
+            <div class="panel-heading">头像可能展现的样式</div>
+            <div class="panel-body">
+                <img class="img-thumbnail" src="<{$member.avatar|storager:'avatar'}>" alt="<{$member.uname}>头像" style="width:175px; height:175px;">
+                <hr>
+                <img class="img-responsive img-rounded" src="<{$member.avatar|storager:'avatar'}>" alt="<{$member.uname}>头像" style="width:175px; height:175px;">
+                <hr>
+                <img class="img-thumbnail img-circle" src="<{$member.avatar|storager:'avatar'}>" alt="<{$member.uname}>头像" style="width:175px; height:175px;">
             </div>
         </div>
-        <div class="col-xs-9">
-            <form id="member_setting_form"  class="form-horizontal" action="<{link app=b2c ctl=site_member act=avatar args0=upload}>" method="post" enctype="multipart/form-data">
-                <div class="form-group">
-                    <label  class="col-xs-4 control-label">
-                        从本地选择头像文件
-                    </label>
-                    <div class="col-xs-8">
-                        <input type="file" required="true" name="avatar_file" class="form-control" value="">
-                    </div>
+    </div>
+    <div class="col-xs-9">
+        <form id="member_setting_form" class="form-horizontal" action="<{link app=b2c ctl=site_member act=avatar args0=upload}>" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <label class="col-xs-4 control-label">
+                    从本地选择头像文件
+                </label>
+                <div class="col-xs-8">
+                    <input type="file" required="true" name="avatar_file" value="">
                 </div>
-                <div class="form-group">
-                    <div class="col-xs-8 col-xs-offset-4">
-                        <div class="well">
-                            <h5><i class="glyphicon glyphicon-info-sign"></i> 文件上传须知</h5>
-                            <div>
-                                仅支持<span class="label label-info"><{$upload_max}>以内</span>.jpg\.jpeg\.gif\.png 等图片格式文件。
-                                <hr>
-                                    建议图片长宽尺寸比例为1:1比例
-
-                            </div>
+            </div>
+            <div class="form-group">
+                <div class="col-xs-8 col-xs-offset-4">
+                    <div class="well">
+                        <h5><i class="glyphicon glyphicon-info-sign"></i> 文件上传须知</h5>
+                        <div>
+                            仅支持<span class="label label-info"><{$upload_max}>以内</span>.jpg\.jpeg\.gif\.png 等图片格式文件。
+                            <hr> 建议图片长宽尺寸比例为1:1比例
                         </div>
                     </div>
                 </div>
-
-                <div class="form-group">
-                    <div class="col-xs-offset-4 col-xs-5">
-                      <button type="submit" data-loading-text="正在上传..." class="btn btn-primary">保存</button>
-                    </div>
+            </div>
+            <div class="form-group">
+                <div class="col-xs-offset-4 col-xs-5">
+                    <button type="submit" data-loading-text="正在上传..." class="btn btn-danger">保存</button>
                 </div>
-            </form>
-        </div>
+            </div>
+        </form>
+    </div>
 </div>
 <script type="text/javascript">
-    $('#member_setting_form').on('submit',function(){
-        $(this).find('button[data-loading-text]').button('loading');
-    });
+$('#member_setting_form').on('submit', function() {
+    $(this).find('button[data-loading-text]').button('loading');
+});
 </script>

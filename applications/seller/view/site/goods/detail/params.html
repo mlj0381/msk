@@ -1,0 +1,54 @@
+<div id="param">
+<h4>商品参数</h4>
+    <div class="form-body">
+        <div class="form-group">
+            <label class="col-xs-2 control-label">
+                <span>产地</span>
+            </label>
+            <div class="col-xs-5">
+                <select class="form-control">
+                    <option value="">北京</option>
+                    <option value="">上海</option>
+                    <option value="">合肥</option>
+                    <option value="">青岛</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-xs-2 control-label">
+                <span>加工方式</span>
+            </label>
+            <div class="col-xs-5">
+                <select class="form-control">
+                    <option value="">单冻</option>
+                    <option value="">板冻</option>
+                </select>
+            </div>
+        </div>
+        <hr>
+        <!-- <div class="form-group">
+            <label class="col-xs-2 control-label">
+                <span>类型</span>
+            </label>
+            <div class="col-xs-5">
+                <select name="goods[type][type_id]" class="form-control">
+                    <option value='0'>普通商品类型</option>
+                    <{foreach from=$gtype item=type}>
+                        <option value='<{$type.type_id}>' <{if $type.type_id==$goods_prototype.type_id}>selected
+                            <{/if}>>
+                                <{$type.name}>
+                        </option>
+                        <{/foreach}>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-xs-2 control-label">
+                <span>品牌</span>
+            </label>
+            <div class="col-xs-5">
+                <{input class="form-control" type="select" name="goods[brand][brand_id]" nulloption="1" rows=$brandList valueColumn="brand_id" labelColumn="brand_name" value=$goods.brand.brand_id}>
+            </div>
+        </div> -->
+    </div>
+</div>

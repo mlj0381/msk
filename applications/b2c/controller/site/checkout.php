@@ -48,6 +48,16 @@ class b2c_ctl_site_checkout extends b2c_frontpage
                 $this->splash('error', '', '购物车为空!');
             }
         }
+        foreach ($cart_result['objects']['goods'] as $key => $value) {
+            if($value['item']['product']['price_interval'] && $value['quantity'] > $value['item']['product']['price_interval']){
+                $count_price[$key] = $value['quantity'] * $value['item']['product']['price_up'];
+            }
+        }
+        if(count($count_price) > 0){
+            $cart_amount = array_sum($count_price);
+            $cart_result['cart_amount'] = $cart_amount;
+            $cart_result['gain_score'] = $cart_amount;
+        }
         $this->pagedata = vmc::singleton('b2c_checkout_stage')->check(array(
             'member_id' => $member_id,
             'cart_result' => $cart_result,
@@ -68,7 +78,7 @@ class b2c_ctl_site_checkout extends b2c_frontpage
         }
         $this->pagedata['my_coupons'] = $my_coupons;
         $this->pagedata['my_av_coupons'] = $available_coupons;
-
+        $this->pagedata['receiving'] = $this->app->getConf('receiving_time');
         $this->page('site/checkout/index.html');
     }
     /**
@@ -156,6 +166,11 @@ class b2c_ctl_site_checkout extends b2c_frontpage
             'ctl' => 'site_member',
             'act' => 'orders',
         ));
+        if($this->app->model('orders')->update(array('pay_status' => '1'), array('order_id' => $order_id))){
+            $this->splash('success', $redirect, '支付成功');
+        }
+        $this->splash('error', $redirect, '支付失败');
+
         $obj_bill = vmc::singleton('ectools_bill');
         $mdl_bills = app::get('ectools')->model('bills');
         $order = $this->app->model('orders')->dump($order_id);

@@ -39,72 +39,10 @@ class b2c_ctl_site_member extends b2c_frontpage
     /**
      * 会员中心首页.
      */
-    public function index()
-    {
-        $order_count = array(
-            's1' => array(
-                'member_id' => $this->member['member_id'],
-                'status' => 'active',
-                'pay_status' => array(
-                    '0',
-                    '3',
-                    '5',
-                ),
-            ) ,
-            's2' => array(
-                'member_id' => $this->member['member_id'],
-                'status' => 'active',
-                'pay_status' => array(
-                    '1',
-                    '2',
-                ) ,
-                'ship_status|notin' => array(
-                    '1',
-                ),
-            ) ,
-            's3' => array(
-                'member_id' => $this->member['member_id'],
-                'status' => 'active',
-                'ship_status' => array(
-                    '1',
-                    '2',
-                ),
-            ) ,
-            's4' => array(
-                'member_id' => $this->member['member_id'],
-                'status' => 'active',
-                'ship_status|notin'=>array(
-                    '0',
-                ),
-            ),
-        );
-        $mdl_order = $this->app->model('orders');
-        foreach ($order_count as $key => $filter) {
-            $count = $mdl_order->count($filter);
-            if ($count && $count > 0) {
-                $order_count_arr[$key] = $count;
-            }
-        }
-
-        $mdl_order = $this->app->model('orders');
-        $mdl_order_items = $this->app->model('order_items');
-        $order_list = $mdl_order->getList('*', array('member_id' => $this->member['member_id']));
-        foreach ($order_list as $key => $value) {
-            $store_info = vmc::singleton('store_store_object')->store_info($value['store_id'], 'store_id, store_name');
-            $order_list[$key]['store_name'] = $store_info['store_name'];
-        }
-        $oids = array_keys(utils::array_change_key($order_list, 'order_id'));
-        $order_items = $mdl_order_items->getList('*', array(
-            'order_id' => $oids,
-        ));
-        $order_items_group = utils::array_change_key($order_items, 'order_id', true);
-        $order_count = $mdl_order->count($filter);
+    public function index(){
+        $this->pagedata['order_count'] = $this->app->model('orders')->type_count();
         $user_obj = vmc::singleton('b2c_user_object');
-        $this->pagedata['order_list'] = $order_list;
-        $this->pagedata['order_count'] = $order_count;
-        $this->pagedata['order_items_group'] = $order_items_group;
         $this->pagedata['pam_data'] = $user_obj->get_pam_data('*', $this->member['member_id']);
-        $this->pagedata['order_count_arr'] = $order_count_arr;
         $this->output();
     }
 
@@ -188,6 +126,7 @@ class b2c_ctl_site_member extends b2c_frontpage
         $redirect_member_index = array('app' => 'b2c','ctl' => 'site_member');
         $redirect_here = array('app' => 'b2c','ctl' => 'site_member','act' => 'set_pam_mobile');
         $pam_data = $user_obj->get_pam_data('*', $this->member['member_id']);
+        unset($pam_data['memberData']);//2015/12/25
         if($pam_data['mobile']){
             $this->splash('success',$redirect_member_index,'已绑定手机');
         }
@@ -217,6 +156,7 @@ class b2c_ctl_site_member extends b2c_frontpage
         $redirect_member_index = array('app' => 'b2c','ctl' => 'site_member');
         $redirect_here = array('app' => 'b2c','ctl' => 'site_member','act' => 'set_pam_email');
         $pam_data = $user_obj->get_pam_data('*', $this->member['member_id']);
+        unset($pam_data['memberData']);//2015/12/25
         if($pam_data['email']){
             $this->splash('success',$redirect_member_index,'已绑定邮箱');
         }
@@ -261,7 +201,9 @@ class b2c_ctl_site_member extends b2c_frontpage
             $pam_data = $user_obj->get_pam_data('*', $this->member['member_id']);
             $this->pagedata['pam_data'] = $pam_data;
             $this->page('site/member/active_email.html');
+            //$this->output();
         }
+
 
     }
 
@@ -331,8 +273,52 @@ class b2c_ctl_site_member extends b2c_frontpage
      */
     public function orders($status = 'all', $page = 1)
     {
+        $mdl_order = $this->app->model('orders');
+        $mdl_order_items = $this->app->model('order_items');
         $limit = 5;
-        $status_filter = array(
+        $status_filter = $mdl_order->filter();
+        
+        $this->pagedata['status'] = $status;
+        $filter = $status_filter[$status];
+        $filter['member_id'] = $this->member['member_id'];
+        $order_list = $mdl_order->getList('*', $filter, ($page - 1) * $limit, $limit);
+        foreach ($order_list as $key => $value) {
+            //所属店铺信息
+            $store_info = vmc::singleton('store_store_object')->store_info($value['store_id'], 'store_id, store_name');
+            $order_list[$key]['store_name'] = $store_info['store_name'];
+        }
+        $oids = array_keys(utils::array_change_key($order_list, 'order_id'));
+        $order_items = $mdl_order_items->getList('*', array(
+            'order_id' => $oids,
+        ));
+        $order_items_group = utils::array_change_key($order_items, 'order_id', true);
+        $order_count = $mdl_order->count($filter);
+        $this->pagedata['type'] = 'orders';
+        $this->pagedata['current_status'] = $status;
+        $this->pagedata['status_map'] = $status_filter;
+        $this->pagedata['order_list'] = $order_list;
+        $this->pagedata['order_count'] = $order_count;
+        $this->pagedata['order_items_group'] = $order_items_group;
+        $this->pagedata['pager'] = array(
+            'total' => ceil($order_count / $limit) ,
+            'current' => $page,
+            'link' => array(
+                'app' => 'b2c',
+                'ctl' => 'site_member',
+                'act' => 'orders',
+                'args' => array(
+                    $status,
+                    ($token = time()),
+                ) ,
+            ) ,
+            'token' => $token,
+        );
+        $this->output();
+    }
+
+    //会员订单筛选条组合
+    public function filter(){
+        return array(
             'all' => array(
                 'member_id' => $this->member['member_id'],
             ) ,
@@ -363,56 +349,30 @@ class b2c_ctl_site_member extends b2c_frontpage
                     '1',
                     '2',
                 ),
+                'confirm' => 'N'
             ) ,
             's4' => array(
                 'member_id' => $this->member['member_id'],
-                'status|notin' => array('dead'),
-                'ship_status|notin'=>array(
-                    '0',
-                ),
+                'status' => 'active',
+                'confirm'=> 'Y',
+                'comment_type' => '0'
+            ),
+            's5' => array(
+                'member_id' => $this->member['member_id'],
+                'status' => 'active',
+                'confirm'=> 'Y',
+            ),
+            's6' => array(
+                'member_id' => $this->member['member_id'],
+                'status' => 'dead',
+            ),
+            's7' => array(
+                'member_id' => $this->member['member_id'],
+                'status' => 'del',
             ),
         );
-        if ($filter = $status_filter[$status]) {
-        } else {
-            $filter = array(
-                'member_id' => $this->member['member_id'],
-            );
-        }
-        $mdl_order = $this->app->model('orders');
-        $mdl_order_items = $this->app->model('order_items');
-        $order_list = $mdl_order->getList('*', $filter, ($page - 1) * $limit, $limit);
-        foreach ($order_list as $key => $value) {
-            $store_info = vmc::singleton('store_store_object')->store_info($value['store_id'], 'store_id, store_name');
-            $order_list[$key]['store_name'] = $store_info['store_name'];
-        }
-        $oids = array_keys(utils::array_change_key($order_list, 'order_id'));
-        $order_items = $mdl_order_items->getList('*', array(
-            'order_id' => $oids,
-        ));
-        $order_items_group = utils::array_change_key($order_items, 'order_id', true);
-        $order_count = $mdl_order->count($filter);
-        $this->pagedata['current_status'] = $status;
-        $this->pagedata['status_map'] = $status_filter;
-        $this->pagedata['order_list'] = $order_list;
-        $this->pagedata['order_count'] = $order_count;
-        $this->pagedata['order_items_group'] = $order_items_group;
-        $this->pagedata['pager'] = array(
-            'total' => ceil($order_count / $limit) ,
-            'current' => $page,
-            'link' => array(
-                'app' => 'b2c',
-                'ctl' => 'site_member',
-                'act' => 'orders',
-                'args' => array(
-                    $status,
-                    ($token = time()),
-                ) ,
-            ) ,
-            'token' => $token,
-        );
-        $this->output();
     }
-
+    
     //购买过的店铺
     public function buy_store(){
         $this->output();
@@ -456,22 +416,92 @@ class b2c_ctl_site_member extends b2c_frontpage
                 break;
             case 'add':
                 if (!$mdl_member_goods->add_fav($member_id, $gid, $obj_type)) {
+                    
                     $this->splash('error', '', '加入收藏失败!');
                 } else {
                     $this->splash('success', '', '加入收藏成功!');
                 }
             default:
-            $list = $mdl_member_goods->getList('*', array('member_id' => $member_id, 'type'=>'fav'));
-            $this->pagedata['favorite_count'] = count($list);
+            $list_tmp = $mdl_member_goods->getList('*', array('member_id' => $member_id, 'type'=>'fav'));
+            $this->pagedata['favorite_count'] = count($list_tmp);
+            $list = array();
+            foreach($list_tmp as $key => &$value){
+                if($value['object_type'] == 'goods'){
+                    $list['goods'][$key] = $value;
+                }else{
+                    $list['store'][$key] = $value;
+                }
+            }
+            unset($list_tmp);
+            $this->pagedata['tag'] = app::get('desktop')->model('tag')->getList('tag_id, tag_name', array('member_id' => $this->member['member_id'], 'tag_mode' => 'favorite'));
             $this->pagedata['member_lv_name'] = $this->member['levelname'];
             $this->pagedata['member_lv_discount'] = $this->member['lv_discount'];
             $this->pagedata['data'] = $list;
-            $this->output();
-            //$this->page('site/member/action/favorite.html');
+            //$this->output();
+            $this->page('site/member/action/favorite.html');
             break;
         }
     }
 
+    //ajax添加收藏店铺的标签
+    public function add_tag(){
+        extract($_POST);
+        if(empty($tagText) && !isset($tagText)){
+            $this->splash('error', '', '标签名称不能为空');
+        }
+        $mdl_tag = app::get('desktop')->model('tag');
+        $data = array(
+            'tag_name' => $tagText,
+            'tag_mode' => 'favorite',
+            'member_id' => $this->member['member_id'],
+            'app_id' => 'b2c'
+        );
+        if($tag_id = $mdl_tag->insert($data)){
+            $this->splash('success', '', $tag_id);
+        }
+        $this->splash('error', '', '添加失败');
+    }
+    
+    //ajax添加删除店铺标签
+    public function update_tag(){
+        extract($_POST);
+        if(!is_numeric($tagId) && empty($type)){
+            $this->splash('error', '', '非法请求');
+        }
+        $mdl_member_goods = $this->app->model('member_goods');
+        $store_tag = $mdl_member_goods->getRow('tag', array('gnotify_id' => $favId));
+        $tag_array = $store_tag['tag'] ? $store_tag['tag'] : array();
+        $data['gnotify_id'] = $favId;
+        if($type == 'add'){
+           $tag_array[$tagId] = $tagId;
+           $data['tag'] = $tag_array;
+        }else if($type == 'del'){
+            $tmp = array_flip($tag_array);
+            
+            unset($tmp[$tagId]);
+            $data['tag'] =  array_flip($tmp);
+        }
+        if($mdl_member_goods->save($data)){
+            $this->splash('success', '', '操作成功');
+        }
+        $this->splash('error', '', '操作失败');
+    }
+    
+    /**
+     * ajax检查商品、店铺收藏     
+     */
+    public function check_favorite(){
+        $member_api = vmc::singleton('b2c_source_member');
+        $return = $member_api->favorite_read($_GET);
+        if (empty($return)) {
+            $this->splash('error', '', '没有收藏');
+        } else {
+            $this->splash('success', '', $return);
+        }
+    }
+            
+    
+    
     /**
      * 消息中心.
      */

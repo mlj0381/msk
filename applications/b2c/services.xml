@@ -141,6 +141,13 @@
     <service id="b2c_goods.b2c_goods_filter" optname="商品筛选器引擎" opttype="select">
         <class>b2c_goods_filter</class>
     </service>
+
+	<service id="desktop_finder.b2c_mdl_pages_position">
+        <class>b2c_finder_pages_position</class>
+    </service>
+	<service id="desktop_finder.b2c_mdl_pages_content">
+        <class>b2c_finder_pages_content</class>
+    </service>
     <!-- FINDER相关SERVICES END -->
 
 
@@ -243,6 +250,15 @@
         <class>b2c_service_image</class>
     </service>
 <!--END-->
+<!--首页基础数据获取 2015/12/17 12:00-->
+    <service id="index_basic_api">
+        <class>b2c_source_addrs</class><!-- 地址定位、切换-->
+        <class>b2c_source_member</class><!-- 收藏，-->
+        <class>b2c_source_search</class><!-- 热门搜索-->
+        <class>b2c_source_cart</class><!-- 购物车数量-->
+        <class>b2c_source_advertising</class><!-- 广告-->
+    </service>
+<!--end 首页基础数据获取-->
 <!-- PC全页缓存 -->
     <service id="site.router.cache">
         <class>b2c_cache</class>

@@ -59,8 +59,7 @@ class b2c_mdl_members extends dbeav_model
         if (is_object($info_object)) {
             $info_object->opinfo($sdf, 'b2c_mdl_members', __FUNCTION__);
         }
-        $flag = parent::save($sdf, $mustUpdate = null, $mustInsert = false);
-
+        $flag = parent::save($sdf, $mustUpdate, $mustInsert);
         return $flag;
     }
 
@@ -306,7 +305,6 @@ class b2c_mdl_members extends dbeav_model
         $columns = array_merge($columns, array(
             'login_account' => ('登录账号'),
         ));
-
         return $columns;
     }
 

@@ -10,6 +10,15 @@
 // | Author: Shanghai ChenShang Software Technology Co., Ltd.
 // +----------------------------------------------------------------------
 
+
+$goods = array(
+    'goods_id',
+    'name',
+    'store_id',
+    'image_id',
+    'price',
+    'product_id',
+);
 /**
  *  外来数据配置
  */
@@ -23,6 +32,10 @@
          array(
              'name' => '上海',
              'id' => '2',
+         ),
+         array(
+             'name' => '广东',
+             'id' => '3',
          )
      ),
      'webnav' => array(
@@ -74,12 +87,12 @@
                         'ctl' => 'site_product',
                         'act' => 'index',
                         'args' => array(
-                            '25', '1',//product_id  seller_id
+                            '1', '5',//product_id  store_id
                         ),
                     ),
-                    'image_id' => '69443bbc9329413cddc5080ef5d5bb59',
-                    'price' => '99.00',
-                    'name' => '神龙客精品五花肉',
+                    'image_id' => 'f7c5a5b54e1ce5cd0fc0c61deaa8eb91',
+                    'price' => '9.00',
+                    'name' => '鸡爪',
                 ),
                 array(
                     'url' => array(
@@ -87,12 +100,12 @@
                         'ctl' => 'site_product',
                         'act' => 'index',
                         'args' => array(
-                            '45', '1',//product_id  seller_id
+                            '4', '5',//product_id  store_id
                         ),
                     ),
-                    'image_id' => '69443bbc9329413cddc5080ef5d5bb59',
-                    'price' => '99.00',
-                    'name' => '神龙客精品五花肉',
+                    'image_id' => '1ed82a9cfc269873c808f2b337fd8bfe',
+                    'price' => '22.00',
+                    'name' => '鸡大腿',
                 ),
                 array(
                     'url' => array(
@@ -100,12 +113,12 @@
                         'ctl' => 'site_product',
                         'act' => 'index',
                         'args' => array(
-                            '37', '1',//product_id  seller_id
+                            '7', '5',//product_id  store_id
                         ),
                     ),
-                    'image_id' => 'ccf9923ad28aa1dd608e9d4df3bcd045',
-                    'price' => '419.00',
-                    'name' => '神龙客精品五花肉',
+                    'image_id' => 'd086b765bb50d049d845e5de4267a8b9',
+                    'price' => '22.00',
+                    'name' => '鸡大胸',
                 ),
                 array(
                     'url' => array(
@@ -113,12 +126,12 @@
                         'ctl' => 'site_product',
                         'act' => 'index',
                         'args' => array(
-                            '37', '1',//product_id  seller_id
+                            '10', '5',//product_id  store_id
                         ),
                     ),
-                    'image_id' => '9ca95ad385eaf776ae5d9c3e8c10ee12',
-                    'price' => '99.00',
-                    'name' => '神龙客精品五花肉',
+                    'image_id' => 'e08e630a0aa3db2d1367d1576315d7f9',
+                    'price' => '18.00',
+                    'name' => '鸡翅',
                 ),
                 array(
                     'url' => array(
@@ -126,12 +139,12 @@
                         'ctl' => 'site_product',
                         'act' => 'index',
                         'args' => array(
-                            '25', '1',//product_id  seller_id
+                            '13', '5',//product_id  store_id
                         ),
                     ),
-                    'image_id' => 'd63a67731c62829909b55a730f24a55b',
-                    'price' => '680.00',
-                    'name' => '神龙客精品五花肉',
+                    'image_id' => '766c25ae515fa9fa4b939c3f27bdcd56',
+                    'price' => '22.00',
+                    'name' => '鸡心',
                 ),
                 array(
                     'url' => array(
@@ -139,12 +152,12 @@
                         'ctl' => 'site_product',
                         'act' => 'index',
                         'args' => array(
-                            '1', '1',//product_id  seller_id
+                            '16', '5',//product_id  store_id
                         ),
                     ),
-                    'image_id' => '9150f7e6f2bf2a5876779f254403cd52',
-                    'price' => '4988.00',
-                    'name' => '神龙客精品五花肉',
+                    'image_id' => '2a33b9c510f7a641a25ea1b45e9cbb63',
+                    'price' => '31.00',
+                    'name' => '鸡杂',
                 ),
                 array(
                     'url' => array(
@@ -152,12 +165,12 @@
                         'ctl' => 'site_product',
                         'act' => 'index',
                         'args' => array(
-                            '46', '1',//product_id  seller_id
+                            '2', '5',//product_id  store_id
                         ),
                     ),
-                    'image_id' => '8d2a0be90a514ecb51ca01b843142b82',
-                    'price' => '2999.00',
-                    'name' => '神龙客精品五花肉',
+                    'image_id' => '6c6a87a3e0b0af6d8bdbfda714f4ba39',
+                    'price' => '17.00',
+                    'name' => '鸡爪',
                 ),
                 array(
                     'url' => array(
@@ -165,12 +178,12 @@
                         'ctl' => 'site_product',
                         'act' => 'index',
                         'args' => array(
-                            '125', '1',//product_id  seller_id
+                            '17', '5',//product_id  store_id
                         ),
                     ),
-                    'image_id' => '8a7f5ca8819a286a2d314a253e3cc8ab',
-                    'price' => '149.00',
-                    'name' => '神龙客精品五花肉',
+                    'image_id' => '2a33b9c510f7a641a25ea1b45e9cbb63',
+                    'price' => '63.00',
+                    'name' => '鸡杂',
                 ),
                 array(
                     'url' => array(
@@ -178,12 +191,12 @@
                         'ctl' => 'site_product',
                         'act' => 'index',
                         'args' => array(
-                            '126', '1',//product_id  seller_id
+                            '11', '5',//product_id  store_id
                         ),
                     ),
-                    'image_id' => '8cb3b3b84e1eba26e7e5748514590ed5',
-                    'price' => '239.00',
-                    'name' => 'Gap多选色全棉纯色舒适休闲短裤',
+                    'image_id' => 'e08e630a0aa3db2d1367d1576315d7f9',
+                    'price' => '34.00',
+                    'name' => '鸡翅',
                 ),
             ),
         ),
@@ -199,7 +212,7 @@
                     '1',//storeid
                 ),
             ),
-            'image_id' =>'',
+            'image_id' =>'dd2505cf2a03611259ad95d00a09cfd4',
         ),
         array(
             'name' => '店铺2',
@@ -211,7 +224,7 @@
                     '2',//storeid
                 ),
             ),
-            'image_id' =>'',
+            'image_id' =>'dd2505cf2a03611259ad95d00a09cfd4',
         ),
         array(
             'name' => '店铺3',
@@ -223,7 +236,7 @@
                     '3',//storeid
                 ),
             ),
-            'image_id' =>'',
+            'image_id' =>'dd2505cf2a03611259ad95d00a09cfd4',
         ),
         array(
             'name' => '店铺4',
@@ -235,7 +248,7 @@
                     '4',//storeid
                 ),
             ),
-            'image_id' =>'',
+            'image_id' =>'dd2505cf2a03611259ad95d00a09cfd4',
         ),
         array(
             'name' => '店铺5',
@@ -247,7 +260,7 @@
                     '5',//storeid
                 ),
             ),
-            'image_id' =>'',
+            'image_id' =>'dd2505cf2a03611259ad95d00a09cfd4',
         ),
         array(
             'name' => '店铺6',
@@ -259,7 +272,7 @@
                     '6',//storeid
                 ),
             ),
-            'image_id' =>'',
+            'image_id' =>'dd2505cf2a03611259ad95d00a09cfd4',
         ),
         array(
             'name' => '店铺7',
@@ -271,7 +284,7 @@
                     '7',//storeid
                 ),
             ),
-            'image_id' =>'',
+            'image_id' =>'dd2505cf2a03611259ad95d00a09cfd4',
         ),
         array(
             'name' => '店铺8',
@@ -283,7 +296,7 @@
                     '8',//storeid
                 ),
             ),
-            'image_id' =>'',
+            'image_id' =>'dd2505cf2a03611259ad95d00a09cfd4',
         ),
     ),
     'filter' => array(
@@ -410,10 +423,100 @@
             'has_children' => true,
             'parent_id' => '0',
         ),
+
+        array(
+            'name' => '海产品类',
+            'id' => '10',
+            'cat_lv' => '1',
+            'order' => '0',
+            'has_children' => true,
+            'parent_id' => '0',
+        ),
+        array(
+            'name' => '丸肠水发品',
+            'id' => '11',
+            'cat_lv' => '1',
+            'order' => '0',
+            'has_children' => true,
+            'parent_id' => '0',
+        ),
+        array(
+            'name' => '腌腊制品',
+            'id' => '12',
+            'cat_lv' => '1',
+            'order' => '0',
+            'has_children' => true,
+            'parent_id' => '0',
+        ),
+        array(
+            'name' => '冰品',
+            'id' => '13',
+            'cat_lv' => '1',
+            'order' => '0',
+            'has_children' => true,
+            'parent_id' => '0',
+        ),
+        array(
+            'name' => '速冻点心',
+            'id' => '14',
+            'cat_lv' => '1',
+            'order' => '0',
+            'has_children' => true,
+            'parent_id' => '0',
+        ),
+        array(
+            'name' => '速冻蔬菜',
+            'id' => '15',
+            'cat_lv' => '1',
+            'order' => '0',
+            'has_children' => true,
+            'parent_id' => '0',
+        ),
+        array(
+            'name' => '粮油产品',
+            'id' => '16',
+            'cat_lv' => '1',
+            'order' => '0',
+            'has_children' => true,
+            'parent_id' => '0',
+        ),
+        array(
+            'name' => '调味品',
+            'id' => '17',
+            'cat_lv' => '1',
+            'order' => '0',
+            'has_children' => true,
+            'parent_id' => '0',
+        ),
+        array(
+            'name' => '干货产品',
+            'id' => '18',
+            'cat_lv' => '1',
+            'order' => '0',
+            'has_children' => true,
+            'parent_id' => '0',
+        ),
+        array(
+            'name' => '小菜产品',
+            'id' => '19',
+            'cat_lv' => '1',
+            'order' => '0',
+            'has_children' => true,
+            'parent_id' => '0',
+        ),
+        array(
+            'name' => '儿童产品',
+            'id' => '20',
+            'cat_lv' => '1',
+            'order' => '0',
+            'has_children' => true,
+            'parent_id' => '0',
+        ),
         //end 一级分类
+        //
         //二级分类
         array(
-            'name' => '原料/白条',
+            'name' => '鸡大腿',
             'id' => '5',
             'cat_lv' => '2',
             'order' => '0',
@@ -421,48 +524,80 @@
             'parent_id' => '1',
         ),
         array(
-            'name' => '原料/分割品',
+            'name' => '鸡大胸',
             'id' => '6',
             'cat_lv' => '2',
             'order' => '0',
             'has_children' => true,
             'parent_id' => '1',
         ),
-        //end二级分类
-        //三级分类
         array(
-            'name' => '鸡肉1',
+            'name' => '鸡爪',
             'id' => '7',
-            'cat_lv' => '3',
+            'cat_lv' => '2',
             'order' => '0',
             'has_children' => true,
-            'parent_id' => '5',
+            'parent_id' => '1',
         ),
         array(
-            'name' => '鸡肉2',
+            'name' => '鸡翅',
             'id' => '8',
-            'cat_lv' => '3',
+            'cat_lv' => '2',
             'order' => '0',
             'has_children' => true,
-            'parent_id' => '5',
+            'parent_id' => '1',
         ),
         array(
-            'name' => '鸡腿1',
+            'name' => '鸡心',
             'id' => '9',
-            'cat_lv' => '3',
+            'cat_lv' => '2',
             'order' => '0',
             'has_children' => true,
-            'parent_id' => '6',
+            'parent_id' => '1',
         ),
         array(
-            'name' => '鸡腿2',
-            'id' => '10',
-            'cat_lv' => '3',
+            'name' => '鸡杂',
+            'id' => '21',
+            'cat_lv' => '2',
             'order' => '0',
             'has_children' => true,
-            'parent_id' => '6',
+            'parent_id' => '1',
         ),
-        //end 三级分类
+        //end二级分类
+        // //三级分类
+        // array(
+        //     'name' => '鸡肉1',
+        //     'id' => '7',
+        //     'cat_lv' => '3',
+        //     'order' => '0',
+        //     'has_children' => true,
+        //     'parent_id' => '5',
+        // ),
+        // array(
+        //     'name' => '鸡肉2',
+        //     'id' => '8',
+        //     'cat_lv' => '3',
+        //     'order' => '0',
+        //     'has_children' => true,
+        //     'parent_id' => '5',
+        // ),
+        // array(
+        //     'name' => '鸡腿1',
+        //     'id' => '9',
+        //     'cat_lv' => '3',
+        //     'order' => '0',
+        //     'has_children' => true,
+        //     'parent_id' => '6',
+        // ),
+        // array(
+        //     'name' => '鸡腿2',
+        //     'id' => '10',
+        //     'cat_lv' => '3',
+        //     'order' => '0',
+        //     'has_children' => true,
+        //     'parent_id' => '6',
+        // ),
+        // //end 三级分类
     ),
 
  );
@@ -473,7 +608,7 @@
                      'gid' => 'v16979961',
                      'origin_id' => '1',
                      'weight_id' => '1',
-                     'name' => 'Gap多选色全棉纯色舒适休闲短裤',
+                     'name' => '鸡爪',
                      'type_id' => '0',
                      'cat_id' => '0',
                      'extended_cat' => '',
@@ -486,7 +621,7 @@
                      'score' => '',
                      'brief' => '',
                      'goods_type' => 'normal',
-                     'image_default_id' => '8cb3b3b84e1eba26e7e5748514590ed5',
+                     'image_default_id' => 'f7c5a5b54e1ce5cd0fc0c61deaa8eb91',
                      'intro' => '<p><br></p>',
                      'min_buy' => '',
                      'nostore_sell' => '0',
@@ -507,7 +642,7 @@
                      'gid' => 'v85539078',
                      'origin_id' => '1',
                      'weight_id' => '1',
-                     'name' => '现货包邮 小米空气净化器滤芯小米智能空气净化器高密度滤网',
+                     'name' => '鸡大腿',
                      'type_id' => '0',
                      'cat_id' => '19',
                      'extended_cat' => '',
@@ -518,9 +653,9 @@
                      'last_modify' => '1433232741',
                      'w_order' => '0',
                      'score' => '',
-                     'brief' => '小米正品 原装滤芯 品质保证',
+                     'brief' => '',
                      'goods_type' => 'normal',
-                     'image_default_id' => '8a7f5ca8819a286a2d314a253e3cc8ab',
+                     'image_default_id' => 'ca1126b7fbd10397b8d0a56778f9efe2',
                      'intro' => '<p><br></p>',
                      'min_buy' => '',
                      'nostore_sell' => '1',
@@ -541,7 +676,7 @@
                      'gid' => 'v66386676',
                      'origin_id' => '1',
                      'weight_id' => '1',
-                     'name' => 'iPad Mini 第三代高清平板电脑',
+                     'name' => '鸡大胸',
                      'type_id' => '0',
                      'cat_id' => '18',
                      'extended_cat' => '',
@@ -552,9 +687,9 @@
                      'last_modify' => '1433232552',
                      'w_order' => '0',
                      'score' => '',
-                     'brief' => '适用于 iPad 的 AppleCare  全方位服务计划可提供自购买之日起长达 2 年的专家电话技术支持，以及额外硬件保修服务，包括多达两次意外损坏保修服务。只需在结账时添加 AppleCare  全方位服务计划。',
+                     'brief' => '',
                      'goods_type' => 'normal',
-                     'image_default_id' => '8d2a0be90a514ecb51ca01b843142b82',
+                     'image_default_id' => '0446f3d1afe774ee124e9bff8f7d11a5',
                      'intro' => '',
                      'min_buy' => '',
                      'nostore_sell' => '0',
@@ -575,7 +710,7 @@
                      'gid' => 'v26635722',
                      'origin_id' => '1',
                      'weight_id' => '1',
-                     'name' => '费雪婴儿游戏桌 多功能双语学习桌早教益智bjv34 儿童节礼物',
+                     'name' => '鸡翅',
                      'type_id' => '0',
                      'cat_id' => '13',
                      'extended_cat' => '',
@@ -586,9 +721,9 @@
                      'last_modify' => '1433232215',
                      'w_order' => '0',
                      'score' => '',
-                     'brief' => '热销款 培养语言能力 四种游戏模式 大动作发展',
+                     'brief' => '',
                      'goods_type' => 'normal',
-                     'image_default_id' => '9150f7e6f2bf2a5876779f254403cd52',
+                     'image_default_id' => '8bc55095f398d263cc6acade39fb220a',
                      'intro' => '<p><br></p>',
                      'min_buy' => '',
                      'nostore_sell' => '1',
@@ -609,7 +744,7 @@
                      'gid' => 'v96359109',
                      'origin_id' => '1',
                      'weight_id' => '1',
-                     'name' => 'New Balance/NB 男鞋 经典复古鞋 跑步鞋 休闲鞋',
+                     'name' => '鸡心',
                      'type_id' => '0',
                      'cat_id' => '10',
                      'extended_cat' => '',
@@ -620,9 +755,9 @@
                      'last_modify' => '1433232219',
                      'w_order' => '0',
                      'score' => '',
-                     'brief' => '热卖 必备入门款',
+                     'brief' => '',
                      'goods_type' => 'normal',
-                     'image_default_id' => 'd63a67731c62829909b55a730f24a55b',
+                     'image_default_id' => 'c9e0f03807b544b554b6880cda751e00',
                      'intro' => '<p><br></p>',
                      'min_buy' => '',
                      'nostore_sell' => '0',
@@ -643,7 +778,7 @@
                      'gid' => 'v96635819',
                      'origin_id' => '1',
                      'weight_id' => '1',
-                     'name' => 'New Balance/NB 男鞋女鞋 复古鞋 跑步运动休闲鞋',
+                     'name' => '鸡杂',
                      'type_id' => '0',
                      'cat_id' => '10',
                      'extended_cat' => '',
@@ -654,9 +789,9 @@
                      'last_modify' => '1433232223',
                      'w_order' => '0',
                      'score' => '',
-                     'brief' => '植物园主题 夏威夷风情 印花拼接设计 时尚百搭',
+                     'brief' => '',
                      'goods_type' => 'normal',
-                     'image_default_id' => '9ca95ad385eaf776ae5d9c3e8c10ee12',
+                     'image_default_id' => '611aaf5d05e41a4e43df0212d3671046',
                      'intro' => '<p><br></p>',
                      'min_buy' => '',
                      'nostore_sell' => '0',

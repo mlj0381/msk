@@ -66,7 +66,7 @@ class aftersales_ctl_site_member extends b2c_ctl_site_member
     /**
      * 售后服务申请.
      */
-    public function newrequest($order_id, $product_id, $action = 'input')
+    public function newrequest($order_id, $product_id, $action = 'input', $price)
     {
         if ($action == 'save') {
             $mdl_as_request = $this->app_current->model('request');
@@ -150,7 +150,7 @@ class aftersales_ctl_site_member extends b2c_ctl_site_member
                 $type_info = app::get('b2c')->model('goods_type')->dump($goods['type_id']);
             }
             $this->pagedata['gtype_assrule'] = $type_info['setting']['assrule'];
-
+            $this->pagedata['price'] = $price;
             $this->output('aftersales');
         }
     }

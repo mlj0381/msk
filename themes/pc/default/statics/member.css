@@ -28,8 +28,48 @@ ol {
   font-size: 0px;
   clear: both;
 }
+/* .hidden{ display: none;} */
+.navbar {
+  border-radius: 0px;
+}
+.navbar-inverse {
+  border-radius: 0px;
+  background-color: #fff;
+  border: none;
+  border-bottom: 1px solid #080808;
+  min-height: 36px;
+}
+.navbar-inverse .nav li {
+  color: #000333;
+  font-size: 16px;
+  cursor: pointer;
+  height: 36px;
+  width: 104px;
+  border-left: 1px solid #080808;
+  border-top: 1px solid #080808;
+}
+.navbar-inverse .nav li a {
+  padding: 0px;
+  text-align: center;
+  line-height: 36px;
+  color: #000333;
+}
+.navbar-inverse .nav li a:hover {
+  color: #080808;
+}
+.navbar-inverse .nav li a.active {
+  background-color: #ff0000;
+  color: #fff;
+}
+.navbar-inverse .nav li:last-child {
+  border-right: 1px solid #080808;
+}
 .buyer_container {
   width: 1200px;
+  min-height: 500px;
+}
+.buyer_container .breadcrumb {
+  margin: 20px auto;
 }
 .buyer_container .my-main .row {
   margin: 0;
@@ -75,13 +115,10 @@ ol {
   border: none;
   height: 200px;
   padding-top: 30px;
-  border-top-left-radius: 100px;
-  border-bottom-left-radius: 100px;
   margin-bottom: 15px;
 }
 .buyer_container .my-main .my-page .alert-warning .m-baseinfo {
-  width: 300px;
-  margin-left: 30px;
+  border-right: 1px dashed #ccc;
 }
 .buyer_container .my-main .my-page .alert-warning .m-baseinfo dl {
   width: 100%;
@@ -91,6 +128,7 @@ ol {
 .buyer_container .my-main .my-page .alert-warning .m-baseinfo dl dt {
   width: 100px;
   height: 100px;
+  margin-left: 20px;
   float: left;
   -webkit-border-radius: 50%;
   -moz-border-radius: 50%;
@@ -122,41 +160,47 @@ ol {
   opacity: 0.8;
 }
 .buyer_container .my-main .my-page .alert-warning .m-baseinfo dl dd {
+  width: 120px;
   float: left;
-  margin-left: 40px;
+  margin-left: 20px;
 }
 .buyer_container .my-main .my-page .alert-warning .m-baseinfo dl dd h4 {
   margin-top: 15px;
   height: 30px;
   line-height: 30px;
   margin-bottom: 0px;
+  width: 120px;
+  overflow: hidden;
+  text-align: center;
 }
 .buyer_container .my-main .my-page .alert-warning .m-baseinfo dl dd ul {
   margin-top: 10px;
 }
-.buyer_container .my-main .my-page .alert-warning .m-baseinfo dl dd ul span.label-warning {
+.buyer_container .my-main .my-page .alert-warning .m-baseinfo dl dd ul li {
   width: 100%;
-  height: 20px;
-  line-height: 20px;
-  -webkit-border-radius: 10px;
-  -moz-border-radius: 10px;
-  -ms-border-radius: 10px;
-  -o-border-radius: 10px;
-  border-radius: 10px;
-  background: #e93428;
+}
+.buyer_container .my-main .my-page .alert-warning .m-baseinfo dl dd ul span.label-warning {
+  display: block;
+  width: 100%;
+  height: 26px;
+  line-height: 22px;
+  -webkit-border-radius: 13px;
+  -moz-border-radius: 13px;
+  -ms-border-radius: 13px;
+  -o-border-radius: 13px;
+  border-radius: 13px;
+  background: #a40001;
+  font-size: 12px;
 }
 .buyer_container .my-main .my-page .alert-warning .order_status_list {
-  width: 360px;
   box-sizing: border-box;
-  border-right: 1px dashed #ccc;
-  border-left: 1px dashed #ccc;
   margin-left: 20px;
 }
 .buyer_container .my-main .my-page .alert-warning .order_status_list li {
-  width: 130px;
+  width: 50%;
   float: left;
   height: 50px;
-  margin: 10px 0 10px 25px;
+  margin: 10px 0 10px 0px;
 }
 .buyer_container .my-main .my-page .alert-warning .order_status_list li span.status_icon {
   display: inline-block;
@@ -171,17 +215,21 @@ ol {
   background: #abcdef;
   float: left;
 }
+.buyer_container .my-main .my-page .alert-warning .order_status_list li span.status_icon img {
+  width: 50px;
+  height: 50px;
+  display: block;
+}
 .buyer_container .my-main .my-page .alert-warning .order_status_list li span {
   display: inline-block;
   height: 50px;
   line-height: 50px;
-  width: 60px;
   float: left;
   margin-left: 5px;
   font-size: 14px;
 }
 .buyer_container .my-main .my-page .alert-warning .order_status_list li span small {
-  color: #e93428;
+  color: #a40001;
   font-size: 14px;
   padding-left: 5px;
 }
@@ -196,9 +244,53 @@ ol {
   font-size: 14px;
 }
 .buyer_container .my-main .my-page .alert-warning .m-balance small {
-  color: #e93428;
+  color: #a40001;
   display: block;
   font-size: 14px;
+}
+.buyer_container .my-main .my-page .last_active {
+  width: 100%;
+}
+.buyer_container .my-main .my-page .last_active h4 {
+  height: 40px;
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 25px;
+}
+.buyer_container .my-main .my-page .last_active h4 span {
+  display: block;
+  width: 150px;
+  height: 40px;
+  line-height: 40px;
+  color: #fff;
+  text-align: center;
+  font-size: 16px;
+  background: #a40001;
+  float: left;
+}
+.buyer_container .my-main .my-page .last_active h4 a {
+  float: right;
+  font-size: 12px;
+  margin-top: 10px;
+}
+.buyer_container .my-main .my-page .last_active .active_item .goods_item .item_pic {
+  display: block;
+  height: 200px;
+  text-align: center;
+  width: 100%;
+}
+.buyer_container .my-main .my-page .last_active .active_item .goods_item .item_pic img {
+  height: 100%;
+  display: block;
+}
+.buyer_container .my-main .my-page .last_active .active_item .goods_item .caption a {
+  display: block;
+  height: 30px;
+  line-height: 30px;
+  overflow: hidden;
+  font-weight: bold;
+}
+.buyer_container .my-main .my-page .last_active .active_item .goods_item .caption span {
+  display: block;
 }
 .buyer_container .my-main .my-page .my-orders-nav li.last_li {
   width: 200px;
@@ -232,6 +324,20 @@ ol {
 }
 .buyer_container .my-main .my-page .my-orders-list .mo-list-items .order_cz a:hover {
   text-decoration: underline;
+}
+.buyer_container .my-main .my-page #cancel_order .tips {
+  margin: 0 0 10px 35px;
+  border: 1px solid #ddd;
+  display: inline-block;
+  padding: 5px 10px;
+  background: #f5f5f5;
+}
+.buyer_container .my-main .my-page #cancel_order .tips i {
+  display: inline-block;
+  margin-right: 10px;
+}
+.buyer_container .my-main .my-page #cancel_order form {
+  margin-bottom: 75px;
 }
 .buyer_container .my-main .my-page .order-detail-container {
   background: #fff;
@@ -267,55 +373,6 @@ ol {
 .buyer_container .my-main .my-page .list-group .list-group-item .goods_imgbox {
   padding: 0;
 }
-.buyer_container .my-main .my-page .fav_nav {
-  width: 100%;
-  height: 40px;
-  line-height: 40px;
-  margin: 20px 0;
-  background: #fff;
-  border-bottom: 1px solid #ddd;
-}
-.buyer_container .my-main .my-page .fav_nav a {
-  font-size: 14px;
-  display: inline-block;
-  padding: 0 15px;
-  margin: 0 10px;
-}
-.buyer_container .my-main .my-page .fav_nav a.active {
-  background: #222;
-  color: #fff;
-}
-.buyer_container .my-main .my-page .fav_nav p {
-  display: inline-block;
-  float: right;
-  padding: 0 15px;
-}
-.buyer_container .my-main .my-page .fav_nav p small {
-  color: #e93428;
-  font-weight: 700;
-  padding: 0 5px;
-}
-.buyer_container .my-main .my-page .receiver_form .region {
-  width: 100%;
-}
-.buyer_container .my-main .my-page .receiver_form .region input {
-  width: 33.33333%;
-}
-.buyer_container .my-main .my-page .receiver_form .region select {
-  width: 33.33333%;
-}
-.buyer_container .my-main .my-page .receiver_form button.btn-primary {
-  width: 120px;
-  padding: 0;
-  height: 34px;
-  line-height: 34px;
-  background: #e93428;
-  color: #fff;
-  border: none;
-}
-.buyer_container .my-main .my-page .list-group ul.list-inline {
-  margin: 10px 0;
-}
 .buyer_container .my-main .my-page .perInfo_nav {
   width: 100%;
   height: 40px;
@@ -336,43 +393,10 @@ ol {
   font-size: 14px;
 }
 .buyer_container .my-main .my-page .perInfo_nav ul li.active {
-  border-bottom: 2px solid #e93428;
+  border-bottom: 2px solid #a40001;
 }
 .buyer_container .my-main .my-page .perInfo_nav ul li.active a {
-  color: #e93428;
-}
-.buyer_container .my-main .my-page .m-baseInfo_form .filebox {
-  position: relative;
-  height: 120px;
-}
-.buyer_container .my-main .my-page .m-baseInfo_form .filebox .file_input {
-  position: absolute;
-  z-index: 10;
-  width: 120px;
-  height: 120px;
-  opacity: 0;
-  cursor: pointer;
-}
-.buyer_container .my-main .my-page .m-baseInfo_form .filebox .showImg {
-  z-index: 5;
-  position: absolute;
-  width: 118px;
-  height: 118px;
-  overflow: hidden;
-  border: 1px solid #ccc;
-}
-.buyer_container .my-main .my-page .m-baseInfo_form .filebox .showImg img {
-  width: 118px;
-  height: 118px;
-}
-.buyer_container .my-main .my-page .m-baseInfo_form .filebox .file_ctr {
-  position: absolute;
-  margin-left: 130px;
-  top: 40px;
-}
-.buyer_container .my-main .my-page .m-baseInfo_form .filebox .file_ctr a {
-  display: block;
-  font-size: 14px;
+  color: #a40001;
 }
 .buyer_container .my-main .my-page .radio_group {
   display: inline-block;
@@ -429,14 +453,421 @@ ol {
   max-width: 100%;
   min-height: 80px;
 }
-.jumbotron {
-  background: none;
+.glist-container .fav_nav {
+  width: 100%;
+  height: 40px;
+  line-height: 40px;
+  margin: 20px 0;
+  background: #fff;
+  border-bottom: 1px solid #ddd;
 }
-.jumbotron .shoping_btn {
-  background: #e93428;
+.glist-container .fav_nav a {
+  font-size: 16px;
+  display: inline-block;
+  width: 120px;
+  text-align: center;
+  margin-right: 10px;
+  background: #eaeaea;
+}
+.glist-container .fav_nav a.active {
+  background: #a40001;
   color: #fff;
 }
-.jumbotron .shoping_btn:hover {
+.glist-container .fav_nav p {
+  display: inline-block;
+  float: right;
+  padding: 0 15px;
+}
+.glist-container .fav_nav p small {
+  color: #a40001;
+  font-weight: 700;
+  padding: 0 5px;
+}
+.glist-container .fav_con {
+  margin-bottom: 50px;
+}
+.glist-container .fav_con .fav_goods,
+.glist-container .fav_con .fav_shop {
+  width: 100%;
+}
+.glist-container .fav_con .fav_goods .fav_g_nav,
+.glist-container .fav_con .fav_shop .fav_g_nav,
+.glist-container .fav_con .fav_goods .fav_s_nav,
+.glist-container .fav_con .fav_shop .fav_s_nav {
+  height: 40px;
+  line-height: 40px;
+  border-bottom: 1px solid #ddd;
+}
+.glist-container .fav_con .fav_goods .fav_g_nav ul,
+.glist-container .fav_con .fav_shop .fav_g_nav ul,
+.glist-container .fav_con .fav_goods .fav_s_nav ul,
+.glist-container .fav_con .fav_shop .fav_s_nav ul {
+  width: 400px;
+}
+.glist-container .fav_con .fav_goods .fav_g_nav ul li,
+.glist-container .fav_con .fav_shop .fav_g_nav ul li,
+.glist-container .fav_con .fav_goods .fav_s_nav ul li,
+.glist-container .fav_con .fav_shop .fav_s_nav ul li {
+  float: left;
+  padding: 0 10px;
+  font-size: 14px;
+  cursor: pointer;
+  margin-right: 10px;
+}
+.glist-container .fav_con .fav_goods .fav_g_nav ul li.active,
+.glist-container .fav_con .fav_shop .fav_g_nav ul li.active,
+.glist-container .fav_con .fav_goods .fav_s_nav ul li.active,
+.glist-container .fav_con .fav_shop .fav_s_nav ul li.active {
+  border-bottom: 3px solid #a40001;
+}
+.glist-container .fav_con .fav_goods .fav_g_nav .fav_g_ctr,
+.glist-container .fav_con .fav_shop .fav_g_nav .fav_g_ctr,
+.glist-container .fav_con .fav_goods .fav_s_nav .fav_g_ctr,
+.glist-container .fav_con .fav_shop .fav_s_nav .fav_g_ctr {
+  float: right;
+}
+.glist-container .fav_con .fav_goods .fav_g_nav .fav_g_ctr button.btn-danger,
+.glist-container .fav_con .fav_shop .fav_g_nav .fav_g_ctr button.btn-danger,
+.glist-container .fav_con .fav_goods .fav_s_nav .fav_g_ctr button.btn-danger,
+.glist-container .fav_con .fav_shop .fav_s_nav .fav_g_ctr button.btn-danger {
+  float: left;
+  border: none;
+  height: 28px;
+  line-height: 28px;
+  border-radius: 2px;
+  padding: 0 10px;
+  margin: 5px 10px 0 0;
+}
+.glist-container .fav_con .fav_goods .fav_g_nav .fav_g_ctr button.gray,
+.glist-container .fav_con .fav_shop .fav_g_nav .fav_g_ctr button.gray,
+.glist-container .fav_con .fav_goods .fav_s_nav .fav_g_ctr button.gray,
+.glist-container .fav_con .fav_shop .fav_s_nav .fav_g_ctr button.gray {
+  background: #ccc;
+}
+.glist-container .fav_con .fav_goods .fav_g_nav .fav_g_ctr form,
+.glist-container .fav_con .fav_shop .fav_g_nav .fav_g_ctr form,
+.glist-container .fav_con .fav_goods .fav_s_nav .fav_g_ctr form,
+.glist-container .fav_con .fav_shop .fav_s_nav .fav_g_ctr form {
+  margin-top: -5px;
+  margin-left: 5px;
+  float: right;
+}
+.glist-container .fav_con .fav_goods .fav_g_nav .fav_g_ctr form input,
+.glist-container .fav_con .fav_shop .fav_g_nav .fav_g_ctr form input,
+.glist-container .fav_con .fav_goods .fav_s_nav .fav_g_ctr form input,
+.glist-container .fav_con .fav_shop .fav_s_nav .fav_g_ctr form input {
+  height: 30px;
+  line-height: 30px;
+  width: 150px;
+}
+.glist-container .fav_con .fav_goods .fav_g_nav .fav_g_ctr form span,
+.glist-container .fav_con .fav_shop .fav_g_nav .fav_g_ctr form span,
+.glist-container .fav_con .fav_goods .fav_s_nav .fav_g_ctr form span,
+.glist-container .fav_con .fav_shop .fav_s_nav .fav_g_ctr form span {
+  cursor: pointer;
+}
+.glist-container .fav_con .fav_goods .fav_g_con,
+.glist-container .fav_con .fav_shop .fav_g_con {
+  width: 100%;
+  margin: 15px auto;
+}
+.glist-container .fav_con .fav_goods .fav_g_con .gl_item_box,
+.glist-container .fav_con .fav_shop .fav_g_con .gl_item_box {
+  overflow: hidden;
+}
+.glist-container .fav_con .fav_goods .fav_g_con .gl_item_box .goods-item,
+.glist-container .fav_con .fav_shop .fav_g_con .gl_item_box .goods-item {
+  border-radius: 0px;
+  position: relative;
+  padding: 0px;
+}
+.glist-container .fav_con .fav_goods .fav_g_con .gl_item_box .goods-item .g_checker,
+.glist-container .fav_con .fav_shop .fav_g_con .gl_item_box .goods-item .g_checker {
+  display: none;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.6);
+  z-index: 10;
+  cursor: pointer;
+}
+.glist-container .fav_con .fav_goods .fav_g_con .gl_item_box .goods-item .g_checker span,
+.glist-container .fav_con .fav_shop .fav_g_con .gl_item_box .goods-item .g_checker span {
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+  display: block;
+  width: 55px;
+  height: 55px;
+  line-height: 80px;
+  text-align: center;
+  font-size: 36px;
+  color: #c40000;
+  background: url(images/checked.png) no-repeat left bottom;
+}
+.glist-container .fav_con .fav_goods .fav_g_con .gl_item_box .goods-item .g_checker span.selected,
+.glist-container .fav_con .fav_shop .fav_g_con .gl_item_box .goods-item .g_checker span.selected {
+  background: url(images/checked.png) no-repeat right bottom;
+}
+.glist-container .fav_con .fav_goods .fav_g_con .gl_item_box .goods-item .caption .g-name,
+.glist-container .fav_con .fav_shop .fav_g_con .gl_item_box .goods-item .caption .g-name {
+  width: 100%;
+  height: 36px;
+  line-height: 18px;
+  margin: 0 0 20px 0;
+}
+.glist-container .fav_con .fav_goods .fav_g_con .gl_item_box .goods-item .caption .g-name a,
+.glist-container .fav_con .fav_shop .fav_g_con .gl_item_box .goods-item .caption .g-name a {
+  font-size: 14px;
+}
+.glist-container .fav_con .fav_goods .fav_g_con .gl_item_box .goods-item .caption p,
+.glist-container .fav_con .fav_shop .fav_g_con .gl_item_box .goods-item .caption p {
+  margin: 10px auto;
+}
+.glist-container .fav_con .fav_goods .fav_s_con,
+.glist-container .fav_con .fav_shop .fav_s_con {
+  width: 100%;
+  margin: 15px auto;
+}
+.glist-container .fav_con .fav_goods .fav_s_con .shop_item,
+.glist-container .fav_con .fav_shop .fav_s_con .shop_item {
+  margin: 0 auto;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 15px;
+  padding-top: 15px;
+}
+.glist-container .fav_con .fav_goods .fav_s_con .shop_item .shop_info .shop_logoimg,
+.glist-container .fav_con .fav_shop .fav_s_con .shop_item .shop_info .shop_logoimg {
+  float: left;
+  display: inline-block;
+  width: 80px;
+  height: 80px;
+  overflow: hidden;
+}
+.glist-container .fav_con .fav_goods .fav_s_con .shop_item .shop_info .shop_logoimg img,
+.glist-container .fav_con .fav_shop .fav_s_con .shop_item .shop_info .shop_logoimg img {
+  width: 80px;
+  height: 80px;
+}
+.glist-container .fav_con .fav_goods .fav_s_con .shop_item .shop_info .shop_about,
+.glist-container .fav_con .fav_shop .fav_s_con .shop_item .shop_info .shop_about {
+  width: 228px;
+  float: left;
+  margin-left: 10px;
+}
+.glist-container .fav_con .fav_goods .fav_s_con .shop_item .shop_info .shop_about .shop_name,
+.glist-container .fav_con .fav_shop .fav_s_con .shop_item .shop_info .shop_about .shop_name {
+  display: block;
+  font-size: 14px;
+  color: #000;
+  margin-bottom: 10px;
+}
+.glist-container .fav_con .fav_goods .fav_s_con .shop_item .shop_info .shop_about .add_remarks,
+.glist-container .fav_con .fav_shop .fav_s_con .shop_item .shop_info .shop_about .add_remarks,
+.glist-container .fav_con .fav_goods .fav_s_con .shop_item .shop_info .shop_about .add_shopTag,
+.glist-container .fav_con .fav_shop .fav_s_con .shop_item .shop_info .shop_about .add_shopTag {
+  margin-bottom: 10px;
+}
+.glist-container .fav_con .fav_goods .fav_s_con .shop_item .shop_info .shop_about .add_remarks span.add_bz_btn,
+.glist-container .fav_con .fav_shop .fav_s_con .shop_item .shop_info .shop_about .add_remarks span.add_bz_btn,
+.glist-container .fav_con .fav_goods .fav_s_con .shop_item .shop_info .shop_about .add_shopTag span.add_bz_btn,
+.glist-container .fav_con .fav_shop .fav_s_con .shop_item .shop_info .shop_about .add_shopTag span.add_bz_btn {
+  cursor: pointer;
+  padding-left: 5px;
+}
+.glist-container .fav_con .fav_goods .fav_s_con .shop_item .shop_info .shop_about .add_remarks,
+.glist-container .fav_con .fav_shop .fav_s_con .shop_item .shop_info .shop_about .add_remarks {
+  position: relative;
+}
+.glist-container .fav_con .fav_goods .fav_s_con .shop_item .shop_info .shop_about .add_remarks form,
+.glist-container .fav_con .fav_shop .fav_s_con .shop_item .shop_info .shop_about .add_remarks form {
+  position: absolute;
+  z-index: 10;
+  top: 0;
+  left: 0;
+}
+.glist-container .fav_con .fav_goods .fav_s_con .shop_item .shop_info .shop_about .add_shopTag,
+.glist-container .fav_con .fav_shop .fav_s_con .shop_item .shop_info .shop_about .add_shopTag {
+  position: relative;
+}
+.glist-container .fav_con .fav_goods .fav_s_con .shop_item .shop_info .shop_about .add_shopTag span.add_tag_btn,
+.glist-container .fav_con .fav_shop .fav_s_con .shop_item .shop_info .shop_about .add_shopTag span.add_tag_btn {
+  padding-left: 5px;
+  cursor: pointer;
+}
+.glist-container .fav_con .fav_goods .fav_s_con .shop_item .shop_info .shop_about .add_shopTag span.add_tag_btn div,
+.glist-container .fav_con .fav_shop .fav_s_con .shop_item .shop_info .shop_about .add_shopTag span.add_tag_btn div {
+  display: inline-block;
+  padding: 2px 5px;
+  border: 1px solid #ddd;
+  background: #fff;
+  text-align: center;
+  color: #333;
+  margin: 1px;
+}
+.glist-container .fav_con .fav_goods .fav_s_con .shop_item .shop_info .shop_about .add_shopTag span.add_tag_btn div i,
+.glist-container .fav_con .fav_shop .fav_s_con .shop_item .shop_info .shop_about .add_shopTag span.add_tag_btn div i {
+  margin-left: 3px;
+}
+.glist-container .fav_con .fav_goods .fav_s_con .shop_item .shop_info .shop_about .add_shopTag .creat_tagbox,
+.glist-container .fav_con .fav_shop .fav_s_con .shop_item .shop_info .shop_about .add_shopTag .creat_tagbox {
+  background: #fff;
+  position: absolute;
+  top: 0;
+  z-index: 10;
+  width: 100%;
+  border: 1px solid #ddd;
+}
+.glist-container .fav_con .fav_goods .fav_s_con .shop_item .shop_info .shop_about .add_shopTag .creat_tagbox h4,
+.glist-container .fav_con .fav_shop .fav_s_con .shop_item .shop_info .shop_about .add_shopTag .creat_tagbox h4 {
+  height: 30px;
+  background: #f2f2f2;
+  font-size: 12px;
+  line-height: 30px;
+  padding: 0 10px;
+  margin: 0;
+  border-bottom: 1px solid #ddd;
+}
+.glist-container .fav_con .fav_goods .fav_s_con .shop_item .shop_info .shop_about .add_shopTag .creat_tagbox h4 i,
+.glist-container .fav_con .fav_shop .fav_s_con .shop_item .shop_info .shop_about .add_shopTag .creat_tagbox h4 i {
+  margin-right: 5px;
+}
+.glist-container .fav_con .fav_goods .fav_s_con .shop_item .shop_info .shop_about .add_shopTag .creat_tagbox ul,
+.glist-container .fav_con .fav_shop .fav_s_con .shop_item .shop_info .shop_about .add_shopTag .creat_tagbox ul {
+  list-style: none;
+}
+.glist-container .fav_con .fav_goods .fav_s_con .shop_item .shop_info .shop_about .add_shopTag .creat_tagbox ul li,
+.glist-container .fav_con .fav_shop .fav_s_con .shop_item .shop_info .shop_about .add_shopTag .creat_tagbox ul li {
+  list-style: none;
+  padding: 0 10px;
+  height: 30px;
+  line-height: 30px;
+}
+.glist-container .fav_con .fav_goods .fav_s_con .shop_item .shop_info .shop_about .add_shopTag .creat_tagbox ul li input,
+.glist-container .fav_con .fav_shop .fav_s_con .shop_item .shop_info .shop_about .add_shopTag .creat_tagbox ul li input {
+  margin-right: 10px;
+}
+.glist-container .fav_con .fav_goods .fav_s_con .shop_item .shop_info .shop_about .add_shopTag .creat_tagbox ul li:hover,
+.glist-container .fav_con .fav_shop .fav_s_con .shop_item .shop_info .shop_about .add_shopTag .creat_tagbox ul li:hover {
+  background: #f2f2f2;
+}
+.glist-container .fav_con .fav_goods .fav_s_con .shop_item .shop_info .shop_about .add_shopTag .creat_class,
+.glist-container .fav_con .fav_shop .fav_s_con .shop_item .shop_info .shop_about .add_shopTag .creat_class {
+  padding: 0 10px;
+  height: 30px;
+  margin: 0;
+  cursor: pointer;
+  line-height: 30px;
+}
+.glist-container .fav_con .fav_goods .fav_s_con .shop_item .shop_info .shop_about .add_shopTag .creat_class i,
+.glist-container .fav_con .fav_shop .fav_s_con .shop_item .shop_info .shop_about .add_shopTag .creat_class i {
+  margin-right: 5px;
+}
+.glist-container .fav_con .fav_goods .fav_s_con .shop_item .shop_info .shop_about .add_shopTag form,
+.glist-container .fav_con .fav_shop .fav_s_con .shop_item .shop_info .shop_about .add_shopTag form {
+  margin: 2px;
+}
+.glist-container .fav_con .fav_goods .fav_s_con .shop_item .btn-danger,
+.glist-container .fav_con .fav_shop .fav_s_con .shop_item .btn-danger {
+  margin: 5px 0;
+}
+.glist-container .best_sellers,
+.glist-container .cnxh {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  margin-bottom: 30px;
+}
+.glist-container .best_sellers .hd,
+.glist-container .cnxh .hd {
+  overflow: hidden;
+  height: 30px;
+  border-bottom: 1px solid #ddd;
+}
+.glist-container .best_sellers .hd span.lm_title,
+.glist-container .cnxh .hd span.lm_title {
+  font-size: 16px;
+  background: #a40001;
+  color: #fff;
+  display: inline-block;
+  width: 120px;
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
+}
+.glist-container .best_sellers .hd span.btns,
+.glist-container .cnxh .hd span.btns {
+  margin-top: 3px;
+  float: right;
+}
+.glist-container .best_sellers .hd span.btns a,
+.glist-container .cnxh .hd span.btns a {
+  display: block;
+  width: 19px;
+  line-height: 18px;
+  float: left;
+  background: #eaeaea;
+  border: 1px solid #ddd;
+  text-align: center;
+  cursor: pointer;
+}
+.glist-container .best_sellers .hd span.btns a.next,
+.glist-container .cnxh .hd span.btns a.next {
+  margin-left: -1px;
+}
+.glist-container .best_sellers .bd,
+.glist-container .cnxh .bd {
+  width: 100%;
+  padding: 15px 0;
+}
+.glist-container .best_sellers .bd ul,
+.glist-container .cnxh .bd ul {
+  overflow: hidden;
+  zoom: 1;
+}
+.glist-container .best_sellers .bd ul li,
+.glist-container .cnxh .bd ul li {
+  margin-right: 12px;
+  float: left;
+  _display: inline;
+  overflow: hidden;
+  text-align: center;
+  position: relative;
+}
+.glist-container .best_sellers .bd ul li .pic,
+.glist-container .cnxh .bd ul li .pic {
+  text-align: center;
+}
+.glist-container .best_sellers .bd ul li .pic img,
+.glist-container .cnxh .bd ul li .pic img {
+  width: 190px;
+  height: 190px;
+  display: block;
+}
+.glist-container .best_sellers .bd ul li .title,
+.glist-container .cnxh .bd ul li .title {
+  position: absolute;
+  width: 100%;
+  height: 30px;
+  line-height: 30px;
+  bottom: 0px;
+  background: rgba(0, 0, 0, 0.8);
+}
+.glist-container .best_sellers .bd ul li .title a,
+.glist-container .cnxh .bd ul li .title a {
+  color: #fff;
+}
+.cart_page {
+  min-height: 500px;
+}
+.cart_page .jumbotron {
+  background: none;
+}
+.cart_page .jumbotron .shoping_btn {
+  background: #a40001;
+  color: #fff;
+}
+.cart_page .jumbotron .shoping_btn:hover {
   color: #fff;
   background: #bd0101;
 }
@@ -450,7 +881,7 @@ ol {
 }
 .cart-html .cart_page .cart-header h1 a {
   float: right;
-  color: #e93428;
+  color: #a40001;
   font-size: 14px;
   text-decoration: underline;
   margin-top: 10px;
@@ -458,6 +889,51 @@ ol {
 .cart-html .cart-container {
   width: 100%;
   background: #fff;
+}
+.cart-html .cart-container .itemnav {
+  margin-bottom: 15px;
+  border-bottom: 1px solid #ddd;
+}
+.cart-html .cart-container .itemnav .nav_item span {
+  display: inline-block;
+  padding: 0 25px;
+  height: 44px;
+  line-height: 44px;
+  font-size: 16px;
+  text-align: center;
+  position: relative;
+  cursor: pointer;
+  color: #727171;
+  border: 1px solid #ddd;
+  border-bottom: none;
+  background: #f2f2f2;
+  margin-right: 10px;
+  float: left;
+}
+.cart-html .cart-container .itemnav .nav_item span.active {
+  background: #a40001;
+  color: #fff;
+  border: 1px solid #a40001;
+  border-bottom: none;
+}
+.cart-html .cart-container .itemnav .nav_item span.active small {
+  color: #fff;
+}
+.cart-html .cart-container .itemnav .nav_item span small {
+  color: #a40001;
+  padding: 0 3px;
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  line-height: 14px;
+}
+.cart-html .cart-container .itemnav .nav_right {
+  float: right;
+}
+.cart-html .cart-container .itemnav .nav_right small {
+  color: #a40001;
+  font-size: 14px;
+  padding: 0 5px;
 }
 .cart-html .cart-container .itembox {
   width: 100%;
@@ -472,7 +948,7 @@ ol {
 }
 .cart-html .cart-container .itembox .shop_name a {
   margin-left: 10px;
-  color: #e93428;
+  color: #a40001;
 }
 .cart-html .cart-container .cart_like {
   width: 100%;
@@ -487,6 +963,7 @@ ol {
 }
 .cart-html .cart-container .cart_like .like_menu span {
   display: inline-block;
+  cursor: pointer;
 }
 .cart-html .cart-container .cart_like .like_menu span a {
   display: inline-block;
@@ -497,11 +974,11 @@ ol {
   color: #000;
 }
 .cart-html .cart-container .cart_like .like_menu span a.active {
-  border-bottom: 2px solid #e93428;
+  border-bottom: 2px solid #a40001;
 }
 .cart-html .cart-container .cart_like .like_menu a.sc_btan {
   float: right;
-  color: #e93428;
+  color: #a40001;
 }
 .cart-html .cart-container .cart_like .like_con {
   width: 100%;
@@ -565,25 +1042,55 @@ ol {
   background-color: #f5f5f5;
   border-bottom: 1px solid #e1e1e1;
 }
-.checkout-con .checkout-container .checkout-dlytime ul {
-  padding: 10px 15px;
-}
-.checkout-con .checkout-container .checkout-dlytime ul li {
+.checkout-con .checkout-container .checkout-dlytime .timespan {
   display: inline-block;
-  width: 95px;
-  height: 30px;
-  line-height: 30px;
+  padding: 3px 5px;
   border: 1px solid #ddd;
-  font-size: 14px;
-  text-align: center;
-  margin: 5px 10px 5px 0;
-  cursor: pointer;
+  background: #fff;
 }
-.checkout-con .checkout-container .checkout-dlytime ul li.active {
-  width: 95px;
-  height: 30px;
-  line-height: 30px;
-  border: 1px solid #e93428;
+.checkout-con .checkout-container .checkout-dlytime .timespan.active {
+  border: 1px solid #dbaf00;
+  background: #faf2d2;
+}
+.checkout-con .checkout-container .checkout-dlytime .time_text {
+  width: 160px;
+  display: inline-block;
+  height: 28px;
+  line-height: 28px;
+}
+.checkout-con .checkout-container .checkout_djz {
+  font-weight: bold;
+  margin: 0 0 20px 0;
+}
+.checkout-con .checkout-container .checkout_djz label {
+  color: #999;
+  font-weight: normal;
+  margin-left: 20px;
+}
+.checkout-con .checkout-container .checkout_djz input {
+  margin-right: 5px;
+}
+.checkout-con .checkout-container .checkout_ps .ps_list_title {
+  width: 100%;
+  background: #f2f2f2;
+}
+.checkout-con .checkout-container .checkout_ps .ps_list_title th {
+  height: 40px;
+  line-height: 40px;
+}
+.checkout-con .checkout-container .checkout_ps ul li .goods_info .img-thumbnail {
+  width: 64px;
+  height: 64px;
+  float: left;
+}
+.checkout-con .checkout-container .checkout_ps ul li .goods_info .goods_name {
+  width: 245px;
+  float: left;
+  margin-left: 15px;
+}
+.checkout-con .checkout-container .checkout_ps ul li .total_money {
+  font-size: 16px;
+  color: #c13e2c;
 }
 .checkout-con .checkout-container .checkout-submit {
   background: #f5f5f5;
@@ -593,20 +1100,113 @@ ol {
   background: none;
   border: 1px solid #ddd;
 }
-.buyer_container .reg_progress {
+.buyer_container {
+  /* .reg_progress{
+		width:100%;
+		text-align: center;
+		height:50px;
+		line-height: 50px;
+		ol{
+			padding: 0;
+			margin:0;
+			text-align: center;
+			li{
+				display: inline-block;
+				width:160px;
+				
+				
+			}
+		}	
+	} */
+}
+.buyer_container .seller_regbox {
+  /*企业类型选择*/
+  /*公司信息提交*/
+}
+.buyer_container .seller_regbox .company_type_t {
+  text-align: center;
+  font-size: 24px;
+}
+.buyer_container .seller_regbox .typebox {
+  width: 696px;
+  margin: 0 auto;
+  overflow: hidden;
+}
+.buyer_container .seller_regbox .typebox li {
+  width: 200px;
+  height: 200px;
+  line-height: 200px;
+  text-align: center;
+  font-size: 24px;
+  border: 1px solid #333;
+  margin: 30px 15px;
+  float: left;
+  cursor: pointer;
+}
+.buyer_container .seller_regbox .typebox li.selected {
+  background: #f2f2f2;
+}
+.buyer_container .seller_regbox .company_btns {
   width: 100%;
-  text-align: center;
-  height: 50px;
-  line-height: 50px;
-}
-.buyer_container .reg_progress ol {
-  padding: 0;
-  margin: 0;
+  margin-top: 35px;
   text-align: center;
 }
-.buyer_container .reg_progress ol li {
+.buyer_container .seller_regbox .company_btns a {
+  margin: 0 10px;
+}
+.buyer_container .seller_regbox .settled_warning {
+  background: #fffdf0;
+  border: 1px solid #ffd119;
+  padding: 20px;
+}
+.buyer_container .seller_regbox .settled_warning dl {
+  width: 100%;
+  margin-bottom: 0;
+}
+.buyer_container .seller_regbox .settled_warning dl dt {
+  float: left;
+  font-size: 30px;
+  color: #ffcc00;
+  margin-left: 15px;
+  margin-right: 15px;
+  margin-top: 15px;
+}
+.buyer_container .seller_regbox .settled_warning dl dd {
+  float: left;
+}
+.buyer_container .seller_regbox .settled_warning dl dd a {
+  color: #a40001;
+}
+.buyer_container .seller_regbox .companyInfo_form h4,
+.buyer_container .seller_regbox .storeInfo_form h4 {
+  margin: 20px;
+}
+.buyer_container .activity_con {
+  border-top: 1px solid #ddd;
+  padding-top: 50px;
+}
+.buyer_container .activity_con h2 {
+  margin: 0px;
+}
+.buyer_container .activity_con h2 span {
   display: inline-block;
-  width: 160px;
+  height: 40px;
+  width: 150px;
+  line-height: 40px;
+  padding: 0 10px;
+  background: #a40001;
+  color: #fff;
+  font-size: 16px;
+}
+.buyer_container .activity_con ul {
+  background: #f2f2f2;
+  padding: 15px;
+}
+.buyer_container .activity_con ul li {
+  height: 30px;
+  line-height: 30px;
+  font-size: 14px;
+  color: #333;
 }
 .buyer_container .seller_reg_tab {
   width: 100%;
@@ -623,7 +1223,7 @@ ol {
   width: 120px;
 }
 .buyer_container .seller_reg_tab ul li.active {
-  background: #e93428;
+  background: #a40001;
 }
 .buyer_container .seller_reg_tab ul li a {
   font-size: 14px;
@@ -648,7 +1248,7 @@ ol {
   margin: 0;
 }
 .buyer_container .settled_container .settled_menu dl dt {
-  background: #e93428;
+  background: #a40001;
   height: 36px;
   line-height: 36px;
   padding-left: 10px;
@@ -669,7 +1269,7 @@ ol {
   padding-left: 15px;
 }
 .buyer_container .settled_container .settled_menu dl dd.active a {
-  border-left: 3px solid #e93428;
+  border-left: 3px solid #a40001;
 }
 .buyer_container .settled_container .settled_main {
   width: 960px;
@@ -712,7 +1312,7 @@ ol {
   float: left;
 }
 .buyer_container .settled_container .settled_main .settled_warning dl dd a {
-  color: #e93428;
+  color: #a40001;
 }
 .buyer_container .settled_container .settled_main .settled_company_form h2.area_heading,
 .buyer_container .settled_container .settled_main .settled_shop_form h2.area_heading {
@@ -730,45 +1330,6 @@ ol {
   font-size: 14px;
   font-weight: 700;
   padding: 10px;
-}
-.buyer_container .settled_container .settled_main .settled_company_form .form-group .filebox,
-.buyer_container .settled_container .settled_main .settled_shop_form .form-group .filebox {
-  position: relative;
-  height: 120px;
-}
-.buyer_container .settled_container .settled_main .settled_company_form .form-group .filebox .file_input,
-.buyer_container .settled_container .settled_main .settled_shop_form .form-group .filebox .file_input {
-  position: absolute;
-  z-index: 10;
-  width: 120px;
-  height: 120px;
-  opacity: 0;
-  cursor: pointer;
-}
-.buyer_container .settled_container .settled_main .settled_company_form .form-group .filebox .showImg,
-.buyer_container .settled_container .settled_main .settled_shop_form .form-group .filebox .showImg {
-  z-index: 5;
-  position: absolute;
-  width: 118px;
-  height: 118px;
-  overflow: hidden;
-  border: 1px solid #ccc;
-}
-.buyer_container .settled_container .settled_main .settled_company_form .form-group .filebox .showImg img,
-.buyer_container .settled_container .settled_main .settled_shop_form .form-group .filebox .showImg img {
-  width: 118px;
-  height: 118px;
-}
-.buyer_container .settled_container .settled_main .settled_company_form .form-group .filebox .file_ctr,
-.buyer_container .settled_container .settled_main .settled_shop_form .form-group .filebox .file_ctr {
-  position: absolute;
-  margin-left: 130px;
-  top: 40px;
-}
-.buyer_container .settled_container .settled_main .settled_company_form .form-group .filebox .file_ctr a,
-.buyer_container .settled_container .settled_main .settled_shop_form .form-group .filebox .file_ctr a {
-  display: block;
-  font-size: 14px;
 }
 .buyer_container .settled_container .settled_main .settled_company_form .form-group .form_datetime,
 .buyer_container .settled_container .settled_main .settled_shop_form .form-group .form_datetime {
@@ -820,7 +1381,7 @@ ol {
   height: 40px;
   line-height: 40px;
   font-size: 14px;
-  background: #e93428;
+  background: #a40001;
   color: #fff;
   text-align: center;
   -webkit-border-radius: 5px;
@@ -841,36 +1402,39 @@ ol {
 .buyer_container .settled_indexpage {
   width: 100%;
   background: #fff;
-  padding: 20px;
-  border-top: 1px solid #ddd;
-}
-.buyer_container .settled_indexpage .side_left {
-  width: 200px;
-  box-sizing: border-box;
-  border: 1px solid #ddd;
-  float: left;
-}
-.buyer_container .settled_indexpage .side_left dl dt.menu_root {
-  width: 100%;
-  background: #f5f5f5;
-  height: 34px;
-  line-height: 34px;
-  padding: 0 10px;
-  font-size: 16px;
-  margin-bottom: 10px;
-}
-.buyer_container .settled_indexpage .side_left dl dd.menu_item {
-  width: 100%;
-  padding: 0 10px;
-  height: 34px;
-  line-height: 34px;
-  font-size: 14px;
-}
-.buyer_container .settled_indexpage .side_left dl dd.menu_item.active {
-  background: #e93428;
-}
-.buyer_container .settled_indexpage .side_left dl dd.menu_item.active a {
-  color: #fff;
+  padding: 20px 0;
+  /* .side_left{
+			width:200px;
+			box-sizing: border-box;
+			border:1px solid #ddd;
+			.fl;
+		
+			dl{
+				dt.menu_root{
+					width:100%;
+					background: #f5f5f5;
+					height:34px;
+					line-height: 34px;
+					padding:0 10px;
+					font-size:16px;
+					margin-bottom:10px;
+				}
+				dd.menu_item{
+					width:100%;
+					padding:0 10px;
+					height: 34px;
+					line-height: 34px;
+					font-size: 14px;
+			
+					&.active{
+						background: @basecolor;
+						a{
+							color:#fff;
+						}
+					}
+				}
+			}
+		} */
 }
 .buyer_container .settled_indexpage .maincon_right {
   width: 940px;
@@ -896,12 +1460,12 @@ ol {
   font-size: 22px;
 }
 .buyer_container .settled_indexpage .maincon_right .advbox span a.settled_btn {
-  background: #e93428;
+  background: #a40001;
   color: #fff;
 }
 .buyer_container .settled_indexpage .maincon_right .advbox span a.settled_progress_btn {
   background: #fff;
-  color: #e93428;
+  color: #a40001;
   margin-left: 10px;
 }
 .buyer_container .settled_indexpage .maincon_right .settled_process {
@@ -965,11 +1529,11 @@ ol {
   color: #727171;
 }
 .buyer_container .settled_indexpage .maincon_right .settled_process .process_items .process_item:hover {
-  border: 2px solid #e93428;
+  border: 2px solid #a40001;
 }
 .buyer_container .settled_indexpage .maincon_right .settled_process .process_items .process_item:hover span {
-  border: 2px solid #e93428;
-  color: #e93428;
+  border: 2px solid #a40001;
+  color: #a40001;
 }
 .buyer_container .settled_statuspage {
   width: 100%;
@@ -1027,7 +1591,7 @@ ol {
   background: #222;
 }
 .buyer_container .settled_statuspage ul.status_process li.active span {
-  background: #e93428;
+  background: #a40001;
 }
 .buyer_container .settled_statuspage .return_btn,
 .buyer_container .settled_statuspage .return_index {
@@ -1035,7 +1599,7 @@ ol {
   height: 40px;
   line-height: 40px;
   text-align: center;
-  background: #e93428;
+  background: #a40001;
   color: #fff;
   font-size: 16px;
   display: block;
@@ -1244,6 +1808,101 @@ ol {
   color: #fff;
   border: 1px solid #222;
 }
+.buyer_container .addgoods_form .editerbox {
+  width: 100%;
+}
+.buyer_container .addgoods_form .editerbox .edit_tools {
+  width: 100%;
+  background: #f5f5f5;
+  border: 1px solid #ddd;
+}
+.buyer_container .addgoods_form .editerbox textarea {
+  width: 100%;
+  border: 1px solid #ddd;
+  min-height: 400px;
+  min-width: 100%;
+  max-width: 100%;
+  padding: 10px;
+  outline: none;
+}
+.buyer_container #sepcInfo ul li {
+  cursor: pointer;
+  display: inline-block;
+  height: 30px;
+  line-height: 30px;
+  border: 2px solid #ddd;
+  padding: 0 20px;
+}
+.buyer_container #sepcInfo ul li.sect {
+  border-color: #a40001;
+}
+.buyer_container #sepcInfo table {
+  border: 1px solid #ddd;
+}
+.buyer_container #sepcInfo table th {
+  text-align: center;
+  background: #ddd;
+  border-bottom: 1px solid #ccc;
+}
+.buyer_container #sepcInfo table td {
+  text-align: center;
+  vertical-align: middle;
+}
+.buyer_container #sepcInfo table td .price_area span {
+  margin: 0 5px;
+  display: inline-block;
+}
+.buyer_container #sepcInfo table td .price_area input {
+  width: 80px;
+}
+.buyer_container .price_page .goods_info .thumbnail {
+  width: 84px;
+  height: 84px;
+  margin-right: 10px;
+  float: left;
+}
+.buyer_container .price_page .goods_info div .goods_name {
+  font-size: 14px;
+  font-weight: bold;
+  color: #333;
+  display: inline-block;
+}
+.buyer_container .price_page .goods_info .edit_record {
+  margin-top: 20px;
+}
+.buyer_container .price_page table.goods_list {
+  border: 1px solid #ddd;
+}
+.buyer_container .price_page table.goods_list th {
+  background: #ddd;
+  text-align: center;
+}
+.buyer_container .price_page table.goods_list td {
+  text-align: center;
+  vertical-align: middle;
+}
+.buyer_container .modify_record_page .goods_num {
+  margin-top: 5px;
+  font-size: 16px;
+}
+.buyer_container .modify_record_page .goods_num span {
+  font-weight: bold;
+}
+.buyer_container .modify_record_page table.modify_list {
+  margin-top: 25px;
+  border: 1px solid #ddd;
+}
+.buyer_container .modify_record_page table.modify_list th {
+  background: #ddd;
+  text-align: center;
+}
+.buyer_container .modify_record_page table.modify_list td {
+  text-align: center;
+  vertical-align: middle;
+}
+.buyer_container .goods_sell {
+  padding-bottom: 20px;
+}
 .buyer_container .goods_sell .page-title {
   border-bottom: 1px solid #ddd;
   padding-bottom: 15px;
@@ -1258,74 +1917,203 @@ ol {
   display: inline-block;
   margin-right: 5px;
 }
+.buyer_container .goods_sell .table-scrollable {
+  border: 1px solid #ddd;
+}
+.buyer_container .goods_sell .table-scrollable .table {
+  margin: 0;
+}
 .buyer_container .goods_sell .table-scrollable th {
   background: #ddd;
+  text-align: center;
 }
 .buyer_container .goods_sell .table-scrollable td {
   vertical-align: middle;
+  text-align: center;
 }
-.buyer_container .appraisal_page .appra_box .appra_nav li {
-  display: inline-block;
+.buyer_container .goods_sell .table-scrollable td a.thumbnail {
+  display: block;
+  width: 60px;
+  height: 60px;
+  margin-bottom: 0px;
+}
+.buyer_container .appraisal_page .rowfirst {
+  margin-bottom: 50px;
+}
+.buyer_container .appraisal_page .rowfirst .personal_info {
+  width: 180px;
+  border: 1px solid #ddd;
+}
+.buyer_container .appraisal_page .rowfirst .personal_info dl {
+  margin-bottom: 0px;
+}
+.buyer_container .appraisal_page .rowfirst .personal_info dt {
+  background: #f2f2f2;
   height: 30px;
+  display: block;
   line-height: 30px;
+  padding: 0 10px;
+}
+.buyer_container .appraisal_page .rowfirst .personal_info dd {
+  padding: 0 10px;
+  height: 40px;
+  line-height: 40px;
+  color: #666;
+}
+.buyer_container .appraisal_page .rowfirst .personal_info dd label {
+  font-weight: normal;
+}
+.buyer_container .appraisal_page .rowfirst .rating {
+  width: 748px;
+  border: 1px solid #ddd;
+}
+.buyer_container .appraisal_page .rowfirst .rating dl {
+  margin-bottom: 0px;
+}
+.buyer_container .appraisal_page .rowfirst .rating dt {
+  background: #f2f2f2;
+  height: 30px;
+  display: block;
+  line-height: 30px;
+  padding: 0 10px;
+}
+.buyer_container .appraisal_page .rowfirst .rating dd {
+  padding: 0 10px;
+  height: 40px;
+  line-height: 40px;
+}
+.buyer_container .appraisal_page .rowfirst .rating dd label {
+  display: inline-block;
+  width: 135px;
+  font-weight: normal;
+  color: #666;
+}
+.buyer_container .appraisal_page .rowfirst .rating dd span.star_group i {
+  display: inline-block;
+  margin: 0 23px;
+  font-size: 18px;
+  color: #ffc73f;
+}
+.buyer_container .appraisal_page .rowfirst .rating .rating_foot {
+  padding: 0 10px;
+  background: #f2f2f2;
+  height: 40px;
+}
+.buyer_container .appraisal_page .rowfirst .rating .rating_foot label {
+  display: inline-block;
+  width: 135px;
+  float: left;
+  font-weight: normal;
+  color: #666;
+  margin-top: 10px;
+  margin-right: 2px;
+}
+.buyer_container .appraisal_page .rowfirst .rating .rating_foot span {
+  display: inline-block;
+  width: 63px;
+  text-align: center;
+  margin-top: 3px;
+}
+.buyer_container .appraisal_page .rowfirst .rating .rating_foot span small {
+  display: block;
+  font-size: 12px;
+  text-align: center;
+}
+.buyer_container .appraisal_page .appra_box .appra_navbox {
+  border-bottom: 1px solid #ddd;
+}
+.buyer_container .appraisal_page .appra_box .appra_navbox .appra_nav {
+  width: 400px;
+  float: left;
+}
+.buyer_container .appraisal_page .appra_box .appra_navbox .appra_nav li {
+  display: inline-block;
+  height: 40px;
+  line-height: 40px;
   margin-right: 10px;
   padding: 0 10px;
   font-size: 14px;
   cursor: pointer;
 }
-.buyer_container .appraisal_page .appra_box .appra_nav li.active {
-  border-bottom: 2px solid #e93428;
+.buyer_container .appraisal_page .appra_box .appra_navbox .appra_nav li.active {
+  border-bottom: 2px solid #a40001;
 }
-.buyer_container .appraisal_page .appra_box .appra_items {
-  margin: 20px auto;
+.buyer_container .appraisal_page .appra_box .appra_navbox .nav_right {
+  width: 245px;
+  float: right;
+  text-align: right;
 }
-.buyer_container .appraisal_page .appra_box .appra_items .appra_item {
-  border-bottom: 1px solid #ddd;
+.buyer_container .appraisal_page .appra_box .appra_navbox .nav_right span {
+  display: inline-block;
+  margin: 10px 15px 0 15px;
 }
-.buyer_container .appraisal_page .appra_box .appra_items table {
-  width: 100%;
-  border-collapse: collapse;
-}
-.buyer_container .appraisal_page .appra_box .appra_items table th {
-  background: #f5f5f5;
-  height: 40px;
-  padding: 0 15px;
-}
-.buyer_container .appraisal_page .appra_box .appra_items table th select {
-  height: 24px;
-  line-height: 24px;
-  width: 100px;
-}
-.buyer_container .appraisal_page .appra_box .appra_items table td {
-  padding: 10px 15px;
-}
-.buyer_container .appraisal_page .appra_box .appra_items table td span.appra_status {
+.buyer_container .appraisal_page .appra_box .appra_navbox .nav_right span .appra_status {
   display: inline-block;
   width: 20px;
   height: 20px;
   overflow: hidden;
+  margin-right: 5px;
 }
-.buyer_container .appraisal_page .appra_box .appra_items table td span.good {
+.buyer_container .appraisal_page .appra_box .appra_navbox .nav_right span .good {
   background: url(images/apprabg.png) no-repeat left bottom;
 }
-.buyer_container .appraisal_page .appra_box .appra_items table td span.medium {
+.buyer_container .appraisal_page .appra_box .appra_navbox .nav_right span .medium {
   background: url(images/apprabg.png) no-repeat left center;
 }
-.buyer_container .appraisal_page .appra_box .appra_items table td span.poor {
+.buyer_container .appraisal_page .appra_box .appra_navbox .nav_right span .poor {
   background: url(images/apprabg.png) no-repeat left top;
 }
-.buyer_container .appraisal_page .appra_box .appra_items .replyShow {
-  padding: 10px 0;
+.buyer_container .appraisal_page .appra_box .appra_itemcon {
+  margin-top: 10px;
 }
-.buyer_container .appraisal_page .appra_box .appra_items .replyShow form {
+.buyer_container .appraisal_page .appra_box .appra_itemcon .appra_items table {
   width: 100%;
 }
-.buyer_container .appraisal_page .appra_box .appra_items .replyShow textarea {
-  max-width: 100%;
+.buyer_container .appraisal_page .appra_box .appra_itemcon .appra_items table th {
+  background: #f2f2f2;
+  height: 40px;
 }
-.buyer_container .appraisal_page .appra_box .appra_items .replyShow .btn {
-  margin: 20px 0;
+.buyer_container .appraisal_page .appra_box .appra_itemcon .appra_items table td {
+  padding: 10px 15px;
+}
+.buyer_container .appraisal_page .appra_box .appra_itemcon .appra_items table td .appra_status {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  overflow: hidden;
+  float: left;
+}
+.buyer_container .appraisal_page .appra_box .appra_itemcon .appra_items table td .good {
+  background: url(images/apprabg.png) no-repeat left bottom;
+}
+.buyer_container .appraisal_page .appra_box .appra_itemcon .appra_items table td .medium {
+  background: url(images/apprabg.png) no-repeat left center;
+}
+.buyer_container .appraisal_page .appra_box .appra_itemcon .appra_items table td .poor {
+  background: url(images/apprabg.png) no-repeat left top;
+}
+.buyer_container .appraisal_page .appra_box .appra_itemcon .appra_items table td ul.plcon {
+  width: 320px;
   float: right;
+}
+.buyer_container .appraisal_page .appra_box .appra_itemcon .appra_items table td ul.plcon li {
+  margin: 5px 0;
+}
+.buyer_container .appraisal_page .appra_box .appra_itemcon .appra_items table td ul.plcon li p {
+  margin-bottom: 5px;
+}
+.buyer_container .appraisal_page .appra_box .appra_itemcon .appra_items table td ul.plcon li p span {
+  color: #999;
+  margin-right: 5px;
+}
+.buyer_container .appraisal_page .appra_box .appra_itemcon .appra_items table td ul.plcon li span.pl_time {
+  color: #999;
+}
+.buyer_container .appraisal_page .reply_form textarea {
+  width: 100%;
+  max-width: 100%;
+  min-height: 100px;
+  border: 1px solid #ddd;
 }
 .buyer_container .aftersales_page {
   width: 100%;
@@ -1353,7 +2141,7 @@ ol {
   cursor: pointer;
 }
 .buyer_container .aftersales_page .aftersales_nav li.active {
-  border-bottom: 2px solid #e93428;
+  border-bottom: 2px solid #a40001;
 }
 .buyer_container .aftersales_page .aftersales_list {
   margin: 20px auto;
@@ -1413,7 +2201,7 @@ ol {
   z-index: 10;
   top: 0;
   right: 0;
-  background: #e93428;
+  background: #a40001;
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
   -ms-border-radius: 5px;
@@ -1501,7 +2289,7 @@ ol {
   line-height: 48px;
   background: url(images/store_bar.jpg) no-repeat center top;
   text-align: center;
-  color: #e93428;
+  color: #a40001;
   margin: 0 auto;
 }
 .store_probox .store_pro_floor ul li {
@@ -1546,7 +2334,7 @@ ol {
   color: #aaa;
 }
 .store_probox .store_pro_floor ul li span small {
-  color: #e93428;
+  color: #a40001;
   display: inline-block;
   margin-right: 10px;
 }
@@ -1561,4 +2349,292 @@ ol {
 }
 .setting_form {
   margin: 20px auto;
+}
+.clerk_setting_page .table {
+  border: 1px solid #ddd;
+}
+.clerk_setting_page .table th {
+  background: #ddd;
+  text-align: center;
+}
+.clerk_setting_page .table td {
+  vertical-align: middle;
+  text-align: center;
+}
+.clerk_setting_page .table td .img-thumbnail {
+  width: 64px;
+  height: 64px;
+}
+.seller_clearing_page .clearing_tab ul.clearing_menu {
+  border-bottom: 1px solid #ddd;
+  height: 40px;
+  margin-bottom: 40px;
+}
+.seller_clearing_page .clearing_tab ul.clearing_menu li {
+  padding: 0 30px;
+  height: 40px;
+  line-height: 40px;
+  cursor: pointer;
+  float: left;
+  font-size: 14px;
+}
+.seller_clearing_page .clearing_tab ul.clearing_menu li.active {
+  background: #a40001;
+  color: #fff;
+}
+.seller_clearing_page .clearing_tab .clearing_con table {
+  border: 1px solid #ddd;
+}
+.seller_clearing_page .clearing_tab .clearing_con table th {
+  background: #ddd;
+  text-align: center;
+}
+.seller_clearing_page .clearing_tab .clearing_con table td {
+  text-align: center;
+  vertical-align: middle;
+}
+.buyStore_page .buyStore_tab .tabMenu {
+  heihgt: 40px;
+  border-bottom: 1px solid #ddd;
+}
+.buyStore_page .buyStore_tab .tabMenu ul {
+  float: left;
+}
+.buyStore_page .buyStore_tab .tabMenu ul li {
+  float: left;
+  height: 40px;
+  line-height: 40px;
+  padding: 0px 30px;
+  font-size: 14px;
+  cursor: pointer;
+}
+.buyStore_page .buyStore_tab .tabMenu ul li.active {
+  background: #a40001;
+  color: #fff;
+}
+.buyStore_page .buyStore_tab .tabMenu ul li.last {
+  height: auto;
+  line-height: auto;
+}
+.buyStore_page .buyStore_tab .tabMenu form.store_search {
+  width: 260px;
+  float: right;
+}
+.buyStore_page .buyStore_tab .tabCon {
+  padding: 15px 0;
+}
+.buyStore_page .buyStore_tab .tabCon table {
+  border: 1px solid #ddd;
+}
+.buyStore_page .buyStore_tab .tabCon table tr {
+  border-bottom: 1px solid #ddd;
+}
+.buyStore_page .buyStore_tab .tabCon table tr td {
+  height: 110px;
+  vertical-align: middle;
+}
+.buyStore_page .buyStore_tab .tabCon table .shop_info {
+  margin-left: 10px;
+}
+.buyStore_page .buyStore_tab .tabCon table .shop_info .shop_logoimg {
+  float: left;
+  display: inline-block;
+  width: 80px;
+  height: 80px;
+  overflow: hidden;
+}
+.buyStore_page .buyStore_tab .tabCon table .shop_info .shop_logoimg img {
+  width: 80px;
+  height: 80px;
+}
+.buyStore_page .buyStore_tab .tabCon table .shop_info .shop_about {
+  width: 228px;
+  float: left;
+  margin-left: 10px;
+}
+.buyStore_page .buyStore_tab .tabCon table .shop_info .shop_about .shop_name {
+  display: block;
+  font-size: 14px;
+  color: #000;
+  margin-bottom: 10px;
+}
+.buyStore_page .buyStore_tab .tabCon table .store_ctrl {
+  text-align: right;
+}
+.buyStore_page .buyStore_tab .tabCon table .store_ctrl button {
+  margin: 5px auto;
+  width: 80px;
+  font-size: 12px;
+}
+.comment-container .pl_form .form-group .star_group {
+  display: inline-block;
+  margin-top: 5px;
+}
+.comment-container .pl_form .form-group .star_group i {
+  font-size: 22px;
+  color: #ddd;
+  cursor: pointer;
+}
+.comment-container .pl_form .form-group .star_group i.bright {
+  color: #ffc73f;
+}
+.comment-container .pl_form .form-group .star_group i.gray {
+  color: #ddd;
+}
+.comment-container .pl_form .form-group .pl_num {
+  margin-left: 10px;
+  color: #666;
+}
+.comment-container .pl_form .form-group .pl_num small {
+  padding-left: 3px;
+  color: #666;
+}
+.comment-container .pl_form .form-group .comment-image {
+  margin-bottom: 5px;
+}
+.comment-container .pl_form .goods_item .img-thumbnail {
+  width: 80px;
+  height: 80px;
+  float: left;
+}
+.comment-container .pl_form .goods_item .goods_info {
+  float: left;
+  margin-left: 15px;
+  width: 180px;
+}
+.comment-container .pl_form .goods_item .goods_info .text-muted {
+  display: inline-block;
+  max-height: 30px;
+  line-height: 15px;
+  overflow-y: hidden;
+  margin-top: 5px;
+}
+.comment-container .pl_form .goods_item .goods_info .g_price {
+  display: block;
+  margin: 5px 0;
+}
+.receiver_addrpage .list-group .list-group-item {
+  padding: 0;
+}
+.receiver_addrpage .list-group .list-group-item:hover {
+  background: #f2f2f2;
+}
+.receiver_addrpage .list-group .list-group-item dl {
+  margin: 15px 0;
+}
+.receiver_addrpage .list-group .list-group-item dl dt {
+  font-size: 14px;
+  font-weight: normal;
+  color: #000;
+}
+.receiver_addrpage .list-group .list-group-item dl dd {
+  color: #666;
+}
+.receiver_addrpage .list-group .list-group-item dl dd .label-danger {
+  padding: 2px 10px;
+  font-size: 12px;
+}
+.receiver_addrpage .list-group .list-group-item .addr_ctr {
+  display: table-cell;
+  text-align: center;
+  vertical-align: middle;
+  padding: 0;
+  margin: 15px 0;
+}
+.receiver_addrpage .list-group .list-group-item .addr_ctr btn {
+  margin: 3px auto;
+}
+.receiver_addrpage .receiver_form .region {
+  width: 100%;
+}
+.receiver_addrpage .receiver_form .region input {
+  width: 33.33333%;
+}
+.receiver_addrpage .receiver_form .region select {
+  width: 33.33333%;
+}
+.receiver_addrpage .receiver_form button.btn-primary {
+  width: 120px;
+  padding: 0;
+  height: 34px;
+  line-height: 34px;
+  background: #a40001;
+  color: #fff;
+  border: none;
+}
+.receiver_addrpage .list-group ul.list-inline {
+  margin: 10px 0;
+}
+.receiver_addrpage .form-group .time_period input {
+  width: 200px;
+  display: inline-block;
+}
+.newrequest_page .order-process-bar .well {
+  box-shadow: none;
+}
+.newrequest_page .order-process-bar div.active .well {
+  background: #ac3727;
+  border: none;
+}
+.newrequest_page .newrequest_main {
+  border: 1px solid #ddd;
+  margin-bottom: 25px;
+  margin-top: 25px;
+}
+.newrequest_page .newrequest_main .newrequest_left {
+  padding: 0;
+  border-right: 1px solid #ddd;
+}
+.newrequest_page .newrequest_main .newrequest_left form {
+  padding: 10px;
+}
+.newrequest_page .newrequest_main .order_info {
+  padding: 0;
+}
+.newrequest_page .newrequest_main .order_info h5 {
+  height: 40px;
+  line-height: 40px;
+  background: #f2f2f2;
+  padding: 0 10px;
+  margin: 0;
+}
+.newrequest_page .newrequest_main .order_info dl {
+  padding: 0 10px;
+  margin: 15px 0;
+}
+.newrequest_page .newrequest_main .order_info dl dt {
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+  font-weight: normal;
+}
+.newrequest_page .newrequest_main .order_info dl dt .img-thumbnail {
+  width: 64px;
+  height: 64px;
+  vertical-align: middle;
+  margin-right: 5px;
+}
+.newrequest_page .newrequest_main .order_info dl dd {
+  height: 30px;
+  line-height: 30px;
+}
+.services_page .order-process-bar .well {
+  box-shadow: none;
+}
+.services_page .order-process-bar div.active .well {
+  background: #ac3727;
+  border: none;
+}
+.request_list_page table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid #ddd;
+}
+.request_list_page table th {
+  background: #f2f2f2;
+  text-align: center;
+}
+.request_list_page table td {
+  background: #fff;
+  text-align: center;
 }

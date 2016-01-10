@@ -1,398 +1,52 @@
-<{script app=desktop src="../com/global/plugins/jquery-tags-input/jquery.tagsinput.min.js" }>
 <{css app=desktop href="../com/global/plugins/jquery-tags-input/jquery.tagsinput.css" }>
-<{css app=desktop href="../com/global/plugins/bootstrap-summernote/summernote.css" }>
-<{script app=desktop src="../com/global/plugins/bootstrap-summernote/summernote.min.js" }>
+<!-- <link rel="stylesheet" type="text/css" href="<{$base_url}>/themes/pc/default/statics/css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css" href="<{$base_url}>/themes/pc/default/statics/js/summernote/summernote.css">
+ -->
+<script type="text/javascript" src="<{$base_url}>/public/javascripts/summernote/summernote.min.js"></script>
+<script type="text/javascript" src="<{$base_url}>/public/javascripts/summernote/lang/summernote-zh-CN.js"></script>
+<{script app=desktop src="../com/global/plugins/jquery-tags-input/jquery.tagsinput.min.js" }>
 <{script app=desktop src="../com/global/scripts/metronic.js" }>
+<script type="text/javascript" src="<{$base_url}>/public/javascripts/summernote/summernot_set.js"></script>
+
+<{script app=desktop src="../com/global/scripts/metronic.js" }>
+
+<link rel="stylesheet" type="text/css" href="<{$base_url}>/public/stylesheets/font-awesome.min.css">
+<link rel="stylesheet" type="text/css" href="<{$base_url}>/public/stylesheets/summernote.css">
+
 
 <div class="page-seller">
     <div class="page-header">
-        <h1><{if $goods}>编辑商品<{else}>添加商品<{/if}><small>Add goods</small></h1>
+        <h1><{if $goods}>编辑商品<{else}>添加商品<{/if}></h1>
     </div>
     <form class="form-horizontal addgoods_form" action="<{link app=seller ctl=site_goods act=save}>" method="post" id="goods_edit_form">
         <div class="goods_tabbox">
-            <!-- Nav tabs -->
-            <ul class="nav nav-tabs" role="tablist">
-                <li role="presentation" class="active"><a href="#baseinfo" aria-controls="baseinfo" role="tab" data-toggle="tab">基本信息</a></li>
-                <li role="presentation"><a href="#tuwen" aria-controls="tuwen" role="tab" data-toggle="tab">图文介绍</a></li>
-                <li role="presentation"><a href="#param" aria-controls="param" role="tab" data-toggle="tab">属性参数</a></li>
-                <li role="presentation"><a href="#moban" aria-controls="moban" role="tab" data-toggle="tab">展示模板</a></li>
-                <li role="presentation"><a href="#seo" aria-controls="seo" role="tab" data-toggle="tab">SEO相关</a></li>
-            </ul>
 
-            <!-- Tab panes -->
-            <div class="tab-content">
-                <div role="tabpanel" class="tab-pane active" id="baseinfo">
-
-                    <input name="goods[goods_id]" value="<{$goods.goods_id}>" type="hidden" />
-                    <div class="form-group">
-                        <label class="col-xs-2 control-label"><span>商品编号</span></label>
-                        <div class="col-xs-5">
-                            <input type="text" value="<{$goods.gid}>" name="goods[gid]" placeholder="请输入商品编号" class="form-control">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-xs-2 control-label"><span>商品名称</span></label>
-                        <div class="col-xs-5">
-                            <input type="text" name="goods[name]" value="<{$goods.name}>" placeholder="请输入商品名称" class="form-control">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-xs-2 control-label"><span>文字描述</span></label>
-                        <div class="col-xs-5">
-                            <input type="text" value="<{$goods.brief}>" name="goods[brief]" placeholder="请输文字描述" class="form-control">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-xs-2 control-label"><span>关键词</span></label>
-                        <div class="col-xs-5">
-                            <div class="goods_keywords_box">
-                                <input type="text" id="goods_keywords_input" name="keywords" value=""  style="display: none;">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-xs-2 control-label"><span>产品相册</span></label>
-                        <div class="col-xs-5">
-                            <div class="filebox">
-                                <input type="hidden" value="<{$goods.image_default_id}>" name="goods[image_default_id]">
-                                <input type="file" data-url="<{link app=image ctl=site_upload act=index}>" accept="image/*" class="file_input">
-                                <div class="showImg">
-                                    <img src="<{$base_url}>/themes/pc/default/statics/images/file_add.jpg">
-                                </div>
-                                <span class="file_ctr">
-                                    <a href="#">查看</a>
-                                    <a href="#">删除</a>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="col-xs-2 control-label"><span>分类</span></label>
-                        <div class="col-xs-5">
-                            <select class="form-control" name="goods[category][cat_id]">
-                                <option value="1">无</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-xs-2 control-label"><span>扩展分类</span></label>
-                        <div class="col-xs-5">
-                            <select class="form-control" name="goods[extended_cat][]">
-                                <option>无</option>
-                                <option>鸡肉类</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-xs-2 control-label"><span>是否上架销售</span></label>
-                        <div class="col-xs-5">
-                            <span style="margin-right:20px;"><input type="radio" name="goods[marketable]" value="true">是</span>
-                            <span style="margin-right:20px;"><input type="radio" name="goods[marketable]" value="false">否</span>
-                            <span class="text-danger">商品下架操作同时影响货品</span>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-xs-2 control-label"><span>是否忽略库存</span></label>
-                        <div class="col-xs-5">
-                            <span style="margin-right:20px;"><input type="radio" name="goods[nostore_sell]" value="1">是</span>
-                            <span style="margin-right:20px;"><input type="radio" name="goods[nostore_sell]" value="0">否</span>
-                            <span class="text-danger">无库存也可以下单</span>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-xs-2 control-label"><span>商品信息</span></label>
-                        <div class="col-xs-5">
-                            <div class="goods_infobox" id="no_spec">
-                                <dl>
-                                <dd><span class="text-danger">*</span>货号</dd>
-                                    <!--商品编号 SKC-->
-                                    <dt>
-                                        <input type="text" id="goods_gid" data-map='bn' value="<{$product.bn}>" name="goods[product][new_0][bn]" class="form-control input_bianhao">
-                                    </dt>
-                                </dl>
-                                <input type="hidden" name="goods[product][new_0][marketable]" value="true">
-                                <dl>
-                                    <dd>条码</dd>
-                                    <!-- SKU-->
-                                    <dt>
-                                        <input class="form-control form-control" value="<{$product.barcode}>" name="goods[product][new_0][barcode]" data-map='barcode' required="1" type="text">
-                                    </dt>
-                                </dl>
-                                <p class="clearfix"></p>
-                                <div class="row" >
-                                    <div class="col-xs-4">
-                                        销售价
-                                        <input type="text" class=" form-control input_xsj" data-map='price' value="<{$product.mktprice}>" name="goods[product][new_0][mktprice]">
-                                    </div>
-                                    <div class="col-xs-4">
-                                        重量
-                                        <input type="text" class="form-control input_weight" data-map='weight' type="text" value="<{$product.weight}>" name="goods[product][new_0][weight]">
-                                    </div>
-                                    <div class="col-xs-4">
-                                        单位
-                                        <input type="text" class="form-control input_danwei" data-map='unit'  value="<{$product.unit|default:'件'}>" name="goods[product][new_0][unit]">
-                                    </div>
-                                </div>
-
-                            </div>
-
-                        </div>
-                    </div>
-
-
-                    <div class="row guige_add_box" id="spec_edit_pane">
-                        <div class="checker guige_yanse">
-                            <span class="checked"><input type="checkbox"  class="checkbox_gg" ></span>有多种规格 如：多个尺码。
-                        </div>
-                        <div class="spec-edit">
-                            <table class="table spec_add_table">
-                                <thead>
-                                    <tr>
-                                        <th width="25%">规格名称</th>
-                                        <th>规格项 <i class="fa fa-lightbulb-o"></i><small>每输入一个规格项后，回车确认</small></th>
-                                        <th width="10%"></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>
-                                            <div class="input-group">
-                                                <input class="form-control spec-t"  name="goods[spec_desc][t][]" value="" type="text" placeholder="如:颜色">
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <input class='form-control spec-v' name="goods[spec_desc][v][]" type="text" value="" id="color_input">
-                                        </td>
-                                        <td>
-                                            <button type=button class="btn btn-sm default hide"><i class="glyphicon glyphicon-trash"></i></button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="input-group">
-                                                <input class="form-control spec-t" name="goods[spec_desc][t][]" type="text" value="" placeholder="如:尺码">
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <input class='form-control spec-v' width="100px" name="goods[spec_desc][v][]" type="text" value="">
-                                        </td>
-                                        <td>
-                                            <button type=button class="btn btn-sm default spec-del"><i class="glyphicon glyphicon-trash"></i></button>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                                <tfoot>
-                                    <tr>
-                                        <td colspan=3>
-                                            <button type=button class="btn btn-sm blue-madison new-spec-item"><i class="fa fa-plus"></i> 新增其他名称</button>
-                                            <button type=button class="btn btn-sm green-meadow create-product-items"><i class="fa fa-cogs"></i> 根据以上信息生成多规格货品</button>
-                                        </td>
-                                    </tr>
-                                </tfoot>
-                            </table>
-                        </div>
-                        <div class="col-md-12 product-items">
-                            <table class="table table-striped  table-hover">
-                                <thead>
-                                    <tr>
-                                        <th width="150px">规格</th>
-                                        <th>货号</th>
-                                        <th>条码</th>
-                                        <th>销售价</th>
-                                        <th>重量</th>
-                                        <th>单位</th>
-                                        <th width="50px;">上架</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <!-- 结束 -->
-                <textarea class="spec-item-tpl hide">
-                    <tr>
-                        <td>
-                            <div class="input-group">
-                                <input class="form-control spec-t" name="goods[spec_desc][t][]" type="text" value="" placeholder="规格名称">
-                            </div>
-                        </td>
-                        <td>
-                            <input class='form-control spec-v' name="goods[spec_desc][v][]" type="text" value="">
-                        </td>
-                        <td>
-                            <button type=button class="btn btn-sm spec-del default"><i class="glyphicon glyphicon-trash"></i></button>
-                        </td>
-                    </tr>
-                </textarea>
-                <textarea class="product-item-tpl hide">
-                    <tr>
-                        <td>
-                            <input type="text" name="goods[product][{key}][spec_info]" class="form-control input-sm spec-info" value="{spec_info}" readonly=true>
-                            <input type="hidden" name="goods[product][{key}][spec_desc]" class="spec-desc" value="{spec_desc}">
-                        </td>
-                        <td>
-                            <input type="text" required="true" data-map="bn" class="form-control input-sm" name="goods[product][{key}][bn]" value="">
-                        </td>
-                        <td>
-                            <input type="text" data-map="barcode" class="form-control input-sm" name="goods[product][{key}][barcode]" value="">
-                        </td>
-                        <td>
-                            <input type="text" data-map="price" class="form-control input-sm" name="goods[product][{key}][price]" value="">
-                        </td>
-                        <td>
-                            <input type="text" data-map="mktprice" class="form-control input-sm" name="goods[product][{key}][mktprice]" value="">
-                        </td>
-                        <td>
-                            <input type="text" data-map="weight" name="goods[product][{key}][weight]" class="form-control input-sm input-xsmall" value="" placeholder="克">
-                        </td>
-                        <td>
-                            <input type="text" data-map="unit" name="goods[product][{key}][unit]" class="form-control input-sm input-xsmall" value="">
-                        </td>
-                        <td>
-                            <input type="checkbox" name="goods[product][{key}][marketable]" value="true" checked>
-                        </td>
-                    </tr>
-                </textarea>
-                <textarea class="spec-item-tpl hide">
-                    <tr>
-                        <td>
-                            <div class="input-group">
-                                <input class="form-control spec-t" name="goods[spec_desc][t][]" type="text" value="" placeholder="规格名称">
-                            </div>
-                        </td>
-                        <td>
-                            <input class='form-control spec-v' name="goods[spec_desc][v][]" type="text" value="">
-                        </td>
-                        <td>
-                            <button type=button class="btn btn-sm spec-del default"><i class="glyphicon glyphicon-trash"></i></button>
-                        </td>
-                    </tr>
-                </textarea>
-                </div>
+            <!-- 商品基本信息 -->
+                <{include file="site/goods/detail/basic.html"}>
+                <!-- 属性参数 -->
+                <{include file="site/goods/detail/params.html"}>
+                <!-- 商品规格 -->
+                <{include file="site/goods/detail/spec.html"}>
+                <!-- 图文介绍 -->
+                <h4>图文介绍</h4>
                 <div role="tabpanel" class="tab-pane" id="tuwen">
                     <div class="editerbox">
-                    此处是编辑器
-                    <script charset="utf-8">
-                        $('#editor_e2407d').summernote({
-                            height: 600,
-                            lang:'zh-CN',
-                            toolbar: [
-                                        ['style',['style']],
-                                        ['color', ['color']],
-                                        ['height', ['height']],
-                                        ['style',['bold', 'italic', 'underline', 'clear']],
-                                        ['para', ['ul', 'ol', 'paragraph']],
-                                        ['insert',['link','picture','table']],
-                                        ['misc',['fullscreen','codeview']]
-                                ],
-                            onImageUpload: function(files, editor, editable) {
-                                    var data = new FormData();
-                                    var file = files[0];
-                                    data.append('file',file);
-                                    $.ajax({
-                                        data: data,
-                                        type: "POST",
-                                        url: "/index.php/console/index.php?app=image&ctl=admin_manage&act=wysiswyg_upload",
-                                        cache: false,
-                                        contentType: false,
-                                        processData: false,
-                                        success: function(re) {
-                                            try{
-                                                re = $.parseJSON(re);
-                                            }catch(e){
+                        <textarea id="summernote" name="goods[description]"></textarea>
+                        <{*input type=html name="goods[description]" remote=site*}>
 
-                                            }
-                                            if(re.url)
-                                            editor.insertImage(editable, re.url);
-                                        }
-                                    });
-                                },onChange:function(){
-                                    $('#editor_e2407d').html($('#editor_e2407d').code());
-                                }
-                            });
-
-                    </script>
-                    </div>
-
-                </div>
-                <div role="tabpanel" class="tab-pane" id="param">
-                    <div class="form-body">
-                        <div class="form-group">
-                            <label class="col-xs-2 control-label">
-                                <span>类型</span>
-                            </label>
-                            <div class="col-xs-5">
-                                <select name="goods[type][type_id]" class="form-control">
-                                   <option value='0'>普通商品类型</option>
-                                   <{foreach from=$gtype item=type}>
-                                   <option  value='<{$type.type_id}>' <{if $type.type_id==$goods_prototype.type_id}>selected<{/if}>><{$type.name}>
-                                   </option>
-                                   <{/foreach}>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-xs-2 control-label">
-                                <span>品牌</span>
-                            </label>
-                            <div class="col-xs-5">
-                                <{input class="form-control" type="select" name="goods[brand][brand_id]" nulloption="1" rows=$brandList valueColumn="brand_id" labelColumn="brand_name" value=$goods.brand.brand_id}>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-                <div role="tabpanel" class="tab-pane" id="moban">
-                    <div class="form-body">
-                        <div class="form-group">
-                            <label class="col-xs-2 control-label">
-                                <span>PC页面模板</span>
-                            </label>
-                            <div class="col-xs-5">
-                                <select class="form-control">
-                                    <option value="default.html">[默认] default.html</option>
-                                    <option value="item1.html">[默认商品详情页] item1.html</option>
-                                    <option value="item1.html">[特别的商品详情页] item1.html</option>
-                                    <option value="item2.html">[大促中的商品详情页] item2.html</option>
-                                </select>
-                            </div>
-                        </div>
                     </div>
                 </div>
-                <div role="tabpanel" class="tab-pane" id="seo">
-                    <div class="form-body">
-                        <div class="form-group">
-                            <label class="col-md-2 control-label">标题 <span class="badge badge-default">Title</span> </label>
-                            <div class="col-md-5">
-                                <input type="text" name='goods[seo_info][seo_title]' value='<{$seo_info.seo_title}>' class="form-control">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-md-2 control-label">关键词 <span class="badge badge-default">Keyword</span> </label>
-                            <div class="col-md-5">
-                                <input type="text" name='goods[seo_info][seo_keywords]' value='<{$seo_info.seo_keywords}>' class="form-control">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-md-2 control-label">简介 <span class="badge badge-default">Description</span> </label>
-                            <div class="col-md-5">
-                                <input type="text" name='goods[seo_info][seo_description]' value='<{$seo_info.seo_description}>' class="form-control">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                <{include file="site/goods/detail/content.html"}>
+
         </div>
-
         <div class="form_action">
-            <a href="/index.php/merchant-goodslist.html">返回商品列表</a>
+            <a class="save_goods" href="<{link app=seller ctl=site_goods act=index}>">返回商品列表</a>
             <a href='javascript:;' class="save_goods" data-redirect="<{link app=seller ctl=site_goods act=save}>&p[0]={goods_id}">保存</a>
-            <a href='javascript:;' class="save_goods" data-redirect="<{link app=seller ctl=site_goods act=save}>&p[0]={goods_id}">保存并添加商品</a>
         </div>
     </form>
 </div>
+
+
 
 
 
@@ -410,349 +64,357 @@ $(function() {
     /**
      * 切换
      */
-    $('#myTabs a').click(function (e) {
-      e.preventDefault()
-      $(this).tab('show')
+    $('#myTabs a').click(function(e) {
+        e.preventDefault()
+        $(this).tab('show')
     })
 })
 </script>
 <script charset="utf-8">
 ! function() {
 
-/**
- * 新增粘贴事件
- *
- *    $("input[type='text']").on("postpaste", function() {
- *        // code...
- *    }).pasteEvents();
- *
- *
- */
-$.fn.pasteEvents = function(delay) {
-    if (delay == undefined) delay = 20;
-    return $(this).each(function() {
-        var $el = $(this);
-        $el.on("paste", function() {
-            $el.trigger("prepaste");
-            setTimeout(function() {
-                $el.trigger("postpaste");
-            }, delay);
-        });
-    });
-};
-
-
-$('#spec_edit_pane .checker :checkbox').on('change', function() {
-    var checked = $(this).is(':checked');
-    $('#spec_edit_pane .spec-edit,#spec_edit_pane .product-items')[checked ? 'removeClass' : 'addClass']('hide');
-    $('#spec_edit_pane .spec-edit,#spec_edit_pane .product-items').find('input,:checkbox,:radio,textarea').attr('disabled', checked ? false : true);
-    $(this).parent('span')[checked ? 'addClass' : 'removeClass']('checked');
-});
-$('#spec_edit_pane .checker :checkbox').change();
-
-
-var substitute = function(str, obj) {
-    return str.replace(/\\?\{([^{}]+)\}/g, function(match, name) {
-        if (match.charAt(0) == '\\') return match.slice(1);
-        return (obj[name] != undefined) ? obj[name] : '';
-    });
-}
-
-var tagsinput_options = {
-    width: 'auto',
-    'defaultText': '新规格项',
-    onAddTag: function() {
-        product_items_change();
-    },
-    onRemoveTag: function() {
-        product_items_change();
-    }
-};
-$('#spec_edit_pane .spec-edit .spec-v').tagsInput(tagsinput_options);
-$('#spec_edit_pane .spec-edit .new-spec-item').on('click', function() {
-    $('#spec_edit_pane .spec-edit tbody').append($('.spec-item-tpl').val());
-    $('#spec_edit_pane .spec-edit tbody tr:last .spec-v').tagsInput(tagsinput_options);
-});
-$('#spec_edit_pane .spec-edit').on('click', '.spec-del', function(e) {
-    e.stopPropagation();
-    if (!confirm('确定删除？')) return;
-    $(this).closest('tr').remove();
-    product_items_change();
-});
-/**
- * 货号、条码 粘贴监听
- * @see desktop.js
- */
-var listen_postpaste = function(els) {
-
-    //只监听第一个
-    $(els).eq(0).on("postpaste", function(e) {
-        var val = $(this).val(),
-            val_arr = val.split(/\s/);;
-        if (val_arr.length && val_arr.length > 1) {
-            $.each(val_arr, function(i, v) {
-                $(els).eq(i).val(v);
+    /**
+     * 新增粘贴事件
+     *
+     *    $("input[type='text']").on("postpaste", function() {
+     *        // code...
+     *    }).pasteEvents();
+     *
+     *
+     */
+    $.fn.pasteEvents = function(delay) {
+        if (delay == undefined) delay = 20;
+        return $(this).each(function() {
+            var $el = $(this);
+            $el.on("paste", function() {
+                $el.trigger("prepaste");
+                setTimeout(function() {
+                    $el.trigger("postpaste");
+                }, delay);
             });
-        }
-    }).pasteEvents();
-
-    //便捷性提示
-    $(els).eq(0).wrap('<div class="input-icon right"></div>');
-    $('<i class="fa fa-paste text-success tooltips" data-container="body" data-toggle="tooltip" data-placement="top" title="粘贴含有`空格`或`换行`的数据,将自动被分隔填充。例：你可以从Excel批量复制粘贴数据到此"></i>').tooltip().insertBefore($(els).eq(0));
-
-}
-
-var create_product_items_func = function() {
-
-    var spec_v = $('#spec_edit_pane .spec-v');
-    /*计算规格交集*/
-    var spec_v_item = new Array();
-    $.each(spec_v, function(idx, item) {
-        if ($.trim($(item).val()) == '') return;
-        spec_v_item[idx] = $(item).val().split(',');
-    });
-
-    $('#spec_edit_pane .product-items table')[spec_v_item.length ? 'removeClass' : 'addClass']('hide');
-    if (!spec_v_item.length) {
-        return Messagebox.warning('您还没有填写任何规格值。', '操作提醒');
-    }
-
-    var root_arr = spec_v_item.shift();
-    var loop_arr;
-    var lnk_arr = function(r, a) {
-        var _return = [];
-        $.each(a, function(i, n) {
-            _return.push(r + ':::' + n);
         });
-        return _return;
-    }
+    };
 
-    while (loop_arr = spec_v_item.shift()) {
-        var cur_len = root_arr.length;
-        console.log(cur_len);
-        console.log(root_arr);
-        for (var i = 0; i < cur_len; i++) {
-            var a = root_arr.shift();
-            console.log(a);
-            root_arr = root_arr.concat(lnk_arr(a, loop_arr));
-            console.log(root_arr);
 
-        }
-        root_arr.slice(cur_len);
-    }
-    /*计算规格交集*/
-    var pit_content = "";
-    $.each(root_arr, function(idx, n) {
-        pit_content += substitute($('.product-item-tpl').val(), {
-            key: 'new_' + idx,
-            spec_info: n.replace(/:::/g, '/'),
-            spec_desc: n
-        });
+    $('#spec_edit_pane .checker :checkbox').on('change', function() {
+        var checked = $(this).is(':checked');
+        $('#spec_edit_pane .spec-edit,#spec_edit_pane .product-items')[checked ? 'removeClass' : 'addClass']('hide');
+        $('#spec_edit_pane .spec-edit,#spec_edit_pane .product-items').find('input,:checkbox,:radio,textarea').attr('disabled', checked ? false : true);
+        $(this).parent('span')[checked ? 'addClass' : 'removeClass']('checked');
     });
-    $('.product-items tbody').empty().append(pit_content);
-
-    /*支持货号条码换行字符粘贴*/
-    listen_postpaste($('.product-items tbody input[name$="[bn]"]'));
-    listen_postpaste($('.product-items tbody input[name$="[barcode]"]'));
-
-    var item_length = $('.product-items tbody').find('> tr').length;
-    $(this).next('.text-success').remove();
-    if (item_length) {
-        $(this).after('<span class="text-success">将会新建<span class="badge badge-success">' + item_length + '</span>个货品</span>');
+    var type = "<{$goods.spec_desc}>";
+    if (!type && !type.length > 0) {
+        $('#spec_edit_pane .checker :checkbox').change();
     }
 
-    $.each($('.product-items input[data-map]'), function(i, n) {
-        var map = $(n).attr('data-map'),
-            val = $('#no_spec input[data-map="' + map + '"]').val();
-        if (map == 'bn' || map == 'barcode') {
-            if (!val || val == '') {
-                val = new String(new Date().getTime()).slice(-5);
+    var substitute = function(str, obj) {
+        return str.replace(/\\?\{([^{}]+)\}/g, function(match, name) {
+            if (match.charAt(0) == '\\') return match.slice(1);
+            return (obj[name] != undefined) ? obj[name] : '';
+        });
+    }
+
+    var tagsinput_options = {
+        width: 'auto',
+        'defaultText': '新规格项',
+        onAddTag: function() {
+            product_items_change();
+        },
+        onRemoveTag: function() {
+            product_items_change();
+        }
+    };
+    $('#spec_edit_pane .spec-edit .spec-v').tagsInput(tagsinput_options);
+    $('#spec_edit_pane .spec-edit .new-spec-item').on('click', function() {
+        $('#spec_edit_pane .spec-edit tbody').append($('.spec-item-tpl').val());
+        $('#spec_edit_pane .spec-edit tbody tr:last .spec-v').tagsInput(tagsinput_options);
+    });
+    $('#spec_edit_pane .spec-edit').on('click', '.spec-del', function(e) {
+        e.stopPropagation();
+        if (!confirm('确定删除？')) return;
+        $(this).closest('tr').remove();
+        product_items_change();
+    });
+    /**
+     * 货号、条码 粘贴监听
+     * @see desktop.js
+     */
+    var listen_postpaste = function(els) {
+
+        //只监听第一个
+        $(els).eq(0).on("postpaste", function(e) {
+            var val = $(this).val(),
+                val_arr = val.split(/\s/);;
+            if (val_arr.length && val_arr.length > 1) {
+                $.each(val_arr, function(i, v) {
+                    $(els).eq(i).val(v);
+                });
             }
-            val += map == 'bn' ? '-' + i : i;
+        }).pasteEvents();
+
+        //便捷性提示
+        $(els).eq(0).wrap('<div class="input-icon right"></div>');
+        $('<i class="fa fa-paste text-success tooltips" data-container="body" data-toggle="tooltip" data-placement="top" title="粘贴含有`空格`或`换行`的数据,将自动被分隔填充。例：你可以从Excel批量复制粘贴数据到此"></i>').tooltip().insertBefore($(els).eq(0));
+
+    }
+
+    var create_product_items_func = function() {
+
+        var spec_v = $('#spec_edit_pane .spec-v');
+        /*计算规格交集*/
+        var spec_v_item = new Array();
+        $.each(spec_v, function(idx, item) {
+            if ($.trim($(item).val()) == '') return;
+            spec_v_item[idx] = $(item).val().split(',');
+        });
+
+        $('#spec_edit_pane .product-items table')[spec_v_item.length ? 'removeClass' : 'addClass']('hide');
+        if (!spec_v_item.length) {
+            return Messagebox.warning('您还没有填写任何规格值。', '操作提醒');
         }
-        $(n).val(val);
+
+        var root_arr = spec_v_item.shift();
+        var loop_arr;
+        var lnk_arr = function(r, a) {
+            var _return = [];
+            $.each(a, function(i, n) {
+                _return.push(r + ':::' + n);
+            });
+            return _return;
+        }
+
+        while (loop_arr = spec_v_item.shift()) {
+            var cur_len = root_arr.length;
+            console.log(cur_len);
+            console.log(root_arr);
+            for (var i = 0; i < cur_len; i++) {
+                var a = root_arr.shift();
+                console.log(a);
+                root_arr = root_arr.concat(lnk_arr(a, loop_arr));
+                console.log(root_arr);
+
+            }
+            root_arr.slice(cur_len);
+        }
+        /*计算规格交集*/
+        var pit_content = "";
+        $.each(root_arr, function(idx, n) {
+            pit_content += substitute($('.product-item-tpl').val(), {
+                key: 'new_' + idx,
+                spec_info: n.replace(/:::/g, '/'),
+                spec_desc: n
+            });
+        });
+        $('.product-items tbody').empty().append(pit_content);
+
+        /*支持货号条码换行字符粘贴*/
+        listen_postpaste($('.product-items tbody input[name$="[bn]"]'));
+        listen_postpaste($('.product-items tbody input[name$="[barcode]"]'));
+
+        var item_length = $('.product-items tbody').find('> tr').length;
+        $(this).next('.text-success').remove();
+        if (item_length) {
+            $(this).after('<span class="text-success">将会新建<span class="badge badge-success">' + item_length + '</span>个货品</span>');
+        }
+
+        $.each($('.product-items input[data-map]'), function(i, n) {
+            var map = $(n).attr('data-map'),
+                val = $('#no_spec input[data-map="' + map + '"]').val();
+            if (map == 'bn' || map == 'barcode') {
+                if (!val || val == '') {
+                    val = new String(new Date().getTime()).slice(-5);
+                }
+                val += map == 'bn' ? '-' + i : i;
+            }
+            $(n).val(val);
+        });
+    };
+    var timer_delay = 0;
+    $('#spec_edit_pane .create-product-items').on('click', function(e) {
+        e.stopPropagation();
+        clearTimeout(timer_delay);
+        var _this = this;
+        timer_delay = setTimeout(function() {
+            return create_product_items_func.apply(_this);
+        }, 0); //TODO 性能问题
     });
 
-
-
-};
-
-var timer_delay = 0;
-$('#spec_edit_pane .create-product-items').on('click', function(e) {
-    e.stopPropagation();
-    clearTimeout(timer_delay);
-    var _this = this;
-    timer_delay = setTimeout(function() {
-        return create_product_items_func.apply(_this);
-    }, 0); //TODO 性能问题
-});
-
-var product_items_change = function() {
-    if ($('#spec_edit_pane .product-items tbody > tr').length) {
-        $('#spec_edit_pane .create-product-items').trigger('click');
-    }
-};
+    var product_items_change = function() {
+        if ($('#spec_edit_pane .product-items tbody > tr').length) {
+            $('#spec_edit_pane .create-product-items').trigger('click');
+        }
+    };
 }();
 //
 </script>
 <script>
-$(function() {
-$(".goods_add_imgs").change(function() {
-    var _this = $(this);
-    //创建FormData对象
-    var data = new FormData();
-    //为FormData对象添加数据
-    $.each($(this)[0].files, function(i, file) {
-
-        data.append('files', file);
-    });
-
-    $.ajax({
-        url: 'image-gimages_upload.html',
-        type: 'POST',
-        data: data,
-        cache: false,
-        contentType: false, //不可缺
-        processData: false, //不可缺
-        success: function(data) {
-            data = eval("(" + data + ")");
-
-            $("#image_default").val(data['image_id']);
-            //_this.next().html("");
-            _this.next().find('img').attr('src', data['url']);
-            _this.next().append('<input type="hidden" value="' + data['image_id'] + '" name="goods[images][]">');
-
-            /*$("#showimage").append('<img src="'+data['url']+'" alt="">');
-            $("#showimage").append('<input type="hidden" value="'+data['image_id']+'" name="goods[images][]">');*/
-
-        }
-    });
-});
-});
 String.prototype.trim = function() {
-return this.replace(/(^\s*)|(\s*$)/g, '');
+    return this.replace(/(^\s*)|(\s*$)/g, '');
 };
 
 //商品规则生成
 function generate_goods_name() {
-//品牌＋一级（男或女）＋最小级＋商品编号
-var select_brand = $("#select_brand").val().trim();
-var index = $("#select_cat select").length;
-var cat_name = '';
-if (index > 1) {
-    cat_name = $("#select_cat").children().children('select').eq(0).find("option:selected").text().trim();
-    var last_cat_name = $("#select_cat").children().children('select').eq(index - 1).find("option:selected").text();
-    if (last_cat_name != '…') {
-        cat_name += last_cat_name;
-    } else if (index > 2) {
-        cat_name += $("#select_cat").children().children('select').eq(index - 2).find("option:selected").text();
-    }
+    //品牌＋一级（男或女）＋最小级＋商品编号
+    var select_brand = $("#select_brand").val().trim();
+    var index = $("#select_cat select").length;
+    var cat_name = '';
+    if (index > 1) {
+        cat_name = $("#select_cat").children().children('select').eq(0).find("option:selected").text().trim();
+        var last_cat_name = $("#select_cat").children().children('select').eq(index - 1).find("option:selected").text();
+        if (last_cat_name != '…') {
+            cat_name += last_cat_name;
+        } else if (index > 2) {
+            cat_name += $("#select_cat").children().children('select').eq(index - 2).find("option:selected").text();
+        }
 
-} else {
-    cat_name = $("#select_cat").children().children('select').eq(index - 1).find("option:selected").text();
-}
-cat_name = cat_name.replace('•', '').trim();
-var gid = $("input[name='goods[gid]']").val().trim();
-$(".input_goodsname").val(select_brand + cat_name + gid);
+    } else {
+        cat_name = $("#select_cat").children().children('select').eq(index - 1).find("option:selected").text();
+    }
+    cat_name = cat_name.replace('•', '').trim();
+    var gid = $("input[name='goods[gid]']").val().trim();
+    $(".input_goodsname").val(select_brand + cat_name + gid);
 }
 
 //出厂货号和货号同步
 $("#goods_gid").blur(function() {
-var gid = $(this).val();
-$("input[name='goods[product][new_0][bn]']").val(gid);
-//商品名称生成
-generate_goods_name();
+    var gid = $(this).val();
+    $("input[name='goods[product][new_0][bn]']").val(gid);
+    //商品名称生成
+    generate_goods_name();
 });
 
 
 //提交表单添加商品
 $(".save_goods").click(function() {
-var formdata = $("#goods_edit_form").serialize();
-// if (!$("#goods_prototype").val()) {
-//     alert('品类不可为空');
-//     return;
-// }
-var cat_val = $("select[name='goods[category][cat_id]']").val();
-if (!cat_val || cat_val == 0) {
-    alert('品名不可为空');
-    return;
-}
-// if (!$("#select_brand").val()) {
-//     alert('品牌不可为空');
-//     return;
-// }
-
-$.ajax({
-    url: '<{link app=seller ctl=site_goods act=save}>',
-    type: 'POST',
-    data: formdata,
-    dataType: 'json',
-    success: function(data) {
-        if (data.success) {
-            location.href = data.redirect;
-        } else {
-            alert(data.error);
-        }
+    var formdata = $("#goods_edit_form").serialize();
+    // if (!$("#goods_prototype").val()) {
+    //     alert('品类不可为空');
+    //     return;
+    // }
+    var cat_val = $("select[name='goods[category][cat_id]']").val();
+    if (!cat_val || cat_val == 0) {
+        alert('品名不可为空');
+        return;
     }
-});
+    // if (!$("#select_brand").val()) {
+    //     alert('品牌不可为空');
+    //     return;
+    // }
+
+    $.ajax({
+        url: '<{link app=seller ctl=site_goods act=save}>',
+        type: 'POST',
+        data: formdata,
+        dataType: 'json',
+        success: function(data) {
+            if (data.success) {
+                location.href = data.redirect;
+            } else {
+                alert(data.error);
+            }
+        }
+    });
 });
 
 
 $(function() {
-// $('#goods_prototype').change(function() {
-//     var data = {
-//         'type_id': $(this).val()
-//     };
-//     $.ajax({
-//         url: '/index.php/merchant-prototype.html',
-//         type: 'GET',
-//         data: data,
-//         success: function(data) {
-//             $("#params").children('div').remove();
-//             $("#params").append(data);
-//         }
-//     });
-// });
+    /*分类树逻辑*/
+    (function() {
+        var empty_nbsp = '&nbsp&nbsp&nbsp&nbsp&nbsp';
+        $.each($('#select_cat option'), function(i, n) {
+            var step = $(n).data('step');
 
-/*分类树逻辑*/
-(function() {
-    var empty_nbsp = '&nbsp&nbsp&nbsp&nbsp&nbsp';
-    $.each($('#select_cat option'), function(i, n) {
-        var step = $(n).data('step');
+            if (step > 1) {
+                var pid = $(this).data('pid');
+                $(this).insertAfter($('#select_cat option[value=' + pid + ']'));
+            }
+            while (step > 1) {
+                $(n).html(empty_nbsp + $(n).html());
+                step--;
+            }
+        });
+    })();
 
-        if (step > 1) {
-            var pid = $(this).data('pid');
-            $(this).insertAfter($('#select_cat option[value=' + pid + ']'));
-        }
-
-        while (step > 1) {
-            $(n).html(empty_nbsp + $(n).html());
-            step--;
-        }
-    });
-})();
 
 });
 </script>
 
 
 <script>
+/**
+ *产品图片添加
+ */
 $(function() {
+    var substitute = function(str, obj) {
+        return str.replace(/\\?\{([^{}]+)\}/g, function(match, name) {
+            if (match.charAt(0) == '\\') return match.slice(1);
+            return (obj[name] != undefined) ? obj[name] : '';
+        });
+    }
     $('input[type="file"]').fileupload({
 
-    add: function(e, data) {
-        if (!data.files[0]['type'].match(/^image/)) {
-            alert('非法上传，不是图片类型');
-        }
-        data.submit();
-    },
-    done: function(e, data) {
-        var re = $.parseJSON(data.result);
-        var input = e.target || e.srcElement;
-        $(input).prev('input[type="hidden"]').attr('value', re.image_id);
-        $(input).next('.showImg').find('img').attr('src',re.url);
+        add: function(e, data) {
+            if (!data.files[0]['type'].match(/^image/)) {
+                alert('非法上传，不是图片类型');
+                return false;
+            }
+            data.submit();
+        },
+        progress:function(e){
+            
+        },
+        done: function(e, data) {
 
-    }
+            var re = $.parseJSON(data.result);
+            var input = e.target || e.srcElement;
+            var content = $('.pro_img_showbox').val();
+            $('.filebox').before(substitute(content, re));
+
+            if($('.pro_imgs .pro_img_item').size()==1){
+                $('.pro_imgs .pro_img_item').find('.default').addClass('selected');
+                var default_val=$('.pro_imgs .pro_img_item:first-child').find('input[type="hidden"]').val();
+                $('#images_add').attr('value',default_val);
+            }
+
+        }
+    });
+    //图片删除
+    /*$('.pro_imgs').on('click','.glyphicon-trash',function(e){
+        e.stopPropagation();
+        var _parent=$(this).parents('.pro_img_item');
+        if(!confirm('确认删除？')){
+            return;
+        }else{
+            _parent.remove();
+            var len=$('.pro_imgs .pro_img_item').size();
+            if(len==1){
+               $('.pro_imgs .pro_img_item').find('.default').addClass('selected');
+               var default_val=$('.pro_imgs .pro_img_item .item_con').find('input[type="hidden"]').val();
+               $('#images_add').attr('value',default_val);
+            }
+
+
+        }
+    })*/
+
+    //设置默认图片
+
+    $('.pro_imgs').on('click','.item_panel',function(){
+        $(this).children('.default').addClass('selected');
+        $(this).parents('.pro_img_item').siblings().find('.default').removeClass('selected');
+
+        var default_val=$(this).siblings('.item_con').find('input[type="hidden"]').val();
+        $('#images_add').attr('value',default_val);
+    })
 });
-});
+</script>
+
+<script type="text/javascript">
+var htmlEditor = {
+    'id' : 'summernote',
+    'url' : '<{link app=image ctl=site_upload act=wysiswyg_upload}>',
+    'name' : ''
+}
+jQuery.extend(optionHtml, htmlEditor);
+$('#summernote').summernote(optionHtml);
 </script>

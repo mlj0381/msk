@@ -1,0 +1,39 @@
+
+<div id="equipment">
+	<h4>检测设备</h4>
+
+	<div class="form-group">
+		<label class="col-xs-2 control-label">
+			<span class="text-danger">*</span>主要设备1：
+		</label>
+		<div class="col-xs-4">
+			<input type="text" value="<{$extra.equipment.value.main_device}>" name="equipment[value][main_device]" class="form-control">
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label class="col-xs-2 control-label">
+			<span class="text-danger">*</span>用途：
+		</label>
+		<div class="col-xs-4">
+			<input type="text" value="<{$extra.equipment.value.use}>" name="equipment[value][use]" class="form-control">
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label class="col-xs-2 control-label">
+			<span class="text-danger">*</span>上传设备照片：
+		</label>
+		<div class="col-xs-4">
+			<div class="filebox">
+	            <input type="hidden" value="<{$extra.equipment.value.attach}>" name="equipment[value][attach]"/>
+	            <input type="file" data-url="<{link app=image ctl=site_upload act=index}>" accept="image/*" class="file_input" />
+	            <div class="showImg">
+	                 <img src="<{if $company.business_license_image eq ''}><{$base_url}>/themes/pc/default/statics/images/file_add.jpg<{else}><{$company.business_license_image|storager:'xs'}><{/if}>">    
+	            </div>
+	        </div>
+		</div>
+	</div>
+
+
+</div>

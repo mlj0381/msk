@@ -32,7 +32,7 @@ ol {
 .glist-container .breadcrumb_row .breadcrumb {
   margin-bottom: 0px;
   height: 56px;
-  padding: 0 10px;
+  padding: 0 15px;
 }
 .glist-container .breadcrumb_row .breadcrumb li {
   padding: 0;
@@ -62,10 +62,65 @@ ol {
   height: 56px;
   line-height: 56px;
   font-size: 14px;
+  text-align: right;
 }
 .glist-container .breadcrumb_row .about_goods_total span {
-  color: #e93428;
+  color: #a40001;
   padding: 0 5px;
+}
+.glist-container .gfilter_condition {
+  width: 1200px;
+  margin: 0 auto;
+  background: #fff;
+  padding: 10px 0;
+}
+.glist-container .gfilter_condition .conditions {
+  padding: 0;
+  margin: 0;
+}
+.glist-container .gfilter_condition .conditions a {
+  border: 1px solid #ddd;
+  background: #f1f1f1;
+  display: inline-block;
+  height: 24px;
+  line-height: 22px;
+  padding: 0 0 0 5px;
+  box-sizing: border-box;
+  overflow: hidden;
+  margin-right: 5px;
+}
+.glist-container .gfilter_condition .conditions a i {
+  float: right;
+  display: inline-block;
+  margin-left: 5px;
+  height: 24px;
+  width: 24px;
+  line-height: 24px;
+  text-align: center;
+}
+.glist-container .gfilter_condition .conditions a:hover {
+  color: #666;
+  border: 1px solid #a40001;
+  background: #fff;
+}
+.glist-container .gfilter_condition .conditions a:hover i {
+  color: #fff;
+  background: #a40001;
+}
+.glist-container .gfilter_condition .cond_reset {
+  text-align: right;
+  font-size: 12px;
+}
+.glist-container .gfilter_condition .cond_reset a {
+  cursor: pointer;
+}
+.glist-container .gfilter_condition .cond_reset i {
+  font-size: 13px;
+  margin-right: 5px;
+}
+.glist-container .gfilter_condition .cond_reset:hover a,
+.glist-container .gfilter_condition .cond_reset:hover i {
+  color: #a40001;
 }
 .glist-container .panel-body {
   padding: 0px;
@@ -79,7 +134,6 @@ ol {
   width: 100%;
 }
 .glist-container .gfilter table.gfilter_tab td {
-  padding: 5px 0;
   border-bottom: 1px solid #ddd;
   text-align: center;
   vertical-align: middle;
@@ -94,49 +148,137 @@ ol {
   font-size: 14px;
   font-weight: 700;
 }
-.glist-container .goods-list {
+.glist-container .goods-listbox {
   margin-top: 20px;
 }
-.glist-container .goods-list .form-inline {
+.glist-container .goods-listbox .goods-item .gi-image-wrapper {
+  padding: 10px 0;
+  height: 256px;
+}
+.glist-container .goods-listbox .goods-item .gi-image-wrapper img {
+  max-height: 100%;
+}
+.glist-container .goods-listbox .form-inline {
   width: 50%;
   float: left;
 }
-.glist-container .goods-list .heading_rt {
+.glist-container .goods-listbox .heading_rt {
   width: 30%;
   float: right;
 }
-.glist-container .goods-list .heading_rt .toggleSpan {
+.glist-container .goods-listbox .heading_rt .tab_toggle {
   margin-top: 5px;
 }
-.glist-container .goods-list .heading_rt .toggleSpan span {
+.glist-container .goods-listbox .heading_rt .tab_toggle span {
   display: inline-block;
-  width: 60px;
   height: 30px;
-  line-height: 30px;
-  text-align: center;
-  float: left;
-  margin-left: -1px;
-  background: #fff;
-  cursor: pointer;
+  border-radius: 0px;
 }
-.glist-container .goods-list .heading_rt .toggleSpan span.active {
-  background: #e93428;
-  color: #fff;
-}
-.glist-container .goods-list .heading_rt .pageNav {
-  height: 30px;
-  line-height: 30px;
+.glist-container .goods-listbox .heading_rt .pageNav {
   text-align: right;
   margin-top: 5px;
 }
-.glist-container .goods-list .heading_rt .pageNav a {
+.glist-container .goods-listbox .heading_rt .pageNav .page_num {
   display: inline-block;
-  width: 30px;
   height: 30px;
   line-height: 30px;
+  margin-right: 10px;
+  float: right;
+}
+.glist-container .goods-listbox .heading_rt .pageNav nav {
+  display: inline;
+  height: 30px;
+  float: right;
+}
+.glist-container .goods-listbox .heading_rt .pageNav nav ul {
+  margin: 0;
+}
+.glist-container .goods-listbox .store_list .store_item {
   border: 1px solid #ddd;
+  padding: 10px 0;
+  margin-bottom: 15px;
+}
+.glist-container .goods-listbox .store_list .store_item .store_bar {
+  height: 80px;
+  overflow: hidden;
+}
+.glist-container .goods-listbox .store_list .store_item .store_bar img.thumbnail {
+  width: 80px;
+  height: 80px;
+  float: left;
+  margin-bottom: 0px;
+}
+.glist-container .goods-listbox .store_list .store_item .store_bar .store_info {
+  float: left;
+  width: 255px;
+  margin-left: 15px;
+}
+.glist-container .goods-listbox .store_list .store_item .store_bar .store_info a {
+  display: block;
+  font-size: 14px;
+  font-weight: bold;
+  color: #333;
+  margin-top: 5px;
+}
+.glist-container .goods-listbox .store_list .store_item .store_bar .store_info p {
+  margin: 5px 0;
+  color: #767676;
+}
+.glist-container .goods-listbox .store_list .store_item .store_bar .pingfen {
+  margin-top: 5px;
+  font-size: 14px;
+  color: #333;
+  font-weight: bold;
+}
+.glist-container .goods-listbox .store_list .store_item .store_bar .pingfen span {
+  color: #a40001;
+  display: block;
+  margin-top: 10px;
+}
+.glist-container .goods-listbox .store_list .store_item .store_bar .store_ctr {
+  text-align: right;
+}
+.glist-container .goods-listbox .store_list .store_item .store_bar .store_ctr button {
+  width: 100px;
+  height: 28px;
+  margin: 5px auto;
+}
+.glist-container .goods-listbox .store_list .store_item .store_goods {
+  margin: 15px 0;
+  overflow: hidden;
+  display: none;
+}
+.glist-container .goods-listbox .store_list .store_item .store_goods ul {
+  margin-left: 95px;
+  width: 1200px;
+  overflow: hidden;
+}
+.glist-container .goods-listbox .store_list .store_item .store_goods ul li {
+  margin-right: 30px;
+  float: left;
+  _display: inline;
+  overflow: hidden;
   text-align: center;
-  background: #fff;
+  position: relative;
+}
+.glist-container .goods-listbox .store_list .store_item .store_goods ul li .pic {
+  text-align: center;
+}
+.glist-container .goods-listbox .store_list .store_item .store_goods ul li .pic img {
+  width: 190px;
+  height: 190px;
+  display: block;
+}
+.glist-container .goods-listbox .store_list .store_item .store_goods ul li .title {
+  position: absolute;
+  width: 100%;
+  height: 30px;
+  line-height: 30px;
+  bottom: 0px;
+  background: rgba(0, 0, 0, 0.8);
+}
+.glist-container .goods-listbox .store_list .store_item .store_goods ul li .title a {
+  color: #fff;
 }
 .product-container {
   margin: 20px auto;
@@ -201,7 +343,7 @@ ol {
 }
 .product-container .product-page .product_firstRow .turnover_info ul li span {
   padding-left: 15px;
-  color: #e93428;
+  color: #a40001;
 }
 .product-container .product-page .product_firstRow .turnover_info ul li span small {
   padding-left: 5px;
@@ -317,7 +459,7 @@ ol {
 }
 .product-container .product-page .goods-detailRow .shop_info .server_info span small {
   display: block;
-  color: #e93428;
+  color: #a40001;
 }
 .product-container .product-page .goods-detailRow .shop_info .shop_ctr {
   text-align: center;
@@ -377,7 +519,7 @@ ol {
   line-height: 24px;
 }
 .product-container .product-page .goods-detailRow .shopkeeper_tj ul li .goods_info .goods_price {
-  color: #e93428;
+  color: #a40001;
   font-size: 16px;
 }
 .product-container .product-page .goods-detailRow .shopkeeper_tj ul li .goods_info .goods_name a {
@@ -388,64 +530,136 @@ ol {
   color: #ccc;
 }
 .product-container .product-page .goods-detailRow .shopkeeper_tj ul li .goods_info .sell_info span small {
-  color: #e93428;
+  color: #a40001;
   font-size: 16px;
   padding: 0 5px;
 }
 .passport-login-container {
-  margin-top: 20px;
+  width: 1000px;
+  margin: 0 auto;
+  margin-top: 60px;
 }
 .passport-login-container .login_panel_lt {
   float: left;
-  width: 60%;
+  width: 62%;
 }
 .passport-login-container .login_panel_rt {
-  width: 40%;
+  width: 38%;
   float: right;
 }
 .passport-login-container .login_panel_rt .panel-heading {
   padding: 0;
   border-bottom: 1px solid #ddd;
+  box-sizing: border-box;
+  border: none;
+  background: #fff;
 }
 .passport-login-container .login_panel_rt .panel-heading span {
   cursor: pointer;
-  display: inline-block;
+  display: block;
   height: 40px;
   line-height: 40px;
-  padding: 0 15px;
+  width: 50%;
+  text-align: center;
+  font-size: 14px;
+  float: left;
+  background: #eaeaea;
 }
 .passport-login-container .login_panel_rt .panel-heading span.active {
-  background: #e93428;
+  background: #a40001;
   color: #fff;
+}
+.passport-login-container .login_panel_rt .panel-body {
+  border: 1px solid #eaeaea;
+  padding: 15px 30px;
+}
+.passport-login-container .login_panel_rt .panel-body .submit_btn {
+  width: 100%;
+  height: 40px;
+  border-radius: 4px;
+}
+.passport-login-container .login_panel_rt .panel-body .form-group {
+  margin-bottom: 20px;
+}
+.passport-login-container .login_panel_rt .panel-body .reg_link {
+  width: 100%;
+  height: 30px;
+  line-height: 30px;
+  color: #727171;
+  padding-bottom: 15px;
+  text-align: right;
+  margin-bottom: 10px;
+}
+.passport-login-container .login_panel_rt .panel-body .reg_link a {
+  color: #333;
+  padding: 0 3px;
+}
+.passport-login-container .login_panel_rt .panel-body .reg_link a i {
+  color: #a40001;
+}
+.passport-login-container .login_panel_rt .panel-body .reg_link a:hover {
+  color: #a40001;
 }
 .passport-login-container .login_panel_rt .login-panel {
   margin-left: 0px;
   width: 100%;
+  border: none;
+  box-shadow: none;
 }
 .reg_progress {
   width: 100%;
-  height: 50px;
-  line-height: 50px;
   margin: 20px 0;
-  background: #f5f5f5;
+  border-bottom: 2px solid #ddd;
 }
 .reg_progress ol {
   width: 100%;
   margin: 0;
   padding: 0;
   text-align: center;
+  height: 50px;
+  line-height: 50px;
 }
 .reg_progress ol li {
-  width: 160px;
+  display: inline-block;
+  margin: 0 30px;
+  padding: 0 15px;
   text-align: center;
 }
-.reg_progress ol li.active {
-  background: #e93428;
-  color: #fff;
-  cursor: pointer;
+.reg_progress ol li span {
+  height: 50px;
+  line-height: 50px;
+  display: block;
+  font-size: 14px;
+  font-weight: bold;
+  color: #999;
 }
-.reg_progress ol li.active a {
+.reg_progress ol li span i {
+  display: inline-block;
+  width: 30px;
+  line-height: 30px;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  border-radius: 50%;
   color: #fff;
+  text-align: center;
+  background: #ddd;
+  font-style: normal;
+  margin-right: 5px;
+}
+.reg_progress ol li.active {
+  border-bottom: 2px solid #a40001;
+  color: #fff;
+}
+.reg_progress ol li.active span {
+  color: #333;
+}
+.reg_progress ol li.active span i {
+  background: #a40001;
+}
+.passport-signup-container .signup-panel {
+  border: none;
+  box-shadow: none;
 }
 #member_signup_checkInfo_form .customer_address select {
   width: 123px;
@@ -455,7 +669,6 @@ ol {
   box-shadow: none;
   padding-left: 0;
   outline: none;
-  width: 190px;
 }
 #member_signup_checkInfo_form #regTerms {
   width: 960px;
@@ -486,4 +699,7 @@ ol {
   width: 100%;
   text-align: center;
   margin: 20px 0;
+}
+.splash_con {
+  min-height: 500px;
 }

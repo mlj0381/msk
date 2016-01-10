@@ -15,7 +15,7 @@
 //GUEST_CART 游客购物车
 class b2c_mdl_cart_objects extends dbeav_model
 {
-    
+
 
     public function save(&$data, $mu = null, $mi = false)
     {

@@ -10,7 +10,8 @@
 // +----------------------------------------------------------------------
 
 class seller_ctl_admin_seller extends desktop_controller {
-    function index($type) {
+    
+    public function index($type) {
         $title = '商家管理';
         $checkin = array('checkin' => array('1'));
         if($type == 'checkin'){

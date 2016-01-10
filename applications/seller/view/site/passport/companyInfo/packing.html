@@ -1,0 +1,18 @@
+
+<div id="packing">
+	<h4>包装照片</h4>
+	<div class="form-group">
+		<label class="col-xs-2 control-label">
+			<span class="text-danger">*</span>包装图片：
+		</label>
+		<div class="col-xs-4">
+			<div class="filebox">
+	            <input type="hidden" value="<{$extra.packing.attach}>" name="packing[value][attach]"/>
+	            <input type="file" data-url="<{link app=image ctl=site_upload act=index}>" accept="image/*" class="file_input" />
+	            <div class="showImg">
+	                 <img src="<{if $company.business_license_image eq ''}><{$base_url}>/themes/pc/default/statics/images/file_add.jpg<{else}><{$company.business_license_image|storager:'xs'}><{/if}>">    
+	            </div>
+	        </div>
+		</div>
+	</div>
+</div>

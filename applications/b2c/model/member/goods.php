@@ -25,6 +25,7 @@ class b2c_mdl_member_goods extends dbeav_model
 
         $filter['member_id'] = $member_id;
         $filter['goods_id'] = $goods_id;
+        $filter['object_type'] = $obj_type;
         $filter['type'] = 'fav';
         if ($this->count($filter) > 0) {
             return true; //已存在

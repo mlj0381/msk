@@ -36,6 +36,7 @@ $db['tag'] = array(
       'type' => array(
         'normal' => '普通标签',
         'filter' => '自动标签',
+        'favorite' => '店铺收藏',
       ),
       'default' => 'normal',
       'label' => '标签类型',
@@ -43,6 +44,12 @@ $db['tag'] = array(
 
       'in_list' => true,
       'default_in_list' => true,
+    ),
+      'member_id' => array(
+      'type' => 'number',
+      'default' => '0',
+      'label' => '所属会员',
+      'comment' => '所属会员',
     ),
     'app_id' => array(
       'type' => 'varchar(32)',

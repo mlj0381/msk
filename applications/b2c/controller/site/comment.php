@@ -10,23 +10,27 @@
 // | Author: Shanghai ChenShang Software Technology Co., Ltd.
 // +----------------------------------------------------------------------
 
-class b2c_ctl_site_comment extends b2c_frontpage
-{
-    public $noCache = true;
-    public function __construct(&$app)
-    {
-        parent::__construct($app);
-    }
+class b2c_ctl_site_comment extends b2c_frontpage {
 
-    public function form($order_id, $product_id, $type = 'comment')
-    {
+    public $noCache = true;
+
+    public function __construct(&$app) {
+        $this->app = $app;
+        parent::__construct($app);
+        $this->mComment = $this->app->model('member_comment');
         $this->verify_member();
         $this->member = $this->get_current_member();
+    }
+
+    public function form($order_id, $product_id, $type = 'comment', $reply = null) {
+        
         $this->_response->set_header('Cache-Control', 'no-store');
         $mdl_order = app::get('b2c')->model('orders');
-        $mdl_mcomment = app::get('b2c')->model('member_comment');
-        $exits_comment = $mdl_mcomment->groupList('*', array('order_id' => $order_id, 'comment_type' => $type));
+        //$this->store = vmc::singleton('seller_object')->get_current_seller();
+        $this->pagedata['good_comment'] = $this->mComment->getRow('*', array('product_id' => $product_id, 'member_id' => $this->member['member_id'], 'order_id' => $order_id, 'type' => $type, 'comment_num' => '1'));
 
+//        $exits_comment = $this->mComment->groupList('*', array('order_id' => $order_id, 'comment_type' => $type));
+        $this->pagedata['reply'] = $reply;
         $order = $mdl_order->dump($order_id, '*', array('items' => array('*')));
         if ($order['member_id'] != $this->member['member_id']) {
             $this->splash('error', '', '非法操作!');
@@ -36,164 +40,86 @@ class b2c_ctl_site_comment extends b2c_frontpage
         }
         $order['store_info'] = app::get('store')->model('store')->getRow('store_id, store_name', array('store_id' => $order['store_id']));
         $this->pagedata['order'] = $order;
-        $this->pagedata['exits_comment'] = $exits_comment;
+        $this->pagedata['product_id'] = $product_id;
+        //$this->pagedata['exits_comment'] = $exits_comment;
         $this->pagedata['member_avatar'] = $this->member['avatar'];
-        $this->title = '评价#'.$order['order_id'].' 商品';
+        $this->title = '评价#' . $order_id . ' 商品';
         $this->set_tmpl('comment_form');
         $this->pagedata['_PAGE_'] = 'site/comment/form.html';
-        $this->output();
-        //$this->page('site/comment/form.html');
+        //$this->output();
+        $this->page('site/comment/form.html');
     }
 
-    public function save($type = 'comment')
-    {
-        $this->verify_member();
-        $this->member = $this->get_current_member();
-        $mdl_mcomment = app::get('b2c')->model('member_comment');
-        $new_comment_id = $mdl_mcomment->apply_id($type);
+   
 
-        $fipt_idx = -1;
-        $max_conf = $this->app->getConf('comment_image_size').'M';
-        $max_size = utils::parse_str_size($max_conf); //byte
-        if (!$_POST) {
-            $this->end(false, '缺少参数！', 'json_response');
+    private function comment_count($goods_id){
+        vmc::singleton('b2c_openapi_goods', false)->counter(array(
+            'goods_id' => $goods_id,
+            'comment_count' => 1,
+            'comment_count_sign' => md5($goods_id . 'comment_count' . (1 * 1024))//计数签名
+        ));
+    }
+    public function save($type = 'comment') {
+        extract($_POST);
+        $redirect = $this->gen_url(array('app' => 'b2c', 'ctl' => 'site_member', 'act' => 'orders', 'args0' => 's4'));
+        if($reply){
+            $comment['for_comment_id'] = $comment['member_id'];
+            $redirect = $this->gen_url(array('app' => 'seller', 'ctl' => 'site_seller', 'act' => 'orders', 'args0' => 's4'));
         }
-        //新评价
-        if ($comment_data = $_POST[$type]) {
-            /**
-             * $word = array($product_id => $content);.
-             */
-            foreach ($comment_data['word'] as $goods_id => $word) {
-                $product_id = key($word);
-                $content = current($word);
-                $new_comment = array(
-                    'comment_id' => $new_comment_id++,
-                    'goods_id' => $goods_id,
-                    'product_id' => $product_id,
-                    'member_id' => $this->member['member_id'],
-                    'order_id' => $_POST['order_id'],
-                    'store_id' => $_POST['store_id'],
-                    'author_name' => $this->member['uname'],
-                    'createtime' => time(),
-                    'content' => htmlspecialchars($content),
-                );
-                $new_comment['content'] = preg_replace("/\n/is", '<br>', $new_comment['content']);
-                if (empty($new_comment['content']) || trim($new_comment['content']) == '') {
-                    continue;
-                }
-                $new_comment['title'] = substr(preg_replace('/\s/','',$new_comment['content']),0,100).'...';
-                if ($mark = $comment_data['mark'][$goods_id]) {
-                    //评分
-                    $new_comment['mark'] = array(
-                        'mark_star' => floatval($mark),
-                        'goods_id' => $goods_id,
-                        'comment_id' => $new_comment['comment_id'],
-                    );
-                }
-                //晒一晒处理
-                $image_upload_arr = array(
-                    'name' => $_FILES[$type]['name'][$product_id],
-                    'tmp_name' => $_FILES[$type]['tmp_name'][$product_id],
-                    'error' => $_FILES[$type]['error'][$product_id],
-                    'size' => $_FILES[$type]['size'][$product_id],
-                    'type' => $_FILES[$type]['type'][$product_id],
-                );
-                $ready_upload = array();
-                $success_upload_images = array();
-                //图片上传验证
-                foreach ($image_upload_arr['tmp_name'] as $i => $v) {
-                    $fipt_idx++;
-                    if (!isset($v) || empty($v)) {
-                        continue;
-                    }
-                    $size = $image_upload_arr['size'][$i];
-                    if (isset($image_upload_arr['error'][$i]) && !empty($image_upload_arr['error'][$i]) && $image_upload_arr['error'][$i] > 0) {
-                        $this->_upload_error($fipt_idx, '文件上传失败!'.$image_upload_arr['error'][$i]);
-                    }
-                    if ($size > $max_size) {
-                        $this->_upload_error($fipt_idx, '文件大小不能超过'.$max_conf);
-                    }
-                    list($w, $h, $t) = getimagesize($v);
-                    if (!in_array($t, array(1, 2, 3, 6))) {
-                        //1 = GIF,2 = JPG，3 = PNG,6 = BMP
-                        $this->_upload_error($fipt_idx, '文件类型错误');
-                    }
-                    $ready_upload[] = array(
-                        'tmp' => $v,
-                        'name' => $image_upload_arr['name'][$i],
-                    );
-                }
-                $mdl_image = app::get('image')->model('image');
-                foreach ($ready_upload as $k => $item) {
-                    $image_id = $mdl_image->store($item['tmp'], null, null, $item['name']);//保存图片
-                    $mdl_image->rebuild($image_id, array('L', 'XS'));//缩略图片
-                    $new_comment['images'][] = array(
-                         'target_type' => 'comment',
-                         'image_id' => $image_id,
-                         'target_id' => $new_comment['comment_id'],
-                     );
-                    logger::info('前台评价晒一晒图片上传操作'.'TMP_NAME:'.$item['tmp'].',FILE_NAME:'.$item['name']);
-                }
-                if (!$mdl_mcomment->save($new_comment)) {
-                    $this->_send('error', '提交失败!');
-                }else{
-                    //商品评价计数
-                    vmc::singleton('b2c_openapi_goods',false)->counter(array(
-                        'goods_id'=>$goods_id,
-                        'comment_count'=>1,
-                        'comment_count_sign'=>md5($goods_id.'comment_count'.(1 * 1024))//计数签名
-                    ));
-                }
+        $comment['comment_id'] = $this->mComment->apply_id($type);
+        $comment['content'] = trim($comment['content']);
+        $comment['goods_id'] = $goods_id;
+        $comment['createtime'] = time();
+        if (is_numeric($comment_id)) {
+            //追评
+            $comment['comment_num'] = 2;
+            if (!$this->mComment->save($comment)) {
+                $this->splash('error', $redirect, '提交失败!');
             }
-        }
-
-        //评价追加、回复
-        if (isset($_POST['reply']) && !empty($_POST['reply'])) {
-            foreach ($_POST['reply'] as $key => $value) {
-                $new_reply = array(
-                    'comment_id' =>$new_comment_id++,
-                    'for_comment_id' => $key,
-                    'order_id' => $_POST['order_id'],
-                    'goods_id' => $value['goods_id'],
-                    'product_id' => $value['product_id'] ,
-                    'member_id' => $this->member['member_id'],
-                    'author_name' => $this->member['uname'],
-                    'createtime' => time(),
-                    'store_id' => $value['store_id'],
-                    'content' => htmlspecialchars($value['content']),
-                );
-                if (empty($new_reply['content']) || trim($new_reply['content']) == '') {
-                    continue;
-                }
-                $new_reply['title'] = substr(preg_replace('/\s/','',$new_reply['content']),0,100).'...';
-                if (!$mdl_mcomment->save($new_reply)) {
-                    $this->_send('error', '追加评价失败');
-                }else{
-                    //更新最后回复时间
-                    $mdl_mcomment->update(array('lastreply'=>time()),array('comment_id'=>$key));
-                    //商品评价计数
-                    vmc::singleton('b2c_openapi_goods',false)->counter(array(
-                        'goods_id'=>$value['goods_id'],
-                        'comment_count'=>1,
-                        'comment_count_sign'=>md5($value['goods_id'].'comment_count'.(1 * 1024))//计数签名
-                    ));
-                }
+            $comment_type = array('order_id' => $comment['order_id'], 'comment_type' => '2');
+            if(!$this->app->model('orders')->save($comment_type)){
+                $db->rollback();
+                $this->_send('error', '提交失败!');
             }
+            $this->splash('success', $redirect, '评论成功!');
+            $this->comment_count($goods_id);
+        } else {
+            //第一次评论
+            $db = vmc::database();
+            $db->beginTransaction();
+            $comment['comment_id'] = $this->mComment->apply_id($type);
+            $comment['comment_num'] = 1;
+            
+            if (!$this->mComment->save($comment)) {
+                $db->rollback();
+                $this->splash('error', $redirect, '提交失败!');
+            }
+            $mark['comment_id'] = $comment['comment_id'];
+            $mark['goods_id'] = $goods_id;
+            if (!$this->app->model('goods_mark')->save($mark)) {
+                $db->rollback();
+                $this->_send('error', '提交失败!');
+            }
+            $comment_type = array('order_id' => $comment['order_id'], 'comment_type' => '1');
+            if(!$this->app->model('orders')->save($comment_type)){
+                $db->rollback();
+                $this->_send('error', '提交失败!');
+            }
+            $this->comment_count($goods_id);
+            $db->commit();
+            $this->splash('success', $redirect, '评论成功');
         }
-
-        $this->_send('success', '提交成功');
     }
 
-    public function show_list($comment_type = 'all', $page = 1){
+    public function show_list($comment_type = 'all', $page = 1) {
         $limit = 10;
-        $mdl_order = app::get('b2c')->model('orders');
-        $mdl_mcomment = app::get('b2c')->model('member_comment');
         $mdl_goods_mark = app::get('b2c')->model('goods_mark');
         $filter = array(
-            'member_id'=>$this->member['member_id'],
-            'display'=>'true'
+            'member_id' => $this->member['member_id'],
+            'display' => 'true',
+            'for_comment_id' => '0'
         );
-        if(is_numeric($comment_type)){
+        if (is_numeric($comment_type)) {
             $comment_id = $mdl_goods_mark->getList('comment_id', array('mark_star' => $comment_type));
             $tmp = array();
             foreach ($comment_id as $key => &$value) {
@@ -201,33 +127,31 @@ class b2c_ctl_site_comment extends b2c_frontpage
             }
             $filter['comment_id|in'] = $tmp;
         }
-        $comment_list = $mdl_mcomment->groupList('*',$filter,($page - 1) * $limit, $limit);
-
-        foreach ($comment_list as $key => &$value) {
-            $order_id = reset($value);
-            $order[$key] = $mdl_order->dump($order_id['order_id'], '*', array('items' => array('*')));
-        }
+        $comment_list_member = $this->mComment->groupList('*', $filter, ($page - 1) * $limit, $limit);
+        $filter['for_comment_id'] = $this->member['member_id'];
+        $comment_list_seller = $this->mComment->groupList('*', $filter, ($page - 1) * $limit, $limit);
+        $this->pagedata['member_info'] = $this->member;
         $this->pagedata['comment_type'] = $comment_type;
-        $this->pagedata['comment'] = $comment_list;
+        $this->pagedata['comment_member'] = $comment_list_member;
+        $this->pagedata['comment_seller'] = $comment_list_seller;
         $this->pagedata['order'] = $order;
         $this->pagedata['_PAGE_'] = 'site/comment/show_list.html';
         $this->output();
     }
 
-    public function show($goods_id,$page=1){
+    public function show($goods_id, $page = 1) {
         $this->_response->set_header('Cache-Control', 'no-store');
-        $mdl_mcomment = app::get('b2c')->model('member_comment');
         $limit = 20;
         $filter = array(
-            'goods_id'=>$goods_id,
-            'display'=>'true'
+            'goods_id' => $goods_id,
+            'display' => 'true'
         );
-        $comment_list = $mdl_mcomment->groupList('*',$filter,($page - 1) * $limit, $limit,'','goods_id');
-        $count = $mdl_mcomment->count($filter);
+        $comment_list = $this->mComment->groupList('*', $filter, ($page - 1) * $limit, $limit, '', 'goods_id');
+        $count = $this->mComment->count($filter);
         $this->pagedata['comment_list'] = $comment_list[$goods_id];
         $this->pagedata['comment_count'] = $count;
         $this->pagedata['pager'] = array(
-            'total' => ceil($count / $limit) ,
+            'total' => ceil($count / $limit),
             'current' => $page,
             'link' => array(
                 'app' => 'b2c',
@@ -236,27 +160,24 @@ class b2c_ctl_site_comment extends b2c_frontpage
                 'args' => array(
                     $goods_id,
                     ($token = time()),
-                ) ,
-            ) ,
+                ),
+            ),
             'token' => $token,
         );
-        if($this->_request->is_ajax()){
+        if ($this->_request->is_ajax()) {
             //商品详情内展示
             $this->display('site/comment/list.html');
-        }else{
+        } else {
             //单独展示
             $goods_detail = vmc::singleton('b2c_goods_stage')->detail($goods_id);
             $this->pagedata['goods_detail'] = $goods_detail;
-            $this->title = $goods_detail['name'].' 评价\口碑';
+            $this->title = $goods_detail['name'] . ' 评价\口碑';
             $this->set_tmpl('comment_show');
             $this->page('site/comment/show.html');
         }
-
     }
 
-
-    private function _send($result, $msg)
-    {
+    private function _send($result, $msg) {
         if ($result == 'success') {
             echo json_encode(array(
                 'success' => '成功',
@@ -270,12 +191,13 @@ class b2c_ctl_site_comment extends b2c_frontpage
         }
         exit;
     }
-    private function _upload_error($index, $error)
-    {
+
+    private function _upload_error($index, $error) {
         echo json_encode(array(
             'fipt_idx' => $index,
             'error' => $error,
         ));
         exit;
     }
+
 }

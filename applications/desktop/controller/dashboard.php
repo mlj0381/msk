@@ -19,7 +19,8 @@ class desktop_ctl_dashboard extends desktop_controller
         $this->_request = vmc::singleton('base_component_request');
     }
     public function index()
-    {
+    {        
+        header('Location:index.php?app=b2c&ctl=admin_setting&act=index');die;
         $dashboard_from = $this->_request->get_post('f');
         $dashboard_to = $this->_request->get_post('t');
         $default_enter = true;

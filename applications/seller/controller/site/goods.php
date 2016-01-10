@@ -35,32 +35,33 @@ class seller_ctl_site_goods extends seller_frontpage
         $filter['marketable'] = 'false';
         if($type){
             $filter['marketable'] = 'true';
-             $filter['checkin'] = $type;
+            $filter['checkin'] = $type;
         }
-        $this->pagedata['serach'] = $serach;
-        if($serach['price']){
-            if(is_numeric($serach['price'][0]) && is_numeric($serach['price'][1])){
-                $price['price|between'] = $serach['price'];
-                $goods_id =  $mdl_product->getList('goods_id', $price);
+        if($serach){
+            $this->pagedata['serach'] = $serach;
+            if($serach['price']){
+                if(is_numeric($serach['price'][0]) && is_numeric($serach['price'][1])){
+                    $price['price|between'] = $serach['price'];
+                    $goods_id =  $mdl_product->getList('goods_id', $price);
+                    if(!$goods_id) return array();
+                }
             }
-            if(!$goods_id){
-                return array();
+            if($serach['buy_count']){
+                if(is_numeric($serach['buy_count'][0]) && is_numeric($serach['buy_count'][1])){
+                    $filter['buy_coun|between'] = $serach['buy_count'];
+                }
             }
-        }
-        if($serach['buy_count']){
-            if(is_numeric($serach['buy_count'][0]) && is_numeric($serach['buy_count'][1])){
-                $filter['buy_coun|between'] = $serach['buy_count'];
+            $tmp = Array();
+            foreach($goods_id as $k => $v)
+            {
+                array_push($tmp, $v['goods_id']);
+            	$tmp = array_unique($tmp);
             }
+            $filter['goods_id|in'] = $tmp;
+            $filter['name|has'] = $serach['name'];
+            $filter['gid'] = $serach['gid'];
         }
-        $tmp = Array();
-        foreach($goods_id as $k => $v)
-        {
-            array_push($tmp, $v['goods_id']);
-        	$tmp = array_unique($tmp);
-        }
-        $filter['goods_id|in'] = $tmp;
-        $filter['name|has'] = $serach['name'];
-        $filter['gid'] = $serach['gid'];
+
         $filter['store_id'] =  $this->store['store_id'];
         $filter['seller_id'] = $this->seller['seller_id'];
         $goodsList = $this->mGoods->getList('*', $filter);
@@ -93,21 +94,21 @@ class seller_ctl_site_goods extends seller_frontpage
         $this->output();
     }
 
-    public function save()
+    public function save($type = null)
 	{
-        $redirect_url = $this->gen_url(array('app' => 'seller', 'ctl' => 'site_goods', 'act' => 'index'));
+        $redirect_url = $this->gen_url(array('app' => 'seller', 'ctl' => 'site_goods', 'act' => $type ? 'add' : 'index'));
         if(!$_POST) $this->splash(false, $redirect_url, '非法请求');
         $goods_data = vmc::singleton('seller_goods_data');
         //检查是否填写了商品编号没有生成有检查是否重复
         $goods = $goods_data->_prepare_goods_data($_POST);
         $return = $goods_data->checkin($goods);
+
         if($return){
             $this->splash('error', '',$return);
         }
         //$this->_price($_POST);
         $goods['seller_id'] = $this->seller['seller_id'];
         $goods['checkin'] = '1';
-        $goods['marketable'] = 'false';
         $goods['store_id'] = $this->store['store_id'];
         if(!$this->mGoods->save($goods)){
             $this->splash('error', $redirect_url, '商品添加失败');
@@ -157,8 +158,15 @@ class seller_ctl_site_goods extends seller_frontpage
     }
 
     //价格修改
-    private function _price(){
+    public function price(){
+        $this->output();
+        
+    }
 
+    //价格修改记录
+    public function modify_record(){
+        $this->output();
+        
     }
 
     private function _editor()

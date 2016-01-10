@@ -10,41 +10,81 @@
 // | Author: Shanghai ChenShang Software Technology Co., Ltd.
 // +----------------------------------------------------------------------
 
-class b2c_ctl_site_list extends b2c_frontpage
-{
+class b2c_ctl_site_list extends b2c_frontpage {
+
     public $title = '商品列表';
-    public function __construct(&$app)
-    {
+
+    public function __construct(&$app) {
         parent::__construct($app);
         $this->app = $app;
         $this->_response->set_header('Cache-Control', 'no-store');
         $this->set_tmpl('list');
     }
-    public function index($fix_brand = false)
-    {
-        if(isset($_POST['keywords']) && !empty($_POST['keywords'])) $keywords = $_POST['keywords'];
+
+    public function index($fix_brand = false) {
         $params = utils::_filter_input($_GET);
+        //顶部搜索框显示
+        $this->pagedata['search_type'] = $params['type'];
+        $this->pagedata['search_keywords'] = $params['keywords'];
+        $this->pagedata['search_having'] = $params['having'];
+        //>>
+        if ($params['type'] == 'goods') {
+            $params['keywords'] = $params['keywords'];
+        } else if ($params['search_type'] == 'store') {
+            //按店铺搜索
+        }
+       
+        $this->handle_params($params);
         $datasetting = vmc::singleton('b2c_view_datasetting');
         $cat_setting = $datasetting->goods_list_cat();
         $params['cat_id'] = $params['cat_id'] ? $params['cat_id'] : 0;
         $cat_title = '一级分类';
         foreach ($cat_setting as $key => $value) {
-            if($value['parent_id'] == $params['cat_id']){
-                if($value['cat_lv'] == 2){
+            if ($value['parent_id'] == $params['cat_id']) {
+                if ($value['cat_lv'] == 2) {
                     $cat_title = '二级分类';
-                }else if($value['cat_lv'] == 3){
-                    $cat_title = '三级分类';
+                    $cat_id = $params['cat_id'];
                 }
                 $this->pagedata['cat_title'] = $cat_title;
                 break;
             }
         }
+        foreach ($cat_setting as $key => $value) {
+            if ($value['id'] == $params['cat_id']) {
+                foreach ($cat_setting as $k => $v) {
+                    if ($value['parent_id'] == $v['id']) {
+                        $search_info['cat'][] = array(
+                            'id' => $v['id'],
+                            'name' => $v['name']);
+                        break;
+                    }
+                }
+                $search_info['cat'][] = array(
+                    'id' => $value['id'],
+                    'name' => $value['name']);
+                break;
+            }
+        }
+        $datasetting->list_search($search_info, $params);
+        $this->pagedata['search_info'] = $search_info;
         $this->pagedata['cat'] = $cat_setting;
-        $this->pagedata['cat_id'] = $params['cat_id'];
+        $this->pagedata['params'] = $params;
         $query_str = $this->_query_str($params);
         $this->pagedata['query'] = $this->_query_str($params, 0);
+
+        $this->pagedata['selector'] = array(
+            'cat' => '分类',
+            'brand' => '品牌',
+            'price' => '价格',
+            'origin' => '产地',
+            'weight' => '重量'
+        );
         $params = $this->_params_decode($params);
         $filter = $params['filter'];
+        if ($cat_id) {
+            $filter['parent_id'] = $cat_id;
+            unset($filter['cat_id']); //一级分类下显示所属子分类的全部商品
+        }
         // if (!$fix_brand && $filter['cat_id']) {
         //     $mdl_cat = $this->app->model('goods_cat');
         //     $cat_info = $mdl_cat->dump($filter['cat_id']);
@@ -56,12 +96,13 @@ class b2c_ctl_site_list extends b2c_frontpage
         // } elseif($fix_brand) {
         //     $filter['brand_id'] = $fix_brand;
         // }
-         $goods_list = $this->_list($filter, $params['page'], $params['orderby'], $keywords);
-         $store_obj = vmc::singleton('store_store_object');
-         foreach ($goods_list['data'] as $key => $value) {
-             $goods_list['data'][$key]['store_info'] = $store_obj->store_info($value['store_id']);
-         }
-         $this->pagedata['data_list'] = $goods_list['data'];
+        $goods_list = $this->_list($filter, $params['page'], $params['orderby'], $params['keywords']);
+
+        $store_obj = vmc::singleton('store_store_object');
+        foreach ($goods_list['data'] as $key => $value) {
+            $goods_list['data'][$key]['store_info'] = $store_obj->store_info($value['store_id']);
+        }
+        $this->pagedata['data_list'] = $goods_list['data'];
         $this->pagedata['count'] = $goods_list['count'];
         $this->pagedata['all_count'] = $goods_list['all_count'];
         // $this->pagedata['pager'] = $goods_list['page_info'];
@@ -88,15 +129,27 @@ class b2c_ctl_site_list extends b2c_frontpage
         // $this->generate_seo_data();
         $this->page('site/list/index.html');
     }
+
+    //商品列表页筛选参数处理
+    private function handle_params($params) {
+        $filter = array(
+            'cat_id' => '',
+            'brand_id' => '',
+            'price_id' => '',
+            'weight_id' => '',
+            'origin_id' => '',
+        );
+        return array_merge($filter, $params);
+    }
+
     //获取商品列表，包装商品列表
-    private function _list($filter, $page, $orderby, $keywords)
-    {
-        $cache_key =  utils::array_md5(func_get_args());
-        if(cachemgr::get($cache_key, $return)){
+    private function _list($filter, $page, $orderby, $keywords) {
+        $cache_key = utils::array_md5(func_get_args());
+        if (cachemgr::get($cache_key, $return)) {
             return $return;
         }
         cachemgr::co_start();
-        if($keywords){
+        if ($keywords) {
             $goods_keywords = $this->app->model('goods_keywords');
             $goods = $goods_keywords->getList('goods_id', array('keyword|has' => $keywords, 'res_type' => 'goods'));
             foreach ($goods as $key => $value) {
@@ -113,30 +166,30 @@ class b2c_ctl_site_list extends b2c_frontpage
         }
         $obj_goods_stage->gallery($goods_list); //引用传递
         $total = $mdl_goods->count($filter);
-
-        $return  = array(
+        $return = array(
             'data' => $goods_list,
-            'count' => count($goods_list) ,
-            'all_count' =>$total,
+            'count' => count($goods_list),
+            'all_count' => $total,
             'page_info' => array(
-                'total' => ($total ? ceil($total / $page['size']) : 1) ,
+                'total' => ($total ? ceil($total / $page['size']) : 1),
                 'current' => intval($page['index']),
             ),
         );
         cachemgr::set($cache_key, $return, cachemgr::co_end());
+        //print_r($return['data']);
         return $return;
     }
-    private function _query_str($params, $nopage = true)
-    {
+
+    private function _query_str($params, $nopage = true) {
         if ($nopage) {
             unset($params['page']);
         }
 
         return http_build_query($params);
     }
+
     //配置参数
-    private function _params_decode($params)
-    {
+    private function _params_decode($params) {
         //排序
         $orderby = str_replace('-', ' ', $params['orderby']);
         unset($params['orderby']);
@@ -147,7 +200,7 @@ class b2c_ctl_site_list extends b2c_frontpage
         unset($params['page_size']);
         //价格区间
         if ($params['price_min'] || $params['price_max']) {
-            $params['price'] = ($params['price_min'] ? $params['price_min'] : '0').'~'.($params['price_max'] ? $params['price_max'] : '99999999');
+            $params['price'] = ($params['price_min'] ? $params['price_min'] : '0') . '~' . ($params['price_max'] ? $params['price_max'] : '99999999');
         }
         unset($params['price_min']);
         unset($params['price_max']);
@@ -163,14 +216,15 @@ class b2c_ctl_site_list extends b2c_frontpage
 
         return $params;
     }
+
     /*
      * 设置列表页SEO
      *
      * */
-    private function generate_seo_data()
-    {
 
-        if(isset($this->seo_info) && !empty($this->seo_info) && !empty($this->seo_info['seo_title'])){
+    private function generate_seo_data() {
+
+        if (isset($this->seo_info) && !empty($this->seo_info) && !empty($this->seo_info['seo_title'])) {
 
             $this->title = $this->seo_info['seo_title'];
             $this->keywords = $this->seo_info['seo_keywords'];
@@ -181,19 +235,19 @@ class b2c_ctl_site_list extends b2c_frontpage
 
 
         $pagedata = $this->pagedata;
-        $cat_path =array();
+        $cat_path = array();
         $cat = array();
         $brand = array();
-        if(isset($pagedata['cat_path'])){
+        if (isset($pagedata['cat_path'])) {
             foreach ($pagedata['cat_path'] as $key => $value) {
                 $cat_path[] = $value['title'];
             }
         }
-        if(empty($cat_path)){
+        if (empty($cat_path)) {
             $cat_path = array('全部分类');
         }
 
-        if(isset($pagedata['data_screen'])){
+        if (isset($pagedata['data_screen'])) {
             foreach ($pagedata['data_screen'] as $key => $value) {
                 switch ($key) {
                     case 'cat_id':
@@ -206,12 +260,28 @@ class b2c_ctl_site_list extends b2c_frontpage
             }
         }
         $seo_data = array(
-            'goods_cat' => implode('_',$cat),//ENV_goods_cat
-            'goods_cat_path' =>implode('_',$cat_path),//ENV_goods_cat_path
-            'goods_brand' => implode('_',$brand),//ENV_goods_brand
+            'goods_cat' => implode('_', $cat), //ENV_goods_cat
+            'goods_cat_path' => implode('_', $cat_path), //ENV_goods_cat_path
+            'goods_brand' => implode('_', $brand), //ENV_goods_brand
         );
 
         $this->setSeo('site_list', 'index', $seo_data);
+    }
+
+    /**
+     * 相关商品
+     */
+    public function goods_rate() {
+        $goods_api = vmc::singleton('b2c_source_goods');
+        return $goods_api->goods_rate($_GET);
+    }
+
+    /**
+     * 商品促销
+     */
+    public function promotions() {
+        $goods_api = vmc::singleton('b2c_source_goods');
+        return $goods_api->promotions($_GET);
     }
 
 }

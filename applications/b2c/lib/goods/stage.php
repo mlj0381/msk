@@ -58,11 +58,11 @@ class b2c_goods_stage
             //商品评分
             $goods_list[$k]['mark_star'] = isset($goods_avg_mark[$k]) ? $goods_avg_mark[$k]['num'] : 5;
 
-            if ($goods_list[$k]['product'] && !empty($goods_list[$k]['product']['image_id'])) {
-                $goods_list[$k]['image_default_id'] = $goods_list[$k]['product']['image_id'];
-            }else{
-                $goods_list[$k]['product']['image_id'] = $goods_list[$k]['image_default_id'];
-            }
+            // if ($goods_list[$k]['product'] && !empty($goods_list[$k]['product']['image_id'])) {
+            //     $goods_list[$k]['image_default_id'] = $goods_list[$k]['product']['image_id'];
+            // }else{
+            //     $goods_list[$k]['product']['image_id'] = $goods_list[$k]['image_default_id'];
+            // }
 
             if ($lv_discount) {
                 //会员价

@@ -1,0 +1,95 @@
+<div id="baseinfo">
+<h4>基本信息</h4>
+    <input name="goods[goods_id]" value="<{$goods.goods_id}>" type="hidden" />
+    <div class="form-group">
+        <label class="col-xs-2 control-label"><span>商品类目</span></label>
+        <div class="col-xs-5">
+            <select class="form-control">
+                <option>请选择</option>
+                <option>鸡肉类</option>
+                <option>鸭肉类</option>
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-xs-2 control-label"><span>所属品牌</span></label>
+        <div class="col-xs-5">
+            <select class="form-control">
+                <option value="">神农客</option>
+                <option value="">美侍客</option>
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-xs-2 control-label"><span>商品编号</span></label>
+        <div class="col-xs-5">
+            <input type="text" value="<{$goods.gid}>" name="goods[gid]" placeholder="不填则系统自动生成" class="form-control">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-xs-2 control-label"><span>商品名称</span></label>
+        <div class="col-xs-5">
+            <input type="text" name="goods[name]" value="<{$goods.name}>" placeholder="请输入商品名称" class="form-control" required>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-xs-2 control-label"><span>文字描述</span></label>
+        <div class="col-xs-5">
+            <input type="text" value="<{$goods.brief}>" name="goods[brief]" placeholder="请输文字描述" class="form-control">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-xs-2 control-label"><span>关键词</span></label>
+        <div class="col-xs-5">
+            <div class="goods_keywords_box">
+                <input type="text" id="goods_keywords_input" name="keywords" value="" style="display: none;">
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-xs-2 control-label"><span>产品相册</span></label>
+        <{input type="siteimagearray" name="goods[images]" default="image_default" default_val=$goods.image_default_id value=$goods.images}>
+    </div>
+    
+
+    <!-- <{if !$goods.spec_desc && !count($goods.spec_desc)> 0}>
+        <div class="form-group">
+            <label class="col-xs-2 control-label"><span>商品信息</span></label>
+            <div class="col-xs-5">
+                <div class="goods_infobox" id="no_spec">
+                    <dl>
+                        <dd><span class="text-danger">*</span>货号</dd>
+                        商品编号 SKC
+                        <dt>
+                            <input type="text" id="goods_gid" data-map='bn' value="<{$goods.product.bn}>" name="goods[product][new_0][bn]" class="form-control input_bianhao">
+                        </dt>
+                    </dl>
+                    <input type="hidden" name="goods[product][new_0][marketable]" value="true">
+                    <dl>
+                        <dd>条码</dd>
+                        SKU
+                        <dt>
+                            <input class="form-control form-control" value="<{$product.barcode}>" name="goods[product][new_0][barcode]" data-map='barcode' required="1" type="text">
+                        </dt>
+                    </dl>
+                    <p class="clearfix"></p>
+                    <div class="row">
+                        <div class="col-xs-4">
+                            销售价
+                            <input type="text" class=" form-control input_xsj" data-map='price' value="<{$product.mktprice}>" name="goods[product][new_0][mktprice]">
+                        </div>
+                        <div class="col-xs-4">
+                            重量
+                            <input type="text" class="form-control input_weight" data-map='weight' type="text" value="<{$product.weight}>" name="goods[product][new_0][weight]">
+                        </div>
+                        <div class="col-xs-4">
+                            单位
+                            <input type="text" class="form-control input_danwei" data-map='unit' value="<{$product.unit|default:'件'}>" name="goods[product][new_0][unit]">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <{/if}> -->
+        <hr>
+</div>

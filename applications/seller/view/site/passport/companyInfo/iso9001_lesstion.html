@@ -1,0 +1,66 @@
+<div id="iso9001_lesstion">
+	<h4>ISO9001质量管理体系认证证书</h4>	
+	<div class="form-group">
+		<label class="col-xs-2 control-label">
+			证书编号：
+		</label>
+		<div class="col-xs-4">
+			<input type="text" value="<{$extra.iso9001_lesstion.value.code}>" name="iso9001_lesstion[value][code]" class="form-control">
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-xs-2 control-label">
+			认证标准：
+		</label>
+		<div class="col-xs-4">
+			<input type="text" value="<{$extra.iso9001_lesstion.value.stand}>" name="iso9001_lesstion[value][stand]" class="form-control">
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-xs-2 control-label">
+			认证范围：
+		</label>
+		<div class="col-xs-4">
+			<input type="text" value="<{$extra.iso9001_lesstion.value.range}>" name="iso9001_lesstion[value][range]" class="form-control">
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-xs-2 control-label">
+			发证日期：
+		</label>
+		<div class="col-xs-4">
+			<input type="text" value="<{$extra.iso9001_lesstion.value.grant_date}>" name="iso9001_lesstion[value][grant_date]" class="form-control">
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-xs-2 control-label">
+			营业期限：
+		</label>
+		<div class="col-xs-4">
+			<input type="text" value="<{$extra.iso9001_lesstion.value.limit.start}>" name="iso9001_lesstion[value][limit][start]" class="form-control" style="width:175px; display: inline-block;"> 至 
+			<input type="text" value="<{$extra.iso9001_lesstion.value.limit.end}>" name="iso9001_lesstion[value][limit][end]" class="form-control"  style="width:175px; display: inline-block;">
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-xs-2 control-label">
+			认证机构：
+		</label>
+		<div class="col-xs-4">
+			<input type="text" value="<{$extra.iso9001_lesstion.value.approve_org}>" name="iso9001_lesstion[value][approve_org]" class="form-control">
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-xs-2 control-label">
+			证书电子版：
+		</label>
+		<div class="col-xs-4">
+			<div class="filebox">
+	            <input type="hidden" value="<{$extra.iso9001_lesstion.value.attach}>" name="iso9001_lesstion[value][attach]"/>
+	            <input type="file" data-url="<{link app=image ctl=site_upload act=index}>" accept="image/*" class="file_input" />
+	            <div class="showImg">
+	                 <img src="<{if $company.business_license_image eq ''}><{$base_url}>/themes/pc/default/statics/images/file_add.jpg<{else}><{$company.business_license_image|storager:'xs'}><{/if}>">    
+	            </div>
+	        </div>
+		</div>
+	</div>
+</div>

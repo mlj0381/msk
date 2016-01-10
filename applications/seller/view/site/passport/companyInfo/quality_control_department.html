@@ -1,0 +1,18 @@
+
+<div id="quality_control_department">
+	<h4>质量控制系统</h4>
+	<div class="form-group">
+		<label class="col-xs-2 control-label">
+			质量控制系统图：
+		</label>
+		<div class="col-xs-4">
+			<div class="filebox">
+	            <input type="hidden" value="<{$extra.quality_control_department.value.attach}>" name="quality_control_department[value][attach]"/>
+	            <input type="file" data-url="<{link app=image ctl=site_upload act=index}>" accept="image/*" class="file_input" />
+	            <div class="showImg">
+	                 <img src="<{if $company.business_license_image eq ''}><{$base_url}>/themes/pc/default/statics/images/file_add.jpg<{else}><{$company.business_license_image|storager:'xs'}><{/if}>">    
+	            </div>
+	        </div>
+		</div>
+	</div>
+</div>

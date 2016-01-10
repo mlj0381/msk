@@ -1,8 +1,8 @@
-<div class="page-header">
+<!-- <div class="page-header">
     <h1>我的收藏夹
         <small>My Favorites</small>
     </h1>
-</div>
+</div> -->
 <div class="glist-container">
     <div class="fav_nav">
         <span>
@@ -11,7 +11,180 @@
         </span>
         <p>共<small><{$favorite_count}></small>项收藏</p>
     </div>
-    <div class="row goods-list gl-default">
+    <div class="fav_con">
+        <!-- 商品收藏 -->
+        <div class="fav_goods">
+            <div class="fav_g_nav clearfix">
+                <ul>
+                    <li class="active">全部商品</li>
+                    <li>同店商品</li>
+                    <li>降价商品</li>
+                    <li>失效商品</li>
+                </ul>
+                <div class="fav_g_ctr">
+                    <span class="ctr_group">
+                        <button class="btn-danger hidden gray compare_start" disabled>开始对比</button>
+                        <button class="btn-danger hidden compare_cancel">取消对比</button>
+                        <button class="btn-danger g_compare">商品对比</button>
+                    </span>
+                    <span class="ctr_group">
+                        <button class="btn-danger ck_all hidden" data-check="false">全选/全不选</button>
+                        <button class="btn-danger manage_del hidden">删除</button>
+                        <button class="btn-danger manage_addCart hidden">加入购物车</button>
+                        <button class="btn-danger manage_cancel hidden">取消管理</button>
+                        <button class="btn-danger manage_batch">批量管理</button>
+                    </span>
+                    <form class="form-inline">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="请输入商品名称">
+                                <span class="input-group-addon"><i class="icon-search"></i></span>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="fav_g_con clearfix">
+                <div class="row gl_item_box clearfix">
+                    <{foreach from=$data.goods item=item}>
+                    <{if $item.object_type == 'goods'}>
+                    <div class="col-xs-3 fav-item">
+                        <div class="thumbnail goods-item">
+                            <div class="g_checker">
+                                <span class="icon"></span>
+                            </div>
+                            <div class="gi-image-wrapper">
+                                <a href="<{link app=b2c ctl=site_product args0=$item.product_id}>">
+                                    <img src="<{$item.image_default_id|storager:'s'}>" alt="<{$item.goods_name}>">
+                                </a>
+                            </div>
+                            <div class="caption">
+                                <h3 class="g-name"><a href="<{link app=b2c ctl=site_product args0=$item.product_id}>"><{$item.goods_name}></a></h3>
+                                <ul class="list-inline">
+                                    <{if 0 && $member_lv_discount && $member_lv_discount>0 }>
+                                    <li class="text-muted"><small>￥</small><{$item.goods_price|cur}></li>
+                                    <li class="price-1 text-danger"><{$member_lv_name}>价：<small>￥</small><{$item.mem_price|cur}></li>
+                                    <{else}>
+                                    <li class="price-1 text-danger"><small>￥</small><{$item.goods_price|cur}></li>
+                                    <{/if}>
+                                </ul>
+                                <p>
+                                    <a class="btn btn-xs btn-default remove-fav" href="<{link app=b2c ctl=site_member act=favorite args0=del args1=$item.goods_id}>">
+                                        <i class="glyphicon glyphicon-trash"></i> 从收藏夹删除
+                                    </a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <{/if}>
+                    <{/foreach}>
+                </div>
+                <div>2</div>
+                <div>3</div>
+                <div>4</div>
+            </div>
+
+        </div>
+        <!-- 商品收藏结束 -->
+
+        <!-- 店铺收藏 -->
+        <div class="fav_shop">
+            <div class="fav_s_nav clearfix">
+                <ul>
+                    <li class="active">全部店铺</li>
+                    <li>新店</li>
+                    <li>优惠店</li>
+                    <li>常逛店</li>
+                </ul>
+                <div class="fav_g_ctr">
+                    <span class="ctr_group">
+                        <button class="btn-danger s_ck_all hidden" data-check="false">全选/全不选</button>
+                        <button class="btn-danger s_manage_del hidden">删除</button>
+                        <button class="btn-danger s_manage_cancel hidden">取消管理</button>
+                        <button class="btn-danger s_manage_batch">批量管理</button>
+                    </span>
+                    <form class="form-inline">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="请输入商品名称">
+                                <span class="input-group-addon"><i class="icon-search"></i></span>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="fav_s_con clearfix">
+                <div>
+                    <{foreach from=$data.store item=item}>
+                    <div class="row shop_item">
+                        <div class="col-xs-1">
+                            <input type="checkbox" class="shop_check">
+                        </div>
+                        <div class="col-xs-5">
+                            <div class="shop_info">
+                                <a href="<{link app=store ctl=site_store act=index args0=$item.goods_id}>" class="shop_logoimg">
+                                    <img src="<{$base_url}>/themes/pc/default/statics/images/shop_logo.png">
+                                </a>
+                                <div class="shop_about">
+                                    <a href="<{link app=store ctl=site_store act=index args0=$item.goods_id}>" class="shop_name"><{$item.goods_name}></a>
+                                    <div class="add_remarks">
+                                        <p><i class="icon-pencil"></i><span class="add_bz_btn">添加备注</span></p>
+                                        <form class="hide">
+                                            <div class="input-group">
+                                                <input type="text" class="form-control" placeholder="输入备注">
+                                                <span class="input-group-btn">
+                                                    <button class="btn btn-default" type="button">确定</button>
+                                                </span>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="add_shopTag" data-id="<{$item.gnotify_id}>">
+                                        <p><i class="icon-tag"></i><span class="add_tag_btn">添加店铺标签 </span></p>
+                                        <div class="creat_tagbox hide">
+                                            <h4><i class="icon-folder-open"></i>分类到</h4>
+                                            <ul>
+                                                <{foreach from=$tag item=tag}>
+                                                <li>
+                                                    <input name="tag_id[]"
+                                                           <{if $item.tag[$tag.tag_id]}> checked<{/if}>
+                                                           type="checkbox" value="<{$tag.tag_id}>"/>
+                                                    <{$tag.tag_name}>
+                                                </li>
+                                                <{/foreach}>
+                                            </ul>
+                                            <p class="creat_class"><i class="icon-plus"></i>新建分类</p>
+                                            <form class="hide">
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control" placeholder="请输入分类名称">
+                                                    <span class="input-group-btn">
+                                                        <button class="btn btn-default" type="button">创建</button>
+                                                    </span>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-5"></div>
+                        <div class="col-xs-1">
+                            <a href="<{link app=store ctl=site_store act=index args0=$item.goods_id}>" class="btn btn-sm btn-danger">进店逛逛</a>
+                            <a href="<{link app=b2c ctl=site_member act=favorite args0=del args1=$item.goods_id}>" class="btn btn-sm btn-danger">删除店铺</a>
+                        </div>
+                    </div>
+                    <{/foreach}>
+                </div>
+                <div>2</div>
+                <div>3</div>
+                <div>4</div>
+            </div>
+        </div>
+        <!-- 商品收藏结束 -->
+    </div>
+    <!-- <div class="row goods-list gl-default">
         <div class="gl_item_box">
             <{foreach from=$data item=item}>
             <{if $item.object_type == 'goods'}>
@@ -43,7 +216,7 @@
                 <{/if}>
             <{/foreach}>
         </div>
-        <!-- 店铺收藏列表 -->
+        店铺收藏列表
         <div class="gl_item_box">
             <{foreach from=$data item=item}>
             <{if $item.object_type == 'store'}>
@@ -67,21 +240,335 @@
                 <{/if}>
             <{/foreach}>
         </div>
-        <!--END 店铺收藏列表 -->
+        END 店铺收藏列表
+    </div> -->
+    <!-- 热卖单品 -->
+    <div class="best_sellers">
+        <div class="hd">
+            <span class="lm_title">热卖单品</span>
+            <span class="btns">
+                <a class="prev icon-angle-left"></a>
+                <a class="next icon-angle-right"></a>
+            </span>
+        </div>
+        <div class="bd">
+            <ul class="picList">
+                <li>
+                    <div class="title"><a href="#" target="_blank">正宗宁夏滩羊肉</a></div>
+                    <div class="pic"><a href="#" target="_blank"><img src="<{$base_url}>/themes/pc/default/statics/images/bestsellers.jpg" /></a></div> 
+                </li>
+                <li>
+                    <div class="title"><a href="#" target="_blank">正宗宁夏滩羊肉</a></div>
+                    <div class="pic"><a href="#" target="_blank"><img src="<{$base_url}>/themes/pc/default/statics/images/bestsellers_01.jpg" /></a></div> 
+                </li>
+                <li>
+                    <div class="title"><a href="#" target="_blank">正宗宁夏滩羊肉</a></div>
+                    <div class="pic"><a href="#" target="_blank"><img src="<{$base_url}>/themes/pc/default/statics/images/bestsellers_02.jpg" /></a></div> 
+                </li>
+                <li>
+                    <div class="title"><a href="#" target="_blank">正宗宁夏滩羊肉</a></div>
+                    <div class="pic"><a href="#" target="_blank"><img src="<{$base_url}>/themes/pc/default/statics/images/bestsellers_03.jpg" /></a></div> 
+                </li>
+                <li>
+                    <div class="title"><a href="#" target="_blank">正宗宁夏滩羊肉</a></div>
+                    <div class="pic"><a href="#" target="_blank"><img src="<{$base_url}>/themes/pc/default/statics/images/bestsellers_04.jpg" /></a></div> 
+                </li>
+                <li>
+                    <div class="title"><a href="#" target="_blank">正宗宁夏滩羊肉</a></div>
+                    <div class="pic"><a href="#" target="_blank"><img src="<{$base_url}>/themes/pc/default/statics/images/bestsellers_04.jpg" /></a></div> 
+                </li>
+                <li>
+                    <div class="title"><a href="#" target="_blank">正宗宁夏滩羊肉</a></div>
+                    <div class="pic"><a href="#" target="_blank"><img src="<{$base_url}>/themes/pc/default/statics/images/bestsellers_01.jpg" /></a></div> 
+                </li>
+            </ul>
+        </div>
     </div>
+    <script type="text/javascript">
+        jQuery(".best_sellers").slide({titCell: ".hd ul", mainCell: ".bd ul", autoPage: true, effect: "left", autoPlay: false, vis: 6, trigger: "click"});
+    </script>
+    <!-- 热卖单品结束 -->
+
+    <!-- 猜你喜欢 -->  
+    <div class="cnxh">
+        <div class="hd">
+            <span class="lm_title">猜你喜欢</span>
+            <span class="btns">
+                <a class="prev icon-angle-left"></a>
+                <a class="next icon-angle-right"></a>
+            </span>
+        </div>
+        <div class="bd">
+            <ul class="picList">
+                <li>
+                    <div class="title"><a href="#" target="_blank">正宗宁夏滩羊肉</a></div>
+                    <div class="pic"><a href="#" target="_blank"><img src="<{$base_url}>/themes/pc/default/statics/images/bestsellers.jpg" /></a></div> 
+                </li>
+                <li>
+                    <div class="title"><a href="#" target="_blank">正宗宁夏滩羊肉</a></div>
+                    <div class="pic"><a href="#" target="_blank"><img src="<{$base_url}>/themes/pc/default/statics/images/bestsellers_01.jpg" /></a></div> 
+                </li>
+                <li>
+                    <div class="title"><a href="#" target="_blank">正宗宁夏滩羊肉</a></div>
+                    <div class="pic"><a href="#" target="_blank"><img src="<{$base_url}>/themes/pc/default/statics/images/bestsellers_02.jpg" /></a></div> 
+                </li>
+                <li>
+                    <div class="title"><a href="#" target="_blank">正宗宁夏滩羊肉</a></div>
+                    <div class="pic"><a href="#" target="_blank"><img src="<{$base_url}>/themes/pc/default/statics/images/bestsellers_03.jpg" /></a></div> 
+                </li>
+                <li>
+                    <div class="title"><a href="#" target="_blank">正宗宁夏滩羊肉</a></div>
+                    <div class="pic"><a href="#" target="_blank"><img src="<{$base_url}>/themes/pc/default/statics/images/bestsellers_04.jpg" /></a></div> 
+                </li>
+                <li>
+                    <div class="title"><a href="#" target="_blank">正宗宁夏滩羊肉</a></div>
+                    <div class="pic"><a href="#" target="_blank"><img src="<{$base_url}>/themes/pc/default/statics/images/bestsellers_04.jpg" /></a></div> 
+                </li>
+                <li>
+                    <div class="title"><a href="#" target="_blank">正宗宁夏滩羊肉</a></div>
+                    <div class="pic"><a href="#" target="_blank"><img src="<{$base_url}>/themes/pc/default/statics/images/bestsellers_01.jpg" /></a></div> 
+                </li>
+            </ul>
+        </div>
+    </div>
+    <script type="text/javascript">
+        jQuery(".cnxh").slide({titCell: ".hd ul", mainCell: ".bd ul", autoPage: true, effect: "left", autoPlay: false, vis: 6, trigger: "click"});
+    </script>
+
+    <!-- 猜你喜欢结束 -->
 </div>
 
+
+
 <script type="text/javascript">
-    $('.remove-fav').on('click',function(e){
+    $('.remove-fav').on('click', function (e) {
         e.stopPropagation();
         var _this = $(this);
-        $.get(_this.prop('href'),function(re){
-            if(re && re.success){
-                _this.closest('.fav-item').fadeOut(function(){
+        $.get(_this.prop('href'), function (re) {
+            if (re && re.success) {
+                _this.closest('.fav-item').fadeOut(function () {
                     $(this).remove();
                 });
             }
-        },'json');
+        }, 'json');
         return false;
     });
+</script>
+
+
+<script type="text/javascript">
+    /**
+     * 商品对比
+     */
+    var select_count = 0;
+    var ck_status;
+
+    //商品对比
+    $('.g_compare').bind('click', function () {
+        $('.g_checker').css('display', 'block');
+        $('.g_compare, .manage_batch').addClass('hidden');
+        $('.compare_start, .compare_cancel').removeClass('hidden');
+    });
+
+    //取消对比
+    $('.compare_cancel').bind('click', function () {
+        $('.g_checker').css('display', 'none');
+        $('.g_checker').find('span').removeClass('selected');
+        $('.compare_start, .compare_cancel').addClass('hidden');
+        $('.g_compare, .manage_batch').removeClass('hidden');
+        select_count = 0;
+    })
+    //开始对比
+    $('.compare_start').bind('click', function () {
+        alert('选择了' + select_count + '个商品');
+    })
+    //选择对比商品
+    $('.g_checker').bind('click', function () {
+
+        ck_status = $(this).find('span').hasClass('selected');
+        ck_status ? select_count-- : select_count++;
+
+        if (select_count >= 2) {
+            $('.compare_start').removeAttr('disabled').removeClass('gray');
+        } else {
+            $('.compare_start').attr('disabled', 'disabled').addClass('gray');
+        }
+
+        $(this).find('span').toggleClass('selected');
+        console.log(select_count);
+    })
+
+    ///////////////////////////////////////////////////////
+
+    //批量管理
+    $('.manage_batch').bind('click', function () {
+        var _par = $(this).parents('.ctr_group');
+        _par.find('button').removeClass('hidden');
+        _par.siblings('.ctr_group').addClass('hidden');
+        $(this).addClass('hidden');
+
+        $('.g_checker').css('display', 'block');
+    })
+
+    //全选
+    $('.ck_all').bind('click', function () {
+        var data_ck = $(this).attr('data-check');
+        if (data_ck == 'false') {
+            $('.g_checker').find('span').addClass('selected')
+            $(this).attr('data-check', 'true');
+            select_count = $('.g_checker').find('span.selected').length;
+        } else {
+            $('.g_checker').find('span').removeClass('selected');
+            $(this).attr('data-check', 'false');
+            select_count = 0;
+        }
+
+    })
+
+    //取消管理
+    $('.manage_cancel').bind('click', function () {
+        $(this).parents('.ctr_group').find('button').addClass('hidden');
+        $(this).parents('.ctr_group').siblings('.ctr_group').removeClass('hidden');
+        $('.manage_batch').removeClass('hidden');
+        $('.g_checker').css('display', 'none');
+        $('.g_checker').find('span').removeClass('selected');
+        select_count = 0;
+    })
+
+    //删除
+    $('.manage_del').bind('click', function () {
+
+    })
+
+
+    /**
+     * 店铺收藏
+     */
+
+    //批量管理
+    $('.s_manage_batch').bind('click', function () {
+        var _par = $(this).parent('.ctr_group');
+        _par.find('button').removeClass('hidden');
+        $(this).addClass('hidden');
+    });
+
+    //取消管理
+    $('.s_manage_cancel').bind('click', function () {
+        var _par = $(this).parent('.ctr_group');
+        _par.find('button').addClass('hidden');
+        $('.s_manage_batch').removeClass('hidden');
+    })
+
+    //全选
+    $('.s_ck_all').bind('click', function () {
+        var data_ck = $(this).attr('data-check');
+
+        if (data_ck == 'false') {
+            $('.shop_check').prop('checked', true);
+            $(this).attr('data-check', 'true');
+        } else {
+            $('.shop_check').prop('checked', false);
+            $(this).attr('data-check', 'false');
+        }
+    });
+
+    function show(showObj) {
+        showObj.removeClass('hide');
+    }
+
+    function hide(hideObj) {
+        hideObj.addClass('hide');
+    }
+
+    //输入框点确定后获取值
+    function getVal(obj) {
+        var val = '';
+        val = $.trim(obj.find('input[type="text"]').val());
+        return val;
+    }
+
+    $('.add_bz_btn').bind('click', function (e) {
+        var form = $(this).parents('p').siblings('form');
+        show(form);
+    })
+
+    $('.add_remarks .input-group-btn button').bind('click', function (e) {
+        var target = e.target || e.srcElement;
+        var form = $(target).parents('form');
+        var inputval = getVal(form);
+        if (inputval != '') {
+            $(target).parents('form').siblings('p').find('.add_bz_btn').text(inputval);
+        }
+        hide(form);
+    })
+
+    //添加店铺标签
+    $('.add_tag_btn').bind('click', function (e) {
+        var form = $(this).parents('p').siblings('.creat_tagbox');
+        show(form);
+        form.find('input[type=text]').val('');
+    })
+
+    $('.creat_class').bind('click', function (e) {
+
+        $(this).addClass('hide').siblings('form').removeClass('hide');
+    })
+
+
+    $('.add_shopTag .input-group-btn button').bind('click', function (e) {
+        var target = e.target || e.srcElement;
+        var form = $(target).closest('form');
+        var tagText = $(form).find('input[type="text"]').val();
+        if (!tagText)
+            return;
+        var url = '<{link app=b2c ctl=site_member act=add_tag}>';
+        $.post(url, {tagText: tagText}, function (re) {
+            var addTag = $(target).closest('.creat_tagbox');
+            var liText = re.success ? tagText : '添加失败，请稍候再试';
+            $(addTag).find('ul').append('<li data-tag=' + re.success + '><input name="tag_id[]" type="checkbox" value="' + re.success + '"/>' + liText + '</li>');
+            $(addTag).on('click', 'input[type="checkbox"]', function(){
+                submitTag($(this));
+            });
+        });
+        
+//        var form = $(target).parents('form');
+//        var inputval = getVal(form);
+//        if(inputval!=''){
+//            var myspan = $(target).parents('.creat_tagbox').siblings('p').find('.add_tag_btn');
+//            myspan.html((myspan.html()).replace(/添加店铺标签/,''))
+//            myspan.append('<div>'+inputval+'<i class="icon-remove"></i></div>');
+//        }
+//        hide($('.creat_tagbox'));
+    });
+
+    $('.creat_tagbox input[type="checkbox"]').click(function () {
+        submitTag($(this));
+    });
+    var submitTag = function(obj){
+        var favId = $(obj).closest('.add_shopTag').attr('data-id');
+        var url = '<{link app=b2c ctl=site_member act=update_tag}>';
+        var type = $(obj).prop('checked') ? 'add' : 'del';
+        $.post(url, {tagId : $(obj).val(), type : type, favId : favId}, function(re){
+            
+        });
+    };
+  
+    $('.add_tag_btn').on('click', 'i', function (e) {
+        var target = e.target || e.srcElement;
+        e.stopPropagation();
+        var taglen = $(target).parents('.add_tag_btn').find('div').size();
+        if (taglen == 1) {
+            $(target).parents('.add_tag_btn').text('添加店铺标签');
+        }
+        $(target).parent('div').remove();
+
+    });
+
+
+
+
+
+
+
+
 </script>

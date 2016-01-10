@@ -15,8 +15,10 @@ class seller_ctl_site_store extends seller_frontpage
 {
     public function __construct(&$app){
         parent::__construct($app);
-        $this->verify();
         $this->app = $app;
+        $this->verify();
+        $this->mStore = app::get('store')->model('store');
+        $this->mComment = app::get('b2c')->model('member_comment');
     }
 
     public function index(){
@@ -29,24 +31,38 @@ class seller_ctl_site_store extends seller_frontpage
     }
     //店铺设置
     public function setting(){
-		$this->output();
+        if($_POST) $this->_setting($_POST);
+        $this->pagedata['store_info'] = app::get('store')->model('store')->getRow('*', array('store_id' => $this->store['store_id']));
+        $this->output();
     }
+    //店铺模板管理
+    public function modal_merg(){
+        $this->output();
+    }
+    
     //修改基本信息
-    public function edit(){
-
+    private function _setting($post){
+        $redirect = $this->gen_url(array('app' => 'seller', 'ctl' => 'site_store', 'act' => 'setting'));
+        $post['store']['store_id'] = $this->store['store_id'];
+		$post['store']['seller_id'] = $this->seller['seller_id'];		
+        if(!$this->mStore->save($post['store']))
+		{			
+            $this->splash('error', $redirect, '修改失败');
+        }
+        $this->splash('success', $redirect, '修改成功');
     }
+    
     //评价
     public function appraisal($comment_type = 'all', $page = 1){
-        if($_POST) $this->_save($_POST);
+        
         $limit = 10;
-        $mdl_order = app::get('b2c')->model('orders');
-        $mdl_mcomment = app::get('b2c')->model('member_comment');
         $mdl_goods_mark = app::get('b2c')->model('goods_mark');
         $filter = array(
-            'store_id'=>$this->store['store_id'],
-            'display'=>'true'
+            'store_id' => $this->store['store_id'],
+            'display' => 'true',
+            'for_comment_id' => '0'
         );
-        if(is_numeric($comment_type)){
+        if (is_numeric($comment_type)) {
             $comment_id = $mdl_goods_mark->getList('comment_id', array('mark_star' => $comment_type));
             $tmp = array();
             foreach ($comment_id as $key => &$value) {
@@ -54,13 +70,14 @@ class seller_ctl_site_store extends seller_frontpage
             }
             $filter['comment_id|in'] = $tmp;
         }
-        $comment_list = $mdl_mcomment->groupList('*',$filter,($page - 1) * $limit, $limit);
-        foreach ($comment_list as $key => &$value) {
-            $order_id = reset($value);
-            $order[$key] = $mdl_order->dump($order_id['order_id'], '*', array('items' => array('*')));
-        }
+        $comment_list_member = $this->mComment->groupList('*', $filter, ($page - 1) * $limit, $limit);
+        unset($filter['for_comment_id']);
+        $filter['for_comment_id|notin'] = 0;
+        $comment_list_seller = $this->mComment->groupList('*', $filter, ($page - 1) * $limit, $limit);
+        $this->pagedata['member_info'] = $this->member;
         $this->pagedata['comment_type'] = $comment_type;
-        $this->pagedata['comment'] = $comment_list;
+        $this->pagedata['comment_member'] = $comment_list_member;
+        $this->pagedata['comment_seller'] = $comment_list_seller;
         $this->pagedata['order'] = $order;
         $this->output();
     }
@@ -106,6 +123,7 @@ class seller_ctl_site_store extends seller_frontpage
         $this->splash('success',$redirect_url, '提交成功');
     }
 
+    //店员设置
     public function clerk_setting(){
         $this->output();
     }

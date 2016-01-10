@@ -35,9 +35,6 @@ class base_view_input{
 
         return $this->input_default($params);
     }
-
-
-
     function input_default($params){
         $ignore = array(
             'password'=>1,

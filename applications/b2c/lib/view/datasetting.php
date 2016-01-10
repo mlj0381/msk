@@ -78,6 +78,9 @@
      }
      public function floor($params)
      {
+         $mdl_goods = app::get('b2c')->model('goods');
+         $mdl_goods->response_goods($params);
+         
          foreach ($this->setting['floor'] as $key => $value) {
              if($value['type'] == $params['type'])
              {
@@ -95,11 +98,6 @@
          }
      }
 
-     public function slider($params)
-     {
-         $image = $this->app->getConf($params['target']);
-         return $image;
-     }
 
      public function show_store($params)
      {
@@ -111,20 +109,37 @@
 
      public function web_nav($params)
      {
-         foreach ($this->setting['webnav'] as $key => $value) {
-             $this->setting['webnav'][$key]['url'] = $this->router->gen_url($value['url']);
-         }
-         return $this->setting['webnav'];
+        $return = app::get('site')->model('map')->get_list('*');
+        foreach ($return as $key => &$value){
+            $order[$key] = $value['ordernum'];
+            foreach($value['son'] as $k => $v){
+                $son_order[$k] = $v['ordernum'];
+            }
+            array_multisort($son_order, SORT_ASC, $value['son']);
+        }
+        array_multisort($order, SORT_ASC, $return);
+        return $return;
      }
-
-     public function goods_list_filter($params)
+     /**
+      * 获取商品属性
+      * @param $params 属性类型
+      */
+     public function goods_list_filter($params, $type = true)
      {
          foreach($this->setting['filter'] as $key => $value)
          {
-             if($key == $params['target'])
-             {
-                 $value['filter'] = $params['filter'];
-                 return $value;
+             if($key == $params['target']){
+                 if($type){
+                     $value['filter'] = $params['filter'];
+                     $value['active'] = $params['active'];
+                     return $value;
+                 }else{
+                     foreach ($value['item'] as $k => $v) {
+                         if($v['id'] == $params['id']){
+                             return $v['name'];
+                         }
+                     }
+                 }
              }
          }
      }
@@ -154,4 +169,61 @@
          return $return;
      }
 
+     //商品列表页按属性搜索获取单个属性值
+     public function list_search(&$search_info, $params)
+     {
+        if($params['keywords'])  unset($params['keywords']);
+        unset($params['type']);
+        unset($params['having']);
+        foreach ($params as $key => $id) {
+            $query = $params;
+            unset($query[$key]);
+            $target = array_shift(explode('_', $key));
+            $label = $this->goods_list_filter(compact('target', 'id'), false);
+            $url = http_build_query($query);
+            $search_info['prop'][$target] = compact('id', 'label' ,'url');
+        }
+        unset($search_info['prop']['cat']);
+     }
+     
+     //网页底部内容管理
+     public function index_footer(){
+        $mdl_content = app::get('content')->model('article_nodes');
+        $data = $mdl_content->fetch_all();
+        $return = array();
+        $items = array();
+        foreach($data as $value){
+            $items[$value['node_id']] = $value;
+        }
+        unset($data);
+        foreach($items as  $item){
+            if(isset($items[$item['parent_id']])){
+                $items[$item['parent_id']]['son'][] = &$items[$item['node_id']];
+            }else{
+                $return[] = &$items[$item['node_id']];
+            }
+        }
+        return $return;
+     }
+     
+     /*
+      * 获取基础数据
+      */
+     public function basic($params){
+         $params['member_id'] = vmc::singleton('b2c_user_object')->get_member_id();
+         $return = array();
+         foreach(vmc::servicelist('index_basic_api') as $k => $object){
+             $return[end(explode('_', $k))] = $object->basic($params);
+         }
+         return $return;
+     }
+     
+     /*
+      * 获取广告数据
+      */
+     public function advertising($params){
+         $advertising_api = vmc::singleton('b2c_source_advertising');
+         return $advertising_api->read_advertising($params);
+     }
+     
  }
