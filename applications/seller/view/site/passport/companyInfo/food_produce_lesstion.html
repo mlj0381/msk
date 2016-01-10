@@ -6,7 +6,7 @@
 			证书编号：
 		</label>
 		<div class="col-xs-4">
-			<input type="text" name="food_produce_lesstion[value][code]" class="form-control">
+			<input type="text" value="<{$extra.food_produce_lesstion.value.code}>" name="food_produce_lesstion[value][code]" class="form-control">
 		</div>
 	</div>
 
@@ -15,8 +15,8 @@
 			有效期：
 		</label>
 		<div class="col-xs-4">
-			<input type="text" name="food_produce_lesstion[value][validity_start]" class="form-control" style="width:175px; display: inline-block;"> 至 
-			<input type="text" name="food_produce_lesstion[value][validity_end]" class="form-control"  style="width:175px; display: inline-block;">
+			<input type="text" value="<{$extra.food_produce_lesstion.value.validity_start}>" name="food_produce_lesstion[value][validity_start]" class="form-control" style="width:175px; display: inline-block;"> 至 
+			<input type="text" value="<{$extra.food_produce_lesstion.value.validity_end}>" name="food_produce_lesstion[value][validity_end]" class="form-control"  style="width:175px; display: inline-block;">
 		</div>
 	</div>
 
@@ -26,7 +26,7 @@
 		</label>
 		<div class="col-xs-4">
 			<div class="filebox">
-	            <input type="hidden" value="food_produce_lesstion[value][attach]" name=""/>
+	            <input type="hidden" value="<{$extra.food_produce_lesstion.value.attach" name="food_produce_lesstion[value][attach]"/>
 	            <input type="file" data-url="<{link app=image ctl=site_upload act=index}>" accept="image/*" class="file_input" />
 	            <div class="showImg">
 	                 <img src="<{if $company.business_license_image eq ''}><{$base_url}>/themes/pc/default/statics/images/file_add.jpg<{else}><{$company.business_license_image|storager:'xs'}><{/if}>">    

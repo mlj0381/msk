@@ -5,7 +5,7 @@
 			<span class="text-danger">*</span>总资产：
 		</label>
 		<div class="col-xs-4">
-			<input type="text" name="factory[value][general]" class="form-control">
+			<input type="text" value="<{$extra.factory.value.general}>" name="factory[value][general]" class="form-control">
 		</div>
 	</div>
 	<div class="form-group">
@@ -13,7 +13,7 @@
 			<span class="text-danger">*</span>占地面积：
 		</label>
 		<div class="col-xs-4">
-			<input type="text" name="factory[value][soil_area]" class="form-control">
+			<input type="text" value="<{$extra.factory.value.soil_area}>" name="factory[value][soil_area]" class="form-control">
 		</div>
 	</div>
 	<div class="form-group">
@@ -21,7 +21,7 @@
 			<span class="text-danger">*</span>厂房面积：
 		</label>
 		<div class="col-xs-4">
-			<input type="text" name="factory[value][plant_area]" class="form-control">
+			<input type="text" value="<{$extra.factory.value.plant_area}>" name="factory[value][plant_area]" class="form-control">
 		</div>
 	</div>
 	<div class="form-group">
@@ -29,7 +29,7 @@
 			<span class="text-danger">*</span>主要设备：
 		</label>
 		<div class="col-xs-4">
-			<input type="text" name="factory[value][main_device]" class="form-control">
+			<input type="text" value="<{$extra.factory.value.main_device}>" name="factory[value][main_device]" class="form-control">
 		</div>
 	</div>
 	<div class="form-group">
@@ -37,7 +37,7 @@
 			<span class="text-danger">*</span>设计产能：
 		</label>
 		<div class="col-xs-4">
-			<input type="text" name="factory[value][design_capacity]" class="form-control">
+			<input type="text" value="<{$extra.factory.value.design_capacity}>" name="factory[value][design_capacity]" class="form-control">
 		</div>
 	</div>
 	<div class="form-group">
@@ -45,7 +45,7 @@
 			<span class="text-danger">*</span>实际产能：
 		</label>
 		<div class="col-xs-4">
-			<input type="text" name="factory[value][actual_capacity ]" class="form-control">
+			<input type="text" value="<{$extra.factory.value.actual_capacity}>" name="factory[value][actual_capacity ]" class="form-control">
 		</div>
 	</div>
 	<div class="form-group">
@@ -53,7 +53,7 @@
 			<span class="text-danger">*</span>外贸销售占比：
 		</label>
 		<div class="col-xs-4">
-			<input type="text" name="factory[value][foreign_trade]" class="form-control">
+			<input type="text" value="<{$extra.factory.value.foreign_trade}>" name="factory[value][foreign_trade]" class="form-control">
 		</div>
 	</div>
 	<div class="form-group">
@@ -61,7 +61,7 @@
 			<span class="text-danger">*</span>直销占比：
 		</label>
 		<div class="col-xs-4">
-			<input type="text" name="factory[value][direct_selling]" class="form-control">
+			<input type="text" value="<{$extra.factory.value.direct_selling}>" name="factory[value][direct_selling]" class="form-control">
 		</div>
 	</div>
 	<div class="form-group">
@@ -69,7 +69,7 @@
 			<span class="text-danger">*</span>代理销售占比：
 		</label>
 		<div class="col-xs-4">
-			<input type="text" name="factory[value][seller_agency]" class="form-control">
+			<input type="text" value="<{$extra.factory.value.seller_agency}>" name="factory[value][seller_agency]" class="form-control">
 		</div>
 	</div>
 	<div class="form-group">
@@ -78,7 +78,7 @@
 		</label>
 		<div class="col-xs-4">
 			<div class="filebox">
-	            <input type="hidden" value="" name="factory[value][factory][attach]"/>
+	            <input type="hidden" value="<{$extra.factory.value.attach}>" name="factory[value][attach]"/>
 	            <input type="file" data-url="<{link app=image ctl=site_upload act=index}>" accept="image/*" class="file_input" />
 	            <div class="showImg">
 	                 <img src="<{if $company.business_license_image eq ''}><{$base_url}>/themes/pc/default/statics/images/file_add.jpg<{else}><{$company.business_license_image|storager:'xs'}><{/if}>">    
