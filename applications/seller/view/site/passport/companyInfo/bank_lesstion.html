@@ -5,7 +5,7 @@
 			<span class="text-danger">*</span>法定代表人：
 		</label>
 		<div class="col-xs-4">
-			<input type="text" name="bank_lesstion[value][code]" class="form-control">
+			<input type="text" name="bank_lesstion[value][legal]" class="form-control">
 		</div>
 	</div>
 	<div class="form-group">
@@ -13,7 +13,7 @@
 			<span class="text-danger">*</span>开户行：
 		</label>
 		<div class="col-xs-4">
-			<input type="text" name="bank_lesstion[value][code]" class="form-control">
+			<input type="text" name="bank_lesstion[value][name]" class="form-control">
 		</div>
 	</div>
 	<div class="form-group">
@@ -26,11 +26,11 @@
 	</div>
 	<div class="form-group">
 		<label class="col-xs-2 control-label">
-			<span class="text-danger">*</span>银行开户许可证电子版：
+			<span class="text-danger">*</span>银行开户许可证电子版:
 		</label>
 		<div class="col-xs-4">
 			<div class="filebox">
-	            <input type="hidden" value="" name="bank_lesstion[attach]"/>
+	            <input type="hidden" value="" name="bank_lesstion[value][attach]"/>
 	            <input type="file" data-url="<{link app=image ctl=site_upload act=index}>" accept="image/*" class="file_input" />
 	            <div class="showImg">
 	                 <img src="<{if $company.business_license_image eq ''}><{$base_url}>/themes/pc/default/statics/images/file_add.jpg<{else}><{$company.business_license_image|storager:'xs'}><{/if}>">    

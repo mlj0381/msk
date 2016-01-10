@@ -6,7 +6,7 @@
 			注册号：
 		</label>
 		<div class="col-xs-4">
-			<input type="text" name="" class="form-control">
+			<input type="text" name="workshop[value][code]" class="form-control">
 		</div>
 	</div>
 	<div class="form-group">
@@ -14,7 +14,7 @@
 			<span class="text-danger">*</span>车间名称：
 		</label>
 		<div class="col-xs-4">
-			<input type="text" name="" class="form-control">
+			<input type="text" name="workshop[value][name]" class="form-control">
 		</div>
 	</div>
 	<div class="form-group">
@@ -22,7 +22,7 @@
 			<span class="text-danger">*</span>生产产品：
 		</label>
 		<div class="col-xs-4">
-			<input type="text" name="" class="form-control">
+			<input type="text" name="workshop[value][pro]" class="form-control">
 		</div>
 	</div>
 	<div class="form-group">
@@ -30,7 +30,7 @@
 			工艺流程特点：
 		</label>
 		<div class="col-xs-4">
-			<input type="text" name="" class="form-control">
+			<input type="text" name="workshop[value][trait]" class="form-control">
 		</div>
 	</div>
 	<div class="form-group">
@@ -39,7 +39,7 @@
 		</label>
 		<div class="col-xs-4">
 			<div class="filebox">
-	            <input type="hidden" value="" name=""/>
+	            <input type="hidden" value="" name="workshop[value][attach]"/>
 	            <input type="file" data-url="<{link app=image ctl=site_upload act=index}>" accept="image/*" class="file_input" />
 	            <div class="showImg">
 	                 <img src="<{if $company.business_license_image eq ''}><{$base_url}>/themes/pc/default/statics/images/file_add.jpg<{else}><{$company.business_license_image|storager:'xs'}><{/if}>">    

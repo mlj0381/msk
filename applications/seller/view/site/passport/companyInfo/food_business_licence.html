@@ -5,7 +5,7 @@
 			许可证编号：
 		</label>
 		<div class="col-xs-4">
-			<input type="text" name="food_flow_licence" class="form-control">
+			<input type="text" name="food_flow_licence[value][code]" class="form-control">
 		</div>
 	</div>
 	<div class="form-group">
@@ -13,8 +13,8 @@
 			有效期限：
 		</label>
 		<div class="col-xs-4">
-			<input type="text" name="" class="form-control" style="width:175px; display: inline-block;"> 至 
-			<input type="text" name="" class="form-control"  style="width:175px; display: inline-block;">
+			<input type="text" name="food_business_licence[value][date_start]" class="form-control" style="width:175px; display: inline-block;"> 至 
+			<input type="text" name="food_business_licence[value][date_end]" class="form-control"  style="width:175px; display: inline-block;">
 		</div>
 	</div>
 	<div class="form-group">
@@ -23,7 +23,7 @@
 		</label>
 		<div class="col-xs-4">
 			<div class="filebox">
-	            <input type="hidden" value="" name="food_flow_licence"/>
+	            <input type="hidden" value="" name="food_flow_licence[value][attach]"/>
 	            <input type="file" data-url="<{link app=image ctl=site_upload act=index}>" accept="image/*" class="file_input" />
 	            <div class="showImg">
 	                 <img src="<{if $company.business_license_image eq ''}><{$base_url}>/themes/pc/default/statics/images/file_add.jpg<{else}><{$company.business_license_image|storager:'xs'}><{/if}>">    
