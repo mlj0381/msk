@@ -48,7 +48,6 @@ $db['company_extra'] = array(
         ),
         'value' => array(
             'type' => 'serialize',
-            'required' => true,
             'default' => '',
             'label' => '属性值',
             'comment' => '属性值',

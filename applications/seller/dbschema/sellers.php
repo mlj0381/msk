@@ -99,6 +99,12 @@ $db['sellers'] = array(
             'default' => 0,
             'comment' => '身份类型(1生产型\2代理型\4OEM)',
         ),
+		'schedule' => array(
+            'type' => 'number',
+            'label' => '入驻进度',
+            'default' => 0,
+            'comment' => '入驻进度',
+        ),
         'reg_ip' => array(
             'type' => 'varchar(16)',
             'label' => ('注册IP'),

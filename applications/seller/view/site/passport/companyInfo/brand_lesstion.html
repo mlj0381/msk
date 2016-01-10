@@ -1,4 +1,4 @@
-
+<input type="hidden" name="brand_lesstion[content_id]"  value="<{$extra.content_id}>" class="form-control">
 <div id="brand_lesstion">
 	<h4>品牌证书</h4>
 	<div class="form-group">
@@ -6,7 +6,7 @@
 			<span class="text-danger">*</span>品牌名称：
 		</label>
 		<div class="col-xs-4">
-			<input type="text" name="brand_lesstion[value][name]" class="form-control">
+			<input type="text" name="brand_lesstion[value][name]" value="<{$extra.value.name}>" class="form-control">
 		</div>
 	</div>
 	<div class="form-group">
@@ -15,10 +15,10 @@
 		</label>
 		<div class="col-xs-4">
 			<div class="filebox">
-	            <input type="hidden" value="" name="brand_lesstion[value][attach]"/>
+	            <input type="hidden" value="<{$extra.attach}>" name="brand_lesstion[attach]"/>
 	            <input type="file" data-url="<{link app=image ctl=site_upload act=index}>" accept="image/*" class="file_input" />
 	            <div class="showImg">
-	                 <img src="<{if $company.business_license_image eq ''}><{$base_url}>/themes/pc/default/statics/images/file_add.jpg<{else}><{$company.business_license_image|storager:'xs'}><{/if}>">    
+	                 <img src="<{if $extra.attach eq ''}><{$base_url}>/themes/pc/default/statics/images/file_add.jpg<{else}><{$extra.attach|storager:'xs'}><{/if}>">    
 	            </div>
 	        </div>
 		</div>

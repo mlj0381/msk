@@ -358,7 +358,8 @@ class seller_ctl_site_passport extends seller_frontpage {
         $licence_type = $this->_request->get_get('card'); //营业执照类型 老版or新版
         $licence_type = $licence_type ? $licence_type : 'new';
         if ($_POST) {
-            $this->_entry($_POST, $licence_type);
+			$params = utils::_filter_input($_POST);
+            $this->_entry($params, $licence_type);
         }
         // 选择类型
         // $seller['type'],process
@@ -411,7 +412,7 @@ class seller_ctl_site_passport extends seller_frontpage {
         return $info;
     }
 
-    public function _entry($post, $licence_type) {
+    private function _entry($post, $licence_type) {
 
         $db = vmc::database();
         $db->beginTransaction();
@@ -447,6 +448,11 @@ class seller_ctl_site_passport extends seller_frontpage {
                 }
             }
         }
+		$data = array('seller_id' => $this->seller['seller_id'], 'schedule' => $this->seller['schedule'] + 1);
+		if(!$this->app->model('sellers')->save($data)){
+			$db->rollback();
+            $this->splash('error', $redirect, '注册失败');
+		}
         $db->commit();
     }
 

@@ -26,7 +26,7 @@ $setting = array(
                 1 => array(
                     'three_lesstion', 'business_licence', 'tax_licence', 'organization_licence', 'bank_lesstion',
                 ),
-                2 => array('animal_certificate', 'slaughter_lesstion', 'food_produce_lesstion', 'national_produce_lesstion', 'entry_lesstion', 'iso9001_lesstion', 'iso22000_lesstion', 'iso14001_lesstion', 'food_mosque_lesstion',
+                2 => array('animal_certificate', 'slaughter_lesstion', 'f_p_lesstion', 'n_p_lesstion', 'entry_lesstion', 'iso9001_lesstion', 'iso22000_lesstion', 'iso14001_lesstion', 'food_mosque_lesstion',
                 ),
                 3 => array(
                     'company_touted', 'factory',
@@ -35,7 +35,7 @@ $setting = array(
                     'workshop', 'storage',
                 ),
                 5 => array(
-                    'laboratory', 'equipment', 'qa_department', 'quality_control_department'
+                    'laboratory', 'equipment', 'qa_department', 'q_c_department'
                 ),
                 6 => array(
                     'president', 'general_manager', 'vice_general_manager', 'sale_manager', 'qa_manager', 'finance_manager'

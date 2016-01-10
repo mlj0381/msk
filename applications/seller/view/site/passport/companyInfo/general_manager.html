@@ -1,4 +1,4 @@
-
+<input type="hidden" name="general_manager[content_id]"  value="<{$extra.content_id}>" class="form-control">
 <div id="general_manager">
 	<h4>公司总经理</h4>
 	<div class="form-group">
@@ -6,7 +6,7 @@
 			<span class="text-danger">*</span>姓名：
 		</label>
 		<div class="col-xs-4">
-			<input type="text" value="<{$extra.general_manager.value.name}>" name="general_manager[value][name]" class="form-control">
+			<input type="text" value="<{$extra.value.name}>" name="general_manager[value][name]" class="form-control">
 		</div>
 	</div>
 	<div class="form-group">
@@ -14,7 +14,7 @@
 			<span class="text-danger">*</span>年龄：
 		</label>
 		<div class="col-xs-4">
-			<input type="text" value="<{$extra.general_manager.value.age}>" name="general_manager[value][age]" class="form-control">
+			<input type="text" value="<{$extra.value.age}>" name="general_manager[value][age]" class="form-control">
 		</div>
 	</div>
 	<div class="form-group">
@@ -22,16 +22,7 @@
 			<span class="text-danger">*</span>学历：
 		</label>
 		<div class="col-xs-4">
-			<select class="form-control" value="<{$extra.general_manager.value.edu}>" name="general_manager[value][edu]">
-				<option value="">请选择</option>
-				<option value="">博士</option>
-				<option value="">硕士</option>
-				<option value="">本科</option>
-				<option value="">专科</option>
-				<option value="">高中</option>
-				<option value="">小学</option>
-				<option value="">其他</option>
-			</select>
+			<{include file="site/passport/companyInfo/grade.html" data=array("general_manager[value][edu]","{$extra.value.edu}")}>
 		</div>
 	</div>
 	<div class="form-group">
@@ -39,7 +30,7 @@
 			<span class="text-danger">*</span>联系方式：
 		</label>
 		<div class="col-xs-4">
-			<input type="text" value="<{$extra.general_manager.value.contact}>" name="general_manager[value][contact]" class="form-control">
+			<input type="text" value="<{$extra.value.contact}>" name="general_manager[value][contact]" class="form-control">
 		</div>
 	</div>
 	<div class="form-group">
@@ -48,10 +39,10 @@
 		</label>
 		<div class="col-xs-4">
 			<div class="filebox">
-	            <input type="hidden" value="<{$extra.general_manager.value.attach}>" name="general_manager[value][attach]"/>
+	            <input type="hidden" value="<{$extra.attach}>" name="general_manager[attach]"/>
 	            <input type="file" data-url="<{link app=image ctl=site_upload act=index}>" accept="image/*" class="file_input" />
 	            <div class="showImg">
-	                 <img src="<{if $company.business_license_image eq ''}><{$base_url}>/themes/pc/default/statics/images/file_add.jpg<{else}><{$company.business_license_image|storager:'xs'}><{/if}>">    
+	                 <img src="<{if $extra.attach eq ''}><{$base_url}>/themes/pc/default/statics/images/file_add.jpg<{else}><{$extra.attach|storager:'xs'}><{/if}>">    
 	            </div>
 	        </div>
 		</div>

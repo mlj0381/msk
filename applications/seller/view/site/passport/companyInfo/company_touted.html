@@ -1,3 +1,4 @@
+<input type="hidden" name="company_touted[content_id]"  value="<{$extra.content_id}>" class="form-control">
 <div id="company_touted">
 	<h4>企业荣誉</h4>
 	<div class="form-group">
@@ -5,7 +6,7 @@
 			发证日期：
 		</label>
 		<div class="col-xs-4">
-			<input type="text" value="<{$extra.company_touted.value.date}>" name="company_touted[value][date]" class="form-control">
+			<input type="text" value="<{$extra.value.date}>" name="company_touted[value][date]" class="form-control">
 		</div>
 	</div>
 	<div class="form-group">
@@ -14,10 +15,10 @@
 		</label>
 		<div class="col-xs-4">
 			<div class="filebox">
-	            <input type="hidden" value="<{$extra.company_touted.value.attach}>" name="company_touted[value][attach]"/>
+	            <input type="hidden" value="<{$extra.attach}>" name="company_touted[attach]"/>
 	            <input type="file" data-url="<{link app=image ctl=site_upload act=index}>" accept="image/*" class="file_input" />
 	            <div class="showImg">
-	                 <img src="<{if $company.business_license_image eq ''}><{$base_url}>/themes/pc/default/statics/images/file_add.jpg<{else}><{$company.business_license_image|storager:'xs'}><{/if}>">    
+	                 <img src="<{if $extra.attach eq ''}><{$base_url}>/themes/pc/default/statics/images/file_add.jpg<{else}><{$extra.attach|storager:'xs'}><{/if}>">    
 	            </div>
 	        </div>
 		</div>
