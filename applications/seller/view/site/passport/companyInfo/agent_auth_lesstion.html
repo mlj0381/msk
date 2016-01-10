@@ -7,7 +7,7 @@
 			<span class="text-danger">*</span>授权单位：
 		</label>
 		<div class="col-xs-4">
-			<input type="text" name="" class="form-control">
+			<input type="text" name="agent_auth_lesstion[value][unit]" class="form-control">
 		</div>
 	</div>
 
@@ -16,8 +16,8 @@
 			授权期限：
 		</label>
 		<div class="col-xs-4">
-			<input type="text" name="" class="form-control" style="width:175px; display: inline-block;"> 至 
-			<input type="text" name="" class="form-control"  style="width:175px; display: inline-block;">
+			<input type="text" name="agent_auth_lesstion[value][limit][lb]" class="form-control" style="width:175px; display: inline-block;"> 至 
+			<input type="text" name="agent_auth_lesstion[value][limit][ub]" class="form-control"  style="width:175px; display: inline-block;">
 		</div>
 	</div>
 
@@ -27,7 +27,7 @@
 		</label>
 		<div class="col-xs-4">
 			<div class="filebox">
-	            <input type="hidden" value="" name=""/>
+	            <input type="hidden" value="" name="agent_auth_lesstion[attch]"/>
 	            <input type="file" data-url="<{link app=image ctl=site_upload act=index}>" accept="image/*" class="file_input" />
 	            <div class="showImg">
 	                 <img src="<{if $company.business_license_image eq ''}><{$base_url}>/themes/pc/default/statics/images/file_add.jpg<{else}><{$company.business_license_image|storager:'xs'}><{/if}>">    
