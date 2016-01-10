@@ -5,6 +5,7 @@
 *~
 *.swo
 $.swn
+.settings/
 config/certi.php
 config/config.php
 config/install.lock.php

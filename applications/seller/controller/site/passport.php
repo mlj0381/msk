@@ -367,16 +367,17 @@ class seller_ctl_site_passport extends seller_frontpage {
         // 选择类型
         // $seller['type'],process
         $setp <= 1 && $setp = 1;
+        $setp >= 8 && $setp = 8;
         $step = $type == 'up' ? $step -1 : $step +1;
         $conf = $this->app->getConf('seller_entry');
         $columns = array_flip($conf['comm'][$step]);
-        if ($ident & 1) {
+        if ($ident & 1 && $conf[1][$step]) {
             $columns = array_merge($columns, array_flip($conf[1][$step]));
         }
-        if ($ident & 2) {
+        if ($ident & 2 && $conf[2][$step]) {
             $columns = array_merge($columns, array_flip($conf[2][$step]));
         }
-        if ($ident & 4) {
+        if ($ident & 4 && $conf[4][$step]) {
             $columns = array_merge($columns, array_flip($conf[4][$step]));
         }
         $this->pagedata['page'] = $columns;

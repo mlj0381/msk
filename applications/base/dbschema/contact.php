@@ -22,14 +22,7 @@ $db['contact'] = array(
             'in_list' => true,
             'comment' => '联系人ID',
         ),
-        'name' => array(
-            'type' => 'varchar(100)',
-            'required' => true,
-            'label' => '姓名',
-            'in_list' => true,
-            'default_in_list' => true,
-            'comment' => '姓名',
-        ),
+        
         'contact_addr' => array(
             'type' => 'varchar(200)',
             //'required' => true,
@@ -37,6 +30,7 @@ $db['contact'] = array(
             'in_list' => false,
             'comment' => '公司地址',
         ),
+        
         'contact_area' => array(
             'label' => ('地区'),
             'type' => 'region',
@@ -46,10 +40,56 @@ $db['contact'] = array(
             'in_list' => true,
             'default_in_list' => true,
         ),
+        'uid' => array(
+            'type' => 'number',
+            'required' => false,
+            'default' => 0,
+            'label' => '所属用户id',
+            'searchtype' => 'has',
+            'in_list' => true,
+            'default_in_list' => true,
+            'order' => '1',
+            'comment' => '所属用户id',
+        ),
+        
+        'boss_name' => array(
+            'type' => 'varchar(100)',
+            'required' => true,
+            'label' => '老板姓名',
+            'in_list' => true,
+            'default_in_list' => true,
+            'comment' => '老板姓名',
+        ),
+        'boss_mobile' => array(
+            'type' => 'varchar(20)',
+            'default' => '',
+            'label' => '老板电话',
+            'comment' => '老板电话',
+        ),
+        'boss_qq' => array(
+            'type' => 'varchar(20)',
+            'default' => '',
+            'label' => '老板QQ',
+            'comment' => '老板QQ',
+        ),
+        'boss_wechat' => array(
+            'type' => 'varchar(20)',
+            'default' => '',
+            'label' => '老板wechat',
+            'comment' => '老板wechat',
+        ),
+        
+        'name' => array(
+            'type' => 'varchar(100)',
+            'required' => true,
+            'label' => '姓名',
+            'in_list' => true,
+            'default_in_list' => true,
+            'comment' => '姓名',
+        ),
         'tel' => array(
             'type' => 'varchar(50)',
             'label' => ('固定电话'),
-            'sdfpath' => 'contact/phone/telephone',
             'searchtype' => 'head',
             'editable' => true,
             'filtertype' => 'normal',
@@ -63,17 +103,6 @@ $db['contact'] = array(
             'label' => ('联系人Email'),
             'comment' => ('联系人Email'),
         ),
-        'seller_id' => array(
-            'type' => 'number',
-            'required' => false,
-            'default' => 0,
-            'label' => '商家',
-            'searchtype' => 'has',
-            'in_list' => true,
-            'default_in_list' => true,
-            'order' => '1',
-            'comment' => '商家',
-        ),
         'contact_qq' => array(
             'type' => 'varchar(20)',
             'default' => '',
@@ -86,15 +115,16 @@ $db['contact'] = array(
             'label' => '联系人wechat',
             'comment' => '联系人wechat',
         ),
-        'contact_type' => array(
+        'from' => array(
+            'label' => ('所属'),
             'type' => array(
-                '0' => '商家',
-                '1' => '会员'
+                0 => 'member',
+                1 => 'seller'
             ),
-            'required' => true,
             'default' => '0',
-            'label' => '联系人类型',
-            'comment' => '联系人类型',
+            'in_list' => true,
+            'default_in_list' => false,
+            'comment' => '所属',
         ),
     ),
     'index' => array(
