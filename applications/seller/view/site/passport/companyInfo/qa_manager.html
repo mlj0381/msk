@@ -5,7 +5,7 @@
 			<span class="text-danger">*</span>姓名：
 		</label>
 		<div class="col-xs-4">
-			<input type="text" name="qa_manager[value][name]" class="form-control">
+			<input type="text" value="<{$extra.qa_department.value.name}>" name="qa_manager[value][name]" class="form-control">
 		</div>
 	</div>
 	<div class="form-group">
@@ -13,7 +13,7 @@
 			<span class="text-danger">*</span>年龄：
 		</label>
 		<div class="col-xs-4">
-			<input type="text" name="qa_manager[value][age]" class="form-control">
+			<input type="text" value="<{$extra.qa_department.value.age}>" name="qa_manager[value][age]" class="form-control">
 		</div>
 	</div>
 	<div class="form-group">
@@ -21,7 +21,7 @@
 			<span class="text-danger">*</span>学历：
 		</label>
 		<div class="col-xs-4">
-			<select class="form-control" name="qa_manager[value][attach]">
+			<select class="form-control" value="<{$extra.qa_department.value.edu}>" name="qa_manager[value][edu]">
 				<option value="">请选择</option>
 				<option value="">博士</option>
 				<option value="">硕士</option>
@@ -38,7 +38,7 @@
 			<span class="text-danger">*</span>联系方式：
 		</label>
 		<div class="col-xs-4">
-			<input type="text" name="qa_manager[value][contact]" class="form-control">
+			<input type="text" value="<{$extra.qa_department.value.contact}>" name="qa_manager[value][contact]" class="form-control">
 		</div>
 	</div>
 	<div class="form-group">
@@ -47,7 +47,7 @@
 		</label>
 		<div class="col-xs-4">
 			<div class="filebox">
-	            <input type="hidden" value="" name="qa_manager[value][attach]"/>
+	            <input type="hidden" value="<{$extra.qa_department.value.attach}>" name="qa_manager[value][attach]"/>
 	            <input type="file" data-url="<{link app=image ctl=site_upload act=index}>" accept="image/*" class="file_input" />
 	            <div class="showImg">
 	                 <img src="<{if $company.business_license_image eq ''}><{$base_url}>/themes/pc/default/statics/images/file_add.jpg<{else}><{$company.business_license_image|storager:'xs'}><{/if}>">    

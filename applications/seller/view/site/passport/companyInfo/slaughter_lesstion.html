@@ -5,7 +5,7 @@
 			定点屠宰代码：
 		</label>
 		<div class="col-xs-4">
-			<input type="text" name="slaughter_lesstion[value][code]" class="form-control">
+			<input type="text" value="<{$extra.slaughter_lesstion.value.code}>" name="slaughter_lesstion[value][code]" class="form-control">
 		</div>
 	</div>
 
@@ -14,7 +14,7 @@
 			批准号：
 		</label>
 		<div class="col-xs-4">
-			<input type="text" name="slaughter_lesstion[value][approve_code]" class="form-control">
+			<input type="text" value="<{$extra.slaughter_lesstion.value.approve_code}>" name="slaughter_lesstion[value][approve_code]" class="form-control">
 		</div>
 	</div>
 
@@ -24,7 +24,7 @@
 		</label>
 		<div class="col-xs-4">
 			<div class="filebox">
-	            <input type="hidden" value="" name="slaughter_lesstion[value][attach]"/>
+	            <input type="hidden" value="<{$extra.slaughter_lesstion.value.attach" name="slaughter_lesstion[value][attach]"/>
 	            <input type="file" data-url="<{link app=image ctl=site_upload act=index}>" accept="image/*" class="file_input" />
 	            <div class="showImg">
 	                 <img src="<{if $company.business_license_image eq ''}><{$base_url}>/themes/pc/default/statics/images/file_add.jpg<{else}><{$company.business_license_image|storager:'xs'}><{/if}>">    

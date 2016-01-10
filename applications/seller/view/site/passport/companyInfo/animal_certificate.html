@@ -5,7 +5,7 @@
 			<span class="text-danger">*</span>动物防疫条件合格证代码编号：
 		</label>
 		<div class="col-xs-4">
-			<input type="text" name="animal_certificate[value][code]" class="form-control">
+			<input type="text" value="<{$extra.animal_certificate.value.code}>" name="animal_certificate[value][code]" class="form-control">
 		</div>
 	</div>
 
@@ -14,7 +14,7 @@
 			<span class="text-danger">*</span>年检日期：
 		</label>
 		<div class="col-xs-4">
-			<input type="text" name="animal_certificate[value][as]" class="form-control">	
+			<input type="text" value="<{$extra.animal_certificate.value.as}>" name="animal_certificate[value][as]" class="form-control">	
 		</div>
 	</div>
 
@@ -24,7 +24,7 @@
 		</label>
 		<div class="col-xs-4">
 			<div class="filebox">
-	            <input type="hidden" value="" name="animal_certificate[value][attach]"/>
+	            <input type="hidden" value="<{$extra.animal_certificate.value.attach}>" name="animal_certificate[value][attach]"/>
 	            <input type="file" data-url="<{link app=image ctl=site_upload act=index}>" accept="image/*" class="file_input" />
 	            <div class="showImg">
 	                 <img src="<{if $company.business_license_image eq ''}><{$base_url}>/themes/pc/default/statics/images/file_add.jpg<{else}><{$company.business_license_image|storager:'xs'}><{/if}>">    
