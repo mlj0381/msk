@@ -33,10 +33,10 @@ ol {
   border-radius: 0px;
 }
 .navbar-inverse {
-  border-radius: 0px;
   background-color: #fff;
-  border: none;
-  border-bottom: 1px solid #080808;
+  border-bottom: 2px solid #a40001;
+  border-top: medium none;
+  border-right: medium none;
   min-height: 36px;
 }
 .navbar-inverse .nav li {
@@ -45,24 +45,29 @@ ol {
   cursor: pointer;
   height: 36px;
   width: 104px;
-  border-left: 1px solid #080808;
-  border-top: 1px solid #080808;
+  margin-right: 10px;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-bottom: none;
+  -webkit-border-top-left-radius: 4px;
+  -webkit-border-top-right-radius: 5px;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  overflow: hidden;
 }
 .navbar-inverse .nav li a {
   padding: 0px;
   text-align: center;
-  line-height: 36px;
+  line-height: 35px;
   color: #000333;
 }
 .navbar-inverse .nav li a:hover {
   color: #080808;
 }
 .navbar-inverse .nav li a.active {
-  background-color: #ff0000;
+  background-color: #a40001;
   color: #fff;
-}
-.navbar-inverse .nav li:last-child {
-  border-right: 1px solid #080808;
+  border: 1px solid #a40001;
 }
 .buyer_container {
   width: 1200px;
@@ -2637,4 +2642,7 @@ ol {
 .request_list_page table td {
   background: #fff;
   text-align: center;
+}
+.seller_account_page .account_tab .tab-content {
+  padding-top: 35px;
 }

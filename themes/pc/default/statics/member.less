@@ -42,11 +42,11 @@ ul,ol{
 	border-radius:0px;
 }
 .navbar-inverse{
-	border-radius:0px;
 	background-color: #fff;
-	border:none;
-	border-bottom: 1px solid #080808;
-	min-height: 36px; 
+	border-bottom: 2px solid @basecolor;
+	border-top: medium none;
+	border-right:medium none;
+	min-height: 36px;
 
 	.nav{
 		 li{
@@ -55,29 +55,35 @@ ul,ol{
     		cursor: pointer;
     		height: 36px;
     		width: 104px;
-    		border-left: 1px solid #080808;
-    		border-top: 1px solid #080808;
+    		margin-right:10px;
+    		background: #fff;
+    		border:1px solid #ddd;
+    		border-bottom:none;
+    		-webkit-border-top-left-radius:4px;
+    		-webkit-border-top-right-radius:5px;
+    		border-top-left-radius:4px;
+			border-top-right-radius: 4px;
+			overflow: hidden;
     		a{
 	    		padding:0px;
 	    		text-align:center;
-	    		line-height: 36px;
+	    		line-height: 35px;
 	    		color:#000333;
 
     			&:hover{
 				  	color: #080808;   			
 				  }
 				&.active{
-				  background-color: #ff0000;
+				  background-color:@basecolor;
 				  color: #fff;
+				  border:1px solid @basecolor;
 	    		}
     			
 			 }
 			
 		
 		 }
-		 li:last-child{
-		 	border-right:1px solid #080808;
-		 	}
+		 
 	}
 }
 
@@ -3010,6 +3016,15 @@ ul,ol{
 		td{
 			background: #fff;
 			text-align: center;
+		}
+	}
+}
+
+//卖家个人资料设置
+.seller_account_page{
+	.account_tab{
+		.tab-content{
+			padding-top:35px;
 		}
 	}
 }

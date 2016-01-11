@@ -281,13 +281,4 @@ class seller_frontpage extends site_controller {
         }
         $this->splash(($result ? 'success' : 'failed'), $url, ($result ? $message : ($message ? $message : '操作失败')), $ajax, $data);
     }
-
-    public function get_company(){
-        return $this->user_obj->get_company($this->seller['seller_id']);
-
-    }
-
-    public function get_contact(){
-        return $this->user_obj->get_contact($this->seller['seller_id']);
-    }
 }
