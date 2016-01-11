@@ -22,12 +22,12 @@
                     <menu app='seller' controller='site_seller' action='company' display='false' order="60">物流工具</menu>
         </menugroup> -->
 		<menugroup name="商品管理">
-            <menu app='seller' controller='site_goods' action='' display='true' order="60">商品目录</menu>
+            <menu app='seller' controller='site_goods' action='directory' display='true' order="60">商品目录</menu>
             <menu app='seller' controller='site_goods' action='add' display='true' order="60">发布商品</menu>
             <menu app='seller' controller='site_goods' action='index' display='true' order="60">出售中的商品</menu>
 			<menu app='seller' controller='site_goods' action='storage' display='true' order="60">仓库中的商品</menu>
             <menu app='seller' controller='site_goods' action='price' display='true' order="60">价格管理</menu>
-			<menu app='seller' controller='site_brand' action='' display='true' order="60">品牌管理</menu>
+			<menu app='seller' controller='site_brand' action='index' display='true' order="60">品牌管理</menu>
         </menugroup>
 
 

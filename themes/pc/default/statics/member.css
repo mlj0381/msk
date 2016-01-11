@@ -2646,3 +2646,103 @@ ol {
 .seller_account_page .account_tab .tab-content {
   padding-top: 35px;
 }
+.brand_page .brand_list_table {
+  border: 1px solid #ddd;
+}
+.brand_page .brand_list_table th {
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
+  background: #f2f2f2;
+}
+.brand_page .brand_list_table td {
+  text-align: center;
+  vertical-align: middle;
+}
+.brand_edit_page #brand_form .form-body {
+  padding-top: 25px;
+}
+.brand_edit_page #brand_form .fileinput-new {
+  margin-bottom: 5px;
+}
+.brand_edit_page #brand_form .fileinput-btn-text {
+  display: none;
+}
+.directory_page .store_panel {
+  margin-top: 25px;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 15px;
+}
+.directory_page .store_panel .thumbnail {
+  display: inline-block;
+  width: 64px;
+  height: 64px;
+  margin-bottom: 0px;
+}
+.directory_page .store_panel .storeInfo {
+  text-align: left;
+  margin-left: 10px;
+}
+.directory_page .store_panel .storeInfo .inline_ul li {
+  float: left;
+  margin-right: 25px;
+  color: #999;
+}
+.directory_page .store_panel .storeInfo .inline_ul li span {
+  display: inline-block;
+  margin-right: 5px;
+}
+.directory_page .directory_box h3 {
+  border-bottom: 1px solid #eee;
+}
+.directory_page .directory_box h3 span {
+  display: inline-block;
+  height: 36px;
+  line-height: 36px;
+  background: #a40001;
+  padding: 0 20px;
+  color: #fff;
+  font-size: 16px;
+}
+.directory_page .directory_box .dir_list .panel-heading .dir_title {
+  font-size: 16px;
+}
+.directory_page .directory_box .dir_list .panel-heading .dir_title i {
+  padding-right: 10px;
+  color: #a40001;
+}
+.directory_page .directory_box .dir_list .panel-body .dir_item {
+  font-weight: normal;
+  display: inline-block;
+  margin-right: 15px;
+  margin-bottom: 15px;
+}
+.directory_page .directory_box .dir_list .panel-body .dir_item input[type="checkbox"] {
+  margin-right: 5px;
+  float: left;
+}
+.directory_page .directory_box .dir_list .panel-body .dir_item span {
+  display: inline-block;
+  margin-top: 2px;
+  color: #727171;
+}
+.directory_page .directory_box .dir_list .panel-body .dir_item:hover span {
+  color: #333;
+}
+.directory_page .directory_box .dir_list .panel-body .dir_item:after {
+  content: "";
+  display: table;
+  clear: both;
+  height: 0px;
+  line-height: 0px;
+  font-size: 0px;
+}
+.directory_page .tip_panel {
+  margin-top: 45px;
+}
+.directory_page .tip_panel span {
+  display: inline-block;
+  font-weight: bold;
+  font-size: 15px;
+  margin-bottom: 10px;
+}

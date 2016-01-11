@@ -157,6 +157,12 @@ class seller_ctl_site_goods extends seller_frontpage
         $this->output();
     }
 
+    //商品目录
+    public function directory(){
+        $this->output();
+    }
+
+
     //价格修改
     public function price(){
         $this->output();

@@ -1,118 +1,101 @@
-<div class="modal-header">
-    <h3 class="modal-title"><{if $brand.id }>品牌编辑<{else}>品牌申请<{/if}></h3>
-</div>
-
-<form method="post" action="<{link app=seller ctl=site_brand act=add}>" id='brand_form' calss="form">
-<div class="modal-body  form-horizontal">
-<div class="form-body">
-    <{if $brand.id  }><input type="hidden" value="<{$brand.id }>" name="brand[brand_id]" /><{/if}>
-    <div class="form-group">
-        <label class="col-md-3 control-label">品牌名称
-            <span class="required" aria-required="true">*</span>
-       </label>
-        <div class="col-md-5">
-            <input type="text" required=true value="<{$brand.extra.brand_name}>" id="check_brand_name" name="brand[extra][brand_name]" vtype='required' class='form-control'/>
-        </div>
+<div class="brand_edit_page">   
+    <div class="modal-header">
+        <h3 class="modal-title"><{if $brand.id }>品牌编辑<{else}>品牌添加<{/if}></h3>
     </div>
-    <div class="form-group">
-        <label class="col-md-3 control-label">拼音首字母
-            <span class="required" aria-required="true">*</span>
-       </label>
-        <div class="col-md-5">
-            <input type="text"  disabled=false  value="<{$brand.extra.brand_initial}>" placeholder="系统自动生成"  class='form-control initial'/>
-            <input type="hidden" required=true  value="<{$brand.extra.brand_initial}>" name="brand[extra][brand_initial]" vtype='required' class='form-control initial'/>
-        </div>
-    </div>
-    <div class="form-group">
-        <label class="col-md-3 control-label">品牌网址
-            <span class="required" aria-required="true">*</span>
-       </label>
-        <div class="col-md-5">
-            <input type="text" required=true value="<{$brand.extra.brand_url}>" name="brand[extra][brand_url]" vtype='required' class='form-control'/>
-        </div>
-    </div>
-    <div class="form-group">
-        <label class="col-md-3 control-label">所属分类
-            <span class="required" aria-required="true">*</span>
-       </label>
-        <div class="col-md-5">
-            <{input type="select" rows=$cat valueColumn="cat_id" labelColumn="cat_name" name="brand[extra][bradn_cat]" vtype='required' class='form-control'}>
-        </div>
-    </div>
-
-    <div class="form-group">
-        <label class="col-md-3 control-label">品牌logo
-            <span class="required" aria-required="true">*</span>
-       </label>
-        <div class="col-md-5">
-            <{input type="siteimage" required=true value=$cat name="brand[extra][brand_logo]" vtype='required' class='form-control'}>
-        </div>
-    </div>
-
-        <div class="form-group">
-            <label class="col-md-3 control-label">上传资质文件
-                <span class="required" aria-required="true">*</span>
-           </label>
-            <div class="col-md-5">
-                <{input type="siteimage" required=true value=$brand.extra.aptitudes_image col name="brand[extra][aptitudes_image]" vtype='required' class='form-control'}>
+    <form method="post" action="<{link app=seller ctl=site_brand act=add}>" id='brand_form' calss="form">
+        <div class="modal-body  form-horizontal">
+            <div class="form-body">
+                <{if $brand.id }>
+                    <input type="hidden" value="<{$brand.id }>" name="brand[brand_id]" />
+                    <{/if}>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">
+                                <span class="required" aria-required="true">*</span>品牌名称
+                            </label>
+                            <div class="col-md-5">
+                                <input type="text" required=true value="<{$brand.extra.brand_name}>" id="check_brand_name" name="brand[extra][brand_name]" vtype='required' class='form-control' />
+                                <p class="text-danger">品牌全系统唯一，不能有重复</p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">
+                                <span class="required text-danger" aria-required="true">*</span>品牌logo
+                            </label>
+                            <div class="col-md-5">
+                                <{input type="siteimage" required=true value=$cat name="brand[extra][brand_logo]" vtype='required' class='form-control' }>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">
+                                <span class="required text-danger" aria-required="true">*</span>品牌授权书
+                            </label>
+                            <div class="col-md-5">
+                                <{input type="siteimage" required=true value=$brand.extra.aptitudes_image col name="brand[extra][aptitudes_image]" vtype='required' class='form-control' }>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">
+                                <span class="required text-danger" aria-required="true">*</span>品牌简介
+                            </label>
+                            <div class="col-md-5">
+                                <textarea class="form-control" name="brand[extra][brand_desc]" placeholder="简单描述" rows="6"><{$brand.extra.brand_desc}></textarea>
+                            </div>
+                        </div>
             </div>
+            <{if $brand.status neq '1'}>
+            <div class="modal-footer">
+                <{$brand.status}>
+                    <button type="reset" class="btn blue btn-default">取消</button>
+                    <button type="submit" class="btn blue btn-danger">保存</button>
+
+            </div>
+            <{/if}>
+            <{if $env.get.callback_func}>
+                <!-- 保存后，不跳转 -->
+            <input type="hidden" name="no_redirect" value="1">
+            <{/if}>
         </div>
-
-    <div class="form-group">
-        <label class="col-md-3 control-label">简介
-            <span class="required" aria-required="true">*</span>
-       </label>
-        <div class="col-md-5">
-            <textarea class="form-control" name="brand[extra][brand_desc]" placeholder="简单描述" rows="1">
-                <{$brand.extra.brand_desc}>
-            </textarea>
-
-        </div>
-    </div>
-
+    </form>
 </div>
-<{if $brand.status neq '1'}>
-<div class="modal-footer"><{$brand.status}>
-        <button type="submit" class="btn blue">保存</button>
-</div>
-<{/if}>
-<{if $env.get.callback_func}>
-<!-- 保存后，不跳转 -->
-<input type="hidden" name="no_redirect" value="1">
-<{/if}>
-</form>
-
-
 <script charset="utf-8">
-    $(function(){
-        $('#check_brand_name').blur(function(){
-            var url = "<{link app=seller ctl=site_brand act=check_brand_name}>";
-            var url_initial = "<{link app=seller ctl=site_brand act=brand_initial}>";
-            var input = $(this);
-            if(input.val() == '')return;
-            $.post(url, {brand_name : input.val()}, function(re){
-                if(re.success){
-                    input.closest('.form-group').removeClass('has-error').addClass('has-success');
-                    if(re.data && re.data.is_mobile){
-                        $('.local-vcode').hide();
-                        $('.mobile-vcode').show();
-                    }else{
-                        $('.local-vcode').show();
-                        $('.mobile-vcode').hide();
-                    }
-                }else{
-                    input.popover({content:re.error,placement:'right',trigger:'click',container:'body'});
-                    input.popover('show');
-                    input.closest('.form-group').removeClass('has-success').addClass('has-error');
+$(function() {
+    $('#check_brand_name').blur(function() {
+        var url = "<{link app=seller ctl=site_brand act=check_brand_name}>";
+        var url_initial = "<{link app=seller ctl=site_brand act=brand_initial}>";
+        var input = $(this);
+        if (input.val() == '') return;
+        $.post(url, {
+            brand_name: input.val()
+        }, function(re) {
+            if (re.success) {
+                input.closest('.form-group').removeClass('has-error').addClass('has-success');
+                if (re.data && re.data.is_mobile) {
+                    $('.local-vcode').hide();
+                    $('.mobile-vcode').show();
+                } else {
+                    $('.local-vcode').show();
+                    $('.mobile-vcode').hide();
                 }
-            }, 'json');
-            $.post(url_initial, {brand_name : input.val()}, function(re){
-                if(re.success){
-                    $('.initial').val(re.success);
-                }else if(re.error){
+            } else {
+                input.popover({
+                    content: re.error,
+                    placement: 'right',
+                    trigger: 'click',
+                    container: 'body'
+                });
+                input.popover('show');
+                input.closest('.form-group').removeClass('has-success').addClass('has-error');
+            }
+        }, 'json');
+        $.post(url_initial, {
+            brand_name: input.val()
+        }, function(re) {
+            if (re.success) {
+                $('.initial').val(re.success);
+            } else if (re.error) {
 
-                }
-            });
+            }
         });
     });
+});
 </script>

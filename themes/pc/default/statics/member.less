@@ -3029,7 +3029,138 @@ ul,ol{
 	}
 }
 
+//卖家品牌管理
+.brand_page{
+	.brand_list_table{
+		border:1px solid #ddd;
 
+		th{
+			height:30px;
+			line-height:30px;
+			text-align: center;
+			background: #f2f2f2;
+		}
+		td{
+			text-align: center;
+			vertical-align:middle;
+		}
+	}
+}
+
+//卖家品牌编辑
+.brand_edit_page{
+	#brand_form{
+		.form-body{
+			padding-top:25px;
+		}
+		.fileinput-new{
+			margin-bottom:5px;
+		}
+		.fileinput-btn-text{
+			display: none;
+		}
+	}
+}
+
+//卖家商品目录
+.directory_page{
+	.store_panel{
+		margin-top:25px;
+		border-bottom:1px solid #eee;
+		padding-bottom:15px; 
+		.thumbnail{
+			display:inline-block;
+			width:64px;
+			height:64px;
+			margin-bottom:0px;
+		}
+		.storeInfo{
+			text-align:left;
+			margin-left:10px;
+
+			.inline_ul{
+				li{
+					 float: left;
+					 margin-right:25px;
+					 color:#999;
+					 span{
+					 	display: inline-block;
+					 	margin-right:5px;
+					 }
+				}
+			}
+		}
+	}
+	.directory_box{
+		h3{
+			border-bottom:1px solid #eee;
+			span{
+				display:inline-block;
+				height:36px;
+				line-height: 36px;
+				background:@basecolor;
+				padding:0 20px;
+				color:#fff;
+				font-size: 16px;
+			}
+		}
+		.dir_list{
+
+			.panel-heading{
+				.dir_title{
+					font-size: 16px;
+					i{
+						padding-right:10px;
+						color:@basecolor;
+						//color:#666;
+					}
+				}
+			}
+			.panel-body{
+				.dir_item{
+					font-weight: normal;
+					display: inline-block;
+					margin-right:15px;
+					margin-bottom:15px;
+					input[type="checkbox"]{
+						margin-right:5px;
+						.fl;
+					}
+					span{
+						display: inline-block;
+						margin-top:2px;
+						color:#727171;
+					}
+					&:hover{
+						span{
+							color:#333;
+						}
+					}
+
+				}
+				.dir_item:after{
+					content: "";
+					display: table;
+					clear: both;
+					height:0px;
+					line-height: 0px;
+					font-size:0px;
+				}
+				
+			}
+		}
+	}
+
+	.tip_panel{
+		margin-top:45px;
+		span{
+			display: inline-block;
+			font-weight: bold;
+			font-size: 15px;
+			margin-bottom:10px;
+		}
+	}
+}
 
 
 
