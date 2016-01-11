@@ -30,14 +30,8 @@ class seller_ctl_site_seller extends seller_frontpage {
     }
 
     //账户信息
-<<<<<<< HEAD
-    public function account() {
-        $this->pagedata['company'] = $this->get_company();
-        $this->pagedata['contact'] = $this->get_contact();
-=======
     public function account()
     {
->>>>>>> 70e1c3c04c4d743b340b7ba78ea2c7815d7eb996
         $this->user_manage('manage');
         if ($_POST) {
             $post = $_POST;
