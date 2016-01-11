@@ -28,14 +28,16 @@ $db['company_extra'] = array(
             'required' => true,
             'comment' => '所属人员',
         ),
-        'identity' => array(
+        'from' => array(
+            'label' => ('所属'),
             'type' => array(
-                'member' => ('会员'),
-                'seller' => ('商家'),
+                0 => 'member',
+                1 => 'seller'
             ),
-            'label' => '身份类型',
-            'required' => true,
-            'comment' => '身份类型',
+            'default' => '0',
+            'in_list' => true,
+            'default_in_list' => false,
+            'comment' => '所属',
         ),
         'key' => array(
             'type' => 'varchar(20)',
@@ -46,7 +48,6 @@ $db['company_extra'] = array(
         ),
         'value' => array(
             'type' => 'serialize',
-            'required' => true,
             'default' => '',
             'label' => '属性值',
             'comment' => '属性值',

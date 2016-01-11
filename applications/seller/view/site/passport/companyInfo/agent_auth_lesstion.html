@@ -1,3 +1,4 @@
+<input type="hidden" name="agent_auth_lesstion[content_id]"  value="<{$extra.content_id}>" class="form-control">
 <div id="agent_auth_lesstion">
 
 	<h4>代理及分销授权书</h4>
@@ -7,7 +8,7 @@
 			<span class="text-danger">*</span>授权单位：
 		</label>
 		<div class="col-xs-4">
-			<input type="text" name="agent_auth_lesstion[value][unit]" class="form-control">
+			<input type="text" name="agent_auth_lesstion[value][unit]" value="<{$extra.value.unit}>" class="form-control">
 		</div>
 	</div>
 
@@ -16,8 +17,8 @@
 			授权期限：
 		</label>
 		<div class="col-xs-4">
-			<input type="text" name="agent_auth_lesstion[value][limit][start]" class="form-control" style="width:175px; display: inline-block;"> 至 
-			<input type="text" name="agent_auth_lesstion[value][limit][end]" class="form-control"  style="width:175px; display: inline-block;">
+			<input type="text" name="agent_auth_lesstion[value][start]" value="<{$extra.value.start}>"  class="form-control" style="width:175px; display: inline-block;"> 至 
+			<input type="text" name="agent_auth_lesstion[value][end]" value="<{$extra.value.end}>"  class="form-control"  style="width:175px; display: inline-block;">
 		</div>
 	</div>
 
@@ -27,10 +28,10 @@
 		</label>
 		<div class="col-xs-4">
 			<div class="filebox">
-	            <input type="hidden" value="" name="agent_auth_lesstion[attach]"/>
+	            <input type="hidden" value="<{$extra.attach}>"  name="agent_auth_lesstion[attach]"/>
 	            <input type="file" data-url="<{link app=image ctl=site_upload act=index}>" accept="image/*" class="file_input" />
 	            <div class="showImg">
-	                 <img src="<{if $company.business_license_image eq ''}><{$base_url}>/themes/pc/default/statics/images/file_add.jpg<{else}><{$company.business_license_image|storager:'xs'}><{/if}>">    
+	                 <img src="<{if $extra.attach eq ''}><{$base_url}>/themes/pc/default/statics/images/file_add.jpg<{else}><{$extra.attach|storager:'xs'}><{/if}>">    
 	            </div>
 	        </div>
 		</div>

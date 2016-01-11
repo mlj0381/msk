@@ -1,3 +1,4 @@
+<input type="hidden" name="bank_lesstion[content_id]"  value="<{$extra.content_id}>" class="form-control">
 <div id="bank_lesstion">
 	<h4>银行开户许可证</h4>
 	<div class="form-group">
@@ -5,7 +6,7 @@
 			<span class="text-danger">*</span>法定代表人：
 		</label>
 		<div class="col-xs-4">
-			<input type="text" value="<{$extra.brand_lesstion.value.legal}>" name="bank_lesstion[value][legal]" class="form-control">
+             <input type="text" name="bank_lesstion[value][legal]" value="<{$extra.value.legal}>" class="form-control">
 		</div>
 	</div>
 	<div class="form-group">
@@ -13,7 +14,7 @@
 			<span class="text-danger">*</span>开户行：
 		</label>
 		<div class="col-xs-4">
-			<input type="text" value="<{$extra.brand_lesstion.value.name}>" name="bank_lesstion[value][name]" class="form-control">
+			<input type="text" name="bank_lesstion[value][name]"  value="<{$extra.value.name}>" class="form-control">
 		</div>
 	</div>
 	<div class="form-group">
@@ -21,7 +22,7 @@
 			<span class="text-danger">*</span>对公银行账号：
 		</label>
 		<div class="col-xs-4">
-			<input type="text" value="<{$extra.brand_lesstion.value.code}>" name="bank_lesstion[value][code]" class="form-control">
+			<input type="text" name="bank_lesstion[value][code]"  value="<{$extra.value.code}>" class="form-control">
 		</div>
 	</div>
 	<div class="form-group">
@@ -30,10 +31,10 @@
 		</label>
 		<div class="col-xs-4">
 			<div class="filebox">
-	            <input type="hidden" value="<{$extra.brand_lesstion.value.attach}>" name="bank_lesstion[value][attach]"/>
+	            <input type="hidden" value="<{$extra.attach}>" name="bank_lesstion[attach]"/>
 	            <input type="file" data-url="<{link app=image ctl=site_upload act=index}>" accept="image/*" class="file_input" />
 	            <div class="showImg">
-	                 <img src="<{if $company.business_license_image eq ''}><{$base_url}>/themes/pc/default/statics/images/file_add.jpg<{else}><{$company.business_license_image|storager:'xs'}><{/if}>">    
+	                 <img src="<{if $extra.attach eq ''}><{$base_url}>/themes/pc/default/statics/images/file_add.jpg<{else}><{$extra.attach|storager:'xs'}><{/if}>">    
 	            </div>
 	        </div>
 		</div>

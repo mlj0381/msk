@@ -159,7 +159,7 @@ class b2c_ctl_site_passport extends b2c_frontpage {
 
     //注册经营信息
     public function business_info() {
-        
+
         $this->verify_member();
         if ($_POST) {
             $redirect = $this->gen_url(array(
@@ -169,17 +169,17 @@ class b2c_ctl_site_passport extends b2c_frontpage {
             ));
             $db = vmc::database();
             $db->beginTransaction();
-            
+
             $extra_columns = $this->app->getConf('member_extra_column');
             $params = $_POST;
-            if ($params['company']) { 
+            if ($params['company']) {
                 $params['company']['uid'] = $this->members['member_id'];
-                if (!app::get('base')->model('company')->save($params['company'])) {die('111');
+                if (!app::get('base')->model('company')->save($params['company'])) {
                     $db->rollback();
                     $this->splash('error', $redirect, '注册失败');
                 }
             }
-           
+
             if ($params['contact']) {
                 if (!app::get('base')->model('contact')->save($params['contact'])) {
                     $params['contact']['uid'] = $this->members['member_id'];
@@ -187,28 +187,21 @@ class b2c_ctl_site_passport extends b2c_frontpage {
                     $this->splash('error', $redirect, '注册失败');
                 }
             }
-            
+            $mdl_company_extra = app::get('base')->model('company_extra');
             foreach ($extra_columns as $col) {
-                if (!$this->_extra_save($col, $params)) {
-                    $db->rollback();
-                    $this->splash('error', $redirect, '注册失败');
-                }
-            }
+				if(isset($params[$col]) && !empty($params[$col])){
+					$params[$col]['uid'] = $this->member['member_id'];
+					$params[$col]['from'] = 0;
+				    if (!$mdl_company_extra->extra_save($col, $params)) {
+					    $db->rollback();
+				        $this->splash('error', $redirect, '注册失败');
+				    }
+				}
+			}
             $db->commit();
         }
         $this->set_tmpl('passport');
         $this->page('site/passport/business_info.html');
-    }
-
-    private function _extra_save($key, $data) {
-        if (isset($data[$key]) && $result = $data[$key]) {
-            return app::get('base')->model('company_extra')->save(array_merge($result, array(
-                        'key' => $key,
-                        'identity' => 'member',
-                        'uid' => $this->members['member_id']
-            )));
-        }
-        return true;
     }
 
     //注册页面--注册完成
@@ -217,12 +210,17 @@ class b2c_ctl_site_passport extends b2c_frontpage {
         if ($_POST) {
             $redirect = $this->gen_url(array('app' => 'b2c', 'ctl' => 'site_passport', 'act' => 'business_info'));
             $params = $_POST;
+			$mdl_company_extra = app::get('base')->model('company_extra');
             $extra_columns = $this->app->getConf('member_extra_column');
             foreach ($extra_columns as $col) {
-                if (!$this->_extra_save($col, $params)) {
-                    $this->splash('error', $redirect, '注册失败');
-                }
-            }
+				if(isset($params[$col]) && !empty($params[$col])){
+					$params[$col]['uid'] = $this->member['member_id'];
+					$params[$col]['from'] = 0;
+					if (!$mdl_company_extra->extra_save($col, $params)) {
+					    $this->splash('error', $redirect, '注册失败');
+				    }
+				}
+			}
         }
         $this->page('site/passport/signup_complete.html');
     }

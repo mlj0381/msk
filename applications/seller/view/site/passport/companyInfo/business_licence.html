@@ -1,6 +1,7 @@
+<input type='hidden' name='company[company_id]' value='<{$info.company.company_id}>'/>
 <div id="business_licence">
 	
-	<h4>营业执照信息（副本）</h4>
+    <h4>营业执照信息（副本）<a href="<{link app=seller ctl=site_passport act=entry}>?card=new"><small class="text-danger">填写新版三证合一执照</small></a></h4>
 	
 	<div class="form-group">
 		<label class="col-xs-2 control-label">
@@ -24,7 +25,7 @@
 			<span class="text-danger">*</span>住所：
 		</label>
 		<div class="col-xs-4">
-			<input type="text" name="company[addr]" class="form-control">
+			<input type="text" name="company[address]" class="form-control">
 		</div>
 	</div>
 	<div class="form-group">
@@ -40,7 +41,7 @@
 			<span class="text-danger">*</span>注册资本：
 		</label>
 		<div class="col-xs-4">
-			<input type="text" name="company[reg_capit]" class="form-control">
+			<input type="text" name="company[registered_capital]" class="form-control">
 		</div>
 	</div>
 	<div class="form-group">
@@ -48,7 +49,7 @@
 			<span class="text-danger">*</span>实收资本：
 		</label>
 		<div class="col-xs-4">
-			<input type="text" name="company[get_capit]" class="form-control">
+			<input type="text" name="company[reality_capital]" class="form-control">
 		</div>
 	</div>
 	<div class="form-group">
@@ -56,7 +57,7 @@
 			<span class="text-danger">*</span>类型：
 		</label>
 		<div class="col-xs-4">
-			<select class="form-control" name="company[type]">
+			<select class="form-control" name="company[enterprise_type]">
 				<option value="">请选择</option>
 				<option value="">公司类型一</option>
 				<option value="">公司类型二</option>
@@ -69,7 +70,7 @@
 			<span class="text-danger">*</span>经营范围：
 		</label>
 		<div class="col-xs-4">
-			<input type="text" name="business_licence[value][date]" class="form-control">
+			<input type="text" name="company[operating_period]" class="form-control">
 		</div>
 	</div>
 	<div class="form-group">
@@ -77,7 +78,7 @@
 			<span class="text-danger">*</span>成立日期：
 		</label>
 		<div class="col-xs-4">
-			<input type="text" name="company[found_date]" class="form-control">
+			<input type="text" name="company[establishment_date]" class="form-control">
 		</div>
 	</div>
 	<div class="form-group">
@@ -85,8 +86,8 @@
 			<span class="text-danger">*</span>营业期限：
 		</label>
 		<div class="col-xs-4">
-			<input type="text" name="company[date_start]" class="form-control" style="width:175px; display: inline-block;"> 至 
-			<input type="text" name="company[date_end]" class="form-control"  style="width:175px; display: inline-block;">
+			<input type="text" name="company[business_scope][begin]" class="form-control" style="width:175px; display: inline-block;"> 至 
+			<input type="text" name="company[business_scope][end]" class="form-control"  style="width:175px; display: inline-block;">
 		</div>
 	</div>
 

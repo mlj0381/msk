@@ -1,4 +1,4 @@
-
+<input type="hidden" name="brand_touted[content_id]"  value="<{$extra.content_id}>" class="form-control">
 <div id="ec_group_employees">
 	<h4>电商团队成员</h4>
 	<div class="form-group">
@@ -22,16 +22,7 @@
 			<span class="text-danger">*</span>学历：
 		</label>
 		<div class="col-xs-4">
-			<select class="form-control" value="<{$extra.ec_group_employees.value.edu}>" name="ec_group_employees[value][edu]">
-				<option value="">请选择</option>
-				<option value="">博士</option>
-				<option value="">硕士</option>
-				<option value="">本科</option>
-				<option value="">专科</option>
-				<option value="">高中</option>
-				<option value="">小学</option>
-				<option value="">其他</option>
-			</select>
+		<{include file="site/passport/companyInfo/grade.html" data=array("ec_group_employees[value][edu]","{$extra.value.edu}")}>
 		</div>
 	</div>
 	<div class="form-group">

@@ -81,10 +81,18 @@ $db['company'] = array(
         'web_site' => array(
             'type' => 'varchar(100)',
             'required' => true,
-            'default' => 0,
+            'default' => '',
             'label' => '网站地址',
             'in_list' => false,
             'comment' => '网站地址',
+        ),
+        'leagl_person' => array(
+            'type' => 'varchar(100)',
+            'required' => true,
+            'default' => '',
+            'label' => '法人代表',
+            'in_list' => false,
+            'comment' => '法人代表',
         ),
         'tel' => array(
             'type' => 'varchar(50)',

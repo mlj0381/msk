@@ -4,6 +4,8 @@
 </div>
 <form method="post" action="index.php?app=b2c&ctl=admin_pages_position&act=save" id='position_edit_form' class="form">
     <input type="hidden" name="position_id" value="<{$position.position_id}>">
+    <input type="hidden" name="pages_id" value="<{$position.pages_id}>">
+    <input type="hidden" name="position[plat]" value="<{$plat}>">
     <div class="modal-body">
         <div class="row">
             <div class="col-md-9">
