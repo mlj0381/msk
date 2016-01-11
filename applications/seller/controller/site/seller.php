@@ -10,35 +10,31 @@
 // | Author: Shanghai ChenShang Software Technology Co., Ltd.
 // +----------------------------------------------------------------------
 
-class seller_ctl_site_seller extends seller_frontpage
-{
+class seller_ctl_site_seller extends seller_frontpage {
+
     public $title = '商家中心';
 
-    public function __construct(&$app)
-    {
+    public function __construct(&$app) {
         parent::__construct($app);
         $this->verify();
         $this->mPam_seller = app::get('pam')->model('sellers');
         $this->mSeller = $this->app->model('sellers');
     }
 
-	// 商家首页
-	public function index()
-	{
+    // 商家首页
+    public function index() {
         $this->pagedata['sellers'] = $this->mPam_seller->getRow('*', array(
             'seller_id' => $this->seller['seller_id']
         ));
-		$this->output();
-	}
+        $this->output();
+    }
 
     //账户信息
-    public function account()
-    {
+    public function account() {
         $this->pagedata['company'] = $this->get_company();
         $this->pagedata['contact'] = $this->get_contact();
         $this->user_manage('manage');
-        if($_POST)
-        {
+        if ($_POST) {
             $post = $_POST;
             $user_passport = vmc::singleton('seller_user_passport');
             $post['seller']['company_id'] = $this->pagedata['company']['company_id'];
@@ -50,23 +46,20 @@ class seller_ctl_site_seller extends seller_frontpage
     }
 
     //消息中心
-    public function message()
-    {        
+    public function message() {
         $this->output();
     }
 
     //结算管理
-    public function clearing()
-    {
+    public function clearing() {
         $this->output();
     }
 
-
-	public function company()
-	{
+    public function company() {
         $this->user_manage('manage');
         $this->title .= "公司信息";
-        if($_POST) $this->_company_post($_POST);
+        if ($_POST)
+            $this->_company_post($_POST);
         $seller = $this->app->model('sellers')->getRow('*', array(
             'seller_id' => $this->seller['seller_id']
         ));
@@ -76,47 +69,45 @@ class seller_ctl_site_seller extends seller_frontpage
         ));
         $this->pagedata['company'] = $company;
         $this->output();
-	}
+    }
 
     // 公司信息提交
-    private function _company_post()
-    {
+    private function _company_post() {
         extract($post);
         $this->begin($this->gen_url(array(
-            'app' => 'seller',
-            'ctl' => 'site_seller',
-            'act' => 'company'
+                    'app' => 'seller',
+                    'ctl' => 'site_seller',
+                    'act' => 'company'
         )));
-        try{
+        try {
             // 更新seller_company
             $mdl_company = $this->app->model('company');
             $update_company_data = compact('company_name', 'company_area', 'company_addr');
-            if(!$mdl_company->update($update_company_data, array('company_id' => $company_id, 'seller_id' => $this->seller['seller_id'])))
-            {
+            if (!$mdl_company->update($update_company_data, array('company_id' => $company_id, 'seller_id' => $this->seller['seller_id']))) {
                 throw new Exception('公司信息更新失败');
             }
             // 更新seller
             $update_seller_data = compact('area', 'addr', 'avatar');
-            if(!$this->mSeller->update($update_seller_data, array('seller_id' => $this->seller['seller_id'])))
-            {
+            if (!$this->mSeller->update($update_seller_data, array('seller_id' => $this->seller['seller_id']))) {
                 throw new Exception('商家信息更新失败');
             }
             // 更新contact
             $update_seller_data = compact('name', 'tel');
             $mdl_contact = $this->app->model('contact');
-            if(!$mdl_contact->update($update_seller_data, array('company_id' => $contact_id, 'seller_id' => $this->seller['seller_id'])))
-            {
+            if (!$mdl_contact->update($update_seller_data, array('company_id' => $contact_id, 'seller_id' => $this->seller['seller_id']))) {
                 throw new Exception('联系人信息更新失败');
             }
-        }catch(Exception $e){
+        } catch (Exception $e) {
             $this->end(false, $e->getMessage());
         }
         $this->end(true, '成功');
     }
+
     //安全设置
-    public function securitycenter(){
+    public function securitycenter() {
         $user_obj = vmc::singleton('seller_user_object');
         $this->pagedata['pam_data'] = $user_obj->get_pam_data('*', $this->seller['seller_id']);
         $this->output();
     }
+
 }

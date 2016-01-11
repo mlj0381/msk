@@ -100,24 +100,7 @@ $db['store'] = array(
             'in_list' => true,
             'default_in_list' => true,
         ),
-        'quality_excel' => array(
-            'type' => 'varchar(255)',
-            'comment' => ('质量信息'),
-            'label' => ('质量信息'),
-            'required' => true,
-        ),
-        'sanitation_excel' => array(
-            'type' => 'varchar(255)',
-            'comment' => ('卫生信息'),
-            'label' => ('卫生信息'),
-            'required' => true,
-        ),
-        'pack_excel' => array(
-            'type' => 'varchar(255)',
-            'comment' => ('包装信息'),
-            'label' => ('包装信息'),
-            'required' => true,
-        ),
+        
         'template' => array(
             'type' => 'varchar(100)',
             'comment' => ('店铺模板'),
@@ -130,6 +113,12 @@ $db['store'] = array(
             'comment' => ('店铺设置'),
             'deny_export' => true,
         ),
+        'store_type' => array(
+            'type' => 'number',
+            'default' => 0,
+            'comment' => ('店铺类型'),
+            'label' => ('店铺类型'),
+            ),
         'status' => array(
             'label' => ('用户状态'),
             'type' => array(
