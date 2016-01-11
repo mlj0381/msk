@@ -58,8 +58,7 @@ class base_application_dbtable extends base_application_prototype_filepath{
             $sql.= 'type = '.$engine.';';
         }else{
             $sql.= 'ENGINE = '.$engine.' DEFAULT CHARACTER SET utf8;';
-        }
-		logger::error($sql . "\n\n");
+        }		
         return $sql;
     }
 

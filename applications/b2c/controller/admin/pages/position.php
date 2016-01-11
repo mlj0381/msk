@@ -55,8 +55,8 @@ class b2c_ctl_admin_pages_position extends desktop_controller
     {
 		$pages_id = isset($this->_filter['pages_id']) ? $pages_id = $this->_filter['pages_id'] : 0;
 		$this->pagedata['pageObject'] = $this->mPages->dump($pages_id);
-
-		$this->pagedata['pages'] = $this->mPages->getList('*');
+		$this->pagedata['plat'] = isset($this->pagedata['pageObject']) ? $this->pagedata['pageObject']['plat'] : 0;
+		$this->pagedata['pages'] = $this->mPages->getList('*');		
 		$this->pagedata['plats'] = $this->app->getConf('pages_plat_type');
 		$this->pagedata['types'] = $this->app->getConf('pages_position_types');	
 		$this->pagedata['multi'] = array(1 => '是');
@@ -68,7 +68,7 @@ class b2c_ctl_admin_pages_position extends desktop_controller
         $this->pagedata['position'] = $this->mPosition->dump($position_id);
         if (empty($this->pagedata['position'])) $this->splash('error', 'index.php?app=content&ctl=admin_pages_position', '错误请求');
 		$this->pagedata['pageObject'] = $this->mPages->dump($this->pagedata['position']['pages_id']);
-
+		$this->pagedata['plat'] = $this->pagedata['position']['plat'];
 		$this->pagedata['pages'] = $this->mPages->getList('*');
 		$this->pagedata['types'] = $this->app->getConf('pages_position_types');	
 		$this->pagedata['plats'] = $this->app->getConf('pages_plat_type');		
@@ -138,7 +138,7 @@ class b2c_ctl_admin_pages_position extends desktop_controller
 			$group['add'] = array(
 				'label' => ('添加页面') ,
 				'icon'=>'fa-plus',
-				'href' =>  $this->_url('position', 'add', $this->_filter),
+				'href' =>  $this->_url('', 'add', $this->_filter),
 				'data-target' => '#pages_dialog',
 				'data-toggle' => 'modal'
 			);
