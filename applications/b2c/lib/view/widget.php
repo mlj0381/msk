@@ -20,7 +20,13 @@ class b2c_view_widget {
      */
     public function function_WIDGET_B2C_GOODS_CAT($params, &$smarty) {
         $render = new base_render(app::get('b2c'));
-        $render->pagedata['category_tree'] = vmc::service('view_datasetting')->good_cat($params);
+       // $render->pagedata['category_tree'] = vmc::service('view_datasetting')->good_cat($params);
+        $mdl_goods_cat = app::get('b2c')->model('goods_cat');
+        $tree = $mdl_goods_cat->get_tree();
+        foreach ($tree as &$value){
+            $value['son'] = $mdl_goods_cat->children($value['cat_id']);
+        }
+        $render->pagedata['category_tree'] = $tree;
         return $render->fetch('widget/category.html');
     }
 

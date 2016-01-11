@@ -4,20 +4,13 @@
     <div class="form-group">
         <label class="col-xs-2 control-label"><span>商品类目</span></label>
         <div class="col-xs-5">
-            <select class="form-control">
-                <option>请选择</option>
-                <option>鸡肉类</option>
-                <option>鸭肉类</option>
-            </select>
+            <{input type=select rows=$params.cat labelColumn="cat_name" valueColumn="cat_id" value}>
         </div>
     </div>
     <div class="form-group">
         <label class="col-xs-2 control-label"><span>所属品牌</span></label>
         <div class="col-xs-5">
-            <select class="form-control">
-                <option value="">神农客</option>
-                <option value="">美侍客</option>
-            </select>
+            <{input type=select rows=$params.brand labelColumn="brand_name" valueColumn="brand_id" value}>
         </div>
     </div>
     <div class="form-group">

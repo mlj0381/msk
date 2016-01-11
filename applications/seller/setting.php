@@ -46,9 +46,11 @@ $setting = array(
                 8 => array(
                     'brand_lesstion', 'packing', 'brand_touted'
                 ),
+                9 => array(
+                    'store_info', 'store_principal', 'goods_info'
+                ),
             ),
             1 => array(
-                
             ),
             2 => array(
                 1 => array(
@@ -59,6 +61,40 @@ $setting = array(
                 1 => array(
                     'food_business_licence', 'food_flow_licence', 'oem_auth_lesstion'
                 ),
+            ),
+        ),
+    ),
+    'goods_inof' => array(
+        'default' => array(
+            'params' => array(
+                'orgion' => array(
+                    array(
+                        'id' => 1,
+                        'name' => '北京',
+                    ),
+                    array(
+                        'id' => 2,
+                        'name' => '上海',
+                    ),
+                    array(
+                        'id' => 3,
+                        'name' => '广州',
+                    ),
+                ),
+                'process' => array(
+                    array(
+                        'id' => 1,
+                        'name' => '单冻',
+                    ),
+                    array(
+                        'id' => 2,
+                        'name' => '板冻',
+                    ),
+                ),
+            ),
+            'product' => array(
+                'quality' => array('A1', 'A2', 'A3'),
+                'pack' => array('箱', '袋'),
             ),
         ),
     ),

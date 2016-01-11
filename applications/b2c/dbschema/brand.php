@@ -66,32 +66,7 @@ $db['brand'] = array(
             'comment' => ('品牌图片标识'),
             'label' => ('品牌图片标识'),
         ),
-        'brand_honor_num' => array(
-            'type' => 'varchar(50)',
-            'label' => '品牌荣誉编号',
-            'comment' => '品牌荣誉编号',
-        ),
-        'brand_honor_time' => array(
-            'type' => 'varchar(50)',
-            'label' => '品牌荣誉发证日期',
-            'comment' => '品牌荣誉发证日期',
-        ),
-        'brand_honor_unit' => array(
-            'type' => 'varchar(50)',
-            'label' => '品牌荣誉发证机构',
-            'comment' => '品牌荣誉发证机构',
-        ),
-        'brand_honor_image' => array(
-            'type' => 'char(32)',
-            'label' => '品牌荣誉图片',
-            'comment' => '品牌荣誉图片',
-        ),
-        'pack_image' => array(
-            'type' => 'varchar(50)',
-            'required' => true,
-            'label' => '包装图片',
-            'comment' => '包装图片',
-        ),
+        
         'brand_country' => array(
             'type' => 'table:country@ectools',
             'label' => ('品牌国家'),

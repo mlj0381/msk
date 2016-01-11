@@ -189,15 +189,15 @@ class b2c_ctl_site_passport extends b2c_frontpage {
             }
             $mdl_company_extra = app::get('base')->model('company_extra');
             foreach ($extra_columns as $col) {
-				if(isset($params[$col]) && !empty($params[$col])){
-					$params[$col]['uid'] = $this->member['member_id'];
-					$params[$col]['from'] = 0;
-				    if (!$mdl_company_extra->extra_save($col, $params)) {
-					    $db->rollback();
-				        $this->splash('error', $redirect, '注册失败');
-				    }
-				}
-			}
+                if (isset($params[$col]) && !empty($params[$col])) {
+                    $params[$col]['uid'] = $this->member['member_id'];
+                    $params[$col]['from'] = 0;
+                    if (!$mdl_company_extra->extra_save($col, $params)) {
+                        $db->rollback();
+                        $this->splash('error', $redirect, '注册失败');
+                    }
+                }
+            }
             $db->commit();
         }
         $this->set_tmpl('passport');
@@ -210,17 +210,17 @@ class b2c_ctl_site_passport extends b2c_frontpage {
         if ($_POST) {
             $redirect = $this->gen_url(array('app' => 'b2c', 'ctl' => 'site_passport', 'act' => 'business_info'));
             $params = $_POST;
-			$mdl_company_extra = app::get('base')->model('company_extra');
+            $mdl_company_extra = app::get('base')->model('company_extra');
             $extra_columns = $this->app->getConf('member_extra_column');
             foreach ($extra_columns as $col) {
-				if(isset($params[$col]) && !empty($params[$col])){
-					$params[$col]['uid'] = $this->member['member_id'];
-					$params[$col]['from'] = 0;
-					if (!$mdl_company_extra->extra_save($col, $params)) {
-					    $this->splash('error', $redirect, '注册失败');
-				    }
-				}
-			}
+                if (isset($params[$col]) && !empty($params[$col])) {
+                    $params[$col]['uid'] = $this->member['member_id'];
+                    $params[$col]['from'] = 0;
+                    if (!$mdl_company_extra->extra_save($col, $params)) {
+                        $this->splash('error', $redirect, '注册失败');
+                    }
+                }
+            }
         }
         $this->page('site/passport/signup_complete.html');
     }

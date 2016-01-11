@@ -1,30 +1,17 @@
 <div id="param">
 <h4>商品参数</h4>
     <div class="form-body">
+        <{foreach from=$params.goods_type item=item}>
         <div class="form-group">
             <label class="col-xs-2 control-label">
-                <span>产地</span>
+                <span><{$item.name}></span>
             </label>
             <div class="col-xs-5">
-                <select class="form-control">
-                    <option value="">北京</option>
-                    <option value="">上海</option>
-                    <option value="">合肥</option>
-                    <option value="">青岛</option>
-                </select>
+                <{input type=select rows=$item.son labelColumn="name" valueColumn="props_id" value}>
             </div>
         </div>
-        <div class="form-group">
-            <label class="col-xs-2 control-label">
-                <span>加工方式</span>
-            </label>
-            <div class="col-xs-5">
-                <select class="form-control">
-                    <option value="">单冻</option>
-                    <option value="">板冻</option>
-                </select>
-            </div>
-        </div>
+        <{/foreach}>
+        
         <hr>
         <!-- <div class="form-group">
             <label class="col-xs-2 control-label">

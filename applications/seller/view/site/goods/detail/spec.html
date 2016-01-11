@@ -1,81 +1,233 @@
 <div id="sepcInfo">
-	<h4>商品规格</h4>
-	<div class="form-group">
+    <h4>商品规格</h4>
+    <div class="form-group">
         <label class="col-xs-2 control-label"><span>质量等级</span></label>
         <div class="col-xs-5">
-	        <ul>
-	        	<li class="sect">A1</li>
-	        	<li>A2</li>
-	        	<li>A3</li>
-	        </ul>
+            <ul class="quality">
+                <{foreach from=$params.setting.product.quality item=item}>
+                <li class="sect"><{$item}></li>
+                <{/foreach}>
+            </ul>
         </div>
     </div>
     <div class="form-group">
         <label class="col-xs-2 control-label"><span>包装规格</span></label>
         <div class="col-xs-5">
-	        <ul>
-	        	<li>袋</li>
-	        	<li>箱</li>
-	        </ul>
-        </div>
-    </div>
-	<div class="form-group">
-        <label class="col-xs-2 control-label"><span>界限值</span></label>
-        <div class="col-xs-5">
-	        <input type="text" class="form-control">
+            <ul class="pack">
+                <{foreach from=$params.setting.product.pack item=item}>
+                <li class="sect"><{$item}></li>
+                <{/foreach}>
+            </ul>
         </div>
     </div>
     <div class="form-group">
-    	<label class="col-xs-2 control-label"></label>
-    	<div class="col-xs-3">
-    		<div class="btn btn-danger creat_goods_btn ">根据以上信息生成多规格货品</div>
-    	</div>
+        <label class="col-xs-2 control-label"><span>界限值</span></label>
+        <div class="col-xs-5">
+            <input type="text" class="form-control">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-xs-2 control-label"></label>
+        <div class="col-xs-3">
+            <div class="btn btn-danger creat_goods_btn ">根据以上信息生成多规格货品</div>
+        </div>
     </div>
 
 
     <table class="table table-hover">
-    	<tr>
-    		<th class="col-xs-2">货号</th>
-    		<th class="col-xs-2">质量等级</th>
-    		<th class="col-xs-1">包装</th>
-    		<th class="col-xs-5">销售价</th>
-    		<th class="col-xs-1">库存</th>
-    		<th class="col-xs-1">是否上架</th>
-    	</tr>
-    	<tr>
-    		<td>342423</td>
-    		<td>A1</td>
-    		<td>箱</td>
-    		<td>
-	    		<div class="price_area">
-	    			<span>小于10箱 <input type="text" placeholder="元"></span>
-	    			<span>大于10箱 <input type="text" placeholder="元"></span>
-	    		</div>
-			</td>
-    		<td>
-    			<input type="text" value="0" style="width:60px;">
-    		</td>
-    		<td>
-    			<input type="checkbox"> 上架
-    		</td>
-    	</tr>
-		<tr>
-    		<td>342423</td>
-    		<td>A1</td>
-    		<td>箱</td>
-    		<td>
-	    		<div class="price_area">
-	    			<span>小于10箱 <input type="text" placeholder="元"></span>
-	    			<span>大于10箱 <input type="text" placeholder="元"></span>
-	    		</div>
-			</td>
-    		<td>
-    			<input type="text" value="0" style="width:60px;">
-    		</td>
-    		<td>
-    			<input type="checkbox"> 上架
-    		</td>
-    	</tr>
+        <tr>
+            <th class="col-xs-2">货号</th>
+            <th class="col-xs-2">质量等级</th>
+            <th class="col-xs-1">包装</th>
+            <th class="col-xs-5">销售价</th>
+            <th class="col-xs-1">库存</th>
+            <th class="col-xs-1">是否上架</th>
+        </tr>
+        <tr>
+            <td>342423</td>
+            <td>A1</td>
+            <td>箱</td>
+            <td>
+                <div class="price_area">
+                    <span>小于10箱 <input type="text" placeholder="元"></span>
+                    <span>大于10箱 <input type="text" placeholder="元"></span>
+                </div>
+            </td>
+            <td>
+                <input type="text" value="0" style="width:60px;">
+            </td>
+            <td>
+                <input type="checkbox"> 上架
+            </td>
+        </tr>
+        <tr>
+            <td>342423</td>
+            <td>A1</td>
+            <td>箱</td>
+            <td>
+                <div class="price_area">
+                    <span>小于10箱 <input type="text" placeholder="元"></span>
+                    <span>大于10箱 <input type="text" placeholder="元"></span>
+                </div>
+            </td>
+            <td>
+                <input type="text" value="0" style="width:60px;">
+            </td>
+            <td>
+                <input type="checkbox"> 上架
+            </td>
+        </tr>
     </table>
-	<hr>
+    <hr>
 </div>
+
+<textarea class="hide">
+<table class="table table-hover">
+        <tr>
+            <th class="col-xs-2">货号</th>
+            <th class="col-xs-2">质量等级</th>
+            <th class="col-xs-1">包装</th>
+            <th class="col-xs-5">销售价</th>
+            <th class="col-xs-1">库存</th>
+            <th class="col-xs-1">是否上架</th>
+        </tr>
+        <tr>
+            <td>342423</td>
+            <td>A1</td>
+            <td>箱</td>
+            <td>
+                <div class="price_area">
+                    <span>小于10箱 <input type="text" placeholder="元"></span>
+                    <span>大于10箱 <input type="text" placeholder="元"></span>
+                </div>
+            </td>
+            <td>
+                <input type="text" value="0" style="width:60px;">
+            </td>
+            <td>
+                <input type="checkbox"> 上架
+            </td>
+        </tr>
+        <tr>
+            <td>342423</td>
+            <td>A1</td>
+            <td>箱</td>
+            <td>
+                <div class="price_area">
+                    <span>小于10箱 <input type="text" placeholder="元"></span>
+                    <span>大于10箱 <input type="text" placeholder="元"></span>
+                </div>
+            </td>
+            <td>
+                <input type="text" value="0" style="width:60px;">
+            </td>
+            <td>
+                <input type="checkbox"> 上架
+            </td>
+        </tr>
+    </table>    
+
+</textarea>
+
+<script>
+    $(function () {
+        var timer_delay = 0;
+        $('#sepcInfo .creat_goods_btn').on('click', function (e) {
+
+            e.stopPropagation();
+            clearTimeout(timer_delay);
+            var _this = this;
+            timer_delay = setTimeout(function () {
+                return create_product_items_func.apply(_this);
+            }, 0);//TODO 性能问题
+        });
+
+        var create_product_items_func = function (handle) {
+
+            var spec_v_has = $('#sepcInfo .quality');
+            var spec_v = $('#sepcInfo .pack'), not_null = false;
+
+            var ul = $('#sepcInfo  ul');
+            /*计算规格交集*///quality pack
+            var spec_v_item = new Array();
+
+            $.each(ul, function (index, items) {
+                var select = new Array();
+                for (var i = 0; i < $(items).find('li').size(); i++) {
+                    var item = $(items).find('li').eq(i);
+                    if (item.hasClass('sect')) {
+                        select[i] = item.text();
+                    }
+                }
+                spec_v_item[index] = select;
+            });
+            $.each(spec_v, function (idx, item) {
+                var exist_sv = $(spec_v_has.eq(idx)).val();
+                if (!!$(item).val()) {
+                    not_null = true;
+                    spec_v_item[idx] = $.merge(exist_sv ? exist_sv.split(',') : [], $(item).val().split(','));
+                } else {
+                    spec_v_item[idx] = exist_sv ? exist_sv.split(',') : [];
+                }
+            });
+            if (!not_null) {
+                Messagebox.warning('您还没有填写任何规格值。', '操作提醒');
+            }
+
+            var root_arr = spec_v_item.shift();
+            var loop_arr;
+            var lnk_arr = function (r, a) {
+                var _return = [];
+                $.each(a, function (i, n) {
+                    _return.push(r + ':::' + n);
+                });
+                return _return;
+            }
+            while (loop_arr = spec_v_item.shift()) {
+                var cur_len = root_arr.length;
+                for (var i = 0; i < cur_len; i++) {
+                    root_arr = root_arr.concat(lnk_arr(root_arr.shift(), loop_arr));
+                }
+                root_arr.slice(cur_len);
+            }
+            /*计算规格交集*/
+            var context = "";
+            $.each(root_arr, function (idx, n) {
+                var spec_info = n.replace(/:::/g, '/');
+                if ($('.exist-products input[value="' + spec_info + '"]').length) {
+                    return; //已存在的不能再生成
+                }
+                context += substitute($('.product-item-tpl').val(), {
+                    key: 'new_' + idx,
+                    spec_info: spec_info,
+                    spec_desc: n
+                });
+            });
+            $('.product-items tbody.new-products').empty().append(context);
+
+            /*支持字符批量分隔粘贴*/
+            listen_postpaste($('.product-items tbody.new-products input[name$="[bn]"]'));
+            listen_postpaste($('.product-items tbody.new-products input[name$="[barcode]"]'));
+            listen_postpaste($('.product-items tbody.new-products input[name$="[price]"]'));
+            listen_postpaste($('.product-items tbody.new-products input[name$="[mktprice]"]'));
+            listen_postpaste($('.product-items tbody.new-products input[name$="[weight]"]'));
+            listen_postpaste($('.product-items tbody.new-products input[name$="[unit]"]'));
+
+            var item_length = $('.product-items tbody.new-products').find('> tr').length;
+            $(this).next('.text-success').remove();
+            if (item_length) {
+                $(this).after('<span class="text-success">将会新建<span class="badge badge-success">' + item_length + '</span>个货品</span>');
+            }
+
+            $.each($('.product-items tbody.new-products input[data-map]'), function (i, n) {
+                var map = $(n).attr('data-map'), val = $('.product-items tbody.exist-products tr:last input[data-map="' + map + '"]').val();
+                if (map == 'bn' || map == 'barcode') {
+                    val += '-' + i;
+                }
+                $(n).val(val);
+            });
+
+
+        };
+    });
+</script>

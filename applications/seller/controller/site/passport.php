@@ -83,7 +83,18 @@ class seller_ctl_site_passport extends seller_frontpage {
                 'act' => 'index',
             ));
         }
+        $this->_schedule();
         $this->splash('success', $forward, '登录成功');
+    }
+
+    //查询入驻进度
+    private function _schedule() {
+        $seller = $this->get_current_seller();
+        $store = app::get('store')->model('store')->getRow('store_id', array('seller_id' => $seller['seller_id']));
+        if (empty($store)) {
+            $redriect = $this->gen_url(array('app' => 'seller', 'ctl' => 'site_passport', 'act' => 'entry', 'args0' => $seller['schedule']));
+            $this->splash('success', $redriect, '登录成功,请先完善入驻信息');
+        }
     }
 
 //end function
@@ -358,20 +369,24 @@ class seller_ctl_site_passport extends seller_frontpage {
         $licence_type = $this->_request->get_get('card'); //营业执照类型 老版or新版
         $licence_type = $licence_type ? $licence_type : 'new';
         if ($_POST) {
-			$params = utils::_filter_input($_POST);
-            $this->_entry($params, $licence_type);
+            $params = utils::_filter_input($_POST);
+            unset($_POST);
+            $this->_entry($params);
         }
-        // 选择类型
-        // $seller['type'],process
-        $step = $_POST['pageIndex'] ? $_POST['pageIndex'] : $step;
+
+        $step = $params['pageIndex'] ? $params['pageIndex'] : $step;
         $step = $type == 'up' ? $step - 1 : $step + 1;
         $step <= 1 && $step = 1;
-        $step >= 8 && $step = 8;
+        $step >= 10 && $step = 10;
         $columns = $this->page_setting($step, $licence_type);
         $this->pagedata['info'] = $this->edit_info($columns);
         $this->pagedata['page'] = $columns;
         $this->pagedata['pageIndex'] = $step;
-        $this->page('site/passport/signup_companyInfo.html');
+        if ($step == 10) {
+            $this->page('site/passport/signup_complete.html');
+        } else {
+            $this->page('site/passport/signup_companyInfo.html');
+        }
     }
 
     private function page_setting($step, $licence_type) {
@@ -405,19 +420,21 @@ class seller_ctl_site_passport extends seller_frontpage {
         foreach ($company_extra as $value) {
             $info['company_extra'][$value['key']] = $value;
         }
-        
+        $info['company_extra']['store'] = app::get('store')->model('store')->getRow('*', $filter);
         $info['company_extra']['company'] = app::get('base')->model('company')->getRow('*', $filter);
         $info['company_extra']['contact'] = app::get('base')->model('contact')->getRow('*', $filter);
+        $info['company_extra']['brand'] = $this->app->model('brand')->getRow('*', array('seller_id' => $this->seller['seller_id']));
 
         return $info;
     }
 
-    private function _entry($post, $licence_type) {
+    private function _entry($params) {
 
         $db = vmc::database();
         $db->beginTransaction();
-        $extra_columns = $this->page_setting($post['pageIndex']);
-        $params = $post;
+        $extra_columns = $this->page_setting($params['pageIndex']);
+
+        //公司信息
         if (isset($params['company']) && !empty($params['company'])) {
             $params['company']['uid'] = $this->seller['seller_id'];
             $params['company']['from'] = '1';
@@ -426,15 +443,45 @@ class seller_ctl_site_passport extends seller_frontpage {
                 $this->splash('error', $redirect, '注册失败');
             }
         }
+        //联第人信息
 
         if (isset($params['contact']) && !empty($params['contact'])) {
+            $params['contact']['uid'] = $this->seller['seller_id'];
+            $params['contact']['from'] = '1';
             if (!app::get('base')->model('contact')->save($params['contact'])) {
-                $params['contact']['uid'] = $this->seller['seller_id'];
-                $params['contact']['from'] = '1';
                 $db->rollback();
                 $this->splash('error', $redirect, '注册失败');
             }
         }
+        //品牌
+        if (isset($params['brand']) && !empty($params['brand'])) {
+            $params['brand']['seller_id'] = $this->seller['seller_id'];
+            if (!$params['brand']['brand_id']) {
+                if (!$barand_id = app::get('b2c')->model('brand')->insert($params['brand'])) {
+                    $db->rollback();
+                    $this->splash('error', $redirect, '注册失败');
+                }
+                $params['brand_id'] = $barand_id;
+            } else if (!app::get('b2c')->model('brand')->save($params['brand'])) {
+                $db->rollback();
+                $this->splash('error', $redirect, '注册失败');
+            }
+
+            if (!$this->app->model('brand')->save($params['brand'])) {
+
+                $db->rollback();
+                $this->splash('error', $redirect, '注册失败');
+            }
+        }
+        //店铺
+        if (isset($params['store']) && !empty($params['store'])) {
+            $params['store']['seller_id'] = $this->seller['seller_id'];
+            if (!app::get('store')->model('store')->save($params['store'])) {
+                $db->rollback();
+                $this->splash('error', $redirect, '注册失败');
+            }
+        }
+        //扩展
         $mdl_company_extra = app::get('base')->model('company_extra');
         foreach ($extra_columns as $key => $col) {
             if (isset($params[$key]) && !empty($params[$key])) {
@@ -448,11 +495,11 @@ class seller_ctl_site_passport extends seller_frontpage {
                 }
             }
         }
-		$data = array('seller_id' => $this->seller['seller_id'], 'schedule' => $this->seller['schedule'] + 1);
-		if(!$this->app->model('sellers')->save($data)){
-			$db->rollback();
+        $data = array('seller_id' => $this->seller['seller_id'], 'schedule' => $params['pageIndex']);
+        if (!$this->app->model('sellers')->save($data)) {
+            $db->rollback();
             $this->splash('error', $redirect, '注册失败');
-		}
+        }
         $db->commit();
     }
 

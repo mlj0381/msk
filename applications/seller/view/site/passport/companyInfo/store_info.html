@@ -1,0 +1,36 @@
+<input type="hidden" name="store[store_id]"  value="<{$extra.store.store_id}>" class="form-control">
+<h4>店铺信息</h4>
+<div class="form-group">
+    <label class="col-xs-2 control-label">
+        <span class="text-danger">*</span>店铺类型：
+    </label>
+    <div class="col-xs-4">
+        <select name="store[store_type]" class="form-control">
+            <option value="1">工厂店铺</option>
+            <option value="2">代理店铺</option>
+            <option value="3">OEM店铺</option>
+        </select>
+    </div>
+</div>
+<div class="form-group">
+    <label class="col-xs-2 control-label">
+        <span class="text-danger">*</span>店铺名称：
+    </label>
+    <div class="col-xs-4">
+        <input name="store[store_name]" class="form-control" />
+    </div>
+</div>
+<div class="form-group">
+    <label class="col-xs-2 control-label">
+        <span class="text-danger">*</span>店铺logo：
+    </label>
+    <div class="col-xs-4">
+        <div class="filebox">
+            <input type="hidden" value="" name="store[logo]"/>
+            <input type="file" data-url="<{link app=image ctl=site_upload act=index}>" accept="image/*" class="file_input" />
+            <div class="showImg">
+                <img src="<{if $company.business_license_image eq ''}><{$base_url}>/themes/pc/default/statics/images/file_add.jpg<{else}><{$company.business_license_image|storager:'xs'}><{/if}>">    
+            </div>
+        </div>
+    </div>
+</div>
