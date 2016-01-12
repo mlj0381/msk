@@ -278,6 +278,7 @@ header .searchbar .searchbox .search_form .search_btn {
   text-align: center;
   cursor: pointer;
   outline: none;
+  float: right;
 }
 header .searchbar .searchbox .hotSearch {
   width: 370px;

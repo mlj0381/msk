@@ -63,6 +63,22 @@ $db['pages_position'] = array(
             'in_list' => true,
 			'default_in_list' => true,
         ),
+        'width' => array(   
+            'type' => 'number',
+            'label' => ('宽度'),
+            'comment' => ('宽度'),         
+            'default' => 100,
+            'in_list' => true,
+            'default_in_list' => true,
+        ),
+        'height' => array(   
+            'type' => 'number',
+            'label' => ('高度'),
+            'comment' => ('宽度'),         
+            'default' => 100,
+            'in_list' => true,
+            'default_in_list' => true,
+        ),
 		'plat' => array(
            'type' => array(
                 '0' => ('商城'),

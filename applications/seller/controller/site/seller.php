@@ -44,6 +44,21 @@ class seller_ctl_site_seller extends seller_frontpage {
         $this->output();
     }
 
+    //商户信息
+    public function businessInfo() {
+        $this->user_manage('manage');
+        $this->output();
+    }
+
+    //安全设置
+    public function securitycenter() {
+        //$user_obj = vmc::singleton('seller_user_object');
+        //$this->pagedata['pam_data'] = $user_obj->get_pam_data('*', $this->seller['seller_id']);
+        $this->user_manage('manage');
+        $this->output();
+    }
+
+
     //消息中心
     public function message() {
         $this->output();
@@ -102,11 +117,8 @@ class seller_ctl_site_seller extends seller_frontpage {
         $this->end(true, '成功');
     }
 
-    //安全设置
-    public function securitycenter() {
-        $user_obj = vmc::singleton('seller_user_object');
-        $this->pagedata['pam_data'] = $user_obj->get_pam_data('*', $this->seller['seller_id']);
-        $this->output();
-    }
+    
+
+    
 
 }

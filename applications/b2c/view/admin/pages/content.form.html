@@ -56,6 +56,8 @@
                         <div class="col-xs-5">
                              <{input type="image" width=110 height=100 tag="图片上传" name="content[image_id]" value=$content.image_id required='true'}>
                         </div>
+                        <label class="col-xs-4 control-label">图片上传尺寸:</label>
+                        <div class="col-xs-5"><{$postion_psize.width}>px*<{$postion_psize.height}>px</div>
                     </div>
                     <div class="form-group" id="content_type">
                        <label class="col-md-4 control-label">类型
@@ -85,7 +87,15 @@
                         <div class="col-md-3">
                             <{input type='text' name='content[ordernum]' value=$content.ordernum|default:0 required='true' }>
                         </div>
-                    </div>                        
+                    </div> 
+                    <div class="form-group ">
+                       <label class="col-md-4 control-label">状态
+                            <span class="required">*</span>
+                       </label>
+                        <div class="col-md-3">
+                        <label class="radio-inline"><input  type="checkbox" name="content[status]" value="1" <{if !$content || $content.status == 1 }>checked<{/if}>>启用</label>
+                        </div>
+                    </div>                       
                     
                 </div>
 

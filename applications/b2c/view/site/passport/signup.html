@@ -13,10 +13,6 @@
 </div>
 <div class="passport-signup-container">
     <div class="panel panel-default signup-panel">
-        <!-- <div class="panel-heading clearfix">
-            注册成为会员(买家)
-            <a class="btn btn-danger btn-xs pull-right" href="<{link app=b2c ctl=site_passport act=login args0=$forward}>">立即登录&raquo;</a>
-        </div> -->
         <div class="panel-body">
             <form id="member_signup_form" class="form-horizontal" action="<{link app=b2c ctl=site_passport act=create}>" method="post">
                 <!-- 登陆后跳转地址 -->
@@ -107,32 +103,7 @@ $(function() {
             datatype: "enum",
             onerror: "用户名格式不正确"
         })
-        /*.functionValidator({
-                fun: function() {
-                    var result = false;
-                    $.ajax({
-                        data: {
-                            'pam_account[login_name]': $('#input_login_name').val()
-                        },
-                        async : false,
-                        type: 'POST',
-                        datatype : 'json',
-                        url: "<{link app=b2c ctl=site_passport act=check_login_name}>",
-                        success: function(data) {  
-                            console.log(data)                          
-                            if (data.success) {                                
-                                result = true;
-                            }
-                        },
-                        error:function(data,){
-
-                        }
-                    });                   
-                    return result;
-                  },
-                  onerror: "该用户名已被占用，请更换用户名"
-          });*/
-
+        
     .ajaxValidator({
         onerror: "",
         onwait: "正在对用户名进行合法性校验，请稍候...",
@@ -199,15 +170,6 @@ $(function() {
         datatype: "enum",
         onerror: "你输入的手机号码格式不正确"
     });
-    /*$("#input_vcode").formValidator({
-        onshow: "",
-        onfocus: "请填写验证码",
-        oncorrect: "验证码正确",
-    }).inputValidator({
-        min: 1,
-        onerrormin: "验证码不能为空",
-    });
-*/
 })
 
 
