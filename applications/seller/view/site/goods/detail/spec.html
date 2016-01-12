@@ -5,7 +5,7 @@
         <div class="col-xs-5">
             <ul class="quality">
                 <{foreach from=$params.setting.product.quality item=item}>
-                <li class="sect"><{$item}></li>
+                <li><{$item}></li>
                 <{/foreach}>
             </ul>
         </div>
@@ -15,7 +15,7 @@
         <div class="col-xs-5">
             <ul class="pack">
                 <{foreach from=$params.setting.product.pack item=item}>
-                <li class="sect"><{$item}></li>
+                <li><{$item}></li>
                 <{/foreach}>
             </ul>
         </div>
@@ -23,7 +23,7 @@
     <div class="form-group">
         <label class="col-xs-2 control-label"><span>界限值</span></label>
         <div class="col-xs-5">
-            <input type="text" class="form-control">
+            <input type="text" class="limit" class="form-control">
         </div>
     </div>
     <div class="form-group">
@@ -34,7 +34,7 @@
     </div>
 
 
-    <table class="table table-hover">
+    <table class="table table-hover exist-products">
         <tr>
             <th class="col-xs-2">货号</th>
             <th class="col-xs-2">质量等级</th>
@@ -81,48 +81,25 @@
     <hr>
 </div>
 
-<textarea class="hide">
+<textarea class="hide product-item-tpl">
 <table class="table table-hover">
         <tr>
-            <th class="col-xs-2">货号</th>
-            <th class="col-xs-2">质量等级</th>
-            <th class="col-xs-1">包装</th>
-            <th class="col-xs-5">销售价</th>
-            <th class="col-xs-1">库存</th>
-            <th class="col-xs-1">是否上架</th>
-        </tr>
-        <tr>
-            <td>342423</td>
-            <td>A1</td>
-            <td>箱</td>
+            <td>
+                <input type="hidden" required="true" data-map="bn" class="form-control" name="goods[product][{key}][bn]">
+            </td>
+            <td>{grade}</td>
+            <td>{pack}</td>
             <td>
                 <div class="price_area">
-                    <span>小于10箱 <input type="text" placeholder="元"></span>
-                    <span>大于10箱 <input type="text" placeholder="元"></span>
+                    <span>小于{num}{pack} <input type="text"name="goods[product][{key}][price_up]" placeholder="元"></span>
+                    <span>大于{num}{pack} <input type="text" name="goods[product][{key}][price_dn]" placeholder="元"></span>
                 </div>
             </td>
             <td>
-                <input type="text" value="0" style="width:60px;">
+                <input type="text" data-map="price" name="goods[product][{key}][price]" style="width:60px;" value="0">
             </td>
             <td>
-                <input type="checkbox"> 上架
-            </td>
-        </tr>
-        <tr>
-            <td>342423</td>
-            <td>A1</td>
-            <td>箱</td>
-            <td>
-                <div class="price_area">
-                    <span>小于10箱 <input type="text" placeholder="元"></span>
-                    <span>大于10箱 <input type="text" placeholder="元"></span>
-                </div>
-            </td>
-            <td>
-                <input type="text" value="0" style="width:60px;">
-            </td>
-            <td>
-                <input type="checkbox"> 上架
+                <input type="checkbox" name="goods[product][{key}][marketable]" value="true" checked> 上架
             </td>
         </tr>
     </table>    
@@ -131,6 +108,14 @@
 
 <script>
     $(function () {
+        //class="sect"
+        var ul = $('#sepcInfo  ul');
+        $(ul).each(function (idx, item) {
+            $(item).find('li').click(function () {
+                $(this).toggleClass('sect')
+            });
+        });
+
         var timer_delay = 0;
         $('#sepcInfo .creat_goods_btn').on('click', function (e) {
 
@@ -147,7 +132,7 @@
             var spec_v_has = $('#sepcInfo .quality');
             var spec_v = $('#sepcInfo .pack'), not_null = false;
 
-            var ul = $('#sepcInfo  ul');
+
             /*计算规格交集*///quality pack
             var spec_v_item = new Array();
 
@@ -157,19 +142,20 @@
                     var item = $(items).find('li').eq(i);
                     if (item.hasClass('sect')) {
                         select[i] = item.text();
+                        not_null = true;
                     }
                 }
                 spec_v_item[index] = select;
             });
-            $.each(spec_v, function (idx, item) {
-                var exist_sv = $(spec_v_has.eq(idx)).val();
-                if (!!$(item).val()) {
-                    not_null = true;
-                    spec_v_item[idx] = $.merge(exist_sv ? exist_sv.split(',') : [], $(item).val().split(','));
-                } else {
-                    spec_v_item[idx] = exist_sv ? exist_sv.split(',') : [];
-                }
-            });
+//            $.each(spec_v, function (idx, item) {
+//                var exist_sv = $(spec_v_has.eq(idx)).val();
+//                if (!!$(item).val()) {
+//                    not_null = true;
+//                    spec_v_item[idx] = $.merge(exist_sv ? exist_sv.split(',') : [], $(item).val().split(','));
+//                } else {
+//                    spec_v_item[idx] = exist_sv ? exist_sv.split(',') : [];
+//                }
+//            });
             if (!not_null) {
                 Messagebox.warning('您还没有填写任何规格值。', '操作提醒');
             }
@@ -192,6 +178,7 @@
             }
             /*计算规格交集*/
             var context = "";
+            console.log(root_arr);
             $.each(root_arr, function (idx, n) {
                 var spec_info = n.replace(/:::/g, '/');
                 if ($('.exist-products input[value="' + spec_info + '"]').length) {
@@ -203,15 +190,16 @@
                     spec_desc: n
                 });
             });
-            $('.product-items tbody.new-products').empty().append(context);
-
-            /*支持字符批量分隔粘贴*/
-            listen_postpaste($('.product-items tbody.new-products input[name$="[bn]"]'));
-            listen_postpaste($('.product-items tbody.new-products input[name$="[barcode]"]'));
-            listen_postpaste($('.product-items tbody.new-products input[name$="[price]"]'));
-            listen_postpaste($('.product-items tbody.new-products input[name$="[mktprice]"]'));
-            listen_postpaste($('.product-items tbody.new-products input[name$="[weight]"]'));
-            listen_postpaste($('.product-items tbody.new-products input[name$="[unit]"]'));
+            console.log(context);
+//            $('.product-items tbody.new-products').empty().append(context);
+//
+//            /*支持字符批量分隔粘贴*/
+//            listen_postpaste($('.product-items tbody.new-products input[name$="[bn]"]'));
+//            listen_postpaste($('.product-items tbody.new-products input[name$="[barcode]"]'));
+//            listen_postpaste($('.product-items tbody.new-products input[name$="[price]"]'));
+//            listen_postpaste($('.product-items tbody.new-products input[name$="[mktprice]"]'));
+//            listen_postpaste($('.product-items tbody.new-products input[name$="[weight]"]'));
+//            listen_postpaste($('.product-items tbody.new-products input[name$="[unit]"]'));
 
             var item_length = $('.product-items tbody.new-products').find('> tr').length;
             $(this).next('.text-success').remove();
@@ -229,5 +217,23 @@
 
 
         };
+        var substitute = function (str, obj) {
+            return str.replace(/\\?\{([^{}]+)\}/g, function (match, name) {
+                if (match.charAt(0) == '\\') {
+                    return match.slice(1);
+                }
+                var product = obj.spec_info.split('/');
+                alert(match.slice(1));
+                if (match == 'grade') {
+                    alert('1')
+                    return product[0];
+                }
+                if (match == 'pack') {
+                    alert('1')
+                    return product[1];
+                }
+                return (obj[name] != undefined) ? obj[name] : '';
+            });
+        }
     });
 </script>

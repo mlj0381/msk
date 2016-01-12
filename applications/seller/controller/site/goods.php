@@ -102,7 +102,11 @@ class seller_ctl_site_goods extends seller_frontpage {
     private function basic() {
         $return = array();
         //商品类目
-        $return['cat'] = app::get('b2c')->model('goods_cat')->get_tree();
+        $mdl_goods_cat = app::get('b2c')->model('goods_cat');
+        $return['cat'] = $mdl_goods_cat->get_tree();
+        foreach ($return['cat'] as &$value) {
+            $value['son'] = $mdl_goods_cat->children($value['cat_id']);
+        }
         //商品品牌
         $return['brand'] = $this->app->model('brand')->getList('*', array('seller_id' => $this->seller['seller_id']));
         //商品参数配置
@@ -111,11 +115,86 @@ class seller_ctl_site_goods extends seller_frontpage {
         foreach ($return['goods_type'] as &$value) {
             $value['son'] = $type_props->getList('*', array('type_id' => $value['type_id']));
         }
-        
-        $return['setting'] = $this->app->getConf('goods_inof');
+        //店铺信息
+        $return['store'] = app::get('store')->model('store')->getRow('*', array('seller_id' => $this->seller['seller_id']));
+        $store_type = app::get('store')->getConf('store_type');
+        $return['store']['store_type'] = $store_type[$return['store']['store_type']]['name'];
+
+        $return['setting'] = $this->app->getConf('goods_info');
         //获取展示位置
-        
         return $return;
+    }
+
+    //商品目录
+    public function directory() {
+        if ($_POST) {
+            $this->edit_directory($_POST);
+        }
+        //查询自己的店铺分类
+        $mdl_store = app::get('store')->model('store');
+        $store_id = $mdl_store->getRow('store_id', array('seller_id' => $this->seller['seller_id']));
+        $store_tree = app::get('store')->model('goods_cat');
+        $this->pagedata['this_cat'] = $store_tree->get_tree('', null, $store_id['store_id']);
+        $this->pagedata['info'] = $this->basic();
+        $this->output();
+    }
+
+    private function edit_directory($post) {
+        $redirect = $this->gen_url(array('app' => 'seller', 'ctl' => 'site_goods', 'act' => 'directory'));
+        $db = vmc::database();
+        $db->beginTransaction();
+        $mdl_store = app::get('store')->model('store');
+        $mdl_store_cat = app::get('store')->model('goods_cat');
+        $store_id = $mdl_store->getRow('store_id', array('seller_id' => $this->seller['seller_id']));
+        foreach ($post['cat'] as $value) {
+
+            $count = 0;
+            foreach ($value['parent'] as $v) {
+                !empty($v['check']) && $count ++;
+                if (empty($v['check']) && empty($v['id'])) {
+                    continue;
+                }
+                if (empty($v['check'])) {
+                    if (!$mdl_store_cat->remove($v['cat_id'], $store_id['store_id'], $msg)) {
+                        $db->rollback();
+                        $this->splash('error', $redirect, $msg);
+                    }
+                } else if(empty($v['id'])){
+                    $son_data = array(
+                        'cat_id' => $v['cat_id'],
+                        'cat_name' => $v['cat_name'],
+                        'store_id' => $store_id['store_id'],
+                        'is_leaf' => 'true',
+                        'cat_path' => ',' . $value['cat_id'] . ',',
+                        'parent_id' => $value['cat_id'],
+                    );
+                    if (!$mdl_store_cat->save($son_data)) {
+                        $db->rollback();
+                        $this->splash('error', $redirect, '操作失败');
+                    }
+                }
+            }
+            if (!$count) {
+                continue;
+            }
+            extract($value);
+            $parent_data = array(
+                'cat_id' => $cat_id,
+                'cat_name' => $cat_name,
+                'child_count' => $count,
+                'store_id' => $store_id['store_id'],
+                'is_leaf' => 'true',
+                'parent_id' => '0',
+                'id' => $value['id']
+            );
+
+            if (!$mdl_store_cat->save($parent_data)) {
+                $db->rollback();
+                $this->splash('error', $redirect, '操作失败');
+            }
+        }
+        $db->commit();
+        $this->splash('success', $redirect, '操作成功');
     }
 
     public function save($type = null) {
@@ -181,21 +260,6 @@ class seller_ctl_site_goods extends seller_frontpage {
         $this->pagedata['_PAGE_'] = 'index.html';
         $this->output();
     }
-
-    //商品目录
-    public function directory(){
-        //获取店铺信息
-        $this->pagedata['store'] = app::get('store')->model('store')->getRow('*', array('seller_id' => $this->seller['seller_id']));
-        //获取分类信息
-        $mdl_goods_cat = app::get('b2c')->model('goods_cat');
-        $tree = $mdl_goods_cat->get_tree();
-        foreach ($tree as &$value){
-            $value['son'] = $mdl_goods_cat->children($value['cat_id']);
-        }
-        $this->pagedata['cat'] = $tree;
-        $this->output();
-    }
-
 
     //价格修改
     public function price() {

@@ -64,7 +64,7 @@ $setting = array(
             ),
         ),
     ),
-    'goods_inof' => array(
+    'goods_info' => array(
         'default' => array(
             'params' => array(
                 'orgion' => array(

@@ -1,19 +1,21 @@
 <div class="brand_edit_page">   
     <div class="modal-header">
-        <h3 class="modal-title"><{if $brand.id }>品牌编辑<{else}>品牌添加<{/if}></h3>
+        <h3 class="modal-title"><{if $brand.brand_id }>品牌编辑<{else}>品牌添加<{/if}></h3>
     </div>
     <form method="post" action="<{link app=seller ctl=site_brand act=add}>" id='brand_form' calss="form">
         <div class="modal-body  form-horizontal">
             <div class="form-body">
-                <{if $brand.id }>
-                    <input type="hidden" value="<{$brand.id }>" name="brand[brand_id]" />
+                <{if $brand.brand_id }>
+                    <input type="hidden" value="<{$brand.brand_id }>" id="check_brand_name" name="brand[brand_id]" />
+                    
                     <{/if}>
+                    <input type="hidden" value="<{$brand.brand_initial }>" class="initial" name="brand[brand_initial]" />
                         <div class="form-group">
                             <label class="col-md-3 control-label">
                                 <span class="required" aria-required="true">*</span>品牌名称
                             </label>
                             <div class="col-md-5">
-                                <input type="text" required=true value="<{$brand.extra.brand_name}>" id="check_brand_name" name="brand[extra][brand_name]" vtype='required' class='form-control' />
+                                <input type="text" <{if $brand.brand_id}>disabled<{/if}> required=true value="<{$brand.brand_name}>" id="check_brand_name" name="brand[brand_name]" vtype='required' class='form-control' />
                                 <p class="text-danger">品牌全系统唯一，不能有重复</p>
                             </div>
                         </div>
@@ -22,7 +24,7 @@
                                 <span class="required text-danger" aria-required="true">*</span>品牌logo
                             </label>
                             <div class="col-md-5">
-                                <{input type="siteimage" required=true value=$cat name="brand[extra][brand_logo]" vtype='required' class='form-control' }>
+                                <{input type="siteimage" required=true value=$brand.brand_logo name="brand[brand_logo]" vtype='required' class='form-control' }>
                             </div>
                         </div>
                         <div class="form-group">
@@ -30,7 +32,7 @@
                                 <span class="required text-danger" aria-required="true">*</span>品牌授权书
                             </label>
                             <div class="col-md-5">
-                                <{input type="siteimage" required=true value=$brand.extra.aptitudes_image col name="brand[extra][aptitudes_image]" vtype='required' class='form-control' }>
+                                <{input type="siteimage" required=true value=$brand.accredit col name="brand[accredit]" vtype='required' class='form-control' }>
                             </div>
                         </div>
                         <div class="form-group">
@@ -38,7 +40,7 @@
                                 <span class="required text-danger" aria-required="true">*</span>品牌简介
                             </label>
                             <div class="col-md-5">
-                                <textarea class="form-control" name="brand[extra][brand_desc]" placeholder="简单描述" rows="6"><{$brand.extra.brand_desc}></textarea>
+                                <textarea class="form-control" name="brand[brand_desc]" placeholder="简单描述" rows="6"><{$brand.brand_desc}></textarea>
                             </div>
                         </div>
             </div>

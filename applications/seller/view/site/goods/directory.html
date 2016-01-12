@@ -3,99 +3,52 @@
         <h1>商品目录</h1>
     </div>
     <div class="store_panel clearfix">
-        <a href="#" class="thumbnail pull-left">
-			<img class="" src="<{$base_url}>/themes/pc/default/statics/images/bestsellers.jpg">
+        <a href="<{link app=store ctl=site_store act=index args0=$info.store.store_id}>" class="thumbnail pull-left">
+            <img class="" src="<{if $info.store.logo}><{$info.store.logo|storager:'xs'}><{else}><{$base_url}>/themes/pc/default/statics/images/bestsellers.jpg<{/if}>">
 		</a>
         <div class="pull-left storeInfo">
-            <h4><a href="#"><{$store.store_name}></a></h4>
+            <h4><a href="#"><{$info.store.store_name}></a></h4>
             <ul class="inline_ul">
-                <li>店铺类型：厂家店铺</li>
-                <li>经营品牌：<span>双汇</span><span>金锣</span></li>
+                <li>店铺类型：<{$info.store.store_type}></li>
+                <li>经营品牌：
+                    <{foreach from=$info.brand item=item}>
+                    <span><{$item.brand_name}></span>
+                    <{/foreach}>
+                </li>
                 <li>所属地区：上海</li>
             </ul>
         </div>
     </div>
     <div class="directory_box">
-    	<form class="directory_form">
+        <form class="directory_form" method="post" action="<{link app=seller ctl=site_goods act=directory}>">
 	        <h3><span>全部商品目录</span></h3>
-	        <div class="panel panel-default dir_list">
+                <{foreach from=$info.cat key=key item=items}>
+                <div class="panel panel-default dir_list">
 	            <div class="panel-heading">
-	            	<span class="dir_title"><i class="icon-th"></i>鸡肉类</span>
+                        <input type="hidden" value="<{$items.cat_id}>" name="cat[<{$key}>][cat_id]"/>
+                        <input type="hidden" value="<{$items.cat_name}>" name="cat[<{$key}>][cat_name]"/>
+                        <input type="hidden" value="<{$this_cat[$key].id}>" name="cat[<{$key}>][id]"/>
+	            	<span class="dir_title"><i class="icon-th"></i><{$items.cat_name}></span>
 	                <div class="btn-group btn-group-xs pull-right" role="group">
 	                    <button type="button" class="btn btn-default btn_qx">全选</button>
 	                    <button type="button" class="btn btn-default btn_fx">反选</button>
 	                </div>
 	            </div>
 	            <div class="panel-body">
-	            	<label class="dir_item"><input type="checkbox"><span>三黄土鸡</span></label>
-	            	<label class="dir_item"><input type="checkbox"><span>三黄土鸡</span></label>
-	            	<label class="dir_item"><input type="checkbox"><span>三黄土鸡</span></label>
-	            	<label class="dir_item"><input type="checkbox"><span>三黄土鸡</span></label>
-	            	<label class="dir_item"><input type="checkbox"><span>三黄土鸡</span></label>
-	            	<label class="dir_item"><input type="checkbox"><span>三黄土鸡</span></label>
-	            	<label class="dir_item"><input type="checkbox"><span>三黄土鸡</span></label>
-	            	<label class="dir_item"><input type="checkbox"><span>三黄土鸡</span></label>
-	            	<label class="dir_item"><input type="checkbox"><span>三黄土鸡</span></label>
-	            	<label class="dir_item"><input type="checkbox"><span>三黄土鸡</span></label>
-	            	<label class="dir_item"><input type="checkbox"><span>三黄土鸡</span></label>
-	            	<label class="dir_item"><input type="checkbox"><span>三黄土鸡</span></label>
-	            	<label class="dir_item"><input type="checkbox"><span>三黄土鸡</span></label>
-	            	<label class="dir_item"><input type="checkbox"><span>三黄土鸡</span></label>
-	            	<label class="dir_item"><input type="checkbox"><span>三黄土鸡</span></label>
+                        <{foreach from=$items.son key=k item=item}>
+                        <input type="hidden" value="<{$item.cat_name}>" name="cat[<{$key}>][parent][<{$k}>][cat_name]"/>
+                        <input type="hidden" value="<{$this_cat[$key].children[$k].id}>" name="cat[<{$key}>][parent][<{$k}>][id]"/>
+                        <input type="hidden" value="<{$item.cat_id}>" name="cat[<{$key}>][parent][<{$k}>][cat_id]"/>
+                        <label class="dir_item">
+                            <input type="checkbox"
+                                   <{if $this_cat[$key].children[$k].cat_id eq $item.cat_id}> checked <{/if}>
+                                   name="cat[<{$key}>][parent][<{$k}>][check]" >
+                            <span><{$item.cat_name}></span>
+                        </label>
+                        <{/foreach}>
 	            </div>
-	        </div>
-	        <div class="panel panel-default dir_list">
-	            <div class="panel-heading">
-	            	<span class="dir_title"><i class="icon-th"></i>鸡肉类</span>
-	                <div class="btn-group btn-group-xs pull-right" role="group">
-	                    <button type="button" class="btn btn-default btn_qx">全选</button>
-	                    <button type="button" class="btn btn-default btn_fx">反选</button>
-	                </div>
-	            </div>
-	            <div class="panel-body">
-	            	<label class="dir_item"><input type="checkbox"><span>三黄土鸡</span></label>
-	            	<label class="dir_item"><input type="checkbox"><span>三黄土鸡</span></label>
-	            	<label class="dir_item"><input type="checkbox"><span>三黄土鸡</span></label>
-	            	<label class="dir_item"><input type="checkbox"><span>三黄土鸡</span></label>
-	            	<label class="dir_item"><input type="checkbox"><span>三黄土鸡</span></label>
-	            	<label class="dir_item"><input type="checkbox"><span>三黄土鸡</span></label>
-	            	<label class="dir_item"><input type="checkbox"><span>三黄土鸡</span></label>
-	            	<label class="dir_item"><input type="checkbox"><span>三黄土鸡</span></label>
-	            	<label class="dir_item"><input type="checkbox"><span>三黄土鸡</span></label>
-	            	<label class="dir_item"><input type="checkbox"><span>三黄土鸡</span></label>
-	            	<label class="dir_item"><input type="checkbox"><span>三黄土鸡</span></label>
-	            	<label class="dir_item"><input type="checkbox"><span>三黄土鸡</span></label>
-	            	<label class="dir_item"><input type="checkbox"><span>三黄土鸡</span></label>
-	            	<label class="dir_item"><input type="checkbox"><span>三黄土鸡</span></label>
-	            	<label class="dir_item"><input type="checkbox"><span>三黄土鸡</span></label>
-	            </div>
-	        </div>
-	        <div class="panel panel-default dir_list">
-	            <div class="panel-heading">
-	            	<span class="dir_title"><i class="icon-th"></i>鸡肉类</span>
-	                <div class="btn-group btn-group-xs pull-right" role="group">
-	                    <button type="button" class="btn btn-default btn_qx">全选</button>
-	                    <button type="button" class="btn btn-default btn_fx">反选</button>
-	                </div>
-	            </div>
-	            <div class="panel-body">
-	            	<label class="dir_item"><input type="checkbox"><span>三黄土鸡</span></label>
-	            	<label class="dir_item"><input type="checkbox"><span>三黄土鸡</span></label>
-	            	<label class="dir_item"><input type="checkbox"><span>三黄土鸡</span></label>
-	            	<label class="dir_item"><input type="checkbox"><span>三黄土鸡</span></label>
-	            	<label class="dir_item"><input type="checkbox"><span>三黄土鸡</span></label>
-	            	<label class="dir_item"><input type="checkbox"><span>三黄土鸡</span></label>
-	            	<label class="dir_item"><input type="checkbox"><span>三黄土鸡</span></label>
-	            	<label class="dir_item"><input type="checkbox"><span>三黄土鸡</span></label>
-	            	<label class="dir_item"><input type="checkbox"><span>三黄土鸡</span></label>
-	            	<label class="dir_item"><input type="checkbox"><span>三黄土鸡</span></label>
-	            	<label class="dir_item"><input type="checkbox"><span>三黄土鸡</span></label>
-	            	<label class="dir_item"><input type="checkbox"><span>三黄土鸡</span></label>
-	            	<label class="dir_item"><input type="checkbox"><span>三黄土鸡</span></label>
-	            	<label class="dir_item"><input type="checkbox"><span>三黄土鸡</span></label>
-	            	<label class="dir_item"><input type="checkbox"><span>三黄土鸡</span></label>
-	            </div>
-	        </div>
+	        </div>                
+                <{/foreach}>
 	        <div class="clearfix"><button class="btn btn-danger pull-right">保存修改</button></div>
         </form>
     </div>

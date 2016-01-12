@@ -42,6 +42,7 @@ $db['brand'] = array(
             'type' => 'varchar(1)',
             'label' => ('拼音首字母'),
             'comment' => ('拼音首字母'),
+            'default' => '',
             'searchtype' => 'has',
             'in_list' => true,
             'default_in_list' => true,
@@ -50,6 +51,7 @@ $db['brand'] = array(
         array(
             'type' => 'varchar(255)',
             'label' => ('品牌网址'),
+            'default' => '',
             'comment' => ('品牌网址'),
             'in_list' => true,
             'default_in_list' => true,
@@ -57,16 +59,24 @@ $db['brand'] = array(
         'brand_desc' =>
         array(
             'type' => 'longtext',
+            'default' => '',
             'comment' => ('品牌介绍'),
             'label' => ('品牌介绍'),
+        ),
+        'accredit' =>
+        array(
+            'type' => 'char(32)',
+            'default' => '',
+            'comment' => ('品牌授权书'),
+            'label' => ('品牌授权书'),
         ),
         'brand_logo' =>
         array(
             'type' => 'varchar(255)',
+            'default' => '',
             'comment' => ('品牌图片标识'),
             'label' => ('品牌图片标识'),
         ),
-        
         'brand_country' => array(
             'type' => 'table:country@ectools',
             'label' => ('品牌国家'),
@@ -75,6 +85,7 @@ $db['brand'] = array(
         'brand_setting' =>
         array(
             'type' => 'serialize',
+            'default' => '',
             'label' => ('品牌设置'),
             'deny_export' => true,
         ),
