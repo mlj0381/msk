@@ -184,6 +184,15 @@ class seller_ctl_site_goods extends seller_frontpage {
 
     //商品目录
     public function directory(){
+        //获取店铺信息
+        $this->pagedata['store'] = app::get('store')->model('store')->getRow('*', array('seller_id' => $this->seller['seller_id']));
+        //获取分类信息
+        $mdl_goods_cat = app::get('b2c')->model('goods_cat');
+        $tree = $mdl_goods_cat->get_tree();
+        foreach ($tree as &$value){
+            $value['son'] = $mdl_goods_cat->children($value['cat_id']);
+        }
+        $this->pagedata['cat'] = $tree;
         $this->output();
     }
 
