@@ -44,7 +44,7 @@ ol {
   font-size: 16px;
   cursor: pointer;
   height: 36px;
-  width: 104px;
+  width: auto;
   margin-right: 10px;
   background: #fff;
   border: 1px solid #ddd;
@@ -56,7 +56,8 @@ ol {
   overflow: hidden;
 }
 .navbar-inverse .nav li a {
-  padding: 0px;
+  display: block;
+  padding: 0 15px;
   text-align: center;
   line-height: 35px;
   color: #000333;
@@ -457,6 +458,136 @@ ol {
   box-shadow: none;
   max-width: 100%;
   min-height: 80px;
+}
+.buyer_container .my-main .my-page .sleuth_page {
+  /* .gl_item_box{
+					overflow: hidden;
+					.goods-item{
+						border-radius: 0px;
+						position: relative;
+						padding:0px;
+				
+						.gi-image-wrapper{
+							height:190px;
+							img{
+								display: block;
+								max-height: 190px;
+								max-width: 100%;
+							}
+						}
+						.g_checker{
+							display: none;
+							position: absolute;
+							width:100%;
+							height:100%;
+							background: rgba(255, 255, 255, 0.6);
+							z-index: 10;
+							cursor: pointer;
+							span{
+								position: absolute;
+								bottom:0px;
+								right:0px;
+								display: block;
+								width:55px;
+								height:55px;
+								line-height: 80px;
+								text-align: center;
+								font-size: 36px;
+								color:#c40000;
+								background: url(images/checked.png) no-repeat left bottom;
+								&.selected{
+									background: url(images/checked.png) no-repeat right bottom;
+								}
+							}
+						}
+				
+						.caption{
+							.g-name{
+								width:100%;
+								height:36px;
+								line-height: 18px;
+								margin:0 0 20px 0;
+								a{
+									font-size: 14px;
+								}
+							}
+							p{
+								margin:10px auto;
+							}
+						}
+					}
+				
+				} */
+}
+.buyer_container .my-main .my-page .sleuth_page .top_panel {
+  background: #f2f2f2;
+}
+.buyer_container .my-main .my-page .sleuth_page .top_panel .panel_body_lt span,
+.buyer_container .my-main .my-page .sleuth_page .top_panel .panel_body_lt select {
+  margin-right: 15px;
+}
+.buyer_container .my-main .my-page .sleuth_page .top_panel .classpanel_body_rt span {
+  margin-right: 15px;
+}
+.buyer_container .my-main .my-page .sleuth_page .top_panel .classpanel_body_rt .input-group .input-group-addon {
+  cursor: pointer;
+}
+.buyer_container .my-main .my-page .sleuth_page .sleuth_list .sleuth_item .sleuth_wrapper {
+  border: 1px solid #ddd;
+  padding: 10px;
+  height: 320px;
+  overflow: hidden;
+  position: relative;
+}
+.buyer_container .my-main .my-page .sleuth_page .sleuth_list .sleuth_item .sleuth_wrapper .g_checker {
+  display: none;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.6);
+  z-index: 10;
+  cursor: pointer;
+  left: 0;
+  bottom: 0;
+}
+.buyer_container .my-main .my-page .sleuth_page .sleuth_list .sleuth_item .sleuth_wrapper .g_checker span {
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+  display: block;
+  width: 55px;
+  height: 55px;
+  line-height: 80px;
+  text-align: center;
+  font-size: 36px;
+  color: #c40000;
+  background: url(images/checked.png) no-repeat left bottom;
+}
+.buyer_container .my-main .my-page .sleuth_page .sleuth_list .sleuth_item .sleuth_wrapper .g_checker span.selected {
+  background: url(images/checked.png) no-repeat right bottom;
+}
+.buyer_container .my-main .my-page .sleuth_page .sleuth_list .sleuth_item .sleuth_wrapper .img_wrapper {
+  width: 100%;
+  height: 185px;
+  display: table-cell;
+  vertical-align: middle;
+  margin: 0 auto;
+}
+.buyer_container .my-main .my-page .sleuth_page .sleuth_list .sleuth_item .sleuth_wrapper .img_wrapper img {
+  display: block;
+  width: 100%;
+  max-height: 100%;
+  margin: auto;
+}
+.buyer_container .my-main .my-page .sleuth_page .sleuth_list .sleuth_item .sleuth_wrapper .item_caption .item_name {
+  margin: 10px 0;
+  font-size: 14px;
+  line-height: 18px;
+  height: 36px;
+  overflow: hidden;
+}
+.buyer_container .my-main .my-page .sleuth_page .sleuth_list .sleuth_item .sleuth_wrapper .item_caption .item_price {
+  margin-bottom: 10px;
 }
 .glist-container .fav_nav {
   width: 100%;
@@ -1403,142 +1534,6 @@ ol {
 }
 .buyer_container .settled_container .settled_main .platform_audit .audit_success i {
   color: #0db53c;
-}
-.buyer_container .settled_indexpage {
-  width: 100%;
-  background: #fff;
-  padding: 20px 0;
-  /* .side_left{
-			width:200px;
-			box-sizing: border-box;
-			border:1px solid #ddd;
-			.fl;
-		
-			dl{
-				dt.menu_root{
-					width:100%;
-					background: #f5f5f5;
-					height:34px;
-					line-height: 34px;
-					padding:0 10px;
-					font-size:16px;
-					margin-bottom:10px;
-				}
-				dd.menu_item{
-					width:100%;
-					padding:0 10px;
-					height: 34px;
-					line-height: 34px;
-					font-size: 14px;
-			
-					&.active{
-						background: @basecolor;
-						a{
-							color:#fff;
-						}
-					}
-				}
-			}
-		} */
-}
-.buyer_container .settled_indexpage .maincon_right {
-  width: 940px;
-  float: right;
-}
-.buyer_container .settled_indexpage .maincon_right .advbox {
-  width: 100%;
-  height: 310px;
-  overflow: hidden;
-  background: url(../statics/images/settled_indexAdv.jpg) no-repeat;
-}
-.buyer_container .settled_indexpage .maincon_right .advbox span {
-  display: block;
-  width: 100%;
-  margin-top: 225px;
-  text-align: center;
-}
-.buyer_container .settled_indexpage .maincon_right .advbox span a {
-  display: inline-block;
-  width: 165px;
-  height: 46px;
-  line-height: 46px;
-  font-size: 22px;
-}
-.buyer_container .settled_indexpage .maincon_right .advbox span a.settled_btn {
-  background: #a40001;
-  color: #fff;
-}
-.buyer_container .settled_indexpage .maincon_right .advbox span a.settled_progress_btn {
-  background: #fff;
-  color: #a40001;
-  margin-left: 10px;
-}
-.buyer_container .settled_indexpage .maincon_right .settled_process {
-  width: 100%;
-  overflow: hidden;
-}
-.buyer_container .settled_indexpage .maincon_right .settled_process .process_items {
-  width: 100%;
-  margin-top: 45px;
-  margin-left: -45px;
-}
-.buyer_container .settled_indexpage .maincon_right .settled_process .process_items .process_item {
-  width: 220px;
-  border: 2px solid #ddd;
-  -webkit-border-radius: 10px;
-  -moz-border-radius: 10px;
-  -ms-border-radius: 10px;
-  -o-border-radius: 10px;
-  border-radius: 10px;
-  float: left;
-  padding-bottom: 30px;
-  margin-left: 90px;
-  position: relative;
-}
-.buyer_container .settled_indexpage .maincon_right .settled_process .process_items .process_item span {
-  position: absolute;
-  display: block;
-  left: 50%;
-  top: -20px;
-  width: 40px;
-  height: 40px;
-  margin-left: -20px;
-  line-height: 40px;
-  font-size: 16px;
-  border: 2px solid #ddd;
-  text-align: center;
-  -webkit-border-radius: 50%;
-  -moz-border-radius: 50%;
-  -ms-border-radius: 50%;
-  -o-border-radius: 50%;
-  border-radius: 50%;
-  background: #fff;
-  color: #ddd;
-  font-weight: 700;
-}
-.buyer_container .settled_indexpage .maincon_right .settled_process .process_items .process_item dl {
-  margin-top: 30px;
-  width: 100%;
-  padding: 0 15px;
-}
-.buyer_container .settled_indexpage .maincon_right .settled_process .process_items .process_item dl dt {
-  font-size: 20px;
-  font-weight: bold;
-  text-align: center;
-}
-.buyer_container .settled_indexpage .maincon_right .settled_process .process_items .process_item dl dd {
-  margin-top: 25px;
-}
-.buyer_container .settled_indexpage .maincon_right .settled_process .process_items .process_item dl dd p {
-  font-size: 12px;
-  color: #727171;
-}
-.buyer_container .settled_indexpage .maincon_right .settled_process .process_items .process_item:hover {
-  border: 2px solid #a40001;
-}
-.buyer_container .settled_indexpage .maincon_right .settled_process .process_items .process_item:hover span {
-  border: 2px solid #a40001;
-  color: #a40001;
 }
 .buyer_container .settled_statuspage {
   width: 100%;
@@ -2646,6 +2641,36 @@ ol {
 .seller_account_page .account_tab .tab-content {
   padding-top: 35px;
 }
+.businessInfo_page .edit_form .area_box h2 {
+  background: #ddd;
+  padding: 0px 10px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  color: #666;
+  line-height: 40px;
+  height: 40px;
+}
+.businessInfo_page .edit_form .area_box h2 i {
+  margin-top: 12px;
+  padding-left: 10px;
+  float: right;
+  color: #666;
+  display: inline-block;
+}
+.businessInfo_page .edit_form .area_box h4 {
+  font-size: 14px;
+  margin-bottom: 30px;
+  font-weight: bold;
+}
+.businessInfo_page .edit_form .area_con {
+  padding: 15px;
+  display: none;
+}
+.businessInfo_page .edit_form .area_con .form-group label {
+  font-weight: normal;
+  color: #666;
+}
 .brand_page .brand_list_table {
   border: 1px solid #ddd;
 }
@@ -2745,4 +2770,116 @@ ol {
   font-weight: bold;
   font-size: 15px;
   margin-bottom: 10px;
+}
+.settled_page {
+  width: 100%;
+  background: #fff;
+}
+.settled_page .maincon {
+  width: 100%;
+  padding: 0 15px;
+  min-height: 600px;
+}
+.settled_page .maincon .page-header {
+  margin: 0;
+}
+.settled_page .maincon .page-header h1 {
+  font-size: 20px;
+}
+.settled_page .maincon .advbox {
+  width: 100%;
+  margin-top: 15px;
+  height: 310px;
+  overflow: hidden;
+  background: url(../statics/images/settled_indexAdv.jpg) no-repeat;
+  background-size: 100%;
+}
+.settled_page .maincon .advbox span {
+  display: block;
+  width: 100%;
+  margin-top: 225px;
+  text-align: center;
+}
+.settled_page .maincon .advbox span a {
+  display: inline-block;
+  width: 165px;
+  height: 46px;
+  line-height: 46px;
+  font-size: 22px;
+}
+.settled_page .maincon .advbox span a.settled_btn {
+  background: #a40001;
+  color: #fff;
+}
+.settled_page .maincon .advbox span a.settled_progress_btn {
+  background: #fff;
+  color: #a40001;
+  margin-left: 10px;
+}
+.settled_page .maincon .settled_process {
+  width: 100%;
+  overflow: hidden;
+}
+.settled_page .maincon .settled_process .process_items {
+  width: 100%;
+  margin-top: 45px;
+  margin-left: -45px;
+}
+.settled_page .maincon .settled_process .process_items .process_item {
+  width: 290px;
+  border: 2px solid #ddd;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
+  border-radius: 10px;
+  float: left;
+  padding-bottom: 30px;
+  margin-left: 90px;
+  position: relative;
+}
+.settled_page .maincon .settled_process .process_items .process_item span {
+  position: absolute;
+  display: block;
+  left: 50%;
+  top: -20px;
+  width: 40px;
+  height: 40px;
+  margin-left: -20px;
+  line-height: 40px;
+  font-size: 16px;
+  border: 2px solid #ddd;
+  text-align: center;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  -o-border-radius: 50%;
+  border-radius: 50%;
+  background: #fff;
+  color: #ddd;
+  font-weight: 700;
+}
+.settled_page .maincon .settled_process .process_items .process_item dl {
+  margin-top: 30px;
+  width: 100%;
+  padding: 0 15px;
+}
+.settled_page .maincon .settled_process .process_items .process_item dl dt {
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+}
+.settled_page .maincon .settled_process .process_items .process_item dl dd {
+  margin-top: 25px;
+}
+.settled_page .maincon .settled_process .process_items .process_item dl dd p {
+  font-size: 12px;
+  color: #727171;
+}
+.settled_page .maincon .settled_process .process_items .process_item:hover {
+  border: 2px solid #a40001;
+}
+.settled_page .maincon .settled_process .process_items .process_item:hover span {
+  border: 2px solid #a40001;
+  color: #a40001;
 }

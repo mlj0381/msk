@@ -54,7 +54,7 @@ ul,ol{
     		font-size: 16px;
     		cursor: pointer;
     		height: 36px;
-    		width: 104px;
+    		width: auto;
     		margin-right:10px;
     		background: #fff;
     		border:1px solid #ddd;
@@ -65,7 +65,8 @@ ul,ol{
 			border-top-right-radius: 4px;
 			overflow: hidden;
     		a{
-	    		padding:0px;
+    			display: block;
+	    		padding:0 15px;
 	    		text-align:center;
 	    		line-height: 35px;
 	    		color:#000333;
@@ -544,7 +545,153 @@ ul,ol{
 			
 
 			//END 商品评价
+			
+			//我的足迹
+			.sleuth_page{
+				.top_panel{
+					background: #f2f2f2;
+					.panel_body_lt{
+						span,select{
+							margin-right:15px;
+						}
+					}
+					.classpanel_body_rt{
+						span{
+							margin-right:15px;
+						}
+						.input-group{
+							.input-group-addon{
+								cursor: pointer;
+							}
+						}
+					}
+				}
+				.sleuth_list{
+					.sleuth_item{
+						.sleuth_wrapper{
+							border:1px solid #ddd;
+							padding:10px;
+							height:320px;
+							overflow: hidden;
+							position: relative;
+							.g_checker{
+								display: none;
+								position: absolute;
+								width:100%;
+								height:100%;
+								background: rgba(255, 255, 255, 0.6);
+								z-index: 10;
+								cursor: pointer;
+								left:0;
+								bottom:0;
+								span{
+									position: absolute;
+									bottom:0px;
+									right:0px;
+									display: block;
+									width:55px;
+									height:55px;
+									line-height: 80px;
+									text-align: center;
+									font-size: 36px;
+									color:#c40000;
+									background: url(images/checked.png) no-repeat left bottom;
+									&.selected{
+										background: url(images/checked.png) no-repeat right bottom;
+									}
+								}
+							}
+							.img_wrapper{
+								width:100%;
+								height:185px;
+								display: table-cell;
+								vertical-align: middle;
+								margin:0 auto;
+								
+								img{
+									display: block;
+									width:100%;
+									max-height: 100%;
+									margin:auto;
+								}
+							}
+							.item_caption{
+								.item_name{
+									margin:10px 0;
+									font-size: 14px;
+									line-height: 18px;
+									height:36px;
+									overflow: hidden;
+								}
+								.item_price{
+									margin-bottom:10px;
+								}
+							}
+						}
+					}
+				}
+				/* .gl_item_box{
+					overflow: hidden;
+					.goods-item{
+						border-radius: 0px;
+						position: relative;
+						padding:0px;
+				
+						.gi-image-wrapper{
+							height:190px;
+							img{
+								display: block;
+								max-height: 190px;
+								max-width: 100%;
+							}
+						}
+						.g_checker{
+							display: none;
+							position: absolute;
+							width:100%;
+							height:100%;
+							background: rgba(255, 255, 255, 0.6);
+							z-index: 10;
+							cursor: pointer;
+							span{
+								position: absolute;
+								bottom:0px;
+								right:0px;
+								display: block;
+								width:55px;
+								height:55px;
+								line-height: 80px;
+								text-align: center;
+								font-size: 36px;
+								color:#c40000;
+								background: url(images/checked.png) no-repeat left bottom;
+								&.selected{
+									background: url(images/checked.png) no-repeat right bottom;
+								}
+							}
+						}
+				
+						.caption{
+							.g-name{
+								width:100%;
+								height:36px;
+								line-height: 18px;
+								margin:0 0 20px 0;
+								a{
+									font-size: 14px;
+								}
+							}
+							p{
+								margin:10px auto;
+							}
+						}
+					}
+				
+				} */
+			}
 
+
+			//END 我的足迹
 
 
 
@@ -1559,147 +1706,6 @@ ul,ol{
 
 	}
 	//END 商家入驻
-	
-
-
-	//商家入驻首页
-	.settled_indexpage{
-		width:100%;
-		background: #fff;
-		padding: 20px 0;
-		/* .side_left{
-			width:200px;
-			box-sizing: border-box;
-			border:1px solid #ddd;
-			.fl;
-		
-			dl{
-				dt.menu_root{
-					width:100%;
-					background: #f5f5f5;
-					height:34px;
-					line-height: 34px;
-					padding:0 10px;
-					font-size:16px;
-					margin-bottom:10px;
-				}
-				dd.menu_item{
-					width:100%;
-					padding:0 10px;
-					height: 34px;
-					line-height: 34px;
-					font-size: 14px;
-			
-					&.active{
-						background: @basecolor;
-						a{
-							color:#fff;
-						}
-					}
-				}
-			}
-		} */
-		.maincon_right{
-			width:940px;
-			.fr;
-
-			.advbox{
-				width:100%;
-				height:310px;
-				overflow: hidden;
-				background: url(../statics/images/settled_indexAdv.jpg) no-repeat;
-
-				span{
-					display: block;
-					width:100%;
-					margin-top:225px; 
-					text-align: center;
-
-					a{
-						display: inline-block;
-						width:165px;
-						height:46px;
-						line-height: 46px;
-						font-size: 22px;
-					}
-					a.settled_btn{
-						background: @basecolor;
-						color:#fff;
-					}
-					a.settled_progress_btn{
-						background: #fff;
-						color:@basecolor;
-						margin-left:10px;
-					}
-				}
-			}
-			.settled_process{
-				width:100%;
-				overflow: hidden;
-				h2{
-
-				}
-				.process_items{
-					width:100%;
-					margin-top:45px;
-					margin-left:-45px;
-					.process_item{
-						width:220px;
-						border:2px solid #ddd;
-						.radius(10px);
-						.fl;
-						padding-bottom:30px;
-						margin-left:90px;
-						position: relative;
-						span{
-							position: absolute;
-							display: block;
-							left:50%;
-							top:-20px;
-							width:40px;
-							height:40px;
-							margin-left:-20px;
-							line-height: 40px;
-							font-size: 16px;
-							border:2px solid #ddd;
-							text-align: center;
-							.radius(50%);
-							background: #fff;
-							color:#ddd;
-							font-weight: 700;
-						}
-						dl{
-							margin-top:30px;
-							width:100%;
-							padding:0 15px;
-							dt{
-								font-size: 20px;
-								font-weight: bold;
-								text-align: center;
-							}
-							dd{
-								margin-top:25px;
-								p{
-									font-size: 12px;
-									color:#727171;
-								}
-							}
-						}
-						&:hover{
-							border:2px solid @basecolor;
-							span{
-								border:2px solid @basecolor;
-								color:@basecolor;
-							}
-						}
-
-					}
-				}
-			}
-		}
-	}
-
-	//END 商家入驻首页
 	
 	//商家入驻状态
 	.settled_statuspage{
@@ -3029,6 +3035,53 @@ ul,ol{
 	}
 }
 
+//卖家商户信息
+.businessInfo_page{
+	.edit_form{
+		.area_box{
+			h2{
+				//border-bottom:1px solid #c40000;
+				//border:1px solid #c40000;
+				background: #ddd;
+				padding:0px 10px;
+				font-size: 16px;
+				font-weight: bold;
+				cursor: pointer;
+				color:#666;
+				line-height: 40px;
+				height:40px;
+				i{
+					margin-top:12px;
+					padding-left:10px;
+					float:right;
+					color:#666;
+					display: inline-block;
+					//background: url(images/arrow_up.png) no-repeat;
+
+				}
+			}
+			h4{
+				font-size: 14px;
+				margin-bottom:30px;
+				font-weight: bold;
+			}
+		}
+		.area_con{
+			padding:15px;
+			display: none;
+
+			.form-group{
+				label{
+					font-weight: normal;
+					color:#666;
+				}
+			}
+		}
+	}
+}
+
+
+
 //卖家品牌管理
 .brand_page{
 	.brand_list_table{
@@ -3165,6 +3218,120 @@ ul,ol{
 
 
 
+
+//商家入驻首页
+	.settled_page{
+		width:100%;
+		background: #fff;
+		.maincon{
+			width:100%;
+			padding:0 15px;
+			min-height: 600px;
+			.page-header{
+				margin:0;
+				h1{
+					font-size: 20px;
+				}
+			}
+			.advbox{
+				width:100%;
+				margin-top:15px;
+				height:310px;
+				overflow: hidden;
+				background: url(../statics/images/settled_indexAdv.jpg) no-repeat;
+				background-size:100%;
+
+				span{
+					display: block;
+					width:100%;
+					margin-top:225px; 
+					text-align: center;
+
+					a{
+						display: inline-block;
+						width:165px;
+						height:46px;
+						line-height: 46px;
+						font-size: 22px;
+					}
+					a.settled_btn{
+						background: @basecolor;
+						color:#fff;
+					}
+					a.settled_progress_btn{
+						background: #fff;
+						color:@basecolor;
+						margin-left:10px;
+					}
+				}
+			}
+			.settled_process{
+				width:100%;
+				overflow: hidden;
+				h2{
+
+				}
+				.process_items{
+					width:100%;
+					margin-top:45px;
+					margin-left:-45px;
+					.process_item{
+						width:290px;
+						border:2px solid #ddd;
+						.radius(10px);
+						.fl;
+						padding-bottom:30px;
+						margin-left:90px;
+						position: relative;
+						span{
+							position: absolute;
+							display: block;
+							left:50%;
+							top:-20px;
+							width:40px;
+							height:40px;
+							margin-left:-20px;
+							line-height: 40px;
+							font-size: 16px;
+							border:2px solid #ddd;
+							text-align: center;
+							.radius(50%);
+							background: #fff;
+							color:#ddd;
+							font-weight: 700;
+						}
+						dl{
+							margin-top:30px;
+							width:100%;
+							padding:0 15px;
+							dt{
+								font-size: 20px;
+								font-weight: bold;
+								text-align: center;
+							}
+							dd{
+								margin-top:25px;
+								p{
+									font-size: 12px;
+									color:#727171;
+								}
+							}
+						}
+						&:hover{
+							border:2px solid @basecolor;
+							span{
+								border:2px solid @basecolor;
+								color:@basecolor;
+							}
+						}
+
+					}
+				}
+			}
+		}
+	}
+
+	//END 商家入驻首页
 
 
 
