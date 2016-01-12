@@ -66,6 +66,8 @@ class b2c_ctl_admin_pages_content extends desktop_controller
     {
 		$pages_id = isset($this->_filter['pages_id']) ? $pages_id = $this->_filter['pages_id'] : 0;
 		$position_id = isset($this->_filter['position_id']) ? $this->_filter['position_id'] : 0;
+		$this->pagedata['postion_psize']= $this->mPosition->getRow('width,height',$this->_filter['position_id']);
+		print_r($this->pagedata['postion_psize']);
 		$this->_set_filter_options($pages_id, $position_id);
 		$this->page('admin/pages/content.form.html');
 	}
@@ -75,6 +77,8 @@ class b2c_ctl_admin_pages_content extends desktop_controller
         $this->pagedata['content'] = $this->mContent->dump($content_id);
         if (empty($this->pagedata['content'])) $this->splash('error', 'index.php?app=content&ctl=admin_pages_content', '错误请求');
 		$this->_set_filter_options($this->pagedata['content']['pages_id'], $this->pagedata['content']['position_id']);
+		$this->pagedata['postion_psize']= $this->mPosition->getRow('width,height',$this->pagedata['content']['position_id']);
+		print_r($postion_psize);
 		$this->page('admin/pages/content.form.html');
 	}
 

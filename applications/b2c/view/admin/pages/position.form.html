@@ -50,7 +50,18 @@
                             <div class="col-md-3">
                                 <{input type='text' name='position[count]' value=$position.count|default:1 required='true' }>
                             </div>
-                        </div>                        
+                        </div>
+                        <div class="form-group ">
+                           <label class="col-md-4 control-label">图片尺寸(px)
+                                <span class="required">*</span>
+                           </label>
+                            <div class="col-md-3">
+                                <{input type='text' name='position[width]' value=$position.width|default:100 required='true' }>
+                            </div>
+                            <div class="col-md-3">
+                                <{input type='text' name='position[height]' value=$position.height|default:100 required='true' }>
+                            </div>
+                    </div>                         
                     </div>
 
                 </div>
