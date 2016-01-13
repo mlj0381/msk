@@ -30,6 +30,16 @@ class b2c_view_widget {
         return $render->fetch('widget/category.html');
     }
 
+	public function function_WIDGET_RECOME($params, &$smarty)
+	{
+		extract($params);
+		$tpl = empty($tpl) ? 'image' : $tpl;// 0普通 1、幻灯 2 商品
+		$page = empty($page) ? 'index' : $page;
+		$position_id = empty($position) ? 0 : $position;
+		$render->pagedata['contents'] = app::get('b2c')->model('pages_content')->getlist("*", compact('position_id'));
+		return $render->fetch("widget/{$tpl}.html");
+	}
+
     // Nav
     public function function_WIDGET_B2C_PUBLIC_NAV($params, &$smarty) {
         $render = new base_render(app::get('b2c'));

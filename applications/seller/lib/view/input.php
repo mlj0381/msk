@@ -31,7 +31,25 @@ class seller_view_input
         $render->pagedata['tag'] = $params['tag'];
         return $render->fetch('ui/input_image_seller.html');
     }
-
+	
+	function input_imageupload($params) {
+        $ui = new base_component_ui($this);
+        $domid = $ui->new_dom_id();
+        $input_name = $params['name'];
+        $input_value = $params['value'];
+        if ($input_value) {
+            $image_url = base_storager::image_path($input_value);
+        }
+        $render = app::get('seller')->render();
+        $render->pagedata = $params;
+        $render->pagedata['id'] = $domid;
+        $render->pagedata['name'] = $input_name;
+        $render->pagedata['url'] = $image_url;
+        $render->pagedata['image_id'] = $input_value;
+        $render->pagedata['tag'] = $params['tag'];
+		
+        return $render->fetch('ui/input_image_upload.html');
+    }
 
 	function input_producttype($params)
 	{

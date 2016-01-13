@@ -225,13 +225,13 @@ class site_controller extends base_controller
         //title description
         $title = $this->title ?
         $this->title :
-        app::get('site')->getConf('site_name', app::get('site')->getConf('page_default_title'));
+        app::get('b2c')->getConf('site_name', app::get('b2c')->getConf('page_default_title'));
         $keywords = $this->keywords ?
         $this->keywords :
-        app::get('site')->getConf('page_default_keywords', $title);
+        app::get('b2c')->getConf('page_default_keywords', $title);
         $description = $this->description ?
         $this->description :
-        app::get('site')->getConf('page_default_description', $title);
+        app::get('b2c')->getConf('page_default_description', $title);
         $this->pagedata = array_merge($this->pagedata, array(
             'title' => htmlspecialchars($title),
             'keywords' => htmlspecialchars($keywords),
