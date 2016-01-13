@@ -28,7 +28,7 @@
                 <h4>图文介绍</h4>
                 <div role="tabpanel" class="tab-pane" id="tuwen">
                     <div class="editerbox">
-                        <textarea id="summernote" name="goods[description]"></textarea>
+                        <textarea id="summernote" name="goods[description]" value="$goods.description"></textarea>
                         <{*input type=html name="goods[description]" remote=site*}>
 
                     </div>
@@ -155,87 +155,8 @@ $(function() {
 
     }
 
-    var create_product_items_func = function() {
-
-        var spec_v = $('#spec_edit_pane .spec-v');
-        /*计算规格交集*/
-        var spec_v_item = new Array();
-        $.each(spec_v, function(idx, item) {
-            if ($.trim($(item).val()) == '') return;
-            spec_v_item[idx] = $(item).val().split(',');
-        });
-
-        $('#spec_edit_pane .product-items table')[spec_v_item.length ? 'removeClass' : 'addClass']('hide');
-        if (!spec_v_item.length) {
-            return Messagebox.warning('您还没有填写任何规格值。', '操作提醒');
-        }
-
-        var root_arr = spec_v_item.shift();
-        var loop_arr;
-        var lnk_arr = function(r, a) {
-            var _return = [];
-            $.each(a, function(i, n) {
-                _return.push(r + ':::' + n);
-            });
-            return _return;
-        }
-
-        while (loop_arr = spec_v_item.shift()) {
-            var cur_len = root_arr.length;
-            console.log(cur_len);
-            console.log(root_arr);
-            for (var i = 0; i < cur_len; i++) {
-                var a = root_arr.shift();
-                console.log(a);
-                root_arr = root_arr.concat(lnk_arr(a, loop_arr));
-                console.log(root_arr);
-
-            }
-            root_arr.slice(cur_len);
-        }
-        /*计算规格交集*/
-        var pit_content = "";
-        $.each(root_arr, function(idx, n) {
-            pit_content += substitute($('.product-item-tpl').val(), {
-                key: 'new_' + idx,
-                spec_info: n.replace(/:::/g, '/'),
-                spec_desc: n
-            });
-        });
-        $('.product-items tbody').empty().append(pit_content);
-
-        /*支持货号条码换行字符粘贴*/
-        listen_postpaste($('.product-items tbody input[name$="[bn]"]'));
-        listen_postpaste($('.product-items tbody input[name$="[barcode]"]'));
-
-        var item_length = $('.product-items tbody').find('> tr').length;
-        $(this).next('.text-success').remove();
-        if (item_length) {
-            $(this).after('<span class="text-success">将会新建<span class="badge badge-success">' + item_length + '</span>个货品</span>');
-        }
-
-        $.each($('.product-items input[data-map]'), function(i, n) {
-            var map = $(n).attr('data-map'),
-                val = $('#no_spec input[data-map="' + map + '"]').val();
-            if (map == 'bn' || map == 'barcode') {
-                if (!val || val == '') {
-                    val = new String(new Date().getTime()).slice(-5);
-                }
-                val += map == 'bn' ? '-' + i : i;
-            }
-            $(n).val(val);
-        });
-    };
-    var timer_delay = 0;
-    $('#spec_edit_pane .create-product-items').on('click', function(e) {
-        e.stopPropagation();
-        clearTimeout(timer_delay);
-        var _this = this;
-        timer_delay = setTimeout(function() {
-            return create_product_items_func.apply(_this);
-        }, 0); //TODO 性能问题
-    });
-
+   
+    
     var product_items_change = function() {
         if ($('#spec_edit_pane .product-items tbody > tr').length) {
             $('#spec_edit_pane .create-product-items').trigger('click');

@@ -7,7 +7,8 @@
                 <span><{$item.name}></span>
             </label>
             <div class="col-xs-5">
-                <{input type=select rows=$item.son labelColumn="name" valueColumn="props_id" value}>
+                
+                <{input type=select name="goods[{$item.cloumns_name}]" rows=$item.son labelColumn="name" valueColumn="props_id" value=$goods[$item.cloumns_name]}>
             </div>
         </div>
         <{/foreach}>

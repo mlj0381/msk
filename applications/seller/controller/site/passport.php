@@ -134,7 +134,7 @@ class seller_ctl_site_passport extends seller_frontpage {
         $return = false;
         switch ($step) {
             case '1':
-                if ($post['treaty']) {
+                if (!$post['treaty']) {
                     $this->splash('error', '', '请详细阅读入驻协议');
                 }
                 $return = $this->_signup_account($post, $redirect);
@@ -197,10 +197,9 @@ class seller_ctl_site_passport extends seller_frontpage {
 
     //入驻方法
     public function settled($step) {
+      
         $this->verify();
         $this->pagedata['store'] = $this->user_obj->get_store($this->seller['seller_id']);
-        $this->pagedata['company'] = $this->user_obj->get_company($this->seller['seller_id']);
-        $this->pagedata['contact'] = $this->user_obj->get_contact($this->seller['seller_id']);
         if ($_POST)
             $this->_settled($_POST, $step);
         switch ($step) {

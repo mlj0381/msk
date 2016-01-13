@@ -40,7 +40,7 @@
                 </dl>
             </div>
             <form id="companyInfo_form" action="<{link app=seller ctl=site_passport act=entry}>" class="form-horizontal companyInfo_form" method="post">
-                <input type='text' name='pageIndex' value='<{$pageIndex}>'/>
+                <input type='hidden' name='pageIndex' value='<{$pageIndex}>'/>
                 <!-- 三证合一 -->
                 <{foreach from=$page key=key item=item}>
                 <{if $key neq 'three_lesstion'}>
