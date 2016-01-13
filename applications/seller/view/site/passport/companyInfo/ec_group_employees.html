@@ -50,7 +50,7 @@
         </div>-->
     <div id="items">
         <div class="team-item">
-            <input type="hidden" name="ec_group_employees[content_id][]"  value="<{$extra.content_id}>" class="form-control">
+            <input type="text" name="ec_group_employees[content_id][]"  value="<{$extra.content_id}>" class="form-control">
             <div class="form-group">
                 <label class="col-xs-2 control-label">
                     <span class="text-danger">*</span>姓名：
@@ -97,6 +97,7 @@
                     </div>
                 </div>
             </div>
+            <hr>
         </div>
     </div>
     <div class="form-group">
@@ -111,72 +112,39 @@
 </div>
 
 
-<textarea class="hide">
-    <div class="form-group">
-            <label class="col-xs-2 control-label">
-                <span class="text-danger">*</span>姓名：
-            </label>
-            <div class="col-xs-4">
-                <input type="text" value="{name}" name="ec_group_employees[value][name][]" class="form-control">
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="col-xs-2 control-label">
-                <span class="text-danger">*</span>年龄：
-            </label>
-            <div class="col-xs-4">
-                <input type="text" value="{age}" name="ec_group_employees[value][age][]" class="form-control">
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="col-xs-2 control-label">
-                <span class="text-danger">*</span>学历：
-            </label>
-            <div class="col-xs-4">
-                <{include file="site/passport/companyInfo/grade.html" data=array("ec_group_employees[value][edu][]","{$extra.value.edu}")}>
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="col-xs-2 control-label">
-                <span class="text-danger">*</span>联系方式：
-            </label>
-            <div class="col-xs-4">
-                <input type="text" value="{contact}" name="ec_group_employees[value][contact]" class="form-control">
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="col-xs-2 control-label">
-                照片：
-            </label>
-            <div class="col-xs-4">
-                <div class="filebox">
-                    <input type="hidden" value="<{$extra.ec_group_employees.value.attach}>" name="ec_group_employees[value][attach]"/>
-                    <input type="file" data-url="<{link app=image ctl=site_upload act=index}>" accept="image/*" class="file_input" />
-                    <div class="showImg">
-                        <img src="<{if $company.business_license_image eq ''}><{$base_url}>/themes/pc/default/statics/images/file_add.jpg<{else}><{$company.business_license_image|storager:'xs'}><{/if}>">    
-                    </div>
-                </div>
-            </div>
-        </div>
-</textarea>
+
 <script>
     void function (ec_group) {
+        var fileObj = {
+            add: function (e, data) {
+                if (!data.files[0]['type'].match(/^image/)) {
+                    alert('非法上传，不是图片类型');
+                }
+                data.submit();
+            },
+            done: function (e, data) {
+                var re = $.parseJSON(data.result);
+                var input = e.target || e.srcElement;
+                var parent = $(input).closest('div');
+                $(parent).find('input[type="hidden"]').attr('value', re.image_id);
+                $(parent).find('img').attr('src', re.url);
+
+            }
+        };
+        
         ec_group.find('.team').click(function (e) {
             e.stopPropagation();
             var data = ec_group.find('.team-item input, select').serializeArray();
             var url = '<{link app=seller ctl=site_passport act=save_ecgroup}>';
+            console.log(data);
             $.post(url, data, function (re) {
-                var item = $('.team-item:last');
-                console.log(re);
+                if(re.success){
+                    $('.team-item:last').find('input[name="ec_group_employees[content_id][]"]').val(re.data.content_id);
+                    $('.team-item:last').clone().insertAfter($('#items .team-item:last'));
+                    $('.team-item:last').find('input [type="text"]').val('');
+                    $('.team-item:last').find('.file_input').fileupload(fileObj);
+                }
             });
         });
-
-        var substitute = function (str, obj) {
-            return str.replace(/\\?\{([^{}]+)\}/g, function (match, name) {
-                if (match.charAt(0) == '\\')
-                    return match.slice(1);
-                return (obj[name] != undefined) ? obj[name] : '';
-            });
-        }
     }($('#companyInfo_form'));
 </script>

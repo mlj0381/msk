@@ -83,18 +83,7 @@ class seller_ctl_site_passport extends seller_frontpage {
                 'act' => 'index',
             ));
         }
-        $this->_schedule();
         $this->splash('success', $forward, '登录成功');
-    }
-
-    //查询入驻进度
-    private function _schedule() {
-        $seller = $this->get_current_seller();
-        $store = app::get('store')->model('store')->getRow('store_id', array('seller_id' => $seller['seller_id']));
-        if (empty($store)) {
-            $redriect = $this->gen_url(array('app' => 'seller', 'ctl' => 'site_passport', 'act' => 'entry', 'args0' => $seller['schedule']));
-            $this->splash('success', $redriect, '登录成功,请先完善入驻信息');
-        }
     }
 
 //end function
@@ -197,7 +186,7 @@ class seller_ctl_site_passport extends seller_frontpage {
 
     //入驻方法
     public function settled($step) {
-      
+
         $this->verify();
         $this->pagedata['store'] = $this->user_obj->get_store($this->seller['seller_id']);
         if ($_POST)
@@ -367,11 +356,9 @@ class seller_ctl_site_passport extends seller_frontpage {
         $step <= 1 && $step = 1;
         $step >= 10 && $step = 10;
         if ($step == '1') {
-            $licence_type = $this->_request->get_get('card'); //营业执照类型 老版or新版
-            $licence_type = $licence_type ? $licence_type : 'new';
-            //查询入住营业执照信息判断是否是新版还是老版
-            $checked = app::get('base')->model('company_extra')->getRow('key', array('uid' => $this->seller['seller_id'], 'from' => '1', 'key' => array('business_licence', 'three_lesstion')));
+            $licence_type = $this->_new_or_old();
         }
+
         $columns = $this->page_setting($step, $licence_type);
         $this->pagedata['info'] = $this->edit_info($columns);
         $this->pagedata['page'] = $columns;
@@ -381,6 +368,16 @@ class seller_ctl_site_passport extends seller_frontpage {
         } else {
             $this->page('site/passport/signup_companyInfo.html');
         }
+    }
+    //营业执照类型 老版or新版
+    private function _new_or_old() {
+        $licence_type = $this->_request->get_get('card'); 
+        if($licence_type) return $licence_type;
+        $licence_type = $licence_type ? $licence_type : 'new';
+        //查询入住营业执照信息判断是否是新版还是老版
+        $checked = app::get('base')->model('company_extra')->getRow('*', array('uid' => $this->seller['seller_id'], 'from' => '1', 'key|in' => array('business_licence', 'three_lesstion')), '0', '1', 'content_id desc');
+        $licence_type = $checked['key'] == 'three_lesstion' ? 'new' : 'old';
+        return $licence_type;
     }
 
     private function page_setting($step, $licence_type) {
@@ -412,7 +409,7 @@ class seller_ctl_site_passport extends seller_frontpage {
         $info = array();
         $filter = array('uid' => $this->seller['seller_id'], 'from' => '1');
         $company_extra = app::get('base')->model('company_extra')->
-                getList('*', array_merge($filter, array('key' => $columns)));
+                getList('*', array_merge($filter, array('key|in' => array_keys($columns))));
         foreach ($company_extra as $value) {
             $info['company_extra'][$value['key']] = $value;
         }

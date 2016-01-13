@@ -1,4 +1,5 @@
 <?php
+
 // +----------------------------------------------------------------------
 // | VMCSHOP [V M-Commerce Shop]
 // +----------------------------------------------------------------------
@@ -12,7 +13,7 @@
 class seller_frontpage extends site_controller {
 
     protected $seller = array();
-	protected $store = array();
+    protected $store = array();
 
     function __construct(&$app) {
         parent::__construct($app);
@@ -24,39 +25,48 @@ class seller_frontpage extends site_controller {
         header('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // 强制查询etag
 
         vmc::singleton('base_session')->start();
-		//$this->verify();
-		$this->action = $this->_request->get_act_name();
+        //$this->verify();
+        $this->action = $this->_request->get_act_name();
         $this->controller = $this->_request->get_ctl_name();
-
+        if($this->controller != 'site_passport'){
+            $this->_schedule();
+        }
         $this->seller = $this->get_current_seller();
         $this->store = $this->get_current_store();
         $this->user_manage();
-		$this->set_tmpl('seller');
+        $this->set_tmpl('seller');
         $this->user_obj = vmc::singleton('seller_user_object');
         $this->passport_obj = vmc::singleton('seller_user_passport');
-	}
+    }
 
-    protected function user_manage($type)
-    {
+    //查询入驻进度
+    private function _schedule() {
+        $seller = $this->get_current_seller();
+        $store = app::get('store')->model('store')->getRow('store_id', array('seller_id' => $seller['seller_id']));
+        if (empty($store)) {
+            $redriect = $this->gen_url(array('app' => 'seller', 'ctl' => 'site_passport', 'act' => 'entry', 'args0' => $seller['schedule']));
+            $this->splash('success', $redriect, '登录成功,请先完善入驻信息');
+        }
+    }
+
+    protected function user_manage($type) {
         $this->_menus = $this->get_menu();
-        if($type == 'manage' ){
+        if ($type == 'manage') {
             foreach ($this->_menus as $key => $value) {
-                if($value['name'] != '帐户管理'){
+                if ($value['name'] != '帐户管理') {
                     unset($this->_menus[$key]);
                 }
             }
-        }else{
+        } else {
             foreach ($this->_menus as $key => $value) {
-                if($value['name'] == '帐户管理'){
+                if ($value['name'] == '帐户管理') {
                     unset($this->_menus[$key]);
                 }
             }
         }
-
     }
 
-    protected function redirect_url($params = array())
-    {
+    protected function redirect_url($params = array()) {
         extract($params);
         empty($app) && $app = $this->app->app_id;
         empty($ctl) && $ctl = $this->controller;
@@ -65,18 +75,17 @@ class seller_frontpage extends site_controller {
         return $this->gen_url(compact('app', 'ctl', 'act', 'args'));
     }
 
-    final public function gen_url($params = array())
-    {
+    final public function gen_url($params = array()) {
         return app::get('seller')->router()->gen_url($params);
     }
-	//End Function
 
-	/*
+    //End Function
+
+    /*
      * 如果是登录状态则直接跳转到商家中心
      *
-	*/
-    public function set_forward(&$forward)
-    {
+     */
+    public function set_forward(&$forward) {
         $params = $this->_request->get_params(true);
         $forward = ($forward ? $forward : $params['forward']);
         if (!$forward) {
@@ -104,23 +113,24 @@ class seller_frontpage extends site_controller {
             }
         }
         $this->splash('error', $this->gen_url(array(
-            'app' => 'seller',
-            'ctl' => 'site_passport',
-            'act' => 'login' //
-        )) , '请用分销商帐号登录');
+                    'app' => 'seller',
+                    'ctl' => 'site_passport',
+                    'act' => 'login' //
+                )), '请用分销商帐号登录');
     }
 
     // 是否开店
-    protected function verify_store()
-    {
+    protected function verify_store() {
         return true;
-	 	$this->store = app::get('store')->model('store')->getRow('*', array(
-			'seller_id' => $this->seller['seller_id']
-		));
-		if(!$this->store) $this->splash('error', $this->redirect_url(), '店铺尚未开启！');
-		if($this->store['disable'] == false) $this->splash('Error', $this->redirect_url(), '店铺正在审核');
-		$this->pagedata['store'] = $this->store;
-		return true;
+        $this->store = app::get('store')->model('store')->getRow('*', array(
+            'seller_id' => $this->seller['seller_id']
+        ));
+        if (!$this->store)
+            $this->splash('error', $this->redirect_url(), '店铺尚未开启！');
+        if ($this->store['disable'] == false)
+            $this->splash('Error', $this->redirect_url(), '店铺正在审核');
+        $this->pagedata['store'] = $this->store;
+        return true;
     }
 
     /**
@@ -137,7 +147,9 @@ class seller_frontpage extends site_controller {
             }
         }
         return $redirect ? true : false;
-    } //End Function
+    }
+
+//End Function
 
     public function bind_seller($seller_id) {
         $columns = array(
@@ -146,29 +158,30 @@ class seller_frontpage extends site_controller {
         );
         $user_obj = vmc::singleton('seller_user_object');
         $cookie_expires = $user_obj->cookie_expires ? time() + $user_obj->cookie_expires * 60 : 0;
-		/*
-        $seller_data = $user_obj->get_sellers_data($columns,$seller_id);*/
-        $login_name = $user_obj->get_seller_name($data['account']['login_name'],$seller_id);
+        /*
+          $seller_data = $user_obj->get_sellers_data($columns,$seller_id); */
+        $login_name = $user_obj->get_seller_name($data['account']['login_name'], $seller_id);
 
         $this->cookie_path = vmc::base_url() . '/';
         $this->set_cookie('UNAME', $login_name, $cookie_expires);
         $this->set_cookie('SELLER_IDENT', $seller_id, $cookie_expires);
     }
-	public function unset_seller()
-    {
+
+    public function unset_seller() {
         $auth = pam_auth::instance(pam_account::get_account_type($this->app->app_id));
         foreach (vmc::servicelist('passport') as $k => $passport) {
             $passport->loginout($auth);
         }
         $this->app->seller_id = 0;
         vmc::singleton('base_session')->set_cookie_expires(0);
-        $this->cookie_path = vmc::base_url().'/';
+        $this->cookie_path = vmc::base_url() . '/';
         $this->set_cookie('UNAME', '', time() - 3600); //用户名
-        $this->set_cookie('SELLER_IDENT', 0, time() - 3600);//会员ID
+        $this->set_cookie('SELLER_IDENT', 0, time() - 3600); //会员ID
         foreach (vmc::servicelist('seller.logout_after') as $service) {
             $service->logout();
         }
     }
+
     public function get_current_seller() {
         return vmc::singleton('seller_user_object')->get_current_seller();
     }
@@ -189,10 +202,10 @@ class seller_frontpage extends site_controller {
         $_COOKIE[$name] = $value;
     }
 
-	// 检查登录
+    // 检查登录
     protected function check_login() {
         vmc::singleton('base_session')->start();
-        if ($_SESSION['account'][pam_account::get_account_type($this->app->app_id) ]) {
+        if ($_SESSION['account'][pam_account::get_account_type($this->app->app_id)]) {
             return true;
         } else {
             return false;
@@ -206,65 +219,59 @@ class seller_frontpage extends site_controller {
         $this->description = $seo['seo_content'];
         $this->nofollow = $seo['seo_nofollow'];
         $this->noindex = $seo['seo_noindex'];
-    } //End Function
+    }
 
-	public function get_menu()
-	{
-		$xmlfile = $this->app->app_dir . "/menu.xml";
-		//$xsd = vmc::singleton('base_xml')->xml2array(file_get_contents($xmlfile), $tags);
-		$parser = xml_parser_create();
-		xml_parser_set_option($parser, XML_OPTION_CASE_FOLDING, 0);
+//End Function
+
+    public function get_menu() {
+        $xmlfile = $this->app->app_dir . "/menu.xml";
+        //$xsd = vmc::singleton('base_xml')->xml2array(file_get_contents($xmlfile), $tags);
+        $parser = xml_parser_create();
+        xml_parser_set_option($parser, XML_OPTION_CASE_FOLDING, 0);
         xml_parser_set_option($parser, XML_OPTION_SKIP_WHITE, 1);
         xml_parse_into_struct($parser, file_get_contents($xmlfile), $tags);
         xml_parser_free($parser);
-		$group = Array();
-		$menus = Array();
-		$count = count($tags);
-		foreach($tags as $key => $item)
-		{
-			if($item['tag'] == 'menugroup')
-			{
-				$menuItem = $item['attributes'];
-				for($i=$key+1; $i<$count; $i++)
-				{
-					if($tags[$i]['tag'] == 'menu')
-					{
-						$tags[$i]['attributes']['label'] = $tags[$i]['value'];
-						$menuItem['items'][] = $tags[$i]['attributes'];
-						continue;
-					}
-					break;
-				}
-				$menus[] = $menuItem;
-			}
-		}
-		return $menus;
-	}
+        $group = Array();
+        $menus = Array();
+        $count = count($tags);
+        foreach ($tags as $key => $item) {
+            if ($item['tag'] == 'menugroup') {
+                $menuItem = $item['attributes'];
+                for ($i = $key + 1; $i < $count; $i++) {
+                    if ($tags[$i]['tag'] == 'menu') {
+                        $tags[$i]['attributes']['label'] = $tags[$i]['value'];
+                        $menuItem['items'][] = $tags[$i]['attributes'];
+                        continue;
+                    }
+                    break;
+                }
+                $menus[] = $menuItem;
+            }
+        }
+        return $menus;
+    }
 
-	//
-	protected function output($app_id)
-    {
+    //
+    protected function output($app_id) {
         $app_id || $app_id = $this->app->app_id;
         $this->pagedata['seller'] = $this->seller;
         $this->pagedata['menu'] = $this->_menus;
         $this->pagedata['app'] = $this->app->app_id;
         $this->pagedata['current_controller'] = $this->controller;
         $this->pagedata['current_action'] = $this->action;
-        $this->action_view = $this->action.'.html';
+        $this->action_view = $this->action . '.html';
         $controller = str_replace("site_", "", $this->controller);
         if ($this->pagedata['_PAGE_']) {
             $this->pagedata['_PAGE_'] = 'site/' . $controller . "/" . $this->pagedata['_PAGE_'];
         } else {
             $this->pagedata['_PAGE_'] = 'site/' . $controller . '/' . $this->action_view;
         }
-		$this->pagedata['app_id'] = $app_id;
+        $this->pagedata['app_id'] = $app_id;
         $this->pagedata['_MAIN_'] = 'site/main.html';
         $this->page('site/main.html');
     }
 
-
-    public function end($result = true, $message = null, $ajax = false, $data = null)
-    {
+    public function end($result = true, $message = null, $ajax = false, $data = null) {
         if (!$this->transaction_start) {
             trigger_error('The transaction has not started yet', E_USER_ERROR);
         }
@@ -281,4 +288,5 @@ class seller_frontpage extends site_controller {
         }
         $this->splash(($result ? 'success' : 'failed'), $url, ($result ? $message : ($message ? $message : '操作失败')), $ajax, $data);
     }
+
 }

@@ -94,8 +94,8 @@ class seller_ctl_site_goods extends seller_frontpage {
     public function add($goods_id) {
         $this->pagedata['goods'] = $this->mB2cGoods->dump($goods_id, '*', 'default');
         $this->pagedata['params'] = $this->basic();
-        
-        foreach($this->pagedata['goods']['product'] as &$value){
+
+        foreach ($this->pagedata['goods']['product'] as &$value) {
             $value['spec'] = explode('/', $value['spec_info']);
         }
         $this->pagedata['_PAGE_'] = 'from.html';
@@ -112,7 +112,7 @@ class seller_ctl_site_goods extends seller_frontpage {
         foreach ($return['cat'] as &$value) {
             $value['son'] = $mdl_goods_cat->children($value['cat_id']);
         }
-        
+
         $return['setting'] = $this->app->getConf('goods_setting');
         //商品品牌
         $return['brand'] = $this->app->model('brand')->getList('*', array('seller_id' => $this->seller['seller_id']));
@@ -120,7 +120,7 @@ class seller_ctl_site_goods extends seller_frontpage {
         $return['goods_type'] = app::get('b2c')->model('goods_type')->getList('*');
         $type_props = app::get('b2c')->model('goods_type_props');
         foreach ($return['goods_type'] as &$value) {
-            if($return['setting']['prop'][$value['name']]){
+            if ($return['setting']['prop'][$value['name']]) {
                 $value['cloumns_name'] = $return['setting']['prop'][$value['name']];
             }
             $value['son'] = $type_props->getList('*', array('type_id' => $value['type_id']));
@@ -167,7 +167,7 @@ class seller_ctl_site_goods extends seller_frontpage {
                         $db->rollback();
                         $this->splash('error', $redirect, $msg);
                     }
-                } else if(empty($v['id'])){
+                } else if (empty($v['id'])) {
                     $son_data = array(
                         'cat_id' => $v['cat_id'],
                         'cat_name' => $v['cat_name'],
@@ -209,10 +209,17 @@ class seller_ctl_site_goods extends seller_frontpage {
         $redirect_url = $this->gen_url(array('app' => 'seller', 'ctl' => 'site_goods', 'act' => $type ? 'add' : 'index'));
         if (!$_POST) {
             $this->splash(false, $redirect_url, '非法请求');
-        }     
-        print_r($_POST);
+        }
+        print_r($_POST['goods']);
+        $objModule = vmc::singleton('seller_goods_module');
+        $objModule->init($_POST['goods']);
+        $methods = get_class_methods($objModule);
+        foreach ($methods as $func) {
+            $objModule->$func();
+        }
+        print_r($objModule);
+        die;
         //检查是否填写了商品编号没有生成有检查是否重复
-        
 //        $goods = $objGoodsData->prepare($_POST);        
 //        $goods = $objGoodsData->checkin();
 //        $objGoodsData = vmc::singleton('seller_goods_data');

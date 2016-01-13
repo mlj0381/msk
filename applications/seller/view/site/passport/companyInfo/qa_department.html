@@ -1,4 +1,4 @@
-<input type="hidden" name="qa_department[content_id]"  value="<{$extra.content_id}>" class="form-control">
+<input type="hidden" name="qa_department[content_id]"  value="<{$extra.qa_department.content_id}>" class="form-control">
 <div id="qa_departmen">
 	<h4>品控组织架构</h4>
 	<div class="form-group">
@@ -7,10 +7,10 @@
 		</label>
 		<div class="col-xs-4">
 			<div class="filebox">
-	            <input type="hidden" value="<{$extra.attach}>" name="qa_department[attach]"/>
+	            <input type="hidden" value="<{$extra.qa_department.attach}>" name="qa_department[attach]"/>
 	            <input type="file" data-url="<{link app=image ctl=site_upload act=index}>" accept="image/*" class="file_input" />
 	            <div class="showImg">
-	                 <img src="<{if $extra.attach eq ''}><{$base_url}>/themes/pc/default/statics/images/file_add.jpg<{else}><{$extra.attach|storager:'xs'}><{/if}>">    
+	                 <img src="<{if $extra.qa_department.attach eq ''}><{$base_url}>/themes/pc/default/statics/images/file_add.jpg<{else}><{$extra.qa_department.attach|storager:'xs'}><{/if}>">    
 	            </div>
 	        </div>
 		</div>
