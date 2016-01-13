@@ -114,9 +114,6 @@ class seller_ctl_site_passport extends seller_frontpage {
             case '2':
                 $tpl = 'signup_companyInfo';
                 break;
-            case '3':
-                $tpl = 'signup_storeInfo';
-                break;
             case '4':
                 $tpl = 'signup_complete';
                 break;
@@ -137,14 +134,10 @@ class seller_ctl_site_passport extends seller_frontpage {
         $return = false;
         switch ($step) {
             case '1':
+                if ($post['treaty']) {
+                    $this->splash('error', '', '请详细阅读入驻协议');
+                }
                 $return = $this->_signup_account($post, $redirect);
-                break;
-            case '2':
-                $return = $this->passport_obj->signup_company($post['seller']);
-                break;
-            case '3':
-                $post['contact']['seller_id'] = $this->seller['seller_id'];
-                $return = $this->passport_obj->signup_contactInfo($post['contact']);
                 break;
         }
         if ($return) {
@@ -365,19 +358,21 @@ class seller_ctl_site_passport extends seller_frontpage {
 
     // 入驻
     public function entry($step = 0, $type) {
-        $ident = $this->seller['ident'];
-        $licence_type = $this->_request->get_get('card'); //营业执照类型 老版or新版
-        $licence_type = $licence_type ? $licence_type : 'new';
         if ($_POST) {
             $params = utils::_filter_input($_POST);
             unset($_POST);
             $this->_entry($params);
         }
-
         $step = $params['pageIndex'] ? $params['pageIndex'] : $step;
         $step = $type == 'up' ? $step - 1 : $step + 1;
         $step <= 1 && $step = 1;
         $step >= 10 && $step = 10;
+        if ($step == '1') {
+            $licence_type = $this->_request->get_get('card'); //营业执照类型 老版or新版
+            $licence_type = $licence_type ? $licence_type : 'new';
+            //查询入住营业执照信息判断是否是新版还是老版
+            $checked = app::get('base')->model('company_extra')->getRow('key', array('uid' => $this->seller['seller_id'], 'from' => '1', 'key' => array('business_licence', 'three_lesstion')));
+        }
         $columns = $this->page_setting($step, $licence_type);
         $this->pagedata['info'] = $this->edit_info($columns);
         $this->pagedata['page'] = $columns;
@@ -392,6 +387,7 @@ class seller_ctl_site_passport extends seller_frontpage {
     private function page_setting($step, $licence_type) {
         $conf = $this->app->getConf('seller_entry');
         $columns = array_flip($conf['comm'][$step]);
+
         if ($licence_type == 'new') {
             unset($columns['business_licence']);
             unset($columns['tax_licence']);
@@ -399,6 +395,7 @@ class seller_ctl_site_passport extends seller_frontpage {
         } else if ($licence_type == 'old') {
             unset($columns['three_lesstion']);
         }
+        $ident = $this->seller['ident'];
         if ($ident & 1 && $conf[1][$step]) {
             $columns = array_merge($columns, array_flip($conf[1][$step]));
         }
@@ -428,8 +425,22 @@ class seller_ctl_site_passport extends seller_frontpage {
         return $info;
     }
 
-    private function _entry($params) {
+    //ajax提交保存电商团队成员
+    public function save_ecgroup() {
+        if ($_POST) {
+            $params = utils::_filter_input($_POST);
+            unset($_POST);
+        }
+        $mdl_company_extra = app::get('base')->model('company_extra');
+        $params['ec_group_employees']['uid'] = $this->seller['seller_id'];
+        $params['ec_group_employees']['from'] = '1';
+        if (!$params['ec_group_employees']['content_id'] = $mdl_company_extra->insert($params['ec_group_employees'])) {
+            $this->splash('error', '', '操作失败');
+        }
+        $this->splash('success', '', $params['ec_group_employees']);
+    }
 
+    private function _entry($params) {
         $db = vmc::database();
         $db->beginTransaction();
         $extra_columns = $this->page_setting($params['pageIndex']);
