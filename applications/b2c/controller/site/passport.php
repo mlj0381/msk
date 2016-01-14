@@ -147,14 +147,14 @@ class b2c_ctl_site_passport extends b2c_frontpage {
             $this->pagedata['attr'] = $this->passport_obj->get_signup_attr();
         }
         $this->set_tmpl('passport');
-        $this->page('site/passport/signup.html');
+        $this->page('site/passport/signup_accoutSet.html');
     }
 
     //注册页面--审核信息
-    public function signup_checkInfo($forward) {
+    public function signup_baseInfo($forward) {
         $this->verify_member();
         $this->set_tmpl('passport');
-        $this->page('site/passport/signup_checkInfo.html');
+        $this->page('site/passport/signup_baseInfo.html');
     }
 
     //注册经营信息
@@ -165,14 +165,13 @@ class b2c_ctl_site_passport extends b2c_frontpage {
             $redirect = $this->gen_url(array(
                 'app' => 'b2c',
                 'ctl' => 'site_passport',
-                'act' => 'signup_checkInfo',
+                'act' => 'signup_baseInfo',
             ));
             $db = vmc::database();
             $db->beginTransaction();
-
             $extra_columns = $this->app->getConf('member_extra_column');
             $params = $_POST;
-            if ($params['company']) {
+            if (!empty($params['company'])) {
                 $params['company']['uid'] = $this->members['member_id'];
                 if (!app::get('base')->model('company')->save($params['company'])) {
                     $db->rollback();
@@ -180,7 +179,7 @@ class b2c_ctl_site_passport extends b2c_frontpage {
                 }
             }
 
-            if ($params['contact']) {
+            if (!empty($params['contact'])) {
                 if (!app::get('base')->model('contact')->save($params['contact'])) {
                     $params['contact']['uid'] = $this->members['member_id'];
                     $db->rollback();
@@ -256,7 +255,7 @@ class b2c_ctl_site_passport extends b2c_frontpage {
         $next = $this->gen_url(array(
             'app' => 'b2c',
             'ctl' => 'site_passport',
-            'act' => 'signup_checkInfo',
+            'act' => 'signup_baseInfo',
         )); //PC首页
 
         unset($_POST['forward']);
