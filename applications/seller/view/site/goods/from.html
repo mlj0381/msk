@@ -28,7 +28,7 @@
                 <h4>图文介绍</h4>
                 <div role="tabpanel" class="tab-pane" id="tuwen">
                     <div class="editerbox">
-                        <textarea id="summernote" name="goods[description]" value="$goods.description"></textarea>
+                        <textarea id="summernote" name="goods[description]" value=""><{$goods.description}></textarea>
                         <{*input type=html name="goods[description]" remote=site*}>
 
                     </div>
@@ -209,11 +209,11 @@ $(".save_goods").click(function() {
     //     alert('品类不可为空');
     //     return;
     // }
-    var cat_val = $("select[name='goods[category][cat_id]']").val();
-    if (!cat_val || cat_val == 0) {
-        alert('品名不可为空');
-        return;
-    }
+//    var cat_val = $("select[name='goods[category][cat_id]']").val();
+//    if (!cat_val || cat_val == 0) {
+//        alert('品名不可为空');
+//        return;
+//    }
     // if (!$("#select_brand").val()) {
     //     alert('品牌不可为空');
     //     return;
