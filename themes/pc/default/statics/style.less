@@ -781,13 +781,110 @@ ul,ol{
 	}
 }
 
+//账户设置
+.accout_seting_form{
+	width:500px;
+	margin:0 auto;
+}
+
+//END 账户设置
+
+
+//基本资料
+.baseInfo_container{
+	.baseInfo_lt{
+		width:200px;
+		box-shadow: 0px 0px 6px #ddd;
+		dl{
+			dt{
+				height:40px;
+				line-height: 40px;
+				font-size: 14px;
+				border-bottom:2px solid @basecolor;
+				padding:0 10px;
+				background: #c40000;
+				color:#fff;
+			}
+			dd{
+				height:40px;
+				line-height: 40px;
+				border-bottom:1px solid #f2f2f2;
+				padding:0 10px;
+				font-size:13px;
+				&.active{
+					//border-left:5px solid @basecolor;
+					background: #f2f2f2;
+					a{
+						color:@basecolor;
+
+					}
+				}
+			}
+		}
+	}
+	.baseInfo_rt{
+		width:960px;
+		padding:0 10px;
+	}
+}
+
+#buyerInfo,#manageInfo,#deliveryInfo{
+	h2{
+		background: #f2f2f2;
+		height:30px;
+		line-height: 30px;
+		font-size: 16px;
+		padding:0 15px;
+		margin:0 0 25px 0;
+	}
+	h3{
+		font-size: 14px;
+		font-weight: bold;
+	}
+}
+#buyerInfo{
+
+}
+#manageInfo{
+	h2{
+		background: #f2f2f2;
+		height:30px;
+		line-height: 30px;
+		font-size: 16px;
+		padding:0 15px;
+		margin:0 0 25px 0;
+	}
+	.use_dir{
+		span{
+			display:inline-block;
+			margin-right:10px;
+			margin-bottom:10px;
+		}
+	}
+}
+
+#deliveryInfo{
+	.pay_method, .delivery_time{
+		span{
+			display: inline-block;
+			margin-right:10px;
+			margin-bottom:10px;
+		}
+	}
+
+}
+
+
+//END 基本资料
+
+
+
 
 #member_signup_checkInfo_form{
 
 	.customer_address{
 
 		select{
-			//margin-right:10px;
 			width:123px;
 		}
 
@@ -797,7 +894,6 @@ ul,ol{
 		box-shadow: none;
 		padding-left:0;
 		outline: none;
-		//width:190px;
 	}
 
 	#regTerms{

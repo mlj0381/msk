@@ -21,4 +21,9 @@ class store_ctl_site_store extends seller_frontpage
         $this->pagedata['store_id'] = $store_id ? $store_id : $this->store['store_id'];
         $this->page('site/index.html');
     }
+
+    public function store_list(){
+        //$this->pagedata['store_id'] = $store_id ? $store_id : $this->store['store_id'];
+        $this->page('site/store_list.html');
+    }
 }
