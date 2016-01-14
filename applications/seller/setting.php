@@ -64,7 +64,7 @@ $setting = array(
             ),
         ),
     ),
-    'goods_info' => array(
+    'goods_setting' => array(
         'default' => array(
             'params' => array(
                 'orgion' => array(
@@ -92,9 +92,38 @@ $setting = array(
                     ),
                 ),
             ),
+            //商品参数数据库字段绑定
+            'prop' => array(
+                '产地' => 'origin',
+                '加工方式' => 'type_id',
+            ),
             'product' => array(
-                'quality' => array('A1', 'A2', 'A3'),
-                'pack' => array('箱', '袋'),
+                'quality' => array(
+                    'name' => '质量等级',
+                    'value' => array('A1', 'A2', 'A3')
+                ),
+                'pack' => array(
+                    'name' => '包装规格',
+                    'value' => array('箱', '袋')
+                ),
+            ),
+            'showcase' => array(
+                array(
+                    'id' => 1,
+                    'name' => '主力产品',
+                ),
+                array(
+                    'id' => 2,
+                    'name' => '本月新品',
+                ),
+                array(
+                    'id' => 3,
+                    'name' => '特价专区',
+                ),
+                array(
+                    'id' => 4,
+                    'name' => '销售专区',
+                ),
             ),
         ),
     ),

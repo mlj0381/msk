@@ -1,4 +1,5 @@
-<input type='hidden' name='company[company_id]' value='<{$info.company.company_id}>'/>
+<input type='hidden' name='business_licence[content_id]' value='<{$extra.business_licence.content_id}>'/>
+<input type='hidden' name='company[company_id]' value='<{$extra.company.company_id}>'/>
 <div id="business_licence">
 	
     <h4>营业执照信息（副本）<a href="<{link app=seller ctl=site_passport act=entry}>?card=new"><small class="text-danger">填写新版三证合一执照</small></a></h4>
@@ -8,7 +9,7 @@
 			<span class="text-danger">*</span>注册号：
 		</label>
 		<div class="col-xs-4">
-			<input type="text" name="business_licence[value][code]" class="form-control">
+                    <input type="text" value="<{$extra.business_licence.value.code}>" name="business_licence[value][code]" class="form-control">
 		</div>
 	</div>
 	<div class="form-group">
@@ -16,7 +17,7 @@
 			<span class="text-danger">*</span>名称：
 		</label>
 		<div class="col-xs-4">
-			<input type="text" name="company[name]" class="form-control">
+			<input type="text" value='<{$extra.company.name}>' name="company[name]" class="form-control">
 		</div>
 	</div>
 
@@ -25,7 +26,7 @@
 			<span class="text-danger">*</span>住所：
 		</label>
 		<div class="col-xs-4">
-			<input type="text" name="company[address]" class="form-control">
+			<input type="text" value='<{$extra.company.address}>' name="company[address]" class="form-control">
 		</div>
 	</div>
 	<div class="form-group">
@@ -33,7 +34,7 @@
 			<span class="text-danger">*</span>法人代表姓名:
 		</label>
 		<div class="col-xs-4">
-			<input type="text" name="business_licence[value][name]" class="form-control">
+			<input type="text" value='<{$extra.business_licence.value.name}>' name="business_licence[value][name]" class="form-control">
 		</div>
 	</div>
 	<div class="form-group">
@@ -41,7 +42,7 @@
 			<span class="text-danger">*</span>注册资本：
 		</label>
 		<div class="col-xs-4">
-			<input type="text" name="company[registered_capital]" class="form-control">
+			<input type="text" value='<{$extra.company.registered_capital}>' name="company[registered_capital]" class="form-control">
 		</div>
 	</div>
 	<div class="form-group">
@@ -49,7 +50,7 @@
 			<span class="text-danger">*</span>实收资本：
 		</label>
 		<div class="col-xs-4">
-			<input type="text" name="company[reality_capital]" class="form-control">
+			<input type="text" value='<{$extra.company.reality_capital}>' name="company[reality_capital]" class="form-control">
 		</div>
 	</div>
 	<div class="form-group">
@@ -70,7 +71,7 @@
 			<span class="text-danger">*</span>经营范围：
 		</label>
 		<div class="col-xs-4">
-			<input type="text" name="company[operating_period]" class="form-control">
+			<input type="text" value='<{$extra.company.operating_period}>' name="company[operating_period]" class="form-control">
 		</div>
 	</div>
 	<div class="form-group">
@@ -78,7 +79,7 @@
 			<span class="text-danger">*</span>成立日期：
 		</label>
 		<div class="col-xs-4">
-			<input type="text" name="company[establishment_date]" class="form-control">
+			<input type="text" value='<{$extra.company.establishment_date}>' name="company[establishment_date]" class="form-control">
 		</div>
 	</div>
 	<div class="form-group">
@@ -86,8 +87,8 @@
 			<span class="text-danger">*</span>营业期限：
 		</label>
 		<div class="col-xs-4">
-			<input type="text" name="company[business_scope][begin]" class="form-control" style="width:175px; display: inline-block;"> 至 
-			<input type="text" name="company[business_scope][end]" class="form-control"  style="width:175px; display: inline-block;">
+			<input type="text" value='<{$extra.company.business_scope.begin}>' name="company[business_scope][begin]" class="form-control" style="width:175px; display: inline-block;"> 至 
+			<input type="text" value='<{$extra.company.business_scope.end}>' name="company[business_scope][end]" class="form-control"  style="width:175px; display: inline-block;">
 		</div>
 	</div>
 
@@ -97,10 +98,10 @@
 		</label>
 		<div class="col-xs-4">
 			<div class="filebox">
-	            <input type="hidden" value="" name="business_license[value][attach]"/>
+	            <input type="hidden" value='<{$extra.business_licence.attach}>' name="business_licence[attach]"/>
 	            <input type="file" data-url="<{link app=image ctl=site_upload act=index}>" accept="image/*" class="file_input" />
 	            <div class="showImg">
-	                 <img src="<{if $company.business_license_image eq ''}><{$base_url}>/themes/pc/default/statics/images/file_add.jpg<{else}><{$company.business_license_image|storager:'xs'}><{/if}>">    
+	                 <img src="<{if $extra.business_licence.attach eq ''}><{$base_url}>/themes/pc/default/statics/images/file_add.jpg<{else}><{$extra.business_licence.attach|storager:'xs'}><{/if}>">    
 	            </div>
 	        </div>
 		</div>

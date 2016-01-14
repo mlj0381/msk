@@ -40,14 +40,12 @@
                 </dl>
             </div>
             <form id="companyInfo_form" action="<{link app=seller ctl=site_passport act=entry}>" class="form-horizontal companyInfo_form" method="post">
-                <input type='text' name='pageIndex' value='<{$pageIndex}>'/>
+                <input type='hidden' name='pageIndex' value='<{$pageIndex}>'/>
                 <!-- 三证合一 -->
                 <{foreach from=$page key=key item=item}>
-                <{if $key neq 'three_lesstion'}>
-                <{include file="site/passport/companyInfo/{$key}.html" extra=$info.company_extra[$key]}>
-                <{else}>
+                
                 <{include file="site/passport/companyInfo/{$key}.html" extra=$info.company_extra}>
-                <{/if}>
+                
                 <{/foreach}>
                 <div class="form-group">
                     <label class="col-xs-2"></label>

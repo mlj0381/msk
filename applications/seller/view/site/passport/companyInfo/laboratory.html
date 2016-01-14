@@ -1,4 +1,4 @@
-<input type="hidden" name="laboratory[content_id]"  value="<{$extra.content_id}>" class="form-control">
+<input type="hidden" name="laboratory[content_id]"  value="<{$extra.laboratory.content_id}>" class="form-control">
 <div id="laboratory">
 	<h4>实验室</h4>
 
@@ -7,7 +7,7 @@
 			<span class="text-danger">*</span>面积：
 		</label>
 		<div class="col-xs-4">
-			<input type="text" value="<{$extra.value.area}>" name="laboratory[value][area]" class="form-control">
+			<input type="text" value="<{$extra.laboratory.value.area}>" name="laboratory[value][area]" class="form-control">
 		</div>
 	</div>
 	<div class="form-group">
@@ -15,7 +15,7 @@
 			<span class="text-danger">*</span>功能：
 		</label>
 		<div class="col-xs-4">
-			<input type="text" value="<{$extra.value.fun}>" name="laboratory[value][fun]" class="form-control">
+			<input type="text" value="<{$extra.laboratory.value.fun}>" name="laboratory[value][fun]" class="form-control">
 		</div>
 	</div>
 	<div class="form-group">
@@ -23,7 +23,7 @@
 			<span class="text-danger">*</span>投资：
 		</label>
 		<div class="col-xs-4">
-			<input type="text" value="<{$extra.value.invest}>" name="laboratory[value][invest]" class="form-control">
+			<input type="text" value="<{$extra.laboratory.value.invest}>" name="laboratory[value][invest]" class="form-control">
 		</div>
 	</div>
 	<div class="form-group">
@@ -31,7 +31,7 @@
 			<span class="text-danger">*</span>人员：
 		</label>
 		<div class="col-xs-4">
-			<input type="text" value="<{$extra.value.staff}>" name="laboratory[value][staff]" class="form-control">
+			<input type="text" value="<{$extra.laboratory.value.staff}>" name="laboratory[value][staff]" class="form-control">
 		</div>
 	</div>
 
@@ -41,10 +41,10 @@
 		</label>
 		<div class="col-xs-4">
 			<div class="filebox">
-	            <input type="hidden" value="<{$extra.attach}>" name="laboratory[attach]"/>
+	            <input type="hidden" value="<{$extra.laboratory.attach}>" name="laboratory[attach]"/>
 	            <input type="file" data-url="<{link app=image ctl=site_upload act=index}>" accept="image/*" class="file_input" />
 	            <div class="showImg">
-	                 <img src="<{if $extra.attach eq ''}><{$base_url}>/themes/pc/default/statics/images/file_add.jpg<{else}><{$extra.attach|storager:'xs'}><{/if}>">    
+	                 <img src="<{if $extra.laboratory.attach eq ''}><{$base_url}>/themes/pc/default/statics/images/file_add.jpg<{else}><{$extra.laboratory.attach|storager:'xs'}><{/if}>">    
 	            </div>
 	        </div>
 		</div>

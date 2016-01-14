@@ -5,7 +5,7 @@
         <span class="text-danger">*</span>店铺类型：
     </label>
     <div class="col-xs-4">
-        <select name="store[store_type]" class="form-control">
+        <select name="store[store_type]" value="<{$extra.store.store_type}>" class="form-control">
             <option value="1">工厂店铺</option>
             <option value="2">代理店铺</option>
             <option value="3">OEM店铺</option>
@@ -17,7 +17,7 @@
         <span class="text-danger">*</span>店铺名称：
     </label>
     <div class="col-xs-4">
-        <input name="store[store_name]" class="form-control" />
+        <input name="store[store_name]" value="<{$extra.store.store_name}>" class="form-control" />
     </div>
 </div>
 <div class="form-group">
@@ -26,10 +26,10 @@
     </label>
     <div class="col-xs-4">
         <div class="filebox">
-            <input type="hidden" value="" name="store[logo]"/>
+            <input type="hidden" value="<{$extra.store.logo}>" name="store[logo]"/>
             <input type="file" data-url="<{link app=image ctl=site_upload act=index}>" accept="image/*" class="file_input" />
             <div class="showImg">
-                <img src="<{if $company.business_license_image eq ''}><{$base_url}>/themes/pc/default/statics/images/file_add.jpg<{else}><{$company.business_license_image|storager:'xs'}><{/if}>">    
+                <img src="<{if $extra.store.logo eq ''}><{$base_url}>/themes/pc/default/statics/images/file_add.jpg<{else}><{$extra.store.logo|storager:'xs'}><{/if}>">    
             </div>
         </div>
     </div>

@@ -1,29 +1,29 @@
 <div id="sepcInfo">
     <h4>商品规格</h4>
+    <{foreach from=$params.setting.product key=key item=items}>
     <div class="form-group">
-        <label class="col-xs-2 control-label"><span>质量等级</span></label>
+        <label class="col-xs-2 control-label">
+            <span><{$items.name}>
+                <input type="hidden" name="goods[spec_desc][t][]" value="<{$items.name}>"/>
+            </span>
+        </label>
         <div class="col-xs-5">
             <ul class="quality">
-                <{foreach from=$params.setting.product.quality item=item}>
-                <li><{$item}></li>
+                <{foreach from=$items.value item=item}>
+                <li <{if in_array($item, $goods[spec_desc][v])}>
+                    class ="sect"
+                    <{/if}>><{$item}>
+                    <input type="hidden" name="goods[spec_desc][v][]" disabled value="<{$item}>"/>
+                </li>
                 <{/foreach}>
             </ul>
         </div>
     </div>
-    <div class="form-group">
-        <label class="col-xs-2 control-label"><span>包装规格</span></label>
-        <div class="col-xs-5">
-            <ul class="pack">
-                <{foreach from=$params.setting.product.pack item=item}>
-                <li><{$item}></li>
-                <{/foreach}>
-            </ul>
-        </div>
-    </div>
+    <{/foreach}>
     <div class="form-group">
         <label class="col-xs-2 control-label"><span>界限值</span></label>
         <div class="col-xs-5">
-            <input type="text" class="limit" class="form-control">
+            <input type="text" class="limit" value="<{$goods.product[1].price_interval}>" class="form-control">
         </div>
     </div>
     <div class="form-group">
@@ -43,76 +43,84 @@
             <th class="col-xs-1">库存</th>
             <th class="col-xs-1">是否上架</th>
         </tr>
-        <tr>
-            <td>342423</td>
-            <td>A1</td>
-            <td>箱</td>
-            <td>
-                <div class="price_area">
-                    <span>小于10箱 <input type="text" placeholder="元"></span>
-                    <span>大于10箱 <input type="text" placeholder="元"></span>
-                </div>
-            </td>
-            <td>
-                <input type="text" value="0" style="width:60px;">
-            </td>
-            <td>
-                <input type="checkbox"> 上架
-            </td>
+        <tbody class="new-products">
+            <{foreach from=$goods.product key=key item=items}>
+            <tr>
+        <input type="hidden"  name="goods[product][<{$key}>][spec_info]" value="<{$items.spec_info}>">
+        <input type="hidden" name="goods[product][<{$key}>][spec_desc]" value="<{$items.spec_desc}>">
+        <input type="hidden" name="goods[product][<{$key}>][product_id]" value="<{$items.product_id}>">
+        <td><{$items.bn}>
+            <input type="hidden" name="goods[product][<{$key}>][bn]" value="<{$items.bn}>">
+        </td>
+        <td><{$items.spec[0]}></td>
+        <td><{$items.spec[1]}></td>
+        <td>
+            <div class="price_area">
+                <input class="price_interval" type="hidden" name="goods[product][<{$key}>][price_interval]" value="<{$items.price_interval}>">
+                <span>小于<{$items.price_interval}><{$items.spec[1]}>
+                    <input type="text" value="<{$items.price_up}>" name="goods[product][<{$key}>][price_dn]" placeholder="元">
+                </span>
+                <span>大于<{$items.price_interval}><{$items.spec[1]}>
+                    <input type="text" value="<{$items.price_dn}>" name="goods[product][<{$key}>][price_up]" placeholder="元">
+                </span>
+            </div>
+        </td>
+        <td>
+            <input type="text" value="0" style="width:60px;">
+        </td>
+        <td>
+            <input type="checkbox" name="goods[product][<{$key}>][marketable]" <{if $items.marketable eq 'true'}> checked value="true"<{/if}>> 上架
+        </td>
         </tr>
-        <tr>
-            <td>342423</td>
-            <td>A1</td>
-            <td>箱</td>
-            <td>
-                <div class="price_area">
-                    <span>小于10箱 <input type="text" placeholder="元"></span>
-                    <span>大于10箱 <input type="text" placeholder="元"></span>
-                </div>
-            </td>
-            <td>
-                <input type="text" value="0" style="width:60px;">
-            </td>
-            <td>
-                <input type="checkbox"> 上架
-            </td>
-        </tr>
+        <{/foreach}>
+        </tbady>
+
     </table>
     <hr>
 </div>
 
 <textarea class="hide product-item-tpl">
-<table class="table table-hover">
         <tr>
             <td>
-                <input type="hidden" required="true" data-map="bn" class="form-control" name="goods[product][{key}][bn]">
+                <input type="text" required="true" data-map="bn" class="form-control" name="goods[product][{key}][bn]">
             </td>
-            <td>{grade}</td>
-            <td>{pack}</td>
+            <td>{grade}
+<input type="hidden" value="{spec_info}"  name="goods[product][{key}][spec_info]" value="<{$product.price_interval}>">
+<input type="hidden" name="goods[product][{key}][spec_desc]" class="spec-desc" value="{spec_desc}">
+</td>
+            <td>{pack}
+</td>
             <td>
                 <div class="price_area">
-                    <span>小于{num}{pack} <input type="text"name="goods[product][{key}][price_up]" placeholder="元"></span>
-                    <span>大于{num}{pack} <input type="text" name="goods[product][{key}][price_dn]" placeholder="元"></span>
+                    <input type="hidden" value="{num}" name="goods[product][{key}][price_interval]" value="<{$product.price_interval}>">
+                    <span>小于{num}{pack} <input type="text"name="goods[product][{key}][price_dn]" placeholder="元"></span>
+                    <span>大于{num}{pack} <input type="text" name="goods[product][{key}][price_up]" placeholder="元"></span>
                 </div>
             </td>
             <td>
-                <input type="text" data-map="price" name="goods[product][{key}][price]" style="width:60px;" value="0">
+                <input type="text" name="goods[product][{key}][price]" style="width:60px;" value="0">
             </td>
             <td>
                 <input type="checkbox" name="goods[product][{key}][marketable]" value="true" checked> 上架
             </td>
         </tr>
-    </table>    
 
 </textarea>
 
 <script>
     $(function () {
+        $('.limit').val($('.price_area').find('input[type="hidden"]:first').val());
         //class="sect"
         var ul = $('#sepcInfo  ul');
         $(ul).each(function (idx, item) {
             $(item).find('li').click(function () {
-                $(this).toggleClass('sect')
+                var _self = $(this);
+                _self.toggleClass('sect');
+                if(_self.hasClass('sect')){
+                    _self.find('input').removeAttr('disabled');
+                }else{
+                    _self.find('input').prop('disabled', 'true');
+                }
             });
         });
 
@@ -178,7 +186,7 @@
             }
             /*计算规格交集*/
             var context = "";
-            console.log(root_arr);
+            var num = $('#sepcInfo .limit').val();
             $.each(root_arr, function (idx, n) {
                 var spec_info = n.replace(/:::/g, '/');
                 if ($('.exist-products input[value="' + spec_info + '"]').length) {
@@ -187,32 +195,26 @@
                 context += substitute($('.product-item-tpl').val(), {
                     key: 'new_' + idx,
                     spec_info: spec_info,
-                    spec_desc: n
+                    spec_desc: n,
+                    num: num
                 });
             });
-            console.log(context);
-//            $('.product-items tbody.new-products').empty().append(context);
-//
-//            /*支持字符批量分隔粘贴*/
-//            listen_postpaste($('.product-items tbody.new-products input[name$="[bn]"]'));
-//            listen_postpaste($('.product-items tbody.new-products input[name$="[barcode]"]'));
-//            listen_postpaste($('.product-items tbody.new-products input[name$="[price]"]'));
-//            listen_postpaste($('.product-items tbody.new-products input[name$="[mktprice]"]'));
-//            listen_postpaste($('.product-items tbody.new-products input[name$="[weight]"]'));
-//            listen_postpaste($('.product-items tbody.new-products input[name$="[unit]"]'));
-
-            var item_length = $('.product-items tbody.new-products').find('> tr').length;
+            $('.exist-products tbody.new-products').empty().append(context);
+            var item_length = $('.exist-products tbody.new-products').find('> tr').length;
             $(this).next('.text-success').remove();
             if (item_length) {
                 $(this).after('<span class="text-success">将会新建<span class="badge badge-success">' + item_length + '</span>个货品</span>');
             }
+            var val = parseInt(100000 * Math.random());
+            $.each($('.exist-products tbody.new-products input[data-map]'), function (i, n) {
+                var _val = val;
+                var map = $(n).attr('data-map');
+                //, val = $('.exist-products tbody.new-products tr:last input[data-map="' + map + '"]').val();
 
-            $.each($('.product-items tbody.new-products input[data-map]'), function (i, n) {
-                var map = $(n).attr('data-map'), val = $('.product-items tbody.exist-products tr:last input[data-map="' + map + '"]').val();
                 if (map == 'bn' || map == 'barcode') {
-                    val += '-' + i;
+                    _val += '-' + i;
                 }
-                $(n).val(val);
+                $(n).val(_val);
             });
 
 
@@ -222,16 +224,15 @@
                 if (match.charAt(0) == '\\') {
                     return match.slice(1);
                 }
+
                 var product = obj.spec_info.split('/');
-                alert(match.slice(1));
-                if (match == 'grade') {
-                    alert('1')
+                if (match.slice(0) == '{grade}') {
                     return product[0];
                 }
-                if (match == 'pack') {
-                    alert('1')
+                if (match.slice(0) == '{pack}') {
                     return product[1];
                 }
+
                 return (obj[name] != undefined) ? obj[name] : '';
             });
         }

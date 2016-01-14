@@ -136,6 +136,7 @@ class b2c_mdl_goods extends dbeav_model
         #↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑记录编辑商品日志-end@lujy↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
         $rs = parent::save($goods, $mustUpdate);
         #↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓记录编辑商品日志-start@lujy↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+        
         if ($obj_operatorlogs = vmc::service('operatorlog.goods')) {
             if (method_exists($obj_operatorlogs, 'goods_log')) {
                 if (isset($addorrestore_goods_flag) && !$addorrestore_goods_flag) {
