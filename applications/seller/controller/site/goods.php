@@ -26,6 +26,8 @@ class seller_ctl_site_goods extends seller_frontpage {
     public function index() {
         // 入商品库
         $serach = $_POST['goods'] ? $_POST['goods'] : '';
+        $mdl_goods_cat = app::get('b2c')->model('goods_cat');
+        $this->pagedata['cat'] = $mdl_goods_cat->get_tree();
         $this->pagedata['goodList'] = $this->_good_list(1, $serach);
         $this->output();
     }
@@ -42,45 +44,57 @@ class seller_ctl_site_goods extends seller_frontpage {
         }
         if ($serach) {
             $this->pagedata['serach'] = $serach;
-            if ($serach['price']) {
-                if (is_numeric($serach['price'][0]) && is_numeric($serach['price'][1])) {
-                    $price['price|between'] = $serach['price'];
-                    $goods_id = $mdl_product->getList('goods_id', $price);
-                    if (!$goods_id)
-                        return array();
-                }
+            if ($serach['price'] && is_numeric($serach['price'][0]) && is_numeric($serach['price'][1])) {
+
+                $price['price|between'] = $serach['price'];
             }
+
             if ($serach['buy_count']) {
                 if (is_numeric($serach['buy_count'][0]) && is_numeric($serach['buy_count'][1])) {
                     $filter['buy_coun|between'] = $serach['buy_count'];
                 }
             }
-            $tmp = Array();
-            foreach ($goods_id as $k => $v) {
-                array_push($tmp, $v['goods_id']);
-                $tmp = array_unique($tmp);
-            }
-            $filter['goods_id|in'] = $tmp;
+
             $filter['name|has'] = $serach['name'];
             $filter['gid'] = $serach['gid'];
+            $filter['cat_id'] = $serach['cat_id'];
         }
+        $price['is_default'] = 'true';
+        $tmp = $mdl_product->getList('*', $price);
+        if (!$tmp) {
+            return array();
+        }
+        $product = Array();
+//            foreach ($goods_id as $k => $v) {
+//                array_push($tmp, $v['goods_id']);
+//                $tmp = array_unique($tmp);
+//            }
+//            $filter['goods_id|in'] = $tmp;
+        foreach ($tmp as $k => $v) {
+            $product['goods_id'][$k] = $v['goods_id'];
+            $product['product'][$v['goods_id']] = $v;
+        }
+        $filter['goods_id|in'] = $product['goods_id'];
 
         $filter['store_id'] = $this->store['store_id'];
         $filter['seller_id'] = $this->seller['seller_id'];
         $goodsList = $this->mB2cGoods->getList('*', $filter);
 
         foreach ($goodsList as $key => $value) {
-            $product = $mdl_product->getList('barcode', array('goods_id' => $value['goods_id']));
-            foreach ($product as $k => $v) {
-                $barcode['barcode'][$k] = $v['barcode'];
-            }
-            $stock = $mdl_stock->getRow('sum(quantity) as stock', array('barcode|in' => $barcode['barcode']));
-            $goodsList[$key]['stock'] = $stock['stock'];
-            foreach ($brandList as $k => $v) {
-                if ($value['brand_id'] == $v['brand_id']) {
-                    $goodsList[$key]['brand_id'] = $v['brand_name'];
-                }
-            }
+            // $product = $mdl_product->getList('barcode', array('goods_id' => $value['goods_id']));
+//            foreach ($product as $k => $v) {
+//                $barcode['barcode'][$k] = $v['barcode'];
+//            }
+            //$stock = $mdl_stock->getRow('sum(quantity) as stock', array('barcode|in' => $barcode['barcode']));
+            //$goodsList[$key]['stock'] = $stock['stock'];
+//            foreach ($brandList as $k => $v) {
+//                if ($value['brand_id'] == $v['brand_id']) {
+//                    $goodsList[$key]['brand_id'] = $v['brand_name'];
+//                }
+//            }
+            $goodsList[$key]['price_interval'] = $product['product'][$value['goods_id']]['price_interval'];
+            $goodsList[$key]['price_up'] = $product['product'][$value['goods_id']]['price_up'];
+            $goodsList[$key]['price_dn'] = $product['product'][$value['goods_id']]['price_dn'];
             foreach ($store_goods_cat as $k => $v) {
                 if ($value['cat_id'] == $v['cat_id']) {
                     $goodsList[$key]['cat_id'] = $v['cat_name'];
@@ -93,8 +107,13 @@ class seller_ctl_site_goods extends seller_frontpage {
     //添加商品
     public function add($goods_id) {
         $this->pagedata['goods'] = $this->mB2cGoods->dump($goods_id, '*', 'default');
-        $this->pagedata['params'] = $this->basic();
+        //获取商品库存信息
 
+        $mdl_stock = app::get('b2c')->model('stock');
+        foreach ($this->pagedata['goods']['product'] as &$value) {
+            $value['stock'] = $mdl_stock->getRow('*', array('sku_bn' => $value['bn'], 'warehouse' => $this->store['store_id']));
+        }
+        $this->pagedata['params'] = $this->basic();
         foreach ($this->pagedata['goods']['product'] as &$value) {
             $value['spec'] = explode('/', $value['spec_info']);
         }
@@ -109,10 +128,6 @@ class seller_ctl_site_goods extends seller_frontpage {
         //商品类目
         $mdl_goods_cat = app::get('b2c')->model('goods_cat');
         $return['cat'] = $mdl_goods_cat->get_tree();
-        foreach ($return['cat'] as &$value) {
-            $value['son'] = $mdl_goods_cat->children($value['cat_id']);
-        }
-
         $return['setting'] = $this->app->getConf('goods_setting');
         //商品品牌
         $return['brand'] = $this->app->model('brand')->getList('*', array('seller_id' => $this->seller['seller_id']));
@@ -210,35 +225,38 @@ class seller_ctl_site_goods extends seller_frontpage {
         if (!$_POST) {
             $this->splash(false, $redirect_url, '非法请求');
         }
-        print_r($_POST['goods']);
-        $objModule = vmc::singleton('seller_goods_module');
-        $objModule->init($_POST['goods']);
-        $methods = get_class_methods($objModule);
-        foreach ($methods as $func) {
-            $objModule->$func();
-        }
-        print_r($objModule);
-        die;
         //检查是否填写了商品编号没有生成有检查是否重复
-//        $goods = $objGoodsData->prepare($_POST);        
-//        $goods = $objGoodsData->checkin();
-//        $objGoodsData = vmc::singleton('seller_goods_data');
-//        $goods = array_merge($goods, array(
-//            'seller_id' => $this->seller['seller_id'],
-//            'store_id' =>  $this->store['store_id']
-//        ));
-//        //var_dump($return);die;
-//        
-//        if (!$this->mB2cGoods->save($goods)) {
-//            return ('保存失败!');
-//        }
-//        //保存商家商品
-//        //if(!$this->mStoreGoods->save())
-//        
-//        if ($return) {
-//            $this->splash('error', '', $return);
-//        }        
-//        $this->splash('success', $redirect_url, '商品添加成功');
+        $objGoodsData = vmc::singleton('seller_goods_data');
+        $goods = $objGoodsData->prepare_goods_data($_POST);
+        $goods = array_merge($goods, array(
+            'seller_id' => $this->seller['seller_id'],
+            'store_id' => $this->store['store_id']
+        ));
+        $objGoodsData->checkin($goods);
+        $db = vmc::database();
+        $db->beginTransaction();
+        if (!$this->mB2cGoods->save($goods)) {
+            $db->rollback();
+            $this->splash('error', $redirect_url, '保存失败');
+        }
+        //更新库存表
+        $mdl_stock = app::get('b2c')->model('stock');
+        foreach ($goods['product'] as $value) {
+            $stockData = array(
+                'title' => $goods['name'],
+                'sku_bn' => $value['bn'],
+                'quantity' => $value['quantity'],
+                'warehouse' => $goods['store_id'],
+                'stock_id' => $value['stock_id'],
+            );
+            if (!$mdl_stock->save($stockData)) {
+                $db->rollback();
+                $this->splash('error', $redirect_url, '保存失败');
+            }
+        }
+
+        $db->commit();
+        $this->splash('success', $redirect_url, '商品添加成功');
     }
 
     //修改
@@ -283,7 +301,10 @@ class seller_ctl_site_goods extends seller_frontpage {
     }
 
     //价格修改
-    public function price() {
+    public function price($goods_id) {
+        $redirect = $this->gen_url(array('app' => 'seller', 'ctl' => 'site_goods', 'act' => 'index'));
+        !is_numeric($goods_id) && $this->splash('error', $redirect, '非法请求');
+        $this->pagedata['goods'] = $this->mB2cGoods->dump($goods_id, '*', 'default');
         $this->output();
     }
 

@@ -62,6 +62,7 @@ $setting = array(
                     'food_business_licence', 'food_flow_licence', 'oem_auth_lesstion'
                 ),
             ),
+            'array_info' => array('equipment', 'ec_group_employees'),
         ),
     ),
     'goods_setting' => array(

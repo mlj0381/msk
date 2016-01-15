@@ -18,116 +18,108 @@ class b2c_ctl_site_list extends b2c_frontpage {
         parent::__construct($app);
         $this->app = $app;
         $this->_response->set_header('Cache-Control', 'no-store');
+        $this->mCat = $this->app->model('goods_cat');
         $this->set_tmpl('list');
     }
 
     public function index($fix_brand = false) {
         $params = utils::_filter_input($_GET);
-        //顶部搜索框显示
-        $this->pagedata['search_type'] = $params['type'];
-        $this->pagedata['search_keywords'] = $params['keywords'];
-        $this->pagedata['search_having'] = $params['having'];
-        //>>
-        if ($params['type'] == 'goods') {
-            $params['keywords'] = $params['keywords'];
-        } else if ($params['search_type'] == 'store') {
-            //按店铺搜索
-        }
-       
-        $this->handle_params($params);
-        $datasetting = vmc::singleton('b2c_view_datasetting');
-        $cat_setting = $datasetting->goods_list_cat();
-        $params['cat_id'] = $params['cat_id'] ? $params['cat_id'] : 0;
-        $cat_title = '一级分类';
-        foreach ($cat_setting as $key => $value) {
-            if ($value['parent_id'] == $params['cat_id']) {
-                if ($value['cat_lv'] == 2) {
-                    $cat_title = '二级分类';
-                    $cat_id = $params['cat_id'];
-                }
-                $this->pagedata['cat_title'] = $cat_title;
-                break;
-            }
-        }
-        foreach ($cat_setting as $key => $value) {
-            if ($value['id'] == $params['cat_id']) {
-                foreach ($cat_setting as $k => $v) {
-                    if ($value['parent_id'] == $v['id']) {
-                        $search_info['cat'][] = array(
-                            'id' => $v['id'],
-                            'name' => $v['name']);
-                        break;
-                    }
-                }
-                $search_info['cat'][] = array(
-                    'id' => $value['id'],
-                    'name' => $value['name']);
-                break;
-            }
-        }
-        $datasetting->list_search($search_info, $params);
-        $this->pagedata['search_info'] = $search_info;
-        $this->pagedata['cat'] = $cat_setting;
-        $this->pagedata['params'] = $params;
         $query_str = $this->_query_str($params);
         $this->pagedata['query'] = $this->_query_str($params, 0);
-
-        $this->pagedata['selector'] = array(
-            'cat' => '分类',
-            'brand' => '品牌',
-            'price' => '价格',
-            'origin' => '产地',
-            'weight' => '重量'
-        );
         $params = $this->_params_decode($params);
+        $this->pagedata['cat'] = $this->_get_cat($params['cat']);
         $filter = $params['filter'];
-        if ($cat_id) {
-            $filter['parent_id'] = $cat_id;
-            unset($filter['cat_id']); //一级分类下显示所属子分类的全部商品
+        if (!$fix_brand && $filter['cat_id']) {
+            $mdl_cat = $this->app->model('goods_cat');
+            $cat_info = $mdl_cat->dump($filter['cat_id']);
+            if ($cat_info['gallery_setting']['site_template']) {
+                $this->set_tmpl_file($cat_info['gallery_setting']['site_template']); //设置模板文件
+            }
+            $this->seo_info = $cat_info['seo_info'];
+            $this->pagedata['cat_path'] = $mdl_cat->getPath($filter['cat_id']);
+        } elseif ($fix_brand) {
+            $filter['brand_id'] = $fix_brand;
         }
-        // if (!$fix_brand && $filter['cat_id']) {
-        //     $mdl_cat = $this->app->model('goods_cat');
-        //     $cat_info = $mdl_cat->dump($filter['cat_id']);
-        //     if ($cat_info['gallery_setting']['site_template']) {
-        //         $this->set_tmpl_file($cat_info['gallery_setting']['site_template']); //设置模板文件
-        //     }
-        //     $this->seo_info = $cat_info['seo_info'];
-        //     $this->pagedata['cat_path'] = $mdl_cat->getPath($filter['cat_id']);
-        // } elseif($fix_brand) {
-        //     $filter['brand_id'] = $fix_brand;
-        // }
-        $goods_list = $this->_list($filter, $params['page'], $params['orderby'], $params['keywords']);
-
-        $store_obj = vmc::singleton('store_store_object');
-        foreach ($goods_list['data'] as $key => $value) {
-            $goods_list['data'][$key]['store_info'] = $store_obj->store_info($value['store_id']);
-        }
+        //by bibin 2015/10/10  只显示审核通过的商品
+        $filter['checkin'] = '1';
+        //>>
+        $goods_list = $this->_list($filter, $params['page'], $params['orderby']);
         $this->pagedata['data_list'] = $goods_list['data'];
         $this->pagedata['count'] = $goods_list['count'];
         $this->pagedata['all_count'] = $goods_list['all_count'];
-        // $this->pagedata['pager'] = $goods_list['page_info'];
-        // $this->pagedata['pager']['token'] = time();
-        // $this->pagedata['pager']['link'] = $this->gen_url(array(
-        //     'app' => 'b2c',
-        //     'ctl' => 'site_list',
-        //     'act' => 'index',
-        //     'full' => 1,
-        // )).'?page='.$this->pagedata['pager']['token'].($query_str ? '&'.$query_str : '');
-        // if (!$fix_brand) {
-        //     $this->pagedata['data_screen'] = vmc::singleton('b2c_goods_stage')->screening_data_by_cat($filter['cat_id']);
-        // } else {
-        //     $brand = app::get('b2c')->model('brand')->dump($fix_brand);
-        //     $this->pagedata['brand'] = $brand;
-        //     $this->pagedata['data_screen'] = vmc::singleton('b2c_goods_stage')->screening_data_by_brand($fix_brand);
-        //     $this->set_tmpl('brandlist'); //锁定品牌型列表模板
-        //     $brand_setting = $brand['brand_setting'];
-        //     if ($brand_setting['site_template']) {
-        //         $this->set_tmpl_file($brand_setting['site_template']);
-        //     }
-        // }
-        // //seo
-        // $this->generate_seo_data();
+        $this->pagedata['pager'] = $goods_list['page_info'];
+        $this->pagedata['pager']['token'] = time();
+        $this->pagedata['pager']['link'] = $this->gen_url(array(
+                    'app' => 'b2c',
+                    'ctl' => 'site_list',
+                    'act' => 'index',
+                    'full' => 1,
+                )) . '?page=' . $this->pagedata['pager']['token'] . ($query_str ? '&' . $query_str : '');
+        if (!$fix_brand) {
+            //$this->pagedata['data_screen'] = $this->_screen_data_by_cat($filter['cat_id']);
+        } else {
+            $brand = app::get('b2c')->model('brand')->dump($fix_brand);
+            $this->pagedata['brand'] = $brand;
+            //$this->pagedata['data_screen'] = $this->_screen_data_by_brand($fix_brand);
+            $this->set_tmpl('brandlist'); //锁定品牌型列表模板
+            $brand_setting = $brand['brand_setting'];
+            if ($brand_setting['site_template']) {
+                $this->set_tmpl_file($brand_setting['site_template']);
+            }
+        }
+        //seo
+        $this->generate_seo_data();
         $this->page('site/list/index.html');
+    }
+
+    private function _get_cat($cat_id) {
+        if (!empty($cat_id) && is_numeric($cat_id)) {
+            //记录父级分类名称，面包屑显示
+            $this->pagedata['cat_name']['self'] = $this->mCat->getRow('cat_id, cat_name, has_children', 
+                    array('cat_id' => $cat_id));
+            $this->pagedata['cat_title'] = '二级分类';
+            if ($this->pagedata['cat_name']['self']['has_children'] == 'true') {
+                return $this->mCat->children($cat_id);
+            }
+            $this->pagedata['cat_name']['parent'] = $this->mCat->getRow('cat_id, cat_name', 
+                    array('parent_id' => $this->pagedata['cat_name']['self']['parent_id']));
+             $this->pagedata['cat_title'] = '';
+        } else {
+            $this->pagedata['cat_title'] = '一级分类';
+            return $this->mCat->get_tree();
+        }
+    }
+    
+
+    /*
+     * 根据品牌ID提供筛选条件，并且返回已选择的条件数据
+     *
+     * @params int $brand 品牌ID
+     * @params array $filter 已选择的条件
+     * */
+
+    private function _screen_data_by_brand($brand_id) {
+        $filter = array();
+        if ($brand_id) {
+            $filter['brand_id'] = $brand_id;
+        }
+        $gprops_arr = $this->app->model('goods')->lw_getList('brand_id,type_id', $filter);
+        $type_id_arr = array_keys(utils::array_change_key($gprops_arr, 'type_id'));
+        //扩展属性
+        if ($type_id_arr) {
+            foreach ($type_id_arr as $type_id) {
+                $type_info = $this->app->model('goods_type')->dump2(array(
+                    'type_id' => $type_id,
+                ));
+                $props = $type_info['props'];
+                foreach ($props as $key => $prop) {
+                    $_return['p_' . $key]['title'] = $prop['name'];
+                    $_return['p_' . $key]['options'] = $prop['options'];
+                }
+            }
+        }
+
+        return $_return;
     }
 
     //商品列表页筛选参数处理

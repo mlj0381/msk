@@ -16,7 +16,7 @@ class seller_goods_data
         $this->mdl_products = app::get('b2c')->model('products');
         $this->mdl_gtype = app::get('b2c')->model('goods_type');
     }
-    public function _prepare_goods_data(&$data)
+    public function prepare_goods_data(&$data)
     {
         $last_goods = $this->mdl_goods->getRow('goods_id', null, 0, 1, 'goods_id desc');
         $last_goods_id = $last_goods['goods_id'];
@@ -212,8 +212,6 @@ class seller_goods_data
             }
         }
         $this->mdl_goods->has_many['product'] = 'products:contrast';
-        if (!$this->mdl_goods->save($goods)) {
-            return ('保存失败!');
-        }
+        
     }
 }

@@ -26,12 +26,14 @@
             <input type="text" class="limit" value="<{$goods.product[1].price_interval}>" class="form-control">
         </div>
     </div>
+    <{if $goods.product eq ''}>
     <div class="form-group">
         <label class="col-xs-2 control-label"></label>
         <div class="col-xs-3">
             <div class="btn btn-danger creat_goods_btn ">根据以上信息生成多规格货品</div>
         </div>
     </div>
+    <{/if}>
 
 
     <table class="table table-hover exist-products">
@@ -66,7 +68,8 @@
             </div>
         </td>
         <td>
-            <input type="text" value="0" style="width:60px;">
+            <input type="hidden" name="goods[product][<{$key}>][stock_id]" value="<{$items.stock.stock_id}>" style="width:60px;">
+            <input type="text" name="goods[product][<{$key}>][quantity]" value="<{$items.stock.quantity}>" style="width:60px;">
         </td>
         <td>
             <input type="checkbox" name="goods[product][<{$key}>][marketable]" <{if $items.marketable eq 'true'}> checked value="true"<{/if}>> 上架
@@ -98,7 +101,7 @@
                 </div>
             </td>
             <td>
-                <input type="text" name="goods[product][{key}][price]" style="width:60px;" value="0">
+                <input type="text" name="goods[product][{key}][quantity]" style="width:60px;" value="0">
             </td>
             <td>
                 <input type="checkbox" name="goods[product][{key}][marketable]" value="true" checked> 上架

@@ -5,8 +5,11 @@
 <div class="glist-container">
     <div class="row breadcrumb_row">
         <ol class="breadcrumb col-xs-10">
-            <li><a href="<{link app=b2c ctl=site_list act=index}>">全部商品：</a></li>
-            <{if $cat_path}>
+            <li><a href="<{link app=b2c ctl=site_list act=index}>">全部商品：</a>
+            <a href="<{link app=b2c ctl=site_list act=index}>?cat=<{$cat_name.parent.cat_id}>"><{$cat_name.parent.cat_name}></a>
+            </li>
+            <li><a href="<{link app=b2c ctl=site_list act=index}>?cat=<{$cat_name.self.cat_id}>"><{$cat_name.self.cat_name}></a></li>
+<!--            <{if $cat_path}>
             <li><a href="<{link app=b2c ctl=site_list act=index}>">全部</a></li>
             <{foreach from=$cat_path item=cat name=cp}>
             <{if $env.foreach.cp.last}>
@@ -19,7 +22,7 @@
             <{foreach from=$search_info.cat item=item}>
                 <li><a href="<{link app=b2c ctl=site_list act=index}>?cat_id=<{$item.id}>"><{$item.name}></a></li>
             <{/foreach}>
-            <{/if}>
+            <{/if}>-->
             <li class="search_li">
                 <form class="goods_search"  mothod="post">
                     <input type="hidden" name="goods[filter]" value="<{$query}>"/>
@@ -51,11 +54,10 @@
                   <ul>
                   <{foreach from=$cat item=item}>
 
-                    <{if $item.parent_id == $params.cat_id}>
                     <li>
-                       <a href="<{link app=b2c ctl=site_list act=index}>?<{$query|merge_query:'cat_id'}>&cat_id=<{$item.id}>"><{$item.name}></a>
+                       <a href="<{link app=b2c ctl=site_list act=index}>?cat=<{$item.cat_id}>"><{$item.cat_name}></a>
                        </li>
-                    <{/if}>
+                    
 
                   <{/foreach}>
                   </ul>

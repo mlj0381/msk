@@ -142,7 +142,7 @@
 	<!--
 	<workground icon="icon-basket-loaded" id="b2c.wrokground.order" name="订单" order="20">
         <menugroup name="订单管理">
-            <!--
+            
             <menu action='index' controller='admin_order' display='true' order='20' permission='order_list'>订单列表</menu>
             <menu action='index' params='p[0]:s1' controller='admin_order' display='true' order='21' permission='order_list'>待付款</menu>
             <menu action='index' params='p[0]:s2' controller='admin_order' display='true' order='22' permission='order_list'>待发货</menu>

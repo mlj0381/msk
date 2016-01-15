@@ -20,25 +20,24 @@ class b2c_view_widget {
      */
     public function function_WIDGET_B2C_GOODS_CAT($params, &$smarty) {
         $render = new base_render(app::get('b2c'));
-       // $render->pagedata['category_tree'] = vmc::service('view_datasetting')->good_cat($params);
+        // $render->pagedata['category_tree'] = vmc::service('view_datasetting')->good_cat($params);
         $mdl_goods_cat = app::get('b2c')->model('goods_cat');
         $tree = $mdl_goods_cat->get_tree();
-        foreach ($tree as &$value){
+        foreach ($tree as &$value) {
             $value['son'] = $mdl_goods_cat->children($value['cat_id']);
         }
         $render->pagedata['category_tree'] = $tree;
         return $render->fetch('widget/category.html');
     }
 
-	public function function_WIDGET_RECOME($params, &$smarty)
-	{
-		extract($params);
-		$tpl = empty($tpl) ? 'image' : $tpl;// 0普通 1、幻灯 2 商品
-		$page = empty($page) ? 'index' : $page;
-		$position_id = empty($position) ? 0 : $position;
-		$render->pagedata['contents'] = app::get('b2c')->model('pages_content')->getlist("*", compact('position_id'));
-		return $render->fetch("widget/{$tpl}.html");
-	}
+    public function function_WIDGET_RECOME($params, &$smarty) {
+        extract($params);
+        $tpl = empty($tpl) ? 'image' : $tpl; // 0普通 1、幻灯 2 商品
+        $page = empty($page) ? 'index' : $page;
+        $position_id = empty($position) ? 0 : $position;
+        $render->pagedata['contents'] = app::get('b2c')->model('pages_content')->getlist("*", compact('position_id'));
+        return $render->fetch("widget/{$tpl}.html");
+    }
 
     // Nav
     public function function_WIDGET_B2C_PUBLIC_NAV($params, &$smarty) {
@@ -99,9 +98,17 @@ class b2c_view_widget {
     //商品筛选
     public function function_WIDGET_B2C_GOODS_LIST_FILTER($params, &$smarty) {
         $render = new base_render(app::get('b2c'));
-        $render->pagedata['filter'] = vmc::service('view_datasetting')->goods_list_filter($params);
-        // print_r($params);
-        // print_r($render->pagedata['filter'] );
+        switch ($params['target']) {
+            case 'brand':
+                $tmp = app::get('b2c')->model($params['target'])->getList('brand_id, brand_name');
+                foreach($tmp as $key => $value){
+                    $render->pagedata['filter']['items'][$key]['id'] = $value['brand_id'];
+                    $render->pagedata['filter']['items'][$key]['name'] = $value['brand_name'];
+                }
+                break;
+        }
+        $render->pagedata['filter']['type'] = $params['target'];
+        $render->pagedata['filter']['filter'] = $params['filter'];
         return $render->fetch('widget/list.filter.html');
     }
 
@@ -162,25 +169,25 @@ class b2c_view_widget {
         $render->pagedata['advertising'] = vmc::service('b2c_source_member')->favorite_read($params);
         return $render->fetch('widget/advertising/login.left.html');
     }
-    
+
     //广告
-    public function function_WIDGET_AD($params, &$smarty){
+    public function function_WIDGET_AD($params, &$smarty) {
         $render = new base_render(app::get($params['app']));
         //$render->pagedata['ad'] = app::get('b2c')->model('ad')->option_ad($params);
         return $render->fetch('widget/ad/index.top.html');
     }
-    
+
     //楼层测试
-    public function function_WIDGET_B2C_GOODS_INDEX_GOOD_FLOOR_TEST($params, &$smarty){
+    public function function_WIDGET_B2C_GOODS_INDEX_GOOD_FLOOR_TEST($params, &$smarty) {
         $render = new base_render(app::get($params['app']));
         $render->pagedata['floor'] = vmc::singleton('b2c_source_goods')->floor($params);
         return $render->fetch('widget/floor.test.html');
     }
 
     //商家推荐、最近浏览、热卖单品、猜你喜欢
-    public function function_WIDGET_B2C_GOOD_HOT($params, &$smarty){
+    public function function_WIDGET_B2C_GOOD_HOT($params, &$smarty) {
         $render = new base_render(app::get($params['app']));
         return $render->fetch('widget/hot.goods.html');
     }
-    
+
 }
