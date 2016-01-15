@@ -43,12 +43,7 @@ $db['goods'] = array(
         'type_id' => array(
             'type' => 'table:goods_type',
             'required' => true,
-            'label' => ('加工方式') ,
-        ) ,
-        'origin' => array(
-            'type' => 'table:goods_type',
-            'required' => true,
-            'label' => ('产地') ,
+            'label' => ('扩展分类') ,
         ) ,
         'cat_id' => array(
             'type' => 'table:goods_cat',

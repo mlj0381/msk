@@ -65,11 +65,7 @@ class seller_ctl_site_goods extends seller_frontpage {
             return array();
         }
         $product = Array();
-//            foreach ($goods_id as $k => $v) {
-//                array_push($tmp, $v['goods_id']);
-//                $tmp = array_unique($tmp);
-//            }
-//            $filter['goods_id|in'] = $tmp;
+
         foreach ($tmp as $k => $v) {
             $product['goods_id'][$k] = $v['goods_id'];
             $product['product'][$v['goods_id']] = $v;
@@ -81,23 +77,13 @@ class seller_ctl_site_goods extends seller_frontpage {
         $goodsList = $this->mB2cGoods->getList('*', $filter);
 
         foreach ($goodsList as $key => $value) {
-            // $product = $mdl_product->getList('barcode', array('goods_id' => $value['goods_id']));
-//            foreach ($product as $k => $v) {
-//                $barcode['barcode'][$k] = $v['barcode'];
-//            }
-            //$stock = $mdl_stock->getRow('sum(quantity) as stock', array('barcode|in' => $barcode['barcode']));
-            //$goodsList[$key]['stock'] = $stock['stock'];
-//            foreach ($brandList as $k => $v) {
-//                if ($value['brand_id'] == $v['brand_id']) {
-//                    $goodsList[$key]['brand_id'] = $v['brand_name'];
-//                }
-//            }
             $goodsList[$key]['price_interval'] = $product['product'][$value['goods_id']]['price_interval'];
             $goodsList[$key]['price_up'] = $product['product'][$value['goods_id']]['price_up'];
             $goodsList[$key]['price_dn'] = $product['product'][$value['goods_id']]['price_dn'];
             foreach ($store_goods_cat as $k => $v) {
                 if ($value['cat_id'] == $v['cat_id']) {
                     $goodsList[$key]['cat_id'] = $v['cat_name'];
+                    break;
                 }
             }
         }
@@ -108,7 +94,6 @@ class seller_ctl_site_goods extends seller_frontpage {
     public function add($goods_id) {
         $this->pagedata['goods'] = $this->mB2cGoods->dump($goods_id, '*', 'default');
         //获取商品库存信息
-
         $mdl_stock = app::get('b2c')->model('stock');
         foreach ($this->pagedata['goods']['product'] as &$value) {
             $value['stock'] = $mdl_stock->getRow('*', array('sku_bn' => $value['bn'], 'warehouse' => $this->store['store_id']));
@@ -132,13 +117,10 @@ class seller_ctl_site_goods extends seller_frontpage {
         //商品品牌
         $return['brand'] = $this->app->model('brand')->getList('*', array('seller_id' => $this->seller['seller_id']));
         //商品参数配置
-        $return['goods_type'] = app::get('b2c')->model('goods_type')->getList('*');
-        $type_props = app::get('b2c')->model('goods_type_props');
+        $mdl_goods_type = app::get('b2c')->model('goods_type');
+        $return['goods_type'] = $mdl_goods_type->getList('*', array('cat' => '0'));
         foreach ($return['goods_type'] as &$value) {
-            if ($return['setting']['prop'][$value['name']]) {
-                $value['cloumns_name'] = $return['setting']['prop'][$value['name']];
-            }
-            $value['son'] = $type_props->getList('*', array('type_id' => $value['type_id']));
+            $value = $mdl_goods_type->get_props($value['type_id']);
         }
         //店铺信息
         $return['store'] = app::get('store')->model('store')->getRow('*', array('seller_id' => $this->seller['seller_id']));

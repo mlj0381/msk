@@ -30,9 +30,10 @@ class b2c_ctl_site_product extends b2c_frontpage
         //获取参数 货品ID
         $params = $this->_request->get_params();
         //调用接口 2015/12/9
-        $data_detail = $this->app->model('products')->goods_detail($params[0]);
+        //$data_detail = $this->app->model('products')->goods_detail($params[0]);
         //>>
         $data_detail = $this->goods_stage->detail($params[0], $msg); //引用传递
+        //var_dump($data_detail['spec_desc']['v']);
         if (!$data_detail) {
             vmc::singleton('site_router')->http_status(404);
             //$this->splash('error', null, $msg);
@@ -47,6 +48,7 @@ class b2c_ctl_site_product extends b2c_frontpage
             $this->set_tmpl_file($data_detail['goods_setting']['site_template']);
         }
         $this->pagedata['goods_path'] = $this->app->model('goods')->getPath($data_detail['goods_id']);
+        
         $this->_set_seo($data_detail);
         $this->page('site/product/index.html');
     }
