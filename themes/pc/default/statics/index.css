@@ -34,6 +34,8 @@
   padding: 0;
   margin: 0;
   min-width: 1200px;
+  background: url(images/banner1.jpg) no-repeat center;
+  background-size: cover;
 }
 .index_page .firstContainer .sliderbox {
   position: relative;
