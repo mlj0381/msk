@@ -98,13 +98,23 @@ class b2c_view_widget {
     //商品筛选
     public function function_WIDGET_B2C_GOODS_LIST_FILTER($params, &$smarty) {
         $render = new base_render(app::get('b2c'));
+        $conf = app::get('b2c')->getConf('serach');
         switch ($params['target']) {
             case 'brand':
                 $tmp = app::get('b2c')->model($params['target'])->getList('brand_id, brand_name');
-                foreach($tmp as $key => $value){
+                foreach ($tmp as $key => $value) {
                     $render->pagedata['filter']['items'][$key]['id'] = $value['brand_id'];
                     $render->pagedata['filter']['items'][$key]['name'] = $value['brand_name'];
                 }
+                break;
+            case 'price':
+                $render->pagedata['filter']['items'] = $conf['price'];
+                break;
+            case 'norms':
+                $render->pagedata['filter']['items'] = $conf['norms'];
+                break;
+            case 'ability':
+                $render->pagedata['filter']['items'] = $conf['ability'];
                 break;
         }
         $render->pagedata['filter']['type'] = $params['target'];

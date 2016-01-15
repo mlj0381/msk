@@ -1,18 +1,22 @@
 <div id="param">
-<h4>商品参数</h4>
+    <h4>商品参数</h4>
     <div class="form-body">
-        <{foreach from=$params.goods_type item=item}>
+        <{foreach from=$params.goods_type item=porps}>
+        <input name="goods[type_id]" type="hidden" value="<{$porps.type_id}>"/>
+        <{assign var="props_value_id" value='1'}>
+        <{foreach from=$porps.props item=porps_value}>
         <div class="form-group">
             <label class="col-xs-2 control-label">
-                <span><{$item.name}></span>
+                <span><{$porps_value.name}></span>
             </label>
             <div class="col-xs-5">
-                
-                <{input type=select name="goods[{$item.cloumns_name}]" rows=$item.son labelColumn="name" valueColumn="props_id" value=$goods[$item.cloumns_name]}>
+                <{assign var="propsid" value='p_'.$props_value_id++}>
+                <{input type=select name="goods[props][{$propsid}][value]" rows=$porps_value.props_value labelColumn="name" valueColumn="props_value_id" value=$goods.props[$propsid].value}>
             </div>
         </div>
         <{/foreach}>
-        
+        <{/foreach}>
+
         <hr>
         <!-- <div class="form-group">
             <label class="col-xs-2 control-label">

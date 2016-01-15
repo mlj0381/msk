@@ -67,37 +67,6 @@ $setting = array(
     ),
     'goods_setting' => array(
         'default' => array(
-            'params' => array(
-                'orgion' => array(
-                    array(
-                        'id' => 1,
-                        'name' => '北京',
-                    ),
-                    array(
-                        'id' => 2,
-                        'name' => '上海',
-                    ),
-                    array(
-                        'id' => 3,
-                        'name' => '广州',
-                    ),
-                ),
-                'process' => array(
-                    array(
-                        'id' => 1,
-                        'name' => '单冻',
-                    ),
-                    array(
-                        'id' => 2,
-                        'name' => '板冻',
-                    ),
-                ),
-            ),
-            //商品参数数据库字段绑定
-            'prop' => array(
-                '产地' => 'origin',
-                '加工方式' => 'type_id',
-            ),
             'product' => array(
                 'quality' => array(
                     'name' => '质量等级',

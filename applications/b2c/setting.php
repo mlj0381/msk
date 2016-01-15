@@ -141,18 +141,42 @@ $setting = array(
     ),
     'pages_position_types' => array(
         'default' => array(
-            '0' => ('普通'),            
-			'1' => ('幻灯'),
-			'2' => ('商品'),
+            '0' => ('普通'),
+            '1' => ('幻灯'),
+            '2' => ('商品'),
         )
     ),
-	'pages_content_types' => array(
+    'pages_content_types' => array(
         'default' => array(
             '0' => ('普通'),
-            '1' => ('商品')			
+            '1' => ('商品')
         )
     ),
     'member_extra_column' => array(
         'default' => array('business_licence', 'member_manage_info')
-    )
+    ),
+    'serach' => array(
+        'default' => array(
+            'price' => array(
+                array('id' => 1, 'name' => '100以下'),
+                array('id' => 2, 'name' => '100 - 200'),
+                array('id' => 3, 'name' => '200 - 300'),
+                array('id' => 4, 'name' => '300 - 400'),
+                array('id' => 5, 'name' => '400 - 500'),
+                array('id' => 6, 'name' => '500 - 600'),
+                array('id' => 7, 'name' => '600 - 700'),
+                array('id' => 8, 'name' => '700以上'),
+            ),
+            'norms' => array(
+                array('id' => 1, 'name' => '规格1'),
+                array('id' => 1, 'name' => '规格2'),
+                array('id' => 1, 'name' => '规格3'),
+            ),
+            'ability' => array(
+                array('id' => 1, 'name' => '货源充足'),
+                array('id' => 1, 'name' => '货源一般'),
+                array('id' => 1, 'name' => '货源不足'),
+            ),
+        ),
+    ),
 );

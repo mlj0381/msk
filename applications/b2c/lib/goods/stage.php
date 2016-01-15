@@ -240,6 +240,7 @@ class b2c_goods_stage
         $current_product_sprc_desc = explode(':::', $current_product['spec_desc']);
         $spec_options = false;
         if ($data_detail['spec_desc'] && count($data_detail['spec_desc']) > 0) {
+            var_dump($data_detail['spec_desc']);
             foreach ($data_detail['spec_desc']['v'] as $key => $value) {
                 unset($data_detail['spec_desc']['v'][$key]);
                 foreach (explode(',', $value) as $value) {
@@ -249,6 +250,7 @@ class b2c_goods_stage
                 }
             }
         }
+        
         foreach ($data_detail['product'] as $key => $product) {
             /*规格选项计算 BEGIN*/
             $spec_desc_arr = explode(':::', $product['spec_desc']);
@@ -274,6 +276,7 @@ class b2c_goods_stage
             }
             /*规格选项计算 END*/
         }
+        //var_dump($data_detail['spec_desc']['t'], $data_detail['spec_desc']['v']);
         //只给当前货品数据
         $data_detail['product'] = $current_product;
 
