@@ -531,14 +531,6 @@
             });
         });
         
-//        var form = $(target).parents('form');
-//        var inputval = getVal(form);
-//        if(inputval!=''){
-//            var myspan = $(target).parents('.creat_tagbox').siblings('p').find('.add_tag_btn');
-//            myspan.html((myspan.html()).replace(/添加店铺标签/,''))
-//            myspan.append('<div>'+inputval+'<i class="icon-remove"></i></div>');
-//        }
-//        hide($('.creat_tagbox'));
     });
 
     $('.creat_tagbox input[type="checkbox"]').click(function () {
@@ -563,6 +555,28 @@
         $(target).parent('div').remove();
 
     });
+
+    //鼠标移开消失
+    $('.creat_tagbox').bind('mouseleave',function(){
+        $(this).addClass('hide');
+        create_tag();
+    });
+
+    //获取选中的标签并显示
+    (function create_tag(){
+        var tags = [];
+        var tagName = "";
+        $('.creat_tagbox input:checked').each(function(i){
+            tagName = $.trim($(this).parent().text());
+            tags.push(tagName);
+            $('.add_tag_btn').append(tags[i]+", ");
+        });
+        $('.add_tag_btn').text($('.add_tag_btn').text().replace(/添加店铺标签/,""));
+        if(tags.length==0){
+            $('.add_tag_btn').text('添加店铺标签');
+        }
+    })();
+    
 
 
 
