@@ -27,6 +27,7 @@ class b2c_ctl_site_order extends b2c_frontpage
     //PC端前台会员创建订单
     public function create($fastbuy = false)
     {
+        
         $member_id = $this->app->member_id;
         //parent method
         //$member_info = $this->get_member_info($member_id);
@@ -43,12 +44,12 @@ class b2c_ctl_site_order extends b2c_frontpage
             'pay_app' => $params['payapp_id'],
             'dlytype_id' => $params['dlytype_id'],
             'createtime' => time() ,
-            'store_id' => $params['store_id'],
             'need_shipping' => $params['need_shipping'],
             'need_invoice' => $params['need_invoice'],
             'invoice_title' => $params['invoice_title'],
             'platform' => 'pc',
             'store_id' => $params['store_id'],
+            'addon' => $params['addon']
         );
         $redirect_cart = $this->gen_url(array(
             'app' => 'b2c',
@@ -103,11 +104,11 @@ class b2c_ctl_site_order extends b2c_frontpage
             $this->splash('error', $redirect_cart, '没有可结算商品');
         }
 
-        //2015、12、2演示过后修改
-        // if ($params['cart_md5'] != utils::array_md5($cart_result)) {
-        //     $this->logger->fail('create', '购物车发生变化', $params);
-        //     $this->splash('error', $redirect_cart, '购物车发生变化');
-        // }
+//        2015、12、2演示过后修改
+//         if ($params['cart_md5'] != utils::array_md5($cart_result)) {
+//             $this->logger->fail('create', '购物车发生变化', $params);
+//             $this->splash('error', $redirect_cart, '购物车发生变化');
+//         }
         $db = vmc::database();
         //开启事务
         $this->transaction_status = $db->beginTransaction();

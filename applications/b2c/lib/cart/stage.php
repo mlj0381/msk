@@ -215,7 +215,11 @@ class b2c_cart_stage
             }
         }
         $cart_result['cart_amount'] = array_sum($price);
-        $cart_result['finally_cart_amount'] = $ecmath->formatNumber($cart_result['cart_amount'] - $cart_result['member_discount_amount'] - $cart_result['promotion_discount_amount'], $f1, $f2);
+        $cart_result['finally_cart_amount'] = $cart_result['cart_amount'];
+        
+        //优惠价格暂时去掉
+       // $cart_result['finally_cart_amount'] = $ecmath->formatNumber($cart_result['cart_amount'] - $cart_result['member_discount_amount'] - $cart_result['promotion_discount_amount'], $f1, $f2);
+        //>>
         return $cart_result;
     }
     /**

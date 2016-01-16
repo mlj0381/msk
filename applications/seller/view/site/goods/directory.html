@@ -35,7 +35,7 @@
 	                </div>
 	            </div>
 	            <div class="panel-body">
-                        <{foreach from=$items.son key=k item=item}>
+                        <{foreach from=$items.children key=k item=item}>
                         <input type="hidden" value="<{$item.cat_name}>" name="cat[<{$key}>][parent][<{$k}>][cat_name]"/>
                         <input type="hidden" value="<{$this_cat[$key].children[$k].id}>" name="cat[<{$key}>][parent][<{$k}>][id]"/>
                         <input type="hidden" value="<{$item.cat_id}>" name="cat[<{$key}>][parent][<{$k}>][cat_id]"/>

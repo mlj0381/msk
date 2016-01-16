@@ -112,8 +112,9 @@ class seller_ctl_site_goods extends seller_frontpage {
         $return = array();
         //商品类目
         $mdl_goods_cat = app::get('b2c')->model('goods_cat');
-        $return['cat'] = $mdl_goods_cat->get_tree();
+        $return['cat'] = $mdl_goods_cat->get_tree('', null);
         $return['setting'] = $this->app->getConf('goods_setting');
+
         //商品品牌
         $return['brand'] = $this->app->model('brand')->getList('*', array('seller_id' => $this->seller['seller_id']));
         //商品参数配置
