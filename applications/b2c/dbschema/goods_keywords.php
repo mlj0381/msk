@@ -43,7 +43,7 @@ $db['goods_keywords']=array (
     ),
     'res_type' =>
     array (
-      'type' => 'enum(\'goods\',\'article\')',
+      'type' => 'enum(\'goods\',\'article\', \'store\')',
       'default' => 'goods',
       'required' => true,
       'pkey' => true,

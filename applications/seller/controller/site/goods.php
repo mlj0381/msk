@@ -113,14 +113,18 @@ class seller_ctl_site_goods extends seller_frontpage {
         //商品类目
         $mdl_goods_cat = app::get('b2c')->model('goods_cat');
         $return['cat'] = $mdl_goods_cat->get_tree('', null);
-        $return['setting'] = $this->app->getConf('goods_setting');
 
         //商品品牌
         $return['brand'] = $this->app->model('brand')->getList('*', array('seller_id' => $this->seller['seller_id']));
         //商品参数配置
         $mdl_goods_type = app::get('b2c')->model('goods_type');
-        $return['goods_type'] = $mdl_goods_type->getList('*', array('cat' => '0'));
+        $return['goods_type'] = $mdl_goods_type->getList('*', array('cat' => '0', 'belong_type' => '0'));
         foreach ($return['goods_type'] as &$value) {
+            $value = $mdl_goods_type->get_props($value['type_id']);
+        }
+        //商品规格
+        $return['goods_norms'] = $mdl_goods_type->getList('*', array('cat' => '0', 'belong_type' => '1'));
+        foreach ($return['goods_norms'] as &$value) {
             $value = $mdl_goods_type->get_props($value['type_id']);
         }
         //店铺信息

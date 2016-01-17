@@ -249,7 +249,7 @@ class b2c_goods_stage
                 }
             }
         }
-        
+
         foreach ($data_detail['product'] as $key => $product) {
             /*规格选项计算 BEGIN*/
             $spec_desc_arr = explode(':::', $product['spec_desc']);
@@ -263,7 +263,7 @@ class b2c_goods_stage
                     $data_detail['spec_desc']['v'][key($diff_spec) ][$vlaue]['p_image_id'] = $product['image_id'];
                 }
             }
-            
+
             if (count($diff_spec) == 0) {
                 foreach ($current_product_sprc_desc as $key => $value) {
                     $value = trim($value);

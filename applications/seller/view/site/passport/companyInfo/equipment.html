@@ -1,16 +1,30 @@
-<input type="hidden" name="equipment[content_id]"  value="<{$extra.equipment.content_id}>" class="form-control">
+<input type="hidden"
+       name="equipment[content_id]"
+       value="<{$extra.equipment.content_id}>"
+       class="form-control">
 <div id="equipment">
-    <h4>检测设备</h4>
+    <h4>
+        检测设备</h4>
+
     <div id="items">
-        <{foreach from=$extra.equipment item=item}>
+        <{foreach
+        from=$extra.equipment
+        item=item}>
         <div class="equipment-items">
             <div class="form-group">
                 <label class="col-xs-2 control-label">
                     <span class="text-danger">*</span>主要设备1：
                 </label>
+
                 <div class="col-xs-4">
-                    <input type="text" name="equipment[content_id][]"  value="<{$item.content_id}>" class="form-control">
-                    <input type="text" value="<{$item.value.main_device}>" name="equipment[value][main_device][]" class="form-control">
+                    <input type="hidden"
+                           name="equipment[content_id][]"
+                           value="<{$item.content_id}>"
+                           class="form-control">
+                    <input type="text"
+                           value="<{$item.value.main_device}>"
+                           name="equipment[value][main_device][]"
+                           class="form-control">
                 </div>
             </div>
 
@@ -18,8 +32,12 @@
                 <label class="col-xs-2 control-label">
                     <span class="text-danger">*</span>用途：
                 </label>
+
                 <div class="col-xs-4">
-                    <input type="text" value="<{$item.value.use}>" name="equipment[value][use][]" class="form-control">
+                    <input type="text"
+                           value="<{$item.value.use}>"
+                           name="equipment[value][use][]"
+                           class="form-control">
                 </div>
             </div>
 
@@ -27,14 +45,32 @@
                 <label class="col-xs-2 control-label">
                     <span class="text-danger">*</span>上传设备照片：
                 </label>
+
                 <div class="col-xs-4">
                     <div class="filebox">
-                        <input type="hidden" value="<{$item.attach}>" name="equipment[attach][]"/>
-                        <input type="file" data-url="<{link app=image ctl=site_upload act=index}>" accept="image/*" class="file_input" />
+                        <input type="hidden"
+                               value="<{$item.attach}>"
+                               name="equipment[attach][]"/>
+                        <input type="file"
+                               data-url="<{link app=image ctl=site_upload act=index}>"
+                               accept="image/*"
+                               class="file_input"/>
+
                         <div class="showImg">
-                            <img src="<{if $item.attach eq ''}><{$base_url}>/themes/pc/default/statics/images/file_add.jpg<{else}><{$item.attach|storager:'xs'}><{/if}>">    
+                            <img src="<{if $item.attach eq ''}><{$base_url}>/themes/pc/default/statics/images/file_add.jpg<{else}><{$item.attach|storager:'xs'}><{/if}>">
                         </div>
                     </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-xs-2 control-label">
+                </label>
+
+                <div class="col-xs-4">
+                    <button class="del-team"
+                            type="button">
+                        删除
+                    </button>
                 </div>
             </div>
             <hr>
@@ -45,48 +81,82 @@
         <label class="col-xs-2 control-label">
 
         </label>
+
         <div class="col-xs-4">
-            <button class="team" type="button">保存并继续添加设备</button>
+            <button class="team"
+                    type="button">
+                保存并继续添加设备
+            </button>
         </div>
     </div>
 </div>
-<textarea class="ex-group hide">
+<textarea
+        class="ex-group hide">
     <div class="equipment-items">
-            <div class="form-group">
-                <label class="col-xs-2 control-label">
-                    <span class="text-danger">*</span>主要设备1：
-                </label>
-                <div class="col-xs-4">
-                    <input type="text" name="equipment[content_id][]"  value="<{$extra.content_id}>" class="form-control">
-                    <input type="text" value="<{$extra.equipment.value.main_device}>" name="equipment[value][main_device][]" class="form-control">
-                </div>
-            </div>
+        <div class="form-group">
+            <label class="col-xs-2 control-label">
+                <span class="text-danger">*</span>主要设备1：
+            </label>
 
-            <div class="form-group">
-                <label class="col-xs-2 control-label">
-                    <span class="text-danger">*</span>用途：
-                </label>
-                <div class="col-xs-4">
-                    <input type="text" value="<{$extra.equipment.value.use}>" name="equipment[value][use][]" class="form-control">
-                </div>
+            <div class="col-xs-4">
+                <input type="hidden"
+                       name="equipment[content_id][]"
+                       value="<{$extra.content_id}>"
+                       class="form-control">
+                <input type="text"
+                       value="<{$extra.equipment.value.main_device}>"
+                       name="equipment[value][main_device][]"
+                       class="form-control">
             </div>
+        </div>
 
-            <div class="form-group">
-                <label class="col-xs-2 control-label">
-                    <span class="text-danger">*</span>上传设备照片：
-                </label>
-                <div class="col-xs-4">
-                    <div class="filebox">
-                        <input type="hidden" value="<{$extra.equipment.attach}>" name="equipment[attach][]"/>
-                        <input type="file" data-url="<{link app=image ctl=site_upload act=index}>" accept="image/*" class="file_input" />
-                        <div class="showImg">
-                            <img src="<{if $extra.equipment.value.attach eq ''}><{$base_url}>/themes/pc/default/statics/images/file_add.jpg<{else}><{$extra.equipment.value.attach|storager:'xs'}><{/if}>">    
-                        </div>
+        <div class="form-group">
+            <label class="col-xs-2 control-label">
+                <span class="text-danger">*</span>用途：
+            </label>
+
+            <div class="col-xs-4">
+                <input type="text"
+                       value="<{$extra.equipment.value.use}>"
+                       name="equipment[value][use][]"
+                       class="form-control">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-xs-2 control-label">
+                <span class="text-danger">*</span>上传设备照片：
+            </label>
+
+            <div class="col-xs-4">
+                <div class="filebox">
+                    <input type="hidden"
+                           value="<{$extra.equipment.attach}>"
+                           name="equipment[attach][]"/>
+                    <input type="file"
+                           data-url="<{link app=image ctl=site_upload act=index}>"
+                           accept="image/*"
+                           class="file_input"/>
+
+                    <div class="showImg">
+                        <img src="<{if $extra.equipment.value.attach eq ''}><{$base_url}>/themes/pc/default/statics/images/file_add.jpg<{else}><{$extra.equipment.value.attach|storager:'xs'}><{/if}>">
                     </div>
                 </div>
             </div>
-            <hr>
         </div>
+        <div class="form-group">
+            <label class="col-xs-2 control-label">
+            </label>
+
+            <div class="col-xs-4">
+                <button class="del-team"
+                        type="button">
+                    删除
+                </button>
+            </div>
+        </div>
+        <hr>
+    </div>
 </textarea>
 
 <script>
@@ -119,14 +189,36 @@
                 }
             });
         });
+
+
+        ec_group.find('del-team').click(function () {
+            del($(this));
+        });
+
+        var del = function (obj) {
+            var parent = $(obj).closest('div.team-item');
+            var content_id = parent.find('input [name="ec_group_employees[content_id][]"]').val();
+            var url = '<{link app=seller ctl=site_passport act=del_extra}>';
+            $.post(url, {content_id: content_id}, function (re) {
+                if (re.success) {
+                    parent.remove();
+                } else {
+                    alert('操作失败');
+                }
+            });
+        };
+
         var init = function () {
             var item = $('.ex-group').val();
             if (!$('#items').find('equipment-items').size()) {
                 $(item).appendTo($('#items'));
             } else {
                 $(item).insertAfter($('#items .equipment-items:last'));
+                $(item).click(function(){
+                    del($(item));
+                });
                 //$('.team-item:last').find('input [type="text"]').val('');
-                
+
             }
             $('.equipment-items:last').find('.file_input').fileupload(fileObj);
         };

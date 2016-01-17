@@ -45,6 +45,11 @@ $db['goods'] = array(
             'required' => true,
             'label' => ('扩展分类') ,
         ) ,
+        'norms_id' => array(
+            'type' => 'table:goods_type',
+            'required' => true,
+            'label' => ('所属规格') ,
+        ) ,
         'cat_id' => array(
             'type' => 'table:goods_cat',
             'required' => true,

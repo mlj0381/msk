@@ -1,25 +1,30 @@
 <div id="sepcInfo">
     <h4>商品规格</h4>
-    <{foreach from=$params.setting.product key=key item=items}>
+    <{foreach from=$params.goods_norms key=key item=props}>
+    <{if $props.cat neq '0'}>
+    <input type="hidden" name="goods[norms_id]" value="<{$props.type_id]}>"/>
+    <{/if}>
+    <{foreach from=$props.props key=key item=items}>
     <div class="form-group">
         <label class="col-xs-2 control-label">
             <span><{$items.name}>
-                <input type="hidden" name="goods[spec_desc][t][]" value="<{$items.name}>"/>
+                <input type="hidden" name="goods[spec_desc][t][]" value="<{$goods.spec_desc.t[$key]}>"/>
             </span>
         </label>
         <div class="col-xs-5">
             <ul class="quality">
-                <input type="text" name="goods[spec_desc][v][]" value="<{$item}>"/>
-                <{foreach from=$items.value item=item}>
+                <input type="hidden" name="goods[spec_desc][v][]" value="<{$goods.spec_desc.v[$key]}>"/>
+                <{foreach from=$items.props_value item=item}>
                 <li <{if in_array($item, $goods[spec_desc][v])}>
                     class ="sect"
-                    <{/if}>><{$item}>
+                    <{/if}>><{$item.name}>
 
             </li>
             <{/foreach}>
         </ul>
     </div>
 </div>
+    <{/foreach}>
 <{/foreach}>
 <div class="form-group">
     <label class="col-xs-2 control-label"><span>界限值</span></label>
@@ -182,7 +187,7 @@
                 for (var i = 0; i < $(items).find('li').size(); i++) {
                     var item = $(items).find('li').eq(i);
                     if (item.hasClass('sect')) {
-                        select[i] = item.text();
+                        select[i] = item.text().trim();
                         not_null = true;
                     }
                 }
@@ -202,11 +207,12 @@
             }
 
             var root_arr = spec_v_item.shift();
+
             var loop_arr;
             var lnk_arr = function (r, a) {
                 var _return = [];
                 $.each(a, function (i, n) {
-                    _return.push(r + ':::' + n);
+                    _return.push(r.trim() + ':::' + n.trim());
                 });
                 return _return;
             }
