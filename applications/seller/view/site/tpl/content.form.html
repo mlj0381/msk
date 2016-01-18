@@ -3,7 +3,7 @@
     <h3 class="modal-title">内容<{if $content.content_id }>编辑<{else}>添加<{/if}></h3>
 </div>
 
-<form method="post" action="<{link app=seller ctl=site_tpl act=content_add}>" id='content_form' class="form">
+<form method="post" action="<{link app=seller ctl=site_tpl act=content_add}>" id='content_form' class="form" target="self">
 <div class="modal-body  form-horizontal">
 <div class="form-body">
     <input type="hidden" value="<{$content.content_id|default:0}>" name="content[content_id]" />
@@ -40,7 +40,7 @@
             <span class="required" aria-required="true">*</span>
        </label>
         <div class="col-md-7">
-            <{input type="select" options=$content_types value=$content.type name="content[content[type]]" required="true" class='form-control'}>
+            <{input type="select" options=$content_types value=$content.type name="content[type]" required="true" class='form-control'}>
         </div>
     </div>
     
