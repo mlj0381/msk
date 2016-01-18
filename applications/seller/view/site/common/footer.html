@@ -1,1 +1,75 @@
+<{script app=desktop src="../com/global/plugins/jquery-validation/js/jquery.validate.js"}>
+<{script app=desktop src="../com/global/plugins/jquery-validation/js/additional-methods.js"}>
+<{script src="form.js"}>
+<{script app=desktop src="../com/global/plugins/bootstrap-toastr/toastr.min.js"}>
+<script>
+var MessageBox = toastr;
+// MessageBox['success']('success', 'test');
+$(function() {
+	$(document.body).on('submit', 'form[target=self]', function(e) {    
+        e.stopPropagation();		
+		var form = $(this);
+        $.ajax({
+            url: form.prop('action'),
+            type: form.prop('method') ? form.prop('method') : 'post',
+            data: form.serialize(),
+            beforeSend: function(xhr) {
+                if (form.data('ajax:beforeSend') && typeof(form.data('ajax:beforeSend')) == 'function') {
+                    form.data('ajax:beforeSend')(xhr);
+                }
+            },
+            success: function(responseText) {            
+                jsonCommond(responseText);
+                if (form.data('ajax:success') && typeof(form.data('ajax:success')) == 'function') {
+                    form.data('ajax:success')(responseText);
+                }
+            },
+            complete: function(xhr) {                
+                if (form.data('ajax:complete') && typeof(form.data('ajax:complete')) == 'function') {
+                    form.data('ajax:complete')(xhr);
+                }
+            },
+            error: function(xhr) {                
+                if (form.data('ajax:error') && typeof(form.data('ajax:error')) == 'function') {
+                    form.data('ajax:error')(xhr);
+                }
+            }
+        });
+        return false;
+	});
+});
 
+var jsonCommond = function(response) {
+    re = jsonDecode(response);
+    if (!re) {
+        return toastr['error']('error', '操作失败!' + response, '异常');
+    }
+    if (re.success) {
+        toastr['success'](re.success, '成功');
+        if (re.redirect){
+            load_page(re.redirect);
+        }
+        return;
+    }
+    if (re.error) {
+        toastr['error'](re.error, '错误');
+    }
+}
+jsonDecode = function(re) {
+    if (typeof(re) == 'object') {
+        return re;
+    }
+    try {
+        re = JSON.parse(re);
+        if (!re || typeof(re) != 'object')
+            re = $.parseJSON(re);
+        if (!re || typeof(re) != 'object')
+            return false;
+    } catch (e) {
+        return false;
+    }
+}
+window.load_page = function(url, container, params, callback) {
+	window.location.href = url;
+};
+</script>

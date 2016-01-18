@@ -1,0 +1,146 @@
+<div class="modal-body  form-horizontal">
+<style>
+.tip{display:none;}
+label.error{color:#ea5200; margin-left:4px; padding:0px 20px; background:url(http://www.helloweba.com/demo/validation/images/unchecked.gif) no-repeat 2px 0 }
+label.right{margin-left:4px; padding-left:20px; background:url(http://www.helloweba.com/demo/validation/images/checked.gif) no-repeat 2px 0}
+.form-group{margin:8px 0px;}
+</style>
+
+<form id="myform" action="#" method="post" class="form">
+<div class="form-body">
+    <div class="form-group">
+        <label class="col-md-2 control-label"><span class="text-danger">*</span>用户名：</label>
+        <div class="col-md-8">
+            <input type="text" required="true" autocomplete='off' name="pam_account[login_name]" format="username" remote="<{link app=seller ctl=site_passport act=check_login_name}>" class="form-control" placeholder="手机号/邮箱/用户名" />
+            <span class="tip" data-message="error">请填3-16个字符，可以为数字、字母、下划线以及中文</span>        
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-md-2 control-label"><span class="text-danger">*</span>密码：</label>
+        <div class="col-md-8">
+            <input type="passowrd" name="passowrd" class="form-control" id="password" required="true" />
+            <span class="tip" data-message="error">密码8位以上</span>        
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-md-2 control-label"><span class="text-danger">*</span>确认密码：</label>
+        <div class="col-md-8">
+            <input type="passowrd" name="com_passowrd" class="form-control" equalTo="#password" required="true" />
+            <span class="tip" data-message="error">密码8位以上</span>        
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-md-2 control-label"><span class="text-danger">*</span>性别：</label>
+        <div class="col-md-8">
+            <input type="radio" name="sex" class="" value="1" required="true" /> 男 
+            <input type="radio" name="sex" class="" value="0" required="true"/> 女
+            <span class="tip" data-message="error">性别为必选</span>        
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-md-2 control-label"><span class="text-danger">*</span>Email：</label>
+        <div class="col-md-8">
+            <input type="text" name="email" class="form-control" required="true" format="email" />            
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-md-2 control-label"><span class="text-danger">*</span>固定电话：</label>
+        <div class="col-md-8">
+            <input type="text" name="tel" class="form-control" required="true" format="email" />            
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-md-2 control-label"><span class="text-danger">*</span>手机：</label>
+        <div class="col-md-8">
+            <input type="text" name="mobile" class="form-control" required="true" format="mobile" />            
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-md-2 control-label"><span class="text-danger">*</span>URL:</label>
+        <div class="col-md-8">
+            <input type="text" name="url" class="form-control" required="true" format="url" />            
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-md-2 control-label"><span class="text-danger">*</span>出生日期：</label>
+        <div class="col-md-8">
+            <input type="date" name="date" class="form-control" required="true" format="dateISO" />            
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-md-2 control-label"><span class="text-danger">*</span>工作年限：</label>
+        <div class="col-md-8">
+            <input type="date" name="years" class="form-control" required="true"  format=digits range="1,10" />            
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-md-2 control-label"><span class="text-danger">*</span>身份证：</label>
+        <div class="col-md-8">
+            <input type="idcard" name="idcard" class="form-control" required="true"  format="idcard" />            
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-md-2 control-label"><span class="text-danger">*</span>地区：</label>
+        <div class="col-md-8">
+            <select name="address" class="required" required="true">
+            <option value="">请选择</option>
+            <option value="1">长沙市</option>
+            <option value="2">石河子市</option>
+            <option value="3">北京市</option>
+            <option value="4">东莞市</option>
+            </select>            
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-md-2 control-label"><span class="text-danger">*</span>邮政编码：</label>
+        <div class="col-md-8">
+            <input type="text" name="zipcode" class="form-control" required="true"  format="zipcode" />            
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-md-2 control-label"><span class="text-danger">*</span>上传头像：</label>
+        <div class="col-md-8">
+            <input type="file" name="photo" class="form-control" required="true"  accept="jpg|gif|png" />            
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-md-2 control-label"><span class="text-danger">*</span>服务器IP：</label>
+        <div class="col-md-8">
+            <input type="text" name="ip" class="form-control" required="true" format="ip" />            
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-md-2 control-label"><span class="text-danger">*</span>同意：</label>
+        <div class="col-md-8">
+            <input type="checkbox" name="agree" class="" required="true" />
+            我已阅读并接受用户协议
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-4">
+            <button type="submit" data-loading-text="正在提交..." class="btn btn-danger">立即注册</button>
+        </div>
+    </div>    
+</div>
+</form>
+</div>
+<script>
+    $(function(){
+        var validate = $("#myform").formValid();
+    });
+</script>
