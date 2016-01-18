@@ -68,11 +68,11 @@ $setting = array(
     'goods_setting' => array(
         'default' => array(
             'product' => array(
-                'quality' => array(
+                array(//'quality' =>
                     'name' => '质量等级',
                     'value' => array('A1', 'A2', 'A3')
                 ),
-                'pack' => array(
+                array(//'pack' =>
                     'name' => '包装规格',
                     'value' => array('箱', '袋')
                 ),

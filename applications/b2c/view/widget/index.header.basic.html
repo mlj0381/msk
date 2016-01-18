@@ -92,7 +92,7 @@
                     <span>店铺</span>
                 </div>
                 <form class="search_form" action="<{link app=b2c ctl=site_list act=index}>" method="post">
-                    <input type="hidden" name="search_type" value="goods"/>
+                    <input type="hidden" name="search_type" value="<{$type|default:goods}>"/>
                     <span class="search_txt"><input type="text" name="keywords" value="<{$keywords}>" placeholder="请输入您要查找的商品"/></span>
                     <button type="button" class="search_btn">搜索</button>
                 </form>

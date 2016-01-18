@@ -240,7 +240,6 @@ class b2c_goods_stage
         $current_product_sprc_desc = explode(':::', $current_product['spec_desc']);
         $spec_options = false;
         if ($data_detail['spec_desc'] && count($data_detail['spec_desc']) > 0) {
-            var_dump($data_detail['spec_desc']);
             foreach ($data_detail['spec_desc']['v'] as $key => $value) {
                 unset($data_detail['spec_desc']['v'][$key]);
                 foreach (explode(',', $value) as $value) {
@@ -250,21 +249,24 @@ class b2c_goods_stage
                 }
             }
         }
-        
+
         foreach ($data_detail['product'] as $key => $product) {
             /*规格选项计算 BEGIN*/
             $spec_desc_arr = explode(':::', $product['spec_desc']);
             $diff_spec = array_diff_assoc($spec_desc_arr, $current_product_sprc_desc);
             if (count($diff_spec) == 1) {
-                $data_detail['spec_desc']['v'][key($diff_spec) ][current($diff_spec) ]['product_id'] = $product['product_id'];
-                $data_detail['spec_desc']['v'][key($diff_spec) ][current($diff_spec) ]['sku_bn'] = $product['bn'];
-                $data_detail['spec_desc']['v'][key($diff_spec) ][current($diff_spec) ]['marketable'] = $product['marketable'];
+                $vlaue = trim(current($diff_spec));
+                $data_detail['spec_desc']['v'][key($diff_spec)][$vlaue]['product_id'] = $product['product_id'];
+                $data_detail['spec_desc']['v'][key($diff_spec)][$vlaue]['sku_bn'] = $product['bn'];
+                $data_detail['spec_desc']['v'][key($diff_spec)][$vlaue]['marketable'] = $product['marketable'];
                 if ($data_detail['goods_setting'] && $data_detail['goods_setting']['spec_info_vimage'] && $data_detail['goods_setting']['spec_info_vimage'] == $data_detail['spec_desc']['t'][key($diff_spec)]) {
-                    $data_detail['spec_desc']['v'][key($diff_spec) ][current($diff_spec) ]['p_image_id'] = $product['image_id'];
+                    $data_detail['spec_desc']['v'][key($diff_spec) ][$vlaue]['p_image_id'] = $product['image_id'];
                 }
             }
+
             if (count($diff_spec) == 0) {
                 foreach ($current_product_sprc_desc as $key => $value) {
+                    $value = trim($value);
                     $data_detail['spec_desc']['v'][$key][$value]['product_id'] = $product['product_id'];
                     $data_detail['spec_desc']['v'][$key][$value]['sku_bn'] = $product['bn'];
                     $data_detail['spec_desc']['v'][$key][$value]['marketable'] = $product['marketable'];
@@ -274,9 +276,9 @@ class b2c_goods_stage
                     }
                 }
             }
+            
             /*规格选项计算 END*/
         }
-        //var_dump($data_detail['spec_desc']['t'], $data_detail['spec_desc']['v']);
         //只给当前货品数据
         $data_detail['product'] = $current_product;
 

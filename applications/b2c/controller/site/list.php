@@ -10,11 +10,13 @@
 // | Author: Shanghai ChenShang Software Technology Co., Ltd.
 // +----------------------------------------------------------------------
 
-class b2c_ctl_site_list extends b2c_frontpage {
+class b2c_ctl_site_list extends b2c_frontpage
+{
 
     public $title = '商品列表';
 
-    public function __construct(&$app) {
+    public function __construct(&$app)
+    {
         parent::__construct($app);
         $this->app = $app;
         $this->_response->set_header('Cache-Control', 'no-store');
@@ -23,7 +25,8 @@ class b2c_ctl_site_list extends b2c_frontpage {
     }
 
 //属性查找面包屑组合
-    private function _init_crumbs($params) {
+    private function _init_crumbs($params)
+    {
         if (empty($params)) {
             return array();
         }
@@ -51,7 +54,8 @@ class b2c_ctl_site_list extends b2c_frontpage {
         return $serach_info;
     }
 
-    private function _get_cat($cat_id) {
+    private function _get_cat($cat_id)
+    {
         if (!empty($cat_id) && is_numeric($cat_id)) {
 //记录父级分类名称，分类面包屑显示
             $this->pagedata['cat_name']['self'] = $this->mCat->getRow('cat_id, cat_name, has_children', array('cat_id' => $cat_id));
@@ -67,13 +71,17 @@ class b2c_ctl_site_list extends b2c_frontpage {
         }
     }
 
-    public function index($fix_brand = false) {
+    public function index($fix_brand = false)
+    {
         $params = utils::_filter_input($_GET);
         $this->pagedata['search_info'] = $this->_init_crumbs($params);
         $query_str = $this->_query_str($params);
         $this->pagedata['query'] = $this->_query_str($params, 0);
         $params = $this->_params_decode($params);
         $this->pagedata['cat'] = $this->_get_cat($params['cat']);
+        $this->pagedata['serach_keywords'] = $params['keywords'];
+        $this->pagedata['serach_type'] = $params['type'];
+        $this->pagedata['search_having'] = $params['having'];
         $filter = $params['filter'];
         if (!$fix_brand && $filter['cat_id']) {
             $mdl_cat = $this->app->model('goods_cat');
@@ -89,20 +97,21 @@ class b2c_ctl_site_list extends b2c_frontpage {
 //by bibin 2015/10/10  只显示审核通过的商品
         $filter['checkin'] = '1';
 //>>
+        $keywords = array('keywords' => $params['keywords'], 'having' => $params['having']);
+        $goods_list = $this->_list($filter, $params['page'], $params['orderby'], $keywords);
 
-        $goods_list = $this->_list($filter, $params['page'], $params['orderby']);
-        
         $this->pagedata['data_list'] = $goods_list['data'];
         $this->pagedata['count'] = $goods_list['count'];
         $this->pagedata['all_count'] = $goods_list['all_count'];
+        $this->pagedata['page_index'] = $params['page']['index'];
         $this->pagedata['pager'] = $goods_list['page_info'];
         $this->pagedata['pager']['token'] = time();
         $this->pagedata['pager']['link'] = $this->gen_url(array(
-                    'app' => 'b2c',
-                    'ctl' => 'site_list',
-                    'act' => 'index',
-                    'full' => 1,
-                )) . '?page=' . $this->pagedata['pager']['token'] . ($query_str ? '&' . $query_str : '');
+                'app' => 'b2c',
+                'ctl' => 'site_list',
+                'act' => 'index',
+                'full' => 1,
+            )) . '?page=' . $this->pagedata['pager']['token'] . ($query_str ? '&' . $query_str : '');
         if (!$fix_brand) {
 //$this->pagedata['data_screen'] = $this->_screen_data_by_cat($filter['cat_id']);
         } else {
@@ -121,6 +130,11 @@ class b2c_ctl_site_list extends b2c_frontpage {
     }
 
     /*
+     * 按店铺搜索
+     *
+     *  */
+
+    /*
      * 根据分类ID提供筛选条件，并且返回已选择的条件数据
      *
      * @params int $cat_id 分类ID
@@ -131,7 +145,8 @@ class b2c_ctl_site_list extends b2c_frontpage {
         //分类
         if ($cat_list = $this->app->model('goods_cat')->getList('cat_id,cat_name', array(
             'parent_id' => ($cat_id ? $cat_id : 0),
-        ))) {
+        ))
+        ) {
             $_return['cat_id']['title'] = '分类';
             foreach ($cat_list as $value) {
                 $_return['cat_id']['options'][$value['cat_id']] = $value['cat_name'];
@@ -153,7 +168,8 @@ class b2c_ctl_site_list extends b2c_frontpage {
         if ($brands = $this->app->model('brand')->getList('brand_id,brand_name', array(
             'brand_id' => $brand_id_arr,
             'disabled' => 'false',
-        ))) {
+        ))
+        ) {
             $_return['brand_id']['title'] = '品牌';
             foreach ($brands as $key => $value) {
                 $_return['brand_id']['options'][$value['brand_id']] = $value['brand_name'];
@@ -167,15 +183,15 @@ class b2c_ctl_site_list extends b2c_frontpage {
                 ));
                 $props = $type_info['props'];
                 foreach ($props as $key => $prop) {
-                    $_return['p_'.$key]['title'] = $prop['name'];
-                    $_return['p_'.$key]['options'] = $prop['options'];
+                    $_return['p_' . $key]['title'] = $prop['name'];
+                    $_return['p_' . $key]['options'] = $prop['options'];
                 }
             }
         }
 
         return $_return;
     }
-    
+
     /*
      * 根据品牌ID提供筛选条件，并且返回已选择的条件数据
      *
@@ -183,7 +199,8 @@ class b2c_ctl_site_list extends b2c_frontpage {
      * @params array $filter 已选择的条件
      * */
 
-    private function _screen_data_by_brand($brand_id) {
+    private function _screen_data_by_brand($brand_id)
+    {
         $filter = array();
         if ($brand_id) {
             $filter['brand_id'] = $brand_id;
@@ -208,7 +225,8 @@ class b2c_ctl_site_list extends b2c_frontpage {
     }
 
 //商品列表页筛选参数处理
-    private function handle_params($params) {
+    private function handle_params($params)
+    {
         $filter = array(
             'cat_id' => '',
             'brand_id' => '',
@@ -220,7 +238,8 @@ class b2c_ctl_site_list extends b2c_frontpage {
     }
 
 //获取商品列表，包装商品列表
-    private function _list($filter, $page, $orderby, $keywords) {
+    private function _list($filter, $page, $orderby, $keywords)
+    {
         $cache_key = utils::array_md5(func_get_args());
         if (cachemgr::get($cache_key, $return)) {
             return $return;
@@ -235,6 +254,7 @@ class b2c_ctl_site_list extends b2c_frontpage {
         }
         $goods_cols = '*';
         $mdl_goods = $this->app->model('goods');
+        $page['size'] = 4;
         $goods_list = $mdl_goods->getList($goods_cols, $filter, $page['size'] * ($page['index'] - 1), $page['size'], $orderby);
         $obj_goods_stage = vmc::singleton('b2c_goods_stage');
 //set_member
@@ -257,7 +277,8 @@ class b2c_ctl_site_list extends b2c_frontpage {
         return $return;
     }
 
-    private function _query_str($params, $nopage = true) {
+    private function _query_str($params, $nopage = true)
+    {
         if ($nopage) {
             unset($params['page']);
         }
@@ -266,7 +287,8 @@ class b2c_ctl_site_list extends b2c_frontpage {
     }
 
 //配置参数
-    private function _params_decode($params) {
+    private function _params_decode($params)
+    {
 //排序
         $orderby = str_replace('-', ' ', $params['orderby']);
         unset($params['orderby']);
@@ -299,7 +321,8 @@ class b2c_ctl_site_list extends b2c_frontpage {
      *
      * */
 
-    private function generate_seo_data() {
+    private function generate_seo_data()
+    {
 
         if (isset($this->seo_info) && !empty($this->seo_info) && !empty($this->seo_info['seo_title'])) {
 
@@ -348,7 +371,8 @@ class b2c_ctl_site_list extends b2c_frontpage {
     /**
      * 相关商品
      */
-    public function goods_rate() {
+    public function goods_rate()
+    {
         $goods_api = vmc::singleton('b2c_source_goods');
         return $goods_api->goods_rate($_GET);
     }
@@ -356,7 +380,8 @@ class b2c_ctl_site_list extends b2c_frontpage {
     /**
      * 商品促销
      */
-    public function promotions() {
+    public function promotions()
+    {
         $goods_api = vmc::singleton('b2c_source_goods');
         return $goods_api->promotions($_GET);
     }

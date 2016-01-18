@@ -53,10 +53,17 @@ $db['goods_type'] = array(
             'width' => 110,
             'label' => ('类型设置'),
         ),
+        'belong_type' => array(
+            'type' => 'number',
+            'default' => '0',
+            'label' => '所属类型',
+            'comment' => '所属类型'  // 0、扩展属性 1、规格
+        ),
         'disabled' => array(
             'type' => 'bool',
             'default' => 'false',
         ),
+
     ),
     'index' => array(
         'ind_disabled' => array(
