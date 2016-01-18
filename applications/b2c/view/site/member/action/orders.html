@@ -140,9 +140,9 @@
                             
                             <{if $status neq 's7'}>
                             
-                            <{if $order.ship_status eq '0' && $order.pay_status eq '1' && $order.status eq 'active'}>
-                            <a class="btn btn-xs btn-block btn-default" href="<{link app=aftersales ctl=site_member act=newrequest args0=$order.order_id args1=$item.product_id}>">退货\退款</a>
-                            <{/if}>
+                            <!--<{if $order.ship_status eq '0' && $order.pay_status eq '1' && $order.status eq 'active'}>-->
+                            <!--<a class="btn btn-xs btn-block btn-default" href="<{link app=aftersales ctl=site_member act=newrequest args0=$order.order_id args1=$item.product_id}>">申请退款</a>-->
+                            <!--<{/if}>-->
                             
                             <{if $order.confirm eq 'Y' && $order.status eq 'active' }>             
                             <{if $order.comment_type eq '0'}>
@@ -151,7 +151,7 @@
                             <a class="btn btn-xs btn-block btn-default" <{if $order.comment_type eq '2'}>disabled <{/if}> href="<{link app=b2c ctl=site_comment act=form args0=$order.order_id args1=$item.product_id}>">追加评价</a>
                             <{/if}>
                             <{/if}>
-                            <{if $order.confirm eq 'N' && $order.ship_status eq '1' && $order.status eq 'active'}>
+                            <{if ($order.confirm eq 'N' && $order.ship_status eq '1') || ($order.ship_status eq '0' && $order.pay_status eq '1') && $order.status eq 'active'}>
                             <a class="btn btn-xs btn-block btn-default" href="<{link app=aftersales ctl=site_member act=newrequest args0=$order.order_id args1=$item.product_id args2=input args3=price}>">申请退款</a>
                             <{/if}> 
                             <{if ($order.confirm eq 'Y' && $order.ship_status eq '1') && $order.status eq 'active'}>

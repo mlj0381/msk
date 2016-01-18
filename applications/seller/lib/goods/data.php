@@ -116,6 +116,7 @@ class seller_goods_data
                 $goods['product'][$prok]['marketable'] = 'false';
             }
             $goods['product'][$prok]['price'] = trim($goods['product'][$prok]['price']);
+            $goods['product'][$prok]['image_id'] = $goods['image_default_id'];
             $goods['product'][$prok]['mktprice'] = trim($goods['product'][$prok]['mktprice']);
         }
         if (is_array($data['linkid'])) {
