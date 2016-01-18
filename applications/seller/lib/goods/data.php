@@ -1,5 +1,4 @@
 <?php
-
 // +----------------------------------------------------------------------
 // | VMCSHOP [V M-Commerce Shop]
 // +----------------------------------------------------------------------
@@ -17,12 +16,11 @@ class seller_goods_data
         $this->mdl_products = app::get('b2c')->model('products');
         $this->mdl_gtype = app::get('b2c')->model('goods_type');
     }
-    public function _prepare_goods_data(&$data)
+    public function prepare_goods_data(&$data)
     {
         $last_goods = $this->mdl_goods->getRow('goods_id', null, 0, 1, 'goods_id desc');
         $last_goods_id = $last_goods['goods_id'];
         $goods = $data['goods'];
-
         //相册默认图
         if (is_array($goods['images'])) {
             $goods['image_default_id'] = $data['image_default'];
@@ -42,7 +40,6 @@ class seller_goods_data
                     unset($goods['spec_desc']['vplus'][$key]);
                 }
             }
-
             //去除空规格值
             if(isset($goods['spec_desc']['t'])){
                 foreach ($goods['spec_desc']['t'] as $key => $value) {
@@ -60,12 +57,10 @@ class seller_goods_data
                     }
                 }
             }
-
         }
         if(!$goods['spec_desc'] || empty($goods['spec_desc']) || empty($goods['spec_desc']['v']) ||empty($goods['spec_desc']['t']) || count($goods['product'])<2){
             $goods['spec_desc'] = null;
         }
-
         //关键词
         if ($data['keywords']) {
             foreach (explode(',', $data['keywords']) as $keyword) {
@@ -77,7 +72,6 @@ class seller_goods_data
         }else{
             $goods['keywords'] = array();
         }
-
         if ($goods['params']) {
             $g_params = array();
             foreach ($goods['params'] as $gpk => $gpv) {
@@ -111,7 +105,6 @@ class seller_goods_data
         }else{
             $goods['product'][key((array) $goods['product']) ]['is_default'] = 'true';
         }
-
         foreach ($goods['product'] as $prok => $pro) {
             if ($goods['unit']) {
                 $goods['product'][$prok]['unit'] = $goods['unit'];
@@ -123,10 +116,9 @@ class seller_goods_data
                 $goods['product'][$prok]['marketable'] = 'false';
             }
             $goods['product'][$prok]['price'] = trim($goods['product'][$prok]['price']);
+            $goods['product'][$prok]['image_id'] = $goods['image_default_id'];
             $goods['product'][$prok]['mktprice'] = trim($goods['product'][$prok]['mktprice']);
         }
-
-
         if (is_array($data['linkid'])) {
             foreach ($data['linkid'] as $k => $id) {
                 if (!empty($goods['goods_id'])) {
@@ -149,7 +141,6 @@ class seller_goods_data
         if (!$goods['tag']) {
             $goods['tag'] = array();
         }
-
         if (!$goods['rate']) {
             $goods['rate'] = array();
         }
@@ -179,7 +170,6 @@ class seller_goods_data
         }
         return $goods;
     }
-
     public function checkin(&$goods){
         if (!empty($goods['gid']) && $this->mdl_goods->count(array(
             'gid' => $goods['gid'],
@@ -187,14 +177,12 @@ class seller_goods_data
         )) > 0) {
             return ('重复的商品ID'.$goods['gid']);
         }
-
         if (empty($goods['product']) || count($goods['product']) == 0) {
             return '货品信息未填写完整';
         }
         if (!$goods['name']) {
             return ('商品名称不能为空');
         }
-
         //验证
         foreach ($goods['product'] as $k => $p) {
             if (empty($p['bn'])) {
@@ -219,15 +207,12 @@ class seller_goods_data
                 return ('重复的条码：'.$p['barcode']);
             }
         }
-
         foreach ($goods['extsplashed_cat'] as $k=>$v) {
             if(!$v || $v<0){
                 unset($goods['extsplashed_cat'][$k]);
             }
         }
         $this->mdl_goods->has_many['product'] = 'products:contrast';
-        if (!$this->mdl_goods->save($goods)) {
-            return ('保存失败!');
-        }
+        
     }
 }

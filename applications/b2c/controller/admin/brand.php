@@ -1,4 +1,5 @@
 <?php
+
 // +----------------------------------------------------------------------
 // | VMCSHOP [V M-Commerce Shop]
 // +----------------------------------------------------------------------
@@ -10,27 +11,31 @@
 // +----------------------------------------------------------------------
 
 class b2c_ctl_admin_brand extends desktop_controller {
+
     function index() {
+
         $this->finder('b2c_mdl_brand', array(
-            'title' => ('商品品牌') ,
-            'use_buildin_recycle'=>true,
+            'title' => ('商品品牌'),
+            'use_buildin_recycle' => true,
             'actions' => array(
                 array(
-                    'label' => ('添加品牌') ,
+                    'label' => ('添加品牌'),
                     'icon' => 'fa-plus',
                     'href' => 'index.php?app=b2c&ctl=admin_brand&act=create',
-                ) ,
+                ),
                 array(
-                    'label' => ('品牌审核') ,
+                    'label' => ('品牌审核'),
                     'icon' => 'fa-plus',
                     'href' => 'index.php?app=seller&ctl=admin_brand&act=index',
-                ) ,
+                ),
             )
         ));
     }
+
     function create() {
         $this->page('admin/goods/brand/detail.html');
     }
+
     function save() {
         $this->begin('index.php?app=b2c&ctl=admin_brand&act=index');
         $objBrand = $this->app->model('brand');
@@ -61,6 +66,7 @@ class b2c_ctl_admin_brand extends desktop_controller {
             $this->end(false, ('品牌保存失败'));
         }
     }
+
     function edit($brand_id) {
         $this->path[] = array(
             'text' => ('商品品牌编辑')
@@ -69,6 +75,7 @@ class b2c_ctl_admin_brand extends desktop_controller {
         $this->pagedata['brandInfo'] = $objBrand->dump($brand_id);
         $this->page('admin/goods/brand/detail.html');
     }
+
     function _preparegtype($data) {
         $data['seo_info']['seo_title'] = $data['seo_title'];
         $data['seo_info']['seo_keywords'] = $data['seo_keywords'];

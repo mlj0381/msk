@@ -12,12 +12,7 @@
         </div>
         <div class="form-group">
             <label for="" class="control-label"><span>所属类目</span></label>
-            <select class="form-control" style="width:180px" name="">
-                <option>鸡肉类</option>
-                <option>鸭肉类</option>
-                <option>猪肉类</option>
-                <option>鱼肉类</option>
-            </select>
+            <{input type=select name="goods[cat_id]" rows=$cat labelColumn="cat_name" valueColumn="cat_id" value=$serach.cat_id}>
         </div>
         <div class="form-group">
             <label class="control-label"><span>价格区间</span></label>
@@ -30,7 +25,7 @@
             <input type="text" class="form-control" style="width:78px;" value="<{$serach.buy_count[1]}>" name="goods[buy_count][]"/>
         </div>
         <div class="form-group">
-            <button type="reset" class="btn btn-default">清空条件</button>
+            <a href="<{link app=seller ctl=site_goods act=index}>" class="btn btn-default">清空条件</a>
             <button type="submit" class="btn btn-default">搜索</button>
         </div>
 
@@ -62,14 +57,14 @@
             <{foreach from=$goodList item=item name="item"}>
                 <tr>
                     <td>
-                        <a href="" class="thumbnail"><img src="<{$base_url}>/themes/pc/default/statics/images/bestsellers.jpg"></a>
+                        <a href="" class="thumbnail"><img src="<{$item.image_default_id|storager:'xs'}>"></a>
                     </td>
                     <td><{$item.gid}></td>
                     <td><{$item.name|cut:50:'...'}></td>
                     <td><{$item.cat_id}></td>
                     <td>
-                        ￥：100.0（小于10箱）<br>
-                        ￥：98.00（大于10箱）
+                        ￥：<{$item.price_up|cur}>（小于<{$item.price_interval}>箱） <a href="<{link app=seller ctl=site_goods act=price args0=$item.goods_id}>">价盘</a><br>
+                        ￥：<{$item.price_dn|cur}>（大于<{$item.price_interval}>箱）
                     </td>
                         <td>
                              <{if $type eq 'storage'}>

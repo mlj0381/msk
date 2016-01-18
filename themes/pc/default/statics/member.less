@@ -1401,7 +1401,7 @@ ul,ol{
 				cursor: pointer;
 
 				&.selected{
-					background: #f2f2f2;
+					background: #ddd;
 				}
 			}
 		}
@@ -1438,6 +1438,14 @@ ul,ol{
 					}
 				}
 			}
+		}
+
+		.singup_step_title{
+			font-size: 20px;
+			background-color: #f2f2f2;
+			padding:15px;
+			font-weight: bold;
+			margin-bottom:15px;
 		}
 
 		.companyInfo_form, .storeInfo_form{
@@ -2532,13 +2540,14 @@ ul,ol{
 		}
 	}
 
-	.store_banner{
-		width:100%;
-		height:499px;
-		background: url(images/store_ban.png) no-repeat top center;
-	}
+	
 }
 
+.store_banner{
+	width:100%;
+	height:499px;
+	background: url(images/store_ban.png) no-repeat top center;
+}
 .store_carousel{
 
 	h2{
@@ -2583,16 +2592,19 @@ ul,ol{
 				border-bottom:1px solid #ddd;
 				width:300px;
 				box-sizing: border-box;
+				vertical-align: middle;
+				display:table-cell;
 
 				a{
 					display: block;
 					position: relative;
 					width:100%;
-					height:314px;
+					height:279px;
 					img{
 						display:block;
-						width:100%;
-						height:314px;
+						max-width:100%;
+						max-height:279px;
+						margin:auto;
 					}
 					span{
 						position: absolute;
@@ -2898,6 +2910,11 @@ ul,ol{
 
 //新增收货地址
 .receiver_addrpage{
+	.page-header{
+		a.btn{
+			margin-top:8px;
+		}
+	}
 	.receiver_form{
 
 		.region{
@@ -3040,8 +3057,6 @@ ul,ol{
 	.edit_form{
 		.area_box{
 			h2{
-				//border-bottom:1px solid #c40000;
-				//border:1px solid #c40000;
 				background: #ddd;
 				padding:0px 10px;
 				font-size: 16px;
@@ -3056,7 +3071,6 @@ ul,ol{
 					float:right;
 					color:#666;
 					display: inline-block;
-					//background: url(images/arrow_up.png) no-repeat;
 
 				}
 			}

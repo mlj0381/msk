@@ -1,6 +1,6 @@
 <div class="request_list_page">
     <div class="page-header">
-      <h1>售后服务处理列表 <small>Services Status</small></h1>
+      <h1>售后服务处理列表</h1>
     </div>
     <{foreach from=$request_list item=item}>
     <table class="table table-hover">
@@ -19,7 +19,7 @@
         <tbody>
             <tr>
                 <td>
-                    <div>
+                    <div style="width:335px;">
                         <div class="col-xs-2" style="text-align: left; padding:0;">
                             <a href="<{link app=b2c ctl=site_product act=index args0=$item.product.product_id}>">
                             <img class="img-thumbnail" src="<{$item.product.info.image_id|storager:'xs'}>" alt="<{$item.product.info.name}>" /></a>

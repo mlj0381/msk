@@ -1,4 +1,4 @@
-<input type="hidden" name="entry_lesstion[content_id]"  value="<{$extra.content_id}>" class="form-control">
+<input type="hidden" name="entry_lesstion[content_id]"  value="<{$extra.entry_lesstion.content_id}>" class="form-control">
 <div id="entry_lesstion">
 	<h4>进沪证</h4>
 	<div class="form-group">
@@ -6,7 +6,7 @@
 			单位名称：
 		</label>
 		<div class="col-xs-4">
-			<input type="text" value="<{$extra.value.unit_name}>" name="entry_lesstion[value][unit_name]" class="form-control">
+			<input type="text" value="<{$extra.entry_lesstion.value.unit_name}>" name="entry_lesstion[value][unit_name]" class="form-control">
 		</div>
 	</div>
 
@@ -15,7 +15,7 @@
 			品种：
 		</label>
 		<div class="col-xs-4">
-			<input type="text" value="<{$extra.value.type}>" name="entry_lesstion[value][type]" class="form-control">
+			<input type="text" value="<{$extra.entry_lesstion.value.type}>" name="entry_lesstion[value][type]" class="form-control">
 		</div>
 	</div>
 	<div class="form-group">
@@ -23,7 +23,7 @@
 			登记日期：
 		</label>
 		<div class="col-xs-4">
-			<input type="text" value="<{$extra.value.date}>" name="entry_lesstion[value][date]" class="form-control">
+			<input type="text" value="<{$extra.entry_lesstion.value.date}>" name="entry_lesstion[value][date]" class="form-control">
 		</div>
 	</div>
 	<div class="form-group">
@@ -32,10 +32,10 @@
 		</label>
 		<div class="col-xs-4">
 			<div class="filebox">
-	            <input type="hidden" value="<{$extra.attach}>" name="entry_lesstion[attach]"/>
+	            <input type="hidden" value="<{$extra.entry_lesstion.attach}>" name="entry_lesstion[attach]"/>
 	            <input type="file" data-url="<{link app=image ctl=site_upload act=index}>" accept="image/*" class="file_input" />
 	            <div class="showImg">
-	                 <img src="<{if $extra.attach eq ''}><{$base_url}>/themes/pc/default/statics/images/file_add.jpg<{else}><{$extra.attach|storager:'xs'}><{/if}>">    
+	                 <img src="<{if $extra.entry_lesstion.attach eq ''}><{$base_url}>/themes/pc/default/statics/images/file_add.jpg<{else}><{$extra.entry_lesstion.attach|storager:'xs'}><{/if}>">    
 	            </div>
 	        </div>
 		</div>

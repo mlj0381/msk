@@ -1280,7 +1280,7 @@ ol {
   cursor: pointer;
 }
 .buyer_container .seller_regbox .typebox li.selected {
-  background: #f2f2f2;
+  background: #ddd;
 }
 .buyer_container .seller_regbox .company_btns {
   width: 100%;
@@ -1312,6 +1312,13 @@ ol {
 }
 .buyer_container .seller_regbox .settled_warning dl dd a {
   color: #a40001;
+}
+.buyer_container .seller_regbox .singup_step_title {
+  font-size: 20px;
+  background-color: #f2f2f2;
+  padding: 15px;
+  font-weight: bold;
+  margin-bottom: 15px;
 }
 .buyer_container .seller_regbox .companyInfo_form h4,
 .buyer_container .seller_regbox .storeInfo_form h4 {
@@ -2254,7 +2261,7 @@ ol {
 .store_header .nav_bg .store_nav li.default a:hover {
   background: none;
 }
-.store_header .store_banner {
+.store_banner {
   width: 100%;
   height: 499px;
   background: url(images/store_ban.png) no-repeat top center;
@@ -2299,17 +2306,20 @@ ol {
   border-bottom: 1px solid #ddd;
   width: 300px;
   box-sizing: border-box;
+  vertical-align: middle;
+  display: table-cell;
 }
 .store_probox .store_pro_floor ul li a {
   display: block;
   position: relative;
   width: 100%;
-  height: 314px;
+  height: 279px;
 }
 .store_probox .store_pro_floor ul li a img {
   display: block;
-  width: 100%;
-  height: 314px;
+  max-width: 100%;
+  max-height: 279px;
+  margin: auto;
 }
 .store_probox .store_pro_floor ul li a span {
   position: absolute;
@@ -2543,6 +2553,9 @@ ol {
 }
 .receiver_addrpage .list-group .list-group-item .addr_ctr btn {
   margin: 3px auto;
+}
+.receiver_addrpage .page-header a.btn {
+  margin-top: 8px;
 }
 .receiver_addrpage .receiver_form .region {
   width: 100%;

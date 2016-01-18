@@ -102,16 +102,17 @@
                     <li class="list-group-item clearfix">
                         <span>习惯正常收货时间段(多选)：</span>
                         <{foreach from=$receiving key=key item=item}>
+                            <input type="hidden" value="<{$item}>" disabled name="addon[consignee_time][interval][]"/>
                             <span class="timespan" data-id="<{$key}>"><{$item}></span>
                         <{/foreach}>
                     </li>
                     <li class="list-group-item clearfix">
                         <span>习惯正常收货最早时间：</span>
-                        <input type="text" class="form-control time_text" placeholder="开始时间">
+                        <input type="text" name="addon[consignee_time][best][early]" class="form-control time_text" placeholder="开始时间">
                     </li>
                     <li class="list-group-item clearfix">
                         <span>习惯正常收货最晚时间：</span>
-                        <input type="text" class="form-control time_text" placeholder="结束时间">
+                        <input type="text" name="addon[consignee_time][best][night]" class="form-control time_text" placeholder="结束时间">
                     </li>
                 </ul>
                 
@@ -119,7 +120,7 @@
 
         </div>
         <div class="col-xs-12 checkout_djz">
-            <input type="checkbox"/>是否需要动检证
+            <input type="checkbox" name="addon[certificates]" value="true"/>是否需要动检证
             <label>只有<span class="text-danger"> 京、津、沪 </span>地区客户可以申请</label>
         </div>
         <div class="col-xs-12 checkout_ps">
@@ -148,6 +149,7 @@
                         <div class="row">
                             <div class="col-xs-4 goods_info">
                                 <a href="<{link app=b2c ctl=site_product act=index args0=$object.item.product.product_id}>">
+                                    <input type="hidden" name="product_id[]" value="<{$object.item.product.product_id}>"/>
                                     <img class="img-thumbnail"  src="<{$object.item.product.image_id|storager:'s'}>" alt="<{$object.item.product.name}>-<{$object.item.product.spec_info}>" />
                                 </a>
                                 <div class="goods_name">
@@ -165,7 +167,7 @@
                                 <{$object.quantity}>
                             </div>
                             <div class="col-xs-2">
-                                <span class="total_money">￥：<{$cart_result.cart_amount|cur}></span>
+                                <span class="total_money">￥：<{$object.item.product.buy_price * $object.quantity|cur}></span>
                             </div>
                             <!-- <div class="col-xs-10">
                                 <a class="text-muted" href="<{link app=b2c ctl=site_product act=index args0=$object.item.product.product_id}>"><{$object.item.product.name}>
@@ -231,7 +233,9 @@
                     </li>
                     <{/foreach }>
                 </ul>
-                <dl class="my-coupon">
+                
+                
+<!--  优惠券信息              <dl class="my-coupon">
                     <dt>使用优惠券</dt>
                     <dd>
                         <div class="input-group">
@@ -262,7 +266,9 @@
                             </div>
                         </div>
                     </dd>
-                </dl>
+                </dl>-->
+
+
                 <dl class="my-coupon">
                     <dt>订单备注</dt>
                     <dd>
@@ -272,20 +278,20 @@
             </div>
             <div class="col-xs-5">
                 <dl class="dl-horizontal pull-right">
-                    <dt>可得积分：</dt>
-                    <dd><span data-bind="total/gain_score"><{$total.gain_score}></span>分</dd>
+                    <!--<dt>可得积分：</dt>
+                    <dd><span data-bind="total/gain_score"><{$total.gain_score}></span>分</dd>-->
                     <dt><{$cart_result.goods_count}>件商品，总商品金额：</dt>
                     <dd>￥<span data-bind="total/cart_amount"><{$cart_result.cart_amount|cur}></span></dd>
                     <{if $cart_result.member_discount_amount}>
 
-                    <dt>会员身份优惠：</dt>
-                    <dd>-￥<span data-bind="total/member_discount_amount"><{$cart_result.member_discount_amount|cur}></span></dd>
+<!--                    <dt>会员身份优惠：</dt>
+                    <dd>-￥<span data-bind="total/member_discount_amount"><{$cart_result.member_discount_amount|cur}></span></dd>-->
 
                     <{/if}>
                     <{if $cart_result.member_discount_amount}>
 
-                    <dt>促销活动优惠：</dt>
-                    <dd>-￥<span data-bind="total/promotion_discount_amount"><{$cart_result.promotion_discount_amount|cur}></span></dd>
+<!--                    <dt>促销活动优惠：</dt>
+                    <dd>-￥<span data-bind="total/promotion_discount_amount"><{$cart_result.promotion_discount_amount|cur}></span></dd>-->
 
                     <{/if}>
 
@@ -745,9 +751,9 @@
             var timespan = $(this);
             timespan.toggleClass('active');
             if($(timespan).hasClass('active')){
-                timespan.append('<input type="hidden" name="receiving[]" value="'+timespan.attr('data-id')+'"/>');
+                timespan.prev().removeAttr('disabled');
             }else{
-                timespan.find('input').remove();
+                timespan.prev().prop('disabled', true);
             }
         });
     });

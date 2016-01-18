@@ -251,6 +251,9 @@ header {
             .logo {
                 padding: 0;
                 margin: 0 auto;
+                img{
+                    height:100px;
+                }
             }
         }
         .searchbox {
@@ -271,8 +274,7 @@ header {
                 }
             }
             .search_form {
-                border: 1px solid @basecolor;
-                display: inline-block;
+                border: 2px solid @basecolor;
                 .search_txt input {
                     display: inline-block;
                     width: 405px;
@@ -294,6 +296,7 @@ header {
                     cursor: pointer;
                     outline: none;
                     float: right;
+                    font-size: 16px;
                 }
             }
             .hotSearch {
@@ -373,11 +376,14 @@ nav.mainNav {
     ul.nav_ul {
         margin-bottom: 0px;
         li {
-            margin: 0 40px 0 40px;
+            display: inline-block;
             .fl;
+            font-size: 16px;
+            color:#999;
             a {
                 font-size: 16px;
                 color: #5d5d5d;
+                padding:0 30px;
                 &:hover {
                     color: @basecolor;
                 }
@@ -409,27 +415,26 @@ nav.mainNav {
                 left: 0px;
                 z-index: 51;
                 height: 550px;
-                background: #cc0116;
-                //opacity:0.85;
+                background: #1c0001;
+                opacity:0.95;
                 display: none;
                 .category {
-                    ul.list-group {
+                    ul{
                         margin: 0px;
                         cursor: pointer;
-                        li.list-group-item:first-child {
+                        li:first-child {
                             border-top-left-radius: 0px;
                             border-top-right-radius: 0px;
                         }
-                        li.list-group-item:last-child {
+                        li:last-child {
                             border-radius: 0px;
                             border-radius: 0px;
                         }
-                        li.list-group-item {
+                        li {
                             font-size: 16px;
                             position: relative;
                             display: block;
                             padding: 0px;
-                            background-color: #cc0116;
                             border: 0px;
                             margin: 0;
                             height: 36px;
@@ -437,8 +442,6 @@ nav.mainNav {
                             width: 100%;
                             a {
                                 margin: 0;
-                                padding: 0;
-                                background: none;
                                 font-size: 14px;
                                 display: block;
                                 width: 100%;
@@ -524,24 +527,31 @@ nav.mainNav {
 //页面底部样式
 .footerbox {
     width: 100%;
-    padding: 10px 0 0 0;
+    padding: 0 0 0 0;
     margin: 20px 0 0 0;
     background: #fff;
-    border-top: 1px solid #ddd;
+    //border-top: 1px solid #ddd;
     min-width: 1200px;
     footer {
         width: 100%;
         margin: 0 auto;
         .partner {
+            border-bottom:1px solid #ddd;
+            padding-bottom:15px;
             ul {
+
                 li {
+                    padding:10px 0;
                     .fl;
-                    width: 200px;
-                    height: 143px;
+                    width: 171px;
+                    border-right:1px solid #ddd;
+                    &:last-child{
+                        border-right:none;
+                    }
                     span {
                         display: block;
                         height: 82px;
-                        width: 200px;
+                        width: 100%;
                         img {
                             display: block;
                             max-height: 100%;
@@ -560,7 +570,7 @@ nav.mainNav {
         }
         .footer_link {
             width: 1000px;
-            margin: 0 auto;
+            margin: 15px auto;
             dl {
                 .fl;
                 width: 140px;
@@ -590,10 +600,11 @@ nav.mainNav {
         }
         .footer_nav {
             width: 100%;
-            background: #222;
+            background: #011626;
             color: #fff;
-            height: 100px;
+            height: 110px;
             margin: 20px auto;
+            border-top:5px solid #a40001;
             p {
                 width: 1200px;
                 margin: 0 auto;

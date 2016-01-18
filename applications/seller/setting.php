@@ -62,39 +62,38 @@ $setting = array(
                     'food_business_licence', 'food_flow_licence', 'oem_auth_lesstion'
                 ),
             ),
+            'array_info' => array('equipment', 'ec_group_employees'),
         ),
     ),
-    'goods_info' => array(
+    'goods_setting' => array(
         'default' => array(
-            'params' => array(
-                'orgion' => array(
-                    array(
-                        'id' => 1,
-                        'name' => '北京',
-                    ),
-                    array(
-                        'id' => 2,
-                        'name' => '上海',
-                    ),
-                    array(
-                        'id' => 3,
-                        'name' => '广州',
-                    ),
+            'product' => array(
+                array(//'quality' =>
+                    'name' => '质量等级',
+                    'value' => array('A1', 'A2', 'A3')
                 ),
-                'process' => array(
-                    array(
-                        'id' => 1,
-                        'name' => '单冻',
-                    ),
-                    array(
-                        'id' => 2,
-                        'name' => '板冻',
-                    ),
+                array(//'pack' =>
+                    'name' => '包装规格',
+                    'value' => array('箱', '袋')
                 ),
             ),
-            'product' => array(
-                'quality' => array('A1', 'A2', 'A3'),
-                'pack' => array('箱', '袋'),
+            'showcase' => array(
+                array(
+                    'id' => 1,
+                    'name' => '主力产品',
+                ),
+                array(
+                    'id' => 2,
+                    'name' => '本月新品',
+                ),
+                array(
+                    'id' => 3,
+                    'name' => '特价专区',
+                ),
+                array(
+                    'id' => 4,
+                    'name' => '销售专区',
+                ),
             ),
         ),
     ),

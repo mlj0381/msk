@@ -242,8 +242,10 @@ void function(){
         plist_order = cart_result['promotions']&&cart_result['promotions']['order']?cart_result['promotions']['order']:false;
         $.each($('.cart-body .cart-item:not(".removeing")'),function(idx,item){
             var object_item = cart_result['objects']['goods'][idx];
+            
             _data_bind(item,object_item);
             _fill_plist(item,plist_goods?plist_goods[object_item['obj_ident']]:false);
+            
         });
         _data_bind($('.cart-footer'),cart_result);
         _fill_plist($('.cart-footer'),plist_order);
@@ -275,6 +277,7 @@ void function(){
                 if(re.success && re.data){
                     //location = re.redirect;
                     _update(re.data);
+                    console.log(re.data);
                     ipt.attr('data-now',cur_val);
                 }
             });

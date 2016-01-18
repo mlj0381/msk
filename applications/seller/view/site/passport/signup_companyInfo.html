@@ -29,25 +29,33 @@
 <div class="passport-signup-container seller_regbox">
     <div class="panel panel-default signup-panel">
         <div class="panel-body">
+            <!-- <div class="singup_step_title">
+                <span>卖家企业基本资质审批</span>
+                <span>卖家企业专业资质审批</span>
+                <span>卖家企业基本生产能力描述</span>
+                <span>卖家企业生产车间、设备、产品工艺流程描述</span>
+                <span>卖家企业实验室、检测设备及产品质量控制系统</span>
+                <span>卖家企业管理团队描述</span>
+                <span>卖家企业电商团队描述</span>
+                <span>卖家企业产品品牌描述</span>
+            </div> -->
             <div class="settled_warning">
                 <dl class="clearfix">
                     <dt><i class="icon-warning-sign"></i></dt>
                     <dd>
-                        <p>1.信息提交前，请务必先了解<a href="">《神农客招商标准》</a>;</p>
+                        <p>1.信息提交前，请务必先了解<a href="">《美侍客招商标准》</a>;</p>
                         <p>2.公司类需填项较多，建议先查看<a href="">《公司信息注意事项》</a>再填写;</p>
                         <p>3.以下所需要上传的电子版资质仅支持JPG、GIF、PNG格式图片，大小不超过1M,且必须加盖企业公章;</p>
                     </dd>
                 </dl>
             </div>
             <form id="companyInfo_form" action="<{link app=seller ctl=site_passport act=entry}>" class="form-horizontal companyInfo_form" method="post">
-                <input type='text' name='pageIndex' value='<{$pageIndex}>'/>
+                <input type='hidden' name='pageIndex' value='<{$pageIndex}>'/>
                 <!-- 三证合一 -->
                 <{foreach from=$page key=key item=item}>
-                <{if $key neq 'three_lesstion'}>
-                <{include file="site/passport/companyInfo/{$key}.html" extra=$info.company_extra[$key]}>
-                <{else}>
+                
                 <{include file="site/passport/companyInfo/{$key}.html" extra=$info.company_extra}>
-                <{/if}>
+                
                 <{/foreach}>
                 <div class="form-group">
                     <label class="col-xs-2"></label>

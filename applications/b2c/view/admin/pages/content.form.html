@@ -34,7 +34,7 @@
                         <div class="col-md-5">
                             <{input required='true' type='select' name='content[pages_id]' rows=$pages value=$pageObject.pages_id valueColumn='pages_id' labelColumn='name'}>
                         </div>
-                    </div>       
+                    </div> 
                    <div class="form-group" id="position">
                        <label class="col-md-4 control-label">所在位置
                             <span class="required">*</span>
@@ -57,7 +57,9 @@
                              <{input type="image" width=110 height=100 tag="图片上传" name="content[image_id]" value=$content.image_id required='true'}>
                         </div>
                         <label class="col-xs-4 control-label">图片上传尺寸:</label>
+                        <{if $position.position_id}>
                         <div class="col-xs-5"><{$postion_psize.width}>px*<{$postion_psize.height}>px</div>
+                        <{else}><div class="col-xs-5">请选择所在位置</div><{/if}>
                     </div>
                     <div class="form-group" id="content_type">
                        <label class="col-md-4 control-label">类型

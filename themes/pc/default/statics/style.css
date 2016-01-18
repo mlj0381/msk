@@ -661,6 +661,75 @@ ol {
   border: none;
   box-shadow: none;
 }
+.accout_seting_form {
+  width: 500px;
+  margin: 0 auto;
+}
+.baseInfo_container .baseInfo_lt {
+  width: 200px;
+  box-shadow: 0px 0px 6px #ddd;
+}
+.baseInfo_container .baseInfo_lt dl dt {
+  height: 40px;
+  line-height: 40px;
+  font-size: 14px;
+  border-bottom: 2px solid #a40001;
+  padding: 0 10px;
+  background: #c40000;
+  color: #fff;
+}
+.baseInfo_container .baseInfo_lt dl dd {
+  height: 40px;
+  line-height: 40px;
+  border-bottom: 1px solid #f2f2f2;
+  padding: 0 10px;
+  font-size: 13px;
+}
+.baseInfo_container .baseInfo_lt dl dd.active {
+  background: #f2f2f2;
+}
+.baseInfo_container .baseInfo_lt dl dd.active a {
+  color: #a40001;
+}
+.baseInfo_container .baseInfo_rt {
+  width: 960px;
+  padding: 0 10px;
+}
+#buyerInfo h2,
+#manageInfo h2,
+#deliveryInfo h2 {
+  background: #f2f2f2;
+  height: 30px;
+  line-height: 30px;
+  font-size: 16px;
+  padding: 0 15px;
+  margin: 0 0 25px 0;
+}
+#buyerInfo h3,
+#manageInfo h3,
+#deliveryInfo h3 {
+  font-size: 14px;
+  font-weight: bold;
+}
+#manageInfo h2 {
+  background: #f2f2f2;
+  height: 30px;
+  line-height: 30px;
+  font-size: 16px;
+  padding: 0 15px;
+  margin: 0 0 25px 0;
+}
+#manageInfo .use_dir span {
+  display: inline-block;
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
+#deliveryInfo .pay_method span,
+#deliveryInfo .delivery_time span {
+  display: inline-block;
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
 #member_signup_checkInfo_form .customer_address select {
   width: 123px;
 }

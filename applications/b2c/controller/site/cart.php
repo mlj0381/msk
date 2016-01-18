@@ -63,6 +63,7 @@ class b2c_ctl_site_cart extends b2c_frontpage {
             'store_id' => '',
             );
         $result = $this->cart_stage->result();
+
         if ($this->cart_stage->is_empty($result)) {
             $this->splash('error', $this->blank_url);
         }

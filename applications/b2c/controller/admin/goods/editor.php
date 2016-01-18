@@ -36,7 +36,7 @@ class b2c_ctl_admin_goods_editor extends desktop_controller
     }
 
     public function save()
-    {
+    {print_r($_POST);die;
         $this->begin($_POST['redirect']);
         $mdl_goods = $this->app->model('goods');
         $mdl_products = $this->app->model('products');
@@ -88,6 +88,7 @@ class b2c_ctl_admin_goods_editor extends desktop_controller
             }
         }
         $mdl_goods->has_many['product'] = 'products:contrast';
+        
         if (!$mdl_goods->save($goods)) {
             $this->end(false, ('保存失败!'));
         }

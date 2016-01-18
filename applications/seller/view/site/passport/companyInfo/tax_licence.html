@@ -1,4 +1,4 @@
-<input type="hidden" name="tax_licence[content_id]"  value="<{$extra.content_id}>" class="form-control">
+<input type="hidden" name="tax_licence[content_id]"  value="<{$extra.tax_licence.content_id}>" class="form-control">
 <div id="tax_licence">
 	<h4>税务登记证</h4>
 	<div class="form-group">
@@ -6,7 +6,7 @@
 			<span class="text-danger">*</span>税务登记证号：
 		</label>
 		<div class="col-xs-4">
-			<input type="text" name="tax_licence[value][code]" value="<{$extra.value.code}>" class="form-control">
+			<input type="text" name="tax_licence[value][code]" value="<{$extra.tax_licence.value.code}>" class="form-control">
 		</div>
 	</div>
 	<div class="form-group">
@@ -14,7 +14,7 @@
 			<span class="text-danger">*</span>一般纳税人资格认定编号：
 		</label>
 		<div class="col-xs-4">
-			<input type="text" name="tax_licence[value][num]" value="<{$extra.value.num}>" class="form-control">
+			<input type="text" name="tax_licence[value][num]" value="<{$extra.tax_licence.value.num}>" class="form-control">
 		</div>
 	</div>
 	<div class="form-group">
@@ -23,10 +23,10 @@
 		</label>
 		<div class="col-xs-4">
 			<div class="filebox">
-	            <input type="hidden" value="<{$extra.attach}>" name="tax_licence[attach]"/>
+	            <input type="hidden" value="<{$extra.tax_licence.attach}>" name="tax_licence[attach]"/>
 	            <input type="file" data-url="<{link app=image ctl=site_upload act=index}>" accept="image/*" class="file_input" />
 	            <div class="showImg">
-	                 <img src="<{if $extra.attach eq ''}><{$base_url}>/themes/pc/default/statics/images/file_add.jpg<{else}><{$extra.attach|storager:'xs'}><{/if}>">    
+	                 <img src="<{if $extra.tax_licence.attach eq ''}><{$base_url}>/themes/pc/default/statics/images/file_add.jpg<{else}><{$extra.tax_licence.attach|storager:'xs'}><{/if}>">    
 	            </div>
 	        </div>
 		</div>

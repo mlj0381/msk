@@ -37,14 +37,15 @@ $db['brand'] = array(
         'brand_name' => array(
             'type' => 'varchar(50)',
             'required' => true,
+            'default' => '',
             'label' => '品牌名称',
             'comment' => '品牌名称',
         ),
         'brand_logo' => array(
             'type' => 'varchar(50)',
-            'required' => true,
-            'label' => '品牌商标注册证',
-            'comment' => '品牌商标注册证',
+            'default' => '',
+            'label' => '品牌logo',
+            'comment' => '品牌logo',
         ),
 
         'seller_id' => array(

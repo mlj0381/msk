@@ -42,8 +42,13 @@ $db['goods'] = array(
         ) ,
         'type_id' => array(
             'type' => 'table:goods_type',
-            'sdfpath' => 'type/type_id',
-            'label' => ('类型') ,
+            'required' => true,
+            'label' => ('扩展分类') ,
+        ) ,
+        'norms_id' => array(
+            'type' => 'table:goods_type',
+            'required' => true,
+            'label' => ('所属规格') ,
         ) ,
         'cat_id' => array(
             'type' => 'table:goods_cat',
@@ -66,6 +71,12 @@ $db['goods'] = array(
             'label' => ('所属店铺') ,
             'default' => '0',
             'required' => true,
+            'in_list' => true,
+        ) ,
+        'showcase' => array(
+            'type' => 'number',
+            'label' => ('所属专区') ,
+            'default' => '0',
             'in_list' => true,
         ) ,
         'assign' => array(

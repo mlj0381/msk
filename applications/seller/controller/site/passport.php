@@ -12,20 +12,24 @@
 // | 商家品牌申请、授权
 // +----------------------------------------------------------------------
 
-class seller_ctl_site_passport extends seller_frontpage {
+class seller_ctl_site_passport extends seller_frontpage
+{
 
-    public function __construct(&$app) {
+    public function __construct(&$app)
+    {
         parent::__construct($app);
         $this->seller = $this->get_current_seller();
     }
 
-    public function index() {
+    public function index()
+    {
         $this->check_login();
         $this->login();
     }
 
     //检查登录
-    public function check_login() {
+    public function check_login()
+    {
         if ($this->user_obj->is_login()) {
             $redirect = $this->gen_url(array(
                 'app' => 'seller',
@@ -38,7 +42,11 @@ class seller_ctl_site_passport extends seller_frontpage {
     }
 
     //登录方法
-    public function login() {
+    /**
+     *
+     */
+    public function login()
+    {
         $this->title = '商家登录';
         $this->check_login();
         $this->set_forward($forward);
@@ -48,7 +56,8 @@ class seller_ctl_site_passport extends seller_frontpage {
         $this->page('site/passport/login.html');
     }
 
-    public function post_login() {
+    public function post_login()
+    {
         $login_url = $this->gen_url(array(
             'app' => 'seller',
             'ctl' => 'site_passport',
@@ -83,23 +92,13 @@ class seller_ctl_site_passport extends seller_frontpage {
                 'act' => 'index',
             ));
         }
-        $this->_schedule();
         $this->splash('success', $forward, '登录成功');
-    }
-
-    //查询入驻进度
-    private function _schedule() {
-        $seller = $this->get_current_seller();
-        $store = app::get('store')->model('store')->getRow('store_id', array('seller_id' => $seller['seller_id']));
-        if (empty($store)) {
-            $redriect = $this->gen_url(array('app' => 'seller', 'ctl' => 'site_passport', 'act' => 'entry', 'args0' => $seller['schedule']));
-            $this->splash('success', $redriect, '登录成功,请先完善入驻信息');
-        }
     }
 
 //end function
     //注册页面
-    public function signup($step) {
+    public function signup($step)
+    {
         $this->title = '注册成为商家';
         $this->set_tmpl('passport');
         //检查是否登录，如果已登录则直接跳转到会员中心
@@ -124,7 +123,8 @@ class seller_ctl_site_passport extends seller_frontpage {
         $this->page('site/passport/' . $tpl . '.html');
     }
 
-    private function _signup($post, $step) {
+    private function _signup($post, $step)
+    {
         $redirect = $this->gen_url(array(
             'app' => 'seller',
             'ctl' => 'site_passport',
@@ -134,7 +134,7 @@ class seller_ctl_site_passport extends seller_frontpage {
         $return = false;
         switch ($step) {
             case '1':
-                if ($post['treaty']) {
+                if (!$post['treaty']) {
                     $this->splash('error', '', '请详细阅读入驻协议');
                 }
                 $return = $this->_signup_account($post, $redirect);
@@ -148,59 +148,67 @@ class seller_ctl_site_passport extends seller_frontpage {
     }
 
     //入驻首页
-    public function settled_index() {
+    public function settled_index()
+    {
         $this->set_tmpl('seller_settled');
         $this->page('site/passport/settled/settled.html');
     }
 
     //入驻流程
-    public function settled_process() {
+    public function settled_process()
+    {
         $this->set_tmpl('seller_settled');
         $this->page('site/passport/settled/settled_process.html');
     }
 
     //招商标准
-    public function insvestment() {
+    public function insvestment()
+    {
         $this->set_tmpl('seller_settled');
         $this->page('site/passport/settled/insvestment.html');
     }
 
     //资质要求
-    public function aptitudes() {
+    public function aptitudes()
+    {
         $this->set_tmpl('seller_settled');
         $this->page('site/passport/settled/aptitudes.html');
     }
 
     //资费标准
-    public function tariff() {
+    public function tariff()
+    {
         $this->set_tmpl('seller_settled');
         $this->page('site/passport/settled/tariff.html');
     }
 
     //联系方式
-    public function contact() {
+    public function contact()
+    {
         $this->set_tmpl('seller_settled');
         $this->page('site/passport/settled/contact.html');
     }
 
     //注意事项
-    public function payAttention() {
+    public function payAttention()
+    {
         $this->set_tmpl('seller_settled');
         $this->page('site/passport/settled/payAttention.html');
     }
 
     //关于美侍客
-    public function aboutmsk() {
+    public function aboutmsk()
+    {
         $this->set_tmpl('seller_settled');
         $this->page('site/passport/settled/aboutmsk.html');
     }
 
     //入驻方法
-    public function settled($step) {
+    public function settled($step)
+    {
+
         $this->verify();
         $this->pagedata['store'] = $this->user_obj->get_store($this->seller['seller_id']);
-        $this->pagedata['company'] = $this->user_obj->get_company($this->seller['seller_id']);
-        $this->pagedata['contact'] = $this->user_obj->get_contact($this->seller['seller_id']);
         if ($_POST)
             $this->_settled($_POST, $step);
         switch ($step) {
@@ -223,7 +231,8 @@ class seller_ctl_site_passport extends seller_frontpage {
         $this->page("site/passport/apply.{$tpl}.html");
     }
 
-    private function _settled($post, $step) {
+    private function _settled($post, $step)
+    {
         $redirect = $this->gen_url(array(
             'app' => 'seller',
             'ctl' => 'site_passport',
@@ -250,7 +259,8 @@ class seller_ctl_site_passport extends seller_frontpage {
     }
 
     //商家入驻帐号注册
-    private function _signup_account($post, $signup_url) {
+    private function _signup_account($post, $signup_url)
+    {
         extract($post);
         if (!vmc::singleton('seller_user_vcode')->verify($smscode, $pam_account['mobile'], 'signup')) {
             $this->splash('error', $signup_url, '手机短信验证码不正确');
@@ -276,7 +286,8 @@ class seller_ctl_site_passport extends seller_frontpage {
     }
 
     //检查用户名
-    public function check_login_name() {
+    public function check_login_name()
+    {
         if ($this->passport_obj->check_signup_account(trim($_POST['pam_account']['login_name']), $msg)) {
             if ($msg == 'mobile') { //用户名为手机号码
                 $this->splash('success', null, array(
@@ -290,7 +301,8 @@ class seller_ctl_site_passport extends seller_frontpage {
     }
 
     //发送短信验证码
-    public function send_vcode_sms($type = 'signup') {
+    public function send_vcode_sms($type = 'signup')
+    {
         $mobile = trim($_POST['mobile']);
         if ($_POST['type'] != 'securitycenter') {
             if (!$this->passport_obj->check_signup_account($mobile, $msg)) {
@@ -313,7 +325,7 @@ class seller_ctl_site_passport extends seller_frontpage {
         if ($vcode) {
             //发送验证码 发送短信
             $data['vcode'] = $vcode;
-            if (!$uvcode_obj->send_sms($type, (string) $mobile, $data)) {
+            if (!$uvcode_obj->send_sms($type, (string)$mobile, $data)) {
                 $this->splash('error', null, '短信发送失败');
             }
         } else {
@@ -323,7 +335,8 @@ class seller_ctl_site_passport extends seller_frontpage {
     }
 
     //重置密码
-    public function reset_password() {
+    public function reset_password()
+    {
 
         $redirect = $this->gen_url(array(
             'app' => 'seller',
@@ -344,7 +357,8 @@ class seller_ctl_site_passport extends seller_frontpage {
     }
 
     //退出登录
-    public function logout($forward) {
+    public function logout($forward)
+    {
         $this->unset_seller();
         if (!$forward) {
             $forward = $this->gen_url(array(
@@ -357,7 +371,9 @@ class seller_ctl_site_passport extends seller_frontpage {
     }
 
     // 入驻
-    public function entry($step = 0, $type) {
+    public function entry($step = 0, $type)
+    {
+        $this->verify();
         if ($_POST) {
             $params = utils::_filter_input($_POST);
             unset($_POST);
@@ -368,11 +384,9 @@ class seller_ctl_site_passport extends seller_frontpage {
         $step <= 1 && $step = 1;
         $step >= 10 && $step = 10;
         if ($step == '1') {
-            $licence_type = $this->_request->get_get('card'); //营业执照类型 老版or新版
-            $licence_type = $licence_type ? $licence_type : 'new';
-            //查询入住营业执照信息判断是否是新版还是老版
-            $checked = app::get('base')->model('company_extra')->getRow('key', array('uid' => $this->seller['seller_id'], 'from' => '1', 'key' => array('business_licence', 'three_lesstion')));
+            $licence_type = $this->_new_or_old();
         }
+
         $columns = $this->page_setting($step, $licence_type);
         $this->pagedata['info'] = $this->edit_info($columns);
         $this->pagedata['page'] = $columns;
@@ -384,7 +398,21 @@ class seller_ctl_site_passport extends seller_frontpage {
         }
     }
 
-    private function page_setting($step, $licence_type) {
+    //营业执照类型 老版or新版
+    private function _new_or_old()
+    {
+        $licence_type = $this->_request->get_get('card');
+        if ($licence_type)
+            return $licence_type;
+        $licence_type = $licence_type ? $licence_type : 'new';
+        //查询入住营业执照信息判断是否是新版还是老版
+        $checked = app::get('base')->model('company_extra')->getRow('*', array('uid' => $this->seller['seller_id'], 'from' => '1', 'key|in' => array('business_licence', 'three_lesstion')), '0', '1', 'content_id desc');
+        $licence_type = $checked['key'] == 'three_lesstion' ? 'new' : 'old';
+        return $licence_type;
+    }
+
+    private function page_setting($step, $licence_type)
+    {
         $conf = $this->app->getConf('seller_entry');
         $columns = array_flip($conf['comm'][$step]);
 
@@ -409,38 +437,59 @@ class seller_ctl_site_passport extends seller_frontpage {
     }
 
     //查询已注册的信息
-    public function &edit_info($columns) {
+    public function &edit_info($columns)
+    {
         $info = array();
         $filter = array('uid' => $this->seller['seller_id'], 'from' => '1');
         $company_extra = app::get('base')->model('company_extra')->
-                getList('*', array_merge($filter, array('key' => $columns)));
+        getList('*', array_merge($filter, array('key|in' => array_keys($columns))));
+        $conf = $this->app->getConf('seller_entry');
         foreach ($company_extra as $value) {
+
+            if (in_array($value['key'], $conf['array_info'])) {
+                $info['company_extra'][$value['key']][] = $value;
+                continue;
+            }
             $info['company_extra'][$value['key']] = $value;
         }
         $info['company_extra']['store'] = app::get('store')->model('store')->getRow('*', $filter);
         $info['company_extra']['company'] = app::get('base')->model('company')->getRow('*', $filter);
         $info['company_extra']['contact'] = app::get('base')->model('contact')->getRow('*', $filter);
         $info['company_extra']['brand'] = $this->app->model('brand')->getRow('*', array('seller_id' => $this->seller['seller_id']));
-
         return $info;
     }
 
     //ajax提交保存电商团队成员
-    public function save_ecgroup() {
-        if ($_POST) {
-            $params = utils::_filter_input($_POST);
-            unset($_POST);
+    public function save_ecgroup()
+    {
+        if (!$_POST) {
+            $this->splash('error', '', '非法请求');
         }
+        $params = utils::_filter_input($_POST);
+        unset($_POST);
+        $type = key($params);
+        print_r($params);
+        $data = array();
+        foreach ($params[$type]['value'] as $key => $value) {
+            $data[$type]['value'][$key] = $value[0];
+        }
+
+        $data[$type]['uid'] = $this->seller['seller_id'];
+        $data[$type]['from'] = '1';
+        $data[$type]['key'] = $type;
+        $data[$type]['attach'] = $params[$type]['attach'][0];
+        $func_name = $data[$type]['content_id'] ? 'save' : 'insert';
         $mdl_company_extra = app::get('base')->model('company_extra');
-        $params['ec_group_employees']['uid'] = $this->seller['seller_id'];
-        $params['ec_group_employees']['from'] = '1';
-        if (!$params['ec_group_employees']['content_id'] = $mdl_company_extra->insert($params['ec_group_employees'])) {
+        $result = $mdl_company_extra->$func_name($data[$type]);
+        $data[$type]['content_id'] = $func_name == 'insert' ? $result : $data[$type]['content_id'];
+        if (!$result) {
             $this->splash('error', '', '操作失败');
         }
-        $this->splash('success', '', $params['ec_group_employees']);
+        $this->splash('success', '', $data[$type]);
     }
 
-    private function _entry($params) {
+    private function _entry($params)
+    {
         $db = vmc::database();
         $db->beginTransaction();
         $extra_columns = $this->page_setting($params['pageIndex']);
@@ -493,14 +542,22 @@ class seller_ctl_site_passport extends seller_frontpage {
             }
         }
         //扩展
+
         $mdl_company_extra = app::get('base')->model('company_extra');
         foreach ($extra_columns as $key => $col) {
             if (isset($params[$key]) && !empty($params[$key])) {
                 $params[$key]['content_id'] = $params[$key]['content_id'];
                 $params[$key]['uid'] = $this->seller['seller_id'];
                 $params[$key]['from'] = 1;
+                //电商成员信息
+                if (is_array(reset($params[$key]['value']))) {
+                    if (!$this->_save_array($key, $params[$key])) {
+                        $db->rollback();
+                        $this->splash('error', $redirect, '注册失败');
+                    }
+                    continue;
+                }
                 if (!$mdl_company_extra->extra_save($key, $params)) {
-
                     $db->rollback();
                     $this->splash('error', $redirect, '注册失败');
                 }
@@ -514,8 +571,52 @@ class seller_ctl_site_passport extends seller_frontpage {
         $db->commit();
     }
 
+    private function _save_array($key, $params = null)
+    {
+
+        if (!empty($params)) {
+            $mdl_company_extra = app::get('base')->model('company_extra');
+            $first_arr = reset($params['value']);
+            $length = count($first_arr);
+            for ($i = 0; $i < $length; $i++) {
+                if (empty($first_arr[$i])) {
+                    continue;
+                }
+                $data['uid'] = $this->seller['seller_id'];
+                $data['from'] = 1;
+                $data['content_id'] = $params['content_id'][$i];
+                $data['attach'] = $params['attach'][$i];
+                $data['key'] = $key;
+                $data['attach'] = $params['attach'][$i];
+
+                foreach ($params['value'] as $k => $v) {
+                    $data['value'][$k] = $v[$i];
+
+                }
+                if (!$mdl_company_extra->save($data)) {
+                    return false;
+                }
+            }
+            return true;
+        }
+    }
+
+    //ajax删除电商团队、主要设备
+    public function del_extra()
+    {
+        if(!$_POST){
+            $this->splash('error', '', '非法请求');
+        }
+        $data = array('content_id' => $_POST['content_id'], 'uid' => $this->member['member_id']);
+        if(!app::get('base')->model('company_extra')->delete($data)){
+            $this->splash('error', '', '操作失败');
+        }
+        $this->splash('success', '', '操作成功');
+    }
+
     //商家入驻类型选择
-    public function identity() {
+    public function identity()
+    {
         if ($_POST) {
             $data = array('seller_id' => $this->seller['seller_id'], 'ident' => $_POST['ident']);
             if (!$this->app->model('sellers')->save($data)) {

@@ -1,4 +1,4 @@
-<input type="hidden" name="sale_manager[content_id]"  value="<{$extra.content_id}>" class="form-control">
+<input type="hidden" name="sale_manager[content_id]"  value="<{$extra.sale_manager.content_id}>" class="form-control">
 <div id="sale_manager">
 	<h4>销售部经理</h4>
 	<div class="form-group">
@@ -6,7 +6,7 @@
 			<span class="text-danger">*</span>姓名：
 		</label>
 		<div class="col-xs-4">
-			<input type="text" value="<{$extra.value.name}>" name="sale_manager[value][name]" class="form-control">
+			<input type="text" value="<{$extra.sale_manager.value.name}>" name="sale_manager[value][name]" class="form-control">
 		</div>
 	</div>
 	<div class="form-group">
@@ -14,7 +14,7 @@
 			<span class="text-danger">*</span>年龄：
 		</label>
 		<div class="col-xs-4">
-			<input type="text" value="<{$extra.value.age}>" name="sale_manager[value][age]" class="form-control">
+			<input type="text" value="<{$extra.sale_manager.value.age}>" name="sale_manager[value][age]" class="form-control">
 		</div>
 	</div>
 	<div class="form-group">
@@ -22,7 +22,7 @@
 			<span class="text-danger">*</span>学历：
 		</label>
 		<div class="col-xs-4">
-		<{include file="site/passport/companyInfo/grade.html" data=array("sale_manager[value][edu]","{$extra.value.edu}")}>
+		<{include file="site/passport/companyInfo/grade.html" data=array("sale_manager[value][edu]","{$extra.sale_manager.value.edu}")}>
 		</div>
 	</div>
 	<div class="form-group">
@@ -30,7 +30,7 @@
 			<span class="text-danger">*</span>联系方式：
 		</label>
 		<div class="col-xs-4">
-			<input type="text" value="<{$extra.value.contact}>" name="sale_manager[value][contact]" class="form-control">
+			<input type="text" value="<{$extra.sale_manager.value.contact}>" name="sale_manager[value][contact]" class="form-control">
 		</div>
 	</div>
 	<div class="form-group">
@@ -39,10 +39,10 @@
 		</label>
 		<div class="col-xs-4">
 			<div class="filebox">
-	            <input type="hidden" value="<{$extra.attach}>" name="sale_manager[attach]"/>
+	            <input type="hidden" value="<{$extra.sale_manager.attach}>" name="sale_manager[attach]"/>
 	            <input type="file" data-url="<{link app=image ctl=site_upload act=index}>" accept="image/*" class="file_input" />
 	            <div class="showImg">
-	                 <img src="<{if $extra.attach eq ''}><{$base_url}>/themes/pc/default/statics/images/file_add.jpg<{else}><{$extra.attach|storager:'xs'}><{/if}>">    
+	                 <img src="<{if $extra.sale_manager.attach eq ''}><{$base_url}>/themes/pc/default/statics/images/file_add.jpg<{else}><{$extra.sale_manager.attach|storager:'xs'}><{/if}>">    
 	            </div>
 	        </div>
 		</div>

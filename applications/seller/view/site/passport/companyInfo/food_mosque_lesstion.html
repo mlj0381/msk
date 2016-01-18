@@ -1,4 +1,4 @@
-<input type="hidden" name="food_mosque_lesstion[content_id]"  value="<{$extra.content_id}>" class="form-control">
+<input type="hidden" name="food_mosque_lesstion[content_id]"  value="<{$extra.food_mosque_lesstion.content_id}>" class="form-control">
 <div id="iso14001_lesstion">
 	<h4>清真食品生产经营许可证</h4>	
 	<div class="form-group">
@@ -6,7 +6,7 @@
 			证书编号：
 		</label>
 		<div class="col-xs-4">
-			<input type="text" value="<{$extra.value.code}>" name="food_mosque_lesstion[value][code]" class="form-control">
+			<input type="text" value="<{$extra.food_mosque_lesstion.value.code}>" name="food_mosque_lesstion[value][code]" class="form-control">
 		</div>
 	</div>
 	<div class="form-group">
@@ -14,7 +14,7 @@
 			认证标准：
 		</label>
 		<div class="col-xs-4">
-			<input type="text" value="<{$extra.value.stand}>" name="food_mosque_lesstion[value][stand]" class="form-control">
+			<input type="text" value="<{$extra.food_mosque_lesstion.value.stand}>" name="food_mosque_lesstion[value][stand]" class="form-control">
 		</div>
 	</div>
 	<div class="form-group">
@@ -22,7 +22,7 @@
 			认证范围：
 		</label>
 		<div class="col-xs-4">
-			<input type="text" value="<{$extra.value.range}>" name="food_mosque_lesstion[value][range]" class="form-control">
+			<input type="text" value="<{$extra.food_mosque_lesstion.value.range}>" name="food_mosque_lesstion[value][range]" class="form-control">
 		</div>
 	</div>
 	<div class="form-group">
@@ -30,7 +30,7 @@
 			发放证日期：
 		</label>
 		<div class="col-xs-4">
-			<input type="text" value="<{$extra.value.grant_date}>" name="food_mosque_lesstion[value][grant_date]" class="form-control">
+			<input type="text" value="<{$extra.food_mosque_lesstion.value.grant_date}>" name="food_mosque_lesstion[value][grant_date]" class="form-control">
 		</div>
 	</div>
 	<div class="form-group">
@@ -38,8 +38,8 @@
 			营业期限：
 		</label>
 		<div class="col-xs-4">
-			<input type="text" value="<{$extra.value.start}>" name="food_mosque_lesstion[value][start]" class="form-control" style="width:175px; display: inline-block;"> 至 
-			<input type="text" value="<{$extra.value.end}>" name="food_mosque_lesstion[value][end]" class="form-control"  style="width:175px; display: inline-block;">
+			<input type="text" value="<{$extra.food_mosque_lesstion.value.start}>" name="food_mosque_lesstion[value][start]" class="form-control" style="width:175px; display: inline-block;"> 至 
+			<input type="text" value="<{$extra.food_mosque_lesstion.value.end}>" name="food_mosque_lesstion[value][end]" class="form-control"  style="width:175px; display: inline-block;">
 		</div>
 	</div>
 	<div class="form-group">
@@ -47,7 +47,7 @@
 			认证机构：
 		</label>
 		<div class="col-xs-4">
-			<input type="text" value="<{$extra.value.approve_org}>" name="food_mosque_lesstion[value][approve_org]" class="form-control">
+			<input type="text" value="<{$extra.food_mosque_lesstion.value.approve_org}>" name="food_mosque_lesstion[value][approve_org]" class="form-control">
 		</div>
 	</div>
 	<div class="form-group">
@@ -56,10 +56,10 @@
 		</label>
 		<div class="col-xs-4">
 			<div class="filebox">
-	            <input type="hidden" value="<{$extra.attach}>" name="food_mosque_lesstion[attach]"/>
+	            <input type="hidden" value="<{$extra.food_mosque_lesstion.attach}>" name="food_mosque_lesstion[attach]"/>
 	            <input type="file" data-url="<{link app=image ctl=site_upload act=index}>" accept="image/*" class="file_input" />
 	            <div class="showImg">
-	                 <img src="<{if $extra.attach eq ''}><{$base_url}>/themes/pc/default/statics/images/file_add.jpg<{else}><{$extra.attach|storager:'xs'}><{/if}>">    
+	                 <img src="<{if $extra.food_mosque_lesstion.attach eq ''}><{$base_url}>/themes/pc/default/statics/images/file_add.jpg<{else}><{$extra.food_mosque_lesstion.attach|storager:'xs'}><{/if}>">    
 	            </div>
 	        </div>
 		</div>

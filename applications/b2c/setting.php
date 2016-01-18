@@ -141,18 +141,43 @@ $setting = array(
     ),
     'pages_position_types' => array(
         'default' => array(
-            '0' => ('普通'),            
-			'1' => ('幻灯'),
-			'2' => ('商品'),
+            '0' => ('普通'),
+            '1' => ('幻灯'),
+            '2' => ('商品'),
         )
     ),
-	'pages_content_types' => array(
+    'pages_content_types' => array(
         'default' => array(
             '0' => ('普通'),
-            '1' => ('商品')			
+            '1' => ('幻灯'),
+            '2' => ('商品')
         )
     ),
     'member_extra_column' => array(
         'default' => array('business_licence', 'member_manage_info')
-    )
+    ),
+    'serach' => array(
+        'default' => array(
+            'price' => array(
+                1 => array('id' => 1, 'name' => '100以下', 'params' => array(0, 100)),
+                2 => array('id' => 2, 'name' => '100 - 200', 'params' => array(100, 200)),
+                3 => array('id' => 3, 'name' => '200 - 300', 'params' => array(200, 300)),
+                4 => array('id' => 4, 'name' => '300 - 400', 'params' => array(300, 400)),
+                5 => array('id' => 5, 'name' => '400 - 500', 'params' => array(400, 500)),
+                6 => array('id' => 6, 'name' => '500 - 600', 'params' => array(500, 600)),
+                7 => array('id' => 7, 'name' => '600 - 700', 'params' => array(600, 700)),
+                8 => array('id' => 8, 'name' => '700以上', 'params' => array(700)),
+            ),
+            'norms' => array(
+                array('id' => 1, 'name' => '规格1'),
+                array('id' => 1, 'name' => '规格2'),
+                array('id' => 1, 'name' => '规格3'),
+            ),
+            'ability' => array(
+                array('id' => 1, 'name' => '货源充足', 'params' => array(30)),//默认单位吨
+                array('id' => 1, 'name' => '货源一般', 'params' => array(20, 30)),
+                array('id' => 1, 'name' => '货源不足', 'params' => array(10)),
+            ),
+        ),
+    ),
 );
