@@ -67,7 +67,6 @@ class b2c_ctl_admin_pages_content extends desktop_controller
 		$pages_id = isset($this->_filter['pages_id']) ? $pages_id = $this->_filter['pages_id'] : 0;
 		$position_id = isset($this->_filter['position_id']) ? $this->_filter['position_id'] : 0;
 		$this->pagedata['postion_psize']= $this->mPosition->getRow('width,height',$this->_filter['position_id']);
-		print_r($this->pagedata['postion_psize']);
 		$this->_set_filter_options($pages_id, $position_id);
 		$this->page('admin/pages/content.form.html');
 	}
