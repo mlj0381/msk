@@ -165,14 +165,12 @@ $setting = array(
     'member_extra_column' => array(
         'default' => array(
             1 => array(
-                'company',
                 'company_extra',
                 'business_licence',
                 'organization_licence',
                 'tax_licence',
                 'shop',
                 'food_flow_licence',
-                'contact',
                 'contact_extra'
             ),
             2 => array('manageInfo'),
