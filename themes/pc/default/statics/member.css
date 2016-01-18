@@ -2554,6 +2554,9 @@ ol {
 .receiver_addrpage .list-group .list-group-item .addr_ctr btn {
   margin: 3px auto;
 }
+.receiver_addrpage .page-header a.btn {
+  margin-top: 8px;
+}
 .receiver_addrpage .receiver_form .region {
   width: 100%;
 }
