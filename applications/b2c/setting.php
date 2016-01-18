@@ -149,7 +149,8 @@ $setting = array(
     'pages_content_types' => array(
         'default' => array(
             '0' => ('普通'),
-            '1' => ('商品')
+            '1' => ('幻灯'),
+            '2' => ('商品')
         )
     ),
     'member_extra_column' => array(

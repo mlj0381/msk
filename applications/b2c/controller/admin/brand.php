@@ -13,6 +13,7 @@
 class b2c_ctl_admin_brand extends desktop_controller {
 
     function index() {
+
         $this->finder('b2c_mdl_brand', array(
             'title' => ('商品品牌'),
             'use_buildin_recycle' => true,

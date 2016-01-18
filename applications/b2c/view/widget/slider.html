@@ -1,4 +1,3 @@
-
 <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
     <!-- Indicators -->
     <ol class="carousel-indicators">
@@ -8,9 +7,9 @@
     </ol>
     <!-- Wrapper for slides -->
     <div class="carousel-inner" role="listbox">
-        <{foreach from=$slider key=key item=item}>
+        <{foreach from=$contents key=key item=item}>
         <div class="item">
-            <a href="<{$item.ad_content.url[0]}>"><img src="<{$item.ad_content.image[0]|storager}>" alt="<{$item.ad_content.title[0]}>"></a>
+            <a href="<{$item.url}>"><img src="<{$item.image_id|storager}>" alt="<{$item.title}>"></a>
         </div>
         <{/foreach}>
     </div>
