@@ -3,7 +3,7 @@
 		<menu app='b2c' controller='site_member' action='index' display='true' order="60">全部功能</menu>
     </menugroup>
 
-	<menugroup name="">
+	<menugroup name="index" label="全部功能">
         <menu app='b2c' controller='site_cart' action='index' display='true' order="60">我的购物车</menu>
         <menu app='b2c' controller='site_member' action='orders' display='true' order="60">已买到的商品</menu>
 		<menu app='b2c' controller='site_member' action='buy_store' display='true' order="60">购买过的店铺</menu>
@@ -19,5 +19,17 @@
         <menu app='b2c' controller='site_member' action='securitycenter' display='true' order="60">安全中心</menu>
         <menu app='b2c' controller='site_member' action='receiver' display='true' order="60">我的收货地址</menu>
         <menu app='b2c' controller='site_member' action='index' display='true' order="60">多鲜乐会员</menu>
+    </menugroup>
+
+    <menugroup name="setting" label="帐户设置">
+        <menu app='b2c' controller='site_comment' action='show_list' display='true' order="60">人个资料</menu>
+        <menu app='b2c' controller='site_comment' action='show_list' display='true' order="60">安全设置</menu>
+        <menu app='b2c' controller='site_comment' action='show_list' display='true' order="60">收货地址</menu>
+        <menu app='b2c' controller='site_comment' action='show_list' display='true' order="60">增票资质</menu>
+        <menu app='b2c' controller='site_comment' action='show_list' display='true' order="60">我的会员卡</menu>
+    </menugroup>
+
+    <menugroup name="message" label="消息中心">
+        <menu app='b2c' controller='site_comment' action='show_list' display='true' order="60">站内信</menu>
     </menugroup>
 </menus>

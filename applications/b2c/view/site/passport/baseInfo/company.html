@@ -1,60 +1,60 @@
 <div id="buyerInfo">
     <h2>企业信息</h2>
-    <input type="hidden" name="" value="" />
+    <input type="hidden" name="company[company_id]" value="<{$extra.company.company_id}>" />
     <div class="form-group">
         <label for="" class="col-md-2 control-label"><span class="text-danger">*</span> 买家全名：</label>
         <div class="col-md-5">
-            <input type="text" name="company[name]" class="form-control" id="customer_name" placeholder="请输入公司或店铺全称">
+            <input type="text" name="company[name]" value="<{$extra.company.name}>" class="form-control" id="customer_name" placeholder="请输入公司或店铺全称">
         </div>
     </div>
     <div class="form-group">
         <label for="" class="col-md-2 control-label"><span class="text-danger">*</span>营业地区：</label>
         <div class="col-md-6 customer_region">
-            <{input type=region name="company[area]" id="customer_region" }>
+            <{input type=region name='company[area]' value=$company.area}>
         </div>
     </div>
     <div class="form-group">
         <label for="" class="col-md-2 control-label"><span class="text-danger">*</span>详细地址：</label>
         <div class="col-md-5 ">
-            <input type="text" class="form-control" name="company[address]" placeholder="不用再填写省市县">
+            <input type="text" class="form-control" value="<{$extra.company.address}>"  name="company[address]" placeholder="不用再填写省市县">
         </div>
     </div>
     <div class="form-group">
         <label for="" class="col-md-2 control-label"><span class="text-danger">*</span>店铺号：</label>
         <div class="col-md-5 ">
-            <input type="text" class="form-control" name="company[store_num]" placeholder="如：“大润发张江店”">
+            <input type="text" class="form-control" value="<{$extra.company.store_num}>"  name="shop[store_num]" placeholder="如：“大润发张江店”">
         </div>
     </div>
     <div class="form-group">
         <label for="" class="col-md-2 control-label">买家网站网址：</label>
         <div class="col-md-5 ">
-            <input type="text" class="form-control" name="company[web_site]" placeholder="请输入您的店铺网址链接">
+            <input type="text" class="form-control" value="<{$extra.company.web_site}>" name="company[web_site]" placeholder="请输入您的店铺网址链接">
         </div>
     </div>
     <div class="form-group">
         <label for="" class="col-md-2 control-label">微信公众号：</label>
         <div class="col-md-5 ">
-            <input type="text" class="form-control" name="company[wechat]" placeholder="">
+            <input type="text" class="form-control" value="<{$extra.company.web_site}>"  name="company_extra[wechat]" placeholder="">
         </div>
     </div>
     <div class="form-group">
         <label for="" class="col-md-2 control-label">营业电话：</label>
         <div class="col-md-5">
-            <input type="text" name="company[tel]" class="form-control" id="company_phone">
+            <input type="text" value="<{$extra.company.tel}>" name="company[tel]" class="form-control" id="company_phone">
         </div>
     </div>
     <div class="form-group">
         <label for="" class="col-md-2 control-label">广告信息：</label>
         <div class="col-md-5">
-            <input type="text" name="company[adv_info]" class="form-control" id="company_phone">
+            <input type="text" name="company_extra[adv_info]" class="form-control" id="company_phone">
         </div>
     </div>
     <div class="form-group">
         <label for="" class="col-md-2 control-label"><span class="text-danger">*</span>买家等级：</label>
         <div class="col-md-5">
-            <span><input type="radio" name="buyer_rank"> 大买家</span>&nbsp;&nbsp;
-            <span><input type="radio" name="buyer_rank"> 标准买家</span>&nbsp;&nbsp;
-            <span><input type="radio" name="buyer_rank"> 小买家</span>
+            <span><input type="radio" name="buyer_rank" name="company_extra[lv]"> 大买家</span>&nbsp;&nbsp;
+            <span><input type="radio" name="buyer_rank" name="company_extra[lv]"> 标准买家</span>&nbsp;&nbsp;
+            <span><input type="radio" name="buyer_rank" name="company_extra[lv]"> 小买家</span>
         </div>
     </div>
     <div class="form-group">
@@ -136,79 +136,79 @@
     <div class="form-group">
         <label for="" class="col-md-2 control-label"><span class="text-danger">*</span>姓名：</label>
         <div class="col-md-5">
-            <input type="text" name="contact[buinour_name]" class="form-control" id="boss_name" placeholder="" id="boss_name">
+            <input type="text" name="contact_extra[value][buinour_name]" class="form-control" id="boss_name" placeholder="" id="boss_name">
             <div id="boss_nameTip"></div>
         </div>
     </div>
     <div class="form-group">
         <label for="" class="col-md-2 control-label"><span class="text-danger">*</span>手机：</label>
         <div class="col-md-5">
-            <input type="text" name="contact[buinour_mobile]" class="form-control" id="boss_phone">
+            <input type="text" name="contact_extra[value][buinour_mobile]" class="form-control" id="boss_phone">
         </div>
     </div>
     <div class="form-group">
         <label for="" class="col-md-2 control-label">QQ：</label>
         <div class="col-md-5">
-            <input type="text" name="contact[buinour_qq]" class="form-control" id="" placeholder="此项重点填写">
+            <input type="text" name="contact_extra[value][buinour_qq]" class="form-control" id="" placeholder="此项重点填写">
         </div>
     </div>
     <div class="form-group">
         <label for="" class="col-md-2 control-label">微信：</label>
         <div class="col-md-5">
-            <input type="text" name="contact[buinour_wechat]" class="form-control" id="" placeholder="此项重点填写">
+            <input type="text" name="contact_extra[value][buinour_wechat]" class="form-control" id="" placeholder="此项重点填写">
         </div>
     </div>
     <h3>采购员</h3>
     <div class="form-group">
         <label for="" class="col-md-2 control-label"><span class="text-danger">*</span>姓名：</label>
         <div class="col-md-5">
-            <input type="text" name="contact[buyer_name]" class="form-control" id="boss_name" placeholder="" id="boss_name">
+            <input type="text" name="contact_extra[value][buyer_name]" class="form-control" id="boss_name" placeholder="" id="boss_name">
             <div id="boss_nameTip"></div>
         </div>
     </div>
     <div class="form-group">
         <label for="" class="col-md-2 control-label"><span class="text-danger">*</span>手机：</label>
         <div class="col-md-5">
-            <input type="text" name="contact[buyer_mobile]" class="form-control" id="boss_phone">
+            <input type="text" name="contact_extra[value][buyer_mobile]" class="form-control" id="boss_phone">
         </div>
     </div>
     <div class="form-group">
         <label for="" class="col-md-2 control-label">QQ：</label>
         <div class="col-md-5">
-            <input type="text" name="contact[buyer_qq]" class="form-control" id="" placeholder="此项重点填写">
+            <input type="text" name="contact_extra[value][buyer_qq]" class="form-control" id="" placeholder="此项重点填写">
         </div>
     </div>
     <div class="form-group">
         <label for="" class="col-md-2 control-label">微信：</label>
         <div class="col-md-5">
-            <input type="text" name="contact[buyer_wechat]" class="form-control" id="" placeholder="此项重点填写">
+            <input type="text" name="contact_extra[value][buyer_wechat]" class="form-control" id="" placeholder="此项重点填写">
         </div>
     </div>
     <h3>有权联系人</h3>
     <div class="form-group">
         <label for="" class="col-md-2 control-label"><span class="text-danger">*</span>姓名：</label>
         <div class="col-md-5">
-            <input type="text" name="contact[power_name]" class="form-control" id="pressing_name">
+            <input type="text" name="contact[name]" class="form-control" id="pressing_name">
             <div id="pressing_nameTip"></div>
         </div>
     </div>
     <div class="form-group">
         <label for="" class="col-md-2 control-label"><span class="text-danger">*</span>手机：</label>
         <div class="col-md-5">
-            <input type="text" name="contact[power_mobile]" class="form-control" id="pressing_phone">
+            <input type="text" name="contact[tel]" class="form-control" id="pressing_phone">
             <div id="pressing_phoneTip"></div>
         </div>
     </div>
     <div class="form-group">
         <label for="" class="col-md-2 control-label">QQ：</label>
         <div class="col-md-5">
-            <input type="text" name="contact[power_qq]" class="form-control" id="">
+            <input type="text" name="contact[contact_qq]" class="form-control" id="">
         </div>
     </div>
     <div class="form-group">
         <label for="" class="col-md-2 control-label">微信：</label>
         <div class="col-md-5">
-            <input type="text" name="contact[power_wechat]" class="form-control" id="">
+            <input type="text" name="contact[contact_wechat]" class="form-control" id="">
         </div>
     </div>
     <hr>
