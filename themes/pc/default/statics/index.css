@@ -39,10 +39,12 @@
 }
 .index_page .firstContainer .sliderbox {
   position: relative;
+  width: 100%;
 }
 .index_page .firstContainer .sliderbox .slide {
   position: absolute;
   z-index: 50;
+  width: 100%;
 }
 .index_page .firstContainer .sliderbox .slide .carousel-inner img {
   width: 100%;

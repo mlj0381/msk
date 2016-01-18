@@ -240,3 +240,19 @@ $(function() {
         return this;
     }
 })(jQuery);
+
+
+jsonDecode = function(re) {
+    if (typeof(re) == 'object') {
+        return re;
+    }
+    try {
+        re = JSON.parse(re);
+        if (!re || typeof(re) != 'object')
+            re = $.parseJSON(re);
+        if (!re || typeof(re) != 'object')
+            return false;
+    } catch (e) {
+        return false;
+    }
+}

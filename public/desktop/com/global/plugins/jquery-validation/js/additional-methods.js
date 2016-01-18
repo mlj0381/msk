@@ -59,7 +59,7 @@ $.validator.addMethod("accept", function(value, element, param) {
 		if (element.files && element.files.length) {
 			for (i = 0; i < element.files.length; i++) {
 				file = element.files[i];
-
+				console.log(file.type);
 				// Grab the mimetype from the loaded file, verify it matches
 				if (!file.type.match(new RegExp( ".?(" + typeParam + ")$", "i"))) {
 					return false;
