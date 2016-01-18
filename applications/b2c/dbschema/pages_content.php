@@ -78,7 +78,8 @@ $db['pages_content'] = array(
 		'type' => array(
            'type' => array(
                 '0' => ('普通'),
-				'1' => ('商品'),
+                '1' => ('幻灯'),
+				'2' => ('商品'),
             ),
             'label' => ('类型'),
             'comment' => ('类型'),
