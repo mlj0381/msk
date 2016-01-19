@@ -177,10 +177,10 @@ class b2c_ctl_site_passport extends b2c_frontpage
                 $conf = $this->_page_company();
                 break;
             case 2:
-                $this->_page_manage();
+                $conf = $this->_page_manage();
                 break;
             case 3:
-                $this->_page_delivery();
+                $conf = $this->_page_delivery();
                 break;
         }
         $page_setting = $this->app->getConf('member_extra_column');
@@ -191,6 +191,7 @@ class b2c_ctl_site_passport extends b2c_frontpage
                 unset($conf['page_setting'][$key]);
             }
         }
+
         return $conf;
     }
 
@@ -225,7 +226,11 @@ class b2c_ctl_site_passport extends b2c_frontpage
      * */
     private function _page_manage()
     {
-
+        //使用方向  经营场所
+        $conf['info'] = $this->app->getConf('main_products');
+        $filter = array('uid' => $this->member['member_id'], 'from' => '0', 'key');
+        $conf['info']['manageInfo'] = app::get('base')->model('company_extra')->getList('*', $filter);
+        return $conf;
     }
 
     /*
@@ -235,7 +240,13 @@ class b2c_ctl_site_passport extends b2c_frontpage
      * */
     private function _page_delivery()
     {
-
+        //配送信息
+        $conf['info'] = $this->app->getConf('main_products');
+        //读取收货时间信息
+        $conf['info']['time'] = $this->app->getConf('receiving_time');
+        $filter = array('uid' => $this->member['member_id'], 'from' => '0');
+        $conf['info']['deliveryInfo'] = app::get('base')->model('company_extra')->getList('*', $filter);
+        return $conf;
     }
 
 
@@ -248,7 +259,8 @@ class b2c_ctl_site_passport extends b2c_frontpage
         $page_setting = $this->app->getConf('member_extra_column');
         $pageIndex = $type == 'up' ? $pageIndex -1 : $pageIndex +1;
         $pageIndex <= 1 && $pageIndex = 1;
-        $pageIndex >= count($page_setting) && $pageIndex = count($page_setting);
+        $pageIndexMax = count($page_setting) + 1;
+        $pageIndex >=  $pageIndexMax && $pageIndex = $pageIndexMax;
         $this->pagedata['conf'] = $this->_page_setting($pageIndex);
         if ($_POST) {
             $redirect = $this->gen_url(array(
@@ -295,7 +307,12 @@ class b2c_ctl_site_passport extends b2c_frontpage
         }
         $this->set_tmpl('passport');
         $this->pagedata['pageIndex'] = $pageIndex;
-        $this->page('site/passport/signup_baseInfo.html');
+        if($pageIndex >= $pageIndexMax){
+            $this->page('site/passport/signup_complete.html');
+        }else{
+            $this->page('site/passport/signup_baseInfo.html');
+        }
+
     }
 
     //注册页面--注册完成

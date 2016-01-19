@@ -1,80 +1,78 @@
 <div id="deliveryInfo">
 	<h2>配送信息</h2>
 	<div class="form-group">
+        <input type="hidden" value="<{$extra.deliveryInfo.deliveryInfo.content_id}>" name="deliveryInfo[content_id]"/>
 		<label for="" class="col-md-2 control-label"><span class="text-danger">*</span>配送地址：</label>
         <div class="col-md-6">
-            <{input type=region name="delivery_info[value][addr]"}>
+            <{input type=region name="deliveryInfo[value][addr]" value=$extra.deliveryInfo.deliveryInfo.value.addr}>
 
         </div>
 	</div>
 	<div class="form-group">
 		<label for="" class="col-md-2 control-label"><span class="text-danger">*</span>配送详细地址：</label>
         <div class="col-md-5">
-            <input type="text" placeholder="详细地址" class="form-control" name="delivery_info[value][detail_addr]">
+            <input type="text" placeholder="详细地址" value="<{$extra.deliveryInfo.deliveryInfo.value.detail_addr}>" class="form-control" name="deliveryInfo[value][detail_addr]">
         </div>
 	</div>
 	<div class="form-group">
 		<label for="" class="col-md-2 control-label"><span class="text-danger">*</span>计划订货间隙：</label>
         <div class="col-md-5">
-            <input type="text" class="form-control" placeholder="例如：2015/12/10" name="delivery_info[value][plan_booking_gap]">
+            <input type="text" class="form-control" value="<{$extra.deliveryInfo.deliveryInfo.value.plan_booking_gap}>" placeholder="例如：2015/12/10" name="deliveryInfo[value][plan_booking_gap]">
         </div>
 	</div>
 	<div class="form-group">
 		<label for="" class="col-md-2 control-label"><span class="text-danger">*</span>计划订货量：</label>
         <div class="col-md-5">
-            <input type="text" class="form-control" name="delivery_info[value][plan_booking_gap]">
+            <input type="text" class="form-control" value="<{$extra.deliveryInfo.deliveryInfo.value.plan_booking_order}>"
+                   name="deliveryInfo[value][plan_booking_order]">
         </div>
 	</div>
 	<div class="form-group">
 		<label for="" class="col-md-2 control-label"><span class="text-danger">*</span>实际订货间隙：</label>
         <div class="col-md-5">
-            <input type="text" class="form-control" placeholder="例如：2015/12/10" name="delivery_info[value][reality_booking_gap]">
+            <input type="text" class="form-control" value="<{$extra.deliveryInfo.deliveryInfo.value.reality_booking_gap}>" placeholder="例如：2015/12/10" name="deliveryInfo[value][reality_booking_gap]">
         </div>
 	</div>
 	<div class="form-group">
 		<label for="" class="col-md-2 control-label"><span class="text-danger">*</span>实际订货量：</label>
         <div class="col-md-5">
-            <input type="text" class="form-control" name="delivery_info[value][reality_booking_amount]">
+            <input type="text" class="form-control"  value="<{$extra.deliveryInfo.deliveryInfo.value.reality_booking_amount}>" name="deliveryInfo[value][reality_booking_amount]">
         </div>
 	</div>
 	<div class="form-group">
 		<label for="" class="col-md-2 control-label"><span class="text-danger">*</span>习惯支付方式：</label>
         <div class="col-md-5 pay_method">
-       		<span><input type="checkbox" name="delivery_info[value][pay]"> 网银</span>
-       		<span><input type="checkbox" name="delivery_info[value][pay]"> POS机</span>
-       		<span><input type="checkbox" name="delivery_info[value][pay]"> 会员卡</span>
+       		<span><input type="checkbox" name="deliveryInfo[value][pay][]" value="<{$extra.deliveryInfo.deliveryInfo.value.pay}>"> 网银</span>
+       		<span><input type="checkbox" name="deliveryInfo[value][pay][]" value="<{$extra.deliveryInfo.deliveryInfo.value.pay}>"> POS机</span>
+       		<span><input type="checkbox" name="deliveryInfo[value][pay][]" value="<{$extra.deliveryInfo.deliveryInfo.value.pay}>"> 会员卡</span>
         </div>
 	</div>
 	<div class="form-group">
 		<label for="" class="col-md-2 control-label"><span class="text-danger">*</span>习惯正常收货时间段：</label>
         <div class="col-md-5 delivery_time">
-       		<span><input type="checkbox"> 00:00-03:00</span>
-       		<span><input type="checkbox"> 03:00-06:00</span>
-       		<span><input type="checkbox"> 06:00-09:00</span>
-       		<span><input type="checkbox"> 09:00-12:00</span>
-       		<span><input type="checkbox"> 12:00-15:00</span>
-       		<span><input type="checkbox"> 15:00-18:00</span>
-       		<span><input type="checkbox"> 18:00-21:00</span>
-       		<span><input type="checkbox"> 21:00-00:00</span>
+            <{foreach from=$extra.time key=key item=item}>
+            <span><input type="checkbox" value="<{$key}>" name="deliveryInfo[value][time][]"> <{$item}></span>
+            <{/foreach}>
         </div>
 	</div>
 	<div class="form-group">
 		<label for="" class="col-md-2 control-label"><span class="text-danger">*</span>最早收货时间：</label>
         <div class="col-md-5">
-       		<input type="text" class="form-control" name="delivery_info[value][delivery_early]">
+       		<input type="text" class="form-control" value="<{$extra.deliveryInfo.deliveryInfo.value.delivery_early}>" name="deliveryInfo[value][delivery_early]">
         </div>
 	</div>
 	<div class="form-group">
 		<label for="" class="col-md-2 control-label"><span class="text-danger">*</span>最晚收货时间：</label>
         <div class="col-md-5">
-       		<input type="text" class="form-control" name="delivery_info[value][delivery_late]">
+       		<input type="text" class="form-control" value="<{$extra.deliveryInfo.deliveryInfo.value.delivery_late}> " name="deliveryInfo[value][delivery_late]">
         </div>
 	</div>
 	<div class="form-group">
 		<label for="" class="col-md-2 control-label"><span class="text-danger">*</span>距门店最近停车距离：</label>
         <div class="col-md-5">
        		<div class="input-group">
-       			<input type="text" class="form-control" name="delivery_info[value][park]">
+       			<input type="text" class="form-control" value="<{$extra.deliveryInfo.deliveryInfo.value.park}> "
+name="deliveryInfo[value][park]">
        			<span class="input-group-addon">m</span>
        		</div>
         </div>
@@ -82,7 +80,8 @@
 	<div class="form-group">
 		<label for="" class="col-md-2 control-label"><span class="text-danger">*</span>装卸方式：</label>
         <div class="col-md-5">
-       		<input type="text" class="form-control" name="delivery_info[value][][handling]">
+       		<input type="text" class="form-control" value="<{$extra.deliveryInfo.deliveryInfo.value.handling}> "
+name="deliveryInfo[value][handling]">
         </div>
 	</div>
 </div>

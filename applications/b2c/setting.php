@@ -115,7 +115,7 @@ $setting = array(
     ),
     'main_products' => array(
         'default' => array(
-            'use' => array(
+            'use' => array( //使用方向
                 array('id' => '1', 'label' => '菜场（含AK）'),
                 array('id' => '2', 'label' => '团膳'),
                 array('id' => '3', 'label' => '火锅'),
@@ -123,6 +123,14 @@ $setting = array(
                 array('id' => '5', 'label' => '西餐'),
                 array('id' => '6', 'label' => '烧烤'),
                 array('id' => '7', 'label' => '加工厂'),
+            ),
+            'plant' => array( //经营场所
+                array('id' => 1, 'label' => '批发市场'),
+                array('id' => 2, 'label' => '菜场'),
+            ),
+            'member_cat' => array( //买家分类
+                array('id' => 1, 'label' => '分销买家'),
+                array('id' => 2, 'label' => '直销买家'),
             ),
 //            1 => '卤味熟食',
 //            2 => '猪产品',

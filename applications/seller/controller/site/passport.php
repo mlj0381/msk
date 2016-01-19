@@ -147,6 +147,11 @@ class seller_ctl_site_passport extends seller_frontpage
         }
     }
 
+    //入驻进度
+    public function complete(){
+        $this->page('site/passport/signup_complete.html');
+    }
+
     //入驻首页
     public function settled_index()
     {
@@ -573,7 +578,6 @@ class seller_ctl_site_passport extends seller_frontpage
 
     private function _save_array($key, $params = null)
     {
-
         if (!empty($params)) {
             $mdl_company_extra = app::get('base')->model('company_extra');
             $first_arr = reset($params['value']);

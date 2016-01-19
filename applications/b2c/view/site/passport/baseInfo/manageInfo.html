@@ -1,68 +1,60 @@
 <div id="manageInfo">
 	<h2>经营信息</h2>
 	<div class="form-group">
+        <input type="hidden" name="manageInfo[content_id]" value="<{$extra.manageInfo.manageInfo.content_id}>"/>
         <label for="" class="col-md-2 control-label"><span class="text-danger">*</span>买家分类：</label>
         <div class="col-md-5">
-            <select name="business_info[value][type]" class="form-control" placeholder="">
-				<option>分销买家</option>
-            </select>
+            <{input type=select required="true" name="manageInfo[value][member_cat]" rows=$extra.member_cat valueColumn="id"
+            labelColumn="label" value=$extra.manageInfo.manageInfo.value.member_cat}>
+
         </div>
     </div>
+
 	<div class="form-group">
         <label for="" class="col-md-2 control-label"><span class="text-danger">*</span>使用方向：</label>
         <div class="col-md-5 use_dir">
-            <span><input type="checkbox" name=" "> 菜场(含KA)</span>
-            <span><input type="checkbox" name=" "> 团膳</span>
-            <span><input type="checkbox" name=" "> 火锅</span>
-            <span><input type="checkbox" name=" "> 中餐</span>
-            <span><input type="checkbox" name=" "> 西餐</span>
-            <span><input type="checkbox" name=" "> 烧烤</span>
-            <span><input type="checkbox" name=" "> 加工厂</span>
+
+            <{foreach from=$extra.use item=item}>
+            <span><input type="checkbox" value="<{$item.id}>" name="manageInfo[value][use][]"> <{$item.label}></span>
+            <{/foreach}>
         </div>
     </div>
     <div class="form-group">
         <label for="" class="col-md-2 control-label"><span class="text-danger">*</span>经营场所：</label>
         <div class="col-md-5">
-            <select name="business_info[value][place]" class="form-control" placeholder="">
-				<option>批发市场</option>
-            </select>
+            <{input type=select required="true" name="manageInfo[value][plant]" rows=$extra.plant valueColumn="id"
+            labelColumn="label" value=$extra..manageInfo.manageInfo.value.plant}>
         </div>
     </div>
     <div class="form-group">
         <label for="" class="col-md-2 control-label"><span class="text-danger">*</span>批发市场全名：</label>
         <div class="col-md-5">
-            <input type="text" name="business_info[value][market_name]" class="form-control">
+            <input type="text" name="manageInfo[value][market_name]" value="<{$extra.manageInfo.manageInfo.value.market_name}>" class="form-control">
         </div>
     </div>
 	<div class="form-group">
         <label for="" class="col-md-2 control-label"><span class="text-danger">*</span>物流区划：</label>
         <div class="col-md-5">
-            <{input type=region name="business_info[value][logistics]"}>
+            <{input type=region name="manageInfo[value][region]" value=$extra.manageInfo.manageInfo.value.region}>
         </div>
     </div>
     <div class="form-group">
         <label for="" class="col-md-2 control-label"><span class="text-danger">*</span>主营品类：</label>
         <div class="col-md-5">
-            <select class="form-control" name="business_info[value][main_category]">
-            	<option>鸡肉类</option>
-				<option>鸭肉类</option>
-            </select>
+            <{input type="category" name="manageInfo[value][main]" value=$extra.manageInfo.manageInfo.value.main}>
         </div>
     </div>
     <div class="form-group">
         <label for="" class="col-md-2 control-label" name="business_info[value][engaged_category]">兼营品类：</label>
         <div class="col-md-5">
-            <select class="form-control">
-            	<option>鸡肉类</option>
-				<option>鸭肉类</option>
-            </select>
+            <{input type="category" name="manageInfo[value][vice]" value=$extra.manageInfo.manageInfo.value.vice}>
         </div>
     </div>
     <div class="form-group">
         <label for="" class="col-md-2 control-label"><span class="text-danger">*</span>日均销售额：</label>
         <div class="col-md-5">
             <div class="input-group">
-            	<input type="text" name="business_info[value][day_sale]" class="form-control">
+            	<input type="text" name="manageInfo[value][day_sale]" value="<{$extra.manageInfo.manageInfo.value.day_sale}>" class="form-control">
             	<span class="input-group-addon">元</span>
             </div>
         </div>
