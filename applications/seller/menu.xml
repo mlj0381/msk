@@ -32,13 +32,13 @@
 
 
 
-    <menugroup name="客户服务">
-        <menu app='aftersales' controller='site_store' action='price' display='true' order="60">退货管理</menu>
-        <menu app='aftersales' controller='site_store' action='price' display='true' order="60">退款管理</menu>
-        <menu app='seller' controller='site_aftersales' action='order' display='true' order="60">售后管理</menu>
-        <menu app='seller' controller='site_aftersales' action='' display='true' order="60">违规处理</menu>
-        <menu app='seller' controller='site_store' action='complaints' display='true' order="60">举报管理</menu>
-        <menu app='seller' controller='site_store' action='appraisal' display='false' order="60">咨询回复</menu>
+    <menugroup name="售后管理">
+        <menu app='seller' controller='site_aftersales' action='order' display='true' order="60">退货管理</menu>
+        <menu app='seller' controller='site_aftersales' action='order' display='true' order="60">退款管理</menu>
+        <menu app='seller' controller='site_aftersales' action='order' display='false' order="60">售后管理</menu>
+        <menu app='seller' controller='site_aftersales' action='' display='false' order="60">违规处理</menu>
+        <menu app='seller' controller='site_store' action='complaints' display='false' order="60">举报管理</menu>
+        <menu app='site' controller='site_store' action='appraisal' display='false' order="60">咨询回复</menu>
     </menugroup>
     <!-- 
     <menugroup name="结算管理">

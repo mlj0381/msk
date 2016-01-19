@@ -277,16 +277,16 @@ class b2c_ctl_admin_setting extends desktop_controller {
 //        $this->end(true, '成功');
 //    }
 //
-//    //基本设置启用
-//    public function setting_publish($type, $id) {
-//        $this->begin();
-//        $data = array('id' => $id, 'status' => $type);
-//        if ($this->mSetting->save($data)) {
-//            $this->end(true, '成功');
-//        }
-//        $this->end(false, '失败');
-//    }
-//
+   //基本设置启用
+   public function setting_publish($type, $id) {
+       $this->begin();
+       $data = array('id' => $id, 'status' => $type);
+       if ($this->mSetting->save($data)) {
+           $this->end(true, '成功');
+       }
+       $this->end(false, '失败');
+   }
+
     private function page_setting(&$items) {
         $page_setting = array(
             'type' => array(
