@@ -55,6 +55,7 @@ class b2c_ctl_site_member extends b2c_frontpage
      * 会员头像
      */
     public function avatar($action = false){
+        $this->menuSetting = 'setting';
         if($action == 'upload'){
             $redirect_here = array('app' => 'b2c','ctl' => 'site_member','act' => 'avatar');
             $mdl_image = app::get('image')->model('image');
@@ -210,6 +211,7 @@ class b2c_ctl_site_member extends b2c_frontpage
 
     public function setting()
     {
+        $this->menuSetting = 'setting';
         $user_obj = vmc::singleton('b2c_user_object');
         $pam_data = $user_obj->get_pam_data('*', $this->member['member_id']);
         $pam_data['memberData']['addon'] = unserialize($pam_data['memberData']['addon']);
@@ -221,6 +223,7 @@ class b2c_ctl_site_member extends b2c_frontpage
 
     public function company()
     {
+        $this->menuSetting = 'setting';
         $user_obj = vmc::singleton('b2c_user_object');
         $pam_data = $user_obj->get_pam_data('*', $this->member['member_id']);
         $pam_data['memberData']['addon'] = unserialize($pam_data['memberData']['addon']);
@@ -514,6 +517,7 @@ class b2c_ctl_site_member extends b2c_frontpage
      */
     public function message($msg_id = 0,$page = 1)
     {
+        $this->menuSetting = 'message';
         $limit = 10;
         $filter = array(
             'member_id'=>$this->member['member_id'],
@@ -555,6 +559,7 @@ class b2c_ctl_site_member extends b2c_frontpage
      * */
     public function receiver($action = 'list', $addr_id = false)
     {
+        $this->menuSetting = 'setting';
         $this->pagedata['action'] = $action;
         $mdl_maddr = $this->app->model('member_addrs');
         $member_id = $this->member['member_id'];
@@ -655,6 +660,7 @@ class b2c_ctl_site_member extends b2c_frontpage
      */
     public function securitycenter()
     {
+        $this->menuSetting = 'setting';
         $user_obj = vmc::singleton('b2c_user_object');
         $this->pagedata['pam_data'] = $user_obj->get_pam_data('*', $this->member['member_id']);
         $this->output();
