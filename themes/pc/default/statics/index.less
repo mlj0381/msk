@@ -79,14 +79,30 @@
 
 		h3.list_title{
 			width:100%;
-			.height(60px);
-			background: @basecolor;
+			height:40px;
 			color: #fff;
 			margin: 0;
 			border-bottom:1px solid #959595;
-			span.floor_name{
+			p{
+				height:40px;
 				display: inline-block;
-				margin-left:15px;
+				width:262px;
+				border-bottom:4px solid @basecolor;
+			}
+			span.floor_num{
+				background: url(images/floor_icon.png) no-repeat left center;
+				display: inline-block;
+				width:42px;
+				height:28px;
+				line-height: 28px;
+				font-size: 16px;
+				padding-left:3px;
+			}
+			span.floor_name{
+				color:#000;
+				font-size: 24px;
+				margin-left:25px;
+				font-weight: bold;
 			}
 		}
 		.list_con{
