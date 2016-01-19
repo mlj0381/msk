@@ -66,6 +66,7 @@
   background: #a40001;
   color: #fff;
   margin: 0;
+  border-bottom: 1px solid #959595;
 }
 .index_page .pro_list h3.list_title span.floor_name {
   display: inline-block;
