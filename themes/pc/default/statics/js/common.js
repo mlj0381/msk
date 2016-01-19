@@ -147,7 +147,7 @@ $(function() {
     /**
      * 单个图片上传功能
      */
-
+/*
     $('.filebox input[type="file"]').fileupload({
 
         add: function(e, data) {
@@ -185,7 +185,7 @@ $(function() {
         $('.filebox .showImg').append('<span class="loading hidden icon-spinner icon-spin"></span>');
     }
 
-
+*/
 
 
    

@@ -79,7 +79,7 @@ jQuery.fn.extend({
 				this.element( element );
 			}
         }       
-        console.log(options);
+        //console.log(options);
         // $.extend(true, {}, $.validator.methods, );
         //console.log($.validator.methods);
         $(form).validate(options);        

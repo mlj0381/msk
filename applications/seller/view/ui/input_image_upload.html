@@ -12,18 +12,41 @@
     </div>
 </div>
 <script charset="utf-8">
+$(function(){
+    var inputItem = $("input[name='<{$name}>']");
+    <{if $required}>
+        $(inputItem).attr('required', 'true');
+    <{/if}>
+    <{if $accept}>
+        $(inputItem).attr('accept', '<{$accept}>');
+    <{/if}>
+    <{if $size}>
+        $(inputItem).attr('size', '<{$size}>');
+    <{/if}>
+    
+});
 $('#image_upload_box_<{$id}> input[type=file]').fileupload({
     <{if $tag}>
     formData:{tag:'<{$tag}>'},
     <{/if}>
-    add:function(e,data){
-        if(!data.files[0]['type'].match(/^image/)){
-            return toastr.warning(data.files[0]['name']+'不是允许的图片类型','类型错误');
+    add:function(e,data){      
+        var msg = data.files[0]['name']+'不是允许的图片类型';
+        var _type = '';
+        if(typeof data.files[0]['type'] != 'undefined')
+        {
+            _type =  data.files[0]['type'];
+        }else{
+            _type = "image/" + data.files[0]['name'].split(".").pop().replace('jpg', 'jpeg');
         }
-        //$('#image_upload_box_<{$id}> .fileinput-btn-text').text('正在上传...');
+        if(!_type.match(/^image/))
+        {
+            return toastr.warning(msg,'类型错误');
+        }       
+        //$('#image_upload_box_<{$id}> .fileinput-btn-text').text('正在上传...');       
         data.submit();
     },
     done:function(e,data){
+        console.log(data);
         var re = $.parseJSON(data.result);
         if(!$('#image_upload_box_<{$id}> .thumbnail img').length){
             $('#image_upload_box_<{$id}> .thumbnail .showImg').empty().append('<img src="'+re.url+'"  /><input type="hidden" name="<{$name}>" value="'+re.image_id+'">');
