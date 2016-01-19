@@ -1,5 +1,6 @@
 <h3 class="list_title">
     <{foreach from=$floor_title item=item}>
-        <span class="floor_name"><{$key+1}>F <{$item.name}></span>
+        <!-- <span class="floor_name"><{$key+1}>F <{$item.name}></span> -->
+        <p><span class="floor_num"><{$key+1}>F</span><span class="floor_name"><{$item.name}></span></p>
     <{/foreach}>
 </h3>
