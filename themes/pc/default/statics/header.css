@@ -797,3 +797,9 @@ form .success .valid_message {
 form .none {
   display: none;
 }
+/* .build_page{
+    height: 100%;
+    background: #fff url(images/build.jpg) no-repeat center;
+    background: red;
+
+} */

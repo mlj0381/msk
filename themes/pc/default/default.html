@@ -11,14 +11,11 @@
 <link rel="stylesheet" href="statics/style.css">
 <link rel="stylesheet" href="statics/bootstrap-datetimepicker.min.css">
 <link rel="stylesheet" href="statics/member.css">
-<link rel="stylesheet" href="statics/css/validator.css">
 
 <script type="text/javascript" src="statics/js/bootstrap-datetimepicker.js"></script>
 <script type="text/javascript" src="statics/js/bootstrap-datetimepicker.zh-CN.js"></script>
 <script type="text/javascript" src="statics/js/common.js"></script>
 <script type="text/javascript" src="statics/js/jquery.SuperSlide.2.1.1.js"></script>
-<!-- <script type="text/javascript" src="statics/js/jquery.validate.min.js"></script>
-<script type="text/javascript" src="statics/js/messages_cn.js"></script> -->
 
 
 </head>
@@ -27,19 +24,13 @@
 <{if $type}>
 <{require file="public/seller-nav.html" }>
 <{else}>
-<{require file="public/buyer-nav.html" }>
+<{require file='public/buyer-nav.html'}>
 <{/if}>
 <div class="container main-container buyer_container">
     <{MAIN}>
 </div>
 <{require file="public/sm-footer.html"}>
 <{SYSTEM_FOOTER}>
-
-
-
-<script src="statics/js/formValidator.js" type="text/javascript" charset="UTF-8"></script>
-<script src="statics/js/formValidatorRegex.js" type="text/javascript" charset="UTF-8"></script>
-
 
 </body>
 </html>

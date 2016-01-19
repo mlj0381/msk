@@ -152,10 +152,10 @@
                             <{/if}>
                             <{/if}>
                             <{if ($order.confirm eq 'N' && $order.ship_status eq '1') || ($order.ship_status eq '0' && $order.pay_status eq '1') && $order.status eq 'active'}>
-                            <a class="btn btn-xs btn-block btn-default" href="<{link app=aftersales ctl=site_member act=newrequest args0=$order.order_id args1=$item.product_id args2=input args3=price}>">申请退款</a>
+                            <a class="btn btn-xs btn-block btn-default" <{if $order.request eq ''}>href="<{link app=aftersales ctl=site_member act=newrequest args0=$order.order_id args1=$item.product_id args2=input args3=price}>"<{/if}>><{if $order.request eq ''}>申请退款<{else}>已申请退款<{/if}></a>
                             <{/if}> 
                             <{if ($order.confirm eq 'Y' && $order.ship_status eq '1') && $order.status eq 'active'}>
-                            <a class="btn btn-xs btn-block btn-default" href="<{link app=aftersales ctl=site_member act=newrequest args0=$order.order_id args1=$item.product_id}>">申请售后</a>
+                            <a class="btn btn-xs btn-block btn-default" <{if $order.request eq ''}>href="<{link app=aftersales ctl=site_member act=newrequest args0=$order.order_id args1=$item.product_id args2=input args3=price}>"<{/if}>><{if $order.request eq ''}>申请售后<{else}>已申请售后<{/if}></a>
                             <{/if}>       
                             <{/if}>
                         </div>

@@ -33,7 +33,7 @@ class seller_frontpage extends site_controller {
         }
         $this->seller = $this->get_current_seller();
         $this->store = $this->get_current_store();
-        $this->user_manage();
+       // $this->user_manage();
         $this->set_tmpl('seller');
         $this->user_obj = vmc::singleton('seller_user_object');
         $this->passport_obj = vmc::singleton('seller_user_passport');
@@ -224,7 +224,7 @@ class seller_frontpage extends site_controller {
 
 //End Function
 
-    public function get_menu() {
+    public function get_menu($action) {
         $xmlfile = $this->app->app_dir . "/menu.xml";
         //$xsd = vmc::singleton('base_xml')->xml2array(file_get_contents($xmlfile), $tags);
         $parser = xml_parser_create();
@@ -235,6 +235,11 @@ class seller_frontpage extends site_controller {
         $group = Array();
         $menus = Array();
         $count = count($tags);
+        $menuSetting = array(
+            'index' => array('store', 'deal', 'goods', 'service'),
+            'account' => array('account'),
+            'message' => array(),
+        );
         foreach ($tags as $key => $item) {
             if ($item['tag'] == 'menugroup') {
                 $menuItem = $item['attributes'];
@@ -256,7 +261,7 @@ class seller_frontpage extends site_controller {
     protected function output($app_id) {
         $app_id || $app_id = $this->app->app_id;
         $this->pagedata['seller'] = $this->seller;
-        $this->pagedata['menu'] = $this->_menus;
+        $this->pagedata['menu'] = $this->get_menu($this->action);
         $this->pagedata['app'] = $this->app->app_id;
         $this->pagedata['current_controller'] = $this->controller;
         $this->pagedata['current_action'] = $this->action;

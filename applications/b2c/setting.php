@@ -115,22 +115,39 @@ $setting = array(
     ),
     'main_products' => array(
         'default' => array(
-            0 => '常规鸡鸭产品',
-            1 => '卤味熟食',
-            2 => '猪产品',
-            3 => '牛羊产品',
-            4 => '海产品(含冷冻河产品)',
-            5 => '丸肠水发品',
-            6 => '腌腊产品',
-            7 => '冰品(指冰鲜产品)',
-            8 => '速冻点心与速冻蔬菜',
-            9 => '方便菜',
-            10 => '粮油产品',
-            11 => '调味品',
-            12 => '干货产品',
-            13 => '小菜(指腌菜、咸菜及其加工品)',
-            14 => '儿童食品(包括饼干、膨化食品等)',
-            15 => '调理水煮包与方便菜',
+            'use' => array( //使用方向
+                array('id' => '1', 'label' => '菜场（含AK）'),
+                array('id' => '2', 'label' => '团膳'),
+                array('id' => '3', 'label' => '火锅'),
+                array('id' => '4', 'label' => '中餐'),
+                array('id' => '5', 'label' => '西餐'),
+                array('id' => '6', 'label' => '烧烤'),
+                array('id' => '7', 'label' => '加工厂'),
+            ),
+            'plant' => array( //经营场所
+                array('id' => 1, 'label' => '批发市场'),
+                array('id' => 2, 'label' => '菜场'),
+            ),
+            'member_cat' => array( //买家分类
+                array('id' => 1, 'label' => '分销买家'),
+                array('id' => 2, 'label' => '直销买家'),
+            ),
+//            1 => '卤味熟食',
+//            2 => '猪产品',
+//            3 => '牛羊产品',
+//            4 => '海产品(含冷冻河产品)',
+//            5 => '丸肠水发品',
+//            6 => '腌腊产品',
+//            7 => '冰品(指冰鲜产品)',
+//            8 => '速冻点心与速冻蔬菜',
+//            9 => '方便菜',
+//            10 => '粮油产品',
+//            11 => '调味品',
+//            12 => '干货产品',
+//            13 => '小菜(指腌菜、咸菜及其加工品)',
+//            14 => '儿童食品(包括饼干、膨化食品等)',
+//            15 => '调理水煮包与方便菜',
+//            16 => '常规鸡鸭产品',
         ),
     ),
     'pages_plat_type' => array(
@@ -154,7 +171,19 @@ $setting = array(
         )
     ),
     'member_extra_column' => array(
-        'default' => array('business_licence', 'member_manage_info')
+        'default' => array(
+            1 => array(
+                'company_extra',
+                'business_licence',
+                'organization_licence',
+                'tax_licence',
+                'shop',
+                'food_flow_licence',
+                'contact_extra'
+            ),
+            2 => array('manageInfo'),
+            3 => array('deliveryInfo'),
+        )
     ),
     'serach' => array(
         'default' => array(

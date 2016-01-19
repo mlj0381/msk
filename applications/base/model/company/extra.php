@@ -24,5 +24,15 @@ class base_mdl_company_extra extends base_db_model{
     public function get_info(){
         
     }
+
+    public function getList($cols = '*', $filter = array(), $offset = 0, $limit = -1, $orderby = null){
+        $rows = parent::getList($cols, $filter, $offset, $limit, $orderby);
+        $result = array();
+        foreach($rows as $row){
+            $result[$row['key']] = $row;
+        }
+        unset($rows);
+        return $result;
+    }
 }
 

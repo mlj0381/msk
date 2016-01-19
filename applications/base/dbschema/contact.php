@@ -128,12 +128,7 @@ $db['contact'] = array(
         ),
     ),
     'index' => array(
-        'ind_name' => array(
-            'columns' => array(
-                0 => 'name',
-            ),
-            'prefix' => 'unique',
-        ),
+
     ),
     'version' => '$Rev$',
     'comment' => '联系人表',

@@ -43,6 +43,7 @@ class b2c_ctl_site_member extends b2c_frontpage
         $this->pagedata['order_count'] = $this->app->model('orders')->type_count();
         $user_obj = vmc::singleton('b2c_user_object');
         $this->pagedata['pam_data'] = $user_obj->get_pam_data('*', $this->member['member_id']);
+        $this->pagedata['member_type'] = 'index';
         $this->output();
     }
 
@@ -282,10 +283,15 @@ class b2c_ctl_site_member extends b2c_frontpage
         $filter = $status_filter[$status];
         $filter['member_id'] = $this->member['member_id'];
         $order_list = $mdl_order->getList('*', $filter, ($page - 1) * $limit, $limit);
+        $obj_store = vmc::singleton('store_store_object');
+        $mdl_request_order = app::get('aftersales')->model('request');
         foreach ($order_list as $key => $value) {
             //所属店铺信息
-            $store_info = vmc::singleton('store_store_object')->store_info($value['store_id'], 'store_id, store_name');
+            $store_info = $obj_store->store_info($value['store_id'], 'store_id, store_name');
             $order_list[$key]['store_name'] = $store_info['store_name'];
+            //查看订单是否已申请退款、售后
+            $result = $mdl_request_order->getRow('request_id, order_id', array('order_id' => $value['order_id']));
+            $order_list[$key]['request'] = $result;
         }
         $oids = array_keys(utils::array_change_key($order_list, 'order_id'));
         $order_items = $mdl_order_items->getList('*', array(
@@ -297,6 +303,7 @@ class b2c_ctl_site_member extends b2c_frontpage
         $this->pagedata['current_status'] = $status;
         $this->pagedata['status_map'] = $status_filter;
         $this->pagedata['order_list'] = $order_list;
+
         $this->pagedata['order_count'] = $order_count;
         $this->pagedata['order_items_group'] = $order_items_group;
         $this->pagedata['pager'] = array(

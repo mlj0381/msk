@@ -10,11 +10,13 @@
 // | Author: Shanghai ChenShang Software Technology Co., Ltd.
 // +----------------------------------------------------------------------
 
-class b2c_ctl_site_passport extends b2c_frontpage {
+class b2c_ctl_site_passport extends b2c_frontpage
+{
 
     public $title = '账户';
 
-    public function __construct(&$app) {
+    public function __construct(&$app)
+    {
         parent::__construct($app);
         $this->_response->set_header('Cache-Control', 'no-store');
         vmc::singleton('base_session')->start();
@@ -27,7 +29,8 @@ class b2c_ctl_site_passport extends b2c_frontpage {
      * 如果是登录状态则直接跳转到会员中心
      * */
 
-    public function check_login() {
+    public function check_login()
+    {
         if ($this->user_obj->is_login()) {
             $redirect = $this->gen_url(array(
                 'app' => 'b2c',
@@ -40,7 +43,8 @@ class b2c_ctl_site_passport extends b2c_frontpage {
         return false;
     }
 
-    public function set_forward(&$forward) {
+    public function set_forward(&$forward)
+    {
         $params = $this->_request->get_params(true);
         $forward = ($forward ? $forward : $params['forward']);
         if (!$forward) {
@@ -51,7 +55,8 @@ class b2c_ctl_site_passport extends b2c_frontpage {
         }
     }
 
-    public function index() {
+    public function index()
+    {
         //如果会员登录则直接跳转到会员中心
         $this->check_login();
         $this->login();
@@ -61,7 +66,8 @@ class b2c_ctl_site_passport extends b2c_frontpage {
      * 登录view
      * */
 
-    public function login($forward) {
+    public function login($forward)
+    {
         $this->title = '会员登录';
         //如果会员登录则直接跳转到会员中心
         $this->check_login();
@@ -81,7 +87,8 @@ class b2c_ctl_site_passport extends b2c_frontpage {
      * 登录验证
      * */
 
-    public function post_login() {
+    public function post_login()
+    {
         $login_url = $this->gen_url(array(
             'app' => 'b2c',
             'ctl' => 'site_passport',
@@ -136,7 +143,8 @@ class b2c_ctl_site_passport extends b2c_frontpage {
 //end function
     //注册页面
 
-    public function signup($forward) {
+    public function signup($forward)
+    {
         $this->title = '注册成为会员';
         //检查是否登录，如果已登录则直接跳转到会员中心
         $this->check_login();
@@ -151,28 +159,124 @@ class b2c_ctl_site_passport extends b2c_frontpage {
     }
 
     //注册页面--审核信息
-    public function signup_baseInfo($forward) {
-        $this->verify_member();
-        $this->set_tmpl('passport');
+    public function signup_baseInfo($pageIndex = 1)
+    {
+
         $this->page('site/passport/signup_baseInfo.html');
     }
 
-    //注册经营信息
-    public function business_info() {
+    /*
+     * 会员注册页面配置
+     * @param $pageIndex 配置页面索引
+     * return pageSetting array()
+     * */
+    private function _page_setting($pageIndex)
+    {
+        switch ($pageIndex) {
+            case 1:
+                $conf = $this->_page_company();
+                break;
+            case 2:
+                $conf = $this->_page_manage();
+                break;
+            case 3:
+                $conf = $this->_page_delivery();
+                break;
+        }
+        $page_setting = $this->app->getConf('member_extra_column');
+        $conf['page_setting'] = $page_setting[$pageIndex];
+        foreach ($conf['page_setting'] as $key => $page) {
+            $path = $this->app->app_dir . '/view/site/passport/baseInfo/' . $page . '.html';
+            if (!file_exists($path)) {
+                unset($conf['page_setting'][$key]);
+            }
+        }
 
+        return $conf;
+    }
+
+    /*
+     * 会员注册页面配置 企业联系人信息
+     * return pageSetting array()
+     * */
+    private function _page_company()
+    {
+        //读取会员注册配置
+        $conf = $this->app->getConf('main_products');
+        //读取收货时间
+        $conf['time'] = $this->app->getConf('receiving_time');
+        //读取分类
+        $conf['cat'] = $this->app->model('goods_cat')->get_tree();
+        //获取页面信息
+        $mdl_company = app::get('base')->model('company');
+        $mdl_contact = app::get('base')->model('contact');
+
+        $filter = array('uid' => $this->member['member_id'], 'from' => '0');
+
+        $conf['info']['company'] = $mdl_company->getRow('*', $filter);
+        $conf['info']['contact'] = $mdl_contact->getRow('*', $filter);
+        $conf['info']['company_extra'] = app::get('base')->model('company_extra')->getList('*', $filter);
+        return $conf;
+    }
+
+    /*
+     * 会员注册页面配置  经营信息
+     * @param $pageIndex 配置页面索引
+     * return pageSetting array()
+     * */
+    private function _page_manage()
+    {
+        //使用方向  经营场所
+        $conf['info'] = $this->app->getConf('main_products');
+        $filter = array('uid' => $this->member['member_id'], 'from' => '0', 'key');
+        $conf['info']['manageInfo'] = app::get('base')->model('company_extra')->getList('*', $filter);
+        return $conf;
+    }
+
+    /*
+     * 会员注册页面配置 配送信息
+     * @param $pageIndex 配置页面索引
+     * return pageSetting array()
+     * */
+    private function _page_delivery()
+    {
+        //配送信息
+        $conf['info'] = $this->app->getConf('main_products');
+        //读取收货时间信息
+        $conf['info']['time'] = $this->app->getConf('receiving_time');
+        $filter = array('uid' => $this->member['member_id'], 'from' => '0');
+        $conf['info']['deliveryInfo'] = app::get('base')->model('company_extra')->getList('*', $filter);
+        return $conf;
+    }
+
+
+
+    //注册经营信息
+    public function business_info($pageIndex = 0, $type = null)
+    {
         $this->verify_member();
+        if (!is_numeric($pageIndex)) $pageIndex = 1;
+        $page_setting = $this->app->getConf('member_extra_column');
+        $pageIndex = $type == 'up' ? $pageIndex -1 : $pageIndex +1;
+        $pageIndex <= 1 && $pageIndex = 1;
+        $pageIndexMax = count($page_setting) + 1;
+        $pageIndex >=  $pageIndexMax && $pageIndex = $pageIndexMax;
+        $this->pagedata['conf'] = $this->_page_setting($pageIndex);
         if ($_POST) {
             $redirect = $this->gen_url(array(
                 'app' => 'b2c',
                 'ctl' => 'site_passport',
-                'act' => 'signup_baseInfo',
+                'act' => 'business_info',
+                'args0' => $pageIndex - 1,
             ));
+
             $db = vmc::database();
             $db->beginTransaction();
             $extra_columns = $this->app->getConf('member_extra_column');
             $params = $_POST;
+
             if (!empty($params['company'])) {
-                $params['company']['uid'] = $this->members['member_id'];
+                $params['company']['uid'] = $this->member['member_id'];
                 if (!app::get('base')->model('company')->save($params['company'])) {
                     $db->rollback();
                     $this->splash('error', $redirect, '注册失败');
@@ -180,15 +284,17 @@ class b2c_ctl_site_passport extends b2c_frontpage {
             }
 
             if (!empty($params['contact'])) {
+                $params['contact']['uid'] = $this->member['member_id'];
                 if (!app::get('base')->model('contact')->save($params['contact'])) {
-                    $params['contact']['uid'] = $this->members['member_id'];
                     $db->rollback();
                     $this->splash('error', $redirect, '注册失败');
                 }
             }
             $mdl_company_extra = app::get('base')->model('company_extra');
-            foreach ($extra_columns as $col) {
+            foreach ($extra_columns[$pageIndex - 1] as $col) {
+
                 if (isset($params[$col]) && !empty($params[$col])) {
+
                     $params[$col]['uid'] = $this->member['member_id'];
                     $params[$col]['from'] = 0;
                     if (!$mdl_company_extra->extra_save($col, $params)) {
@@ -200,11 +306,18 @@ class b2c_ctl_site_passport extends b2c_frontpage {
             $db->commit();
         }
         $this->set_tmpl('passport');
-        $this->page('site/passport/business_info.html');
+        $this->pagedata['pageIndex'] = $pageIndex;
+        if($pageIndex >= $pageIndexMax){
+            $this->page('site/passport/signup_complete.html');
+        }else{
+            $this->page('site/passport/signup_baseInfo.html');
+        }
+
     }
 
     //注册页面--注册完成
-    public function signup_complete($forward) {
+    public function signup_complete($forward)
+    {
         $this->set_tmpl('passport');
         if ($_POST) {
             $redirect = $this->gen_url(array('app' => 'b2c', 'ctl' => 'site_passport', 'act' => 'business_info'));
@@ -225,7 +338,8 @@ class b2c_ctl_site_passport extends b2c_frontpage {
     }
 
     //注册的时，检查用户名
-    public function check_login_name() {
+    public function check_login_name()
+    {
 
         if ($this->passport_obj->check_signup_account(trim($_POST['pam_account']['login_name']), $msg)) {
             if ($msg == 'mobile') { //用户名为手机号码
@@ -248,14 +362,15 @@ class b2c_ctl_site_passport extends b2c_frontpage {
      * create
      * 创建会员
      */
-    public function create() {
+    public function create()
+    {
         $params = $_POST;
         $forward = $params['forward'];
 
         $next = $this->gen_url(array(
             'app' => 'b2c',
             'ctl' => 'site_passport',
-            'act' => 'signup_baseInfo',
+            'act' => 'business_info',
         )); //PC首页
 
         unset($_POST['forward']);
@@ -293,7 +408,8 @@ class b2c_ctl_site_passport extends b2c_frontpage {
     /**
      * 重置密码操作
      */
-    public function reset_password($action) {
+    public function reset_password($action)
+    {
         $this->title = '重置密码';
         if ($action == 'doreset') {
             $redirect_here = array('app' => 'b2c', 'ctl' => 'site_passport', 'act' => 'reset_password');
@@ -344,7 +460,8 @@ class b2c_ctl_site_passport extends b2c_frontpage {
     }
 
     //发送身份识别验证码
-    public function member_vcode() {
+    public function member_vcode()
+    {
         $account = $_POST['account'];
         $login_type = $this->passport_obj->get_login_account_type($account);
         if ($login_type != 'mobile' && $login_type != 'email') {
@@ -360,10 +477,10 @@ class b2c_ctl_site_passport extends b2c_frontpage {
         $data['vcode'] = $vcode;
         switch ($login_type) {
             case 'email':
-                $send_flag = vmc::singleton('b2c_user_vcode')->send_email('reset', (string) $account, $data);
+                $send_flag = vmc::singleton('b2c_user_vcode')->send_email('reset', (string)$account, $data);
                 break;
             case 'mobile':
-                $send_flag = vmc::singleton('b2c_user_vcode')->send_sms('reset', (string) $account, $data);
+                $send_flag = vmc::singleton('b2c_user_vcode')->send_sms('reset', (string)$account, $data);
                 break;
         }
         if (!$send_flag) {
@@ -373,7 +490,8 @@ class b2c_ctl_site_passport extends b2c_frontpage {
     }
 
     //发送邮件验证码
-    public function send_vcode_email($type = "activation") {
+    public function send_vcode_email($type = "activation")
+    {
         $email = $_POST['email'];
 
         if (!$this->passport_obj->check_signup_account(trim($email), $msg)) {
@@ -387,7 +505,7 @@ class b2c_ctl_site_passport extends b2c_frontpage {
         if ($vcode) {
             //发送邮箱验证码
             $data['vcode'] = $vcode;
-            if (!$uvcode_obj->send_email($type, (string) $email, $data)) {
+            if (!$uvcode_obj->send_email($type, (string)$email, $data)) {
                 $this->splash('error', null, '邮件发送失败');
             }
         } else {
@@ -397,7 +515,8 @@ class b2c_ctl_site_passport extends b2c_frontpage {
     }
 
     //短信发送验证码
-    public function send_vcode_sms($type = 'signup') {
+    public function send_vcode_sms($type = 'signup')
+    {
 
         $mobile = trim($_POST['mobile']);
 
@@ -413,7 +532,7 @@ class b2c_ctl_site_passport extends b2c_frontpage {
         if ($vcode) {
             //发送验证码 发送短信
             $data['vcode'] = $vcode;
-            if (!$uvcode_obj->send_sms($type, (string) $mobile, $data)) {
+            if (!$uvcode_obj->send_sms($type, (string)$mobile, $data)) {
                 $this->splash('error', null, '短信发送失败');
             }
         } else {
@@ -422,7 +541,8 @@ class b2c_ctl_site_passport extends b2c_frontpage {
         $this->splash('success', null, '短信已发送');
     }
 
-    public function logout($forward) {
+    public function logout($forward)
+    {
         $this->unset_member();
         if (!$forward) {
             $forward = $this->gen_url(array(
@@ -434,7 +554,8 @@ class b2c_ctl_site_passport extends b2c_frontpage {
         $this->splash('success', $forward, '退出登录成功');
     }
 
-    private function unset_member() {
+    private function unset_member()
+    {
         $auth = pam_auth::instance(pam_account::get_account_type($this->app->app_id));
         foreach (vmc::servicelist('passport') as $k => $passport) {
             $passport->loginout($auth);
