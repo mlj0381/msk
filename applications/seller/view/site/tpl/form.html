@@ -11,7 +11,7 @@ label.right{margin-left:4px; padding-left:20px; background:url(http://www.hellow
     <div class="form-group">
         <label class="col-md-2 control-label"><span class="text-danger">*</span>用户名：</label>
         <div class="col-md-8">
-            <input type="text" required="true" autocomplete='off' name="pam_account[login_name]" format="username" remote="<{link app=seller ctl=site_passport act=check_login_name}>" class="form-control" placeholder="手机号/邮箱/用户名" />
+            <input type="text" required="true" autocomplete='off' name="pam_account[login_name]" format="username|mobile|email" remote="<{link app=seller ctl=site_passport act=check_login_name}>" class="form-control required" placeholder="手机号/邮箱/用户名" />
             <span class="tip" data-message="error">请填3-16个字符，可以为数字、字母、下划线以及中文</span>        
         </div>
     </div>
@@ -19,7 +19,7 @@ label.right{margin-left:4px; padding-left:20px; background:url(http://www.hellow
     <div class="form-group">
         <label class="col-md-2 control-label"><span class="text-danger">*</span>密码：</label>
         <div class="col-md-8">
-            <input type="passowrd" name="passowrd" class="form-control" id="password" required="true" />
+            <input type="password" name="passowrd" class="form-control" id="password" required format="password"/>
             <span class="tip" data-message="error">密码8位以上</span>        
         </div>
     </div>
@@ -27,8 +27,9 @@ label.right{margin-left:4px; padding-left:20px; background:url(http://www.hellow
     <div class="form-group">
         <label class="col-md-2 control-label"><span class="text-danger">*</span>确认密码：</label>
         <div class="col-md-8">
-            <input type="passowrd" name="com_passowrd" class="form-control" equalTo="#password" required="true" />
-            <span class="tip" data-message="error">密码8位以上</span>        
+            <input type="password" name="com_passowrd" class="form-control" equalTo="#password" required="true" />
+            <span class="tip" data-message="error">密码8位以上</span>
+            <span class="tip" data-message="equalTo">两次密码不一致</span>
         </div>
     </div>
 
@@ -37,7 +38,7 @@ label.right{margin-left:4px; padding-left:20px; background:url(http://www.hellow
         <div class="col-md-8">
             <input type="radio" name="sex" class="" value="1" required="true" /> 男 
             <input type="radio" name="sex" class="" value="0" required="true"/> 女
-            <span class="tip" data-message="error">性别为必选</span>        
+            <span class="tip" data-message="required">性别为必选</span>        
         </div>
     </div>
 
@@ -51,7 +52,7 @@ label.right{margin-left:4px; padding-left:20px; background:url(http://www.hellow
     <div class="form-group">
         <label class="col-md-2 control-label"><span class="text-danger">*</span>固定电话：</label>
         <div class="col-md-8">
-            <input type="text" name="tel" class="form-control" required="true" format="email" />            
+            <input type="text" name="tel" class="form-control" required="true" format="tel" />            
         </div>
     </div>
 
@@ -79,14 +80,14 @@ label.right{margin-left:4px; padding-left:20px; background:url(http://www.hellow
     <div class="form-group">
         <label class="col-md-2 control-label"><span class="text-danger">*</span>工作年限：</label>
         <div class="col-md-8">
-            <input type="date" name="years" class="form-control" required="true"  format=digits range="1,10" />            
+            <input type="date" name="years" class="form-control" required="true"  digits="true" range="1,10" />            
         </div>
     </div>
 
     <div class="form-group">
         <label class="col-md-2 control-label"><span class="text-danger">*</span>身份证：</label>
         <div class="col-md-8">
-            <input type="idcard" name="idcard" class="form-control" required="true"  format="idcard" />            
+            <input type="text" name="idcard" class="form-control" required="true"  format="idcard" />            
         </div>
     </div>
 
@@ -113,7 +114,7 @@ label.right{margin-left:4px; padding-left:20px; background:url(http://www.hellow
     <div class="form-group">
         <label class="col-md-2 control-label"><span class="text-danger">*</span>上传头像：</label>
         <div class="col-md-8">
-            <input type="file" name="photo" class="form-control" required="true"  accept="jpg|gif|png" />            
+            <input type="file" name="photo" class="form-control" required="true" size="2m" />            
         </div>
     </div>
 
