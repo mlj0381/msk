@@ -2,11 +2,7 @@
 <div class="floor">
     <!-- 商品楼层列表 -->
     <div class="pro_list">
-        <h3 class="list_title">
-            <{foreach from=$floor_title key=key item=item}>
-                <span class="floor_name"><{$key+1}>F <{$item.name}></span>
-            <{/foreach}>
-        </h3>
+            <{WIDGET_B2C_INDEX_FLOOR_TITLE app=b2c position_id=3}>
         <div class="list_con clearfix">
             <{WIDGET_B2C_INDEX_LEFT_GOOD app=b2c position_id=4}>
             <{WIDGET_B2C_GOODS_INDEX_GOOD_FLOOR num=8  addr=1}>

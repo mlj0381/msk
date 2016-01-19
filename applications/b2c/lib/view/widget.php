@@ -199,6 +199,20 @@ class b2c_view_widget {
         $render->pagedata['contents']= app::get('b2c')->model('pages_content')->getList('*', array('type' => '2', 'status' => '1',));
         return $render->fetch('widget/floor.test.html');
     }
+    //楼层标题
+    public function function_WIDGET_B2C_INDEX_FLOOR_TITLE($params, &$smarty) {
+        $render = new base_render(app::get($params['app']));
+        $render->pagedata['position_id'] = $params['position_id'];
+        $render->pagedata['floor_title'] = app::get('b2c')->model('pages_position')->getList('*', array('status' => '1', 'position_id'=>$params['position_id'],));
+        return $render->fetch('widget/floor.title.html');
+    }
+    //楼层广告
+    public function function_WIDGET_B2C_INDEX_FLOOR_BANNER($params, &$smarty) {
+        $render = new base_render(app::get($params['app']));
+        $render->pagedata['position_id'] = $params['position_id'];
+        $render->pagedata['banner'] = app::get('b2c')->model('pages_content')->getRow('*', array('status' => '1', 'position_id'=>$params['position_id'],));
+        return $render->fetch('widget/floor.banner.html');
+    }
 
     //商家推荐、最近浏览、热卖单品、猜你喜欢
     public function function_WIDGET_B2C_GOOD_HOT($params, &$smarty) {
