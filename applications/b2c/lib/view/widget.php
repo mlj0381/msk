@@ -50,7 +50,7 @@ class b2c_view_widget {
     public function function_WIDGET_B2C_INDEX_SLIDER($params, &$smarty) {
         $render = new base_render(app::get($params['app']));
         //$render->pagedata['slider'] = app::get('b2c')->model('ad')->getList('*', array('page_id' => 34, 'ad_type' => 1, 'status' => 'true',));
-       $render->pagedata['contents']= app::get('b2c')->model('pages_content')->getList('*', array('type' => 1, 'status' => '1',));
+       $render->pagedata['contents']= app::get('b2c')->model('pages_content')->getList('*', array('type' => '1', 'status' => '1',));
         return $render->fetch('widget/slider.html');
     }
 
@@ -70,7 +70,8 @@ class b2c_view_widget {
     //楼层左侧推荐
     public function function_WIDGET_B2C_INDEX_LEFT_GOOD($params, &$smaryt) {
         $render = new base_render(app::get('b2c'));
-        $render->pagedata['floor_left'] = vmc::service('view_datasetting')->floor_left($params);
+        //$render->pagedata['floor_left'] = vmc::service('view_datasetting')->floor_left($params);
+        $render->pagedata['contents']= app::get('b2c')->model('pages_content')->getList('*', array('type' => '2', 'status' => '1','position_id'=>'4',));
         return $render->fetch('widget/index_left_good.html');
     }
 
@@ -86,7 +87,7 @@ class b2c_view_widget {
         $render = new base_render(app::get('b2c'));
        // $render->pagedata['window'] = $params['window'];
         //$render->pagedata['goods'] = vmc::service('view_datasetting')->floor($params);
-         $render->pagedata['contents']= app::get('b2c')->model('pages_content')->getList('*', array('type' => '2', 'status' => '1',));
+         $render->pagedata['contents']= app::get('b2c')->model('pages_content')->getList('*', array('type' => '2', 'status' => '1','position_id'=>'4',));
         return $render->fetch('widget/good.floor.html');
     }
 

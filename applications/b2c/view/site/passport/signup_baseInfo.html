@@ -20,12 +20,11 @@
         </dl>
     </div>
     <div class="baseInfo_rt fr">
-        <form id="" class="form-horizontal" action="<{link app=b2c ctl=site_passport act=business_info}>" method="post">
+        <form id="" class="form-horizontal" action="<{link app=b2c ctl=site_passport act=business_info args0=$pageIndex}>" method="post">
+            <{foreach from=$conf.page_setting item=item}>
 
-            <{include file="site/passport/baseInfo/buyerInfo.html" }>
-            <{include file="site/passport/baseInfo/manageInfo.html" }>
-            <{include file="site/passport/baseInfo/deliveryInfo.html" }>
-
+            <{include file="site/passport/baseInfo/{$item}.html" extra=$conf.info}>
+            <{/foreach}>
             <div class="form-group">
                 <label for="" class="col-md-2 control-label"></label>
                 <div class="col-md-4">
@@ -37,10 +36,8 @@
             </div>
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-4">
-                    <button type="submit" data-loading-text="正在提交..." class="btn btn-default">返回上一步</button>
-                    <button type="submit" data-loading-text="正在提交..." class="btn btn-danger">去填写经营信息</button>
-                    <button type="submit" data-loading-text="正在提交..." class="btn btn-danger">去填写配送信息</button>
-                    <button type="submit" data-loading-text="正在提交..." class="btn btn-danger">立即提交</button>
+                    <a href="<{link app=b2c ctl=site_passport act=business_info args0=$pageIndex args1=up}>" data-loading-text="正在提交..." class="btn btn-default">返回上一步</a>
+                    <button type="submit" data-loading-text="正在提交..." class="btn btn-danger">提交</button>
                 </div>
             </div>
             <!-- 会员注册条款modal -->
