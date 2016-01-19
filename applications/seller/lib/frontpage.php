@@ -255,7 +255,7 @@ class seller_frontpage extends site_controller {
             $this->pagedata['_PAGE_'] = 'site/' . $controller . "/" . $this->pagedata['_PAGE_'];
         } else {
             $this->pagedata['_PAGE_'] = 'site/' . $controller . '/' . $this->action_view;
-        }
+        }        
         $this->pagedata['app_id'] = $app_id;
         $this->pagedata['_MAIN_'] = 'site/main.html';
         $this->page('site/main.html');
