@@ -1,40 +1,12 @@
-<{foreach from=$floor key=key item=item}>
+<{foreach from=$contents key=key item=item}>
 <div class="floor">
     <!-- 商品楼层列表 -->
     <div class="pro_list">
         <h3 class="list_title">
             <span class="floor_name"><{$key+1}>F <{$item.ad_name}></span>
         </h3>
+        <{WIDGET_B2C_INDEX_LEFT_GOOD}>
         <{WIDGET_B2C_GOODS_INDEX_GOOD_FLOOR num=$item.ad_setting.show_num  type=china_food window=$item.ad_setting.floor_window  addr=1}>
-        <{*WIDGET_B2C_GOODS_INDEX_GOOD_FLOOR target=index num=8 type=china_food orderby=last_modify desc*}>
-        
-    </div>
-    <!-- 店铺橱窗展示 -->
-    <{foreach from=$item.ad_setting.floor_ad item=ads}>
-    <{if $ads}>
-    <div class="shop_show">
-        <div class="bd">
-            <ul class="picList">
-                <{foreach from=$ads.ad_content.title  key=key item=ad}>
-                <li>
-                    <div class="pic">
-                        <a href="<{$ads.ad_content.url[$key]}>" target="_blank">
-                            <img src="<{$base_url}>/themes/pc/default/statics/images/loading.gif" data-original="<{$ads.ad_content.image[$key]|storager:'xs'}>"/>
-                        </a>
-                    </div>
-                    <div class="title">
-                        <a href="<{$ads.ad_content.url[$key]}>" target="_blank">
-                            <{$ads.ad_content.title[$key]}>
-                        </a>
-                    </div>
-                </li>
-                
-                <{/foreach}>
-            </ul>
-        </div>
-    </div>
-    <{break}>
-    <{/if}>
-    <{/foreach}>
+    </div>       
 </div>
 <{/foreach}>

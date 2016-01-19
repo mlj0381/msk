@@ -32,6 +32,7 @@
 
 
 
+<<<<<<< HEAD
     <menugroup label="客户服务" name="service">
         <menu app='aftersales' controller='site_store' action='price' display='true' order="60">退货管理</menu>
         <menu app='aftersales' controller='site_store' action='price' display='true' order="60">退款管理</menu>
@@ -39,6 +40,15 @@
         <menu app='seller' controller='site_aftersales' action='' display='true' order="60">违规处理</menu>
         <menu app='seller' controller='site_store' action='complaints' display='true' order="60">举报管理</menu>
         <menu app='seller' controller='site_store' action='appraisal' display='false' order="60">咨询回复</menu>
+=======
+    <menugroup name="售后管理">
+        <menu app='seller' controller='site_aftersales' action='order' display='true' order="60">退货管理</menu>
+        <menu app='seller' controller='site_aftersales' action='order' display='true' order="60">退款管理</menu>
+        <menu app='seller' controller='site_aftersales' action='order' display='false' order="60">售后管理</menu>
+        <menu app='seller' controller='site_aftersales' action='' display='false' order="60">违规处理</menu>
+        <menu app='seller' controller='site_store' action='complaints' display='false' order="60">举报管理</menu>
+        <menu app='site' controller='site_store' action='appraisal' display='false' order="60">咨询回复</menu>
+>>>>>>> 2cc9e3954a5dbd3e02f55c0f17db851c0da6f8a7
     </menugroup>
     <!-- 
     <menugroup label="结算管理">

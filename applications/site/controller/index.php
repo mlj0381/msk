@@ -25,4 +25,9 @@ class site_ctl_index extends site_controller{
         }
     }
 
+//网站正在建设中
+    public function build(){
+    	$this->display('build.html');
+    }
+
 }
