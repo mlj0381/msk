@@ -212,10 +212,10 @@ class b2c_ctl_site_passport extends b2c_frontpage
         $mdl_contact = app::get('base')->model('contact');
 
         $filter = array('uid' => $this->member['member_id'], 'from' => '0');
+
         $conf['info']['company'] = $mdl_company->getRow('*', $filter);
         $conf['info']['contact'] = $mdl_contact->getRow('*', $filter);
-        $conf['info']['company_extra'] = app::get('base')->model('company_extra')->getList('*', array('uid' =>$this->member['member_id'], 'from' => '0'));
-
+        $conf['info']['company_extra'] = app::get('base')->model('company_extra')->getList('*', $filter);
         return $conf;
     }
 
@@ -252,7 +252,7 @@ class b2c_ctl_site_passport extends b2c_frontpage
 
 
     //注册经营信息
-    public function business_info($pageIndex, $type = null)
+    public function business_info($pageIndex = 0, $type = null)
     {
         $this->verify_member();
         if (!is_numeric($pageIndex)) $pageIndex = 1;
