@@ -1,15 +1,15 @@
-<div class="list_con clearfix">
-    <ul class="list_rt">
-        <{foreach from=$contents item=item}>
-        <li>
-            <a href="<{$item.url}>">
-                <div class="goodsImgbox"><img src="<{$base_url}>/themes/pc/default/statics/images/loading.gif" data-original="<{$item.image_id|storager:'s'}>" class="proimg"></div>
-                <div class="list_info">
-                    <span class="price">￥<{$item.price|cur}></span>
-                    <p><{$item.title}></p>
-                </div>
-            </a>
-        </li>
-        <{/foreach}>
-    </ul>
-</div>
+
+<ul class="list_rt">
+    <{foreach from=$contents item=item}>
+    <li>
+        <a href="<{$item.url}>">
+            <div class="goodsImgbox"><img src="<{$base_url}>/themes/pc/default/statics/images/loading.gif" data-original="<{$item.image_id|storager:'s'}>" class="proimg"></div>
+            <div class="list_info">
+                <span class="price">￥<{$item.price|cur}></span>
+                <p><{$item.title}></p>
+            </div>
+        </a>
+    </li>
+    <{/foreach}>
+</ul>
+
