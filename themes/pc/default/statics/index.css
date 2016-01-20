@@ -23,7 +23,6 @@
   position: relative;
   padding: 0;
   font-size: 12px;
-  background: #f2f2f2;
 }
 .index_page .container {
   padding: 0;
@@ -124,7 +123,7 @@
 .index_page .pro_list .list_con .list_rt li {
   position: relative;
   width: 220px;
-  height: 286px;
+  height: 284px;
   background: #fff;
   margin-left: 15px;
   margin-bottom: 15px;

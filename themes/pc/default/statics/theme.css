@@ -273,10 +273,8 @@ body {
   line-height: 30px;
 }
 .my-menu dd li.active {
-  -moz-border-radius: 4px;
-  -webkit-border-radius: 4px;
-  border-radius: 4px;
-  background: #555;
+  background: #a40001;
+  border-radius: 0px;
 }
 .my-menu dd li.active a {
   color: #fff;

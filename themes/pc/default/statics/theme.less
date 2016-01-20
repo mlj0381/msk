@@ -3,6 +3,7 @@
 body {
     padding-top: 60px;
 }
+@basecolor:#a40001;
 .container {
     width: 1200px !important;
 }
@@ -309,8 +310,8 @@ body {
             padding: 0 0 0 15px;
             line-height: 30px;
             &.active {
-                .fn_rounded_corners;
-                background: #555;
+                background: @basecolor;
+                border-radius:0px;
                 a {
                     color: #fff;
                 }

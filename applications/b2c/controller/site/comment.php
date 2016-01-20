@@ -20,6 +20,7 @@ class b2c_ctl_site_comment extends b2c_frontpage {
         $this->mComment = $this->app->model('member_comment');
         $this->verify_member();
         $this->member = $this->get_current_member();
+        $this->set_tmpl('member');
     }
 
     public function form($order_id, $product_id, $type = 'comment', $reply = null) {

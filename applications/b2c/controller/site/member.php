@@ -12,7 +12,7 @@
 
 class b2c_ctl_site_member extends b2c_frontpage
 {
-    public $title = 'ä¼šå‘˜ä¸­å¿ƒ';
+    public $title = '»áÔ±ÖÐÐÄ';
     public function __construct(&$app)
     {
         parent::__construct($app);
@@ -20,11 +20,11 @@ class b2c_ctl_site_member extends b2c_frontpage
         $this->verify_member();
         $this->action = $this->_request->get_act_name();
         $this->set_tmpl('member');
-        //åˆ·æ–°ç»éªŒå€¼å’Œä¼šå‘˜ç­‰çº§
+        //Ë¢ÐÂ¾­ÑéÖµºÍ»áÔ±µÈ¼¶
         //vmc::singleton('b2c_member_exp')->renew($this->member['member_id']);
     }
     /**
-     * ä¼šå‘˜ä¸­å¿ƒèœå•æŽ’åº.
+     * »áÔ±ÖÐÐÄ²Ëµ¥ÅÅÐò.
      */
     public static function sort_menu($a, $b)
     {
@@ -37,7 +37,7 @@ class b2c_ctl_site_member extends b2c_frontpage
 
 
     /**
-     * ä¼šå‘˜ä¸­å¿ƒé¦–é¡µ.
+     * »áÔ±ÖÐÐÄÊ×Ò³.
      */
     public function index(){
         $this->pagedata['order_count'] = $this->app->model('orders')->type_count();
@@ -52,7 +52,7 @@ class b2c_ctl_site_member extends b2c_frontpage
     }
 
     /**
-     * ä¼šå‘˜å¤´åƒ
+     * »áÔ±Í·Ïñ
      */
     public function avatar($action = false){
         $this->menuSetting = 'setting';
@@ -65,26 +65,26 @@ class b2c_ctl_site_member extends b2c_frontpage
             $max_conf = $this->app->getConf('member_avatar_max_size').'M';
             $max_size = utils::parse_str_size($max_conf); //byte
             if($_FILES['avatar_file']['error']){
-                $this->splash('error',$redirect_here,'å¤´åƒä¸Šä¼ å¤±è´¥!'.$_FILES['avatar_file']['error']);
+                $this->splash('error',$redirect_here,'Í·ÏñÉÏ´«Ê§°Ü!'.$_FILES['avatar_file']['error']);
             }
             if($bt_size>$max_size){
-                $this->splash('error',$redirect_here,'å¤´åƒæ–‡ä»¶å¤§å°ä¸èƒ½è¶…è¿‡'.$max_conf);
+                $this->splash('error',$redirect_here,'Í·ÏñÎÄ¼þ´óÐ¡²»ÄÜ³¬¹ý'.$max_conf);
             }
             list($w, $h, $t) = getimagesize($ready_tmp_file);
             if(!in_array($t,array(1,2,3,6))){
-                //1 = GIF,2 = JPGï¼Œ3 = PNG,6 = BMP
-                $this->splash('error',$redirect_here,'æ–‡ä»¶ç±»åž‹é”™è¯¯');
+                //1 = GIF,2 = JPG£¬3 = PNG,6 = BMP
+                $this->splash('error',$redirect_here,'ÎÄ¼þÀàÐÍ´íÎó');
             }
             $image_id = $mdl_image->store($_FILES['avatar_file']['tmp_name'],$this->member['avatar'],null,$image_name);
-            logger::info('å‰å°ä¼šå‘˜å¤´åƒä¸Šä¼ æ“ä½œ'.'TMP_NAME:'.$_FILES['avatar_file']['tmp_name'].',FILE_NAME:'.$image_name);
+            logger::info('Ç°Ì¨»áÔ±Í·ÏñÉÏ´«²Ù×÷'.'TMP_NAME:'.$_FILES['avatar_file']['tmp_name'].',FILE_NAME:'.$image_name);
             if(!$image_id){
-                $this->splash('error',$redirect_here,'å¤´åƒä¸Šä¼ å¤±è´¥!');
+                $this->splash('error',$redirect_here,'Í·ÏñÉÏ´«Ê§°Ü!');
             }
             $mdl_image->rebuild($image_id,array('S','XS'));
             if($this->app->model('members')->update(array('avatar'=>$image_id),array('member_id'=>$this->member['member_id']))){
-                $this->splash('success',$redirect_here,'ä¸Šä¼ å¹¶ä¿å­˜æˆåŠŸ!');
+                $this->splash('success',$redirect_here,'ÉÏ´«²¢±£´æ³É¹¦!');
             }else{
-                $this->splash('error',$redirect_here,'ä¿å­˜å¤±è´¥!');
+                $this->splash('error',$redirect_here,'±£´æÊ§°Ü!');
             }
 
         }
@@ -104,7 +104,7 @@ class b2c_ctl_site_member extends b2c_frontpage
         $redirect_here = array('app' => 'b2c','ctl' => 'site_member','act' => 'set_pam_uname');
         $pam_data = $user_obj->get_pam_data('*', $this->member['member_id']);
         if($pam_data['local']){
-            $this->splash('success',$redirect_member_index,'å·²è®¾ç½®ç”¨æˆ·å');
+            $this->splash('success',$redirect_member_index,'ÒÑÉèÖÃÓÃ»§Ãû');
         }
 
         if($action == 'save'){
@@ -130,14 +130,14 @@ class b2c_ctl_site_member extends b2c_frontpage
         $pam_data = $user_obj->get_pam_data('*', $this->member['member_id']);
         unset($pam_data['memberData']);//2015/12/25
         if($pam_data['mobile']){
-            $this->splash('success',$redirect_member_index,'å·²ç»‘å®šæ‰‹æœº');
+            $this->splash('success',$redirect_member_index,'ÒÑ°ó¶¨ÊÖ»ú');
         }
 
         if($action == 'save'){
             $mobile = $_POST['mobile'];
             $vcode = $_POST['vcode'];
             if(!vmc::singleton('b2c_user_vcode')->verify($vcode, $mobile, 'signup')){
-                $this->splash('error', $redirect_here, 'éªŒè¯ç ä¸æ­£ç¡®');
+                $this->splash('error', $redirect_here, 'ÑéÖ¤Âë²»ÕýÈ·');
             }
             if(!vmc::singleton('b2c_user_passport')->set_mobile($mobile,$msg)){
                 $this->splash('error',$redirect_here,$msg);
@@ -160,14 +160,14 @@ class b2c_ctl_site_member extends b2c_frontpage
         $pam_data = $user_obj->get_pam_data('*', $this->member['member_id']);
         unset($pam_data['memberData']);//2015/12/25
         if($pam_data['email']){
-            $this->splash('success',$redirect_member_index,'å·²ç»‘å®šé‚®ç®±');
+            $this->splash('success',$redirect_member_index,'ÒÑ°ó¶¨ÓÊÏä');
         }
 
         if($action == 'save'){
             $email = $_POST['email'];
             $vcode = $_POST['vcode'];
             if(!vmc::singleton('b2c_user_vcode')->verify($email, $vcode, 'activation')){
-                $this->splash('error', $signup_url, 'éªŒè¯ç ä¸æ­£ç¡®');
+                $this->splash('error', $signup_url, 'ÑéÖ¤Âë²»ÕýÈ·');
             }
             if(!vmc::singleton('b2c_user_passport')->set_email($email,$msg)){
                 $this->splash('error',$redirect_here,$msg);
@@ -186,17 +186,17 @@ class b2c_ctl_site_member extends b2c_frontpage
         if($action == 'active'){
             $params = $_POST;
             if(!vmc::singleton('b2c_user_vcode')->verify($params['vcode'], $params['email'], 'reset')){
-                $this->splash('error','','éªŒè¯ç é”™è¯¯ï¼');
+                $this->splash('error','','ÑéÖ¤Âë´íÎó£¡');
             }
             $mdl_pm = app::get('pam')->model('members');
             $p_m = $mdl_pm->getRow('member_id,login_type',array('login_account'=>$params['email']));
             if(empty($p_m['member_id']) || $p_m['login_type']!='email'){
-                $this->splash('error','','è´¦å·å¼‚å¸¸!');
+                $this->splash('error','','ÕËºÅÒì³£!');
             }
             if($mdl_pm->update(array('disabled'=>'false'),array('member_id'=>$p_m['member_id'],'login_type'=>$p_m['login_type']))){
-                $this->splash('success',array('app'=>'b2c','ctl'=>'site_member','act'=>'securitycenter'),$params['email'].'å·²æˆåŠŸæ¿€æ´»!');
+                $this->splash('success',array('app'=>'b2c','ctl'=>'site_member','act'=>'securitycenter'),$params['email'].'ÒÑ³É¹¦¼¤»î!');
             }else{
-                $this->splash('error','','æ¿€æ´»å¼‚å¸¸!');
+                $this->splash('error','','¼¤»îÒì³£!');
             }
         }else{
             $user_obj = vmc::singleton('b2c_user_object');
@@ -246,7 +246,7 @@ class b2c_ctl_site_member extends b2c_frontpage
                 $_POST[$aTmp[1]] = serialize($val);
             }
         }
-        //--é˜²æ­¢æ¶æ„ä¿®æ”¹
+        //--·ÀÖ¹¶ñÒâÐÞ¸Ä
         $arr_colunm = array(
             'contact',
             'profile',
@@ -267,13 +267,13 @@ class b2c_ctl_site_member extends b2c_frontpage
         //---end
         $_POST['member_id'] = $this->member['member_id'];
         if ($member_model->save($_POST)) {
-            $this->splash('success', $url, ('ä¿å­˜æˆåŠŸ'));
+            $this->splash('success', $url, ('±£´æ³É¹¦'));
         } else {
-            $this->splash('failed', $url, ('ä¿å­˜å¤±è´¥'));
+            $this->splash('failed', $url, ('±£´æÊ§°Ü'));
         }
     }
     /**
-     * æˆ‘çš„è®¢å•.
+     * ÎÒµÄ¶©µ¥.
      */
     public function orders($status = 'all', $page = 1)
     {
@@ -289,10 +289,10 @@ class b2c_ctl_site_member extends b2c_frontpage
         $obj_store = vmc::singleton('store_store_object');
         $mdl_request_order = app::get('aftersales')->model('request');
         foreach ($order_list as $key => $value) {
-            //æ‰€å±žåº—é“ºä¿¡æ¯
+            //ËùÊôµêÆÌÐÅÏ¢
             $store_info = $obj_store->store_info($value['store_id'], 'store_id, store_name');
             $order_list[$key]['store_name'] = $store_info['store_name'];
-            //æŸ¥çœ‹è®¢å•æ˜¯å¦å·²ç”³è¯·é€€æ¬¾ã€å”®åŽ
+            //²é¿´¶©µ¥ÊÇ·ñÒÑÉêÇëÍË¿î¡¢ÊÛºó
             $result = $mdl_request_order->getRow('request_id, order_id', array('order_id' => $value['order_id']));
             $order_list[$key]['request'] = $result;
         }
@@ -326,7 +326,7 @@ class b2c_ctl_site_member extends b2c_frontpage
         $this->output();
     }
 
-    //ä¼šå‘˜è®¢å•ç­›é€‰æ¡ç»„åˆ
+    //»áÔ±¶©µ¥É¸Ñ¡Ìõ×éºÏ
     public function filter(){
         return array(
             'all' => array(
@@ -383,27 +383,27 @@ class b2c_ctl_site_member extends b2c_frontpage
         );
     }
     
-    //è´­ä¹°è¿‡çš„åº—é“º
+    //¹ºÂò¹ýµÄµêÆÌ
     public function buy_store(){
         $this->output();
     }
 
-    //æœ€è¿‘è®¿é—®
+    //×î½ü·ÃÎÊ
     public function visit(){
         $this->output();
     }
 
-    //æˆ‘çš„è¶³è¿¹
+    //ÎÒµÄ×ã¼£
     public function sleuth(){
         $this->output();
     }
 
-    //é€€è´§ä¸Žç»´æƒ
+    //ÍË»õÓëÎ¬È¨
     public function refund(){
         $this->output();
     }
     /**
-     * æˆ‘çš„æ”¶è—.
+     * ÎÒµÄÊÕ²Ø.
      */
     public function favorite($action = 'list', $gid = false, $obj_type = 'goods')
     {
@@ -415,21 +415,21 @@ class b2c_ctl_site_member extends b2c_frontpage
         switch ($action) {
             case 'del':
                 if (!$gid) {
-                    $this->splash('error', $redirect_here, 'åˆ é™¤æ”¶è—å¤±è´¥!');
+                    $this->splash('error', $redirect_here, 'É¾³ýÊÕ²ØÊ§°Ü!');
                 } else {
                     if ($mdl_member_goods->delete(array('member_id' => $member_id, 'goods_id' => $gid,'type'=>'fav'))) {
-                        $this->splash('success', $redirect_here, 'åˆ é™¤æˆåŠŸ!');
+                        $this->splash('success', $redirect_here, 'É¾³ý³É¹¦!');
                     } else {
-                        $this->splash('error', $redirect_here, 'åˆ é™¤æ”¶è—å¤±è´¥!');
+                        $this->splash('error', $redirect_here, 'É¾³ýÊÕ²ØÊ§°Ü!');
                     }
                 }
                 break;
             case 'add':
                 if (!$mdl_member_goods->add_fav($member_id, $gid, $obj_type)) {
                     
-                    $this->splash('error', '', 'åŠ å…¥æ”¶è—å¤±è´¥!');
+                    $this->splash('error', '', '¼ÓÈëÊÕ²ØÊ§°Ü!');
                 } else {
-                    $this->splash('success', '', 'åŠ å…¥æ”¶è—æˆåŠŸ!');
+                    $this->splash('success', '', '¼ÓÈëÊÕ²Ø³É¹¦!');
                 }
             default:
             $list_tmp = $mdl_member_goods->getList('*', array('member_id' => $member_id, 'type'=>'fav'));
@@ -453,11 +453,11 @@ class b2c_ctl_site_member extends b2c_frontpage
         }
     }
 
-    //ajaxæ·»åŠ æ”¶è—åº—é“ºçš„æ ‡ç­¾
+    //ajaxÌí¼ÓÊÕ²ØµêÆÌµÄ±êÇ©
     public function add_tag(){
         extract($_POST);
         if(empty($tagText) && !isset($tagText)){
-            $this->splash('error', '', 'æ ‡ç­¾åç§°ä¸èƒ½ä¸ºç©º');
+            $this->splash('error', '', '±êÇ©Ãû³Æ²»ÄÜÎª¿Õ');
         }
         $mdl_tag = app::get('desktop')->model('tag');
         $data = array(
@@ -469,14 +469,14 @@ class b2c_ctl_site_member extends b2c_frontpage
         if($tag_id = $mdl_tag->insert($data)){
             $this->splash('success', '', $tag_id);
         }
-        $this->splash('error', '', 'æ·»åŠ å¤±è´¥');
+        $this->splash('error', '', 'Ìí¼ÓÊ§°Ü');
     }
     
-    //ajaxæ·»åŠ åˆ é™¤åº—é“ºæ ‡ç­¾
+    //ajaxÌí¼ÓÉ¾³ýµêÆÌ±êÇ©
     public function update_tag(){
         extract($_POST);
         if(!is_numeric($tagId) && empty($type)){
-            $this->splash('error', '', 'éžæ³•è¯·æ±‚');
+            $this->splash('error', '', '·Ç·¨ÇëÇó');
         }
         $mdl_member_goods = $this->app->model('member_goods');
         $store_tag = $mdl_member_goods->getRow('tag', array('gnotify_id' => $favId));
@@ -492,19 +492,19 @@ class b2c_ctl_site_member extends b2c_frontpage
             $data['tag'] =  array_flip($tmp);
         }
         if($mdl_member_goods->save($data)){
-            $this->splash('success', '', 'æ“ä½œæˆåŠŸ');
+            $this->splash('success', '', '²Ù×÷³É¹¦');
         }
-        $this->splash('error', '', 'æ“ä½œå¤±è´¥');
+        $this->splash('error', '', '²Ù×÷Ê§°Ü');
     }
     
     /**
-     * ajaxæ£€æŸ¥å•†å“ã€åº—é“ºæ”¶è—     
+     * ajax¼ì²éÉÌÆ·¡¢µêÆÌÊÕ²Ø     
      */
     public function check_favorite(){
         $member_api = vmc::singleton('b2c_source_member');
         $return = $member_api->favorite_read($_GET);
         if (empty($return)) {
-            $this->splash('error', '', 'æ²¡æœ‰æ”¶è—');
+            $this->splash('error', '', 'Ã»ÓÐÊÕ²Ø');
         } else {
             $this->splash('success', '', $return);
         }
@@ -513,7 +513,7 @@ class b2c_ctl_site_member extends b2c_frontpage
     
     
     /**
-     * æ¶ˆæ¯ä¸­å¿ƒ.
+     * ÏûÏ¢ÖÐÐÄ.
      */
     public function message($msg_id = 0,$page = 1)
     {
@@ -555,7 +555,7 @@ class b2c_ctl_site_member extends b2c_frontpage
     }
 
     /*
-     *ä¼šå‘˜ä¸­å¿ƒæ”¶è´§åœ°å€
+     *»áÔ±ÖÐÐÄÊÕ»õµØÖ·
      * */
     public function receiver($action = 'list', $addr_id = false)
     {
@@ -567,15 +567,15 @@ class b2c_ctl_site_member extends b2c_frontpage
         switch ($action) {
             case 'set_default':
                 if (!$mdl_maddr->set_default($addr_id, $member_id)) {
-                    $this->splash('error', '', 'è®¾ç½®å¤±è´¥');
+                    $this->splash('error', '', 'ÉèÖÃÊ§°Ü');
                 }
-                $this->splash('success', $redirect, 'è®¾ç½®æˆåŠŸ');
+                $this->splash('success', $redirect, 'ÉèÖÃ³É¹¦');
                 break;
             case 'delete':
                 if (!$mdl_maddr->delete(array('member_id' => $member_id, 'addr_id' => $addr_id))) {
-                    $this->splash('error', '', 'åˆ é™¤å¤±è´¥');
+                    $this->splash('error', '', 'É¾³ýÊ§°Ü');
                 }
-                $this->splash('success', $redirect, 'åˆ é™¤æˆåŠŸ');
+                $this->splash('success', $redirect, 'É¾³ý³É¹¦');
                 break;
             case 'edit':
                 $this->pagedata['maddr'] = $mdl_maddr->getRow('*', array('member_id' => $member_id, 'addr_id' => $addr_id));
@@ -585,9 +585,9 @@ class b2c_ctl_site_member extends b2c_frontpage
                 $addr = $_POST['maddr'];
                 $addr['member_id'] = $member_id;
                 if (!$mdl_maddr->save($addr)) {
-                    $this->splash('error', '', 'ä¿å­˜å¤±è´¥');
+                    $this->splash('error', '', '±£´æÊ§°Ü');
                 }
-                $this->splash('success', $redirect, 'ä¿å­˜æˆåŠŸ');
+                $this->splash('success', $redirect, '±£´æ³É¹¦');
                 break;
             default:
                 $this->pagedata['list'] = $mdl_maddr->getList('*', array('member_id' => $member_id));
@@ -596,7 +596,7 @@ class b2c_ctl_site_member extends b2c_frontpage
         }
     }
     /**
-     *ä¼šå‘˜æ”¶è´§åœ°å€ è´­ç‰©æµç¨‹å¿«æ·è®¾ç½®ä¸“ç”¨.
+     *»áÔ±ÊÕ»õµØÖ· ¹ºÎïÁ÷³Ì¿ì½ÝÉèÖÃ×¨ÓÃ.
      */
     public function quick_maddr($action = 'list', $addr_id = false)
     {
@@ -607,15 +607,15 @@ class b2c_ctl_site_member extends b2c_frontpage
         switch ($action) {
             case 'set_default':
                 if (!$mdl_maddr->set_default($addr_id, $member_id)) {
-                    $this->splash('error', '', 'è®¾ç½®å¤±è´¥');
+                    $this->splash('error', '', 'ÉèÖÃÊ§°Ü');
                 }
-                $this->splash('success', $redirect, 'è®¾ç½®æˆåŠŸ');
+                $this->splash('success', $redirect, 'ÉèÖÃ³É¹¦');
                 break;
             case 'delete':
                 if (!$mdl_maddr->delete(array('member_id' => $member_id, 'addr_id' => $addr_id))) {
-                    $this->splash('error', '', 'åˆ é™¤å¤±è´¥');
+                    $this->splash('error', '', 'É¾³ýÊ§°Ü');
                 }
-                $this->splash('success', $redirect, 'åˆ é™¤æˆåŠŸ');
+                $this->splash('success', $redirect, 'É¾³ý³É¹¦');
                 break;
             case 'edit':
                 $data = $mdl_maddr->getRow('*', array('member_id' => $member_id, 'addr_id' => $addr_id));
@@ -628,7 +628,7 @@ class b2c_ctl_site_member extends b2c_frontpage
                 $addr = $_POST['maddr'];
                 $addr['member_id'] = $member_id;
                 if (!$mdl_maddr->save($addr)) {
-                    $this->splash('error', '', 'ä¿å­˜å¤±è´¥');
+                    $this->splash('error', '', '±£´æÊ§°Ü');
                 }
                 $addr['area'] = vmc::singleton('base_view_helper')->modifier_region($addr['area']);
                 $this->splash('success', $redirect, $addr);
@@ -637,7 +637,7 @@ class b2c_ctl_site_member extends b2c_frontpage
     }
 
     /**
-     * æˆ‘çš„ä¼˜æƒ åˆ¸.
+     * ÎÒµÄÓÅ»ÝÈ¯.
      */
     public function coupon($action = 'list')
     {
@@ -656,7 +656,7 @@ class b2c_ctl_site_member extends b2c_frontpage
     }
 
     /**
-     * å®‰å…¨ä¸­å¿ƒ.
+     * °²È«ÖÐÐÄ.
      */
     public function securitycenter()
     {
@@ -667,7 +667,7 @@ class b2c_ctl_site_member extends b2c_frontpage
     }
 
     /**
-     * æˆ‘çš„ç§¯åˆ†æ¦‚è§ˆ
+     * ÎÒµÄ»ý·Ö¸ÅÀÀ
      */
 
      public function integral($page=1){
