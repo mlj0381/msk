@@ -10,7 +10,7 @@
         <menu app='store' controller='site_store' action='index' display='true' order="60">查看店铺</menu>
         <menu app='seller' controller='site_store' action='setting' display='true' order="60">店铺设置</menu>
         <!--             <menu app='seller' controller='site_store' action='clerk_setting' display='true' order="60">店员设置</menu> -->
-        <menu app='seller' controller='site_store' action='modal_merg' display='true' order="60">模板管理</menu>
+        <menu app='seller' controller='site_tpl' action='form' display='true' order="60">模板管理</menu>
     </menugroup>
     <menugroup label="交易管理" name="deal">
         <menu app='seller' controller='site_order' action='index' display='true' order="60">订单管理</menu>
@@ -30,9 +30,9 @@
         <menu app='seller' controller='site_brand' action='index' display='true' order="60">品牌管理</menu>
     </menugroup>
 
-    <menugroup name="售后管理">
+    <menugroup label="售后管理" name="service">
         <menu app='seller' controller='site_aftersales' action='order' display='true' order="60">退货管理</menu>
-        <menu app='seller' controller='site_aftersales' action='order' display='true' order="60">退款管理</menu>
+        <menu app='seller' controller='site_aftersales' action='price_manage' display='true' order="60">退款管理</menu>
         <menu app='seller' controller='site_aftersales' action='order' display='false' order="60">售后管理</menu>
         <menu app='seller' controller='site_aftersales' action='' display='false' order="60">违规处理</menu>
         <menu app='seller' controller='site_store' action='complaints' display='false' order="60">举报管理</menu>

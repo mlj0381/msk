@@ -422,6 +422,7 @@ ol {
   margin-top: 20px;
   width: 242px;
   padding: 0;
+  float: left;
 }
 .product-container .product-page .goods-detailRow .shop_info {
   border: 1px solid #ddd;
@@ -533,6 +534,58 @@ ol {
   color: #a40001;
   font-size: 16px;
   padding: 0 5px;
+}
+.product-container .product-page .goods-detailRow .product_detail_rt {
+  float: right;
+  width: 900px;
+}
+.product-container .product-page .goods-detailRow .product-page-content {
+  width: 100%;
+}
+.product-container .product-page .goods-detailRow .product-page-content .tab-content #record {
+  margin-top: 25px;
+}
+.product-container .product-page .goods-detailRow .product-page-content .tab-content #record table {
+  width: 100%;
+}
+.product-container .product-page .goods-detailRow .product-page-content .tab-content #record table th {
+  background: #f2f2f2;
+  border: none;
+  padding: 10px 15px;
+}
+.product-container .product-page .goods-detailRow .product-page-content .tab-content #record table th span {
+  color: #aaa;
+  font-weight: normal;
+}
+.product-container .product-page .goods-detailRow .product-page-content .tab-content #record table td {
+  border-bottom: 1px solid #f2f2f2;
+  padding: 10px 15px;
+}
+.product-container .product-page .goods-detailRow .product-page-content .tab-content #comment {
+  margin-top: 25px;
+}
+.product-container .product-page .goods-detailRow .product-page-content .tab-content #comment table {
+  width: 100%;
+}
+.product-container .product-page .goods-detailRow .product-page-content .tab-content #comment table td {
+  padding: 15px 15px;
+  border-bottom: 1px solid #f2f2f2;
+}
+.product-container .product-page .goods-detailRow .product-page-content .tab-content #comment table .comment_con div span {
+  color: #aaa;
+}
+.product-container .product-page .goods-detailRow .product-page-content .tab-content #comment table .comment_con div p {
+  color: #3e3e3e;
+}
+.product-container .product-page .goods-detailRow .product-page-content .tab-content #comment table .comment_con div img {
+  width: 48px;
+  height: 48px;
+}
+.product-container .product-page .goods-detailRow .product-page-content .tab-content #comment table .customer_name {
+  text-align: right;
+}
+.product-container .product-page .goods-detailRow .product-page-content .tab-content #comment table .customer_name span {
+  color: #aaa;
 }
 .passport-login-container {
   width: 1000px;

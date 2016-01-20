@@ -294,9 +294,9 @@ header .searchbar .kefu {
   float: right;
   margin: 0;
   padding: 0;
-  height: 40px;
-  line-height: 40px;
-  margin-top: 34px;
+  height: 78px;
+  line-height: 78px;
+  margin-top: 20px;
 }
 header .searchbar .kefu .mobile {
   position: relative;
@@ -325,8 +325,11 @@ header .searchbar .kefu .mobile .wxcode:before {
 }
 header .searchbar .kefu .hotLine {
   line-height: 20px;
-  height: 40px;
+  height: 78px;
   font-size: 14px;
+  padding-top: 12px;
+  background: url(images/clock.jpg) no-repeat left center;
+  padding-left: 74px;
   float: right;
 }
 header .searchbar .kefu .hotLine b {
@@ -797,9 +800,20 @@ form .success .valid_message {
 form .none {
   display: none;
 }
-/* .build_page{
-    height: 100%;
-    background: #fff url(images/build.jpg) no-repeat center;
-    background: red;
-
-} */
+.msgtip {
+  display: none;
+}
+label.error {
+  color: #ea5200;
+  margin-left: 4px;
+  padding: 0px 20px;
+  background: url(http://www.helloweba.com/demo/validation/images/unchecked.gif) no-repeat 2px 0;
+}
+label.right {
+  margin-left: 4px;
+  padding-left: 20px;
+  background: url(http://www.helloweba.com/demo/validation/images/checked.gif) no-repeat 2px 0;
+}
+.form-group {
+  margin: 8px 0px;
+}

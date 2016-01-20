@@ -205,7 +205,7 @@
         </div>
 
         <div class="row goods-detailRow">
-            <div class="col-xs-3 goods_side_left">
+            <div class="goods_side_left">
                 <!-- 店铺信息 -->
                 <div class="shop_info">
                     <dl>
@@ -265,65 +265,15 @@
                     </ul>
                 </div>
             </div>
-            <div class="col-xs-9">
+            <div class="product_detail_rt">
                 <div class="product-page-content">
                     <ul id="pp_tabs" class="nav nav-tabs">
                         <li class="active"><a href="#desc" data-toggle="tab">详情介绍</a></li>
+                        <li><a href="#record " data-toggle="tab">成交记录</a></li>
                         <li><a href="#comment" data-toggle="tab">评价</a></li>
                     </ul>
                     <div  class="tab-content">
                         <div class="tab-pane fade in active" id="desc">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th width="100px">品牌</th>
-                                        <th>分类</th>
-                                        <{if $data_detail.keywords}>
-                                        <th>关键词</th>
-                                        <{/if}>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td width:100px;>
-                                            <{if $data_detail.brand.brand_id}>
-                                            <a target="_blank" href="<{link app=b2c ctl=site_list args0=$data_detail.brand.brand_id}>">
-                                                <{if $data_detail.brand.brand_logo}>
-                                                <img src="<{$data_detail.brand.brand_logo|storager:'xs'}>" alt="<{$data_detail.brand.brand_name}>" width="100px" height="100px"/>
-                                                <{$data_detail.brand.brand_name}>
-                                                <{else}>
-                                                <{$data_detail.brand.brand_name}>
-                                                <{/if}>
-                                            </a>
-                                            <{else}>
-                                            无
-                                            <{/if}>
-                                        </td>
-                                        <td>
-                                            <{if $data_detail.category.cat_id}>
-                                            <a href="<{link app=b2c ctl=site_list}>?cat_id=<{$data_detail.category.cat_id}>">
-                                                <{$data_detail.category.cat_name}>
-                                            </a>
-                                            <{else}>
-                                            无
-                                            <{/if}>
-                                        </td>
-                                        <{if $data_detail.keywords}>
-                                        <td>
-                                            <ul class="list-inline">
-                                                <{foreach from=$data_detail.keywords item=item}>
-                                                <li>
-                                                    <a href="<{link app=b2c ctl=site_list}>?keyword=<{$item.keyword}>">
-                                                        <{$item.keyword}>
-                                                    </a>
-                                                </li>
-                                                <{/foreach}>
-                                            </ul>
-                                        </td>
-                                        <{/if}>
-                                    </tr>
-                                </tbody>
-                            </table>
                             <{if $data_detail.params}>
                             <div class="row">
                                 <{foreach from=$data_detail.params key=key item=item}>
@@ -354,8 +304,42 @@
                                 <img src="<{$base_url}>/themes/pc/default/statics/images/details.jpg" />
                             </div>
                         </div>
+                        <div class="tab-pane fade" id="record">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th class="col-xs-4">买家<span>[登录后可见]</span></th>
+                                        <th class="col-xs-3">款式/型号</th>
+                                        <th class="col-xs-2">数量</th>
+                                        <th class="col-xs-3">成交时间</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>拓***里</td>
+                                        <td>默认</td>
+                                        <td>1</td>
+                                        <td>2015-10-13 10:28:21</td>
+                                    </tr>
+                                    <tr>
+                                        <td>拓***里</td>
+                                        <td>默认</td>
+                                        <td>1</td>
+                                        <td>2015-10-13 10:28:21</td>
+                                    </tr>
+                                    <tr>
+                                        <td>拓***里</td>
+                                        <td>默认</td>
+                                        <td>1</td>
+                                        <td>2015-10-13 10:28:21</td>
+                                    </tr>
+                                </tbody> 
+                            </table>
+                        </div>
                         <div class="tab-pane fade" id="comment">
-                            //COMMENTS TODO
+                            <table>
+                                32
+                            </table>
                         </div>
                     </div>
                 </div>
@@ -545,30 +529,30 @@
                 }
             }
         });
-                <{if $data_detail.nostore_sell != '1'}>
-                //库存确认openAPI
-                var stock_confirm_api = "<{$base_url}>/openapi/stock/confirm/";
-        $.post(stock_confirm_api, {sku:'<{$data_detail.product.bn}>'}, function (recv) {
-            try {
-                data = recv.data;
-                if (!data || !data['<{$data_detail.product.bn}>'] || data['<{$data_detail.product.bn}>']['num'] < 1) {
-                    //无法确认库存,或无库存
-                    //DO SOMETHING
-                    $('.product-page-cart .btn').addClass('disabled');
-                    $('<br><div class="alert alert-warning">无库存</div>').insertAfter($('.product-page-cart'));
-                } else {
-                    var stock_num = data['<{$data_detail.product.bn}>']['num'];
-                    $('.product-quantity input.spinner-input').attr('data-maxbuy', stock_num);
+        <{if $data_detail.nostore_sell != '1'}>
+            //库存确认openAPI
+            var stock_confirm_api = "<{$base_url}>/openapi/stock/confirm/";
+            $.post(stock_confirm_api, {sku:'<{$data_detail.product.bn}>'}, function (recv) {
+                try {
+                    data = recv.data;
+                    if (!data || !data['<{$data_detail.product.bn}>'] || data['<{$data_detail.product.bn}>']['num'] < 1) {
+                        //无法确认库存,或无库存
+                        //DO SOMETHING
+                        $('.product-page-cart .btn').addClass('disabled');
+                        $('<br><div class="alert alert-warning">无库存</div>').insertAfter($('.product-page-cart'));
+                    } else {
+                        var stock_num = data['<{$data_detail.product.bn}>']['num'];
+                        $('.product-quantity input.spinner-input').attr('data-maxbuy', stock_num);
+                    }
+                } catch (e) {
+                    //console.error(e);
                 }
-            } catch (e) {
-                //console.error(e);
-            }
 
-        }, 'json');
-                <{/if}>
+            }, 'json');
+        <{/if}>
 
-                        //相关商品openAPI
-                        var related_api = "<{link app=b2c ctl=site_goods act=goods_rate}>";
+                //相关商品openAPI
+                var related_api = "<{link app=b2c ctl=site_goods act=goods_rate}>";
                 $.getJSON(related_api, {goods_id: goods_id}, function (recv) {
                     try {
                         $.each(recv.data, function (k, v) {

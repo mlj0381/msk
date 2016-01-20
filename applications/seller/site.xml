@@ -37,8 +37,8 @@
 		<disable>true</disable>
 	</module>
 
-	<module controller='site_template' id="seller">
-		<name>sellertemplate</name>
+	<module controller='site_tpl' id="seller">
+		<name>sellertpl</name>
 		<title>店铺模板</title>
 		<disable>true</disable>
 	</module>

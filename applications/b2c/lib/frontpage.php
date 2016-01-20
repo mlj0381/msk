@@ -19,6 +19,7 @@ class b2c_frontpage extends site_controller
     {
         parent::__construct($app);
         $this->member = $this->get_current_member();
+        $this->menuSetting = 'index';
     }
 
     /**
@@ -135,7 +136,7 @@ class b2c_frontpage extends site_controller
         $this->noindex = $seo['seo_noindex'];
     } //End Function
 
-    public function get_menu($action)
+    public function get_menu()
     {
         $xmlfile = $this->app->app_dir . "/menu.xml";
         $parser = xml_parser_create();
@@ -146,10 +147,14 @@ class b2c_frontpage extends site_controller
         $group = Array();
         $menus = Array();
         $count = count($tags);
-        $menuSetting = array('message', 'setting');
-        !in_array($action, $menuSetting) && $action = 'index';
+        $menuSetting = array(
+            'index' => array('index'),
+            'setting' => array('setting'),
+            'message' => array('message'),
+        );
+        $menu = $menuSetting[$this->menuSetting];
         foreach ($tags as $key => $item) {
-            if ($item['tag'] == 'menugroup' && $item['attributes']['name'] == $action) {
+            if ($item['tag'] == 'menugroup' && in_array($item['attributes']['name'], $menu)) {
                 $menuItem = $item['attributes'];
 
                 for ($i = $key + 1; $i < $count; $i++) {
@@ -173,7 +178,7 @@ class b2c_frontpage extends site_controller
     {
         $app_id = $app_id ? $app_id : $this->app->app_id;
         $this->pagedata['member'] = $this->member;
-        $this->pagedata['menu'] = $this->get_menu($this->action);
+        $this->pagedata['menu'] = $this->get_menu();
         $this->pagedata['current_action'] = $this->action;
         $this->action_view = 'action/' . $this->action . '.html';
         if ($this->pagedata['_PAGE_']) {

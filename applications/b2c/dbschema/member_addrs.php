@@ -31,36 +31,40 @@ $db['member_addrs'] = array(
             'is_title' => true,
             'type' => 'varchar(50)',
             'required' => true,
+            'default' => '',
             'comment' => ('收货人姓名') ,
         ) ,
         'area' => array(
             'type' => 'region',
             'required' => true,
+            'default' => '',
             'comment' => ('收货人地区') ,
         ) ,
         'addr' => array(
             'type' => 'varchar(255)',
             'required' => true,
+            'default' => '',
             'comment' => ('收货地址') ,
         ) ,
         'zip' => array(
             'type' => 'varchar(20)',
-
+            'default' => '',
             'comment' => ('邮编') ,
         ) ,
         'tel' => array(
             'type' => 'varchar(50)',
-
+            'default' => '',
             'comment' => ('电话') ,
         ) ,
         'mobile' => array(
             'type' => 'varchar(50)',
             'required' => true,
+            'default' => '',
             'comment' => ('手机') ,
         ) ,
         'email' => array(
             'type' => 'varchar(100)',
-
+            'default' => '',
             'comment' => ('邮箱') ,
         ) ,
         
@@ -79,14 +83,14 @@ $db['member_addrs'] = array(
         
         'habit_normal_last' => array(
             'type' => 'varchar(20)',
-            'required' => true,
+            'default' => '',
             'label' => '习惯最晚收货时间',
             'comment' => '习惯最晚收货时间'
         ),
         
         'cart_stop_distance' => array(
             'type' => 'varchar(20)',
-            'required' => true,
+            'default' => '',
             'label' => '最近停车距离',
             'comment' => '最近停车距离'
         ),

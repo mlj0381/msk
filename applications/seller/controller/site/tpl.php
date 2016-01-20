@@ -26,7 +26,6 @@ class seller_ctl_site_tpl extends seller_frontpage
 	}
 	public function form()
 	{
-		
 		$this->output();
 	}
 	

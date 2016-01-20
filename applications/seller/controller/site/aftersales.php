@@ -72,4 +72,9 @@ class seller_ctl_site_aftersales extends seller_frontpage
         );
         $this->output();
     }
+
+    public function price_manage(){
+        $this->pagedata['_PAGE_'] = 'order.html';
+        $this->output();
+    }
 }
