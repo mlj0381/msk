@@ -807,12 +807,12 @@ label.error {
   color: #ea5200;
   margin-left: 4px;
   padding: 0px 20px;
-  background: url(http://www.helloweba.com/demo/validation/images/unchecked.gif) no-repeat 2px 0;
+  background: url(images/unchecked.gif) no-repeat 2px 0;
 }
 label.right {
   margin-left: 4px;
   padding-left: 20px;
-  background: url(http://www.helloweba.com/demo/validation/images/checked.gif) no-repeat 2px 0;
+  background: url(images/checked.gif) no-repeat 2px 0;
 }
 .form-group {
   margin: 8px 0px;
