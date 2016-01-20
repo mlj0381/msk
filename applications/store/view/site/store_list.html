@@ -23,13 +23,13 @@
             <li class="search_li">
                 <form class="goods_search"  mothod="post">
                     <input type="hidden" name="goods[filter]" value="<{$query}>"/>
-                    <input class="" type="text" name="goods[keywords]" value="<{$search_having}>" placeholder="在当前条件下搜索">
+                    <input class="" type="text" name="goods[keywords]" value="<{$having}>" placeholder="在当前条件下搜索">
                     <button class="search_keywords" type="button"><i class="icon-search"></i></button>
                 </form>
             </li>
         </ol>
 
-        <div class="col-xs-2 about_goods_total">共<span><{$all_count}></span>件相关商品  </div>
+        <div class="col-xs-2 about_goods_total">共<span><{$count}></span>件相关商品  </div>
     </div>
     <{if $search_info.prop}>
         <div class="gfilter_condition clearfix">
@@ -43,22 +43,23 @@
         </div>
     <{/if}>
 
-    
-
     <div class="goods-listbox">
         <div class="panel panel-default">
           <div class="panel-heading clearfix">
                   <div class="form-inline col-xs-8">
                       <div class="btn-group order-btn btn-sm" role="group" aria-label="...">
-                          <a class="btn  btn-sm <{if !$env.get.orderby}>btn-danger<{else}>btn-default<{/if}>" href="<{link app=b2c ctl=site_list act=index}>?<{$query|merge_query:'orderby'}>">
+                          <a class="btn  btn-sm <{if !$env.get.orderby}>btn-danger<{else}>btn-default<{/if}>"
+                             href="<{link app=store ctl=site_store act=store_list args0=$store_id}>?<{$query|merge_query:'orderby'}>">
                               综合排序
                               <i class="glyphicon glyphicon-sort-by-attributes-alt"></i>
                           </a>
-                          <a class="btn  btn-sm <{if $env.get.orderby=='buy_count-desc'}>btn-danger<{else}>btn-default<{/if}>" href="<{link app=b2c ctl=site_list act=index}>?<{$query|merge_query:'orderby':'buy_count-desc'}>">
+                          <a class="btn  btn-sm <{if $env.get.orderby=='buy_count-desc'}>btn-danger<{else}>btn-default<{/if}>"
+                             href="<{link app=store ctl=site_store act=store_list args0=$store_id}>?<{$query|merge_query:'orderby':'buy_count-desc'}>">
                               销量
                               <i class="glyphicon glyphicon-sort-by-order-alt"></i>
                           </a>
-                          <a class="btn  btn-sm <{if $env.get.orderby=='comment_count-desc'}>btn-danger<{else}>btn-default<{/if}>" href="<{link app=b2c ctl=site_list act=index}>?<{$query|merge_query:'orderby':'comment_count-desc'}>">
+                          <a class="btn  btn-sm <{if $env.get.orderby=='comment_count-desc'}>btn-danger<{else}>btn-default<{/if}>"
+                             href="<{link app=store ctl=site_store act=store_list args0=$store_id}>?<{$query|merge_query:'orderby':'comment_count-desc'}>">
                               评价数
                               <i class="glyphicon glyphicon-sort-by-order-alt"></i>
                           </a>
@@ -72,18 +73,18 @@
                           <nav>
                             <ul class="pagination pagination-sm">
                                 <li>
-                                  <a href="#" aria-label="Previous">
+                                  <a href="<{link app=store ctl=site_store act=store_list args0=$store_id}>?<{$query|merge_query:page:$page_index - 1}>"  aria-label="Previous">
                                     <span aria-hidden="true">&laquo;</span>
                                   </a>
                                 </li>
                                 <li>
-                                  <a href="#" aria-label="Next">
+                                  <a href="<{link app=store ctl=site_store act=store_list args0=$store_id}>?<{$query|merge_query:page:$page_index + 1}>"  aria-label="Next">
                                     <span aria-hidden="true">&raquo;</span>
                                   </a>
                                 </li>
                             </ul>
                           </nav>
-                          <span class="page_num"><b>1</b> / 2</span>
+                          <span class="page_num"><b><{$page_index}></b> / <{$pager.total}></span>
                       </div>
                   </div> 
             </div>
@@ -95,7 +96,8 @@
                   <div class="thumbnail goods-item">
                       <div class="gi-image-wrapper">
                           <a href="<{link app=b2c ctl=site_product args0=$item.product.product_id args1=$item.store_id}>">
-                              <img src="<{$base_url}>/themes/pc/default/statics/images/loading.gif" data-original="<{$item.image_default_id|storager:'s'}>" alt="<{$item.name}>">
+                              <img src="<{$item.image_default_id|storager:'s'}>" alt="<{$item.name}>">
+                              <!--data-original="<{$item.image_default_id|storager:'s'}>"-->
                           </a>
                       </div>
                     <div class="caption">
@@ -159,8 +161,8 @@
                 $(input).val('请输入关键词');
                 reutrn;
             }
-            var url = "<{link app=b2c ctl=site_list act=index}>?<{$query|merge_query:'having'}>"; 
-            url += '&having=' + $(input).val();
+            var url = "<{link app=store ctl=site_store act=store_list args0=$store_id}>?<{$query}>";
+            url += '&keywords=' + $(input).val();
             location = url;
         });
     });
