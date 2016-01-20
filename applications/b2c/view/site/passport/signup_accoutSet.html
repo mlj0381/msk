@@ -219,8 +219,9 @@ void function(signup_form){
             obj.popover('show');
             return false;
 //        }
-            return true;
+
         }
+        return true;
         ;
     }
     /* var re = type ? /^(?=.*[0-9]+)(?=.*[A-Za-z]+)[A-Za-z0-9]+$/ : /^[A-Za-z0-9_]+$/;
@@ -273,7 +274,7 @@ void function(signup_form){
     //获得短信验证码
     var _cutdown_sms = function(btn){
         btn.addClass('disabled');
-        var cutdown = 120,btn_o_text = btn.text(),timer =
+        var cutdown = 10,btn_o_text = btn.text(),timer =
         setInterval((function(){
             btn.text('短信已发送,'+(cutdown--)+'秒后可重试');
             if(cutdown<1){
@@ -286,7 +287,7 @@ void function(signup_form){
     signup_form.find('.mobile-vcode button').on('click',function(e){
         var btn = $(this);
         if(btn.hasClass('disabled'))return;
-        btn.addClass('disabled');
+       // btn.addClass('disabled');
         $.post('<{link app=b2c ctl=site_passport act=send_vcode_sms}>',{mobile:$('#input_mobile').val()},function(re){
             if(re && re.error){
                 btn.removeClass('disabled');

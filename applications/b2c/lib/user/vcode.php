@@ -32,8 +32,8 @@ class b2c_user_vcode {
                 return false;
             }
             $left_time = (time() - $vcodeData['lastmodify']);
-            if ($left_time < 120) {
-                $msg = '请'.(120 - $left_time).'秒后重试';
+            if ($left_time < 10) {
+                $msg = '请'.(10 - $left_time).'秒后重试';
                 return false;
             }
             if ($vcodeData['createtime'] != date('Ymd')) {

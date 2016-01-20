@@ -74,6 +74,7 @@ class b2c_ctl_site_list extends b2c_frontpage
     public function index($fix_brand = false)
     {
         $params = utils::_filter_input($_GET);
+
         $this->pagedata['search_info'] = $this->_init_crumbs($params);
         $query_str = $this->_query_str($params);
         $this->pagedata['query'] = $this->_query_str($params, 0);
@@ -82,36 +83,23 @@ class b2c_ctl_site_list extends b2c_frontpage
         $this->pagedata['serach_keywords'] = $params['keywords'];
         $this->pagedata['serach_type'] = $params['type'];
         $this->pagedata['search_having'] = $params['having'];
-        $filter = $params['filter'];
-        if (!$fix_brand && $filter['cat_id']) {
+        //$filter = $params['filter'];
+        if (!$fix_brand && $params['filter']['cat_id']) {
             $mdl_cat = $this->app->model('goods_cat');
-            $cat_info = $mdl_cat->dump($filter['cat_id']);
+            $cat_info = $mdl_cat->dump($params['filter']['cat_id']);
             if ($cat_info['gallery_setting']['site_template']) {
                 $this->set_tmpl_file($cat_info['gallery_setting']['site_template']); //设置模板文件
             }
             $this->seo_info = $cat_info['seo_info'];
-            $this->pagedata['cat_path'] = $mdl_cat->getPath($filter['cat_id']);
+            $this->pagedata['cat_path'] = $mdl_cat->getPath($params['filter']['cat_id']);
         } elseif ($fix_brand) {
-            $filter['brand_id'] = $fix_brand;
+            $params['filter']['brand_id'] = $fix_brand;
         }
 //by bibin 2015/10/10  只显示审核通过的商品
-        $filter['checkin'] = '1';
+        $params['filter']['checkin'] = '1';
 //>>
-        $keywords = array('keywords' => $params['keywords'], 'having' => $params['having']);
-        $goods_list = $this->_list($filter, $params['page'], $params['orderby'], $keywords);
+        $params['keywords'] = array('keywords' => $params['keywords'], 'having' => $params['having']);
 
-        $this->pagedata['data_list'] = $goods_list['data'];
-        $this->pagedata['count'] = $goods_list['count'];
-        $this->pagedata['all_count'] = $goods_list['all_count'];
-        $this->pagedata['page_index'] = $params['page']['index'];
-        $this->pagedata['pager'] = $goods_list['page_info'];
-        $this->pagedata['pager']['token'] = time();
-        $this->pagedata['pager']['link'] = $this->gen_url(array(
-                'app' => 'b2c',
-                'ctl' => 'site_list',
-                'act' => 'index',
-                'full' => 1,
-            )) . '?page=' . $this->pagedata['pager']['token'] . ($query_str ? '&' . $query_str : '');
         if (!$fix_brand) {
 //$this->pagedata['data_screen'] = $this->_screen_data_by_cat($filter['cat_id']);
         } else {
@@ -124,15 +112,70 @@ class b2c_ctl_site_list extends b2c_frontpage
                 $this->set_tmpl_file($brand_setting['site_template']);
             }
         }
+        !isset($params['sg']) && $params['sg'] = 'g';
 //seo
         $this->generate_seo_data();
-        $this->page('site/list/index.html');
+        if ($params['type'] == 'store') {
+            $this->pagedata['storeList'] = $this->_search_store($params);
+            $page = 'store';
+        } else {
+            $this->_search_goods($params);
+            $page = 'index';
+        }
+        $this->pagedata['pager']['link'] = $this->gen_url(array(
+                'app' => 'b2c',
+                'ctl' => 'site_list',
+                'act' => 'index',
+                'full' => 1,
+            )) . '?page=' . $this->pagedata['pager']['token'] . ($query_str ? '&' . $query_str : '');
+        $this->page("site/list/{$page}.html");
+
     }
 
     /*
      * 按店铺搜索
      *
      *  */
+
+    private function _search_store($params)
+    {
+        if (empty($params) && !isset($params)) return array();
+        $cache_key = utils::array_md5(func_get_args());
+        if (cachemgr::get($cache_key, $return)) {
+            return $return;
+        }
+        cachemgr::co_start();
+        //查询店铺
+        $mdl_store = app::get('store')->model('store');
+        $filter = array('store_name|has' => $params['keywords']['keywords']);
+        $result = $mdl_store->getList('*', $filter, $params['page']['size'] * ($params['page']['index'] - 1),
+            $params['page']['size'], $params['orderdy']);
+        $mdl_brand = $this->app->model('brand');
+        foreach($result as &$value){
+            $value['brand'] = $mdl_brand->getList('brand_name, brand_id', array('seller_id' => $value['seller_id']));
+        }
+        cachemgr::set($cache_key, $return, cachemgr::co_end());
+        return $result;
+    }
+
+    /*
+     * 按店铺搜索
+     *
+     *  */
+
+    private function _search_goods($params)
+    {
+        if (empty($params) && !isset($params)) return array();
+
+        $goods_list = $this->_list($params);
+        $this->pagedata['show_type'] = $params['sg'];
+        $this->pagedata['data_list'] = $goods_list['data'];
+        $this->pagedata['count'] = $goods_list['count'];
+        $this->pagedata['all_count'] = $goods_list['all_count'];
+        $this->pagedata['page_index'] = $params['page']['index'];
+        $this->pagedata['pager'] = $goods_list['page_info'];
+        $this->pagedata['pager']['token'] = time();
+    }
 
     /*
      * 根据分类ID提供筛选条件，并且返回已选择的条件数据
@@ -238,44 +281,66 @@ class b2c_ctl_site_list extends b2c_frontpage
     }
 
 //获取商品列表，包装商品列表
-    private function _list($filter, $page, $orderby, $keywords)
+    private function _list($params)
     {
         $cache_key = utils::array_md5(func_get_args());
         if (cachemgr::get($cache_key, $return)) {
             return $return;
         }
+
         cachemgr::co_start();
-        if ($keywords) {
+        if ($params['keywords']) {
             $goods_keywords = $this->app->model('goods_keywords');
-            $goods = $goods_keywords->getList('goods_id', array('keyword|has' => $keywords, 'res_type' => 'goods'));
+            $goods = $goods_keywords->getList('goods_id', array('keyword|has' => $params['keywords'], 'res_type' => 'goods'));
             foreach ($goods as $key => $value) {
-                $filter['goods_id|in'][$key] = $value['goods_id'];
+                $params['filter']['goods_id|in'][$key] = $value['goods_id'];
             }
         }
         $goods_cols = '*';
         $mdl_goods = $this->app->model('goods');
-        $page['size'] = 4;
-        $goods_list = $mdl_goods->getList($goods_cols, $filter, $page['size'] * ($page['index'] - 1), $page['size'], $orderby);
+        $filter = array(
+            'cat_id' => $params['filter']['cat'],
+            'brand_id' => $params['filter']['brand'],
+        );
+        $goods_list = $mdl_goods->getList($goods_cols, $filter, $params['page']['size'] * ($params['page']['index'] - 1), $params['page']['size'], $params['orderby']);
         $obj_goods_stage = vmc::singleton('b2c_goods_stage');
 //set_member
         if ($this->app->member_id = vmc::singleton('b2c_user_object')->get_member_id()) {
             $obj_goods_stage->set_member($this->app->member_id);
         }
+
         $obj_goods_stage->gallery($goods_list); //引用传递
-        $total = $mdl_goods->count($filter);
+        if($params['sg'] == 's'){
+            $goods_list = $this->_store_goods($goods_list);
+        }
+        $total = $mdl_goods->count($params['filter']);
         $return = array(
             'data' => $goods_list,
             'count' => count($goods_list),
             'all_count' => $total,
             'page_info' => array(
-                'total' => ($total ? ceil($total / $page['size']) : 1),
-                'current' => intval($page['index']),
+                'total' => ($total ? ceil($total / $params['page']['size']) : 1),
+                'current' => intval($params['page']['index']),
             ),
         );
         cachemgr::set($cache_key, $return, cachemgr::co_end());
 //print_r($return['data']);
         return $return;
     }
+
+    //商品列表按店铺显示
+    private function _store_goods(&$goodsList){
+        $mdl_store = app::get('store')->model('store');
+        foreach($goodsList as $key => $value){
+            $store_info = $mdl_store->getRow('*', array('store_id' => $value['store_id']));
+            $store_info['goods'][$key] = $value;
+            $result[$store_info['store_id']] = $store_info;
+
+        }
+        unset($goodsList);unset($store_info);
+        return $result;
+    }
+
 
     private function _query_str($params, $nopage = true)
     {
@@ -294,7 +359,7 @@ class b2c_ctl_site_list extends b2c_frontpage
         unset($params['orderby']);
 //分页,页码
         $page['index'] = $params['page'] ? $params['page'] : 1;
-        $page['size'] = $params['page_size'] ? $params['page_size'] : 20;
+        $page['size'] = $params['page_size'] ? $params['page_size'] : 8;
         unset($params['page']);
         unset($params['page_size']);
 //价格区间

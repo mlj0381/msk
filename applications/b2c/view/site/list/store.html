@@ -1,0 +1,68 @@
+
+
+
+
+
+
+
+<!--<{if $brand}>-->
+<!--<{include file='site/brand/inlist.html'}>-->
+<!--<{/if}>-->
+<div class="glist-container">
+    <div class="goods-listbox">
+        <div class="list_maincon">
+       <div class="store_list clearfix">
+            <{foreach from=$storeList item=item}>
+                <div class="store_item clearfix">
+                    <div class="store_bar">
+                        <div class="col-xs-8">
+                            <a href="<{link app=store ctl=site_store act=index args0=$item.store_id}>">
+                                <img class="thumbnail" src="<{$item.logo|storager:'s'}>">
+                            </a>
+                            <div class="store_info">
+                                <a href="<{link app=store ctl=site_store act=index args0=$item.store_id}>"><{$item.store_name}></a>
+                                <p>主营品牌：
+                                    <{foreach from=$item.brand item=brand}>
+                                        <{$brand.brand_name}>
+                                    <{/foreach}>
+                                </p>
+                                <p>所在地区：<{$item.store_area|region}></p>
+                            </div>
+                        </div>
+                        <div class="col-xs-2">
+                            <!--<p class="pingfen">店铺综合评分<span>4.8分</span></p>-->
+                        </div>
+                        <div class="col-xs-2 store_ctr">
+                            <a href="<{link app=store ctl=site_store act=index args0=$item.store_id}>" class="btn btn-sm btn-danger">进店逛逛</a>
+                            <!--<button class="btn btn-sm btn-danger five_goods">5件相关商品</button>-->
+                        </div>
+                    </div>
+                </div>
+            <{/foreach}>
+
+            </div>
+        </div>
+        <{pagers data=$pager}>
+    </div>
+</div>
+<script>
+    $(function(e){
+        $('.search_keywords, .result_search').click(function(){
+            var input = $(this).prev();
+            if(!$(input).val() || $(input).val() == "请输入关键词"){
+                $(input).val('请输入关键词');
+                reutrn;
+            }
+            var url = "<{link app=b2c ctl=site_list act=index}>?<{$query|merge_query:'having'}>";
+            url += '&having=' + $(input).val();
+            location = url;
+        });
+    });
+
+    //5件相关商品
+    $(function(){
+        $('.five_goods').bind('click',function(){
+            $(this).parents('.store_bar').siblings('.store_goods').slideToggle(400);
+        })
+    })
+</script>

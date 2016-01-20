@@ -31,9 +31,9 @@ class seller_frontpage extends site_controller {
         if($this->controller != 'site_passport'){
             $this->_schedule();
         }
+        $this->menuSetting = 'index';
         $this->seller = $this->get_current_seller();
         $this->store = $this->get_current_store();
-       // $this->user_manage();
         $this->set_tmpl('seller');
         $this->user_obj = vmc::singleton('seller_user_object');
         $this->passport_obj = vmc::singleton('seller_user_passport');
@@ -47,23 +47,6 @@ class seller_frontpage extends site_controller {
         if (empty($store)) {
             $redriect = $this->gen_url(array('app' => 'seller', 'ctl' => 'site_passport', 'act' => 'entry', 'args0' => $seller['schedule']));
             $this->splash('success', $redriect, '登录成功,请先完善入驻信息');
-        }
-    }
-
-    protected function user_manage($type) {
-        $this->_menus = $this->get_menu();
-        if ($type == 'manage') {
-            foreach ($this->_menus as $key => $value) {
-                if ($value['name'] != '帐户管理') {
-                    unset($this->_menus[$key]);
-                }
-            }
-        } else {
-            foreach ($this->_menus as $key => $value) {
-                if ($value['name'] == '帐户管理') {
-                    unset($this->_menus[$key]);
-                }
-            }
         }
     }
 
@@ -224,7 +207,7 @@ class seller_frontpage extends site_controller {
 
 //End Function
 
-    public function get_menu($action) {
+    public function get_menu() {
         $xmlfile = $this->app->app_dir . "/menu.xml";
         //$xsd = vmc::singleton('base_xml')->xml2array(file_get_contents($xmlfile), $tags);
         $parser = xml_parser_create();
@@ -238,10 +221,11 @@ class seller_frontpage extends site_controller {
         $menuSetting = array(
             'index' => array('store', 'deal', 'goods', 'service'),
             'account' => array('account'),
-            'message' => array(),
+            'message' => array('message'),
         );
+        $menu = $menuSetting[$this->menuSetting];
         foreach ($tags as $key => $item) {
-            if ($item['tag'] == 'menugroup') {
+            if ($item['tag'] == 'menugroup' && in_array($item['attributes']['name'], $menu)) {
                 $menuItem = $item['attributes'];
                 for ($i = $key + 1; $i < $count; $i++) {
                     if ($tags[$i]['tag'] == 'menu') {

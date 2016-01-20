@@ -32,7 +32,7 @@ class seller_ctl_site_seller extends seller_frontpage {
     //账户信息
     public function account()
     {
-        $this->user_manage('manage');
+        $this->menuSetting = 'account';
         if ($_POST) {
             $post = $_POST;
             $user_passport = vmc::singleton('seller_user_passport');
@@ -46,21 +46,22 @@ class seller_ctl_site_seller extends seller_frontpage {
 
     //商户信息
     public function businessInfo() {
-        $this->user_manage('manage');
+        $this->menuSetting = 'account';
         $this->output();
     }
 
     //安全设置
     public function securitycenter() {
+        $this->menuSetting = 'account';
         //$user_obj = vmc::singleton('seller_user_object');
         //$this->pagedata['pam_data'] = $user_obj->get_pam_data('*', $this->seller['seller_id']);
-        $this->user_manage('manage');
         $this->output();
     }
 
 
     //消息中心
     public function message() {
+        $this->menuSetting = 'message';
         $this->output();
     }
 
@@ -70,7 +71,6 @@ class seller_ctl_site_seller extends seller_frontpage {
     }
 
     public function company() {
-        $this->user_manage('manage');
         $this->title .= "公司信息";
         if ($_POST)
             $this->_company_post($_POST);
