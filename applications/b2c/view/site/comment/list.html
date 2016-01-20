@@ -1,96 +1,82 @@
 <table>
     <tbody>
+    <{}>
+    <{foreach from=$comment_list item=items}>
         <tr>
             <td class="col-xs-8 comment_con">
+                <{foreach from=$items item=item}>
+                <{if ($item.comment_num eq '1' || $item.comment_num eq '2') && $item.content neq ''}>
                 <div>
-                    <span class="pl_time">[初次评价]</span>
-                    <p>真心不错，肉质鲜嫩！</p>
+                    <span class="pl_time"><{if $item.comment_num eq '1'}>[初次评价]<{else}>追加评价<{/if}></span>
+                    <p><{$item.content}></p>
+                    <{foreach from=$item.image_id item=image}>
+                    <img class="img-thumbnail" src="<{$image|storager:'m'}>">
+                    <{/foreach}>
                 </div>
-                <div>
-                    <span>
-                        [追加评论]
-                    </span>
-                    <p>告诉我你叫什么名字，保证不打死你！</p>
-                    <img class="img-thumbnail" src="<{$base_color}>/themes/pc/default/statics/images/store_goods.jpg">
-                </div>
+
+                <{/if}>
+                <{/foreach}>
             </td>
             <td class="col-xs-4 customer_name">
-                大****雪<span>(匿名)</span>
+                <{$items.member_info.login_account}><span>(匿名)</span>
             </td>
         </tr>
-        <tr>
-            <td class="col-xs-8 comment_con">
-                <div>
-                    <span class="pl_time">[初次评价]</span>
-                    <p>真心不错，肉质鲜嫩！</p>
-                </div>
-                <div>
-                    <span>
-                        [追加评论]
-                    </span>
-                    <p>告诉我你叫什么名字，保证不打死你！</p>
-                    <img class="img-thumbnail" src="<{$base_color}>/themes/pc/default/statics/images/store_goods.jpg">
-                </div>
-            </td>
-            <td class="col-xs-4 customer_name">
-                大****雪<span>(匿名)</span>
-            </td>
-        </tr>
+    <{/foreach}>
     </tbody>
 </table>
 
 
-<{foreach from=$comment_list item=comment name=fec_cl}>
-    <div class="row">
-        <div class="col-md-1 col-xs-3">
-            <img src="<{$comment.member_id|avatar:'xs'}>" alt="<{$comment.author_name}>" class="img-thumbnail img-circle" />
-        </div>
-        <div class="col-md-11 col-xs-9">
-            <h5>
-                <{$comment.author_name}> <small><{$comment.createtime|cdate}></small>
-            </h5>
-            <p>
-                满意度：<span class="text-warning"><{$comment.mark.mark_star|star}></span>
-            </p>
-            <p><{$comment.content}></p>
-            <div class="row">
-            <{foreach from=$comment.images item=image}>
-                <div class="col-md-2">
-                    <a href="<{$image.image_id|storager}>" target='_blank' class="thumbnail">
-                        <img src="<{$image.image_id|storager:'s'}>"/>
-                    </a>
-                </div>
-            <{/foreach}>
-            </div>
-            <{foreach from=$comment.reply item=reply}>
-                <{if $reply.member_id!=$comment.member_id}>
-                    <{continue;}>
-                <{/if}>
-                <div class="highlight">
-                    <h5><small><{$reply.createtime|cdate}></small></h5>
-                    <p>
-                        <{$reply.content}>
-                    </p>
-                </div>
-            <{/foreach}>
-            <{foreach from=$comment.reply item=reply}>
-                <{if $reply.member_id ==$comment.member_id}>
-                    <{continue;}>
-                <{/if}>
-                <div class="row">
-                    <div class="col-md-1 col-xs-3">
-                        <img width='100%' src="<{$reply.member_id|avatar:'xs'}>" alt="<{$reply.author_name}>" class="img-thumbnail img-circle" />
-                    </div>
-                    <div class="col-md-11 col-xs-9">
-                        <h5><{$reply.author_name}> <small><{$reply.createtime|cdate}></small></h5>
-                        <p><{$reply.content}></p>
-                    </div>
-                </div>
-            <{/foreach}>
-        </div>
-    </div>
-    <{if !$env.foreach.fec_cl.last}>
-    <hr>
-    <{/if}>
-<{/foreach}>
+<!--<{foreach from=$comment_list item=comment name=fec_cl}>-->
+    <!--<div class="row">-->
+        <!--<div class="col-md-1 col-xs-3">-->
+            <!--<img src="<{$comment.member_id|avatar:'xs'}>" alt="<{$comment.author_name}>" class="img-thumbnail img-circle" />-->
+        <!--</div>-->
+        <!--<div class="col-md-11 col-xs-9">-->
+            <!--<h5>-->
+                <!--<{$comment.author_name}> <small><{$comment.createtime|cdate}></small>-->
+            <!--</h5>-->
+            <!--<p>-->
+                <!--满意度：<span class="text-warning"><{$comment.mark.mark_star|star}></span>-->
+            <!--</p>-->
+            <!--<p><{$comment.content}></p>-->
+            <!--<div class="row">-->
+            <!--<{foreach from=$comment.images item=image}>-->
+                <!--<div class="col-md-2">-->
+                    <!--<a href="<{$image.image_id|storager}>" target='_blank' class="thumbnail">-->
+                        <!--<img src="<{$image.image_id|storager:'s'}>"/>-->
+                    <!--</a>-->
+                <!--</div>-->
+            <!--<{/foreach}>-->
+            <!--</div>-->
+            <!--<{foreach from=$comment.reply item=reply}>-->
+                <!--<{if $reply.member_id!=$comment.member_id}>-->
+                    <!--<{continue;}>-->
+                <!--<{/if}>-->
+                <!--<div class="highlight">-->
+                    <!--<h5><small><{$reply.createtime|cdate}></small></h5>-->
+                    <!--<p>-->
+                        <!--<{$reply.content}>-->
+                    <!--</p>-->
+                <!--</div>-->
+            <!--<{/foreach}>-->
+            <!--<{foreach from=$comment.reply item=reply}>-->
+                <!--<{if $reply.member_id ==$comment.member_id}>-->
+                    <!--<{continue;}>-->
+                <!--<{/if}>-->
+                <!--<div class="row">-->
+                    <!--<div class="col-md-1 col-xs-3">-->
+                        <!--<img width='100%' src="<{$reply.member_id|avatar:'xs'}>" alt="<{$reply.author_name}>" class="img-thumbnail img-circle" />-->
+                    <!--</div>-->
+                    <!--<div class="col-md-11 col-xs-9">-->
+                        <!--<h5><{$reply.author_name}> <small><{$reply.createtime|cdate}></small></h5>-->
+                        <!--<p><{$reply.content}></p>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--<{/foreach}>-->
+        <!--</div>-->
+    <!--</div>-->
+    <!--<{if !$env.foreach.fec_cl.last}>-->
+    <!--<hr>-->
+    <!--<{/if}>-->
+<!--<{/foreach}>-->
 <{pagers data=$pager}>

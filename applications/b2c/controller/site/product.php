@@ -44,10 +44,28 @@ class b2c_ctl_site_product extends b2c_frontpage {
             //设置模板页
             $this->set_tmpl_file($data_detail['goods_setting']['site_template']);
         }
+
+        $this->pagedata['buy_items'] = $this->_buy_items($data_detail['goods_id']);
         $this->pagedata['goods_path'] = $this->app->model('goods')->getPath($data_detail['goods_id']);
 
         $this->_set_seo($data_detail);
         $this->page('site/product/index.html');
+    }
+
+    //商品查询成交记录
+    private function _buy_items($goods_id){
+        //得到商品id
+        $order_items = $this->app->model('order_items')->getList('*', array('goods_id' => $goods_id));
+        $mdl_order = $this->app->model('orders');
+       // $mdl_member = $this->app->model('members'); 显示登录名
+        $mdl_member = app::get('pam')->model('members');
+        foreach($order_items as &$value){
+            $member = $mdl_order->getRow('member_id, createtime', array('order_id' => $value['order_id']));
+            $value['createtime'] = $member['createtime'];
+            $value['member_info'] = $mdl_member->getRow('login_account, member_id', array('member_id' => $member['member_id']));
+            $value['member_info']['login_account'] = substr_replace($value['member_info']['login_account'], '****', 2, 5);
+        }
+        return $order_items;
     }
 
     /* 设置详情页SEO --start */
