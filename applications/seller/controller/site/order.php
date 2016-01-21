@@ -14,20 +14,24 @@
 class seller_ctl_site_order extends seller_frontpage
 {
     public $titel = '商家订单';
-    public function __construct(&$app){
+
+    public function __construct(&$app)
+    {
         parent::__construct($app);
         $this->verify();
     }
 
     //商家订单
-    public function index($status = 'all', $page = 1){
-         $mdl_order = app::get('b2c')->model('orders');
+    public function index($status = 'all', $page = 1)
+    {
+        $mdl_order = app::get('b2c')->model('orders');
         $mdl_order_items = app::get('b2c')->model('order_items');
         $limit = 5;
-        
+
         $status_filter = $mdl_order->filter();
         $this->pagedata['status'] = $status;
         $filter = $status_filter[$status];
+
         $filter['store_id'] = $this->store['store_id'];
         $order_list = $mdl_order->getList('*', $filter, ($page - 1) * $limit, $limit);
         foreach ($order_list as $key => $value) {
@@ -48,7 +52,7 @@ class seller_ctl_site_order extends seller_frontpage
         $this->pagedata['order_count'] = $order_count;
         $this->pagedata['order_items_group'] = $order_items_group;
         $this->pagedata['pager'] = array(
-            'total' => ceil($order_count / $limit) ,
+            'total' => ceil($order_count / $limit),
             'current' => $page,
             'link' => array(
                 'app' => 'b2c',
@@ -57,35 +61,40 @@ class seller_ctl_site_order extends seller_frontpage
                 'args' => array(
                     $status,
                     ($token = time()),
-                ) ,
-            ) ,
+                ),
+            ),
             'token' => $token,
         );
         $this->output();
     }
 
     //支付
-    public function dopay(){
+    public function dopay()
+    {
 
     }
 
     //订单发货
-    public function send(){
+    public function send()
+    {
 
     }
 
     //订单取消
-    public function docancel(){
+    public function docancel()
+    {
 
     }
 
     //编辑
-    public function edit(){
+    public function edit()
+    {
 
     }
 
     //订单详细信息
-    public function detail($order_id){
+    public function detail($order_id)
+    {
         $mdl_order = app::get('b2c')->model('orders');
         $mdl_order_log = app::get('b2c')->model('order_log');
         $order = $mdl_order->dump($order_id, '*', array(
@@ -117,37 +126,44 @@ class seller_ctl_site_order extends seller_frontpage
     }
 
     //退货
-    public function goreship(){
+    public function goreship()
+    {
 
     }
 
     //退款
-    public function dorefund(){
+    public function dorefund()
+    {
 
     }
 
     //保存
-    public function save(){
+    public function save()
+    {
 
     }
 
     //删除
-    public function del(){
+    public function del()
+    {
 
     }
 
     //订单操作日志
-    public function order_log(){
+    public function order_log()
+    {
 
     }
 
     //打印单据
-    public function doreship(){
+    public function doreship()
+    {
 
     }
 
     //手工订单减价
-    public function discount(){
+    public function discount()
+    {
 
     }
 

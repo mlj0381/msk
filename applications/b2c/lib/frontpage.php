@@ -179,7 +179,7 @@ class b2c_frontpage extends site_controller
         $app_id = $app_id ? $app_id : $this->app->app_id;
         $this->pagedata['member'] = $this->member;
         $this->pagedata['menu'] = $this->get_menu();
-        $this->pagedata['current_action'] = $this->action;
+        $this->pagedata['current_action'] = $this->menuSetting;
         $this->action_view = 'action/' . $this->action . '.html';
         if ($this->pagedata['_PAGE_']) {
             //$this->pagedata['_PAGE_'] = 'site/member/'.$this->pagedata['_PAGE_'];
