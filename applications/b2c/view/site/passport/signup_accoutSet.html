@@ -20,35 +20,35 @@
                 <div class="form-group">
                     <label for="input_login_name" class="col-xs-3 control-label"><span class="text-danger">*</span>登录账号：</label>
                     <div class="col-xs-8">
-                        <input type="text" name="pam_account[login_name]" class="form-control" id="input_login_name" placeholder="请输入用户名" value="" required="true" format="username|mobile|email" remote="<{link app=seller ctl=site_passport act=check_login_name}>">
-                        <label class="msgtip" data-message="error">格式错误</label>
+                        <input type="text" name="pam_account[login_name]" class="form-control" id="input_login_name" placeholder="手机号/邮箱/用户名" value="" required="true" format="username|mobile|email" remote="<{link app=b2c ctl=site_passport act=check_login_name}>">
+                        <span class="msgTip" data-message="format">用户名只能是手机号、邮箱、用户名</span>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="input_login_password" class="col-xs-3 control-label"><span class="text-danger">*</span>登录密码：</label>
                     <div class="col-xs-8">
-                        <input type="password" name="pam_account[login_password]" class="form-control" id="input_login_password" placeholder="登录密码">
-                        <div id="input_login_passwordTip"></div>
+                        <input type="password" name="pam_account[login_password]" class="form-control" id="input_login_password" placeholder="6-11位字符，必须是字母、数字、下划线组合" required="true" minlength="6" maxlength="11" format="password">
+                        <span class="msgTip" data-message="format">密码格式错误</span>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="input_psw_confirm" class="col-xs-3 control-label"><span class="text-danger">*</span>确认密码：</label>
                     <div class="col-xs-8">
                         <input type="password" name="pam_account[psw_confirm]" class="form-control" id="input_psw_confirm" placeholder="再次输入登录密码" equalTo="#input_login_password">
-                        <div id="input_psw_confirmTip"></div>
+                        <span class="msgTip" data-message="error">两次密码输入不一致</span>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="input_psw_confirm" class="col-xs-3 control-label"><span class="text-danger">*</span>验证手机：</label>
                     <div class="col-xs-8">
-                        <input type="text" name="pam_account[mobile]" class="form-control" id="input_mobile">
-                        <div id="input_mobileTip"></div>
+                        <input type="text" name="pam_account[mobile]" class="form-control" id="input_mobile" required="true" format="mobile">
+                        <span class="msgTip" data-message="error">请输入正确的手机号码</span>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="input_psw_confirm" class="col-xs-3 control-label"><span class="text-danger">*</span>短信验证码：</label>
                     <div class="col-xs-4">
-                        <input type="text" name="smscode" class="form-control" id="mobile_vcode">
+                        <input type="text" name="smscode" class="form-control" id="mobile_vcode" >
                         <div id="mobile_vcodeTip"></div>
                     </div>
                     <div class="col-xs-4">
@@ -71,10 +71,9 @@
 /**
  * 表单验证
  */
-$(function(){
-    var validate = $(".accout_seting_form").formValid();
-})
-
+ $(function(){
+    var validate = $.VMC.validator("member_signup_form");
+});
 
 
 /*
@@ -94,85 +93,7 @@ void function(signup_form){
             });
         },3000);
     }
-    $('input[type="file"]').fileupload({
-
-        add:function(e, data){
-            if(!data.files[0]['type'].match(/^image/)){
-                alert('非法上传，不是图片类型');
-            }
-//            data.submit();
-        },
-        done:function(e, data){
-            var re = $.parseJSON(data.result);
-            var input= e.target || e.srcElement;
-            $(input).next('input').val(re.image_id);
-            $(input).next('input').nextAll().removeClass('hide');
-        }
-    });
-//
-    var _input_checkin = function(obj, length, type) {
-        type = type ? type : false;
-        if (obj.val().length < length) {
-            obj.popover({
-                content: '最少位' + length + '字符',
-                placement: 'right',
-                container: 'body'
-            });
-            obj.popover('show');
-            return false;
-//        }
-
-        }
-        return true;
-        ;
-    }
-    /* var re = type ? /^(?=.*[0-9]+)(?=.*[A-Za-z]+)[A-Za-z0-9]+$/ : /^[A-Za-z0-9_]+$/;
-     if(!re.test(obj.val())){
-            var val = type ? '包含非法字符或必须有两种组合' : '包含非法字符';
-            obj.popover({content : val, placement : 'right', container : 'body'});
-            obj.popover('show');
-            return false;
-        }
-        return true;
-    }*/
-    $('#input_login_name').on('blur',function(e){
-        var ipt = $(this);
-       // if(!_input_checkin(ipt, 6)) return;
-        $.post('<{link app=b2c ctl=site_passport act=check_login_name}>',{'pam_account[login_name]':ipt.val()},function(re){
-            if(re.error){
-                ipt.popover({content:re.error,placement:'right',trigger:'click',container:'body'});
-                ipt.popover('show');
-                ipt.closest('.form-group').removeClass('has-success').addClass('has-error');
-            }else if(re.success){
-                ipt.closest('.form-group').removeClass('has-error').addClass('has-success');
-                if(re.data && re.data.is_mobile){
-                    // $('.local-vcode').hide();
-                    // $('.mobile-vcode').show();
-                }else{
-                    // $('.local-vcode').show();
-                    // $('.mobile-vcode').hide();
-                }
-            }
-
-        },'json');
-    });
-
-
-    signup_form.on('submit',function(e){
-        e.stopPropagation();
-        //signup_form.find('button[type=submit]').button('loading');
-        $.post(signup_form.prop('action'),signup_form.serialize(),function(re){
-            if(re.error){
-                _alert_error(re.error);
-            }
-            if(re.success){
-                location = re.redirect;
-            }
-            signup_form.find('button[type=submit]').button('reset');
-        },'json');
-        return false;
-    });
-
+    
     //获得短信验证码
     var _cutdown_sms = function(btn){
         btn.addClass('disabled');
@@ -186,6 +107,7 @@ void function(signup_form){
             return arguments.callee;
         })(),1000);
     };
+
     signup_form.find('.mobile-vcode button').on('click',function(e){
         var btn = $(this);
         if(btn.hasClass('disabled'))return;
@@ -201,6 +123,7 @@ void function(signup_form){
             }
         },'json');
     });
+
 }($('#member_signup_form'));
 </script>
 
