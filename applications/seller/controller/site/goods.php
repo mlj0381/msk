@@ -219,6 +219,7 @@ class seller_ctl_site_goods extends seller_frontpage {
             'seller_id' => $this->seller['seller_id'],
             'store_id' => $this->store['store_id']
         ));
+
         $objGoodsData->checkin($goods);
         $db = vmc::database();
         $db->beginTransaction();

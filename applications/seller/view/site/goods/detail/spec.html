@@ -4,27 +4,35 @@
     <{if $props.cat neq '0'}>
     <input type="hidden" name="goods[norms_id]" value="<{$props.type_id]}>"/>
     <{/if}>
+    <{assign var=i value=0}>
     <{foreach from=$props.props key=key item=items}>
+
     <div class="form-group">
         <label class="col-xs-2 control-label">
             <span><{$items.name}>
-                <input type="hidden" name="goods[spec_desc][t][]" value="<{$goods.spec_desc.t[$key]}>"/>
+                <input type="hidden" name="goods[spec_desc][t][]" value="<{$items.name}>"/>
             </span>
         </label>
+
         <div class="col-xs-5">
             <ul class="quality">
                 <input type="hidden" name="goods[spec_desc][v][]" value="<{$goods.spec_desc.v[$key]}>"/>
+
                 <{foreach from=$items.props_value item=item}>
-                <li <{if in_array($item, $goods[spec_desc][v])}>
+                <{$goods[spec_desc][v][0]|print_r}><{$goods[spec_desc][v][$i]|print_r}>
+                 <{$item.name}>
+                <li <{if $item.name|in:$goods[spec_desc][v][$i]}>
                     class ="sect"
                     <{/if}>><{$item.name}>
-
             </li>
+
             <{/foreach}>
         </ul>
     </div>
 </div>
+
     <{/foreach}>
+    <{$i++}>
 <{/foreach}>
 <div class="form-group">
     <label class="col-xs-2 control-label"><span>界限值</span></label>

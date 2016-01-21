@@ -106,4 +106,25 @@ class b2c_source_member extends base_source {
     public function basic($params) {
         return $this->favorite_read($params);
     }
+
+    /*
+     * 添加浏览记录
+     * @params $params member_id
+     * return array() List
+     */
+    public function scan($data){
+        $mdl_member_goods = app::get('b2c')->model('member_goods');
+        $check = $mdl_member_goods->getList('gnotify_id', $data);
+        if(!empty($check)) return null;
+        //查询商品信息
+        $goods = app::get('b2c')->model('products')->getRow('*', array('goods_id' => $data['goods_id'], 'is_default' => 'true'));
+        $data['create_time'] = time();
+        $data['status'] = 'ready';
+        $data['product_id'] = $goods['product_id'];
+        $data['goods_id'] = $goods['goods_id'];
+        $data['goods_name'] = $goods['name'];
+        $data['goods_price'] = $goods['price_dn'];
+        $data['image_default_id'] = $goods['image_id'];
+        $mdl_member_goods->save($data);
+    }
 }

@@ -76,53 +76,20 @@
 
 <!-- 最近访问 -->
 <div class="last_active">
-    <h4><span>最近访问</span><a href="#">查看全部</a></h4>
+    <h4><span>最近访问</span></h4>
     <div class="row active_list">
+        <{foreach from=$scan item=item}>
         <div class="col-xs-3 active_item">
             <div class="goods_item thumbnail">
-                <a href="#" class="item_pic">
-                    <img src="<{$base_url}>/themes/pc/default/statics/images/bestsellers.jpg">
+                <a href="<{link app=b2c ctl=site_product act=index args0=$item.product_id args1=$item.store.store_id}>" class="item_pic">
+                    <img src="<{$item.image_default_id|storager:'x'}>">
                 </a>
                 <div class="caption">
-                    <a href="#">宁夏滩正宗羊肉</a>
-                    <span class="text-danger">￥：50.00</span>
+                    <a href="<{link app=b2c ctl=site_product act=index args0=$item.product_id args1=$item.store.store_id}>"><{$item.goods_name}></a>
+                    <span class="text-danger">￥：<{$item.goods_price}></span>
                 </div>
             </div>
         </div>
-        <div class="col-xs-3 active_item">
-            <div class="goods_item thumbnail">
-                <a href="#" class="item_pic">
-                    <img src="<{$base_url}>/themes/pc/default/statics/images/bestsellers.jpg">
-                </a>
-                <div class="caption">
-                    <a href="#">宁夏滩正宗羊肉</a>
-                    <span class="text-danger">￥：50.00</span>
-                </div>
-            </div>
-        </div>
-        <div class="col-xs-3 active_item ">
-            <div class="goods_item thumbnail">
-                <a href="#" class="item_pic">
-                    <img src="<{$base_url}>/themes/pc/default/statics/images/bestsellers.jpg">
-                </a>
-                <div class="caption">
-                    <a href="#">宁夏滩正宗羊肉</a>
-                    <span class="text-danger">￥：50.00</span>
-                </div>
-            </div>
-        </div>
-        <div class="col-xs-3 active_item">
-            <div class="goods_item thumbnail">
-                <a href="#" class="item_pic">
-                    <img src="<{$base_url}>/themes/pc/default/statics/images/bestsellers.jpg">
-                </a>
-                <div class="caption">
-                    <a href="#">宁夏滩正宗羊肉</a>
-                    <span class="text-danger">￥：50.00</span>
-                </div>
-            </div>
-        </div>
-
-
+    <{/foreach}>
     </div>
 </div>

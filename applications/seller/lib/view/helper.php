@@ -31,4 +31,10 @@ class seller_view_helper
             break;
         }
     }
+
+    public function modifier_in($k, $v)
+    {
+        //var_dump($v);
+        //return in_array($k, explode(',', $v[0]));
+    }
 }

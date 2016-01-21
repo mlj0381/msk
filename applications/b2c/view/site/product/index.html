@@ -6,7 +6,7 @@
         <{if $env.foreach.gp.last}>
         <li class="active"><{$data_detail.name}>&nbsp;<{$data_detail.product.spec_info}></li>
         <{else}>
-        <li><a href="<{link app=b2c ctl=site_list act=index}>?cat_id=<{$item.ident}>"><{$item.title}></a></li>
+        <li><a href="<{link app=b2c ctl=site_list act=index}>?cat=<{$item.ident}>"><{$item.title}></a></li>
         <{/if}>
         <{/foreach}>
         <{else}>
@@ -540,6 +540,11 @@
 
             }, 'json');
         <{/if}>
+
+                //浏览记录
+                var required_scan = "<{link app=b2c ctl=site_member act=scan_goods}>";
+                $.post(required_scan, {goods_id: goods_id}, function (recv) {
+                });
 
                 //相关商品openAPI
                 var related_api = "<{link app=b2c ctl=site_goods act=goods_rate}>";
