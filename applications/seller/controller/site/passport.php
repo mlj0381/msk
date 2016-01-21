@@ -457,7 +457,7 @@ class seller_ctl_site_passport extends seller_frontpage
             }
             $info['company_extra'][$value['key']] = $value;
         }
-        $info['company_extra']['store'] = app::get('store')->model('store')->getRow('*', $filter);
+        $info['company_extra']['store'] = app::get('store')->model('store')->getRow('*', array('seller_id' => $filter['uid']));
         $info['company_extra']['company'] = app::get('base')->model('company')->getRow('*', $filter);
         $info['company_extra']['contact'] = app::get('base')->model('contact')->getRow('*', $filter);
         $info['company_extra']['brand'] = $this->app->model('brand')->getRow('*', array('seller_id' => $this->seller['seller_id']));

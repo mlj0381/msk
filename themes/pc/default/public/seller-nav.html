@@ -1,12 +1,12 @@
 <nav class="navbar navbar-inverse">
     <div class="container">
       <ul class="nav navbar-nav">
-        <li><a href="<{link app=seller ctl=site_seller act=index}>" <{if $current_action eq 'index'}> class="active"<{/if}>>我是卖家</a></li>
-        <li><a href="<{link app=seller ctl=site_seller act=account}>" <{if $current_action eq 'account'}> class="active"<{/if}>>账号管理</a></li>
-        <li><a href="<{link app=site ctl=index act=build}>" <{if $current_action eq 'message'}> class="active"<{/if}>>消息中心</a></li>
-        <li><a href="<{link app=site ctl=index act=build}>" <{if $current_action eq ''}> class="active"<{/if}>>卖家地图</a></li>
-        <li><a href="<{link app=site ctl=index act=build}>" <{if $current_action eq ''}> class="active"<{/if}>>美侍客学堂</a></li>
-        <li><a href="<{link app=site ctl=index act=build}>" <{if $current_action eq ''}> class="active"<{/if}>>商家服务</a></li>
+        <li><a href="<{link app=seller ctl=site_seller act=index}>" <{if $active eq 'index'}> class="active"<{/if}>>我是卖家</a></li>
+        <li><a href="<{link app=seller ctl=site_seller act=account}>" <{if $active eq 'account'}> class="active"<{/if}>>账号管理</a></li>
+        <li><a href="<{link app=site ctl=index act=build}>" <{if $active eq 'message'}> class="active"<{/if}>>消息中心</a></li>
+        <li><a href="<{link app=site ctl=index act=build}>" <{if $active eq ''}> class="active"<{/if}>>卖家地图</a></li>
+        <li><a href="<{link app=site ctl=index act=build}>" <{if $active eq ''}> class="active"<{/if}>>美侍客学堂</a></li>
+        <li><a href="<{link app=site ctl=index act=build}>" <{if $active eq ''}> class="active"<{/if}>>商家服务</a></li>
       </ul>
     </div>
 </nav>

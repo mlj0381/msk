@@ -19,6 +19,7 @@ class b2c_frontpage extends site_controller
     {
         parent::__construct($app);
         $this->member = $this->get_current_member();
+        $this->controller = $this->_request->get_ctl_name();
         $this->menuSetting = 'index';
     }
 
@@ -179,7 +180,9 @@ class b2c_frontpage extends site_controller
         $app_id = $app_id ? $app_id : $this->app->app_id;
         $this->pagedata['member'] = $this->member;
         $this->pagedata['menu'] = $this->get_menu();
-        $this->pagedata['current_action'] = $this->menuSetting;
+        $this->pagedata['current_controller'] = $this->controller;
+        $this->pagedata['current_action'] = $this->action;
+        $this->pagedata['active'] = $this->menuSetting;
         $this->action_view = 'action/' . $this->action . '.html';
         if ($this->pagedata['_PAGE_']) {
             //$this->pagedata['_PAGE_'] = 'site/member/'.$this->pagedata['_PAGE_'];

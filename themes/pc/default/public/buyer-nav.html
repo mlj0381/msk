@@ -1,9 +1,9 @@
 <nav class="navbar navbar-inverse buyer_nav">
     <div class="container">
       <ul class="nav navbar-nav">
-        <li><a href="<{link app=b2c ctl=site_member act=index}>" <{if $current_action eq 'index'}> class="active"<{/if}>>我是买家</a></li>
-        <li><a href="<{link app=b2c ctl=site_member act=setting}>" <{if $current_action eq 'setting'}> class="active"<{/if}>>账号设置</a></li>
-        <li><a href="<{link app=site ctl=index act=build}>" <{if $current_action eq 'message'}> class="active"<{/if}>>消息中心</a></li>
+        <li><a href="<{link app=b2c ctl=site_member act=index}>" <{if $active eq 'index'}> class="active"<{/if}>>我是买家</a></li>
+        <li><a href="<{link app=b2c ctl=site_member act=setting}>" <{if $active eq 'setting'}> class="active"<{/if}>>账号设置</a></li>
+        <li><a href="<{link app=site ctl=index act=build}>" <{if $active eq 'message'}> class="active"<{/if}>>消息中心</a></li>
       </ul>
     </div>
 </nav>
