@@ -5,67 +5,68 @@
 
 <form method="post" action="<{link app=seller ctl=site_tpl act=content_add}>" id='content_form' class="form" target="self">
 <div class="modal-body  form-horizontal">
-<div class="form-body">
-    <input type="hidden" value="<{$content.content_id|default:0}>" name="content[content_id]" />
-    <input type="hidden" value="<{$position.position_id|default:0}>" name="content[position_id]" />
-    <input type="hidden" value="<{$pages.pages_id|default:0}>" name="content[pages_id]" />
-    <div class="form-group">
-        <label class="col-md-3 control-label">标题
-            <span class="required" aria-required="true">*</span>
-       </label>
-        <div class="col-md-7">
-            <input type="text" required=true value="<{$content.title}>" id="" name="content[title]" vtype='required' class='form-control'/>
-        </div>
-    </div>    
-    <div class="form-group">
-        <label class="col-md-3 control-label">链接地址
-            <span class="required" aria-required="true">*</span>
-       </label>
-        <div class="col-md-7">
-            <input type="text" required=true value="<{$content.url}>" name="content[url]" vtype='required' class='form-control'/>
-        </div>
-    </div>
-
-  
-    <div class="form-group">
-        <label class="col-md-3 control-label">图片上传:</label>
-        <div class="col-md-7">
-            <{input type="imageupload" tag="图片上传" name="content[image_id]" value=$content.image_id required='true'}>            
-        </div>
-    </div>
-
-
-    <div class="form-group" id="content_type">
-        <label class="col-md-3 control-label">类型
-            <span class="required" aria-required="true">*</span>
-       </label>
-        <div class="col-md-7">
-            <{input type="select" options=$content_types value=$content.type name="content[type]" required="true" class='form-control'}>
-        </div>
-    </div>
-    
-    <div class="form-group" id="content_price">
-        <label class="col-md-3 control-label">商品价格：</label>
-        <div class="col-md-7">
-            <div class="col-md-5">
-                <label>原价：</label>
-                <{input type="text" data-map="price" name="content[extra][cost]" value=$content.extra.cost|default:'0.00'}>
+    <div class="form-body">
+        <input type="hidden" value="<{$content.content_id|default:0}>" name="content[content_id]" />
+        <input type="hidden" value="<{$position.position_id|default:0}>" name="content[position_id]" />
+        <input type="hidden" value="<{$pages.pages_id|default:0}>" name="content[pages_id]" />
+        <div class="form-group">
+            <label class="col-md-3 control-label">标题
+                <span class="required" aria-required="true">*</span>
+           </label>
+            <div class="col-md-7">
+                <input type="text" required=true value="<{$content.title}>" id="" name="content[title]" vtype='required' class='form-control'/>
             </div>
-            <div class="col-md-5">
-                <label>售价：</label>
-                <{input type="text" data-map="price" name="content[extra][price]" value=$content.extra.price|default:'0.00'}>
+        </div>    
+        <div class="form-group">
+            <label class="col-md-3 control-label">链接地址
+                <span class="required" aria-required="true">*</span>
+           </label>
+            <div class="col-md-7">
+                <input type="text" required=true value="<{$content.url}>" name="content[url]" vtype='required' class='form-control'/>
             </div>
         </div>
-    </div>
 
-    <div class="form-group ">
-       <label class="col-md-3 control-label">排序
-            <span class="required">*</span>
-       </label>
-        <div class="col-md-7">
-            <{input type='text' name='content[ordernum]' value=$content.ordernum|default:0 required='true' }>
+      
+        <div class="form-group">
+            <label class="col-md-3 control-label">图片上传:</label>
+            <div class="col-md-7">
+                <{input type="imageupload" tag="图片上传" name="content[image_id]" value=$content.image_id required='true'}>            
+            </div>
         </div>
-    </div> 
+
+
+        <div class="form-group" id="content_type">
+            <label class="col-md-3 control-label">类型
+                <span class="required" aria-required="true">*</span>
+           </label>
+            <div class="col-md-7">
+                <{input type="select" options=$content_types value=$content.type name="content[type]" required="true" class='form-control'}>
+            </div>
+        </div>
+        
+        <div class="form-group" id="content_price">
+            <label class="col-md-3 control-label">商品价格：</label>
+            <div class="col-md-7">
+                <div class="col-md-5">
+                    <label>原价：</label>
+                    <{input type="text" data-map="price" name="content[extra][cost]" value=$content.extra.cost|default:'0.00'}>
+                </div>
+                <div class="col-md-5">
+                    <label>售价：</label>
+                    <{input type="text" data-map="price" name="content[extra][price]" value=$content.extra.price|default:'0.00'}>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group ">
+           <label class="col-md-3 control-label">排序
+                <span class="required">*</span>
+           </label>
+            <div class="col-md-7">
+                <{input type='text' name='content[ordernum]' value=$content.ordernum|default:0 required='true' }>
+            </div>
+        </div> 
+    </div>
 </div>
 
 <div class="modal-footer">
@@ -79,7 +80,7 @@
 <!-- 保存后，不跳转 -->
 <input type="hidden" name="no_redirect" value="1">
 <{/if}>
-</form>
+
 
 
 <script charset="utf-8">
