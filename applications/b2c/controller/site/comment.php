@@ -10,11 +10,13 @@
 // | Author: Shanghai ChenShang Software Technology Co., Ltd.
 // +----------------------------------------------------------------------
 
-class b2c_ctl_site_comment extends b2c_frontpage {
+class b2c_ctl_site_comment extends b2c_frontpage
+{
 
     public $noCache = true;
 
-    public function __construct(&$app) {
+    public function __construct(&$app)
+    {
         $this->app = $app;
         parent::__construct($app);
         $this->mComment = $this->app->model('member_comment');
@@ -23,8 +25,9 @@ class b2c_ctl_site_comment extends b2c_frontpage {
         $this->set_tmpl('member');
     }
 
-    public function form($order_id, $product_id, $type = 'comment', $reply = null) {
-        
+    public function form($order_id, $product_id, $type = 'comment', $reply = null)
+    {
+
         $this->_response->set_header('Cache-Control', 'no-store');
         $mdl_order = app::get('b2c')->model('orders');
         //$this->store = vmc::singleton('seller_object')->get_current_seller();
@@ -51,19 +54,21 @@ class b2c_ctl_site_comment extends b2c_frontpage {
         $this->page('site/comment/form.html');
     }
 
-   
 
-    private function comment_count($goods_id){
+    private function comment_count($goods_id)
+    {
         vmc::singleton('b2c_openapi_goods', false)->counter(array(
             'goods_id' => $goods_id,
             'comment_count' => 1,
             'comment_count_sign' => md5($goods_id . 'comment_count' . (1 * 1024))//计数签名
         ));
     }
-    public function save($type = 'comment') {
+
+    public function save($type = 'comment')
+    {
         extract($_POST);
         $redirect = $this->gen_url(array('app' => 'b2c', 'ctl' => 'site_member', 'act' => 'orders', 'args0' => 's4'));
-        if($reply){
+        if ($reply) {
             $comment['for_comment_id'] = $comment['member_id'];
             $redirect = $this->gen_url(array('app' => 'seller', 'ctl' => 'site_seller', 'act' => 'orders', 'args0' => 's4'));
         }
@@ -78,7 +83,7 @@ class b2c_ctl_site_comment extends b2c_frontpage {
                 $this->splash('error', $redirect, '提交失败!');
             }
             $comment_type = array('order_id' => $comment['order_id'], 'comment_type' => '2');
-            if(!$this->app->model('orders')->save($comment_type)){
+            if (!$this->app->model('orders')->save($comment_type)) {
                 $db->rollback();
                 $this->_send('error', '提交失败!');
             }
@@ -90,7 +95,7 @@ class b2c_ctl_site_comment extends b2c_frontpage {
             $db->beginTransaction();
             $comment['comment_id'] = $this->mComment->apply_id($type);
             $comment['comment_num'] = 1;
-            
+
             if (!$this->mComment->save($comment)) {
                 $db->rollback();
                 $this->splash('error', $redirect, '提交失败!');
@@ -102,7 +107,7 @@ class b2c_ctl_site_comment extends b2c_frontpage {
                 $this->_send('error', '提交失败!');
             }
             $comment_type = array('order_id' => $comment['order_id'], 'comment_type' => '1');
-            if(!$this->app->model('orders')->save($comment_type)){
+            if (!$this->app->model('orders')->save($comment_type)) {
                 $db->rollback();
                 $this->_send('error', '提交失败!');
             }
@@ -112,7 +117,8 @@ class b2c_ctl_site_comment extends b2c_frontpage {
         }
     }
 
-    public function show_list($comment_type = 'all', $page = 1) {
+    public function show_list($comment_type = 'all', $page = 1)
+    {
         $this->menuSetting = 'setting';
         $limit = 10;
         $mdl_goods_mark = app::get('b2c')->model('goods_mark');
@@ -129,7 +135,9 @@ class b2c_ctl_site_comment extends b2c_frontpage {
             }
             $filter['comment_id|in'] = $tmp;
         }
+
         $comment_list_member = $this->mComment->groupList('*', $filter, ($page - 1) * $limit, $limit);
+        $this->mComment->comments($comment_list_member);
         $filter['for_comment_id'] = $this->member['member_id'];
         $this->pagedata['member_info'] = $this->member;
         $this->pagedata['comment_type'] = $comment_type;
@@ -140,7 +148,8 @@ class b2c_ctl_site_comment extends b2c_frontpage {
         $this->output();
     }
 
-    public function show($goods_id, $page = 1) {
+    public function show($goods_id, $page = 1)
+    {
         $this->_response->set_header('Cache-Control', 'no-store');
         $limit = 20;
         $filter = array(
@@ -149,6 +158,7 @@ class b2c_ctl_site_comment extends b2c_frontpage {
             'display' => 'true'
         );
         $comment_list = $this->mComment->groupList('*', $filter, ($page - 1) * $limit, $limit, '', 'goods_id');
+        $comment_list = $this->mComment->memberGroup($comment_list);
         $count = $this->mComment->count($filter);
         $this->pagedata['comment_list'] = $comment_list;
 //        print_r($comment_list);
@@ -180,7 +190,8 @@ class b2c_ctl_site_comment extends b2c_frontpage {
         }
     }
 
-    private function _send($result, $msg) {
+    private function _send($result, $msg)
+    {
         if ($result == 'success') {
             echo json_encode(array(
                 'success' => '成功',
@@ -195,7 +206,8 @@ class b2c_ctl_site_comment extends b2c_frontpage {
         exit;
     }
 
-    private function _upload_error($index, $error) {
+    private function _upload_error($index, $error)
+    {
         echo json_encode(array(
             'fipt_idx' => $index,
             'error' => $error,

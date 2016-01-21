@@ -121,8 +121,8 @@ $db['member_goods']=array (
       'comment' => ('备注'),
     ),
     'type' =>array(
-        'type' =>  "enum('fav', 'sto')",
-        'comment' => ('类型, 收藏还是缺货'),
+        'type' =>  "enum('fav', 'sto', 'scan')",
+        'comment' => ('类型, 收藏、缺货、浏览记录'),
         ),
      'object_type' =>array(
         'type' => 'varchar(100)',

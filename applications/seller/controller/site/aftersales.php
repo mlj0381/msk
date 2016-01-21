@@ -19,18 +19,29 @@ class seller_ctl_site_aftersales extends seller_frontpage
         $this->verify();
     }
 
-    public function order($type = 'all'){
+    public function order($list = 'all', $page = 1){
+        $this->_list($list, 'goods', $page);
+        $this->output();
+    }
+
+    public function price_manage($list = 'all', $page = 1){
+        $this->_list($list, 'price', $page);
+        $this->pagedata['_PAGE_'] = 'order.html';
+        $this->output();
+    }
+
+    private function _list($list, $type, $page){
         $limit = 10;
         $mdl_as_request = app::get('aftersales')->model('request');
         $mdl_products = app::get('b2c')->model('products');
         $filter = array(
             'store_id' => $this->store['store_id'],
         );
-        if(is_numeric($type)){
-            if($type == '1'){
+        if(is_numeric($list)){
+            if($list == '1'){
                 $filter['status|in'] = array('1', '3', '4');
             }else{
-                $filter['status'] = $type;
+                $filter['status'] = $list;
             }
         }
         foreach ($_POST['order'] as $key => $value) {
@@ -43,6 +54,8 @@ class seller_ctl_site_aftersales extends seller_frontpage
             }
             $filter[$key] = $value;
         }
+        $filter['req_type'] = 5;
+        if($type != 'price') $filter['req_type'] = 1;
         $count = $mdl_as_request->count($filter);
         $request_list = $mdl_as_request->getList('*', $filter, ($page - 1) * $limit, $limit);
         $mdl_member = app::get('pam')->model('members');
@@ -55,26 +68,22 @@ class seller_ctl_site_aftersales extends seller_frontpage
             }
         }
         $this->pagedata['filter'] = $_POST['order'];
-        $this->pagedata['status'] = $type;
+        $this->pagedata['status'] = $list;
         $this->pagedata['request_list'] = $request_list;
+        $action = $type == 'price' ? 'price_manage' : 'order';
         $this->pagedata['pager'] = array(
             'total' => ceil($count / $limit) ,
             'current' => $page,
             'link' => array(
-                'app' => 'aftersales',
-                'ctl' => 'site_member',
-                'act' => 'request',
+                'app' => 'seller',
+                'ctl' => 'site_aftersales',
+                'act' => $action,
                 'args' => array(
+                    $list,
                     ($token = time()),
                 ) ,
             ) ,
             'token' => $token,
         );
-        $this->output();
-    }
-
-    public function price_manage(){
-        $this->pagedata['_PAGE_'] = 'order.html';
-        $this->output();
     }
 }

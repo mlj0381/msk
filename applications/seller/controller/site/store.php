@@ -71,9 +71,11 @@ class seller_ctl_site_store extends seller_frontpage
             $filter['comment_id|in'] = $tmp;
         }
         $comment_list_member = $this->mComment->groupList('*', $filter, ($page - 1) * $limit, $limit);
+        $this->mComment->comments($comment_list_member);
         unset($filter['for_comment_id']);
         $filter['for_comment_id|notin'] = 0;
         $comment_list_seller = $this->mComment->groupList('*', $filter, ($page - 1) * $limit, $limit);
+        $this->mComment->comments($comment_list_seller);
         $this->pagedata['member_info'] = $this->member;
         $this->pagedata['comment_type'] = $comment_type;
         $this->pagedata['comment_member'] = $comment_list_member;

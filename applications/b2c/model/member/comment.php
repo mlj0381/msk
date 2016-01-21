@@ -84,15 +84,18 @@ class b2c_mdl_member_comment extends dbeav_model {
     }
 
     //按用户分组
-    public function member_group(&$list){
+    public function memberGroup(&$list){
         $mdl_member = app::get('pam')->model('members');
-        foreach($list as $key => &$value){
-            $comment_item = reset($value);
-            $member_info = $mdl_member->getRow('login_account, member_id', array('member_id' =>
-                $comment_item['member_id']));
-            $member_info['comment'][$comment_item['member_id']] = $value;
-
+        $result = array();
+        $list = reset($list);
+        foreach($list as $key => $value){
+            if(empty($result[$value['member_id']])){
+                $result[$value['member_id']] = $mdl_member->getRow('login_account, member_id', array('member_id' =>$value['member_id']));
+            }
+            $result[$value['member_id']]['comment'][$key] = $value;
         }
+        unset($list);
+        return $result;
     }
 
     public function comments(&$comment_list) {
