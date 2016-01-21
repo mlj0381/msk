@@ -571,12 +571,12 @@
                         if (data.goods_id && data.goods_id > 0) {
                             $('.favorite-button i').eq(0).removeClass('glyphicon-heart-empty').eq(0).addClass('glyphicon-heart');
                             $('.favorite-button').eq(0).addClass('disabled');
-                            $('.favorite-button em').eq(0).text('已收藏');
+                            //$('.favorite-button em').eq(0).text('已收藏');
                         }
                         if (data.store_id && data.store_id > 0) {
                             $('.favorite-button i').eq(1).removeClass('glyphicon-heart-empty').eq(1).addClass('glyphicon-heart');
                             $('.favorite-button').eq(1).addClass('disabled');
-                            $('.favorite-button em').eq(1).text('已收藏');
+                            //$('.favorite-button em').eq(1).text('已收藏');
                         }
                     } catch (e) {
                     }

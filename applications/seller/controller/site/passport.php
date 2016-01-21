@@ -19,6 +19,7 @@ class seller_ctl_site_passport extends seller_frontpage
     {
         parent::__construct($app);
         $this->seller = $this->get_current_seller();
+        $this->set_tmpl('passport');
     }
 
     public function index()
@@ -52,7 +53,7 @@ class seller_ctl_site_passport extends seller_frontpage
         $this->set_forward($forward);
         $mdl_toauth_pam = app::get('toauth')->model('pam')->getList('*', array('status' => 'true'));
         $this->pagedata['toauth'] = $mdl_toauth_pam;
-        $this->set_tmpl('passport');
+
         $this->page('site/passport/login.html');
     }
 

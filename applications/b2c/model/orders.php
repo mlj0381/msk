@@ -269,7 +269,7 @@ class b2c_mdl_orders extends dbeav_model {
         $return['confirm'] = $this->getRow('count(order_id) as confirm',
             array_merge($filter, array('confirm' => 'N')));
         $return['comment'] = $this->getRow('count(order_id) as comment',
-            array_merge($filter, array('comment' => 'false', 'confirm' => 'Y')));
+            array_merge($filter, array('comment' => 'false', 'confirm' => 'Y', 'comment_type' => '0')));
         return $return;
     }
     
