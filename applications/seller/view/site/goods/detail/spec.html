@@ -6,7 +6,6 @@
     <{/if}>
     <{assign var=i value=0}>
     <{foreach from=$props.props key=key item=items}>
-
     <div class="form-group">
         <label class="col-xs-2 control-label">
             <span><{$items.name}>
@@ -16,24 +15,45 @@
 
         <div class="col-xs-5">
             <ul class="quality">
-                <input type="hidden" name="goods[spec_desc][v][]" value="<{$goods.spec_desc.v[$key]}>"/>
-
+                <input type="hidden" name="goods[spec_desc][v][]" value="<{$goods.spec_desc.v[$i]}>"/>
                 <{foreach from=$items.props_value item=item}>
-                <{$goods[spec_desc][v][0]|print_r}><{$goods[spec_desc][v][$i]|print_r}>
-                 <{$item.name}>
-                <li <{if $item.name|in:$goods[spec_desc][v][$i]}>
+                <li <{if $item.name|in:$goods.spec_desc.v[$i]}>
                     class ="sect"
                     <{/if}>><{$item.name}>
             </li>
-
             <{/foreach}>
-        </ul>
+            </ul>
     </div>
 </div>
-
+    <{assign var=i value=$i+1}>
     <{/foreach}>
-    <{$i++}>
+
 <{/foreach}>
+
+    <!--<{if $goods_prototype.params}>-->
+    <!--<div class="form-group">-->
+        <!--<label class="col-md-2 control-label">参数表 <span class="help-block">根据类型</span></label>-->
+        <!--<div class="col-md-10">-->
+            <!--<{assign var="paramsItem" value="0"}>-->
+            <!--<{foreach from=$goods_prototype.params item=param key=group}>-->
+            <!--<div class="row">-->
+                <!--<label class="control-label col-md-12 text-primary" style="text-align:left;"><{$group}></label>-->
+                <!--<{foreach from=$param item=value key=item}>-->
+                <!--<{assign var="paramsItem" value=$paramsItem+1}>-->
+                <!--<div class="col-md-2">-->
+                    <!--<label class="control-label"><{$item}></label>-->
+                    <!--<{assign var="params" value="params"}>-->
+                    <!--<{input class="form-control input-sm" type="text" name="goods[params][{$paramsItem}]" value="{$goods[$params][$group][$item]}" }>-->
+                    <!--<input type='hidden' name='goodsParams[group][<{$paramsItem}>]' value='<{$group}>'/>-->
+                    <!--<input type='hidden' name='goodsParams[item][<{$paramsItem}>]' value='<{$item}>'/>-->
+                <!--</div>-->
+                <!--<{/foreach}>-->
+            <!--</div>-->
+            <!--<{/foreach}>-->
+        <!--</div>-->
+    <!--</div>-->
+    <!--<{/if}>-->
+
 <div class="form-group">
     <label class="col-xs-2 control-label"><span>界限值</span></label>
     <div class="col-xs-5">
@@ -144,6 +164,7 @@
         var ul = $('#sepcInfo  ul');
         $(ul).each(function (idx, item) {
             $(item).find('li').click(function () {
+                if('<{$goods.product}>') return false;
                 var _self = $(this);
                 _self.toggleClass('sect');
                 var specDesc = _self.closest('ul').find('input').val();

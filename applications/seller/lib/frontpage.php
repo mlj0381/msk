@@ -249,6 +249,7 @@ class seller_frontpage extends site_controller {
         $this->pagedata['app'] = $this->app->app_id;
         $this->pagedata['current_controller'] = $this->controller;
         $this->pagedata['current_action'] = $this->action;
+        $this->pagedata['active'] = $this->menuSetting;
         $this->action_view = $this->action . '.html';
         $controller = str_replace("site_", "", $this->controller);
         if ($this->pagedata['_PAGE_']) {

@@ -260,13 +260,16 @@ class b2c_mdl_orders extends dbeav_model {
     }
 
     //订单各状态数量统计
-    public function type_count(){
-        $member_id = vmc::singleton('b2c_user_object')->get_member_id(); 
+    public function type_count($filter){
         $return = array();
-        $return['no_pay'] = $this->getRow('count(order_id) as no_pay', array('member_id' => $member_id, 'pay_status' => '0'));
-        $return['no_ship'] = $this->getRow('count(order_id) as no_ship', array('member_id' => $member_id, 'ship_status' => '0'));
-        $return['confirm'] = $this->getRow('count(order_id) as confirm', array('member_id' => $member_id, 'confirm' => 'N'));
-        $return['comment'] = $this->getRow('count(order_id) as comment', array('member_id' => $member_id, 'comment' => 'false'));
+        $return['no_pay'] = $this->getRow('count(order_id) as no_pay',
+            array_merge($filter, array( 'pay_status' => '0')));
+        $return['no_ship'] = $this->getRow('count(order_id) as no_ship',
+            array_merge($filter, array( 'ship_status' => '0')));
+        $return['confirm'] = $this->getRow('count(order_id) as confirm',
+            array_merge($filter, array('confirm' => 'N')));
+        $return['comment'] = $this->getRow('count(order_id) as comment',
+            array_merge($filter, array('comment' => 'false', 'confirm' => 'Y')));
         return $return;
     }
     
@@ -284,6 +287,7 @@ class b2c_mdl_orders extends dbeav_model {
                     '3',
                     '5',
                 ),
+                'is_cod' => 'N'
             ) ,
             's2' => array(
                 

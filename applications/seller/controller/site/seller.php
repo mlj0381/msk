@@ -26,6 +26,7 @@ class seller_ctl_site_seller extends seller_frontpage {
         $this->pagedata['sellers'] = $this->mPam_seller->getRow('*', array(
             'seller_id' => $this->seller['seller_id']
         ));
+        $this->pagedata['order_count'] = app::get('b2c')->model('orders')->type_count(array('store_id' => $this->store['store_id']));
         $this->output();
     }
 
