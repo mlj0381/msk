@@ -2,27 +2,30 @@
 	if ( typeof define === "function" && define.amd ) {
 		define( [
 			"jquery", 
-			"./desktop/com/global/plugins/jquery-validation/jquery.validate.min", 
-			"./desktop/com/global/plugins/jquery-validation/additional-methods.min"
+			"js/global/plugs/jquery-validation/jquery.validate.min", 
+			"js/global/plugs/jquery-validation/additional-methods.min"
 		], 
-		factory);
+		factory );
 	} else {
 		factory( jQuery );
 	}
 }(function( $ ) {
-	$.VMC = {
 
+	$.VMC = {	
+		
 		validator : function(form, options) {		
 			this.form	= $("#"+ form);			
 			this.plugs	= $.validator;
 			this.methods= $.VMC.methods;
-			this.format	= {};	
+
+			this.format	= {};
 			
 			var defaults = {
 				rules	: {},
 				messages: {},
 				methods : {}
-			};			
+			};
+			
 			this.setting = $.extend( true, defaults, options);	
 			
 			this.init = function()
@@ -32,18 +35,15 @@
 				this.plugs.methods = this.setting.methods = $.extend( true, $.validator.methods, methods);
 				this.plugs.messages = this.setting.methods = $.extend( true, $.validator.messages, messages);
 				var formObj = $.VMC.initForm(this.form, $.validator);
-				$(this.form).validate(v = {
+
+				$(this.form).validate({
 					rules : formObj.rules,
 					messages : formObj.messages,
 					errorPlacement : this.errorPlacement,
 					success : this.success,
 					onkeyup : this.onkeyup
 				});
-				console.log(v);
 			};
-
-			$("myform").validator(options);
-
 			this.errorPlacement = function(error, element) {
 				if( element.is(":radio") )
 					error.appendTo ( element.parent() );	
@@ -56,6 +56,7 @@
 			};
 
 			this.success = function(label) {
+				console.log(label);
 			   label.html("&nbsp;").addClass("right");
 			};
 
@@ -68,8 +69,9 @@
 				}
 			};
 
-			this.init();
+			this.init();			
 		},
+
 		initForm : function(form, plugs){
 			
 			this.form = form;
@@ -158,6 +160,7 @@
 			this.init();			
 			return this;
 		},
+
 		regx : {
 			'mobile'    : /^(13[0-9]|14[0-9]|15[0-9]|18[0-9])\d{8}$/i,
 			'email'     : /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/,
@@ -170,8 +173,7 @@
 		},
 		methods : {
 			format : function(value, element, param)
-			{		
-				console.log(value, param);
+			{	
 				if (this.optional( element ) ) {            
 					return "dependency-mismatch";
 				}
@@ -217,8 +219,7 @@
 				return true;
 			},
 			accept : function(value, element, param)
-			{
-				console.log(value, param);
+			{				
 				var typeParam = typeof param === "string" ? param.replace(/\s/g, "").replace(/,/g, "|") : "image/*",
 				optionalValue = this.optional(element),
 				i, file;		
@@ -364,6 +365,7 @@
 			accept : $.validator.format("仅支持{0}文件！"),
 			size : $.validator.format("文件大小控制在{0}以内！"),
 			username : $.validator.format("文件大小控制在{0}以内！"),
-		}
+		}		
 	};
+
 }));
