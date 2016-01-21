@@ -34,6 +34,6 @@ class seller_view_helper
 
     public function modifier_in($k, $v)
     {
-        return in_array($k, explode(',', $v[0]));
+        return in_array($k, explode(',', $v));
     }
 }

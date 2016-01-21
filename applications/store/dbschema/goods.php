@@ -20,13 +20,13 @@ $db['goods'] = array(
             'in_list' => true,
 			'comment' => 'id',
         ),
-        'brand_id' => array(
+        'goods_id' => array(
             'type' => 'number',
-            'lable' => '品牌',
+            'lable' => '商品Id',
             'default' => 0,
             'required' => false,
             'in_list' => false,
-			'comment' => '品牌ID',
+			'comment' => '商品Id',
         ),
 		'store_id' => array(
             'type' => 'number',
@@ -49,6 +49,14 @@ $db['goods'] = array(
             'default_in_list' => true,
             'order' => '1',
 			'comment' => '商家',
+        ),
+        'showcase' => array(
+            'type' => 'number',
+            'required' => false,
+            'default' => 0,
+            'label' => '商品展示位置',//默认普通
+            'order' => '1',
+            'comment' => '商品展示位置',
         ),
 		'status' => array(
             'type' => array(
