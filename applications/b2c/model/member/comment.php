@@ -62,9 +62,7 @@ class b2c_mdl_member_comment extends dbeav_model {
 
         $orderType = ' createtime DESC'; //fixOrder
         $list = parent::getList($cols = '*', $filter, $offset, $limit, $orderType);
-
         $list = utils::array_change_key($list, $group_by, true);
-
         foreach ($list as $group => &$items) {
             $items = utils::array_change_key($items, 'comment_id');
 
@@ -80,8 +78,24 @@ class b2c_mdl_member_comment extends dbeav_model {
             }
         }
 
+        //$this->member_group($list);
         $this->comments($list);
         return $list;
+    }
+
+    //按用户分组
+    public function memberGroup(&$list){
+        $mdl_member = app::get('pam')->model('members');
+        $result = array();
+        $list = reset($list);
+        foreach($list as $key => $value){
+            if(empty($result[$value['member_id']])){
+                $result[$value['member_id']] = $mdl_member->getRow('login_account, member_id', array('member_id' =>$value['member_id']));
+            }
+            $result[$value['member_id']]['comment'][$key] = $value;
+        }
+        unset($list);
+        return $result;
     }
 
     public function comments(&$comment_list) {
@@ -90,14 +104,14 @@ class b2c_mdl_member_comment extends dbeav_model {
         $mdl_goods = app::get('b2c')->model('goods');
         $mdl_member = app::get('pam')->model('members');
         foreach ($comment_list as $key => &$value) {
-            $commint_item = reset($value);
-            $comment_list[$key]['store_info'] = $mdl_store->getRow('store_name, store_id', array('store_id' => $commint_item['store_id']));
-            $comment_list[$key]['member_info'] = $mdl_member->getRow('login_account, member_id', array('member_id' => $commint_item['member_id']));
-            $comment_list[$key]['goods_info'] = $mdl_goods->getRow('name, goods_id', array('goods_id' => $commint_item['goods_id']));
-            $comment_list[$key]['goods_info']['comment_num'] = $commint_item['comment_num'];
-            $comment_list[$key]['goods_info']['order_id'] = $commint_item['order_id'];
-            $comment_list[$key]['goods_info']['product_id'] = $commint_item['product_id'];
-            $comment_list[$key]['goods_info']['comment_id'] = $commint_item['comment_id'];
+            $comment_item = reset($value);
+            $comment_list[$key]['store_info'] = $mdl_store->getRow('store_name, store_id', array('store_id' => $comment_item['store_id']));
+            $comment_list[$key]['member_info'] = $mdl_member->getRow('login_account, member_id', array('member_id' => $comment_item['member_id']));
+            $comment_list[$key]['goods_info'] = $mdl_goods->getRow('name, goods_id', array('goods_id' => $comment_item['goods_id']));
+            $comment_list[$key]['goods_info']['comment_num'] = $comment_item['comment_num'];
+            $comment_list[$key]['goods_info']['order_id'] = $comment_item['order_id'];
+            $comment_list[$key]['goods_info']['product_id'] = $comment_item['product_id'];
+            $comment_list[$key]['goods_info']['comment_id'] = $comment_item['comment_id'];
         }
     }
 }

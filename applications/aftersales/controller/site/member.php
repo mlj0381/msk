@@ -164,7 +164,7 @@ class aftersales_ctl_site_member extends b2c_ctl_site_member
      */
     public function request($page = 1)
     {
-        $limit = 10;
+        $limit = 5;
         $mdl_as_request = $this->app_current->model('request');
         $mdl_products = app::get('b2c')->model('products');
         $filter = array(
