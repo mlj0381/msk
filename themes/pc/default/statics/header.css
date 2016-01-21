@@ -800,19 +800,24 @@ form .success .valid_message {
 form .none {
   display: none;
 }
-.msgtip {
+.msgTip {
   display: none;
 }
 label.error {
-  color: #ea5200;
-  margin-left: 4px;
-  padding: 0px 20px;
-  background: url(images/unchecked.gif) no-repeat 2px 0;
+  display: inline-block;
+  color: #a40001;
+  margin: 4px 0px;
+  padding-left: 20px;
+  background: url(images/failed.png) no-repeat 2px center;
 }
 label.right {
-  margin-left: 4px;
+  display: inline-block;
+  margin: 4px 0px;
   padding-left: 20px;
-  background: url(images/checked.gif) no-repeat 2px 0;
+  background: url(images/success.png) no-repeat 2px center;
+  position: absolute;
+  right: 15px;
+  top: 5px;
 }
 .form-group {
   margin: 8px 0px;

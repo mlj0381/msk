@@ -4,45 +4,52 @@
     <div class="form-group">
         <label for="" class="col-md-2 control-label"><span class="text-danger">*</span> 买家全名：</label>
         <div class="col-md-5">
-            <input type="text" name="company[name]" value="<{$extra.company.name}>" class="form-control" id="customer_name" placeholder="请输入公司或店铺全称">
+            <input type="text" name="company[name]" value="<{$extra.company.name}>" class="form-control" id="customer_name" placeholder="请输入公司或店铺全称" required="true">
+            <span class="msgTip" data-message="error"></span>
         </div>
     </div>
     <div class="form-group">
         <label for="" class="col-md-2 control-label"><span class="text-danger">*</span>营业地区：</label>
         <div class="col-md-6 customer_region">
-            <{input type=region name='company[area]' value=$extra.company.area}>
+            <{input type=region name='company[area]' required="true" value=$extra.company.area}>
+            <span class="msgTip" data-message="error"></span>
         </div>
     </div>
     <div class="form-group">
         <label for="" class="col-md-2 control-label"><span class="text-danger">*</span>详细地址：</label>
         <div class="col-md-5 ">
-            <input type="text" class="form-control" value="<{$extra.company.address}>"  name="company[address]" placeholder="不用再填写省市县">
+            <input type="text" class="form-control" value="<{$extra.company.address}>"  name="company[address]" placeholder="不用再填写省市县" required="true">
+            <span class="msgTip" data-message="error"></span>
         </div>
     </div>
     <div class="form-group">
         <label for="" class="col-md-2 control-label"><span class="text-danger">*</span>店铺号：</label>
         <div class="col-md-5 ">
             <input type="hidden" name="shop[content_id]" value="<{$extra.company_extra.shop.content_id}>"/>
-            <input type="text" class="form-control" value="<{$extra.company_extra.shop.value.store_num}>"  name="shop[value][store_num]" placeholder="如：“大润发张江店”">
+            <input type="text" class="form-control" value="<{$extra.company_extra.shop.value.store_num}>"  name="shop[value][store_num]" placeholder="如：“大润发张江店”" required="true">
+            <span class="msgTip" data-message="error"></span>
         </div>
     </div>
     <div class="form-group">
         <label for="" class="col-md-2 control-label">买家网站网址：</label>
         <div class="col-md-5 ">
-            <input type="text" class="form-control" value="<{$extra.company.web_site}>" name="company[web_site]" placeholder="请输入您的店铺网址链接">
+            <input type="text" class="form-control" value="<{$extra.company.web_site}>" name="company[web_site]" placeholder="请输入您的店铺网址链接" required="true" format="url">
+            <span class="msgTip" data-message="error"></span>
         </div>
     </div>
     <div class="form-group">
         <label for="" class="col-md-2 control-label">微信公众号：</label>
         <div class="col-md-5 ">
             <input type="hidden" name="company_extra[content_id]" value="<{$extra.company_extra.company_extra.content_id}>"/>
-            <input type="text" class="form-control" value="<{$extra.company_extra.company_extra.value.wechat}>"  name="company_extra[value][wechat]" placeholder="">
+            <input type="text" class="form-control" value="<{$extra.company_extra.company_extra.value.wechat}>"  name="company_extra[value][wechat]" placeholder="" required="false">
+            <span class="msgTip" data-message="error"></span>
         </div>
     </div>
     <div class="form-group">
         <label for="" class="col-md-2 control-label">营业电话：</label>
         <div class="col-md-5">
-            <input type="text" value="<{$extra.company.tel}>" name="company[tel]" class="form-control" id="company_phone">
+            <input type="text" value="<{$extra.company.tel}>" name="company[tel]" class="form-control" id="company_phone" required="true" format="tel">
+            <span class="msgTip" data-message="error"></span>
         </div>
     </div>
     <div class="form-group">
@@ -54,9 +61,12 @@
     <div class="form-group">
         <label for="" class="col-md-2 control-label"><span class="text-danger">*</span>买家等级：</label>
         <div class="col-md-5">
-            <span><input type="radio" value="1" <{if $extra.company_extra.company_extra.value.lv eq '1'}> checked <{/if}> name="company_extra[value][lv]"> 大买家</span>&nbsp;&nbsp;
-            <span><input type="radio" value="2" <{if $extra.company_extra.company_extra.value.lv eq '2'}> checked <{/if}> name="company_extra[value][lv]"> 标准买家</span>&nbsp;&nbsp;
-            <span><input type="radio" value="3" <{if $extra.company_extra.company_extra.value.lv eq '3'}> checked <{/if}> name="company_extra[value][lv]"> 小买家</span>
+            <div>
+                <span><input type="radio" value="1" <{if $extra.company_extra.company_extra.value.lv eq '1'}> checked <{/if}> name="company_extra[value][lv]"> 大买家</span>&nbsp;&nbsp;
+                <span><input type="radio" value="2" <{if $extra.company_extra.company_extra.value.lv eq '2'}> checked <{/if}> name="company_extra[value][lv]"> 标准买家</span>&nbsp;&nbsp;
+                <span><input type="radio" value="3" required="true" <{if $extra.company_extra.company_extra.value.lv eq '3'}> checked <{/if}> name="company_extra[value][lv]"> 小买家</span>
+            </div>
+            <span class="msgTip" data-message="required">买家等级为必选</span>
         </div>
     </div>
     <div class="form-group">
