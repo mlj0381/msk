@@ -29,7 +29,7 @@
         </style>
 </head>
 
-<body class="index_page">
+<body class="index_page" style="background: #f2f2f2;">
 <{WIDGET_B2C_INDEX_HEADER_BASIC page=index}>
 <{WIDGET_B2C_PUBLIC_NAV}>
 <div class="firstContainer">
@@ -37,50 +37,58 @@
         <{WIDGET_B2C_INDEX_SLIDER app=b2c page=1 type=1 num=3}>
     </div>
 </div>
-<div class="container">
-<div class="floor">
-    <!-- 商品楼层列表 -->
-    <div class="pro_list">
-            <{WIDGET_B2C_INDEX_FLOOR_TITLE app=b2c position_id=7 key=0}>
-        <div class="list_con clearfix">
-            <{WIDGET_B2C_INDEX_LEFT_GOOD app=b2c position_id=5}>
-            <{WIDGET_B2C_GOODS_INDEX_GOOD_FLOOR position_id=6}>
-         </div>
-         <{WIDGET_B2C_INDEX_FLOOR_BANNER app=b2c position_id=7}>
+<div class="container floorBox">
+    <div class="floor">
+        <!-- 商品楼层列表 -->
+        <div class="pro_list">
+                <{WIDGET_B2C_INDEX_FLOOR_TITLE app=b2c position_id=7 key=0}>
+            <div class="list_con clearfix">
+                <{WIDGET_B2C_INDEX_LEFT_GOOD app=b2c position_id=5}>
+                <{WIDGET_B2C_GOODS_INDEX_GOOD_FLOOR position_id=6}>
+             </div>
+             <{WIDGET_B2C_INDEX_FLOOR_BANNER app=b2c position_id=7}>
+        </div>
     </div>
-    <div class="pro_list">
-            <{WIDGET_B2C_INDEX_FLOOR_TITLE app=b2c position_id=10 key=1}>
-        <div class="list_con clearfix">
-            <{WIDGET_B2C_INDEX_LEFT_GOOD app=b2c position_id=8}>
-            <{WIDGET_B2C_GOODS_INDEX_GOOD_FLOOR position_id=9}>
-         </div>
-         <{WIDGET_B2C_INDEX_FLOOR_BANNER app=b2c position_id=10}>
+    <div class="floor">
+        <div class="pro_list">
+                <{WIDGET_B2C_INDEX_FLOOR_TITLE app=b2c position_id=10 key=1}>
+            <div class="list_con clearfix">
+                <{WIDGET_B2C_INDEX_LEFT_GOOD app=b2c position_id=8}>
+                <{WIDGET_B2C_GOODS_INDEX_GOOD_FLOOR position_id=9}>
+             </div>
+             <{WIDGET_B2C_INDEX_FLOOR_BANNER app=b2c position_id=10}>
+        </div>
     </div>
-    <div class="pro_list">
-            <{WIDGET_B2C_INDEX_FLOOR_TITLE app=b2c position_id=13 key=2}>
-        <div class="list_con clearfix">
-            <{WIDGET_B2C_INDEX_LEFT_GOOD app=b2c position_id=11}>
-            <{WIDGET_B2C_GOODS_INDEX_GOOD_FLOOR position_id=12}>
-         </div>
-         <{WIDGET_B2C_INDEX_FLOOR_BANNER app=b2c position_id=13}>
+    <div class="floor">
+        <div class="pro_list">
+                <{WIDGET_B2C_INDEX_FLOOR_TITLE app=b2c position_id=13 key=2}>
+            <div class="list_con clearfix">
+                <{WIDGET_B2C_INDEX_LEFT_GOOD app=b2c position_id=11}>
+                <{WIDGET_B2C_GOODS_INDEX_GOOD_FLOOR position_id=12}>
+             </div>
+             <{WIDGET_B2C_INDEX_FLOOR_BANNER app=b2c position_id=13}>
+        </div>
     </div>
-    <div class="pro_list">
-            <{WIDGET_B2C_INDEX_FLOOR_TITLE app=b2c position_id=16 key=3}>
-        <div class="list_con clearfix">
-            <{WIDGET_B2C_INDEX_LEFT_GOOD app=b2c position_id=14}>
-            <{WIDGET_B2C_GOODS_INDEX_GOOD_FLOOR position_id=15}>
-         </div>
-         <{WIDGET_B2C_INDEX_FLOOR_BANNER app=b2c position_id=16}>
+    <div class="floor">
+        <div class="pro_list">
+                <{WIDGET_B2C_INDEX_FLOOR_TITLE app=b2c position_id=16 key=3}>
+            <div class="list_con clearfix">
+                <{WIDGET_B2C_INDEX_LEFT_GOOD app=b2c position_id=14}>
+                <{WIDGET_B2C_GOODS_INDEX_GOOD_FLOOR position_id=15}>
+             </div>
+             <{WIDGET_B2C_INDEX_FLOOR_BANNER app=b2c position_id=16}>
+        </div>
     </div>
-    <div class="pro_list">
-            <{WIDGET_B2C_INDEX_FLOOR_TITLE app=b2c position_id=19 key=4}>
-        <div class="list_con clearfix">
-            <{WIDGET_B2C_INDEX_LEFT_GOOD app=b2c position_id=17}>
-            <{WIDGET_B2C_GOODS_INDEX_GOOD_FLOOR position_id=18}>
-         </div>
-         <{WIDGET_B2C_INDEX_FLOOR_BANNER app=b2c position_id=19}>
-    </div>           
-</div>
+    <div class="floor">
+        <div class="pro_list">
+                <{WIDGET_B2C_INDEX_FLOOR_TITLE app=b2c position_id=19 key=4}>
+            <div class="list_con clearfix">
+                <{WIDGET_B2C_INDEX_LEFT_GOOD app=b2c position_id=17}>
+                <{WIDGET_B2C_GOODS_INDEX_GOOD_FLOOR position_id=18}>
+             </div>
+             <{WIDGET_B2C_INDEX_FLOOR_BANNER app=b2c position_id=19}>
+        </div> 
+    </div>
 </div>
 <!-- 右侧固定边栏 -->
 <div class="container-fulid">
@@ -107,6 +115,7 @@
             <li>2F</li>
             <li>3F</li>
             <li>4F</li>
+            <li>5F</li>
         </ul>
     </div>
 </div>

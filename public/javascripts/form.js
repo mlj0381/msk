@@ -54,9 +54,7 @@ jQuery.fn.extend({
             }			
             options['rules'][inputName] = rule;
 		});        
-        //console.log(options);
         options.errorPlacement = function(error, element) {
-			//console.log(error, element);
 			if( element.is(":radio") )
 			{
 				error.appendTo ( element.parent() );
@@ -79,9 +77,7 @@ jQuery.fn.extend({
 				this.element( element );
 			}
         }       
-        //console.log(options);
-        // $.extend(true, {}, $.validator.methods, );
-        //console.log($.validator.methods);
+        // console.log(options);
         $(form).validate(options);        
 	}
 });
@@ -245,8 +241,6 @@ var customMethod = {
         this.startRequest( element );
         data = {};
         data[ element.name ] = value;
-
-        //console.log(value);
         $.ajax( $.extend( true, {
             url: param,
             mode: "abort",
@@ -299,8 +293,7 @@ var customMethod = {
                 previous.valid = valid;
                 validator.stopRequest( element, valid );
             }
-        }, param ) );
-	    
+        }, param ) );	    
         return "pending";
-   }
+	}
 }
