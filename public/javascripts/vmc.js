@@ -13,68 +13,62 @@
 
 	$.VMC = {	
 		
-		validator : function(form, options, methods) {		
+		validator : function(form, options) {		
 			this.form	= $("#"+ form);			
 			this.plugs	= $.validator;
 			this.methods= $.VMC.methods;
+
 			this.format	= {};
-
+			
 			var defaults = {
+				rules	: {},
 				messages: {},
-				groups: {},
-				rules: {},
-				errorClass: "error",
-				validClass: "right",
-				errorElement: "label",				
-				focusInvalid: true,
-				errorContainer: $( [] ),
-				errorLabelContainer: $( [] ),
-				onsubmit: true,
-				ignore: ":hidden",
-				ignoreTitle: false				
+				methods : {}
 			};
-
-			var events = {	
-				success : function(label) {					
-					label.html("&nbsp;").addClass('right');
-				},
-				onkeyup : function(element, event){ // 去除 keyup remote事件            
-					if($(element).attr('remote')) return ;
-					if ( event.which === 9 && this.elementValue( element ) === "" ) {
-						return;
-					} else if ( element.name in this.submitted || element === this.lastElement ) {
-						this.element( element );
-					}
-				},
-				errorPlacement : function(error, element) {
-					if( element.is(":radio") )
-						error.appendTo ( element.parent() );	
-					else if ( element.is(":checkbox") )
-						error.appendTo ( element.parent() );
-					else if ( element.is("input[name=captcha]") )
-						error.appendTo ( element.parent() );
-					else
-						error.insertAfter(element);
-				}				
-			};
-
-			this.setting = $.extend( true, defaults, events, options); // 合并方法与事件
-
+			
+			this.setting = $.extend( true, defaults, options);	
+			
 			this.init = function()
 			{
-				var methods = $.extend(true, $.VMC.methods, methods);
+				var methods = $.extend(true, $.VMC.methods, this.setting.methods);
 				var messages = $.extend(true, $.VMC.messages, this.setting.messages);
-
-				this.plugs.methods = $.extend( true, $.validator.methods, methods);
-				this.plugs.messages = $.extend( true, $.validator.messages, messages);
-
+				this.plugs.methods = this.setting.methods = $.extend( true, $.validator.methods, methods);
+				this.plugs.messages = this.setting.methods = $.extend( true, $.validator.messages, messages);
 				var formObj = $.VMC.initForm(this.form, $.validator);
-				
-				this.setting.rules = formObj.rules;
-				this.setting.messages = formObj.messages;
-				console.log(this.setting);
-				$(this.form).validate(this.setting);
+
+				$(this.form).validate({
+					rules : formObj.rules,
+					messages : formObj.messages,
+					errorPlacement : this.errorPlacement,
+					success : this.success,
+					onkeyup : this.onkeyup
+				});
 			};
+			this.errorPlacement = function(error, element) {
+				if( element.is(":radio") )
+					error.appendTo ( element.parent() );	
+				else if ( element.is(":checkbox") )
+					error.appendTo ( element.parent() );
+				else if ( element.is("input[name=captcha]") )
+					error.appendTo ( element.parent() );
+				else
+					error.insertAfter(element);
+			};
+
+			this.success = function(label) {
+				console.log(label);
+			   label.html("&nbsp;").addClass("right");
+			};
+
+			this.onkeyup = function(element, event){ // 去除 keyup remote事件            
+				if($(element).attr('remote')) return ;
+				if ( event.which === 9 && this.elementValue( element ) === "" ) {
+					return;
+				} else if ( element.name in this.submitted || element === this.lastElement ) {
+					this.element( element );
+				}
+			};
+
 			this.init();			
 		},
 
