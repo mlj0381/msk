@@ -38,9 +38,8 @@
     <div class="form-group">
         <label for="" class="col-md-2 control-label">买家网站网址：</label>
         <div class="col-md-5 ">
-            <input type="text" class="form-control" value="<{$extra.company.web_site}>" name="company[web_site]" required="true" format="url" placeholder="请输入您的店铺网址链接" >
-            <span class="msgTip" data-message="error">店铺网址链接</span>
-             <span class="msgTip" data-message="format">////店铺网址链接</span>
+            <input type="text" class="form-control" value="<{$extra.company.web_site}>" name="company[web_site]" placeholder="请输入您的店铺网址链接" >
+            <span class="msgTip" data-message="format">请输入正确的网址</span>
         </div>
     </div>
     <div class="form-group">
@@ -55,24 +54,12 @@
         <label for="" class="col-md-2 control-label">营业电话：</label>
         <div class="col-md-5">
             <input type="text" value="<{$extra.company.tel}>" name="company[tel]" class="form-control" id="company_phone">
-           
         </div>
     </div>
     <div class="form-group">
         <label for="" class="col-md-2 control-label">广告信息：</label>
         <div class="col-md-5">
             <input type="text" name="company_extra[value][adv_info]" value="<{$extra.company_extra.company_extra.value.adv_info}>" class="form-control" id="company_phone">
-        </div>
-    </div>
-    <div class="form-group">
-        <label for="" class="col-md-2 control-label"><span class="text-danger">*</span>买家等级：</label>
-        <div class="col-md-5">
-            <div>
-                <input type="radio" value="1" required="true" <{if $extra.company_extra.company_extra.value.lv eq '1'}> checked <{/if}> name="company_extra[value][lv]"><span> 大买家&nbsp;&nbsp;</span>  
-                <input type="radio" value="2" <{if $extra.company_extra.company_extra.value.lv eq '2'}> checked <{/if}> name="company_extra[value][lv]"><span> 标准买家&nbsp;&nbsp;</span>  
-                <input type="radio" value="3"  <{if $extra.company_extra.company_extra.value.lv eq '3'}> checked <{/if}> name="company_extra[value][lv]"><span> 小买家&nbsp;&nbsp;</span>
-            </div>
-            <span class="msgTip" data-message="required">买家等级为必选</span>
         </div>
     </div>
     <div class="form-group">
@@ -137,15 +124,15 @@
         <div class="col-md-5">
             <input type="hidden" name="contact[company_id]" value="<{$extra.contact.company_id}>">
             <input type="text" name="contact[boss_name]" value="<{$extra.contact.boss_name}>" class="form-control" id="boss_name" required="true">
-            <span class="msgTip" data-format="required">xx</span>
+            <span class="msgTip" data-message="required"></span>
         </div>
     </div>
     <div class="form-group">
         <label for="" class="col-md-2 control-label"><span class="text-danger">*</span>手机：</label>
         <div class="col-md-5">
             <input type="text" name="contact[boss_mobile]" value="<{$extra.contact.boss_mobile}>" class="form-control" id="boss_phone" required="true" format="mobile">
-            <span class="msgTip" data-format="required"></span>
-            <span class="msgTip" data-format="format">手机格式不正确</span>
+            <span class="msgTip" data-message="required"></span>
+            <span class="msgTip" data-message="mobile">请输入正确手机号码</span>
         </div>
     </div>
     <div class="form-group">
@@ -165,15 +152,16 @@
         <label for="" class="col-md-2 control-label"><span class="text-danger">*</span>姓名：</label>
         <div class="col-md-5">
             <input type="hidden" name="contact_extra[content_id]" value="<{$extra.company_extra.contact_extra.content_id}>">
-            <input type="text" name="contact_extra[value][buinour_name]" value="<{$extra.company_extra.contact_extra.value.buinour_name}>" class="form-control" id="boss_name" placeholder="">
-            <span class="msgTip" data-format="error"></span>
+            <input type="text" name="contact_extra[value][buinour_name]" value="<{$extra.company_extra.contact_extra.value.buinour_name}>" required="true" class="form-control" id="boss_name" placeholder="">
+            <span class="msgTip" data-message="required"></span>
         </div>
     </div>
     <div class="form-group">
         <label for="" class="col-md-2 control-label"><span class="text-danger">*</span>手机：</label>
         <div class="col-md-5">
-            <input type="text" name="contact_extra[value][buinour_mobile]" value="<{$extra.company_extra.contact_extra.value.buinour_mobile}>" class="form-control" id="boss_phone" required="true" format="mobile">
-            <span class="msgTip" data-format="error"></span>
+            <input type="text" name="contact_extra[value][buinour_mobile]" value="<{$extra.company_extra.contact_extra.value.buinour_mobile}>" class="form-control" id="boss_phone" required="true" format="mobile" >
+            <span class="msgTip" data-message="required"></span>
+            <span class="msgTip" data-message="mobile">请输入正确手机号码</span>
         </div>
     </div>
     <div class="form-group">
@@ -193,14 +181,15 @@
         <label for="" class="col-md-2 control-label"><span class="text-danger">*</span>姓名：</label>
         <div class="col-md-5">
             <input type="text" name="contact_extra[value][buyer_name]" value="<{$extra.company_extra.contact_extra.value.buyer_name}>" class="form-control" id="boss_name" placeholder="" id="boss_name" required="true">
-            <span class="msgTip" data-format="error"></span>
+            <span class="msgTip" data-message="required"></span>
         </div>
     </div>
     <div class="form-group">
         <label for="" class="col-md-2 control-label"><span class="text-danger">*</span>手机：</label>
         <div class="col-md-5">
-            <input type="text" name="contact_extra[value][buyer_mobile]" value="<{$extra.company_extra.contact_extra.value.buyer_mobile}>" class="form-control" id="boss_phone" required="true">
-            <span class="msgTip" data-format="error"></span>
+            <input type="text" name="contact_extra[value][buyer_mobile]" value="<{$extra.company_extra.contact_extra.value.buyer_mobile}>" class="form-control" id="boss_phone" required="true" format="mobile">
+            <span class="msgTip" data-message="required"></span>
+            <span class="msgTip" data-message="mobile">请输入正确手机号码</span>
         </div>
     </div>
     <div class="form-group">
@@ -220,14 +209,15 @@
         <label for="" class="col-md-2 control-label"><span class="text-danger">*</span>姓名：</label>
         <div class="col-md-5">
             <input type="text" name="contact[name]" value="<{$extra.contact.name}>" class="form-control" id="pressing_name" required="true">
-            <span class="msgTip" data-format="error"></span>
+            <span class="msgTip" data-message="required"></span>
         </div>
     </div>
     <div class="form-group">
         <label for="" class="col-md-2 control-label"><span class="text-danger">*</span>手机：</label>
         <div class="col-md-5">
-            <input type="text" name="contact[tel]" value="<{$extra.contact.tel}>" class="form-control" id="pressing_phone" required="true">
-            <span class="msgTip" data-format="error"></span>
+            <input type="text" name="contact[tel]" value="<{$extra.contact.tel}>" class="form-control" id="pressing_phone" required="true" format="mobile">
+            <span class="msgTip" data-message="required"></span>
+            <span class="msgTip" data-message="mobile">请输入正确手机号码</span>
         </div>
     </div>
     <div class="form-group">

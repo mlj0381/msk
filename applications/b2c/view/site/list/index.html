@@ -276,7 +276,7 @@
             var input = $(this).prev();
             if(!$(input).val() || $(input).val() == "请输入关键词"){
                 $(input).val('请输入关键词');
-                reutrn;
+                return;
             }
             var url = "<{link app=b2c ctl=site_list act=index}>?<{$query|merge_query:'having'}>"; 
             url += '&having=' + $(input).val();
