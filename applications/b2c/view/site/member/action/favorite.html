@@ -9,7 +9,7 @@
             <a href="javascript:;" class="active">商品收藏</a>
             <a href="javascript:;">店铺收藏</a>
         </span>
-        <p>共<small><{$favorite_count}></small>项收藏</p>
+        <p>共<small><{$data.goods_count}></small>项收藏</p>
     </div>
     <div class="fav_con">
         <!-- 商品收藏 -->
@@ -17,9 +17,9 @@
             <div class="fav_g_nav clearfix">
                 <ul>
                     <li class="active">全部商品</li>
-                    <li>同店商品</li>
-                    <li>降价商品</li>
-                    <li>失效商品</li>
+                    <!--<li>同店商品</li>-->
+                    <!--<li>降价商品</li>-->
+                    <!--<li>失效商品</li>-->
                 </ul>
                 <div class="fav_g_ctr">
                     <span class="ctr_group">
@@ -141,16 +141,24 @@
                                         </form>
                                     </div>
                                     <div class="add_shopTag" data-id="<{$item.gnotify_id}>">
-                                        <p><i class="icon-tag"></i><span class="add_tag_btn">添加店铺标签 </span></p>
+                                        <p><i class="icon-tag"></i><span class="add_tag_btn">
+                                            <{if $tag eq ''}>添加店铺标签<{/if}>
+
+                                            <{foreach from=$tag item=tags}>
+                                            <{if $item.tag[$tags.tag_id]}> <{$tags.tag_name}>， <{/if}>
+                                            <{/foreach}>
+                                        </span></p>
                                         <div class="creat_tagbox hide">
                                             <h4><i class="icon-folder-open"></i>分类到</h4>
-                                            <ul>
-                                                <{foreach from=$tag item=tag}>
-                                                <li>
+                                            <ul data-url="<{link app=b2c ctl=site_member act=del_tag}>">
+
+                                                <{foreach from=$tag item=tags}>
+                                                <li class="clearfix">
                                                     <input name="tag_id[]"
-                                                           <{if $item.tag[$tag.tag_id]}> checked<{/if}>
-                                                           type="checkbox" value="<{$tag.tag_id}>"/>
-                                                    <{$tag.tag_name}>
+                                                           <{if $item.tag[$tags.tag_id]}> checked<{/if}>
+                                                           type="checkbox" value="<{$tags.tag_id}>"/>
+                                                    <{$tags.tag_name}>
+                                                    <button data-id="<{$tag.tag_id}>" style="margin-top: 3px;" class="btn btn-xs btn-default fr">删除</button>
                                                 </li>
                                                 <{/foreach}>
                                             </ul>
@@ -184,64 +192,6 @@
         </div>
         <!-- 商品收藏结束 -->
     </div>
-    <!-- <div class="row goods-list gl-default">
-        <div class="gl_item_box">
-            <{foreach from=$data item=item}>
-            <{if $item.object_type == 'goods'}>
-                <div class="col-xs-3 fav-item">
-                    <div class="thumbnail goods-item">
-                        <div class="gi-image-wrapper">
-                            <a href="<{link app=b2c ctl=site_product args0=$item.product_id}>">
-                                <img src="<{$item.image_default_id|storager:'s'}>" alt="<{$item.goods_name}>">
-                            </a>
-                        </div>
-                        <div class="caption">
-                            <h3 class="g-name"><a href="<{link app=b2c ctl=site_product args0=$item.product_id}>"><{$item.goods_name}></a></h3>
-                            <ul class="list-inline">
-                                <{if 0 && $member_lv_discount && $member_lv_discount>0 }>
-                                <li class="text-muted"><small>￥</small><{$item.goods_price|cur}></li>
-                                <li class="price-1 text-danger"><{$member_lv_name}>价：<small>￥</small><{$item.mem_price|cur}></li>
-                                <{else}>
-                                <li class="price-1 text-danger"><small>￥</small><{$item.goods_price|cur}></li>
-                                <{/if}>
-                            </ul>
-                            <p>
-                                <a class="btn btn-xs btn-default remove-fav" href="<{link app=b2c ctl=site_member act=favorite args0=del args1=$item.goods_id}>">
-                                    <i class="glyphicon glyphicon-trash"></i> 从收藏夹删除
-                                </a>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <{/if}>
-            <{/foreach}>
-        </div>
-        店铺收藏列表
-        <div class="gl_item_box">
-            <{foreach from=$data item=item}>
-            <{if $item.object_type == 'store'}>
-                <div class="col-xs-3 fav-item">
-                    <div class="thumbnail goods-item">
-                        <div class="gi-image-wrapper">
-                            <a href="<{link app=b2c ctl=site_product args0=$item.product_id}>">
-                                <img src="<{$item.image_default_id|storager:'s'}>" alt="<{$item.goods_name}>">
-                            </a>
-                        </div>
-                        <div class="caption">
-                            <h3 class="g-name"><a href="<{link app=b2c ctl=site_product args0=$item.product_id}>"><{$item.goods_name}></a></h3>
-                            <p>
-                                <a class="btn btn-xs btn-default remove-fav" href="<{link app=b2c ctl=site_member act=favorite args0=del args1=$item.goods_id}>">
-                                    <i class="glyphicon glyphicon-trash"></i> 从收藏夹删除
-                                </a>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <{/if}>
-            <{/foreach}>
-        </div>
-        END 店铺收藏列表
-    </div> -->
     <!-- 热卖单品 -->
     <div class="best_sellers">
         <div class="hd">
@@ -341,6 +291,14 @@
 
 
 <script type="text/javascript">
+   var favorite =  $('.glist-container .fav_nav');
+   favorite.find('a').click(function(){
+        if($(this).text() == '店铺收藏'){
+            favorite.find('small').text('<{$data.store_count}>');
+        }else if($(this).text() == '商品收藏'){
+            favorite.find('small').text('<{$data.goods_count}>');
+        }
+    });
     $('.remove-fav').on('click', function (e) {
         e.stopPropagation();
         var _this = $(this);
@@ -353,10 +311,7 @@
         }, 'json');
         return false;
     });
-</script>
 
-
-<script type="text/javascript">
     /**
      * 商品对比
      */
@@ -525,7 +480,9 @@
         $.post(url, {tagText: tagText}, function (re) {
             var addTag = $(target).closest('.creat_tagbox');
             var liText = re.success ? tagText : '添加失败，请稍候再试';
-            $(addTag).find('ul').append('<li data-tag=' + re.success + '><input name="tag_id[]" type="checkbox" value="' + re.success + '"/>' + liText + '</li>');
+            $(addTag).find('ul').append('<li data-tag=' + re.success + '><input name="tag_id[]" type="checkbox" value="' + re.success + '"/>' +
+            liText + '<button data-id="'+ re.success +'" style="margin-top: 3px;" class="btn btn-xs btn-default fr">删除</button></li>');
+
             $(addTag).on('click', 'input[type="checkbox"]', function(){
                 submitTag($(this));
             });
@@ -543,7 +500,15 @@
         $.post(url, {tagId : $(obj).val(), type : type, favId : favId}, function(re){
             
         });
+
     };
+   //删除店铺标签
+   $('.creat_tagbox button').click(function () {
+       tagDel();
+   });
+   var tagDel = function(){
+
+           };
   
     $('.add_tag_btn').on('click', 'i', function (e) {
         var target = e.target || e.srcElement;
@@ -563,7 +528,7 @@
     });
 
     //获取选中的标签并显示
-    (function create_tag(){
+    function create_tag(){
         var tags = [];
         var tagName = "";
         $('.creat_tagbox input:checked').each(function(i){
@@ -575,14 +540,5 @@
         if(tags.length==0){
             $('.add_tag_btn').text('添加店铺标签');
         }
-    })();
-    
-
-
-
-
-
-
-
-
+    };
 </script>

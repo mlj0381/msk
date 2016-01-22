@@ -37,10 +37,8 @@ class seller_ctl_site_goods extends seller_frontpage
 
     private function _good_list($type, $serach)
     {
-        $brandList = app::get('b2c')->model('brand')->getList('brand_id, brand_name');
         $store_goods_cat = app::get('b2c')->model('goods_cat')->getList('*');
         $mdl_product = app::get('b2c')->model('products');
-        $mdl_stock = app::get('b2c')->model('stock');
         $filter['marketable'] = 'false';
         if ($type) {
             $filter['marketable'] = 'true';
@@ -84,6 +82,7 @@ class seller_ctl_site_goods extends seller_frontpage
             $goodsList[$key]['price_interval'] = $product['product'][$value['goods_id']]['price_interval'];
             $goodsList[$key]['price_up'] = $product['product'][$value['goods_id']]['price_up'];
             $goodsList[$key]['price_dn'] = $product['product'][$value['goods_id']]['price_dn'];
+            $goodsList[$key]['product_id'] = $product['product'][$value['goods_id']]['product_id'];
             foreach ($store_goods_cat as $k => $v) {
                 if ($value['cat_id'] == $v['cat_id']) {
                     $goodsList[$key]['cat_id'] = $v['cat_name'];
@@ -323,17 +322,37 @@ class seller_ctl_site_goods extends seller_frontpage
     //价格修改
     public function price($goods_id)
     {
-        $redirect = $this->gen_url(array('app' => 'seller', 'ctl' => 'site_goods', 'act' => 'index'));
-        !is_numeric($goods_id) && $this->splash('error', $redirect, '非法请求');
-        $this->pagedata['goods'] = $this->mB2cGoods->dump($goods_id, '*', 'default');
+        if (is_numeric($goods_id)) {
+            $this->pagedata['goods'] = $this->mB2cGoods->dump($goods_id, '*', 'default');
+        } else {
+            $this->pagedata['goods_list'] = $this->_good_list(1, '');
+            $this->pagedata['_PAGE_'] = 'goods_price.html';
+        }
         $this->output();
+        // $redirect = $this->gen_url(array('app' => 'seller', 'ctl' => 'site_goods', 'act' => 'index'));
+        //!is_numeric($goods_id) && $this->splash('error', $redirect, '非法请求');
+
     }
 
     //价格修改记录
-    public function modify_record()
+    public function modify_record($goods_id)
     {
+        !is_numeric($goods_id) && $this->splash('error', '', '参数错误，非法请求');
+        $product_list = app::get('b2c')->model('products')->getList('product_id', array('goods_id' => $goods_id));
+        $mdl_goods = app::get('b2c')->model('goods');
+        $result = array();
+        $result['gid'] = $mdl_goods->getRow('gid', array('goods_id', $goods_id));
+        foreach($product_list as $key => $value){
+            base_kvstore::instance('goods_price')->fetch("goods_price_{$this->store['store_id']}_{$value['product_id']}", $data);
+            if(!empty($data)){
+                $result['product'][] = $data;
+
+            }
+        }
+        $this->pagedata['product_list'] = $result;
         $this->output();
     }
+
 
     private function _editor()
     {
@@ -363,6 +382,33 @@ class seller_ctl_site_goods extends seller_frontpage
                 'file' => 'site/goods/goods/price.html',
             ),
         );
+    }
+
+    //价格修改
+    public function edit_price($product_id)
+    {
+        !is_numeric($product_id) && die('参数错误，非法请求');
+        $this->pagedata['product'] = app::get('b2c')->model('products')->getRow('*', array('product_id' => $product_id));
+        $this->display('site/goods/edit_price.html');
+    }
+
+    //价格保存
+    public function save_price()
+    {
+        extract($_POST);
+        $redirect = $this->gen_url(
+                            array('app' => 'seller',
+                                'ctl' => 'site_goods',
+                                'act' => 'price',
+                                'args0' => $product['goods_id']));
+        if (empty($_POST)) $this->splash('error', $redirect, '非法请求');
+        $product['createTime'] = time();
+        $result = base_kvstore::instance('goods_price')->store("goods_price_{$this->store['store_id']}_{$product['product_id']}", $product);
+        //base_kvstore::instance('goods_price')->fetch("goods_price_{$this->store['store_id']}_{$product['product_id']}", $data);
+        if ($result) {
+            $this->splash('success', $redirect, '操作成功');
+        }
+        $this->splash('error', $redirect, '操作失败');
     }
 
 }

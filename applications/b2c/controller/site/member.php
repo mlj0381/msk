@@ -427,6 +427,8 @@ class b2c_ctl_site_member extends b2c_frontpage
                         $list['store'][$key] = $value;
                     }
                 }
+                $list['goods_count'] = count($list['goods']);
+                $list['store_count'] = count($list['store']);
                 unset($list_tmp);
                 $this->pagedata['tag'] = app::get('desktop')->model('tag')->getList('tag_id, tag_name', array('member_id' => $this->member['member_id'], 'tag_mode' => 'favorite'));
                 $this->pagedata['member_lv_name'] = $this->member['levelname'];

@@ -119,7 +119,7 @@ class b2c_ctl_site_comment extends b2c_frontpage
 
     public function show_list($comment_type = 'all', $page = 1)
     {
-        $this->menuSetting = 'setting';
+        $this->menuSetting = 'index';
         $limit = 10;
         $mdl_goods_mark = app::get('b2c')->model('goods_mark');
         $filter = array(
