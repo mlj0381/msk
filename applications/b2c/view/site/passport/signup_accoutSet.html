@@ -124,6 +124,21 @@ void function(signup_form){
         },'json');
     });
 
+    signup_form.on('submit',function(e){
+        e.stopPropagation();
+        //signup_form.find('button[type=submit]').button('loading');
+        $.post(signup_form.prop('action'),signup_form.serialize(),function(re){
+            if(re.error){
+                _alert_error(re.error);
+            }
+            if(re.success){
+                location = re.redirect;
+            }
+            signup_form.find('button[type=submit]').button('reset');
+        },'json');
+        return false;
+    });
+
 }($('#member_signup_form'));
 </script>
 
