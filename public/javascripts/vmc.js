@@ -49,7 +49,7 @@
 				errorPlacement : function(error, element) {
 					if(element.parents('.form-item').length >0) // 外层存在
 					{
-						error.appendTo ( element.parents('.form-item'));
+						error.appendTo ( element.parents('.form-item').parent());
 						return ;
 					}
 					if(element.is(":radio") || element.is(":checkbox") || element.is("input[name=captcha]"))
@@ -67,12 +67,12 @@
 			{
 				var methods = $.extend(true, $.VMC.methods, methods);
 				var messages = $.extend(true, $.VMC.messages, this.setting.messages);
-
 				this.plugs.methods = $.extend( true, $.validator.methods, methods);
 				this.plugs.messages = $.extend( true, $.validator.messages, messages);
 				var formObj = $.VMC.initForm(this.form, $.validator);				
 				this.setting.rules = formObj.rules;
 				this.setting.messages = formObj.messages;
+				console.log(this.setting);
 				$(this.form).validate(this.setting);
 			};
 			this.init();			
@@ -185,9 +185,12 @@
 		methods : {
 			format : function(value, element, param)
 			{	
-				if (this.optional( element ) ) {            
+				if (this.optional(element)) {
 					return "dependency-mismatch";
 				}
+
+				if(typeof $.validator.methods[param] == 'function') return true;
+
 				if(param.indexOf("|")) // 或
 				{
 					var regxs = param.split("|");
@@ -209,9 +212,9 @@
 						}								
 					}
 					return true;
-				}else{
-					return typeof  $.VMC.regx[regxs[i]] != 'undefined' &&  $.VMC.regx[param.regx].test(value);
-				}		
+				}				
+				return typeof  $.VMC.regx[regxs[i]] != 'undefined' &&  $.VMC.regx[param.regx].test(value);
+						
 			},
 			size : function(value, element, param)
 			{		

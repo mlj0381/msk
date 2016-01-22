@@ -2,60 +2,67 @@
 	<h2>经营信息</h2>
 	<div class="form-group">
         <input type="hidden" name="manageInfo[content_id]" value="<{$extra.manageInfo.manageInfo.content_id}>"/>
-        <label for="" class="col-md-2 control-label"><span class="text-danger">*</span>买家分类：</label>
-        <div class="col-md-5">
-            <{input type=select required="true" name="manageInfo[value][member_cat]" rows=$extra.member_cat valueColumn="id"
-            labelColumn="label" value=$extra.manageInfo.manageInfo.value.member_cat}>
-
+        <label for="" class="col-xs-2 control-label"><span class="text-danger">*</span>买家分类：</label>
+        <div class="col-xs-5">
+            <{input type=select required="true" name="manageInfo[value][member_cat]" rows=$extra.member_cat valueColumn="id" labelColumn="label" value=$extra.manageInfo.manageInfo.value.member_cat}>
+            <span class="msgTip" data-message="required"></span>
+            
         </div>
     </div>
 
 	<div class="form-group">
-        <label for="" class="col-md-2 control-label"><span class="text-danger">*</span>使用方向：</label>
-        <div class="col-md-5 use_dir">
-
-            <{foreach from=$extra.use item=item}>
-            <span><input type="checkbox" value="<{$item.id}>" name="manageInfo[value][use][]"> <{$item.label}></span>
+        <label for="" class="col-xs-2 control-label"><span class="text-danger">*</span>使用方向：</label>
+        <div class="col-xs-5 use_dir">
+            <div class="form-item">
+            <{foreach name="manage" from=$extra.use item=item}>
+            <span><input type="checkbox" value="<{$item.id}>" name="manageInfo[value][use][]" <{if $env.foreach.manage.last}> required="true" <{/if}> > <{$item.label}></span>
             <{/foreach}>
+            <span class="msgTip" data-message="required"></span>
+            </div>
         </div>
     </div>
     <div class="form-group">
-        <label for="" class="col-md-2 control-label"><span class="text-danger">*</span>经营场所：</label>
-        <div class="col-md-5">
+        <label for="" class="col-xs-2 control-label"><span class="text-danger">*</span>经营场所：</label>
+        <div class="col-xs-5">
             <{input type=select required="true" name="manageInfo[value][plant]" rows=$extra.plant valueColumn="id"
             labelColumn="label" value=$extra..manageInfo.manageInfo.value.plant}>
         </div>
     </div>
     <div class="form-group">
-        <label for="" class="col-md-2 control-label"><span class="text-danger">*</span>批发市场全名：</label>
-        <div class="col-md-5">
-            <input type="text" name="manageInfo[value][market_name]" value="<{$extra.manageInfo.manageInfo.value.market_name}>" class="form-control">
+        <label for="" class="col-xs-2 control-label"><span class="text-danger">*</span>批发市场全名：</label>
+        <div class="col-xs-5">
+            <input type="text" name="manageInfo[value][market_name]" value="<{$extra.manageInfo.manageInfo.value.market_name}>" class="form-control" required="true">
+            <span class="msgTip" data-message="required"></span>
         </div>
     </div>
 	<div class="form-group">
-        <label for="" class="col-md-2 control-label"><span class="text-danger">*</span>物流区划：</label>
-        <div class="col-md-5">
-            <{input type=region name="manageInfo[value][region]" value=$extra.manageInfo.manageInfo.value.region}>
+        <label for="" class="col-xs-2 control-label"><span class="text-danger">*</span>物流区划：</label>
+        <div class="col-xs-5">
+            <{input type=region name="manageInfo[value][region]" value=$extra.manageInfo.manageInfo.value.region required="true"}>
+            <span class="msgTip" data-message="required"></span>
         </div>
     </div>
     <div class="form-group">
-        <label for="" class="col-md-2 control-label"><span class="text-danger">*</span>主营品类：</label>
-        <div class="col-md-5">
-            <{input type="category" name="manageInfo[value][main]" value=$extra.manageInfo.manageInfo.value.main}>
+        <label for="" class="col-xs-2 control-label"><span class="text-danger">*</span>主营品类：</label>
+        <div class="col-xs-5">
+            <{input type="category" name="manageInfo[value][main]" value=$extra.manageInfo.manageInfo.value.main required="true"}>
+            <span class="msgTip" data-message="required"></span>
         </div>
     </div>
     <div class="form-group">
-        <label for="" class="col-md-2 control-label" name="business_info[value][engaged_category]">兼营品类：</label>
-        <div class="col-md-5">
+        <label for="" class="col-xs-2 control-label" name="business_info[value][engaged_category]">兼营品类：</label>
+        <div class="col-xs-5">
             <{input type="category" name="manageInfo[value][vice]" value=$extra.manageInfo.manageInfo.value.vice}>
         </div>
     </div>
     <div class="form-group">
-        <label for="" class="col-md-2 control-label"><span class="text-danger">*</span>日均销售额：</label>
-        <div class="col-md-5">
-            <div class="input-group">
-            	<input type="text" name="manageInfo[value][day_sale]" value="<{$extra.manageInfo.manageInfo.value.day_sale}>" class="form-control">
+        <label for="" class="col-xs-2 control-label"><span class="text-danger">*</span>日均销售额：</label>
+        <div class="col-xs-5">
+            <div class="input-group form-item ">
+            	<input type="text" name="manageInfo[value][day_sale]" value="<{$extra.manageInfo.manageInfo.value.day_sale}>" class="form-control" required="true" format="number">
             	<span class="input-group-addon">元</span>
+                <span class="msgTip" data-message="required"></span>
+                <span class="msgTip" data-message="number"></span>
             </div>
         </div>
     </div>

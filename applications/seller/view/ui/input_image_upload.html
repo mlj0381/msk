@@ -1,10 +1,47 @@
-<div data-module="upload" id="image_upload_box_<{$id}>">
+<style>
+    .uploadBox{
+        position: relative;
+        min-height: 120px;
+        margin-bottom:10px;
+    }
+    .uploadBox .thumb{
+        width:120px;
+        height:120px;
+        border:1px solid #ddd;
+        display: table-cell;
+        overflow: hidden;
+        position: absolute;
+        cursor: pointer;
+        top:0;
+        left:0;
+    }
+    .uploadBox .thumb img{
+        max-width: 120px;
+        max-height: 120px;
+        margin:auto;
+
+    }
+    .uploadBox .file_input{
+        width:120px;
+        height:120px;
+        opacity: 0;
+        filter: alpha(opacity=0);
+        cursor: pointer;
+    }
+</style>
+
+
+<div data-module="upload" id="image_upload_box_<{$id}>" class=uploadBox>
     <input type="hidden" name="<{$name}>" value="<{$value}>" />
     <div class="thumb" data-toggle="show" >        
-        <img src="<{$value|storager:'xs'}>" >      
+        <!-- <img src="<{$value|storager:'xs'}>" > -->
+        <img src="<{$base_url}>/themes/pc/default/statics/images/file_add.jpg" >       
     </div>
-    <input type="file" name="" />
+    <input type="file" class="file_input" name="" />
 </div>
+
+
+
 
 <!-- <div class="fileinput fileinput-new" data-provides="fileinput" id="image_upload_box_<{$id}>">    
     <div class="filebox fileinput-new thumbnail" style="border:0px;padding:0px;margin-bottom:0px">
