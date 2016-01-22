@@ -32,8 +32,8 @@
 				onsubmit: true,
 				ignore: ":hidden",
 				ignoreTitle: false				
-			};
-
+			};	
+			
 			var events = {	
 				success : function(label) {					
 					label.html("&nbsp;").addClass('right');
@@ -47,14 +47,17 @@
 					}
 				},
 				errorPlacement : function(error, element) {
-					if( element.is(":radio") )
-						error.appendTo ( element.parent() );	
-					else if ( element.is(":checkbox") )
+					if(element.parents('.form-item').length >0) // 外层存在
+					{
+						error.appendTo ( element.parents('.form-item'));
+						return ;
+					}
+					if(element.is(":radio") || element.is(":checkbox") || element.is("input[name=captcha]"))
+					{
 						error.appendTo ( element.parent() );
-					else if ( element.is("input[name=captcha]") )
-						error.appendTo ( element.parent() );
-					else
-						error.insertAfter(element);
+						return ;
+					}
+					error.insertAfter(element);
 				}				
 			};
 
@@ -67,12 +70,9 @@
 
 				this.plugs.methods = $.extend( true, $.validator.methods, methods);
 				this.plugs.messages = $.extend( true, $.validator.messages, messages);
-
-				var formObj = $.VMC.initForm(this.form, $.validator);
-				
+				var formObj = $.VMC.initForm(this.form, $.validator);				
 				this.setting.rules = formObj.rules;
 				this.setting.messages = formObj.messages;
-				console.log(this.setting);
 				$(this.form).validate(this.setting);
 			};
 			this.init();			
@@ -104,11 +104,11 @@
 								if(typeof(_this.methods[value]) == 'function')
 								{
 									rule[value] = true;
-									_messages(obj, value, _this); // 初始化提示									
+									_messages(obj, attr, value, _this); // 初始化提示									
 								}else	//if(typeof(customRegx[value]) == 'string'){
 								{	
 									rule['format'] = value;
-									_messages(obj, 'format', _this); // 初始化提示
+									_messages(obj, attr, value, _this); // 初始化提示
 								}
 							}else if(typeof(_this.methods[attr]) == 'function')
 							{
@@ -134,7 +134,7 @@
 										break;
 								}
 								rule[attr] = value;
-								_messages(obj, attr, _this); // 初始化提示
+								_messages(obj, attr, '', _this); // 初始化提示
 							}
 						}			
 						_this.rules[inputName] = rule;
@@ -142,25 +142,30 @@
 				});				
 			}
 
-			var _messages = function(obj, method, _self)
-			{
+			var _messages = function(obj, method, value, _self)
+			{				
 				var group = $(obj).parents('.form-group');					
-				var message = $(group).find("span[data-message='" + method + "']").text();
+				var methodMessage = $(group).find("span[data-message='" + method + "']").text();
+				var valueMessage = $(group).find("span[data-message='" + value + "']").text();
 				var error = $(group).find("span[data-message='error']").text();
-				var name = $(obj).attr('name');
-				if($(group).find("span[data-message]").length > 0)
+				var name = $(obj).attr('name');			
+				if(typeof _self.messages[name] == 'undefined')  _self.messages[name] = {};
+				if(value && typeof $.validator.messages[value] == 'string')
 				{
-					if(typeof _self.messages[name] == 'undefined')  _self.messages[name] = {};
-					
-					if(error && error != '')
-					{
-						_self.messages[name][method] = error;
-					}
-					if(message && message != '')
-					{
-						_self.messages[name][method] = message;
-					}
+					_self.messages[name][method] = $.validator.messages[value];
 				}
+				if(typeof error == 'string' && error != '')
+				{
+					_self.messages[name][method] = error;
+				}
+				if(typeof methodMessage == 'string' && methodMessage != '')
+				{
+					_self.messages[name][method] = methodMessage;
+				}
+				if(typeof valueMessage == 'string' && valueMessage != '')
+				{
+					_self.messages[name][method] = valueMessage;
+				}				
 			}
 
 			this.init();			
@@ -233,8 +238,7 @@
 					return optionalValue;
 				}
 				if ($(element).attr("type") === "file") {			
-					typeParam = typeParam.replace(/\*/g, ".*").replace('jpg', 'jpeg');
-					
+					typeParam = typeParam.replace(/\*/g, ".*").replace('jpg', 'jpeg');					
 					if (element.files && element.files.length) {
 						for (i = 0; i < element.files.length; i++) {
 							file = element.files[i];					
@@ -354,7 +358,7 @@
 			required: "必须填写",
 			remote: "请修正此栏位",
 			email: "请输入有效的电子邮件",
-			url: "请输入有效的网址",
+			url: "请输入有效的6666666666666网址",
 			date: "请输入有效的日期",
 			dateISO: "请输入有效的日期 (YYYY-MM-DD)",
 			number: "请输入正确的数字",
@@ -371,7 +375,123 @@
 			accept : $.validator.format("仅支持{0}文件！"),
 			size : $.validator.format("文件大小控制在{0}以内！"),
 			username : $.validator.format("文件大小控制在{0}以内！"),
-		}		
+		},
+				
+		upload : function(Box, options){
+			// this.box = Box;
+			var defaults = {
+				name	: '',
+				formData: {},
+				accept	: '',
+				show	: '.imgShow',
+				thumbClass : '.thumb',
+				thumbDefault  : '' // thumb默认图片
+			};		
+				
+			this.box = $.extend( true, defaults, options);
+
+			var attrs = $(Box).attributes;
+			console.log($(Box)[0].attributes);
+
+			//this.setting.name = $(this.box).attr('data-box-name');
+			
+			//console.log(this.setting);
+
+			this.thumb = function()
+			{
+				var _box = this.box;
+				if(this.setting.thumb == true)
+				{
+					if($(_box).find('.thumb,[data-thumb]').length < 1)
+					{
+						$(_box).append($.validator.format('<div class="{0}"></div>', this.setting.thumbClass));
+					}
+				}
+			}
+
+			this.init = function()
+			{	
+				/*
+				// 容器初始化
+				// file
+				var _elment = this.elment;
+				var _file = $(_elment).find('input[type=file]');
+				if($(_file).length < 1) return ; // 不含有文件上传控件
+				// 设置名称
+				if(this.setting.name == '')
+				{
+					this.setting.name = $(_file).attr('for');	
+				}				
+				// formdata 初始化
+				var tag = $(_elment).attr('data-tag');
+				if(typeof tag == 'string')
+				{
+					this.setting.formData.tag = tag;
+				}
+				// 设置容器
+				if(this.setting.thumbContainer == '') 
+				{				
+					this.setting.thumbContainer = '.thumb';					
+				}
+				if($(_elment).find(this.setting.thumbContainer).length < 1)
+				{
+					$(_elment).append($.validator.format('<div class="{0}"><img src="" /></div>', [this.setting.thumbContainer]));
+				}				
+				// 设置缩略图容器
+				if($(this.setting.thumbContainer).find('img').length < 1)
+				{
+					$(this.setting.thumbContainer).append('<img src="" />');
+				}
+
+				// 设置隐藏域
+				if($(_elment).find('input[type="hidden"]').length < 1)
+				{
+					var html = '<input type="hidden" name="{0}" value="" />';
+					$(_file).after($.validator.format(html, this.setting.name));
+				}
+
+				//console.log($(_elment).html());			
+				
+				$(this.setting.thumbContainer).bind('click', function(){
+					//$(_file).trigger('click');
+				});
+							
+				this.setting.add = this.add;
+				this.setting.done= this.done;
+				$(_file).fileupload(this.setting);
+				$(_file).trigger('click');
+				*/	
+			}			
+			this.add = function(e, data){
+				$(this.setting.thumbContainer).append('<span class="loading hidden icon-spinner icon-spin"></span>');
+				data.submit();
+			};
+			this.done = function(e, data){
+				var _self = this;
+				var re = $.parseJSON(data.result);
+				var _elment = ($(_self).parents('[data-module="upload"]'));
+				if(re.image_id)
+				{
+					// 回传
+					$(_elment).find('input[type="hidden"]').val(re.image_id);
+					$(_elment).find('img').attr('src', re.url).removeClass('hidden');
+				}else{
+					$(this.setting.thumbContainer).append('<span>上传出错</span>');
+				}
+				$(this.setting.thumbContainer).find('span').remove();
+			}
+			this.init();
+		}
 	};
+	
+	$.extend($.fn, {	
+		upload : function( options ) {
+			var _this = $(this);
+			$.VMC.upload(_this, options);
+		}
+	});
+
+	//$(document.body).find('[data-module="upload"],.filebox').upload({thumb : true});
 
 }));
+
