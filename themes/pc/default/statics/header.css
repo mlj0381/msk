@@ -632,6 +632,7 @@ nav.mainNav ul.nav_ul li .category-container .category .tab-pane .tab-pane-brand
   vertical-align: middle;
   display: table-cell;
   text-align: center;
+  cursor: pointer;
 }
 .filebox .showImg img {
   display: block;

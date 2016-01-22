@@ -19,6 +19,7 @@ class seller_ctl_site_passport extends seller_frontpage
     {
         parent::__construct($app);
         $this->seller = $this->get_current_seller();
+        $this->set_tmpl('passport');
     }
 
     public function index()
@@ -52,7 +53,7 @@ class seller_ctl_site_passport extends seller_frontpage
         $this->set_forward($forward);
         $mdl_toauth_pam = app::get('toauth')->model('pam')->getList('*', array('status' => 'true'));
         $this->pagedata['toauth'] = $mdl_toauth_pam;
-        $this->set_tmpl('passport');
+
         $this->page('site/passport/login.html');
     }
 
@@ -457,7 +458,7 @@ class seller_ctl_site_passport extends seller_frontpage
             }
             $info['company_extra'][$value['key']] = $value;
         }
-        $info['company_extra']['store'] = app::get('store')->model('store')->getRow('*', $filter);
+        $info['company_extra']['store'] = app::get('store')->model('store')->getRow('*', array('seller_id' => $filter['uid']));
         $info['company_extra']['company'] = app::get('base')->model('company')->getRow('*', $filter);
         $info['company_extra']['contact'] = app::get('base')->model('contact')->getRow('*', $filter);
         $info['company_extra']['brand'] = $this->app->model('brand')->getRow('*', array('seller_id' => $this->seller['seller_id']));

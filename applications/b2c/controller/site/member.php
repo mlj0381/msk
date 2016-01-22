@@ -36,7 +36,7 @@ class b2c_ctl_site_member extends b2c_frontpage
      */
     public function index(){
         $mdl_member_goods = $this->app->model('member_goods');
-        $this->pagedata['order_count'] = $this->app->model('orders')->type_count();
+        $this->pagedata['order_count'] = $this->app->model('orders')->type_count(array('member_id' => $this->member['member_id']));
         $user_obj = vmc::singleton('b2c_user_object');
         $this->pagedata['pam_data'] = $user_obj->get_pam_data('*', $this->member['member_id']);
         //查询最近浏览
@@ -409,6 +409,7 @@ class b2c_ctl_site_member extends b2c_frontpage
                 }
                 break;
             case 'add':
+                var_dump($member_id, $gid, $obj_type);
                 if (!$mdl_member_goods->add_fav($member_id, $gid, $obj_type)) {
 
                     $this->splash('error', '', '加入收藏失败!');

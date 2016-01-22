@@ -67,16 +67,6 @@ $setting = array(
     ),
     'goods_setting' => array(
         'default' => array(
-            'product' => array(
-                array(//'quality' =>
-                    'name' => '质量等级',
-                    'value' => array('A1', 'A2', 'A3')
-                ),
-                array(//'pack' =>
-                    'name' => '包装规格',
-                    'value' => array('箱', '袋')
-                ),
-            ),
             'showcase' => array(
                 array(
                     'id' => 1,

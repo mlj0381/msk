@@ -167,7 +167,7 @@ $setting = array(
         'default' => array(
             '0' => ('普通'),
             '1' => ('幻灯'),
-            '2' => ('商品')
+            '2' => ('商品'),
         )
     ),
     'member_extra_column' => array(
@@ -179,7 +179,7 @@ $setting = array(
                 'tax_licence',
                 'shop',
                 'food_flow_licence',
-                'contact_extra'
+                'contact_extra',
             ),
             2 => array('manageInfo'),
             3 => array('deliveryInfo'),

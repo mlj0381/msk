@@ -13,8 +13,8 @@
 </ul>
 <div class="tab-content">
     <{foreach from=$category_tree item=one_cat key=ck}>
-    <div class="tab-pane fade in clearfix<{if $ck==20}> active<{/if}>" id="subCat<{$one_cat.cat_id}>">
-        <div class="tab-pane-cat"><{$one_cat.cat_id}>
+        <div class="tab-pane fade in clearfix<{if $ck==20}> active<{/if}>" id="subCat<{$one_cat.cat_id}>">
+        <div class="tab-pane-cat">
         <{foreach from=$one_cat.son item=two_item}>
             <a href="<{link app=b2c ctl=site_list act=index}>?cat_id=<{$two_item.cat_id}>"><span><{$two_item.cat_name}></span></a>
         <{/foreach}>

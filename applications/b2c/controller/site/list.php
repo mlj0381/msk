@@ -32,14 +32,14 @@ class b2c_ctl_site_list extends b2c_frontpage
         if (!empty($cat_id) && is_numeric($cat_id)) {
 //记录父级分类名称，分类面包屑显示
             $this->pagedata['cat_name']['self'] = $this->mCat->getRow('cat_id, cat_name, has_children', array('cat_id' => $cat_id));
-            $this->pagedata['cat_title'] = '二级分类';
+            $this->pagedata['cat_title'] = '分类';
             if ($this->pagedata['cat_name']['self']['has_children'] == 'true') {
                 return $this->mCat->children($cat_id);
             }
             $this->pagedata['cat_name']['parent'] = $this->mCat->getRow('cat_id, cat_name', array('parent_id' => $this->pagedata['cat_name']['self']['parent_id']));
             $this->pagedata['cat_title'] = '';
         } else {
-            $this->pagedata['cat_title'] = '一级分类';
+            $this->pagedata['cat_title'] = '分类';
             return $this->mCat->get_tree();
         }
     }

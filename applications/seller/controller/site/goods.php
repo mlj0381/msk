@@ -12,9 +12,11 @@
 // | Description 商家商品申请
 // +----------------------------------------------------------------------
 
-class seller_ctl_site_goods extends seller_frontpage {
+class seller_ctl_site_goods extends seller_frontpage
+{
 
-    public function __construct(&$app) {
+    public function __construct(&$app)
+    {
         parent::__construct($app);
         $this->app = $app;
         $this->verify();
@@ -23,7 +25,8 @@ class seller_ctl_site_goods extends seller_frontpage {
     }
 
     //商品页
-    public function index() {
+    public function index()
+    {
         // 入商品库
         $serach = $_POST['goods'] ? $_POST['goods'] : '';
         $mdl_goods_cat = app::get('b2c')->model('goods_cat');
@@ -32,7 +35,8 @@ class seller_ctl_site_goods extends seller_frontpage {
         $this->output();
     }
 
-    private function _good_list($type, $serach) {
+    private function _good_list($type, $serach)
+    {
         $brandList = app::get('b2c')->model('brand')->getList('brand_id, brand_name');
         $store_goods_cat = app::get('b2c')->model('goods_cat')->getList('*');
         $mdl_product = app::get('b2c')->model('products');
@@ -91,7 +95,8 @@ class seller_ctl_site_goods extends seller_frontpage {
     }
 
     //添加商品
-    public function add($goods_id) {
+    public function add($goods_id)
+    {
         $this->pagedata['goods'] = $this->mB2cGoods->dump($goods_id, '*', 'default');
         //获取商品库存信息
         $mdl_stock = app::get('b2c')->model('stock');
@@ -108,7 +113,8 @@ class seller_ctl_site_goods extends seller_frontpage {
     }
 
     //获取商品添加所需基本参数
-    private function basic() {
+    private function basic()
+    {
         $return = array();
         //商品类目
         $mdl_goods_cat = app::get('b2c')->model('goods_cat');
@@ -132,11 +138,13 @@ class seller_ctl_site_goods extends seller_frontpage {
         $store_type = app::get('store')->getConf('store_type');
         $return['store']['store_type'] = $store_type[$return['store']['store_type']]['name'];
         //获取展示位置
+        $return['setting'] = $this->app->getConf('goods_setting');
         return $return;
     }
 
     //商品目录
-    public function directory() {
+    public function directory()
+    {
         if ($_POST) {
             $this->edit_directory($_POST);
         }
@@ -149,7 +157,8 @@ class seller_ctl_site_goods extends seller_frontpage {
         $this->output();
     }
 
-    private function edit_directory($post) {
+    private function edit_directory($post)
+    {
         $redirect = $this->gen_url(array('app' => 'seller', 'ctl' => 'site_goods', 'act' => 'directory'));
         $db = vmc::database();
         $db->beginTransaction();
@@ -160,7 +169,7 @@ class seller_ctl_site_goods extends seller_frontpage {
 
             $count = 0;
             foreach ($value['parent'] as $v) {
-                !empty($v['check']) && $count ++;
+                !empty($v['check']) && $count++;
                 if (empty($v['check']) && empty($v['id'])) {
                     continue;
                 }
@@ -207,7 +216,8 @@ class seller_ctl_site_goods extends seller_frontpage {
         $this->splash('success', $redirect, '操作成功');
     }
 
-    public function save($type = null) {
+    public function save($type = null)
+    {
         $redirect_url = $this->gen_url(array('app' => 'seller', 'ctl' => 'site_goods', 'act' => $type ? 'add' : 'index'));
         if (!$_POST) {
             $this->splash(false, $redirect_url, '非法请求');
@@ -221,12 +231,29 @@ class seller_ctl_site_goods extends seller_frontpage {
         ));
 
         $objGoodsData->checkin($goods);
+
         $db = vmc::database();
         $db->beginTransaction();
         if (!$this->mB2cGoods->save($goods)) {
             $db->rollback();
             $this->splash('error', $redirect_url, '保存失败');
         }
+
+        //更新店铺商品表
+        $mdl_store_goods = app::get('store')->model('goods');
+        $store_data['seller_id'] = $goods['seller_id'];
+        $store_data['store_id'] = $goods['store_id'];
+        $store_data['goods_id'] = $goods['goods_id'];
+        $check = $mdl_store_goods->getRow('id', $store_data);
+        !empty($check) && $store_data['id'] = $check['id'];
+        $store_data['create_time'] = time();
+        $store_data['showcase'] = $goods['showcase'];
+
+        if (!$mdl_store_goods->save($store_data)) {
+            $db->rollback();
+            $this->splash('error', $redirect_url, '保存失败');
+        }
+
         //更新库存表
         $mdl_stock = app::get('b2c')->model('stock');
         foreach ($goods['product'] as $value) {
@@ -248,12 +275,14 @@ class seller_ctl_site_goods extends seller_frontpage {
     }
 
     //修改
-    public function edit() {
-        
+    public function edit()
+    {
+
     }
 
     //商品上下架
-    public function marketable($goods_id, $type) {
+    public function marketable($goods_id, $type)
+    {
         $redirect_url = array('app' => 'seller', 'ctl' => 'site_goods', 'act' => $type == 'dn' ? 'index' : 'storage');
         if (!$goods_id || !$type)
             $this->splash('error', $redirect_url, '非法请求');
@@ -270,17 +299,20 @@ class seller_ctl_site_goods extends seller_frontpage {
     }
 
     //删除
-    public function del() {
-        
+    public function del()
+    {
+
     }
 
     //商品库存
-    public function stock() {
+    public function stock()
+    {
         $this->output();
     }
 
     //仓库中的商品
-    public function storage() {
+    public function storage()
+    {
         $this->pagedata['type'] = 'storage';
         $serach = $_POST['goods'] ? $_POST['goods'] : '';
         $this->pagedata['goodList'] = $this->_good_list(null, $serach);
@@ -289,7 +321,8 @@ class seller_ctl_site_goods extends seller_frontpage {
     }
 
     //价格修改
-    public function price($goods_id) {
+    public function price($goods_id)
+    {
         $redirect = $this->gen_url(array('app' => 'seller', 'ctl' => 'site_goods', 'act' => 'index'));
         !is_numeric($goods_id) && $this->splash('error', $redirect, '非法请求');
         $this->pagedata['goods'] = $this->mB2cGoods->dump($goods_id, '*', 'default');
@@ -297,11 +330,13 @@ class seller_ctl_site_goods extends seller_frontpage {
     }
 
     //价格修改记录
-    public function modify_record() {
+    public function modify_record()
+    {
         $this->output();
     }
 
-    private function _editor() {
+    private function _editor()
+    {
         $this->pagedata['sections'] = array(
             'basic' => array(
                 'label' => ('基本信息'),

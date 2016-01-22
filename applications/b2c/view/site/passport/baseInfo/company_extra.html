@@ -1,3 +1,8 @@
+<style>
+    .fileinput-new input[type='file']{
+        height:0px;
+    }
+</style>
 <div id="buyerInfo">
     <h2>企业信息</h2>
     <input type="hidden" name="company[company_id]" value="<{$extra.company.company_id}>" />
@@ -33,23 +38,24 @@
     <div class="form-group">
         <label for="" class="col-md-2 control-label">买家网站网址：</label>
         <div class="col-md-5 ">
-            <input type="text" class="form-control" value="<{$extra.company.web_site}>" name="company[web_site]" placeholder="请输入您的店铺网址链接" required="true" format="url">
-            <span class="msgTip" data-message="error"></span>
+            <input type="text" class="form-control" value="<{$extra.company.web_site}>" name="company[web_site]" required="true" format="url" placeholder="请输入您的店铺网址链接" >
+            <span class="msgTip" data-message="error">店铺网址链接</span>
+             <span class="msgTip" data-message="format">////店铺网址链接</span>
         </div>
     </div>
     <div class="form-group">
         <label for="" class="col-md-2 control-label">微信公众号：</label>
         <div class="col-md-5 ">
             <input type="hidden" name="company_extra[content_id]" value="<{$extra.company_extra.company_extra.content_id}>"/>
-            <input type="text" class="form-control" value="<{$extra.company_extra.company_extra.value.wechat}>"  name="company_extra[value][wechat]" placeholder="" required="false">
+            <input type="text" class="form-control" value="<{$extra.company_extra.company_extra.value.wechat}>"  name="company_extra[value][wechat]" placeholder="">
             <span class="msgTip" data-message="error"></span>
         </div>
     </div>
     <div class="form-group">
         <label for="" class="col-md-2 control-label">营业电话：</label>
         <div class="col-md-5">
-            <input type="text" value="<{$extra.company.tel}>" name="company[tel]" class="form-control" id="company_phone" required="true" format="tel">
-            <span class="msgTip" data-message="error"></span>
+            <input type="text" value="<{$extra.company.tel}>" name="company[tel]" class="form-control" id="company_phone">
+           
         </div>
     </div>
     <div class="form-group">
@@ -62,9 +68,9 @@
         <label for="" class="col-md-2 control-label"><span class="text-danger">*</span>买家等级：</label>
         <div class="col-md-5">
             <div>
-                <span><input type="radio" value="1" <{if $extra.company_extra.company_extra.value.lv eq '1'}> checked <{/if}> name="company_extra[value][lv]"> 大买家</span>&nbsp;&nbsp;
-                <span><input type="radio" value="2" <{if $extra.company_extra.company_extra.value.lv eq '2'}> checked <{/if}> name="company_extra[value][lv]"> 标准买家</span>&nbsp;&nbsp;
-                <span><input type="radio" value="3" required="true" <{if $extra.company_extra.company_extra.value.lv eq '3'}> checked <{/if}> name="company_extra[value][lv]"> 小买家</span>
+                <input type="radio" value="1" required="true" <{if $extra.company_extra.company_extra.value.lv eq '1'}> checked <{/if}> name="company_extra[value][lv]"><span> 大买家&nbsp;&nbsp;</span>  
+                <input type="radio" value="2" <{if $extra.company_extra.company_extra.value.lv eq '2'}> checked <{/if}> name="company_extra[value][lv]"><span> 标准买家&nbsp;&nbsp;</span>  
+                <input type="radio" value="3"  <{if $extra.company_extra.company_extra.value.lv eq '3'}> checked <{/if}> name="company_extra[value][lv]"><span> 小买家&nbsp;&nbsp;</span>
             </div>
             <span class="msgTip" data-message="required">买家等级为必选</span>
         </div>
@@ -72,56 +78,56 @@
     <div class="form-group">
         <label for="" class="col-md-2 control-label"><span class="text-danger">*</span>营业执照副本：</label>
         <div class="col-md-5">
-            <div class="filebox">
-                <input type="hidden" name="business_licence[content_id]" value="<{$extra.company_extra.business_licence.content_id}>" />
-                <input type="hidden" name="business_licence[attach]" value="<{$extra.company_extra.business_licence.attach}>" />
-                <input type="file" data-url="<{link app=image ctl=site_upload act=index}>" accept="image/*" class="file_input" id="boss_card_photo" />
-                <div class="showImg">
-                    <img src="<{if $extra.company_extra.business_licence.attach eq ''}>./../../themes/pc/default/statics/images/file_add.jpg<{else}><{$extra.company_extra.business_licence.attach|storager:'xs'}><{/if}>">
-                </div>
-            </div>
+            <{input type="imageupload" tag="图片上传" name="business_licence[attach]" value=$extra.company_extra.business_licence.attach required='true' accept="jpg|png|gif" size="2m"}>
+            <span class="msgTip" data-message="required">该项为必填</span>
         </div>
     </div>
     <div class="form-group">
         <label for="" class="col-md-2 control-label"><span class="text-danger">*</span>组织结构代码证副本：</label>
         <div class="col-md-5">
-            <div class="filebox">
+            <{input type="imageupload" tag="图片上传" name="organization_licence[attach]" value=$extra.company_extra.organization_licence.attach required='true' accept="jpg|png|gif" size="2m"}>
+            <span class="msgTip" data-message="required">该项为必填</span>
+            <!-- <div class="filebox">
                 <input type="hidden" name="organization_licence[content_id]" value="<{$extra.company_extra.organization_licence.content_id}>" />
                 <input type="hidden" name="organization_licence[attach]" value="<{$extra.company_extra.organization_licence.attach}>" />
-
+            
                 <input type="file" data-url="<{link app=image ctl=site_upload act=index}>" accept="image/*" class="file_input" id="boss_card_photo" />
                 <div class="showImg">
                     <img src="<{if $extra.company_extra.organization_licence.attach eq ''}>./../../themes/pc/default/statics/images/file_add.jpg<{else}><{$extra.company_extra.organization_licence.attach|storager:'xs'}><{/if}>">
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
     <div class="form-group">
         <label for="" class="col-md-2 control-label"><span class="text-danger">*</span>税务登记证副本：</label>
         <div class="col-md-5">
-            <div class="filebox">
+            <{input type="imageupload" tag="图片上传" name="tax_licence[attach]" value=$extra.company_extra.tax_licence.attach required='true' accept="jpg|png|gif" size="2m"}>
+            <span class="msgTip" data-message="required">该项为必填</span>
+            <!-- <div class="filebox">
                 <input type="hidden" name="tax_licence[content_id]" value="<{$extra.company_extra.tax_licence.content_id}>" />
                 <input type="hidden" name="tax_licence[attach]" value="<{$extra.company_extra.tax_licence.attach}>" />
-
+            
                 <input type="file" data-url="<{link app=image ctl=site_upload act=index}>" accept="image/*" class="file_input" id="boss_card_photo" />
                 <div class="showImg">
                     <img src="<{if $extra.company_extra.tax_licence.attach eq ''}>./../../themes/pc/default/statics/images/file_add.jpg<{else}><{$extra.company_extra.tax_licence.attach|storager:'xs'}><{/if}>">
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
     <div class="form-group">
         <label for="" class="col-md-2 control-label"><span class="text-danger">*</span>食品流通许可证副本：</label>
         <div class="col-md-5">
-            <div class="filebox">
+            <{input type="imageupload" tag="图片上传" name="food_flow_licence[attach]" value=$extra.company_extra.food_flow_licence.attach required='true' accept="jpg|png|gif" size="2m"}>
+            <span class="msgTip" data-message="required">该项为必填</span>
+            <!-- <div class="filebox">
                 <input type="hidden" name="food_flow_licence[content_id]" value="<{$extra.company_extra.food_flow_licence.content_id}>" />
                 <input type="hidden" name="food_flow_licence[attach]" value="<{$extra.company_extra.food_flow_licence.attach}>" />
-
+            
                 <input type="file" data-url="<{link app=image ctl=site_upload act=index}>" accept="image/*" class="file_input" id="boss_card_photo" />
                 <div class="showImg">
                     <img src="<{if $extra.company_extra.food_flow_licence.attach eq ''}>./../../themes/pc/default/statics/images/file_add.jpg<{else}><{$extra.company_extra.food_flow_licence.attach|storager:'xs'}><{/if}>">
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
     <h2>联系人信息</h2>
@@ -130,14 +136,16 @@
         <label for="" class="col-md-2 control-label"><span class="text-danger">*</span>姓名：</label>
         <div class="col-md-5">
             <input type="hidden" name="contact[company_id]" value="<{$extra.contact.company_id}>">
-            <input type="text" name="contact[boss_name]" value="<{$extra.contact.boss_name}>" class="form-control" id="boss_name">
-            <div id="boss_nameTip"></div>
+            <input type="text" name="contact[boss_name]" value="<{$extra.contact.boss_name}>" class="form-control" id="boss_name" required="true">
+            <span class="msgTip" data-format="required">xx</span>
         </div>
     </div>
     <div class="form-group">
         <label for="" class="col-md-2 control-label"><span class="text-danger">*</span>手机：</label>
         <div class="col-md-5">
-            <input type="text" name="contact[boss_mobile]" value="<{$extra.contact.boss_mobile}>" class="form-control" id="boss_phone">
+            <input type="text" name="contact[boss_mobile]" value="<{$extra.contact.boss_mobile}>" class="form-control" id="boss_phone" required="true" format="mobile">
+            <span class="msgTip" data-format="required"></span>
+            <span class="msgTip" data-format="format">手机格式不正确</span>
         </div>
     </div>
     <div class="form-group">
@@ -158,13 +166,14 @@
         <div class="col-md-5">
             <input type="hidden" name="contact_extra[content_id]" value="<{$extra.company_extra.contact_extra.content_id}>">
             <input type="text" name="contact_extra[value][buinour_name]" value="<{$extra.company_extra.contact_extra.value.buinour_name}>" class="form-control" id="boss_name" placeholder="">
-            <div id="boss_nameTip"></div>
+            <span class="msgTip" data-format="error"></span>
         </div>
     </div>
     <div class="form-group">
         <label for="" class="col-md-2 control-label"><span class="text-danger">*</span>手机：</label>
         <div class="col-md-5">
-            <input type="text" name="contact_extra[value][buinour_mobile]" value="<{$extra.company_extra.contact_extra.value.buinour_mobile}>" class="form-control" id="boss_phone">
+            <input type="text" name="contact_extra[value][buinour_mobile]" value="<{$extra.company_extra.contact_extra.value.buinour_mobile}>" class="form-control" id="boss_phone" required="true" format="mobile">
+            <span class="msgTip" data-format="error"></span>
         </div>
     </div>
     <div class="form-group">
@@ -183,14 +192,15 @@
     <div class="form-group">
         <label for="" class="col-md-2 control-label"><span class="text-danger">*</span>姓名：</label>
         <div class="col-md-5">
-            <input type="text" name="contact_extra[value][buyer_name]" value="<{$extra.company_extra.contact_extra.value.buyer_name}>" class="form-control" id="boss_name" placeholder="" id="boss_name">
-            <div id="boss_nameTip"></div>
+            <input type="text" name="contact_extra[value][buyer_name]" value="<{$extra.company_extra.contact_extra.value.buyer_name}>" class="form-control" id="boss_name" placeholder="" id="boss_name" required="true">
+            <span class="msgTip" data-format="error"></span>
         </div>
     </div>
     <div class="form-group">
         <label for="" class="col-md-2 control-label"><span class="text-danger">*</span>手机：</label>
         <div class="col-md-5">
-            <input type="text" name="contact_extra[value][buyer_mobile]" value="<{$extra.company_extra.contact_extra.value.buyer_mobile}>" class="form-control" id="boss_phone">
+            <input type="text" name="contact_extra[value][buyer_mobile]" value="<{$extra.company_extra.contact_extra.value.buyer_mobile}>" class="form-control" id="boss_phone" required="true">
+            <span class="msgTip" data-format="error"></span>
         </div>
     </div>
     <div class="form-group">
@@ -209,15 +219,15 @@
     <div class="form-group">
         <label for="" class="col-md-2 control-label"><span class="text-danger">*</span>姓名：</label>
         <div class="col-md-5">
-            <input type="text" name="contact[name]" value="<{$extra.contact.name}>" class="form-control" id="pressing_name">
-            <div id="pressing_nameTip"></div>
+            <input type="text" name="contact[name]" value="<{$extra.contact.name}>" class="form-control" id="pressing_name" required="true">
+            <span class="msgTip" data-format="error"></span>
         </div>
     </div>
     <div class="form-group">
         <label for="" class="col-md-2 control-label"><span class="text-danger">*</span>手机：</label>
         <div class="col-md-5">
-            <input type="text" name="contact[tel]" value="<{$extra.contact.tel}>" class="form-control" id="pressing_phone">
-            <div id="pressing_phoneTip"></div>
+            <input type="text" name="contact[tel]" value="<{$extra.contact.tel}>" class="form-control" id="pressing_phone" required="true">
+            <span class="msgTip" data-format="error"></span>
         </div>
     </div>
     <div class="form-group">

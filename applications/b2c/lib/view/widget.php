@@ -49,8 +49,8 @@ class b2c_view_widget {
     // 首页-幻灯
     public function function_WIDGET_B2C_INDEX_SLIDER($params, &$smarty) {
         $render = new base_render(app::get($params['app']));
-        //$render->pagedata['slider'] = app::get('b2c')->model('ad')->getList('*', array('page_id' => 34, 'ad_type' => 1, 'status' => 'true',));
-       $render->pagedata['contents']= app::get('b2c')->model('pages_content')->getList('*', array('type' => '1', 'status' => '1',));
+        $render->pagedata['position_id'] = $params['position_id'];
+       $render->pagedata['contents']= app::get('b2c')->model('pages_content')->getList('*', array('type' => '1', 'status' => '1','position_id'=>$params['position_id'],));
         return $render->fetch('widget/slider.html');
     }
 
