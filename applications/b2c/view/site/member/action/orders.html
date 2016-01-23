@@ -172,17 +172,18 @@
 
 
                 <td class="text-center" width="12%">
-                    <{if $order.pay_status eq '0' && $order.status eq 'active' && $order.is_cod eq 'N'}>
+                    <{if $order.pay_status eq '0' && $order.status eq 'active' && $order.is_cod eq 'N' &&$order.status eq 'active'}>
                     待付款
                     <{/if}>
-                    <{if ($order.pay_status eq '1' || $order.is_cod eq 'Y') &&$order.ship_status eq '0'}>
+                    <{if ($order.pay_status eq '1' || $order.is_cod eq 'Y') &&$order.ship_status eq '0' &&$order.status eq 'active'}>
                     待发货
                     <{/if}>
-                    <{if ($order.pay_status eq '1' || $order.is_cod eq 'Y') &&$order.ship_status eq '1' && $order.confirm eq 'N'}>
+                    <{if ($order.pay_status eq '1' || $order.is_cod eq 'Y') &&$order.ship_status eq '1' && $order.confirm eq 'N' &&$order.status eq 'active'}>
                     待收货
                     <{/if}>
 
-                    <{if ($order.pay_status eq '1' || $order.is_cod eq 'Y') && $order.ship_status eq '1' && $order.confirm eq 'Y' && $order.comment_type eq '0'}>
+                    <{if ($order.pay_status eq '1' || $order.is_cod eq 'Y') && $order.ship_status eq '1' && $order.confirm eq 'Y' &&
+                    $order.comment_type eq '0' &&$order.status eq 'active'}>
                     待评价<br />
                     <{/if}>
 
@@ -203,12 +204,13 @@
                 <td width="12%">
                     <div class="order_cz">
                         <{if $status neq 's7'}>
-                              <{if $order.ship_status eq '0' && $order.pay_status eq '0' && $order.status eq 'active'}>
+                              <{if $order.ship_status eq '0' && $order.pay_status eq '0' && $order.status eq 'active'  && $order.is_cod eq 'N'}>
                               <a href="<{link app=b2c ctl=site_checkout act=payment args0=$order.order_id}>" class="btn_link btn-block">订单付款</a>
                         <a class="btn_link btn-block abolish"  data-orderid="<{$order.order_id}>" data-toggle="modal" data-target="#cancel_order" href="#">取消订单</a>
                               <{/if}>
 
-                        <{if ($order.ship_status eq '0' && $order.pay_status eq '0' && $order.status eq 'active') || $order.status eq 'dead'}>
+                        <{if ($order.ship_status eq '0' && $order.pay_status eq '0' && $order.status eq 'active') || $order.status eq
+                        'dead' && $order.is_cod eq 'N'}>
                         <a href="javascript:;" data-url="<{link app=b2c ctl=site_order act=del args0=$order.order_id}>"
 
                            class="btn_link btn-block order-del">订单删除</a>

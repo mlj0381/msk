@@ -127,8 +127,8 @@
                         </td>
                         <td>
                             
-                            <a href="<{link app=b2c ctl=site_comment act=form args0=$items.goods_info.order_id args1=$items.goods_info.product_id args2=comment args3=reply}>" class="btn btn-xs btn-danger">回复</a>
-                            
+                            <a href="<{link app=seller ctl=site_goods act=comment args0=$items.goods_info.order_id args1=$items.goods_info.product_id args2=comment args3=reply}>" class="btn btn-xs btn-danger">回复</a>
+
                         </td>
                     </tr>
                      
@@ -216,70 +216,8 @@
 
 
 
-<!-- <div class="appraisal_page">
-	<div class="page-header">
-		<h1>评价列表</h1>
-	</div>
 
-	<div class="appra_box">
-		<ul class="appra_nav">
-			<li <{if $comment_type eq 'all'}>class="active" <{/if}>><a href="<{link app=seller ctl=site_store act=appraisal args0=all}>">全部评价</a></li>
-			<li <{if $comment_type eq '5'}>class="active" <{/if}>><a href="<{link app=seller ctl=site_store act=appraisal args0=5}>">好评</a></li>
-			<li <{if $comment_type eq '4'}>class="active" <{/if}>><a href="<{link app=seller ctl=site_store act=appraisal args0=4}>">中评</a></li>
-			<li <{if $comment_type eq '3'}>class="active" <{/if}>><a href="<{link app=seller ctl=site_store act=appraisal args0=3}>">差评</a></li>
-		</ul>
-		<div class="appra_items">
-			<dl>
-				<dt>
-					<table>
-						<tr>
-							<th colspan="2" width="40%">
-								评价
-							</th>
-							<th width="15%">评价人</th>
-							<th width="30%">宝贝信息</th>
-							<th width="15%">操作</th>
-						</tr>
-					</table>
-				</dt>
-				<{foreach from=$order item=item}>
-                    <{foreach from=$item.items item=i}>
-				<dd>
-					<div class="appra_item">
-						<table>
-							<tbody>
-								<tr>
-									<{foreach from=$comment[$i.product_id] item=mark}>
-										<td width="5%"><span class="appra_status <{if $mark.mark.mark_star eq 5}>good<{elseif $mark.mark.mark_star eq 4}>medium<{else}>poor<{/if}> "></span></td>
-									<{/foreach}>
-										<td colspan="2" width="35%">
-										<{foreach from=$comment[$i.product_id] item=j}>
-										<div><{$j.content}> <{$j.mark.mark_star}></div>
-											<{foreach from=$j['reply'] item=k}>
-												<div><{$k.content}></div>
-											<{/foreach}>
-
-									</td>
-									<td width="15%">买家:<{$item.member_id}></td>
-									<td width="30%"><{$i.name}></td>
-									<td width="15%"><button data-gid="<{$i.goods_id}>" data-odid="<{$i.order_id}>" data-name="<{$j.comment_id}>" data-mid="<{$item.member_id}>" data-pid="<{$i.product_id}>"  class="btn btn-xs btn-danger reply_btn">回复</button></td>
-									<{/foreach}>
-								</tr>
-							</tbody>
-						</table>
-						<div class="replyCon hidden">我回复：</div>
-						<div class="replyShow hidden"></div>
-					</div>
-				</dd>
-				<{/foreach}>
-			<{/foreach}>
-			</dl>
-
-		</div>
-	</div>
-</div>
- -->
-<!-- <script type="text/javascript">
+ <script type="text/javascript">
 	$(function(){
 		$('.appra_item .reply_btn').click(function(){
 			$('.appra_items form').remove();
@@ -300,7 +238,6 @@
 			)
 
 			_this.on('click','.btn',function(){
-
 				var value=$(this).siblings('textarea').val();
 				$(this).parents('.replyShow').siblings('.replyCon').append(value);
 				$(this).parents('.replyShow').siblings('.replyCon').removeClass('hidden');
@@ -309,4 +246,3 @@
 		})
 	})
 </script>
- -->

@@ -149,9 +149,9 @@
                         <div class="col-xs-2 text-center">
                             <ul class="list-unstyled">
                                 <li>
-                                    <del>
-                                        <{$item.price|cur}>
-                                    </del>
+                                    <!--<del>-->
+                                        <!--<{$item.price|cur}>-->
+                                    <!--</del>-->
                                 </li>
                                 <li>
                                     <{$item.buy_price|cur}>
@@ -171,7 +171,8 @@
                     <{if $order.pay_status eq '0' && $order.status eq 'active' && $order.is_cod eq 'N'}>
                     待付款<br/>
                     <{/if}>
-                    <{if ($order.pay_status eq '1' || $order.is_cod eq 'Y') &&$order.ship_status eq '0'}>
+                    <{if ($order.pay_status eq '1' || $order.is_cod eq 'Y') &&$order.ship_status eq '0' && $order.status eq
+                    'active'}>
                     待发货<br/>
                     <{/if}>
                     <{if ($order.pay_status eq '1' || $order.is_cod eq 'Y') &&$order.ship_status eq '1' && $order.confirm eq 'N'}>
@@ -205,7 +206,7 @@
 
                         
                               <{/if}>
-                              <a href="<{link app=b2c ctl=site_order act=detail args0=$order.order_id}>" class="btn_link btn-block">订单详情</a>
+                              <a href="<{link app=seller ctl=site_order act=detail args0=$order.order_id}>" class="btn_link btn-block">订单详情</a>
                               <{else}>
                               
                               <{/if}>

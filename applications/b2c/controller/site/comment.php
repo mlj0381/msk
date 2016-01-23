@@ -20,7 +20,7 @@ class b2c_ctl_site_comment extends b2c_frontpage
         $this->app = $app;
         parent::__construct($app);
         $this->mComment = $this->app->model('member_comment');
-        $this->verify_member();
+        $this->verify_member() || vmc::singleton('seller_frontpage')->verify();
         $this->member = $this->get_current_member();
         $this->set_tmpl('member');
     }

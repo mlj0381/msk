@@ -411,4 +411,22 @@ class seller_ctl_site_goods extends seller_frontpage
         $this->splash('error', $redirect, '操作失败');
     }
 
+//    public function comment($order_id, $product_id, $type = 'comment', $reply = null){
+//        $this->pagedata['reply'] = $reply;
+//        $mdl_order = app::get('b2c')->model('orders');
+//        $order = $mdl_order->dump($order_id, '*', array('items' => array('*')));
+//        if ($order['ship_status'] == '0' || $order['status'] == 'dead') {
+//            $this->splash('error', '', '暂不能评价!');
+//        }
+//        $order['store_info'] = app::get('store')->model('store')->getRow('store_id, store_name', array('store_id' => $order['store_id']));
+//        $this->pagedata['order'] = $order;
+//        $this->pagedata['product_id'] = $product_id;
+//        //$this->pagedata['exits_comment'] = $exits_comment;
+//        $this->pagedata['member_avatar'] = $this->member['avatar'];
+//        $this->title = '评价#' . $order_id . ' 商品';
+//        $this->set_tmpl('comment_form');
+//        $this->pagedata['_PAGE_'] = 'site/comment/form.html';
+//        //$this->output();
+//        $this->page('site/goods/comment.html');
+//    }
 }
