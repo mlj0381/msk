@@ -125,28 +125,24 @@
                         <div class="col-xs-5">
                             <div class="shop_info">
                                 <a href="<{link app=store ctl=site_store act=index args0=$item.goods_id}>" class="shop_logoimg">
-                                    <img src="<{$base_url}>/themes/pc/default/statics/images/shop_logo.png">
+                                    <img src="<{$item.image_default_id|storager:'xs'}>">
                                 </a>
                                 <div class="shop_about">
                                     <a href="<{link app=store ctl=site_store act=index args0=$item.goods_id}>" class="shop_name"><{$item.goods_name}></a>
                                     <div class="add_remarks">
-                                        <p><i class="icon-pencil"></i><span class="add_bz_btn">添加备注</span></p>
+                                        <p><i class="icon-pencil"></i><span class="add_bz_btn"><{$item.remark|default:'添加备注'}></span></p>
                                         <form class="hide">
                                             <div class="input-group">
-                                                <input type="text" class="form-control" placeholder="输入备注">
+                                                <input type="text" value="<{$item.remark}>" class="form-control" placeholder="输入备注">
                                                 <span class="input-group-btn">
-                                                    <button class="btn btn-default" type="button">确定</button>
+                                                    <button class="btn btn-default remark" data-id="<{$item.gnotify_id}>" type="button">确定</button>
                                                 </span>
                                             </div>
                                         </form>
                                     </div>
                                     <div class="add_shopTag" data-id="<{$item.gnotify_id}>">
                                         <p><i class="icon-tag"></i><span class="add_tag_btn">
-                                            <{if $tag eq ''}>添加店铺标签<{/if}>
 
-                                            <{foreach from=$tag item=tags}>
-                                            <{if $item.tag[$tags.tag_id]}> <{$tags.tag_name}>， <{/if}>
-                                            <{/foreach}>
                                         </span></p>
                                         <div class="creat_tagbox hide">
                                             <h4><i class="icon-folder-open"></i>分类到</h4>
@@ -157,8 +153,8 @@
                                                     <input name="tag_id[]"
                                                            <{if $item.tag[$tags.tag_id]}> checked<{/if}>
                                                            type="checkbox" value="<{$tags.tag_id}>"/>
-                                                    <{$tags.tag_name}>
-                                                    <button data-id="<{$tag.tag_id}>" style="margin-top: 3px;" class="btn btn-xs btn-default fr">删除</button>
+                                                    <span><{$tags.tag_name}></span>
+                                                    <button data-id="<{$tags.tag_id}>" style="margin-top: 3px;" class="btn btn-xs btn-default fr">删除</button>
                                                 </li>
                                                 <{/foreach}>
                                             </ul>
@@ -469,6 +465,13 @@
         $(this).addClass('hide').siblings('form').removeClass('hide');
     })
 
+   //添加备注
+    $('.remark').click(function(){
+        var value = $(this).closest('div').find('input').val();
+        var favId = $(this).attr('data-id');
+        var url = '<{link app=b2c ctl=site_member act=add_remark}>';
+        $.post(url, {value : value, favId : favId}, function(re){});
+    });
 
     $('.add_shopTag .input-group-btn button').bind('click', function (e) {
         var target = e.target || e.srcElement;
@@ -480,11 +483,14 @@
         $.post(url, {tagText: tagText}, function (re) {
             var addTag = $(target).closest('.creat_tagbox');
             var liText = re.success ? tagText : '添加失败，请稍候再试';
-            $(addTag).find('ul').append('<li data-tag=' + re.success + '><input name="tag_id[]" type="checkbox" value="' + re.success + '"/>' +
-            liText + '<button data-id="'+ re.success +'" style="margin-top: 3px;" class="btn btn-xs btn-default fr">删除</button></li>');
-
+            $(addTag).find('ul').append('<li class="clearfix" data-tag=' + re.success + '><input name="tag_id[]" type="checkbox" value="' +
+            re.success + '"/><span>' +
+            liText + '</span><button data-id="'+ re.success +'" style="margin-top: 3px;" class="btn btn-xs btn-default fr">删除</button></li>');
             $(addTag).on('click', 'input[type="checkbox"]', function(){
                 submitTag($(this));
+            });
+            $(addTag).on('click', 'button', function(){
+                tagDel($(this));
             });
         });
         
@@ -504,11 +510,21 @@
     };
    //删除店铺标签
    $('.creat_tagbox button').click(function () {
-       tagDel();
+       tagDel($(this));
    });
-   var tagDel = function(){
-
-           };
+   var tagDel = function(obj){
+       var parent = obj.closest('li');
+       if(parent.find('input[type="checkbox"]').prop('checked')){
+           alert('该标签下还有店铺，请先取消再进行删除');
+           return false;
+       }
+       var url = '<{link app=b2c ctl=site_member act=del_tag}>';
+       $.post(url, {tagId : obj.attr('data-id')}, function(re){
+            if(re.success){
+                $(parent).remove();
+            }
+       });
+   };
   
     $('.add_tag_btn').on('click', 'i', function (e) {
         var target = e.target || e.srcElement;
@@ -524,21 +540,21 @@
     //鼠标移开消失
     $('.creat_tagbox').bind('mouseleave',function(){
         $(this).addClass('hide');
-        create_tag();
+        tagInit();
     });
 
+  var tagInit = function(){
+      var tagName = "";
+      $('.creat_tagbox input:checked').each(function(i){
+          tagName += $.trim($(this).closest('li').find('span').text()) + "， ";
+      });
+      tagName && $('.add_tag_btn').text(tagName);
+      !tagName && $('.add_tag_btn').text('添加店铺标签');
+  };
+
+
     //获取选中的标签并显示
-    function create_tag(){
-        var tags = [];
-        var tagName = "";
-        $('.creat_tagbox input:checked').each(function(i){
-            tagName = $.trim($(this).parent().text());
-            tags.push(tagName);
-            $('.add_tag_btn').append(tags[i]+", ");
-        });
-        $('.add_tag_btn').text($('.add_tag_btn').text().replace(/添加店铺标签/,""));
-        if(tags.length==0){
-            $('.add_tag_btn').text('添加店铺标签');
-        }
-    };
+   (function create_tag(){
+       tagInit()
+    })();
 </script>

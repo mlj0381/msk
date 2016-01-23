@@ -458,7 +458,7 @@ class b2c_ctl_site_member extends b2c_frontpage
         $this->splash('error', '', '添加失败');
     }
 
-    //ajax添加删除店铺标签
+    //ajax添加取消店铺标签
     public function update_tag(){
         extract($_POST);
         if(!is_numeric($tagId) && empty($type)){
@@ -483,6 +483,24 @@ class b2c_ctl_site_member extends b2c_frontpage
         $this->splash('error', '', '操作失败');
     }
 
+    //ajax删除标签
+    public function del_tag(){
+        extract($_POST);
+        $data = array('tag_id' => $tagId, 'member_id' => $this-> member['member_id']);
+        if(app::get('desktop')->model('tag')->delete($data)){
+            $this->splash('success', '', '操作成功');
+        }
+        $this->splash('error', '', '操作失败');
+    }
+
+    //店铺添加备注
+    public function add_remark(){
+        $data = array('gnotify_id' => $_POST['favId'], 'remark' => $_POST['value']);
+        if($this->app->model('member_goods')->save($data)){
+            $this->splash('success', '', '操作成功');
+        }
+        $this->splash('error', '', '操作失败');
+    }
     /**
      * ajax检查商品、店铺收藏
      */
