@@ -82,7 +82,6 @@ class b2c_ctl_site_checkout extends b2c_frontpage
         $this->pagedata['my_coupons'] = $my_coupons;
         $this->pagedata['my_av_coupons'] = $available_coupons;
         $this->pagedata['receiving'] = $this->app->getConf('receiving_time');
-        print_r($this->pagedata['total']);
         $this->page('site/checkout/index.html');
     }
     /**

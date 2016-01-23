@@ -205,14 +205,13 @@ class b2c_ctl_site_member extends b2c_frontpage
     public function setting()
     {
         $this->menuSetting = 'setting';
-        $user_obj = vmc::singleton('b2c_user_object');
-        $pam_data = $user_obj->get_pam_data('*', $this->member['member_id']);
-        $pam_data['memberData']['addon'] = unserialize($pam_data['memberData']['addon']);
-        $this->pagedata['pam_data'] = $pam_data;
-        $attr = vmc::singleton('b2c_user_passport')->get_signup_attr($this->member['member_id']);
-        $this->pagedata['attr'] = $attr;
+        $this->pagedata['member_data'] = $this->app->model('members')->getRow('member_id, mobile, email', array('member_id' =>
+            $this->member['member_id']));
         $this->output();
     }
+
+
+
     public function company()
     {
         $this->menuSetting = 'setting';
@@ -242,7 +241,9 @@ class b2c_ctl_site_member extends b2c_frontpage
             'profile',
             'pam_account',
             'currency',
-            'addon'
+            'addon',
+            'mobile',
+            'email'
         );
         $attr = $this->app->model('member_attr')->getList('attr_column');
         foreach ($attr as $attr_colunm) {
@@ -256,6 +257,7 @@ class b2c_ctl_site_member extends b2c_frontpage
         }
         //---end
         $_POST['member_id'] = $this->member['member_id'];
+
         if ($member_model->save($_POST)) {
             $this->splash('success', $url, ('保存成功'));
         } else {
@@ -275,7 +277,15 @@ class b2c_ctl_site_member extends b2c_frontpage
         $this->pagedata['status'] = $status;
         $filter = $status_filter[$status];
         $filter['member_id'] = $this->member['member_id'];
-        $order_list = $mdl_order->getList('*', $filter, ($page - 1) * $limit, $limit);
+        if($status == 's2'){
+            $sql = "SELECT
+* FROM
+vmc_b2c_orders WHERE `member_id`={$this->member['member_id']} AND `status` = 'active' AND `confirm` = 'N' AND (`is_cod`='Y' OR
+`pay_status`='1') ORDER BY createtime desc LIMIT ". (($page - 1) * $limit). ", {$limit}";
+            $order_list = vmc::database()->select($sql);
+        }else{
+            $order_list = $mdl_order->getList('*', $filter, ($page - 1) * $limit, $limit);
+        }
         $obj_store = vmc::singleton('store_store_object');
         $mdl_request_order = app::get('aftersales')->model('request');
         foreach ($order_list as $key => $value) {

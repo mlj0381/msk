@@ -87,4 +87,20 @@ $setting = array(
             ),
         ),
     ),
+    'store_type' => array(
+        'default' => array(
+            array(
+                'id' => '1',
+                'label' => '工厂店铺',
+            ),
+            array(
+                'id' => '2',
+                'label' => '代理店铺',
+            ),
+            array(
+                'id' => '3',
+                'label' => 'OEM店铺',
+            ),
+        ),
+    ),
 );

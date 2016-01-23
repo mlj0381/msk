@@ -33,7 +33,13 @@ class seller_ctl_site_order extends seller_frontpage
         $filter = $status_filter[$status];
 
         $filter['store_id'] = $this->store['store_id'];
-        $order_list = $mdl_order->getList('*', $filter, ($page - 1) * $limit, $limit);
+
+        if($status == 's2'){
+            $sql = "SELECT * FROM vmc_b2c_orders WHERE `store_id`={$this->store['store_id']} AND `status` = 'active' AND `confirm` = 'N' AND (`is_cod`='Y' OR `pay_status`='1') ORDER BY createtime desc LIMIT ". (($page - 1) * $limit). ", {$limit}";
+            $order_list = vmc::database()->select($sql);
+        }else{
+            $order_list = $mdl_order->getList('*', $filter, ($page - 1) * $limit, $limit);
+        }
         foreach ($order_list as $key => $value) {
             //所属店铺信息
             $store_info = vmc::singleton('store_store_object')->store_info($value['store_id'], 'store_id, store_name');

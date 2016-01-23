@@ -125,7 +125,7 @@ class b2c_goods_search
         }
         cachemgr::co_start();
         if (!empty($params['keywords']['keywords'])) {
-            $goods = $this->mKeywords->getList('goods_id', array('keyword|has' => $params['keywords'], 'res_type' => 'goods'));
+            $goods = $this->mKeywords->getList('goods_id', array('keyword|has' => $params['keywords']['keywords'], 'res_type' => 'goods'));
             if(empty($goods)) return array();
             foreach ($goods as $key => $value) {
                 $filter['goods_id|in'][$key] = $value['goods_id'];

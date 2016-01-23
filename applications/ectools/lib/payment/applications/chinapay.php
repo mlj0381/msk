@@ -13,8 +13,8 @@
 include_once("chinapayclient.php");
 final class ectools_payment_applications_chinapay extends ectools_payment_parent implements ectools_payment_interface
 {
-    public $name = '中国银联支付';
-    public $version = 'v2.5.23';
+    public $name = '网银';
+    public $version = '';
     public $intro = 'CHINAPAY 致力于发展中国金融电子支付服务';
     public $platform_allow = array(
         'pc','mobile'

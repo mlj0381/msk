@@ -33,6 +33,9 @@ class seller_ctl_site_store extends seller_frontpage
     public function setting(){
         if($_POST) $this->_setting($_POST);
         $this->pagedata['store_info'] = app::get('store')->model('store')->getRow('*', array('store_id' => $this->store['store_id']));
+        $this->pagedata['store_type'] = $this->app->getConf('store_type');
+        $this->pagedata['store_principal'] = app::get('base')->model('company_extra')->getList('*', array('uid' =>
+            $this->seller['seller_id'], 'from' => '1', 'key' => 'store_principal'));
         $this->output();
     }
     //店铺模板管理
@@ -44,11 +47,21 @@ class seller_ctl_site_store extends seller_frontpage
     private function _setting($post){
         $redirect = $this->gen_url(array('app' => 'seller', 'ctl' => 'site_store', 'act' => 'setting'));
         $post['store']['store_id'] = $this->store['store_id'];
-		$post['store']['seller_id'] = $this->seller['seller_id'];		
+		$post['store']['seller_id'] = $this->seller['seller_id'];
+        $db = vmc::database();
+        $db->beginTransaction();
         if(!$this->mStore->save($post['store']))
-		{			
+		{
+            $db->rollback();
             $this->splash('error', $redirect, '修改失败');
         }
+        $post['store_principal']['from'] = 1;
+        $post['store_principal']['uid'] = $this->seller['seller_id'];
+        if(!app::get('base')->model('company_extra')->extra_save('store_principal', $post)){
+            $db->rollback();
+            $this->splash('error', $redirect, '修改失败');
+        }
+        $db->commit();
         $this->splash('success', $redirect, '修改成功');
     }
     

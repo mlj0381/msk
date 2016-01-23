@@ -172,10 +172,10 @@
 
 
                 <td class="text-center" width="12%">
-                    <{if $order.pay_status eq '0' && $order.status eq 'active'}>
+                    <{if $order.pay_status eq '0' && $order.status eq 'active' && $order.is_cod eq 'N'}>
                     待付款
                     <{/if}>
-                    <{if $order.pay_status eq '1' &&$order.ship_status eq '0'}>
+                    <{if ($order.pay_status eq '1' || $order.is_cod eq 'Y') &&$order.ship_status eq '0'}>
                     待发货
                     <{/if}>
                     <{if ($order.pay_status eq '1' || $order.is_cod eq 'Y') &&$order.ship_status eq '1' && $order.confirm eq 'N'}>
