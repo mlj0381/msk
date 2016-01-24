@@ -27,7 +27,6 @@ class b2c_ctl_site_comment extends b2c_frontpage
 
     public function form($order_id, $product_id, $type = 'comment', $reply = null)
     {
-
         $this->_response->set_header('Cache-Control', 'no-store');
         $mdl_order = app::get('b2c')->model('orders');
         //$this->store = vmc::singleton('seller_object')->get_current_seller();
@@ -139,6 +138,8 @@ class b2c_ctl_site_comment extends b2c_frontpage
         $comment_list_member = $this->mComment->groupList('*', $filter, ($page - 1) * $limit, $limit);
         $this->mComment->comments($comment_list_member);
         $filter['for_comment_id'] = $this->member['member_id'];
+        $comment_list_seller = $this->mComment->groupList('*', $filter, ($page - 1) * $limit, $limit);
+        $this->mComment->comments($comment_list_seller);
         $this->pagedata['member_info'] = $this->member;
         $this->pagedata['comment_type'] = $comment_type;
         $this->pagedata['comment_member'] = $comment_list_member;

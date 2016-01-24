@@ -96,7 +96,6 @@
                         <th class="col-xs-1">操作</th>
                     </tr>
                     <{foreach from=$comment_member key=key item=items}>
-                    
                     <tr>
                         <td>
                             <span class="appra_status good"></span>
@@ -107,7 +106,7 @@
                                 <{if $item.comment_num eq '1'}>
                                 <li>
                                     <p><{$item.content}></p>
-                                    <span class="pl_time"><{$item.createtime}></span>
+                                    <span class="pl_time"><{$item.createtime|cdate}></span>
                                 </li>
                                 <{else $item.comment_num eq '2'}>
                                 <li>
@@ -127,11 +126,17 @@
                         </td>
                         <td>
                             
-                            <a href="<{link app=seller ctl=site_goods act=comment args0=$items.goods_info.order_id args1=$items.goods_info.product_id args2=comment args3=reply}>" class="btn btn-xs btn-danger">回复</a>
-
+                            <a href="javascript:;"
+                                data-gid="<{$items.goods_info.goods_id}>"  data-mid="<{$items.member_info.member_id}>" data-pid="<{$items.goods_info.product_id}>" data-oid="<{$items.goods_info.order_id}>"
+                                data-num="" class="btn btn-xs btn-danger reply_btn">回复</a>
+<!--<{link app=seller ctl=site_goods act=comment args0=$items.goods_info.order_id args1=$items.goods_info.product_id args2=comment args3=reply}>-->
                         </td>
                     </tr>
-                     
+                     <tr>
+                         <td colspan="4">
+
+                         </td>
+                     </tr>
                     <{/foreach}>
                 </table>
             </div>
@@ -179,7 +184,7 @@
                         </td>
                         <td>
                             
-                            <a href="<{link app=b2c ctl=site_comment act=form args0=$items.goods_info.order_id args1=$items.goods_info.product_id args2=comment args3=reply}>" class="btn btn-xs btn-danger">回复</a>
+                            <!--<a href="<{link app=b2c ctl=site_comment act=form args0=$items.goods_info.order_id args1=$items.goods_info.product_id args2=comment args3=reply}>" class="btn btn-xs btn-danger">回复aaa</a>-->
                             
                         </td>
                     </tr>
@@ -219,30 +224,29 @@
 
  <script type="text/javascript">
 	$(function(){
-		$('.appra_item .reply_btn').click(function(){
+		$('.appra_items .reply_btn').click(function(){
 			$('.appra_items form').remove();
-			var _this=$(this).parents('table').siblings('.replyShow');
-			var input_name = "reply["+$(this).attr('data-name')+"]";
-			var gid = $(this).attr('data-gid'), mid = $(this).attr('data-mid'), pid = $(this).attr('data-pid'), order_id = $(this).attr('data-odid');
+			var _this=$(this).parents('tr').next('tr').find('td');
+			var gid = $(this).attr('data-gid'), mid = $(this).attr('data-mid'), pid = $(this).attr('data-pid'), order_id = $(this).attr('data-oid');
 			_this.html('');
 			_this.removeClass('hidden');
 			_this.append(
-				'<form action="<{link app=seller ctl=site_store act=appraisal}>" method="post">'
-					+'<input type="hidden" name="order_id" value="'+order_id+'"/>'
-					+'<input type="hidden" name="'+input_name+'[goods_id]" value="'+gid+'"/>'
-					+'<input type="hidden" name="'+input_name+'[member_id]" value="'+mid+'"/>'
-					+'<input type="hidden" name="'+input_name+'[product_id]" value="'+pid+'"/>'
-					+'<textarea class="form-control" name="'+input_name+'[content]" placeholder="请输入回复内容"></textarea>'
-					+'<button type="submit" class="btn btn-info">提交</button>'
+				'<form action="<{link app=seller ctl=site_store act=reply}>" method="post">'
+					+'<input type="hidden" name="reply[order_id]" value="'+order_id+'"/>'
+					+'<input type="hidden" name="reply[goods_id]" value="'+gid+'"/>'
+					+'<input type="hidden" name="reply[member_id]" value="'+mid+'"/>'
+					+'<input type="hidden" name="reply[product_id]" value="'+pid+'"/>'
+					+'<textarea class="form-control" name="reply[content]" placeholder="请输入回复内容"></textarea>'
+					+'<button type="submit" style="margin:5px 10px;" class="btn btn-info fr">提交</button>'
 				+'</form>'
 			)
 
-			_this.on('click','.btn',function(){
-				var value=$(this).siblings('textarea').val();
-				$(this).parents('.replyShow').siblings('.replyCon').append(value);
-				$(this).parents('.replyShow').siblings('.replyCon').removeClass('hidden');
-
-			})
+//			_this.on('click','.btn',function(){
+//				var value=$(this).siblings('textarea').val();
+//				$(this).parents('.replyShow').siblings('.replyCon').append(value);
+//				$(this).parents('.replyShow').siblings('.replyCon').removeClass('hidden');
+//
+//			})
 		})
 	})
 </script>

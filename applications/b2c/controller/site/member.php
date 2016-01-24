@@ -281,7 +281,7 @@ class b2c_ctl_site_member extends b2c_frontpage
             $sql = "SELECT
 * FROM
 vmc_b2c_orders WHERE `member_id`={$this->member['member_id']} AND `status` = 'active' AND `confirm` = 'N' AND (`is_cod`='Y' OR
-`pay_status`='1') ORDER BY createtime desc LIMIT ". (($page - 1) * $limit). ", {$limit}";
+`pay_status`='1') AND `ship_status`='0' ORDER BY createtime desc LIMIT ". (($page - 1) * $limit). ", {$limit}";
             $order_list = vmc::database()->select($sql);
         }else{
             $order_list = $mdl_order->getList('*', $filter, ($page - 1) * $limit, $limit);

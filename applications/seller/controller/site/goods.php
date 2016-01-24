@@ -28,15 +28,16 @@ class seller_ctl_site_goods extends seller_frontpage
     public function index()
     {
         // 入商品库
-        $serach = $_POST['goods'] ? $_POST['goods'] : '';
+        $search = $_POST['goods'] ? $_POST['goods'] : '';
         $mdl_goods_cat = app::get('b2c')->model('goods_cat');
         $this->pagedata['cat'] = $mdl_goods_cat->get_tree();
-        $this->pagedata['goodList'] = $this->_good_list(1, $serach);
+        $this->pagedata['goodList'] = $this->_good_list(1, $search);
         $this->output();
     }
 
-    private function _good_list($type, $serach)
+    private function _good_list($type, $search, $page)
     {
+        $limit = 8;
         $store_goods_cat = app::get('b2c')->model('goods_cat')->getList('*');
         $mdl_product = app::get('b2c')->model('products');
         $filter['marketable'] = 'false';
@@ -44,22 +45,22 @@ class seller_ctl_site_goods extends seller_frontpage
             $filter['marketable'] = 'true';
             $filter['checkin'] = $type;
         }
-        if ($serach) {
-            $this->pagedata['serach'] = $serach;
-            if ($serach['price'] && is_numeric($serach['price'][0]) && is_numeric($serach['price'][1])) {
+        if ($search) {
+            $this->pagedata['serach'] = $search;
+            if ($search['price'] && is_numeric($search['price'][0]) && is_numeric($search['price'][1])) {
 
-                $price['price|between'] = $serach['price'];
+                $price['price|between'] = $search['price'];
             }
 
-            if ($serach['buy_count']) {
-                if (is_numeric($serach['buy_count'][0]) && is_numeric($serach['buy_count'][1])) {
-                    $filter['buy_coun|between'] = $serach['buy_count'];
+            if ($search['buy_count']) {
+                if (is_numeric($search['buy_count'][0]) && is_numeric($search['buy_count'][1])) {
+                    $filter['buy_coun|between'] = $search['buy_count'];
                 }
             }
 
-            $filter['name|has'] = $serach['name'];
-            $filter['gid'] = $serach['gid'];
-            $filter['cat_id'] = $serach['cat_id'];
+            $filter['name|has'] = $search['name'];
+            $filter['gid'] = $search['gid'];
+            $filter['cat_id'] = $search['cat_id'];
         }
         $price['is_default'] = 'true';
         $tmp = $mdl_product->getList('*', $price);
@@ -76,8 +77,8 @@ class seller_ctl_site_goods extends seller_frontpage
 
         $filter['store_id'] = $this->store['store_id'];
         $filter['seller_id'] = $this->seller['seller_id'];
-        $goodsList = $this->mB2cGoods->getList('*', $filter);
-
+        $goodsList = $this->mB2cGoods->getList('*', $filter, (($page - 1) * $limit), $limit);
+        $this->pagedata['pager']['total'] = ceil($this->mB2cGoods->count($filter) / $limit);
         foreach ($goodsList as $key => $value) {
             $goodsList[$key]['price_interval'] = $product['product'][$value['goods_id']]['price_interval'];
             $goodsList[$key]['price_up'] = $product['product'][$value['goods_id']]['price_up'];
@@ -313,8 +314,8 @@ class seller_ctl_site_goods extends seller_frontpage
     public function storage()
     {
         $this->pagedata['type'] = 'storage';
-        $serach = $_POST['goods'] ? $_POST['goods'] : '';
-        $this->pagedata['goodList'] = $this->_good_list(null, $serach);
+        $search = $_POST['goods'] ? $_POST['goods'] : '';
+        $this->pagedata['goodList'] = $this->_good_list(null, $search);
         $this->pagedata['_PAGE_'] = 'index.html';
         $this->output();
     }
@@ -322,10 +323,17 @@ class seller_ctl_site_goods extends seller_frontpage
     //价格修改
     public function price($goods_id)
     {
+        $params = $this->_request->get_get();
         if (is_numeric($goods_id)) {
             $this->pagedata['goods'] = $this->mB2cGoods->dump($goods_id, '*', 'default');
         } else {
-            $this->pagedata['goods_list'] = $this->_good_list(1, '');
+            $page = $params['page'] ? $params['page'] : 1;
+            $this->pagedata['goods_list'] = $this->_good_list(1, '', $page);
+            $this->pagedata['pager']['token'] = time();
+            $this->pagedata['pager']['current'] = $page;
+            $this->pagedata['pager']['link'] = $this->gen_url(
+                    array('app' => 'seller', 'ctl' => 'site_goods', 'act' => 'price')
+                ).'?page='.$this->pagedata['pager']['token'];
             $this->pagedata['_PAGE_'] = 'goods_price.html';
         }
         $this->output();
