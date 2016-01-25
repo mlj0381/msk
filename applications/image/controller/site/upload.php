@@ -43,6 +43,14 @@ class image_ctl_site_upload extends site_controller
 		echo json_encode(array('url'=>base_storager::image_path($image_id),'image_id'=>$image_id));
 	}
 
+	function site(){
+		$image = $this->app->model('image');		
+		$src = array_pop(array_values($_FILES));
+		extract($src);
+		$image_id = $image->store($tmp_name, null,null, $name);
+		echo json_encode(array('url'=>base_storager::image_path($image_id),'image_id'=>$image_id));
+	}
+
 	function wysiswyg_upload(){
 		$image = $this->app->model('image');
 		$image_name = $_FILES['file']['name'];

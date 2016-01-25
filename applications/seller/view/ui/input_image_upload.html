@@ -1,28 +1,7 @@
-<div data-module="upload" id="image_upload_box_<{$id}>">
-    <input type="hidden" name="<{$name}>" value="<{$value}>" />
-    <div class="thumb" data-toggle="show" >        
-        <img src="<{$value|storager:'xs'}>" >      
+<div data-module="uploader" class="filebox" name="<{$id}>" tag="<{$tag}>" >
+    <input type="hidden" name="<{$name}>" required="true" id="<{$id}>-<{$name}>" value="<{$value}>" />
+    <div class="thumb showImg" data-toggle="show">        
+        <img <{if $value}>src="<{$value|storager:'xs'}>"<{/if}> />     
     </div>
-    <input type="file" name="" />
+    <input type="file" name="<{$id}>" required="<{$required}>" accept="<{$accept}>" for="<{$name}>" data-url="<{link app=image ctl=site_upload act=site}>" />
 </div>
-
-<!-- <div class="fileinput fileinput-new" data-provides="fileinput" id="image_upload_box_<{$id}>">    
-    <div class="filebox fileinput-new thumbnail" style="border:0px;padding:0px;margin-bottom:0px">
-        <input type="hidden" value="<{$image_id}>" name="<{$name}>" />        
-        <div class="showImg">
-            <{if $image_id && $url}>
-            <img src="<{$content.image|storager:'xs'}>" />
-            <{else}>               
-            <img src="<{$base_url}>/themes/pc/default/statics/images/file_add.jpg">
-            <{/if}>
-        </div>
-        <input type="file" name="<{$id}>-file" accept="<{$accept|default:'images/*'}>"" size="<{$size|default:'2m'}>" required="<{$required|default:'false'}>" data-url="<{link app=image ctl=site_upload act=index}>"  class="file_input" />        
-    </div>
-</div>
-<script charset="utf-8">
-$('#image_upload_box_<{$id}>').on("click", ".showImg", function(){    
-    $(this).parents(".filebox").find("input[type='file']").trigger('click');
-});
-</script> -->
-
-
