@@ -75,6 +75,15 @@ class b2c_view_widget {
         $render->pagedata['contents'] = app::get('b2c')->model('pages_content')->getList('*', array('type' => '2', 'status' => '1', 'position_id'=>$params['position_id'],));
         return $render->fetch('widget/index_left_good.html');
     }
+    //店铺楼层左侧推荐
+    public function function_WIDGET_STORE_INDEX_LEFT_GOOD($params, &$smaryt) {
+        $render = new base_render(app::get($params['app']));
+        $render->pagedata['position_id'] = $params['position_id'];
+        $render->pagedata['store_id'] = $params['store_id'];
+        $render->pagedata['contents'] = app::get('b2c')->model('pages_content')->getList('*', array('type' => '0', 'status' => '1', 'position_id'=>$params['position_id'],'store_id'=>$params['store_id'],));
+        return $render->fetch('widget/store_left_good.html');
+    }
+
 
     //楼层店铺
     public function function_WIDGET_B2C_GOODS_INDEX_SHOP_SHOW($params, &$smaryt) {
@@ -88,9 +97,16 @@ class b2c_view_widget {
         $render = new base_render(app::get('b2c'));
         $render->pagedata['num'] = $params['num'];
         $render->pagedata['position_id'] = $params['position_id'];
-        //$render->pagedata['goods'] = vmc::service('view_datasetting')->floor($params);
          $render->pagedata['contents'] = app::get('b2c')->model('pages_content')->getList('*', array('type' => '2','position_id'=>$params['position_id'],));
         return $render->fetch('widget/good.floor.html');
+    }
+    // 店铺首页-楼层
+    public function function_WIDGET_STORE_GOODS_INDEX_GOOD_FLOOR($params, &$smarty) {
+        $render = new base_render(app::get('b2c'));
+        $render->pagedata['store_id'] = $params['store_id'];
+        $render->pagedata['position_id'] = $params['position_id'];
+         $render->pagedata['contents'] = app::get('b2c')->model('pages_content')->getList('*', array('type' => '2','position_id'=>$params['position_id'],'store_id'=>$params['store_id'],));
+        return $render->fetch('widget/store.good.floor.html');
     }
 
     //网站导航
@@ -207,6 +223,14 @@ class b2c_view_widget {
         $render->pagedata['key'] = $params['key'];
         $render->pagedata['floor_title'] = app::get('b2c')->model('pages_position')->getList('*', array('status' => '1', 'position_id'=>$params['position_id'],));
         return $render->fetch('widget/floor.title.html');
+    }
+        //楼层标题
+    public function function_WIDGET_STORE_INDEX_FLOOR_TITLE($params, &$smarty) {
+        $render = new base_render(app::get($params['app']));
+        $render->pagedata['position_id'] = $params['position_id'];
+        $render->pagedata['store_id'] = $params['store_id'];
+        $render->pagedata['floor_title'] = app::get('b2c')->model('pages_position')->getList('*', array('status' => '1', 'position_id'=>$params['position_id'],));
+        return $render->fetch('widget/store.floor.title.html');
     }
     //楼层广告
     public function function_WIDGET_B2C_INDEX_FLOOR_BANNER($params, &$smarty) {
