@@ -6,7 +6,8 @@
 			<span class="text-danger">*</span>法定代表人：
 		</label>
 		<div class="col-xs-4">
-             <input type="text" name="bank_lesstion[value][legal]" value="<{$extra.bank_lesstion.value.legal}>" class="form-control">
+             <input type="text" name="bank_lesstion[value][legal]" value="<{$extra.bank_lesstion.value.legal}>" class="form-control" required="true">
+             <span class="msgTip" data-message="error"></span>
 		</div>
 	</div>
 	<div class="form-group">
@@ -14,7 +15,8 @@
 			<span class="text-danger">*</span>开户行：
 		</label>
 		<div class="col-xs-4">
-			<input type="text" name="bank_lesstion[value][name]"  value="<{$extra.bank_lesstion.value.name}>" class="form-control">
+			<input type="text" name="bank_lesstion[value][name]"  value="<{$extra.bank_lesstion.value.name}>" class="form-control" required="true">
+			<span class="msgTip" data-message="error"></span>
 		</div>
 	</div>
 	<div class="form-group">
@@ -22,7 +24,8 @@
 			<span class="text-danger">*</span>对公银行账号：
 		</label>
 		<div class="col-xs-4">
-			<input type="text" name="bank_lesstion[value][code]"  value="<{$extra.bank_lesstion.value.code}>" class="form-control">
+			<input type="text" name="bank_lesstion[value][code]"  value="<{$extra.bank_lesstion.value.code}>" class="form-control" required="true">
+			<span class="msgTip" data-message="error"></span>
 		</div>
 	</div>
 	<div class="form-group">

@@ -105,14 +105,14 @@
 
         <li>
             <div class="row goods_item_thead">
-                <div class="col-xs-10">
+                <div class="col-xs-12">
                     <div class="col-xs-5 left" style="padding-left:0">商品信息</div>
                     <div class="col-xs-2">单价</div>
                     <div class="col-xs-2">数量</div>
                     <div class="col-xs-1">优惠</div>
                     <div class="col-xs-2">订单状态</div>
                 </div>
-                <div class="col-xs-2">运费</div>
+                <!--<div class="col-xs-2">运费</div>-->
             </div>
         </li>
         <{foreach from=$order.items item=item}>
@@ -158,7 +158,7 @@
                               </div>
                             </div>
                         </td>
-                        <td class="col-xs-2 center" style="border-left:1px solid #ddd">￥<span><{$order.cost_freight|cur}></span></td>
+                        <!--<td class="col-xs-2 center" style="border-left:1px solid #ddd">￥<span><{$order.cost_freight|cur}></span></td>-->
                     </tr>
                 </tbody>
             </table>
@@ -179,38 +179,38 @@
                         </ul>
                     <{/if}>
                 </div>
-                <div class="col-xs-4">
-                    <dl class="dl-horizontal">
-                        <br>
-                        <dt>订单应付总金额：</dt>
-                        <dd class="text-danger">
-                            ￥<strong><{$order.order_total|cur}></strong>
-                        </dd>
-                        <!-- <{if $order.memberlv_discount>0}>
-                            <dt>会员身份节省了：</dt>
-                            <dd>￥<span><{$order.memberlv_discount|cur}></span></dd>
-                        <{/if}>
-                        <{if $cart_result.pmt_goods||$order.pmt_order}>
-                            <dt>促销活动优惠节省了：</dt>
-                            <dd>￥<span><{$order.pmt_goods+$order.pmt_order|cur}></span></dd>
-                        <{/if}> -->
-                    </dl>
-                </div>
+                <!--<div class="col-xs-4">-->
+                    <!--<dl class="dl-horizontal">-->
+                        <!--<br>-->
+                        <!--<dt>订单应付总金额：</dt>-->
+                        <!--<dd class="text-danger">-->
+                            <!--￥<strong><{$order.order_total|cur}></strong>-->
+                        <!--</dd>-->
+                        <!--&lt;!&ndash; <{if $order.memberlv_discount>0}>-->
+                            <!--<dt>会员身份节省了：</dt>-->
+                            <!--<dd>￥<span><{$order.memberlv_discount|cur}></span></dd>-->
+                        <!--<{/if}>-->
+                        <!--<{if $cart_result.pmt_goods||$order.pmt_order}>-->
+                            <!--<dt>促销活动优惠节省了：</dt>-->
+                            <!--<dd>￥<span><{$order.pmt_goods+$order.pmt_order|cur}></span></dd>-->
+                        <!--<{/if}> &ndash;&gt;-->
+                    <!--</dl>-->
+                <!--</div>-->
             </div>
         </li>
 
     </ul>
 
-    <div class="panel-footer text-right">
+    <!--<div class="panel-footer text-right">-->
 
-        <{if $order.is_cod!='Y' && $order.pay_status|in_array:$paystatus_map}>
-        <a href="<{link app=b2c ctl=site_checkout act=payment args0=$order.order_id}>" class="btn btn-sm  btn-danger">订单付款</a>
-        <{/if}>
-        <{if $order.status=='finish'}>
-        <a href="<{link app=b2c ctl=site_order act=detail args0=$order.order_id args1=logistics_tracker}>" class="btn btn-sm btn-default">商品评价</a>
-        <{/if}>
-        <!-- <a href="<{link app=b2c ctl=site_cart act=mergeorder args0=$order.order_id}>" class="btn btn-sm btn-default">再次购买</a> -->
-    </div>
+        <!--<{if $order.is_cod!='Y' && $order.pay_status|in_array:$paystatus_map}>-->
+        <!--<a href="<{link app=b2c ctl=site_checkout act=payment args0=$order.order_id}>" class="btn btn-sm  btn-danger">订单付款</a>-->
+        <!--<{/if}>-->
+        <!--<{if $order.status=='finish'}>-->
+        <!--<a href="<{link app=b2c ctl=site_order act=detail args0=$order.order_id args1=logistics_tracker}>" class="btn btn-sm btn-default">商品评价</a>-->
+        <!--<{/if}>-->
+        <!--&lt;!&ndash; <a href="<{link app=b2c ctl=site_cart act=mergeorder args0=$order.order_id}>" class="btn btn-sm btn-default">再次购买</a> &ndash;&gt;-->
+    <!--</div>-->
 </div>
 </div>
 <{if $order.need_shipping == 'Y' && $delivery_id}>

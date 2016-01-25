@@ -108,7 +108,7 @@ class b2c_goods_search
         $filter = array('store_name|has' => $params['keywords']['keywords']);
         $result = $mdl_store->getList('*', $filter, $params['page']['size'] * ($params['page']['index'] - 1),
             $params['page']['size'], $params['orderdy']);
-        $mdl_brand = $this->app->model('brand');
+        $mdl_brand = app::get('b2c')->model('brand');
         foreach ($result as &$value) {
             $value['brand'] = $mdl_brand->getList('brand_name, brand_id', array('seller_id' => $value['seller_id']));
         }
@@ -125,18 +125,17 @@ class b2c_goods_search
         }
         cachemgr::co_start();
         if (!empty($params['keywords']['keywords'])) {
-            $goods = $this->mKeywords->getList('goods_id', array('keyword|has' => $params['keywords'], 'res_type' => 'goods'));
+            $goods = $this->mKeywords->getList('goods_id', array('keyword|has' => $params['keywords']['keywords'], 'res_type' => 'goods'));
             if(empty($goods)) return array();
             foreach ($goods as $key => $value) {
-                $params['filter']['goods_id|in'][$key] = $value['goods_id'];
+                $filter['goods_id|in'][$key] = $value['goods_id'];
             }
         }
         $goods_cols = '*';
-        $filter = array(
-            'cat_id' => $params['filter']['cat'],
-            'brand_id' => $params['filter']['brand'],
-            'store_id' => $params['filter']['store_id']
-        );
+        $filter['cat_id'] = $params['filter']['cat'];
+        $filter['brand_id'] = $params['filter']['brand'];
+        $filter['store_id'] = $params['filter']['store_id'];
+        $filter['marketable'] = 'true';
 
         $goods_list = $this->mGoods->getList($goods_cols, $filter, $params['page']['size'] * ($params['page']['index'] - 1), $params['page']['size'], $params['orderby']);
         $obj_goods_stage = vmc::singleton('b2c_goods_stage');

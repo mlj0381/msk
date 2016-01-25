@@ -139,7 +139,7 @@
                         <th class="col-xs-2">所属店铺</th>
                         <th class="col-xs-2">单价</th>
                         <th class="col-xs-2">数量</th>
-                        <th class="col-xs-2">金额（不含运费）</th>
+                        <th class="col-xs-2">金额</th>
                     </tr>
                 </table>
                 <ul class="list-group">
@@ -294,9 +294,8 @@
                     <dd>-￥<span data-bind="total/promotion_discount_amount"><{$cart_result.promotion_discount_amount|cur}></span></dd>-->
 
                     <{/if}>
-
-                    <dt>运费：</dt>
-                    <dd>￥<span data-bind="total/cost_freight"><{$total.cost_freight|cur}></span></dd>
+                    <!--<dt>运费：</dt>-->
+                    <!--<dd>￥<span data-bind="total/cost_freight"><{$total.cost_freight|cur}></span></dd>-->
 
                     <dt>应付总额：</dt>
                     <dd>￥<strong data-bind="total/order_total"><{$total.order_total|cur}></strong></dd>

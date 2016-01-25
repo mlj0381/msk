@@ -13,9 +13,10 @@
 
         <menu app='b2c' controller='site_comment' action='show_list' display='true' order="60">我的评价</menu>
 		<menu app='aftersales' controller='site_member' action='request' display='true' order="60">退货与维权</menu>
-		<menu app='b2c' controller='site_member' action='sleuth ' display='true' order="60">我的足迹</menu>
+        <menu app='site' controller='index' action='build' display='true' order="60">我的足迹</menu>
+        <!--<menu app='b2c' controller='site_member' action='sleuth ' display='true' order="60">我的足迹</menu>-->
 		<menu app='b2c' controller='site_member' action='index' display='true' order="60">最近访问</menu>
-		<menu app='b2c' controller='site_member' action='index' display='true' order="60">大促会</menu>
+		<menu app='site' controller='index' action='build' display='true' order="60">大促会</menu>
 
 
 

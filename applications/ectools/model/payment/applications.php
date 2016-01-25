@@ -19,6 +19,7 @@ class ectools_mdl_payment_applications {
             $setting = $app_ins->setting();
             $class_arr = explode('_', $class_name);
             $conf = unserialize(app::get('ectools')->getConf($class_name));
+
             foreach ($setting as $key => $item) {
                 if (!$conf || empty($conf[$key])) {
                     $conf[$key] = $item['default'];
@@ -36,6 +37,7 @@ class ectools_mdl_payment_applications {
                 'pay_fee' => $conf['pay_fee'],
                 'status' => $conf['status']
             );
+
             $flag = true;
             if ($filter && is_array($filter)) {
                 foreach ($filter as $key => $value) {

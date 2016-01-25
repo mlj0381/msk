@@ -245,6 +245,7 @@ class seller_frontpage extends site_controller {
     protected function output($app_id) {
         $app_id || $app_id = $this->app->app_id;
         $this->pagedata['seller'] = $this->seller;
+        $this->pagedata['store'] = $this->store;
         $this->pagedata['menu'] = $this->get_menu($this->action);
         $this->pagedata['app'] = $this->app->app_id;
         $this->pagedata['current_controller'] = $this->controller;

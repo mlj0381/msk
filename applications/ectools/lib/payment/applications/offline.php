@@ -11,8 +11,8 @@
 
 
 final class ectools_payment_applications_offline extends ectools_payment_parent implements ectools_payment_interface {
-    public $name = '线下支付';
-    public $version = '1.0';
+    public $name = '会员卡';
+    public $version = '';
     public $intro = "线下支付方式";
     public $platform_allow = array(
         'pc',

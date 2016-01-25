@@ -205,14 +205,13 @@ class b2c_ctl_site_member extends b2c_frontpage
     public function setting()
     {
         $this->menuSetting = 'setting';
-        $user_obj = vmc::singleton('b2c_user_object');
-        $pam_data = $user_obj->get_pam_data('*', $this->member['member_id']);
-        $pam_data['memberData']['addon'] = unserialize($pam_data['memberData']['addon']);
-        $this->pagedata['pam_data'] = $pam_data;
-        $attr = vmc::singleton('b2c_user_passport')->get_signup_attr($this->member['member_id']);
-        $this->pagedata['attr'] = $attr;
+        $this->pagedata['member_data'] = $this->app->model('members')->getRow('member_id, mobile, email', array('member_id' =>
+            $this->member['member_id']));
         $this->output();
     }
+
+
+
     public function company()
     {
         $this->menuSetting = 'setting';
@@ -242,7 +241,9 @@ class b2c_ctl_site_member extends b2c_frontpage
             'profile',
             'pam_account',
             'currency',
-            'addon'
+            'addon',
+            'mobile',
+            'email'
         );
         $attr = $this->app->model('member_attr')->getList('attr_column');
         foreach ($attr as $attr_colunm) {
@@ -256,6 +257,7 @@ class b2c_ctl_site_member extends b2c_frontpage
         }
         //---end
         $_POST['member_id'] = $this->member['member_id'];
+
         if ($member_model->save($_POST)) {
             $this->splash('success', $url, ('保存成功'));
         } else {
@@ -274,8 +276,21 @@ class b2c_ctl_site_member extends b2c_frontpage
 
         $this->pagedata['status'] = $status;
         $filter = $status_filter[$status];
+        $obj_order_search = vmc::singleton('b2c_order_search');
+        $search = $obj_order_search->search($_POST);
         $filter['member_id'] = $this->member['member_id'];
-        $order_list = $mdl_order->getList('*', $filter, ($page - 1) * $limit, $limit);
+        if($status == 's2'){
+            $where = $search['sql'];
+            $sql = "SELECT
+* FROM
+vmc_b2c_orders WHERE `member_id`={$this->member['member_id']} AND `status` = 'active' AND `confirm` = 'N' AND (`is_cod`='Y' OR
+`pay_status`='1') {$where} AND `ship_status`='0' ORDER BY createtime desc LIMIT ". (($page - 1) * $limit). ", {$limit}";
+            $order_list = vmc::database()->select($sql);
+        }else{
+            $search['order_id|has'] && $filter['order_id|has'] = $search['order_id|has'];
+            $search['order_id|in'] && $filter['order_id|in'] = $search['order_id|in'];
+            $order_list = $mdl_order->getList('*', $filter, ($page - 1) * $limit, $limit);
+        }
         $obj_store = vmc::singleton('store_store_object');
         $mdl_request_order = app::get('aftersales')->model('request');
         foreach ($order_list as $key => $value) {
@@ -292,6 +307,7 @@ class b2c_ctl_site_member extends b2c_frontpage
         ));
         $order_items_group = utils::array_change_key($order_items, 'order_id', true);
         $order_count = $mdl_order->count($filter);
+        $this->pagedata['search'] = $_POST['search'];
         $this->pagedata['type'] = 'orders';
         $this->pagedata['current_status'] = $status;
         $this->pagedata['status_map'] = $status_filter;
@@ -427,6 +443,8 @@ class b2c_ctl_site_member extends b2c_frontpage
                         $list['store'][$key] = $value;
                     }
                 }
+                $list['goods_count'] = count($list['goods']);
+                $list['store_count'] = count($list['store']);
                 unset($list_tmp);
                 $this->pagedata['tag'] = app::get('desktop')->model('tag')->getList('tag_id, tag_name', array('member_id' => $this->member['member_id'], 'tag_mode' => 'favorite'));
                 $this->pagedata['member_lv_name'] = $this->member['levelname'];
@@ -456,7 +474,7 @@ class b2c_ctl_site_member extends b2c_frontpage
         $this->splash('error', '', '添加失败');
     }
 
-    //ajax添加删除店铺标签
+    //ajax添加取消店铺标签
     public function update_tag(){
         extract($_POST);
         if(!is_numeric($tagId) && empty($type)){
@@ -481,6 +499,24 @@ class b2c_ctl_site_member extends b2c_frontpage
         $this->splash('error', '', '操作失败');
     }
 
+    //ajax删除标签
+    public function del_tag(){
+        extract($_POST);
+        $data = array('tag_id' => $tagId, 'member_id' => $this-> member['member_id']);
+        if(app::get('desktop')->model('tag')->delete($data)){
+            $this->splash('success', '', '操作成功');
+        }
+        $this->splash('error', '', '操作失败');
+    }
+
+    //店铺添加备注
+    public function add_remark(){
+        $data = array('gnotify_id' => $_POST['favId'], 'remark' => $_POST['value']);
+        if($this->app->model('member_goods')->save($data)){
+            $this->splash('success', '', '操作成功');
+        }
+        $this->splash('error', '', '操作失败');
+    }
     /**
      * ajax检查商品、店铺收藏
      */

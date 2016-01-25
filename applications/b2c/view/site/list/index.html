@@ -79,14 +79,14 @@
               </td>
           </tr>
           <{/if}>
-          <{if !$search_info.norms}>
-          <tr>
-              <td>规格</td>
-              <td>
-                 <{WIDGET_B2C_GOODS_LIST_FILTER target=norms filter=$query active=$params.origin_id}>
-              </td>
-          </tr>
-          <{/if}>
+          <!--<{if !$search_info.norms}>-->
+          <!--<tr>-->
+              <!--<td>规格</td>-->
+              <!--<td>-->
+                 <!--<{WIDGET_B2C_GOODS_LIST_FILTER target=norms filter=$query active=$params.origin_id}>-->
+              <!--</td>-->
+          <!--</tr>-->
+          <!--<{/if}>-->
           <{if !$search_info.ability}>
           <tr>
               <td>供货能力</td>
@@ -153,7 +153,7 @@
                                 </li>
                             </ul>
                           </nav>
-                          <span class="page_num"><b><{$page_index}></b> / <{$count}></span>
+                          <span class="page_num"><b><{$page_index}></b> / <{$pager.total}></span>
                       </div>
                   </div> 
             </div>
@@ -276,7 +276,7 @@
             var input = $(this).prev();
             if(!$(input).val() || $(input).val() == "请输入关键词"){
                 $(input).val('请输入关键词');
-                reutrn;
+                return;
             }
             var url = "<{link app=b2c ctl=site_list act=index}>?<{$query|merge_query:'having'}>"; 
             url += '&having=' + $(input).val();

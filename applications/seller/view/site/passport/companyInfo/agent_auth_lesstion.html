@@ -8,7 +8,8 @@
 			<span class="text-danger">*</span>授权单位：
 		</label>
 		<div class="col-xs-4">
-			<input type="text" name="agent_auth_lesstion[value][unit]" value="<{$extra.agent_auth_lesstion.value.unit}>" class="form-control">
+			<input type="text" name="agent_auth_lesstion[value][unit]" value="<{$extra.agent_auth_lesstion.value.unit}>" class="form-control" required="true">
+			<span class="msgTip" data-message="error"></span>
 		</div>
 	</div>
 
@@ -17,8 +18,11 @@
 			授权期限：
 		</label>
 		<div class="col-xs-4">
-			<input type="text" name="agent_auth_lesstion[value][start]" value="<{$extra.agent_auth_lesstion.value.start}>"  class="form-control" style="width:175px; display: inline-block;"> 至 
-			<input type="text" name="agent_auth_lesstion[value][end]" value="<{$extra.agent_auth_lesstion.value.end}>"  class="form-control"  style="width:175px; display: inline-block;">
+			<div class="form-item">
+				<input type="text" name="agent_auth_lesstion[value][start]" value="<{$extra.agent_auth_lesstion.value.start}>"  class="form-control" style="width:175px; display: inline-block;"> 至 
+				<input type="text" name="agent_auth_lesstion[value][end]" value="<{$extra.agent_auth_lesstion.value.end}>"  class="form-control" required="true"  style="width:175px; display: inline-block;">
+				<span class="msgTip" data-message="error"></span>
+			</div>
 		</div>
 	</div>
 

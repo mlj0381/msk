@@ -1,5 +1,5 @@
 
-<select class="form-control" value="<{$data[1]}>" name="<{$data[0]}>">
+<select class="form-control" value="<{$data[1]}>" name="<{$data[0]}>" required="true">
 	<option <{if $data[1] eq '1'}> selected <{/if}> value="1">博士</option>
 	<option <{if $data[1] eq '2'}> selected <{/if}> value="2">硕士</option>
 	<option <{if $data[1] eq '3'}> selected <{/if}> value="3">本科</option>
@@ -8,3 +8,4 @@
 	<option <{if $data[1] eq '6'}> selected <{/if}> value="6">小学</option>
 	<option <{if $data[1] eq '7'}> selected <{/if}> value="7">其他</option>
 </select>
+<span class="msgTip" data-message="error"></span>

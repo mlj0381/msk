@@ -39,11 +39,13 @@ ol {
 }
 .glist-container .breadcrumb_row .breadcrumb li.search_li form.goods_search {
   margin-left: 10px;
-  height: 20px;
-  line-height: 20px;
+  height: 24px;
+  line-height: 24px;
 }
 .glist-container .breadcrumb_row .breadcrumb li.search_li form.goods_search input {
-  padding: 0 5px;
+  display: inline-block;
+  height: 24px;
+  line-height: 24px;
 }
 .glist-container .breadcrumb_row .breadcrumb li.search_li form.goods_search button {
   background: #333;
@@ -780,6 +782,7 @@ ol {
 #deliveryInfo .pay_method span,
 #deliveryInfo .delivery_time span {
   display: inline-block;
+  margin-top: 5px;
   margin-right: 10px;
   margin-bottom: 10px;
 }
@@ -821,6 +824,21 @@ ol {
   width: 100%;
   margin: 20px 0;
   text-align: center;
+}
+.signup_complete_con h2 {
+  margin-top: 100px;
+  color: #255625;
+  font-size: 34px;
+}
+.signup_complete_con h2 .icon-ok-sign {
+  font-size: 34px;
+  color: #255625;
+}
+.signup_complete_con h4 {
+  margin-top: 25px;
+}
+.signup_complete_con h4 a {
+  color: #255625;
 }
 .splash_con {
   min-height: 500px;

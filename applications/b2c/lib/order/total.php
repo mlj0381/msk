@@ -67,7 +67,7 @@ class b2c_order_total {
         $order_total = $obj_math->number_plus(array(
             $finally_cart_amount,
             $cost_protect,
-            $cost_freight
+            //$cost_freight
         ));
 
 
@@ -93,7 +93,7 @@ class b2c_order_total {
         $_return = array(
 
             'cost_protect' => $cost_protect, //保价费
-            'cost_freight' => $cost_freight, //运费
+            //'cost_freight' => $cost_freight, //运费
             'cost_payment' => 0, //TODO //在线支付手续费
             'order_total' => $order_total, //*******订单最终应付总价
             'cost_tax' => 0, //TODO //税

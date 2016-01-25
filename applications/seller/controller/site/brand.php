@@ -25,6 +25,7 @@ class seller_ctl_site_brand extends seller_frontpage {
         $this->title = '商品品牌';
         //查询详细信息
         $this->pagedata['brands'] = app::get('b2c')->model('brand')->getList('*', array('seller_id' => $this->seller['seller_id']));
+
         $this->output();
     }
 

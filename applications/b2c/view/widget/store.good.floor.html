@@ -1,0 +1,14 @@
+<ul class="clearfix">
+ <{foreach from=$contents item=item}>
+    <li>
+        <p class="tag">旺铺名品</p>
+        <a class="pro_img" href="<{$item.url}>">
+            <img src="<{$base_url}>/themes/pc/default/statics/images/loading.gif" data-original="<{$item.image_id|storager:'s'}>">
+        </a>
+        <p class="caption"><a href="<{$item.url}>"><{$item.title}></a></p>
+        <p class="goods_info"><span class="price"><b><{$item.extra.price|cur}></b></span><span class="sell_count">已售出<b>36</b>箱</span></p>
+    </li>
+<{/foreach}>
+</ul>
+
+

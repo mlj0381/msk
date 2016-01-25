@@ -26,6 +26,7 @@ class seller_ctl_site_aftersales extends seller_frontpage
 
     public function price_manage($list = 'all', $page = 1){
         $this->_list($list, 'price', $page);
+        $this->pagedata['type'] = 'price';
         $this->pagedata['_PAGE_'] = 'order.html';
         $this->output();
     }
@@ -60,7 +61,7 @@ class seller_ctl_site_aftersales extends seller_frontpage
         $request_list = $mdl_as_request->getList('*', $filter, ($page - 1) * $limit, $limit);
         $mdl_member = app::get('pam')->model('members');
         foreach ($request_list as $key => $value) {
-            $request_list[$key]['member_info'] = $mdl_member->getRow('member_id, login_account');
+            $request_list[$key]['member_info'] = $mdl_member->getRow('member_id, login_account', array('member_id' => $value['member_id']));
         }
         foreach ($request_list as $key => &$item) {
             if ($item['product']['product_id']) {

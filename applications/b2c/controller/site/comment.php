@@ -20,14 +20,13 @@ class b2c_ctl_site_comment extends b2c_frontpage
         $this->app = $app;
         parent::__construct($app);
         $this->mComment = $this->app->model('member_comment');
-        $this->verify_member();
+        $this->verify_member() || vmc::singleton('seller_frontpage')->verify();
         $this->member = $this->get_current_member();
         $this->set_tmpl('member');
     }
 
     public function form($order_id, $product_id, $type = 'comment', $reply = null)
     {
-
         $this->_response->set_header('Cache-Control', 'no-store');
         $mdl_order = app::get('b2c')->model('orders');
         //$this->store = vmc::singleton('seller_object')->get_current_seller();
@@ -119,7 +118,7 @@ class b2c_ctl_site_comment extends b2c_frontpage
 
     public function show_list($comment_type = 'all', $page = 1)
     {
-        $this->menuSetting = 'setting';
+        $this->menuSetting = 'index';
         $limit = 10;
         $mdl_goods_mark = app::get('b2c')->model('goods_mark');
         $filter = array(
@@ -139,6 +138,8 @@ class b2c_ctl_site_comment extends b2c_frontpage
         $comment_list_member = $this->mComment->groupList('*', $filter, ($page - 1) * $limit, $limit);
         $this->mComment->comments($comment_list_member);
         $filter['for_comment_id'] = $this->member['member_id'];
+        $comment_list_seller = $this->mComment->groupList('*', $filter, ($page - 1) * $limit, $limit);
+        $this->mComment->comments($comment_list_seller);
         $this->pagedata['member_info'] = $this->member;
         $this->pagedata['comment_type'] = $comment_type;
         $this->pagedata['comment_member'] = $comment_list_member;

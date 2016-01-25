@@ -6,7 +6,8 @@
 			<span class="text-danger">*</span>姓名：
 		</label>
 		<div class="col-xs-4">
-			<input type="text" value="<{$extra.qa_manager.value.name}>" name="qa_manager[value][name]" class="form-control">
+			<input type="text" value="<{$extra.qa_manager.value.name}>" name="qa_manager[value][name]" class="form-control" required="true">
+			<span class="msgTip" data-message="error"></span>
 		</div>
 	</div>
 	<div class="form-group">
@@ -14,7 +15,8 @@
 			<span class="text-danger">*</span>年龄：
 		</label>
 		<div class="col-xs-4">
-			<input type="text" value="<{$extra.qa_manager.value.age}>" name="qa_manager[value][age]" class="form-control">
+			<input type="text" value="<{$extra.qa_manager.value.age}>" name="qa_manager[value][age]" class="form-control" required="true" format="number">
+			<span class="msgTip" data-message="number"></span>
 		</div>
 	</div>
 	<div class="form-group">
@@ -30,7 +32,8 @@
 			<span class="text-danger">*</span>联系方式：
 		</label>
 		<div class="col-xs-4">
-			<input type="text" value="<{$extra.qa_manager.value.contact}>" name="qa_manager[value][contact]" class="form-control">
+			<input type="text" value="<{$extra.qa_manager.value.contact}>" name="qa_manager[value][contact]" class="form-control" required="true" format="mobile">
+			<span class="msgTip" data-message="mobile">请输入正确手机号码</span>
 		</div>
 	</div>
 	<div class="form-group">

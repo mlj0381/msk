@@ -43,6 +43,10 @@
             $('.typebox li.selected').each(function(idx, obj){
                 dataValue += parseInt($(this).attr('data-type'));
             });
+            if(!dataValue){
+                alert('请至少选择一种企业类型');
+                return false;
+            }
             var url = '<{link app=seller ctl=site_passport act=identity}>';
             var redirect = '<{link app=seller ctl=site_passport act=entry}>';
             $.post(url, {ident : dataValue}, function(re){

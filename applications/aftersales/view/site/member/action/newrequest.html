@@ -24,7 +24,7 @@
                 <div class="form-group" data-extend="req_type">
                     <label class="col-xs-2 control-label">申请服务类型</label>
                     <div class="col-xs-7">
-
+                        <{if $type neq 'price'}>
                         <select class="form-control" style="width:200px;" name="request[req_type]">
                             <{if $type eq 'price'}>
                             <option value='5'>退款</option>
@@ -33,6 +33,7 @@
                             <{/if}>
 <!--                            <option value="">换货</option>-->
                         </select>
+                        <{/if}>
                     </div>
                 </div>
                 <hr>
@@ -111,9 +112,9 @@
                 <dd>
                     交易金额：<span class="text-danger">￥：<{$order.payed}></span>
                 </dd>
-                <dd>
-                    运费：￥：<{$order.cost_freight}>
-                </dd>
+                <!--<dd>-->
+                    <!--运费：￥：<{$order.cost_freight}>-->
+                <!--</dd>-->
             </dl>
             <!-- <table class="table table-bordered">
                 <thead>

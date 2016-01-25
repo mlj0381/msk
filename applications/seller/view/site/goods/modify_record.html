@@ -4,7 +4,7 @@
 	</div>
 	<div class="clearfix">
 		<div class="col-xs-6 goods_num">
-			<span>商品编号：</span>2352235324
+			<span>商品编号：</span><{$product_list.gid.gid}>
 		</div>
 		<div class="col-xs-6" style="text-align: right;">
 			<a href="<{link app=seller ctl=site_goods act=price}>" class="btn btn-danger">返回列表</a>
@@ -18,28 +18,19 @@
 			<th class="col-xs-4">价格</th>
 			<th class="col-xs-2">修改时间</th>
 		</tr>
+        <{foreach from=$product_list.product item=item}>
 		<tr>
-			<td>34592348924-1</td>
-			<td>A1/箱</td>
+			<td><{$item.bn}></td>
+			<td><{$item.spec_info}></td>
 			<td>
-				<p>100.0(小于10箱)</p>
-				<p>98.0(大于10箱)</p>
+				<p><{$item.price_dn|cur}>(小于<{$item.price_interval}>箱)</p>
+				<p><{$item.price_up|cur}>(大于<{$item.price_interval}>箱)</p>
 			</td>
 			<td>
-				2015-12-10 12:10:33
+                <{$item.createTime|cdate}>
 			</td>
 		</tr>
-		<tr>
-			<td>34592348924-1</td>
-			<td>A1/箱</td>
-			<td>
-				<p>100.0(小于10箱)</p>
-				<p>98.0(大于10箱)</p>
-			</td>
-			<td>
-				2015-12-10 12:10:33
-			</td>
-		</tr>
+        <{/foreach}>
 	</table>
 
 </div>

@@ -371,6 +371,7 @@ class b2c_ctl_site_passport extends b2c_frontpage
             'app' => 'b2c',
             'ctl' => 'site_passport',
             'act' => 'business_info',
+            'args0' => '0'
         )); //PC首页
 
         unset($_POST['forward']);

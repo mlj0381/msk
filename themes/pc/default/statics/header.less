@@ -877,7 +877,7 @@ form {
 
 
 //表单验证
-.msgTip{display:none;}
+.msgTip{display:none !important;}
 label.error{
     display: inline-block;
     color:@basecolor; 
@@ -891,12 +891,17 @@ label.right{
     padding-left:20px; 
     background:url(images/success.png) no-repeat 2px center; 
     position:absolute;
-    right:15px;
+    right:-15px;
     top:5px;
 }
 .form-group{
     margin:8px 0px;
+        .input-group label.right{
+            right:-30px;
+    }
 }
+
+    
 
 
 

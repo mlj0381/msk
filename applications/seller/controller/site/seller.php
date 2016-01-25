@@ -47,6 +47,8 @@ class seller_ctl_site_seller extends seller_frontpage {
 
     //商户信息
     public function businessInfo() {
+        $schedule = $this->app->model('sellers')->getRow('schedule', array('seller_id' => $this->seller['seller_id']));
+
         $this->menuSetting = 'account';
         $this->output();
     }

@@ -6,7 +6,8 @@
 			定点屠宰代码：
 		</label>
 		<div class="col-xs-4">
-			<input type="text" value="<{$extra.slaughter_lesstion.value.code}>" name="slaughter_lesstion[value][code]" class="form-control">
+			<input type="text" value="<{$extra.slaughter_lesstion.value.code}>" name="slaughter_lesstion[value][code]" class="form-control" required="true">
+			<span class="msgTip" data-message="error"></span>
 		</div>
 	</div>
 
@@ -15,7 +16,8 @@
 			批准号：
 		</label>
 		<div class="col-xs-4">
-			<input type="text" value="<{$extra.slaughter_lesstion.value.approve_code}>" name="slaughter_lesstion[value][approve_code]" class="form-control">
+			<input type="text" value="<{$extra.slaughter_lesstion.value.approve_code}>" name="slaughter_lesstion[value][approve_code]" class="form-control" required="true">
+			<span class="msgTip" data-message="error"></span>
 		</div>
 	</div>
 

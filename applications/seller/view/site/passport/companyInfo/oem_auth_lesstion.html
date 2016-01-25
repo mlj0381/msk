@@ -6,7 +6,8 @@
 			<span class="text-danger">*</span>委托单位：
 		</label>
 		<div class="col-xs-4">
-			<input type="text" name="oem_auth_lesstion[value][auth_unit]" value="<{$extra.oem_auth_lesstion.value.auth_unit}>" class="form-control">
+			<input type="text" name="oem_auth_lesstion[value][auth_unit]" value="<{$extra.oem_auth_lesstion.value.auth_unit}>" class="form-control" required="true">
+			<span class="msgTip" data-message="error"></span>
 		</div>
 	</div>
 
@@ -15,7 +16,8 @@
 			<span class="text-danger">*</span>被委托单位：
 		</label>
 		<div class="col-xs-4">
-			<input type="text" name="oem_auth_lesstion[value][comm_unit]" value="<{$extra.oem_auth_lesstion.value.comm_unit}>" class="form-control">
+			<input type="text" name="oem_auth_lesstion[value][comm_unit]" value="<{$extra.oem_auth_lesstion.value.comm_unit}>" class="form-control" required="true">
+			<span class="msgTip" data-message="error"></span>
 		</div>
 	</div>
 
