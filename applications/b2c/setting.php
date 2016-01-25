@@ -197,11 +197,11 @@ $setting = array(
                 7 => array('id' => 7, 'name' => '600 - 700', 'params' => array(600, 700)),
                 8 => array('id' => 8, 'name' => '700以上', 'params' => array(700)),
             ),
-            'norms' => array(
-                array('id' => 1, 'name' => '规格1'),
-                array('id' => 1, 'name' => '规格2'),
-                array('id' => 1, 'name' => '规格3'),
-            ),
+//            'norms' => array(
+//                array('id' => 1, 'name' => '规格1'),
+//                array('id' => 1, 'name' => '规格2'),
+//                array('id' => 1, 'name' => '规格3'),
+//            ),
             'ability' => array(
                 array('id' => 1, 'name' => '货源充足', 'params' => array(30)),//默认单位吨
                 array('id' => 1, 'name' => '货源一般', 'params' => array(20, 30)),

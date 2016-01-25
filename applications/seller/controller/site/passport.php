@@ -622,6 +622,7 @@ class seller_ctl_site_passport extends seller_frontpage
     //商家入驻类型选择
     public function identity()
     {
+        (!$_POST['ident'] || !is_numeric($_POST['ident'])) && $this->splash('error', '', '非法请求');
         if ($_POST) {
             $data = array('seller_id' => $this->seller['seller_id'], 'ident' => $_POST['ident']);
             if (!$this->app->model('sellers')->save($data)) {
