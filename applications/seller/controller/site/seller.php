@@ -46,13 +46,48 @@ class seller_ctl_site_seller extends seller_frontpage {
     }
 
     //商户信息
-    public function businessInfo() {
-        $schedule = $this->app->model('sellers')->getRow('schedule', array('seller_id' => $this->seller['seller_id']));
-
+    public function businessInfo($step = 1) {
+        !is_numeric($step) && $step = 1;
+        $companyInfo = $this->app->getConf('seller_entry');
+        $companyInfo = $companyInfo['comm'];
+        unset($companyInfo[count($companyInfo)]);
+        if ($step == '1') {
+            $licence_type = $this->_request->get_get('card');
+            if(!$licence_type){
+                $licence_type = $this->passport_obj->new_or_old($this->seller['seller_id']);
+            }
+        }
+        $companyInfo[1]['page'] = array_flip($companyInfo[1]['page']);
+        if ($licence_type == 'new') {
+            unset($companyInfo[1]['page']['business_licence']);
+            unset($companyInfo[1]['page']['tax_licence']);
+            unset($companyInfo[1]['page']['organization_licence']);
+        } else if ($licence_type == 'old') {
+            unset($companyInfo[1]['page']['three_lesstion']);
+        }
+        $companyInfo[1]['page'] = array_flip($companyInfo[1]['page']);
+        $columns = $this->passport_obj->page_setting($step, $licence_type);
+        $this->pagedata['company'] = $companyInfo;
+        $this->pagedata['info'] = $this->passport_obj->edit_info($columns, $this->seller['seller_id']);
+        $this->pagedata['info']['company_extra']['type'] = 'center';
+        $this->pagedata['activePage'] = $step;
         $this->menuSetting = 'account';
         $this->output();
     }
 
+    public function save_businessInfo(){
+        $redirect = $this->gen_url(array(
+            'app' => 'seller',
+            'ctl' => 'site_seller',
+            'act' => 'businessInfo'
+        ));
+        if(empty($_POST)) $this->splash('error', $redirect, '非法请求');
+        $params = utils::_filter_input($_POST);
+        unset($_POST);
+        $result = $this->passport_obj->entry($params, $this->seller['seller_id']);
+        if(!$result) $this->splash('error', $redirect, '操作失败');
+        $this->splash('success', $redirect, '修改成功');
+    }
     //安全设置
     public function securitycenter() {
         $this->menuSetting = 'account';

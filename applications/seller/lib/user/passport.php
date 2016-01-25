@@ -566,4 +566,158 @@ class seller_user_passport
         }
         return $columns;
     }
+
+    //查询已注册的信息
+    public function &edit_info($columns, $seller_id)
+    {
+        $info = array();
+        $filter = array('uid' => $seller_id, 'from' => '1');
+        $company_extra = app::get('base')->model('company_extra')->
+        getList('*', array_merge($filter, array('key|in' => array_keys($columns))));
+        $conf = $this->app->getConf('seller_entry');
+        foreach ($company_extra as $value) {
+
+            if (in_array($value['key'], $conf['array_info'])) {
+                $info['company_extra'][$value['key']][] = $value;
+                continue;
+            }
+            $info['company_extra'][$value['key']] = $value;
+        }
+        $info['company_extra']['store'] = app::get('store')->model('store')->getRow('*', array('seller_id' => $filter['uid']));
+        $info['company_extra']['company'] = app::get('base')->model('company')->getRow('*', $filter);
+        $info['company_extra']['contact'] = app::get('base')->model('contact')->getRow('*', $filter);
+        $info['company_extra']['brand'] = $this->app->model('brand')->getRow('*', array('seller_id' => $this->seller['seller_id']));
+        return $info;
+    }
+
+    //保存注册信息
+    public function entry($params, $seller_id)
+    {
+        $db = vmc::database();
+        $db->beginTransaction();
+        $extra_columns = $this->page_setting($params['pageIndex'], '');
+        $sqlType = false;
+        //公司信息
+        if (isset($params['company']) && !empty($params['company'])) {
+            $params['company']['uid'] = $seller_id;
+            $params['company']['from'] = '1';
+            $params['company']['company_id'] && $sqlType = true;
+            if (!app::get('base')->model('company')->save($params['company'])) {
+                $db->rollback();
+                return false;
+            }
+        }
+        //联第人信息
+
+        if (isset($params['contact']) && !empty($params['contact'])) {
+            $params['contact']['uid'] = $seller_id;
+            $params['contact']['from'] = '1';
+            $params['contact']['contact_id'] && $sqlType = true;
+            if (!app::get('base')->model('contact')->save($params['contact'])) {
+                $db->rollback();
+                return false;
+            }
+        }
+        //品牌
+        if (isset($params['brand']) && !empty($params['brand'])) {
+            $params['brand']['brand_id'] && $sqlType = true;
+            $params['brand']['seller_id'] = $seller_id;
+            if (!$params['brand']['brand_id']) {
+                if (!$barand_id = app::get('b2c')->model('brand')->insert($params['brand'])) {
+                    $db->rollback();
+                    return false;
+                }
+                $params['brand_id'] = $barand_id;
+            } else if (!app::get('b2c')->model('brand')->save($params['brand'])) {
+                $db->rollback();
+                return false;
+            }
+
+            if (!$this->app->model('brand')->save($params['brand'])) {
+
+                $db->rollback();
+                return false;
+            }
+        }
+        //店铺
+        if (isset($params['store']) && !empty($params['store'])) {
+            $params['store']['store_id'] && $sqlType = true;
+            $params['store']['seller_id'] = $seller_id;
+            if (!app::get('store')->model('store')->save($params['store'])) {
+                $db->rollback();
+                return false;
+            }
+        }
+        //扩展
+
+        $mdl_company_extra = app::get('base')->model('company_extra');
+        foreach ($extra_columns as $key => $col) {
+            if (isset($params[$key]) && !empty($params[$key])) {
+                $params[$key]['content_id'] && $sqlType = true;
+                $params[$key]['content_id'] = $params[$key]['content_id'];
+                $params[$key]['uid'] = $seller_id;
+                $params[$key]['from'] = 1;
+                //电商成员信息
+                if (is_array(reset($params[$key]['value']))) {
+                    if (!$this->_save_array($key, $params[$key], $seller_id)) {
+                        $db->rollback();
+                        return false;
+                    }
+                    continue;
+                }
+                if (!$mdl_company_extra->extra_save($key, $params)) {
+                    $db->rollback();
+                    return false;
+                }
+
+            }
+        }
+        if(!$sqlType){
+            $data = array('seller_id' => $seller_id, 'schedule' => $params['pageIndex']);
+            if (!$this->app->model('sellers')->save($data)) {
+                $db->rollback();
+                return false;
+            }
+        }
+        $db->commit();
+        return true;
+    }
+
+    private function _save_array($key, $params = null, $seller_id)
+    {
+        if (!empty($params)) {
+            $mdl_company_extra = app::get('base')->model('company_extra');
+            $first_arr = reset($params['value']);
+            $length = count($first_arr);
+            for ($i = 0; $i < $length; $i++) {
+                if (empty($first_arr[$i])) {
+                    continue;
+                }
+                $data['uid'] = $seller_id;
+                $data['from'] = 1;
+                $data['content_id'] = $params['content_id'][$i];
+                $data['attach'] = $params['attach'][$i];
+                $data['key'] = $key;
+                $data['attach'] = $params['attach'][$i];
+
+                foreach ($params['value'] as $k => $v) {
+                    $data['value'][$k] = $v[$i];
+
+                }
+                if (!$mdl_company_extra->save($data)) {
+                    return false;
+                }
+            }
+            return true;
+        }
+    }
+
+    //营业执照类型 老版or新版
+    public function new_or_old($seller_id)
+    {
+        //查询入住营业执照信息判断是否是新版还是老版
+        $checked = app::get('base')->model('company_extra')->getRow('*', array('uid' => $seller_id, 'from' => '1', 'key|in' => array('business_licence', 'three_lesstion')), '0', '1', 'content_id desc');
+        $licence_type = $checked['key'] == 'three_lesstion' ? 'new' : 'old';
+        return $licence_type;
+    }
 }

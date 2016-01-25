@@ -1,6 +1,14 @@
 
 <div id="three_lesstion">
-    <h4>三证合一营业执照（副本）<a href="<{link app=seller ctl=site_passport act=entry}>?card=old"><small class="text-danger">还没换证，填写旧版</small></a></h4>
+    <h4>三证合一营业执照（副本）
+        <{if $extra.type eq 'center'}>
+        <a href="<{link app=seller ctl=site_seller act=businessInfo}>?card=old">
+        <{else}>
+        <a href="<{link app=seller ctl=site_passport act=entry}>?card=old">
+         <{/if}>
+            <small class="text-danger">还没换证，填写旧版</small>
+        </a>
+    </h4>
     <div class="form-group">
         <label class="col-xs-2 control-label">
             <span class="text-danger">*</span>注册号：
