@@ -23,10 +23,10 @@
     <li <{if $current_status=='s7' }>class="active"
         <{/if}>><a href="<{link app=b2c ctl=site_member act=orders args0=s7}>">订单回收站</a></li>
     <li class="last_li">
-        <form action="<{link app=b2c ctl=site_member act=orders args0=$status}>" method="post">
+        <form action="<{link app=b2c ctl=site_member act=orders args0=$current_status}>" method="post">
             <div class="form-group">
                 <div class="input-group">
-                    <input type="text" class="form-control" name="search" placeholder="商品名称/订单编号">
+                    <input type="text" class="form-control" value="<{$search}>" name="search" placeholder="商品名称/订单编号">
                     <div class="input-group-addon">
                         <button type="submit"><i class="glyphicon glyphicon-search"></i></button>
                     </div>

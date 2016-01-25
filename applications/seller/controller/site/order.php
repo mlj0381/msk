@@ -31,13 +31,19 @@ class seller_ctl_site_order extends seller_frontpage
         $status_filter = $mdl_order->filter();
         $this->pagedata['status'] = $status;
         $filter = $status_filter[$status];
-
+        $obj_order_search = vmc::singleton('b2c_order_search');
+        $search = $obj_order_search->search($_POST);
         $filter['store_id'] = $this->store['store_id'];
 
         if($status == 's2'){
-            $sql = "SELECT * FROM vmc_b2c_orders WHERE `store_id`={$this->store['store_id']} AND `status` = 'active' AND `confirm` = 'N' AND (`is_cod`='Y' OR `pay_status`='1') ORDER BY createtime desc LIMIT ". (($page - 1) * $limit). ", {$limit}";
+            $where = $search['sql'];
+            $sql = "SELECT
+* FROM  vmc_b2c_orders WHERE `store_id`={$this->store['store_id']} AND `status` = 'active' AND `confirm` = 'N' AND (`is_cod`='Y' OR
+`pay_status`='1')  {$where}   ORDER BY createtime desc LIMIT ". (($page - 1) * $limit). ", {$limit}";
             $order_list = vmc::database()->select($sql);
         }else{
+            $search['order_id|has'] && $filter['order_id|has'] = $search['order_id|has'];
+            $search['order_id|in'] && $filter['order_id|in'] = $search['order_id|in'];
             $order_list = $mdl_order->getList('*', $filter, ($page - 1) * $limit, $limit);
         }
         foreach ($order_list as $key => $value) {
@@ -51,6 +57,7 @@ class seller_ctl_site_order extends seller_frontpage
         ));
         $order_items_group = utils::array_change_key($order_items, 'order_id', true);
         $order_count = $mdl_order->count($filter);
+        $this->pagedata['search'] = $_POST['search'];
         $this->pagedata['type'] = 'orders';
         $this->pagedata['current_status'] = $status;
         $this->pagedata['status_map'] = $status_filter;
@@ -74,6 +81,9 @@ class seller_ctl_site_order extends seller_frontpage
         $this->output();
     }
 
+    private function search_order($post){
+
+    }
     //支付
     public function dopay()
     {

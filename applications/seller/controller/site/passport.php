@@ -474,7 +474,6 @@ class seller_ctl_site_passport extends seller_frontpage
         $params = utils::_filter_input($_POST);
         unset($_POST);
         $type = key($params);
-        print_r($params);
         $data = array();
         foreach ($params[$type]['value'] as $key => $value) {
             $data[$type]['value'][$key] = $value[0];

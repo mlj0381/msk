@@ -1,6 +1,6 @@
 <div class="aftersales_page">
 	<div class="page-header">
-		<h1>售后管理</h1>
+		<h1><{if $type eq 'price'}>退款管理<{else}>售后管理<{/if}></h1>
 	</div>
 	<div class="filter_box clearfix">
         <form class="form-inline" method="post" action="<{link app=seller ctl=site_aftersales act=order args0=$status}>">
@@ -45,10 +45,34 @@
     </div>
 
 	<ul class="aftersales_nav">
-		<li <{if $status eq 'all'}>class="active"<{/if}>><a href="<{link app=seller ctl=site_aftersales act=order args0=all}>">全部</a></li>
-		<li <{if $status eq '1' or $status eq '3' or $status eq '4'}>class="active"<{/if}>><a href="<{link app=seller ctl=site_aftersales act=order args0=1}>">处理中</a></li>
-		<li <{if $status eq '5'}>class="active"<{/if}>><a href="<{link app=seller ctl=site_aftersales act=order args0=5}>">退款成功</a></li>
-		<li <{if $status eq '2'}>class="active"<{/if}>><a href="<{link app=seller ctl=site_aftersales act=order args0=2}>">退款拒绝</a></li>
+		<li <{if $status eq 'all'}>class="active"<{/if}>>
+        <{if $type eq 'price'}>
+        <a href="<{link app=seller ctl=site_aftersales act=price_manage args0=all}>">全部</a>
+        <{else}>
+        <a href="<{link app=seller ctl=site_aftersales act=order args0=all}>">全部</a>
+        <{/if}>
+        </li>
+		<li <{if $status eq '1' or $status eq '3' or $status eq '4'}>class="active"<{/if}>>
+        <{if $type eq 'price'}>
+        <a href="<{link app=seller ctl=site_aftersales act=price_manage args0=1}>">处理中</a>
+        <{else}>
+        <a href="<{link app=seller ctl=site_aftersales act=order args0=1}>">处理中</a>
+        <{/if}>
+        </li>
+		<li <{if $status eq '5'}>class="active"<{/if}>>
+        <{if $type eq 'price'}>
+        <a href="<{link app=seller ctl=site_aftersales act=price_manage args0=5}>">退款成功</a>
+        <{else}>
+        <a href="<{link app=seller ctl=site_aftersales act=order args0=5}>">退款成功</a>
+        <{/if}>
+        </li>
+		<li <{if $status eq '2'}>class="active"<{/if}>>
+        <{if $type eq 'price'}>
+        <a href="<{link app=seller ctl=site_aftersales act=price_manage args0=2}>">退款拒绝</a>
+        <{else}>
+        <a href="<{link app=seller ctl=site_aftersales act=order args0=2}>">退款拒绝</a>
+        <{/if}>
+        </li>
 	</ul>
 	<table class="aftersales_list">
 		<thead>

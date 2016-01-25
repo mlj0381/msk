@@ -276,14 +276,19 @@ class b2c_ctl_site_member extends b2c_frontpage
 
         $this->pagedata['status'] = $status;
         $filter = $status_filter[$status];
+        $obj_order_search = vmc::singleton('b2c_order_search');
+        $search = $obj_order_search->search($_POST);
         $filter['member_id'] = $this->member['member_id'];
         if($status == 's2'){
+            $where = $search['sql'];
             $sql = "SELECT
 * FROM
 vmc_b2c_orders WHERE `member_id`={$this->member['member_id']} AND `status` = 'active' AND `confirm` = 'N' AND (`is_cod`='Y' OR
-`pay_status`='1') AND `ship_status`='0' ORDER BY createtime desc LIMIT ". (($page - 1) * $limit). ", {$limit}";
+`pay_status`='1') {$where} AND `ship_status`='0' ORDER BY createtime desc LIMIT ". (($page - 1) * $limit). ", {$limit}";
             $order_list = vmc::database()->select($sql);
         }else{
+            $search['order_id|has'] && $filter['order_id|has'] = $search['order_id|has'];
+            $search['order_id|in'] && $filter['order_id|in'] = $search['order_id|in'];
             $order_list = $mdl_order->getList('*', $filter, ($page - 1) * $limit, $limit);
         }
         $obj_store = vmc::singleton('store_store_object');
@@ -302,6 +307,7 @@ vmc_b2c_orders WHERE `member_id`={$this->member['member_id']} AND `status` = 'ac
         ));
         $order_items_group = utils::array_change_key($order_items, 'order_id', true);
         $order_count = $mdl_order->count($filter);
+        $this->pagedata['search'] = $_POST['search'];
         $this->pagedata['type'] = 'orders';
         $this->pagedata['current_status'] = $status;
         $this->pagedata['status_map'] = $status_filter;

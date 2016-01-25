@@ -97,16 +97,18 @@ class seller_ctl_site_goods extends seller_frontpage
     //添加商品
     public function add($goods_id)
     {
-        $this->pagedata['goods'] = $this->mB2cGoods->dump($goods_id, '*', 'default');
-        //获取商品库存信息
-        $mdl_stock = app::get('b2c')->model('stock');
-        foreach ($this->pagedata['goods']['product'] as &$value) {
-            $value['stock'] = $mdl_stock->getRow('*', array('sku_bn' => $value['bn'], 'warehouse' => $this->store['store_id']));
+        if(is_numeric($goods_id)){
+            $this->pagedata['goods'] = $this->mB2cGoods->dump($goods_id, '*', 'default');
+            //获取商品库存信息
+            $mdl_stock = app::get('b2c')->model('stock');
+            foreach ($this->pagedata['goods']['product'] as &$value) {
+                $value['stock'] = $mdl_stock->getRow('*', array('sku_bn' => $value['bn'], 'warehouse' => $this->store['store_id']));
+            }
+            foreach ($this->pagedata['goods']['product'] as &$value) {
+                $value['spec'] = explode('/', $value['spec_info']);
+            }
         }
         $this->pagedata['params'] = $this->basic();
-        foreach ($this->pagedata['goods']['product'] as &$value) {
-            $value['spec'] = explode('/', $value['spec_info']);
-        }
         $this->pagedata['_PAGE_'] = 'from.html';
         $this->_editor();
         $this->output();
