@@ -6,7 +6,8 @@
 			<span class="text-danger">*</span>车间名称：
 		</label>
 		<div class="col-xs-4">
-			<input type="text" value="<{$extra.workshop.value.name}>" name="workshop[value][name]" class="form-control">
+			<input type="text" value="<{$extra.workshop.value.name}>" name="workshop[value][name]" class="form-control" required="true">
+			<span class="msgTip" data-message="error"></span>
 		</div>
 	</div>
 	<div class="form-group">
@@ -14,7 +15,8 @@
 			<span class="text-danger">*</span>生产产品：
 		</label>
 		<div class="col-xs-4">
-			<input type="text" value="<{$extra.workshop.value.pro}>" name="workshop[value][pro]" class="form-control">
+			<input type="text" value="<{$extra.workshop.value.pro}>" name="workshop[value][pro]" class="form-control"required="true">
+			<span class="msgTip" data-message="error"></span>
 		</div>
 	</div>
 	<div class="form-group">

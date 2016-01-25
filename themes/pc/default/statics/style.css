@@ -825,6 +825,21 @@ ol {
   margin: 20px 0;
   text-align: center;
 }
+.signup_complete_con h2 {
+  margin-top: 100px;
+  color: #255625;
+  font-size: 34px;
+}
+.signup_complete_con h2 .icon-ok-sign {
+  font-size: 34px;
+  color: #255625;
+}
+.signup_complete_con h4 {
+  margin-top: 25px;
+}
+.signup_complete_con h4 a {
+  color: #255625;
+}
 .splash_con {
   min-height: 500px;
 }

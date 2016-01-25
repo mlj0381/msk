@@ -7,7 +7,8 @@
 			<span class="text-danger">*</span>面积：
 		</label>
 		<div class="col-xs-4">
-			<input type="text" value="<{$extra.laboratory.value.area}>" name="laboratory[value][area]" class="form-control">
+			<input type="text" value="<{$extra.laboratory.value.area}>" name="laboratory[value][area]" class="form-control" required="true">
+			<span class="msgTip" data-message="error"></span>
 		</div>
 	</div>
 	<div class="form-group">
@@ -15,7 +16,8 @@
 			<span class="text-danger">*</span>功能：
 		</label>
 		<div class="col-xs-4">
-			<input type="text" value="<{$extra.laboratory.value.fun}>" name="laboratory[value][fun]" class="form-control">
+			<input type="text" value="<{$extra.laboratory.value.fun}>" name="laboratory[value][fun]" class="form-control" required="true">
+			<span class="msgTip" data-message="error"></span>
 		</div>
 	</div>
 	<div class="form-group">
@@ -23,7 +25,8 @@
 			<span class="text-danger">*</span>投资：
 		</label>
 		<div class="col-xs-4">
-			<input type="text" value="<{$extra.laboratory.value.invest}>" name="laboratory[value][invest]" class="form-control">
+			<input type="text" value="<{$extra.laboratory.value.invest}>" name="laboratory[value][invest]" class="form-control" required="true">
+			<span class="msgTip" data-message="error"></span>
 		</div>
 	</div>
 	<div class="form-group">
@@ -31,7 +34,8 @@
 			<span class="text-danger">*</span>人员：
 		</label>
 		<div class="col-xs-4">
-			<input type="text" value="<{$extra.laboratory.value.staff}>" name="laboratory[value][staff]" class="form-control">
+			<input type="text" value="<{$extra.laboratory.value.staff}>" name="laboratory[value][staff]" class="form-control" required="true" format="number">
+			<span class="msgTip" data-message="number"></span>
 		</div>
 	</div>
 

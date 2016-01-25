@@ -5,11 +5,12 @@
         <span class="text-danger">*</span>店铺类型：
     </label>
     <div class="col-xs-4">
-        <select name="store[store_type]" value="<{$extra.store.store_type}>" class="form-control">
+        <select name="store[store_type]" value="<{$extra.store.store_type}>" class="form-control" required="true">
             <option value="1">工厂店铺</option>
             <option value="2">代理店铺</option>
             <option value="3">OEM店铺</option>
         </select>
+        <span class="msgTip" data-message="error"></span>
     </div>
 </div>
 <div class="form-group">
@@ -17,7 +18,8 @@
         <span class="text-danger">*</span>店铺名称：
     </label>
     <div class="col-xs-4">
-        <input name="store[store_name]" value="<{$extra.store.store_name}>" class="form-control" />
+        <input name="store[store_name]" value="<{$extra.store.store_name}>" class="form-control" required="true" />
+        <span class="msgTip" data-message="error"></span>
     </div>
 </div>
 <div class="form-group">

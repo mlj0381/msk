@@ -26,31 +26,36 @@
                 <div class="form-group">
                     <label for="input_login_name" class="col-md-2 control-label"><span class="text-danger">*</span>登录账号：</label>
                     <div class="col-md-4">
-                        <input type="text" required="true" autocomplete='off' name="pam_account[login_name]" class="form-control" id="input_login_name" placeholder="请输入用户名支持字母、数字与下划线的组合">
+                        <input type="text" required="true" autocomplete='off' name="pam_account[login_name]" class="form-control" id="input_login_name" placeholder="手机号/邮箱/用户名" required="true" format="username|mobile|email" remote="<{link app=seller ctl=site_passport act=check_login_name}>">
+                        <span class="msgTip" data-message="format">用户名只能是手机号、邮箱、用户名</span>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="input_login_password" class="col-md-2 control-label"><span class="text-danger">*</span>登录密码：</label>
                     <div class="col-md-4">
-                        <input type="password" required="true" name="pam_account[login_password]" class="form-control" id="input_login_password" placeholder="登录密码">
+                        <input type="password" required="true" name="pam_account[login_password]" class="form-control" id="input_login_password" placeholder="6-11位字符，必须是字母、数字、下划线组合" required="true" minlength="6" maxlength="11" format="password">
+                        <span class="msgTip" data-message="format">密码格式错误</span>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="input_psw_confirm" class="col-md-2 control-label"><span class="text-danger">*</span>确认密码：</label>
                     <div class="col-md-4">
-                        <input type="password" required="true" name="pam_account[psw_confirm]" class="form-control" id="input_psw_confirm" placeholder="再次输入登录密码">
+                        <input type="password" required="true" name="pam_account[psw_confirm]" class="form-control" id="input_psw_confirm" placeholder="再次输入登录密码" equalTo="#input_login_password">
+                        <span class="msgTip" data-message="error">两次密码输入不一致</span>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="input_psw_confirm" class="col-md-2 control-label"><span class="text-danger">*</span>验证手机：</label>
                     <div class="col-md-4">
-                        <input type="text" required="true" name="pam_account[mobile]" class="form-control" id="input_mobile">
+                        <input type="text" required="true" name="pam_account[mobile]" class="form-control" id="input_mobile" required="true" format="mobile">
+                        <span class="msgTip" data-message="error">请输入正确的手机号码</span>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="input_psw_confirm" class="col-md-2 control-label"><span class="text-danger">*</span>短信验证码：</label>
                     <div class="col-md-2">
-                        <input type="text" required="true" name="smscode" class="form-control" id="input_vcode">
+                        <input type="text" required="true" name="smscode" class="form-control" id="input_vcode" required="true">
+                        <span class="msgTip" data-message="error"></span>
                     </div>
                     <div class="col-md-2">
                         <div class="mobile-vcode">
@@ -58,22 +63,10 @@
                         </div>
                     </div>
                 </div>
-            <!--      <div class="form-group">
-                    <label for="input_vcode" class="col-md-2 control-label">验证码<span class="text-danger">*</span></label>
-                    <div class="col-md-2">
-                        <input type="text" required="true" name="vcode" class="form-control" id="input_vcode">
-                    </div>
-                  <div class="col-md-2">
-                        <div class="local-vcode">
-                            <img src="<{link app=site ctl=vcode act=index args0='passport'}>" alt="验证码" />
-                            <button type="button" class="btn btn-link btn-sm" onclick="$(this).prev().prop('src',$(this).attr('data-src')+'?'+new Date().getTime())" data-src="<{link app=site ctl=vcode act=index args0='passport'}>">更换验证码</button>
-                        </div>
-                    </div>
-                </div>-->
                 <div class="form-group">
                     <label for="input_psw_confirm" class="col-md-2 control-label"></label>
                     <div class="col-md-4">
-                        <input type="checkbox" name="treaty"> 我已阅读并同意
+                        <input type="checkbox" name="treaty" checked="checked"> 我已阅读并同意
                         <a href="#" class="text-danger" data-toggle="modal" data-target="#accordModal">《美侍客用户注册协议》</a>
                         <a href="#" class="text-danger" data-toggle="modal" data-target="#accordModal">《美侍客服务条款》</a>
                     </div>
@@ -110,13 +103,24 @@
 
 
 <script>
+/**
+ * 表单验证
+ */
+ $(function(){
+    var validate = $.VMC.validator("member_signup_form");
+});
+
+
+
+
+
 /*
  * 会员注册脚本
  */
 
 void function(signup_form) {
 
-    var alert_timer = 0;
+    /*var alert_timer = 0;
     var _alert_error = function(msg) {
         signup_form.find('.alert-error').remove();
         signup_form.append($('<div class="alert alert-danger">' + msg + '</div>'));
@@ -189,7 +193,7 @@ void function(signup_form) {
         }, 'json');
         return false;
     });
-
+*/
     //获得短信验证码
     var _cutdown_sms = function(btn) {
         btn.addClass('disabled');

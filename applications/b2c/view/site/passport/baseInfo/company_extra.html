@@ -123,14 +123,14 @@
         <label for="" class="col-md-2 control-label"><span class="text-danger">*</span>姓名：</label>
         <div class="col-md-5">
             <input type="hidden" name="contact[company_id]" value="<{$extra.contact.company_id}>">
-            <input type="text" name="contact[boss_name]" value="<{$extra.contact.boss_name}>" class="form-control" id="boss_name" required="true">
+            <input type="text" name="contact[boss_name]" value="<{$extra.contact.boss_name}>" class="form-control"  required="true">
             <span class="msgTip" data-message="required"></span>
         </div>
     </div>
     <div class="form-group">
         <label for="" class="col-md-2 control-label"><span class="text-danger">*</span>手机：</label>
         <div class="col-md-5">
-            <input type="text" name="contact[boss_mobile]" value="<{$extra.contact.boss_mobile}>" class="form-control" id="boss_phone" required="true" format="mobile">
+            <input type="text" name="contact[boss_mobile]" value="<{$extra.contact.boss_mobile}>" class="form-control" required="true" format="mobile">
             <span class="msgTip" data-message="required"></span>
             <span class="msgTip" data-message="mobile">请输入正确手机号码</span>
         </div>
@@ -138,13 +138,13 @@
     <div class="form-group">
         <label for="" class="col-md-2 control-label">QQ：</label>
         <div class="col-md-5">
-            <input type="text" name="contact[boss_qq]" value="<{$extra.contact.boss_qq}>"  class="form-control" id="" placeholder="此项重点填写">
+            <input type="text" name="contact[boss_qq]" value="<{$extra.contact.boss_qq}>"  class="form-control" placeholder="此项重点填写">
         </div>
     </div>
     <div class="form-group">
         <label for="" class="col-md-2 control-label">微信：</label>
         <div class="col-md-5">
-            <input type="text" name="contact[boss_wechat]" value="<{$extra.contact.boss_wechat}>"  class="form-control" id="" placeholder="此项重点填写">
+            <input type="text" name="contact[boss_wechat]" value="<{$extra.contact.boss_wechat}>"  class="form-control" placeholder="此项重点填写">
         </div>
     </div>
     <h3>店长</h3>
@@ -152,14 +152,14 @@
         <label for="" class="col-md-2 control-label"><span class="text-danger">*</span>姓名：</label>
         <div class="col-md-5">
             <input type="hidden" name="contact_extra[content_id]" value="<{$extra.company_extra.contact_extra.content_id}>">
-            <input type="text" name="contact_extra[value][buinour_name]" value="<{$extra.company_extra.contact_extra.value.buinour_name}>" required="true" class="form-control" id="boss_name" placeholder="">
+            <input type="text" name="contact_extra[value][buinour_name]" value="<{$extra.company_extra.contact_extra.value.buinour_name}>" required="true" class="form-control" placeholder="">
             <span class="msgTip" data-message="required"></span>
         </div>
     </div>
     <div class="form-group">
         <label for="" class="col-md-2 control-label"><span class="text-danger">*</span>手机：</label>
         <div class="col-md-5">
-            <input type="text" name="contact_extra[value][buinour_mobile]" value="<{$extra.company_extra.contact_extra.value.buinour_mobile}>" class="form-control" id="boss_phone" required="true" format="mobile" >
+            <input type="text" name="contact_extra[value][buinour_mobile]" value="<{$extra.company_extra.contact_extra.value.buinour_mobile}>" class="form-control" required="true" format="mobile" >
             <span class="msgTip" data-message="required"></span>
             <span class="msgTip" data-message="mobile">请输入正确手机号码</span>
         </div>
@@ -167,27 +167,27 @@
     <div class="form-group">
         <label for="" class="col-md-2 control-label">QQ：</label>
         <div class="col-md-5">
-            <input type="text" name="contact_extra[value][buinour_qq]" value="<{$extra.company_extra.contact_extra.value.buinour_qq}>" class="form-control" id="" placeholder="此项重点填写">
+            <input type="text" name="contact_extra[value][buinour_qq]" value="<{$extra.company_extra.contact_extra.value.buinour_qq}>" class="form-control" placeholder="此项重点填写">
         </div>
     </div>
     <div class="form-group">
         <label for="" class="col-md-2 control-label">微信：</label>
         <div class="col-md-5">
-            <input type="text" name="contact_extra[value][buinour_wechat]" value="<{$extra.company_extra.contact_extra.value.buinour_wechat}>" class="form-control" id="" placeholder="此项重点填写">
+            <input type="text" name="contact_extra[value][buinour_wechat]" value="<{$extra.company_extra.contact_extra.value.buinour_wechat}>" class="form-control" placeholder="此项重点填写">
         </div>
     </div>
     <h3>采购员</h3>
     <div class="form-group">
         <label for="" class="col-md-2 control-label"><span class="text-danger">*</span>姓名：</label>
         <div class="col-md-5">
-            <input type="text" name="contact_extra[value][buyer_name]" value="<{$extra.company_extra.contact_extra.value.buyer_name}>" class="form-control" id="boss_name" placeholder="" id="boss_name" required="true">
+            <input type="text" name="contact_extra[value][buyer_name]" value="<{$extra.company_extra.contact_extra.value.buyer_name}>" class="form-control"  placeholder="" required="true">
             <span class="msgTip" data-message="required"></span>
         </div>
     </div>
     <div class="form-group">
         <label for="" class="col-md-2 control-label"><span class="text-danger">*</span>手机：</label>
         <div class="col-md-5">
-            <input type="text" name="contact_extra[value][buyer_mobile]" value="<{$extra.company_extra.contact_extra.value.buyer_mobile}>" class="form-control" id="boss_phone" required="true" format="mobile">
+            <input type="text" name="contact_extra[value][buyer_mobile]" value="<{$extra.company_extra.contact_extra.value.buyer_mobile}>" class="form-control" required="true" format="mobile">
             <span class="msgTip" data-message="required"></span>
             <span class="msgTip" data-message="mobile">请输入正确手机号码</span>
         </div>
@@ -195,27 +195,27 @@
     <div class="form-group">
         <label for="" class="col-md-2 control-label">QQ：</label>
         <div class="col-md-5">
-            <input type="text" name="contact_extra[value][buyer_qq]" value="<{$extra.company_extra.contact_extra.value.buyer_qq}>" class="form-control" id="" placeholder="此项重点填写">
+            <input type="text" name="contact_extra[value][buyer_qq]" value="<{$extra.company_extra.contact_extra.value.buyer_qq}>" class="form-control" placeholder="此项重点填写">
         </div>
     </div>
     <div class="form-group">
         <label for="" class="col-md-2 control-label">微信：</label>
         <div class="col-md-5">
-            <input type="text" name="contact_extra[value][buyer_wechat]" value="<{$extra.company_extra.contact_extra.value.buyer_wechat}>" class="form-control" id="" placeholder="此项重点填写">
+            <input type="text" name="contact_extra[value][buyer_wechat]" value="<{$extra.company_extra.contact_extra.value.buyer_wechat}>" class="form-control" placeholder="此项重点填写">
         </div>
     </div>
     <h3>有权联系人</h3>
     <div class="form-group">
         <label for="" class="col-md-2 control-label"><span class="text-danger">*</span>姓名：</label>
         <div class="col-md-5">
-            <input type="text" name="contact[name]" value="<{$extra.contact.name}>" class="form-control" id="pressing_name" required="true">
+            <input type="text" name="contact[name]" value="<{$extra.contact.name}>" class="form-control" required="true">
             <span class="msgTip" data-message="required"></span>
         </div>
     </div>
     <div class="form-group">
         <label for="" class="col-md-2 control-label"><span class="text-danger">*</span>手机：</label>
         <div class="col-md-5">
-            <input type="text" name="contact[tel]" value="<{$extra.contact.tel}>" class="form-control" id="pressing_phone" required="true" format="mobile">
+            <input type="text" name="contact[tel]" value="<{$extra.contact.tel}>" class="form-control" required="true" format="mobile">
             <span class="msgTip" data-message="required"></span>
             <span class="msgTip" data-message="mobile">请输入正确手机号码</span>
         </div>
@@ -223,13 +223,13 @@
     <div class="form-group">
         <label for="" class="col-md-2 control-label">QQ：</label>
         <div class="col-md-5">
-            <input type="text" name="contact[contact_qq]" value="<{$extra.contact.contact_qq}>" class="form-control" id="">
+            <input type="text" name="contact[contact_qq]" value="<{$extra.contact.contact_qq}>" class="form-control" 
         </div>
     </div>
     <div class="form-group">
         <label for="" class="col-md-2 control-label">微信：</label>
         <div class="col-md-5">
-            <input type="text" name="contact[contact_wechat]" value="<{$extra.contact.contact_wechat}>" class="form-control" id="">
+            <input type="text" name="contact[contact_wechat]" value="<{$extra.contact.contact_wechat}>" class="form-control">
         </div>
     </div>
     <hr>

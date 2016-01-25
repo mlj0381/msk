@@ -70,6 +70,17 @@
     </div>
 </div>
 <script>
+/**
+ * 表单验证
+ */
+ $(function(){
+    var validate = $.VMC.validator("companyInfo_form");
+});
+
+
+
+
+
     void function (signup_form) {
         var _alert_error = function (msg) {
             signup_form.find('.alert-error').remove();

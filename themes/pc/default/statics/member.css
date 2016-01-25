@@ -1327,6 +1327,24 @@ ol {
 .buyer_container .seller_regbox .storeInfo_form h4 {
   margin: 20px;
 }
+.buyer_container .seller_regbox .seller_signup_complete {
+  text-align: center;
+}
+.buyer_container .seller_regbox .seller_signup_complete h2 {
+  margin-top: 100px;
+  color: #255625;
+  font-size: 34px;
+}
+.buyer_container .seller_regbox .seller_signup_complete h2 .icon-ok-sign {
+  font-size: 34px;
+  color: #255625;
+}
+.buyer_container .seller_regbox .seller_signup_complete h4 {
+  margin-top: 25px;
+}
+.buyer_container .seller_regbox .seller_signup_complete h4 a {
+  color: #255625;
+}
 .buyer_container .activity_con {
   border-top: 1px solid #ddd;
   padding-top: 50px;

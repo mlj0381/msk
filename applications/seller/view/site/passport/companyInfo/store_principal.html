@@ -5,7 +5,8 @@
         <span class="text-danger">*</span>姓名：
     </label>
     <div class="col-xs-4">
-        <input name="store_principal[value][name]" value='<{$extra.store_principal.value.name}>' class="form-control" />
+        <input name="store_principal[value][name]" value='<{$extra.store_principal.value.name}>' class="form-control" required="true"/>
+        <span class="msgTip" data-message="error"></span>
     </div>
 </div>
 <div class="form-group">
@@ -13,15 +14,17 @@
         <span class="text-danger">*</span>手机号码：
     </label>
     <div class="col-xs-4">
-        <input name="store_principal[value][mobile]" value='<{$extra.store_principal.value.mobile}>'  class="form-control" />
+        <input name="store_principal[value][mobile]" value='<{$extra.store_principal.value.mobile}>'  class="form-control" required="true" format="mobile" />
+        <span class="msgTip" data-message="mobile">请输入正确手机号码</span>
     </div>
 </div>
 <div class="form-group">
     <label class="col-xs-2 control-label">
-        电子邮箱：
+        <span class="text-danger">*</span>电子邮箱：
     </label>
     <div class="col-xs-4">
-        <input name="store_principal[value][email]" value='<{$extra.store_principal.value.email}>'  class="form-control" />
+        <input name="store_principal[value][email]" value='<{$extra.store_principal.value.email}>'  class="form-control" required="true" format="email" />
+        <span class="msgTip" data-message="email"></span>
     </div>
 </div>
 <div class="form-group">
@@ -29,7 +32,8 @@
         <span class="text-danger">*</span>QQ：
     </label>
     <div class="col-xs-4">
-        <input name="store_principal[value][qq]" value='<{$extra.store_principal.value.qq}>'  class="form-control" />
+        <input name="store_principal[value][qq]" value='<{$extra.store_principal.value.qq}>'  class="form-control"  required="true"/>
+        <span class="msgTip" data-message="error"></span>
     </div>
 </div>
 <div class="form-group">
