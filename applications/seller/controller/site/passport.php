@@ -149,7 +149,8 @@ class seller_ctl_site_passport extends seller_frontpage
     }
 
     //入驻进度
-    public function complete(){
+    public function complete()
+    {
         $this->page('site/passport/signup_complete.html');
     }
 
@@ -380,21 +381,32 @@ class seller_ctl_site_passport extends seller_frontpage
     public function entry($step = 0, $type)
     {
         $this->verify();
+        $redirect = $this->gen_url(array(
+            'app' => 'seller',
+            'ctl' => 'site_passport',
+            'act' => 'entry',
+            'args0' => $step,
+        ));
         if ($_POST) {
             $params = utils::_filter_input($_POST);
             unset($_POST);
-            $this->_entry($params);
+           $result = $this->passport_obj->entry($params, $this->seller['seller_id']);
+            if(!$result) $this->splash('error', $redirect, '操作失败');
         }
         $step = $params['pageIndex'] ? $params['pageIndex'] : $step;
         $step = $type == 'up' ? $step - 1 : $step + 1;
         $step <= 1 && $step = 1;
         $step >= 10 && $step = 10;
         if ($step == '1') {
-            $licence_type = $this->_new_or_old();
+            $licence_type = $this->_request->get_get('card');
+            if(!$licence_type){
+                $licence_type = $this->passport_obj->new_or_old($this->seller['seller_id']);
+            }
+
         }
 
         $columns = $this->passport_obj->page_setting($step, $licence_type);
-        $this->pagedata['info'] = $this->edit_info($columns);
+        $this->pagedata['info'] = $this->passport_obj->edit_info($columns, $this->seller['seller_id']);
         $this->pagedata['page'] = $columns;
         $this->pagedata['pageIndex'] = $step;
         if ($step == 10) {
@@ -402,42 +414,6 @@ class seller_ctl_site_passport extends seller_frontpage
         } else {
             $this->page('site/passport/signup_companyInfo.html');
         }
-    }
-
-    //营业执照类型 老版or新版
-    private function _new_or_old()
-    {
-        $licence_type = $this->_request->get_get('card');
-        if ($licence_type)
-            return $licence_type;
-        $licence_type = $licence_type ? $licence_type : 'new';
-        //查询入住营业执照信息判断是否是新版还是老版
-        $checked = app::get('base')->model('company_extra')->getRow('*', array('uid' => $this->seller['seller_id'], 'from' => '1', 'key|in' => array('business_licence', 'three_lesstion')), '0', '1', 'content_id desc');
-        $licence_type = $checked['key'] == 'three_lesstion' ? 'new' : 'old';
-        return $licence_type;
-    }
-
-    //查询已注册的信息
-    public function &edit_info($columns)
-    {
-        $info = array();
-        $filter = array('uid' => $this->seller['seller_id'], 'from' => '1');
-        $company_extra = app::get('base')->model('company_extra')->
-        getList('*', array_merge($filter, array('key|in' => array_keys($columns))));
-        $conf = $this->app->getConf('seller_entry');
-        foreach ($company_extra as $value) {
-
-            if (in_array($value['key'], $conf['array_info'])) {
-                $info['company_extra'][$value['key']][] = $value;
-                continue;
-            }
-            $info['company_extra'][$value['key']] = $value;
-        }
-        $info['company_extra']['store'] = app::get('store')->model('store')->getRow('*', array('seller_id' => $filter['uid']));
-        $info['company_extra']['company'] = app::get('base')->model('company')->getRow('*', $filter);
-        $info['company_extra']['contact'] = app::get('base')->model('contact')->getRow('*', $filter);
-        $info['company_extra']['brand'] = $this->app->model('brand')->getRow('*', array('seller_id' => $this->seller['seller_id']));
-        return $info;
     }
 
     //ajax提交保存电商团队成员
@@ -468,126 +444,14 @@ class seller_ctl_site_passport extends seller_frontpage
         $this->splash('success', '', $data[$type]);
     }
 
-    private function _entry($params)
-    {
-        $db = vmc::database();
-        $db->beginTransaction();
-        $extra_columns = $this->passport_obj->page_setting($params['pageIndex']);
-
-        //公司信息
-        if (isset($params['company']) && !empty($params['company'])) {
-            $params['company']['uid'] = $this->seller['seller_id'];
-            $params['company']['from'] = '1';
-            if (!app::get('base')->model('company')->save($params['company'])) {
-                $db->rollback();
-                $this->splash('error', $redirect, '注册失败');
-            }
-        }
-        //联第人信息
-
-        if (isset($params['contact']) && !empty($params['contact'])) {
-            $params['contact']['uid'] = $this->seller['seller_id'];
-            $params['contact']['from'] = '1';
-            if (!app::get('base')->model('contact')->save($params['contact'])) {
-                $db->rollback();
-                $this->splash('error', $redirect, '注册失败');
-            }
-        }
-        //品牌
-        if (isset($params['brand']) && !empty($params['brand'])) {
-            $params['brand']['seller_id'] = $this->seller['seller_id'];
-            if (!$params['brand']['brand_id']) {
-                if (!$barand_id = app::get('b2c')->model('brand')->insert($params['brand'])) {
-                    $db->rollback();
-                    $this->splash('error', $redirect, '注册失败');
-                }
-                $params['brand_id'] = $barand_id;
-            } else if (!app::get('b2c')->model('brand')->save($params['brand'])) {
-                $db->rollback();
-                $this->splash('error', $redirect, '注册失败');
-            }
-
-            if (!$this->app->model('brand')->save($params['brand'])) {
-
-                $db->rollback();
-                $this->splash('error', $redirect, '注册失败');
-            }
-        }
-        //店铺
-        if (isset($params['store']) && !empty($params['store'])) {
-            $params['store']['seller_id'] = $this->seller['seller_id'];
-            if (!app::get('store')->model('store')->save($params['store'])) {
-                $db->rollback();
-                $this->splash('error', $redirect, '注册失败');
-            }
-        }
-        //扩展
-
-        $mdl_company_extra = app::get('base')->model('company_extra');
-        foreach ($extra_columns as $key => $col) {
-            if (isset($params[$key]) && !empty($params[$key])) {
-                $params[$key]['content_id'] = $params[$key]['content_id'];
-                $params[$key]['uid'] = $this->seller['seller_id'];
-                $params[$key]['from'] = 1;
-                //电商成员信息
-                if (is_array(reset($params[$key]['value']))) {
-                    if (!$this->_save_array($key, $params[$key])) {
-                        $db->rollback();
-                        $this->splash('error', $redirect, '注册失败');
-                    }
-                    continue;
-                }
-                if (!$mdl_company_extra->extra_save($key, $params)) {
-                    $db->rollback();
-                    $this->splash('error', $redirect, '注册失败');
-                }
-            }
-        }
-        $data = array('seller_id' => $this->seller['seller_id'], 'schedule' => $params['pageIndex']);
-        if (!$this->app->model('sellers')->save($data)) {
-            $db->rollback();
-            $this->splash('error', $redirect, '注册失败');
-        }
-        $db->commit();
-    }
-
-    private function _save_array($key, $params = null)
-    {
-        if (!empty($params)) {
-            $mdl_company_extra = app::get('base')->model('company_extra');
-            $first_arr = reset($params['value']);
-            $length = count($first_arr);
-            for ($i = 0; $i < $length; $i++) {
-                if (empty($first_arr[$i])) {
-                    continue;
-                }
-                $data['uid'] = $this->seller['seller_id'];
-                $data['from'] = 1;
-                $data['content_id'] = $params['content_id'][$i];
-                $data['attach'] = $params['attach'][$i];
-                $data['key'] = $key;
-                $data['attach'] = $params['attach'][$i];
-
-                foreach ($params['value'] as $k => $v) {
-                    $data['value'][$k] = $v[$i];
-
-                }
-                if (!$mdl_company_extra->save($data)) {
-                    return false;
-                }
-            }
-            return true;
-        }
-    }
-
     //ajax删除电商团队、主要设备
     public function del_extra()
     {
-        if(!$_POST){
+        if (!$_POST) {
             $this->splash('error', '', '非法请求');
         }
         $data = array('content_id' => $_POST['content_id'], 'uid' => $this->member['member_id']);
-        if(!app::get('base')->model('company_extra')->delete($data)){
+        if (!app::get('base')->model('company_extra')->delete($data)) {
             $this->splash('error', '', '操作失败');
         }
         $this->splash('success', '', '操作成功');

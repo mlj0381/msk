@@ -2,59 +2,28 @@
 	<div class="page-header">
 		<h1>商户信息</h1>
 	</div>
-	<form action="" method="" class="edit_form form-horizontal">
-		<div class="area_box">
-			<h2>生产商企业基本资质<i class="icon-chevron-down" ></i></h2>
-			<div class="area_con">
-				<{include file='site/passport/companyInfo/three_lesstion.html'}>
-			</div>
-		</div>
-		<div class="area_box">
-			<h2>生产商企业专业资质<i class="icon-chevron-down" ></i></h2>
-			<div class="area_con">
-				<{include file='site/passport/companyInfo/three_lesstion.html'}>
-			</div>
-		</div>
-		<div class="area_box">
-			<h2>生产商企业基本生产能力<i class="icon-chevron-down" ></i></h2>
-			<div class="area_con">
-				<{include file='site/passport/companyInfo/three_lesstion.html'}>
-			</div>
-		</div>
-		<div class="area_box">
-			<h2>生产商企业生产车间、设备、产品工艺流程<i class="icon-chevron-down" ></i></h2>
-			<div class="area_con">
-				<{include file='site/passport/companyInfo/three_lesstion.html'}>
-			</div>
-		</div>
-		<div class="area_box">
-			<h2>生产商企业实验室、检测设备及产品质量控制系统<i class="icon-chevron-down" ></i></h2>
-			<div class="area_con">
-				<{include file='site/passport/companyInfo/three_lesstion.html'}>
-			</div>
-		</div>
-		<div class="area_box">
-			<h2>生产商企业管理团队<i class="icon-chevron-down" ></i></h2>
-			<div class="area_con">
-				<{include file='site/passport/companyInfo/three_lesstion.html'}>
-			</div>
-		</div>
-		<div class="area_box">
-			<h2>生产商企业电商团队<i class="icon-chevron-down" ></i></h2>
-			<div class="area_con">
-				<{include file='site/passport/companyInfo/three_lesstion.html'}>
-			</div>
-		</div>
-		<div class="area_box">
-			<h2>生产商企业产品品牌<i class="icon-chevron-down" ></i></h2>
-			<div class="area_con">
-				<{include file='site/passport/companyInfo/three_lesstion.html'}>
-			</div>
-		</div>
+	<form action="<{link app=seller ctl=site_seller act=save_businessInfo}>" method="post" class="edit_form form-horizontal">
+        <input type="hidden" name="pageIndex" value="<{$activePage}>"/>
+        <{foreach from=$company key=key item=items}>
+        <div class="area_box">
+            <a href="<{link app=seller ctl=site_seller act=businessInfo args0=$key}>" ><h2><{$items.label}><i class="icon-chevron-down" ></i></h2></a>
+            <div class="<{if $key eq $activePage}> area_con show<{else}> hide<{/if}>">
+                <{if $key eq $activePage}>
+                <{foreach from=$items.page  item=item}>
+                <{include file="site/passport/companyInfo/{$item}.html" extra=$info.company_extra}>
+                <{/foreach}>
+                <button type="submit" class="btn btn-danger btn-md col-xs-offset-5">确定修改</button>
+                <{/if}>
+            </div>
+        </div>
+
+        <{/foreach}>
 	</form>
 </div>	
 
-
+<style>
+    .show{display: block;}
+</style>
 <script type="text/javascript">
 	$(function(){
 		$('.edit_form .area_box:eq(0)').find('.area_con').css('display','block');

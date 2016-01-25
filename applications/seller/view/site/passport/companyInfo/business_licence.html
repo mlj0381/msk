@@ -1,8 +1,15 @@
 <input type='hidden' name='business_licence[content_id]' value='<{$extra.business_licence.content_id}>'/>
 <input type='hidden' name='company[company_id]' value='<{$extra.company.company_id}>'/>
 <div id="business_licence">
-	
-    <h4>营业执照信息（副本）<a href="<{link app=seller ctl=site_passport act=entry}>?card=new"><small class="text-danger">填写新版三证合一执照</small></a></h4>
+    <h4>营业执照信息（副本）
+        <{if $extra.type eq 'center'}>
+        <a href="<{link app=seller ctl=site_seller act=businessInfo}>?card=new">
+        <{else}>
+        <a href="<{link app=seller ctl=site_passport act=entry}>?card=new">
+        <{/if}>
+            <small class="text-danger">填写新版三证合一执照</small>
+        </a>
+    </h4>
 	
 	<div class="form-group">
 		<label class="col-xs-2 control-label">
