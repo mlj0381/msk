@@ -115,19 +115,31 @@ $(function() {
     })
 
 
+    /*
+     *首页分类导航下拉显示效果 
+     */
+     var cat = $('.category-container');
+     var speed = 400;
+     cat.hide();
+     $('.nav_ul .default').hover(function(){
+        cat.stop().slideDown(speed);
+     },function(){
+        cat.stop().slideUp(speed);
+     })
+     
 
 
 
     /*
      *首页返回顶部
      */
-    $(function() {
-        $('.gotoTop').click(function() {
-            $("html,body").stop().animate({
-                scrollTop: 0
-            }, 1000);
-        })
+
+    $('.gotoTop').click(function() {
+        $("html,body").stop().animate({
+            scrollTop: 0
+        }, 1000);
     })
+  
 
 
 
