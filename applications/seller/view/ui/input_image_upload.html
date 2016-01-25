@@ -1,7 +1,7 @@
-<div data-module="uploader" class="filebox" name="<{$id}>" tag="<{$tag}>" >
-    <input type="hidden" name="<{$name}>" required="true" id="<{$id}>-<{$name}>" value="<{$value}>" />
+<div data-module="uploader" class="filebox" name="<{$id}>" tag="<{$tag}>" >    
     <div class="thumb showImg" data-toggle="show">        
         <img <{if $value}>src="<{$value|storager:'xs'}>"<{/if}> />     
     </div>
-    <input type="file" name="<{$id}>" required="<{$required}>" accept="<{$accept}>" for="<{$name}>" data-url="<{link app=image ctl=site_upload act=site}>" />
+    <input type="file" name="<{$id}>" class="hidden" accept="<{$accept}>" for="<{$name}>" data-url="<{link app=image ctl=site_upload act=site}>" />
+    <input type="hidden" name="<{$name}>" required="<{$required}>" id="<{$id}>-<{$name}>" value="<{$value}>" />
 </div>

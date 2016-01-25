@@ -249,7 +249,7 @@
 
 			var defaults = {
 				uploader	: true, // 增加Rules
-				validator	: true,				
+				validator	: false,				
 				dialoger	: true
 			};
 				
@@ -260,7 +260,7 @@
 					var operator = this[i]();
 			}
 		},
-		validator : function()
+		validator : function(form)
 		{
 			var defaults = {
 				name : '',
@@ -302,8 +302,10 @@
 				}
 			};
 
-			$(document.body).find('[data-module="validator"]').each(function(n, obj)
-			{
+			var obj = $("#" + form);
+			//$('#member_signup_form').each(function(n, obj)
+			//{
+				//console.log($(obj).find('input[required]').length);
 				// 初始规则
 				var initRule = function (Obj){					
 					var attrs = $(Obj)[0].attributes;
@@ -362,6 +364,7 @@
 					$(group).find("span[data-message]").each(function(i, o){
 						var attr = $(o).attr('data-message');
 						var value = $(o).text();
+						if(typeof value == 'string' && value == '') return ;
 						if(attr in rules[inputName])
 						{
 							messages[attr] = value;
@@ -377,6 +380,7 @@
 					return messages;
 				}
 				
+
 				if($(obj).find('input[required]').length < 1) return ;
 				
 				var rules = {};
@@ -384,9 +388,6 @@
 				$(obj).find('input[required]').each(function(i, item){	
 					
 					var name = $(item).attr('name');
-
-					console.log(name);
-
 					var rule = initRule(item, name);
 					
 					if(typeof rule == 'object')
@@ -402,12 +403,12 @@
 				var thisSeting = $.extend(true, defaults, {rules : rules, messages : messages});	
 				console.log(thisSeting);
 				$(obj).validate(thisSeting);				
-			});
+			//});
 		},
 
 		uploader : function()
 		{
-			$(document.body).find('[data-module="uploader"]').each(function(n, obj){				
+			$('div[data-module="uploader"]').each(function(n, obj){				
 				var form = obj;
 				var defaults = {
 					name	: '',
@@ -451,7 +452,7 @@
 					}else{
 						$(thumb).append('<span class="uploadError">上传失败！</span>');
 					}
-
+					
 					$(thumb).unbind("click").bind('click', function(){
 						$(box).find("input[type='file']").trigger('click');
 					});
@@ -476,6 +477,8 @@
 					 $(settings.showBox).prop('src', settings.thumbDefault);
 				}
 				
+				//console.log($(settings));
+
 				$(settings.trigger).fileupload(settings);
 
 				$(settings.thumbBox).unbind("click").bind('click', function(){
@@ -484,7 +487,6 @@
 
 			});				
 		}		
-	};	
-	$.VMC.init();	
+	};
 }));
 
