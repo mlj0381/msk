@@ -75,7 +75,7 @@ class seller_ctl_site_tpl extends seller_frontpage
 		$this->pagedata['content_types'] = app::get('b2c')->getConf('pages_content_types');
 		$this->pagedata['position'] = $this->mPosition->dump($content['position_id']);
 		$this->pagedata['pages'] = $this->mPages->dump($content['pages_id']);
-		$this->display('site/content.form.html');
+		$this->display('site/tpl/content.form.html');
 	}
 	public function content_save($post)
 	{	
