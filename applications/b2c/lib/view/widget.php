@@ -80,7 +80,7 @@ class b2c_view_widget {
         $render = new base_render(app::get($params['app']));
         $render->pagedata['position_id'] = $params['position_id'];
         $render->pagedata['store_id'] = $params['store_id'];
-        $render->pagedata['contents'] = app::get('b2c')->model('pages_content')->getList('*', array('type' => '0', 'status' => '1', 'position_id'=>$params['position_id'],'store_id'=>$params['store_id'],));
+        $render->pagedata['contents'] = app::get('b2c')->model('pages_content')->getList('*', array('type' => '2', 'status' => '1', 'position_id'=>$params['position_id'],'store_id'=>$params['store_id'],));
         return $render->fetch('widget/store_left_good.html');
     }
 
