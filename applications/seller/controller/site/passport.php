@@ -292,10 +292,19 @@ class seller_ctl_site_passport extends seller_frontpage
         }
     }
 
-    //检查用户名
+   
+
+     //检查用户名
     public function check_login_name()
     {
-        if ($this->passport_obj->check_signup_account(trim($_POST['pam_account']['login_name']), $msg)) {
+        if(isset($_POST['pam_account']['login_name'])) 
+        {
+            $name =  trim($_POST['pam_account']['login_name']);
+        }else{
+            $name =  trim($_POST['pam_account']['mobile']);
+        }
+       
+        if ($this->passport_obj->check_signup_account($name, $msg)) {
             if ($msg == 'mobile') { //用户名为手机号码
                 $this->splash('success', null, array(
                     'is_mobile' => 'true',

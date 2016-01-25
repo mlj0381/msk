@@ -12,7 +12,7 @@
 }(function( $ ) {
 
 	$.validator.regex = {
-		'mobile'    : /^(13[0-9]|14[0-9]|15[0-9]|18[0-9])\d{8}$/i,
+		'mobile'    : /^(13[0-9]|14[0-9]|15[0-9]|18[0-9]|17[0-9])\d{8}$/i,
 		'email'     : /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/,
 		'username'  : /^[a-zA-z][a-zA-Z0-9_]{5,15}$/,
 		'zipcode'   : /^[0-9]{6}$/,
@@ -229,6 +229,7 @@
 			// bind to the blur event of the target in order to revalidate whenever the target field is updated
 			// TODO find a way to bind the event just once, avoiding the unbind-rebind overhead
 			var target = $( param );
+			return true;
 			if ( this.settings.onfocusout ) {
 				target.unbind( ".validate-equalTo" ).bind( "blur.validate-equalTo", function() {
 					$( element ).valid();
@@ -373,10 +374,10 @@
 						messages[attr] = value;						
 					});
 					
-					if(valid == false && typeof messages['error'] == 'string')
+					if(typeof messages['error'] == 'string' && messages['error'])
 					{
 						return messages['error'];
-					}	
+					}
 					return messages;
 				}
 				

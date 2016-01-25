@@ -33,8 +33,8 @@
                 <div class="form-group">
                     <label for="input_login_password" class="col-md-2 control-label"><span class="text-danger">*</span>登录密码：</label>
                     <div class="col-md-4">
-                        <input type="password" required="true" name="pam_account[login_password]" class="form-control" id="input_login_password" placeholder="6-11位字符，必须是字母、数字、下划线组合" required="true" minlength="6" maxlength="11" format="password">
-                        <span class="msgTip" data-message="format">密码格式错误</span>
+                        <input type="password" required="true" name="pam_account[login_password]" class="form-control" id="input_login_password" placeholder="6-11位字符，必须是字母、数字、下划线组合" required="true" format="password">
+                        <span class="msgTip" data-message="error">密码格式错误</span>
                     </div>
                 </div>
                 <div class="form-group">
@@ -47,14 +47,15 @@
                 <div class="form-group">
                     <label for="input_psw_confirm" class="col-md-2 control-label"><span class="text-danger">*</span>验证手机：</label>
                     <div class="col-md-4">
-                        <input type="text" required="true" name="pam_account[mobile]" class="form-control" id="input_mobile" required="true" format="mobile">
+                        <input type="text" required="true" name="pam_account[mobile]" class="form-control" id="input_mobile" required="true" format="mobile" remote="<{link app=seller ctl=site_passport act=check_login_name}>">
                         <span class="msgTip" data-message="error">请输入正确的手机号码</span>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="input_psw_confirm" class="col-md-2 control-label"><span class="text-danger">*</span>短信验证码：</label>
                     <div class="col-md-2">
-                        <input type="text" required="true" name="smscode" class="form-control" id="input_vcode" required="true">
+                        <input type="text" required="true" name="smscode" class="form-control" id="input_vcode" required="true" >
+
                         <span class="msgTip" data-message="error"></span>
                     </div>
                     <div class="col-md-2">
@@ -132,54 +133,7 @@ void function(signup_form) {
         }, 3000);
     }
 
-     */
-    $('#input_login_name').on('blur', function(e) {
-        var ipt = $(this);
-        $.post('<{link app=seller ctl=site_passport act=check_login_name}>', {
-            'pam_account[login_name]': ipt.val()
-        }, function(re) {
-            if (re.error) {
-                ipt.popover({
-                    content: re.error,
-                    placement: 'right',
-                    trigger: 'click',
-                    container: 'body'
-                });
-                ipt.popover('show');
-                ipt.closest('.form-group').removeClass('has-success').addClass('has-error');
-            } else if (re.success) {
-                ipt.closest('.form-group').removeClass('has-error').addClass('has-success');
-                if (re.data && re.data.is_mobile) {
-                    // $('.local-vcode').hide();
-                    // $('.mobile-vcode').show();
-                } else {
-                    // $('.local-vcode').show();
-                    // $('.mobile-vcode').hide();
-                }
-            }
-
-        }, 'json');
-    });
-    $('#input_login_name').on('focus', function(e) {
-        $(this).popover('destroy');
-    });
-
-
-    signup_form.on('submit', function(e) {
-        e.stopPropagation();
-        //signup_form.find('button[type=submit]').button('loading');
-        $.post(signup_form.prop('action'), signup_form.serialize(), function(re) {
-            if (re.error) {
-                _alert_error(re.error);
-            }
-            if (re.success) {
-                location = re.redirect;
-            }
-            signup_form.find('button[type=submit]').button('reset');
-        }, 'json');
-        return false;
-    });
-
+     */    
     //获得短信验证码
     var _cutdown_sms = function(btn) {
         btn.addClass('disabled');
@@ -195,6 +149,7 @@ void function(signup_form) {
                 return arguments.callee;
             })(), 1000);
     };
+
     signup_form.find('.mobile-vcode button').on('click', function(e) {
         var btn = $(this);
         if (btn.hasClass('disabled')) return;
@@ -204,7 +159,8 @@ void function(signup_form) {
         }, function(re) {
             if (re && re.error) {//input_vcode
                 btn.removeClass('disabled');
-                _alert_error(re.error);
+                
+                alert(re.error);   
             }
             if (re && re.success) {
                 $("#input_vcode").val(re.redirect);
