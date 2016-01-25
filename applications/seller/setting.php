@@ -24,34 +24,53 @@ $setting = array(
         'default' => array(
             'comm' => array(
                 1 => array(
-                    'three_lesstion', 'business_licence', 'tax_licence', 'organization_licence', 'bank_lesstion',
+                    'label' => '生产商企业基本资质',
+                    'page' => array(
+                        'three_lesstion', 'business_licence', 'tax_licence', 'organization_licence', 'bank_lesstion',)
                 ),
-                2 => array('animal_certificate', 'slaughter_lesstion', 'f_p_lesstion', 'n_p_lesstion', 'entry_lesstion', 'iso9001_lesstion', 'iso22000_lesstion', 'iso14001_lesstion', 'food_mosque_lesstion',
+                2 => array(
+                    'label' => '生产商企业专业资质',
+                    'page' => array(
+                        'animal_certificate', 'slaughter_lesstion', 'f_p_lesstion', 'n_p_lesstion', 'entry_lesstion', 'iso9001_lesstion',
+                        'iso22000_lesstion', 'iso14001_lesstion', 'food_mosque_lesstion',)
                 ),
                 3 => array(
-                    'company_touted', 'factory',
+                    'label' => '生产商企业基本生产能力',
+                    'page' => array(
+                        'company_touted', 'factory',)
                 ),
                 4 => array(
-                    'workshop', 'storage',
+                    'label' => '生产商企业生产车间、设备、产品工艺流程',
+                    'page' => array(
+                        'workshop', 'storage',)
                 ),
                 5 => array(
-                    'laboratory', 'equipment', 'qa_department', 'q_c_department'
+                    'label' => '生产商企业实验室、检测设备及产品质量控制系统',
+                    'page' => array(
+                        'laboratory', 'equipment', 'qa_department', 'q_c_department')
                 ),
                 6 => array(
-                    'president', 'general_manager', 'vice_general_manager', 'sale_manager', 'qa_manager', 'finance_manager'
+                    'label' => '生产商企业管理团队',
+                    'page' => array(
+                        'president', 'general_manager', 'vice_general_manager', 'sale_manager', 'qa_manager', 'finance_manager')
                 ),
                 7 => array(
-                    'ec_group_manager', 'ec_group_employees'
+                    'label' => '生产商企业电商团队',
+                    'page' => array(
+                        'ec_group_manager', 'ec_group_employees')
                 ),
                 8 => array(
-                    'brand_lesstion', 'packing', 'brand_touted'
+                    'label' => '生产商企业产品品牌',
+                    'page' => array(
+                        'brand_lesstion', 'packing', 'brand_touted')
                 ),
                 9 => array(
-                    'store_info', 'store_principal', 'goods_info'
+                    'label' => '店铺及产品信息',
+                    'page' => array(
+                        'store_info', 'store_principal', 'goods_info')
                 ),
             ),
-            1 => array(
-            ),
+            1 => array(),
             2 => array(
                 1 => array(
                     'food_business_licence', 'food_flow_licence', 'agent_auth_lesstion'

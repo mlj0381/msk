@@ -541,69 +541,29 @@ class seller_user_passport
             $service->logout();
         }
     }
-    //商家入驻公司信息注册
-   public function signup_company($post){
-       $db = vmc::database();
-       $db->beginTransaction();
-       if($company_id = $this->app->model('company')->insert($post)){
-         $seller_data = array(
-                            'status' => 1,
-                             'company_id' => $company_id,
-                             'seller_id' => $post['seller_id'],
-                            );
-         //if(!$this->app->model('sellers')->update( $update_seller_data, array('seller_id' => $post['seller_id']))){
-        if(!$this->update_selelr($seller_data)){
-           $db->rollBack();
-           return false;
-         }
-         $db->commit();
-         return true;
-       }
-       return false;
-   }
 
-   public function update_selelr($data){
-      return $this->app->model('sellers')->save($data);
-   }
+    //商家入驻页面配置
+    public function page_setting($step, $licence_type){
+        $conf = $this->app->getConf('seller_entry');
+        $columns = array_flip($conf['comm'][$step]['page']);
 
-   //入驻商家公司信息完善
-   public function settled_company($post){
-       $filter['seller_id'] = $post['seller_id'];
-       unset($post['seller_id']);
-       if(!$this->app->model('company')->update($post, $filter))
-       {
-           return false;
-       }
-       return true;
-   }
-   //商家入驻联系人信息注册
-   public function signup_contactInfo($post){
-       $mdl_contact = $this->app->model('contact');
-       if($mdl_contact->save($post)){
-           return true;
-       }
-       return false;
-   }
-
-   //商家入驻店铺注册
-   public function signup_shop($post){
-       $mdl_store = app::get('store')->model('store');
-       if($mdl_store->save($post)){
-           return true;
-       }
-       return false;
-   }
-
-
-   //商家入驻品牌信息注册
-   // public function signup_brand($post){
-   //     $mdl_brand = $this->app->model('brand');
-   //     $post['seller']['create_time'] = time();
-   //     if(!$mdl_brand->save($post['seller'])){
-   //         return false;
-   //     }
-   //     return true;
-   //
-   // // }
-
+        if ($licence_type == 'new') {
+            unset($columns['business_licence']);
+            unset($columns['tax_licence']);
+            unset($columns['organization_licence']);
+        } else if ($licence_type == 'old') {
+            unset($columns['three_lesstion']);
+        }
+        $ident = $this->seller['ident'];
+        if ($ident & 1 && $conf[1][$step]) {
+            $columns = array_merge($columns, array_flip($conf[1][$step]));
+        }
+        if ($ident & 2 && $conf[2][$step]) {
+            $columns = array_merge($columns, array_flip($conf[2][$step]));
+        }
+        if ($ident & 4 && $conf[4][$step]) {
+            $columns = array_merge($columns, array_flip($conf[4][$step]));
+        }
+        return $columns;
+    }
 }

@@ -393,7 +393,7 @@ class seller_ctl_site_passport extends seller_frontpage
             $licence_type = $this->_new_or_old();
         }
 
-        $columns = $this->page_setting($step, $licence_type);
+        $columns = $this->passport_obj->page_setting($step, $licence_type);
         $this->pagedata['info'] = $this->edit_info($columns);
         $this->pagedata['page'] = $columns;
         $this->pagedata['pageIndex'] = $step;
@@ -415,31 +415,6 @@ class seller_ctl_site_passport extends seller_frontpage
         $checked = app::get('base')->model('company_extra')->getRow('*', array('uid' => $this->seller['seller_id'], 'from' => '1', 'key|in' => array('business_licence', 'three_lesstion')), '0', '1', 'content_id desc');
         $licence_type = $checked['key'] == 'three_lesstion' ? 'new' : 'old';
         return $licence_type;
-    }
-
-    private function page_setting($step, $licence_type)
-    {
-        $conf = $this->app->getConf('seller_entry');
-        $columns = array_flip($conf['comm'][$step]);
-
-        if ($licence_type == 'new') {
-            unset($columns['business_licence']);
-            unset($columns['tax_licence']);
-            unset($columns['organization_licence']);
-        } else if ($licence_type == 'old') {
-            unset($columns['three_lesstion']);
-        }
-        $ident = $this->seller['ident'];
-        if ($ident & 1 && $conf[1][$step]) {
-            $columns = array_merge($columns, array_flip($conf[1][$step]));
-        }
-        if ($ident & 2 && $conf[2][$step]) {
-            $columns = array_merge($columns, array_flip($conf[2][$step]));
-        }
-        if ($ident & 4 && $conf[4][$step]) {
-            $columns = array_merge($columns, array_flip($conf[4][$step]));
-        }
-        return $columns;
     }
 
     //查询已注册的信息
@@ -497,7 +472,7 @@ class seller_ctl_site_passport extends seller_frontpage
     {
         $db = vmc::database();
         $db->beginTransaction();
-        $extra_columns = $this->page_setting($params['pageIndex']);
+        $extra_columns = $this->passport_obj->page_setting($params['pageIndex']);
 
         //公司信息
         if (isset($params['company']) && !empty($params['company'])) {

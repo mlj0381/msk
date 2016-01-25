@@ -19,7 +19,7 @@ class store_ctl_site_store extends site_controller
 
     }
     public function index($store_id){
-        $this->pagedata['store_id'] = $store_id ? $store_id : $this->store['store_id'];
+        $this->pagedata['store_id'] = $store_id ? $store_id : $this->_request->get_get('store');
         $this->page('site/index.html');
     }
 
