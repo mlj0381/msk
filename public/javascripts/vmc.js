@@ -2,9 +2,9 @@
 	if ( typeof define === "function" && define.amd ) {
 		define( [
 			"jquery",
-			"js/global/plugs/jquery-validation/jquery.validate.min", 
+			"js/global/plugs/jquery-validation/jquery.validate.min",
 			"js/global/plugs/jquery-validation/additional-methods.min"
-		], 
+		],
 		factory );
 	} else {
 		factory( jQuery );
@@ -46,56 +46,56 @@ $.validator.messages = {
 };
 $.extend($.validator.methods, {
 	format : function(value, element, param)
-	{	
+	{
 		console.log(param);
-		if (this.optional( element ) ) {            
+		if (this.optional( element ) ) {
 			return "dependency-mismatch";
-		}			
+		}
 		if(typeof param != 'string' || param == '') return false;
 		var regex = $.validator.regex;
-		if(param.indexOf("|")) // »ò
+		if(param.indexOf("|"))
 		{
 			var REs = param.split("|");
 			for(i in REs)
-			{				
+			{
 				if (typeof regex[REs[i]] != 'undefined' &&  regex[REs[i]].test(value))
 				{
 					return true;
-				}								
+				}
 			}
 			return false;
-		}else if(param.indexOf("&")){ // ºÍ
+		}else if(param.indexOf("&")){
 			var REs = param.split("&");
 			for(i in REs)
 			{
 				if (typeof regex[REs[i]] == 'undefined' || !regex[REs[i]].test(value))
 				{
 					return false;
-				}								
+				}
 			}
 			return true;
 		}else if(regex[param] != 'undefined' && regex[param].test(value))
 		{
 			return true;
-		}else{ // ×ÔÐ´ÕýÔò±í´ïÊ½
-			try{  
+		}else{
+			try{
 				var Re = new RegExp(input);
 				return Re.text(value);
-			}catch(e){  
+			}catch(e){
 				return false;
-			} 
+			}
 		}
 	},
 	size : function(value, element, param)
-	{		
+	{
 		if (this.optional(element)) {
 			return "dependency-mismatch";
 		}
-		var size = Number(param.replace('m', '')) * 1024 * 1024;		
-		if ($(element).attr("type") === "file") {			
+		var size = Number(param.replace('m', '')) * 1024 * 1024;
+		if ($(element).attr("type") === "file") {
 			if (element.files && element.files.length) {
 				for (i = 0; i < element.files.length; i++) {
-					file = element.files[i];					
+					file = element.files[i];
 					if(file.size > size) return false;
 				}
 			}
@@ -103,18 +103,18 @@ $.extend($.validator.methods, {
 		return true;
 	},
 	accept : function(value, element, param)
-	{				
+	{
 		var typeParam = typeof param === "string" ? param.replace(/\s/g, "").replace(/,/g, "|") : "image/*",
 		optionalValue = this.optional(element),
-		i, file;		
+		i, file;
 		if (optionalValue) {
 			return optionalValue;
 		}
-		if ($(element).attr("type") === "file") {			
-			typeParam = typeParam.replace(/\*/g, ".*").replace('jpg', 'jpeg');					
+		if ($(element).attr("type") === "file") {
+			typeParam = typeParam.replace(/\*/g, ".*").replace('jpg', 'jpeg');
 			if (element.files && element.files.length) {
 				for (i = 0; i < element.files.length; i++) {
-					file = element.files[i];					
+					file = element.files[i];
 					if (!file.type.match(new RegExp( ".?(" + typeParam + ")$", "i"))) {
 						return false;
 					}
@@ -123,7 +123,7 @@ $.extend($.validator.methods, {
 		}
 		return true;
 	},
-	idcard : function(value, element){       
+	idcard : function(value, element){
 		if (value.length == 15)
 		{
 			var exp = new RegExp(/^(\d{6})()?(\d{2})(\d{2})(\d{2})(\d{2})(\w)$/);
@@ -131,33 +131,32 @@ $.extend($.validator.methods, {
 			if(strMatch == null) return false;
 			var D = new Date("19"+ strMatch[3] + "/"+ strMatch[4]+"/" + strMatch[5]);
 			if(
-				D.getYear() == strMatch[3] && 
-			   (D.getMonth()+1) == strMatch[4] && 
+				D.getYear() == strMatch[3] &&
+			   (D.getMonth()+1) == strMatch[4] &&
 			   D.getDate()== strMatch[5]
 			) return true;
 		}else if (value.length == 18){
-			var exp = new RegExp(/^(\d{6})()?(\d{4})(\d{2})(\d{2})(\d{3})(\w)$/); 
+			var exp = new RegExp(/^(\d{6})()?(\d{4})(\d{2})(\d{2})(\d{3})(\w)$/);
 			var strMatch = value.match(exp);
 			if(strMatch == null) return false;
-			var D = new Date(strMatch[3]+"/"+ strMatch[4] + "/" + strMatch[5]);           
-			if( D.getFullYear() == strMatch[3] && 
-			   (D.getMonth()+1) == strMatch[4] && 
+			var D = new Date(strMatch[3]+"/"+ strMatch[4] + "/" + strMatch[5]);
+			if( D.getFullYear() == strMatch[3] &&
+			   (D.getMonth()+1) == strMatch[4] &&
 				D.getDate()== strMatch[5]
-			)  return true;            
+			)  return true;
 		}
 		return false;
 	},
 	remote : function(value, element, param)
 	{
-		if (this.optional( element ) ) {            
+		if (this.optional( element ) ) {
 			return "dependency-mismatch";
 		}
-		// ÑéÖ¤ÊÇ·ñÓÐÉÏÒ»´ÎÑéÖ¤
 		var previous = this.previousValue( element ), validator, data;
 		if (!this.settings.messages[ element.name ] ) {
 			this.settings.messages[ element.name ] = {};
 		}
-		
+
 		previous.originalMessage = this.settings.messages[ element.name ].remote;
 
 		this.settings.messages[ element.name ].remote = previous.message;
@@ -165,7 +164,7 @@ $.extend($.validator.methods, {
 		if ( previous.old === value ) {
 			return previous.valid;
 		}
-		
+
 		if('data' in param && typeof param.data == 'string')
 		{
 			var dataObj={};
@@ -174,10 +173,9 @@ $.extend($.validator.methods, {
 				var o = arrData[d].replace("#", "");
 				if($("#" + o).length > 0)
 				{
-					//$.data(dataObj, d.replace("#"), $(d).val());
 					dataObj[o] = $("#" + o).val();
 				}
-			}				
+			}
 			param['data'] = dataObj;
 		}
 
@@ -193,19 +191,19 @@ $.extend($.validator.methods, {
 			dataType: "json",
 			data: data,
 			context: validator.currentForm,
-			success: function( response ) {					
+			success: function( response ) {
 				var valid = false;
 				var errors, message, submitted;
-			   
+
 				if(typeof response == 'object')
-				{   
+				{
 					if(typeof response.success != 'undefined')
 					{
 						if(response.success !== 'true')
-						{                            
+						{
 							valid = true;
 							message = response.success;
-						}                     
+						}
 					}else if(typeof response.error != 'undefined')
 					{
 						 message = response.error;
@@ -224,18 +222,18 @@ $.extend($.validator.methods, {
 					validator.successList.push( element );
 					delete validator.invalid[ element.name ];
 					validator.showErrors();
-				} else {                   
+				} else {
 					errors[ element.name ] = previous.message = $.isFunction( message ) ? message( value ) : message;
-					validator.invalid[ element.name ] = true;						
+					validator.invalid[ element.name ] = true;
 				}
 				validator.showErrors( errors );
 				previous.valid = valid;
 				validator.stopRequest( element, valid );
 			}
-		}, param ) );	    
+		}, param ) );
 		return "pending";
 	},
-	equalto: function( value, element, param ) {			
+	equalto: function( value, element, param ) {
 		var target = $( param );
 		return true;
 		if ( this.settings.onfocusout ) {
@@ -254,17 +252,17 @@ $.VMC = {
 		this.location = location.host;
 		this.root = location.origin;
 		var defaults = {
-			uploader	: true, // Ôö¼ÓRules
-			validator	: true,				
+			uploader	: true,
+			validator	: true,
 			dialoger	: true
-		};				
+		};
 		setting = $.extend(true, defaults, options);
 		for (i in setting )
-		{	
-			if(setting[i] === true && typeof this[i] == 'function') 
+		{
+			if(setting[i] === true && typeof this[i] == 'function')
 				var operator = this[i]();
 		}
-	}	
+	}
 };
 //------------------------------------------------------------------
 $.VMC.validator = function(form){
@@ -275,26 +273,26 @@ $.VMC.validator = function(form){
 		rules: {},
 		errorClass: "error",
 		validClass: "right",
-		errorElement: "label",				
+		errorElement: "label",
 		focusInvalid: true,
 		errorContainer: $( [] ),
 		errorLabelContainer: $( [] ),
 		onsubmit: true,
 		ignore: ":hidden",
 		ignoreTitle: false,
-		success : function(label) {							
+		success : function(label) {
 			label.html("&nbsp;").addClass('right');
 		},
-		onkeyup : function(element, event){ // È¥³ý keyup remoteÊÂ¼þ            
+		onkeyup : function(element, event){
 			if($(element).attr('remote')) return ;
 			if ( event.which === 9 && this.elementValue( element ) === "" ) {
 				return;
-			} else if ( element.name in this.submitted || element === this.lastElement ) {						
+			} else if ( element.name in this.submitted || element === this.lastElement ) {
 				this.element( element );
 			}
 		},
 		errorPlacement : function(error, element) {
-			if(element.parents('.form-item').length >0) // Íâ²ã´æÔÚ
+			if(element.parents('.form-item').length >0)
 			{
 				error.appendTo ( element.parents('.form-item'));
 				return ;
@@ -306,34 +304,34 @@ $.VMC.validator = function(form){
 			}
 			error.insertAfter(element);
 		}
-	};				
+	};
 	$('form[data-module="validator"]').each(function(n, obj)
-	{				
-		var initRule = function (Obj){					
+	{
+		var initRule = function (Obj){
 			var attrs = $(Obj)[0].attributes;
-			var rules = {};		
+			var rules = {};
 			var hasrule = false;
 			for (i in attrs)
 			{
 				var attr = attrs[i].name;
 				var value = attrs[i].value;
 				if(typeof $.validator.methods[attr] != 'function') continue;
-				if(attr == 'required' && value == 'false') continue ;						
+				if(attr == 'required' && value == 'false') continue ;
 				if(attr == 'format')
 				{
 					if(! attr in $.validator.regex && attr in $.validator.methods)
 					{
 						attr = value;
 					}
-				}							
+				}
 				switch (attr)
 				{
-					case 'remote':								
+					case 'remote':
 						value = {
 							url   : value,
 							type : 'post',
 							data : $(Obj).attr('data')
-						};								
+						};
 						break;
 					case 'range':
 						range = value.split(",");
@@ -342,28 +340,28 @@ $.VMC.validator = function(form){
 						break;
 					case 'rangelength':
 						var rang = value.split(",");
-						if(rang.length != 2) break;                        
+						if(rang.length != 2) break;
 						break;
 					case 'equalTo':
 					case 'format' :
 						break;
-					default : 
+					default :
 						value = true;
-						break;							
+						break;
 				}
 				rules[attr] = value;
 				hasrule = true;
-			}	
+			}
 			if(hasrule) return rules;
-			return hasrule;					
-		};				
+			return hasrule;
+		};
 		var initMessage = function (Obj, inputName)
 		{
-			var group = $(Obj).parents('.form-group');				
+			var group = $(Obj).parents('.form-group');
 			var messages = {};
 			var _define = {};
 			var hasmsg = false;
-			if($(group).find("span[data-message]").length < 1) return false;					
+			if($(group).find("span[data-message]").length < 1) return false;
 			$(group).find("span[data-message]").each(function(i, o){
 				var attr = $(o).attr('data-message');
 				var value = $(o).text();
@@ -373,16 +371,16 @@ $.VMC.validator = function(form){
 				{
 					messages[attr] = value;
 					hasmsg = true;
-				}						
+				}
 			});
-			
+
 			if('format' in _define){
 
 				for(i in rules[inputName]) // format = mobile, email = true
-				{						
+				{
 					var rule = rules[inputName][i];
-					if( i == 'required' || 
-						i in messages 
+					if( i == 'required' ||
+						i in messages
 					) continue;
 					if(rule in $.validator.methods || i in $.validator.methods)
 					{
@@ -394,105 +392,80 @@ $.VMC.validator = function(form){
 			if(hasmsg == false && 'error' in _define)
 			{
 				return _define['error'];
-			}					
+			}
 			return messages;
 		}
-		if($(obj).find('input[required]').length < 1) return ;				
+		if($(obj).find('input[required]').length < 1) return ;
 		var rules = {};
 		var messages = {};
-		$(obj).find('input[required]').each(function(i, item){						
-			var name = $(item).attr('name');					
-			var rule = initRule(item, name);					
+		$(obj).find('input[required]').each(function(i, item){
+			var name = $(item).attr('name');
+			var rule = initRule(item, name);
 			if(typeof rule == 'object')
 			{
 				rules[name] = rule;
 				var message = initMessage(item, name);
-				if(message)	
+				if(message)
 				{
 					messages[name] = message;
 				}
-			}					
+			}
 		});
-		var thisSeting = $.extend(true, defaults, {rules : rules, messages : messages});					
-		$(obj).validate(thisSeting);				
+		var thisSeting = $.extend(true, defaults, {rules : rules, messages : messages});
+		$(obj).validate(thisSeting);
 	});
 };
 //------------------------------------------------------------------
 $.VMC.uploader = function() {
-	$('div[data-module="uploader"]').each(function(n, obj){				
-		var form = obj;
-		var defaults = {
-			name	: '',
-			tag		: '',
-			replaceFileInput : true,
-			formData: {},
-			accept	: '',
-			showClass	: 'imgShow',
-			showBox	: $([]),
-			thumb	: true,
-			thumbClass	: 'thumb',
-			thumbBox	: $([]),
-			thumbDefault: $.VMC.root + '/public/javascripts/images/add.jpg' // thumbÄ¬ÈÏÍ¼Æ¬
+	var images = [];
+	$('div[data-module="uploader"]').each(function(n, obj){
+		var box = {
+			thumbBox : $(obj).find(".thumb"),
+			showBox : $(obj).find(".thumb img"),
+			handle : $(obj).find("input[type='file']"),
+			hidden	: $(obj).find("input[type='hidden']"),
+			thumbDefault: $.VMC.root + '/public/javascripts/images/add.jpg'
 		};
-		
-		var add = function(e, data){
-			var box = $(this).parents('[data-module="uploader"]');
-			var thumb = $(box).find('.thumb');
-			var show = $(box).find('.thumb img');
-			$(thumb).append('<span class="loading icon-spinner icon-spin"></span>');
-			$(show).hide();
-			if (data.autoUpload || (data.autoUpload !== false &&
-				$(this).fileupload('option', 'autoUpload'))) {
-					data.process().done(function () {
-					data.submit();
-				});
-			}					
-			data.submit();
-		};
-		var done = function(e, data){
-			var box = $(this).parents('[data-module="uploader"]');
-			var thumb = $(box).find('.thumb');
-			var show = $(box).find('.thumb img');
-			var re = $.parseJSON(data.result);
-			$(thumb).find('.loading').remove();
-			if(re.image_id)
-			{						
-				$(show).prop('src', re.url);
-				$(box).find('input[type="hidden"]').val(re.image_id);
-				$(show).show();
-			}else{
-				$(thumb).append('<span class="uploadError">ÉÏ´«Ê§°Ü£¡</span>');
-			}
-			
-			$(thumb).unbind("click").bind('click', function(){
-				$(box).find("input[type='file']").trigger('click');
-			});
-
-		};
-
-		var settings = $.extend(true, defaults, {
+		var settings = {
 			name : $(obj).attr('name'),
+			url : $(box.handle).attr('data-url'),
 			formData : {
 				tag : $(obj).attr('tag'),
 			},
-			thumbBox : $(obj).find(".thumb"),
-			showBox : $(obj).find(".thumb img"),
-			trigger : $(obj).find("input[type='file']"),
-			hidden	: $(obj).find("input[type='hidden']"),
-			add : add,
-			done : done
-		});
-
-		if( typeof $(settings.showBox).prop('src') != 'string' || $(settings.showBox).prop('src') == '')
+			add : function(e, data){
+				var box = $(this).parents('[data-module="uploader"]');
+				var thumb = $(box).find('.thumb');
+				var show = $(box).find('.thumb img');
+				$(thumb).append('<span class="loading icon-spinner icon-spin"></span>');
+				$(show).hide();
+				console.log(data);
+				data.submit();
+			},
+			done : function(e, data){
+				var box = $(this).parents('[data-module="uploader"]');
+				var thumb = $(box).find('.thumb');
+				var show = $(box).find('.thumb img');
+				var re = $.parseJSON(data.result);
+				$(thumb).find('.loading').remove();
+				if(re.image_id)
+				{
+					$(show).prop('src', re.url);
+					$(box).find('input[type="hidden"]').val(re.image_id);
+					$(show).show();
+				}else{
+					$(thumb).append('<span class="uploadError">ÉÏ´«Ê§°Ü£¡</span>');
+				}
+				$(thumb).unbind("click").bind('click', function(){
+					$(box).find("input[type='file']").trigger('click');
+				});
+			}
+		};
+		if( typeof $(box.showBox).prop('src') != 'string' || $(box.showBox).prop('src') == '')
 		{
-			 $(settings.showBox).prop('src', settings.thumbDefault);
+			 $(box.showBox).prop('src', box.thumbDefault);
 		}
-		$(settings.trigger).fileupload(settings);
-		$(settings.thumbBox).unbind("click").bind('click', function(){
-			$(settings.trigger).trigger('click');
-		});
-
-	});				
+		$(box.handle).fileupload(settings);
+	});
 };
 //------------------------------------------------------------------
 $.VMC.init();}))

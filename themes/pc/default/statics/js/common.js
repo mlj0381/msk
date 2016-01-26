@@ -160,9 +160,7 @@ $(function() {
      */
 
     $('.filebox input[type="file"]').fileupload({
-
-        add: function(e, data) {
-            console.log(data);
+        add: function(e, data) {            
             if (!data.files[0]['type'].match(/^image/)) {
                 alert('非法上传，不是图片类型');
                 return false;
@@ -186,7 +184,7 @@ $(function() {
             var re = $.parseJSON(data.result);
             var input = e.target || e.srcElement;
             $(input).parents('.filebox').find('input[type="hidden"]').attr('value', re.image_id);
-            console.log(input);
+           
             //$(input).attr('value', re.image_id);
             $(input).parents('.filebox').find('.showImg').find('img').attr('src', re.url);
         }
