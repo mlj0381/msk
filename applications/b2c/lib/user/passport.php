@@ -113,7 +113,7 @@ class b2c_user_passport {
         }
         $pam_members_model = app::get('pam')->model('members');
         $flag = $pam_members_model->getList('member_id', array(
-            'login_account' => trim($login_account),
+            'mobile' => trim($login_account),
         ));
 
         return $flag ? true : false;

@@ -422,9 +422,6 @@ class b2c_ctl_site_passport extends b2c_frontpage
                     'ctl' => 'index',
                 ));
             }
-            // if(!vmc::singleton('b2c_user_passport')-is_exists_login_name($params['account'])){
-            //     $this->splash('error', null, '未知账号!');
-            // }
             if (empty($params['new_password'])) {
                 $this->splash('error', $redirect_here, '请输入新密码!');
             }
@@ -435,9 +432,13 @@ class b2c_ctl_site_passport extends b2c_frontpage
             if (!vmc::singleton('b2c_user_vcode')->verify($params['vcode'], $params['account'], 'reset')) {
                 $this->splash('error', $redirect_here, '验证码错误！');
             }
-            $p_m = app::get('pam')->model('members')->getRow('member_id', array('login_account' => $params['account']));
+            $result = $this->app->model('members')->getRow('member_id', array('mobile' => $params['account']));
+            if(empty($result)){
+                $this->splash('error', $redirect_here, '未知帐号!');
+            }
+            $p_m = app::get('pam')->model('members')->getRow('member_id', array('member_id' => $result['member_id']));
             if (empty($p_m['member_id'])) {
-                $this->splash('error', $redirect_here, '账号异常!');
+                $this->splash('error', $redirect_here, '帐号异常!');
             }
             $member_id = $p_m['member_id'];
             if (!$this->passport_obj->reset_password($member_id, $params['new_password'])) {
@@ -447,13 +448,13 @@ class b2c_ctl_site_passport extends b2c_frontpage
             /**
              * 直接登录操作
              */
-            $this->unset_member();
-            //设置session
-            $this->user_obj->set_member_session($member_id);
-            //设置客户端cookie
-            $this->bind_member($member_id);
-
-            $this->splash('success', $forward, '密码重置成功');
+//            $this->unset_member();
+//            //设置session
+//            $this->user_obj->set_member_session($member_id);
+//            //设置客户端cookie
+//            $this->bind_member($member_id);
+            $redirect = $this->gen_url(array('app' => 'b2c', 'ctl' => 'site_passport', 'act' => 'login'));
+            $this->splash('success', $redirect, '密码重置成功，请重新登录');
         } else {
             $this->set_tmpl('passport');
             $this->page('site/passport/reset_password.html');
@@ -474,6 +475,7 @@ class b2c_ctl_site_passport extends b2c_frontpage
         if (!$vcode = vmc::singleton('b2c_user_vcode')->set_vcode($account, 'reset', $msg)) {
             $this->splash('error', null, $msg);
         }
+        $this->splash('success', $vcode, '短信已发送');
         //$data[$login_type] = $account;
         $data['vcode'] = $vcode;
         switch ($login_type) {

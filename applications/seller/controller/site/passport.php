@@ -360,26 +360,37 @@ class seller_ctl_site_passport extends seller_frontpage
         $this->splash('success', null, '短信已发送');
     }
 
+
+
     //重置密码
     public function reset_password()
     {
+        if(!empty($_POST)) {
+            $redirect = $this->gen_url(array(
+                'app' => 'seller',
+                'ctl' => 'site_passport',
+                'act' => 'login',
+            ));
+            extract($_POST);
+            $seller = $this->app->model('sellers')->getRow('seller_id', array('mobile' => $pam_account['mobile']));
 
-        $redirect = $this->gen_url(array(
-            'app' => 'seller',
-            'ctl' => 'site_seller',
-            'act' => 'securitycenter',
-        ));
-        extract($_POST);
-        if (!vmc::singleton('seller_user_vcode')->verify($smscode, $pam_account['mobile'], 'signup')) {
-            $this->splash('error', $redirect, '手机短信验证码不正确');
+            if(empty($seller)){
+                $this->splash('error', $redirect, '不存在的用户');
+            }
+            if (!vmc::singleton('seller_user_vcode')->verify($smscode, $pam_account['mobile'], 'signup')) {
+                $this->splash('error', $redirect, '手机短信验证码不正确');
+            }
+            if ($pam_account['login_password'] != $pam_account['psw_confirm']) {
+                $this->splash('error', $redirect, '确认密码输入不正确');
+            }
+            if (!$this->passport_obj->reset_password($seller['seller_id'], $pam_account['psw_confirm'])) {
+                $this->splash('error', $redirect, '重置失败');
+            }
+            $this->unset_seller();
+            $this->splash('success', $redirect, '重置成功,请重新登录');
         }
-        if ($pam_account['login_password'] != $pam_account['psw_confirm']) {
-            $this->splash('error', $redirect, '确认密码输入不正确');
-        }
-        if (!$this->passport_obj->reset_password($this->seller['seller_id'], $pam_account['psw_confirm'])) {
-            $this->splash('error', $redirect, '重置失败');
-        }
-        $this->splash('success', $redirect, '重置成功');
+        $this->pagedata['reset'] = 'reset';
+        $this->page('site/seller/reset_password.html');
     }
 
     //退出登录

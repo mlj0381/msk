@@ -685,6 +685,7 @@ vmc_b2c_orders WHERE `member_id`={$this->member['member_id']} AND `status` = 'ac
         $this->menuSetting = 'setting';
         $user_obj = vmc::singleton('b2c_user_object');
         $this->pagedata['pam_data'] = $user_obj->get_pam_data('*', $this->member['member_id']);
+        print_r($this->pagedata['pam_data']);
         $this->output();
     }
     /**

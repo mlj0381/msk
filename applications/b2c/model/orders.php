@@ -263,11 +263,11 @@ class b2c_mdl_orders extends dbeav_model {
     public function type_count($filter){
         $return = array();
         $return['no_pay'] = $this->getRow('count(order_id) as no_pay',
-            array_merge($filter, array( 'pay_status' => '0')));
+            array_merge($filter, array( 'pay_status' => '0', 'status' => 'active',)));
         $return['no_ship'] = $this->getRow('count(order_id) as no_ship',
-            array_merge($filter, array( 'ship_status' => '0')));
+            array_merge($filter, array( 'ship_status' => '0', 'status' => 'active',)));
         $return['confirm'] = $this->getRow('count(order_id) as confirm',
-            array_merge($filter, array('confirm' => 'N')));
+            array_merge($filter, array('confirm' => 'N', 'status' => 'active', 'ship_status' => '1')));
         $return['comment'] = $this->getRow('count(order_id) as comment',
             array_merge($filter, array('comment' => 'false', 'confirm' => 'Y', 'comment_type' => '0')));
         return $return;

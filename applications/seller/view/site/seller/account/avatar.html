@@ -4,22 +4,28 @@
         <div class="panel panel-default">
             <div class="panel-heading">头像可能展现的样式</div>
             <div class="panel-body">
-                <img class="img-thumbnail" src="<{$member.avatar|storager:'avatar'}>" alt="<{$member.uname}>头像" style="width:175px; height:175px;">
+                <img class="img-thumbnail" src="<{$seller.avatar|storager:'avatar'}>" alt="<{$member.uname}>头像" style="width:175px; height:175px;">
                 <hr>
-                <img class="img-responsive img-rounded" src="<{$member.avatar|storager:'avatar'}>" alt="<{$member.uname}>头像" style="width:175px; height:175px;">
+                <img class="img-responsive img-rounded" src="<{$seller.avatar|storager:'avatar'}>" alt="<{$member.uname}>头像" style="width:175px; height:175px;">
                 <hr>
-                <img class="img-thumbnail img-circle" src="<{$member.avatar|storager:'avatar'}>" alt="<{$member.uname}>头像" style="width:175px; height:175px;">
+                <img class="img-thumbnail img-circle" src="<{$seller.avatar|storager:'avatar'}>" alt="<{$member.uname}>头像" style="width:175px; height:175px;">
             </div>
         </div>
     </div>
     <div class="col-xs-9">
-        <form id="member_setting_form" class="form-horizontal" action="#" method="post" enctype="multipart/form-data">
+        <form id="member_setting_form" class="form-horizontal" action="<{link app=seller ctl=site_seller act=account}>" method="post">
             <div class="form-group">
                 <label class="col-xs-4 control-label">
-                    从本地选择头像文件
+                    <span class="text-danger">*</span>从本地选择头片：
                 </label>
                 <div class="col-xs-8">
-                    <input type="file" required="true" name="avatar_file" value="">
+                    <div class="filebox">
+                        <input type="hidden" value='<{$seller.avatar}>' name="seller[avatar]"/>
+                        <input type="file" data-url="<{link app=image ctl=site_upload act=index}>" accept="image/*" class="file_input" />
+                        <div class="showImg">
+                            <img src="<{if $seller.avatar eq ''}><{$base_url}>/themes/pc/default/statics/images/file_add.jpg<{else}><{$seller.avatar|storager:'xs'}><{/if}>">
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="form-group">
