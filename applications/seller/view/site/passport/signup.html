@@ -20,27 +20,27 @@
 <div class="passport-signup-container seller_regbox">
     <div class="panel panel-default signup-panel">
         <div class="panel-body">
-            <form id="member_signup_form" class="form-horizontal" action="<{link app=seller ctl=site_passport act=signup args0=1}>" method="post">
+            <form id="member_signup_form" data-module="validator" class="form-horizontal" action="<{link app=seller ctl=site_passport act=signup args0=1}>" method="post">
                 <!-- 登陆后跳转地址 -->
                 <input type="hidden" name="forward" value="<{$forward}>">
                 <div class="form-group">
                     <label for="input_login_name" class="col-md-2 control-label"><span class="text-danger">*</span>登录账号：</label>
                     <div class="col-md-4">
-                        <input type="text" required="true" autocomplete='off' name="pam_account[login_name]" class="form-control" id="input_login_name" placeholder="手机号/邮箱/用户名" required="true" format="username|mobile|email" remote="<{link app=seller ctl=site_passport act=check_login_name}>">
+                        <input type="text" required="true" autocomplete='off' name="pam_account[login_name]" class="form-control" id="input_login_name" placeholder="手机号/邮箱/用户名" required="true" format="username|mobile|email" remote="<{link app=seller ctl=site_passport act=check_login_name}>" data="#input_login_password">
                         <span class="msgTip" data-message="format">用户名只能是手机号、邮箱、用户名</span>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="input_login_password" class="col-md-2 control-label"><span class="text-danger">*</span>登录密码：</label>
                     <div class="col-md-4">
-                        <input type="password" required="true" name="pam_account[login_password]" class="form-control" id="input_login_password" placeholder="6-11位字符，必须是字母、数字、下划线组合" required="true" format="password">
-                        <span class="msgTip" data-message="error">密码格式错误</span>
+                        <input type="password" required="true" name="pam_account[login_password]" class="form-control" id="input_login_password" placeholder="6-11位字符，必须是字母、数字、下划线组合" minlength="6" maxlength="11" required="true" format="password">
+                        <span class="msgTip" data-message="format">密码必须是6-11位字母、数字、下划线组合</span>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="input_psw_confirm" class="col-md-2 control-label"><span class="text-danger">*</span>确认密码：</label>
                     <div class="col-md-4">
-                        <input type="password" required="true" name="pam_account[psw_confirm]" class="form-control" id="input_psw_confirm" placeholder="再次输入登录密码" equalTo="#input_login_password">
+                        <input type="password" required="true" format="password" name="pam_account[psw_confirm]" class="form-control" id="input_psw_confirm" placeholder="再次输入登录密码" equalTo="#input_login_password">
                         <span class="msgTip" data-message="error">两次密码输入不一致</span>
                     </div>
                 </div>
@@ -104,17 +104,6 @@
 
 
 <script>
-/**
- * 表单验证
- */
- $(function(){
-    var validate = $.VMC.validator("member_signup_form");
-});
-
-
-
-
-
 /*
  * 会员注册脚本
  */
