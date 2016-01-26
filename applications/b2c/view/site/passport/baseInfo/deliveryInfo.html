@@ -5,21 +5,21 @@
 		<label for="" class="col-md-2 control-label"><span class="text-danger">*</span>配送地址：</label>
         <div class="col-md-6">
             <{input type=region name="deliveryInfo[value][addr]" value=$extra.deliveryInfo.deliveryInfo.value.addr required="true"}>
-            <span class="msgTip" data-message="required"></span>
+            <span class="msgTip" data-message="error"></span>
         </div>
 	</div>
 	<div class="form-group">
 		<label for="" class="col-md-2 control-label"><span class="text-danger">*</span>配送详细地址：</label>
         <div class="col-md-5">
             <input type="text" placeholder="详细地址" value="<{$extra.deliveryInfo.deliveryInfo.value.detail_addr}>" class="form-control" name="deliveryInfo[value][detail_addr]" required="true">
-            <span class="msgTip" data-message="required"></span>
+            <span class="msgTip" data-message="error"></span>
         </div>
 	</div>
 	<div class="form-group">
 		<label for="" class="col-md-2 control-label"><span class="text-danger">*</span>计划订货间隙：</label>
         <div class="col-md-5">
             <input type="text" class="form-control" value="<{$extra.deliveryInfo.deliveryInfo.value.plan_booking_gap}>" name="deliveryInfo[value][plan_booking_gap]" required="true">
-            <span class="msgTip" data-message="required"></span>
+            <span class="msgTip" data-message="error"></span>
         </div>
 	</div>
 	<div class="form-group">
@@ -27,7 +27,7 @@
         <div class="col-md-5">
             <input type="text" class="form-control" value="<{$extra.deliveryInfo.deliveryInfo.value.plan_booking_order}>"
                    name="deliveryInfo[value][plan_booking_order]" required="true">
-            <span class="msgTip" data-message="required"></span>
+            <span class="msgTip" data-message="error"></span>
         </div>
 	</div>
 	<div class="form-group">
@@ -35,14 +35,14 @@
         <div class="col-md-5">
             <input type="text" class="form-control" value="<{$extra.deliveryInfo.deliveryInfo.value.reality_booking_gap}>"
              name="deliveryInfo[value][reality_booking_gap]" required="true">
-            <span class="msgTip" data-message="required"></span>
+            <span class="msgTip" data-message="error"></span>
         </div>
 	</div>
 	<div class="form-group">
 		<label for="" class="col-md-2 control-label"><span class="text-danger">*</span>实际订货量：</label>
         <div class="col-md-5">
             <input type="text" class="form-control"  value="<{$extra.deliveryInfo.deliveryInfo.value.reality_booking_amount}>" name="deliveryInfo[value][reality_booking_amount]" required="true" data-message="number">
-            <span class="msgTip" data-message="required"></span>
+            <span class="msgTip" data-message="error"></span>
         </div>
 	</div>
 	<div class="form-group">
@@ -53,7 +53,7 @@
          		<span><input type="checkbox" name="deliveryInfo[value][pay][]" value="<{$extra.deliveryInfo.deliveryInfo.value.pay}>"> POS机</span>
          		<span><input type="checkbox" name="deliveryInfo[value][pay][]" value="<{$extra.deliveryInfo.deliveryInfo.value.pay}>"> 会员卡</span>
           </div>
-          <span class="msgTip" data-message="required"></span>
+          <span class="msgTip" data-message="error"></span>
         </div>
 	</div>
 	<div class="form-group">
@@ -64,21 +64,21 @@
                 <span><input type="checkbox" value="<{$key}>" name="deliveryInfo[value][time][]" required="true"> <{$item}></span>
                 <{/foreach}>
             </div>
-            <span class="msgTip" data-message="required"></span>
+            <span class="msgTip" data-message="error"></span>
         </div>
 	</div>
 	<div class="form-group">
 		<label for="" class="col-md-2 control-label"><span class="text-danger">*</span>最早收货时间：</label>
         <div class="col-md-5">
        		<input type="text" class="form-control" value="<{$extra.deliveryInfo.deliveryInfo.value.delivery_early}>" name="deliveryInfo[value][delivery_early]" placeholder="例如：06:30" required="true" format="date">
-          <span class="msgTip" data-message="date">请输入正确时间格式</span>
+          <span class="msgTip" data-message="format">请输入正确时间格式</span>
         </div>
 	</div>
 	<div class="form-group">
 		<label for="" class="col-md-2 control-label"><span class="text-danger">*</span>最晚收货时间：</label>
         <div class="col-md-5">
        		<input type="text" class="form-control" value="<{$extra.deliveryInfo.deliveryInfo.value.delivery_late}>" name="deliveryInfo[value][delivery_late]" placeholder="例如：06:30" required="true" format="date" >
-          <span class="msgTip" data-message="date">请输入正确时间格式</span>
+          <span class="msgTip" data-message="format">请输入正确时间格式</span>
         </div>
 	</div>
 
@@ -90,7 +90,7 @@
 name="deliveryInfo[value][park]" required="true" format="number">
        			<span class="input-group-addon">m</span>
        		</div>
-          <span class="msgTip" data-message="number">请输入正确的整数</span>
+          <span class="msgTip" data-message="format">请输入正确的整数</span>
         </div>
 	</div>
 	<div class="form-group">
@@ -98,7 +98,7 @@ name="deliveryInfo[value][park]" required="true" format="number">
         <div class="col-md-5">
        		<input type="text" class="form-control" value="<{$extra.deliveryInfo.deliveryInfo.value.handling}>"
 name="deliveryInfo[value][handling]" required="true">
-          <span class="msgTip" data-message="required"></span>
+          <span class="msgTip" data-message="error"></span>
         </div>
 	</div>
 </div>

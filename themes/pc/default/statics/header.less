@@ -689,6 +689,39 @@ nav.mainNav {
 }
 
 
+
+//新文件上传样式
+.uploader {
+    overflow:hidden;
+    position: relative;
+}
+.uploader .handle, .uploader .thumb{
+    cursor: pointer;
+}
+.uploader .thumb{
+    height:120px; 
+    width:120px; 
+    border:1px solid #CCC;
+    overflow:hidden;
+    
+}
+.uploader .thumb img{
+    display: block;
+    margin: auto;
+    max-height: 118px;
+    max-width: 118px;
+}
+.uploader .handle{
+    position: absolute; 
+    top:0;
+    left: 0;
+    margin: 0;
+    opacity: 0; 
+    -ms-filter: 'alpha(opacity=0)';
+    width:120px; 
+    height:120px;   
+}
+
 /* .file_add{
 	position: relative;
 	width:120px;
