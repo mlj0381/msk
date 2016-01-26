@@ -425,7 +425,6 @@ vmc_b2c_orders WHERE `member_id`={$this->member['member_id']} AND `status` = 'ac
                 }
                 break;
             case 'add':
-                var_dump($member_id, $gid, $obj_type);
                 if (!$mdl_member_goods->add_fav($member_id, $gid, $obj_type)) {
 
                     $this->splash('error', '', '加入收藏失败!');

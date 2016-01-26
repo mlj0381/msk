@@ -1,5 +1,5 @@
 <div id="param">
-    <h4>商品参数</h4>
+    <h4><span class="text-danger">*</span>商品参数</h4>
     <div class="form-body">
         <{foreach from=$params.goods_type item=porps}>
         <input name="goods[type_id]" type="hidden" value="<{$porps.type_id}>"/>
@@ -11,7 +11,7 @@
             </label>
             <div class="col-xs-5">
                 <{assign var="propsid" value='p_'.$props_value_id++}>
-                <{input type=select name="goods[props][{$propsid}][value]" rows=$porps_value.props_value labelColumn="name" valueColumn="props_value_id" value=$goods.props[$propsid].value}>
+                <{input type=select name="goods[props][{$propsid}][value]" required="true" rows=$porps_value.props_value labelColumn="name" valueColumn="props_value_id" value=$goods.props[$propsid].value}>
             </div>
         </div>
         <{/foreach}>

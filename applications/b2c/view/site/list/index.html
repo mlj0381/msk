@@ -5,10 +5,12 @@
 <div class="glist-container">
     <div class="row breadcrumb_row">
         <ol class="breadcrumb col-xs-10">
-            <li><a href="<{link app=b2c ctl=site_list act=index}>">全部商品：</a>
-            <a href="<{link app=b2c ctl=site_list act=index}>?cat=<{$cat_name.parent.cat_id}>"><{$cat_name.parent.cat_name}></a>
-            </li>
-            <li><a href="<{link app=b2c ctl=site_list act=index}>?cat=<{$cat_name.self.cat_id}>"><{$cat_name.self.cat_name}></a></li>
+            <li><a href="<{link app=b2c ctl=site_list act=index}>">全部商品：</a></li>
+                <{foreach from=$cat.catPath item=item}>
+            <li> <a href="<{link app=b2c ctl=site_list act=index}>?cat=<{$item.ident}>"><{$item.title}></a></li>
+                <{/foreach}>
+
+
             <{if $cat_path}>
                 <li><a href="<{link app=b2c ctl=site_list act=index}>">全部</a></li>
                 <{foreach from=$cat_path item=cat name=cp}>
@@ -49,19 +51,19 @@
     <div class="panel panel-default gfilter">
       <table class="gfilter_tab">
            <tr>
-              <td><{$cat_title}></td>
+               <{if $cat.cat}>
+              <td>分类</td>
               <td>
                   <ul>
-                  <{foreach from=$cat item=item}>
+                  <{foreach from=$cat.cat item=item}>
 
                     <li>
                        <a href="<{link app=b2c ctl=site_list act=index}>?<{$query|merge_query:cat:$item.cat_id}>"><{$item.cat_name}></a>
                        </li>
-                    
-
                   <{/foreach}>
                   </ul>
               </td>
+               <{/if}>
           </tr>
           <{if !$search_info.brand}>
           <tr>

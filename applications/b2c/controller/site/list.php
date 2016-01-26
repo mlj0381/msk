@@ -26,22 +26,16 @@ class b2c_ctl_site_list extends b2c_frontpage
     }
 
 
-
     private function _get_cat($cat_id)
     {
         if (!empty($cat_id) && is_numeric($cat_id)) {
-//记录父级分类名称，分类面包屑显示
-            $this->pagedata['cat_name']['self'] = $this->mCat->getRow('cat_id, cat_name, has_children', array('cat_id' => $cat_id));
-            $this->pagedata['cat_title'] = '分类';
-            if ($this->pagedata['cat_name']['self']['has_children'] == 'true') {
-                return $this->mCat->children($cat_id);
-            }
-            $this->pagedata['cat_name']['parent'] = $this->mCat->getRow('cat_id, cat_name', array('parent_id' => $this->pagedata['cat_name']['self']['parent_id']));
-            $this->pagedata['cat_title'] = '';
+            //记录父级分类名称，分类面包屑显示
+            $cat['catPath'] = $this->mCat->getPath($cat_id);
+            $cat['cat'] = $this->mCat->children($cat_id);
         } else {
-            $this->pagedata['cat_title'] = '分类';
-            return $this->mCat->get_tree();
+            $cat['cat'] = $this->mCat->get_tree();
         }
+        return $cat;
     }
 
     public function index($fix_brand = false)
@@ -94,7 +88,7 @@ class b2c_ctl_site_list extends b2c_frontpage
             $page = 'store';
         } else {
             $goods_list = $this->objSearch->goods_list($params);
-            if(!empty($goods_list)){
+            if (!empty($goods_list)) {
                 $this->pagedata['show_type'] = $params['sg'];
                 $this->pagedata['data_list'] = $goods_list['data'];
                 $this->pagedata['count'] = $goods_list['count'];
