@@ -85,7 +85,7 @@
         </label>
 
         <div class="col-xs-4">
-            <button class="team"
+            <button class="team btn btn-danger"
                     type="button">
                 保存并继续添加设备
             </button>
@@ -108,7 +108,8 @@
                 <input type="text"
                        value="<{$extra.equipment.value.main_device}>"
                        name="equipment[value][main_device][]"
-                       class="form-control">
+                       class="form-control" required="true">
+                        <span class="msgTip" data-message="error"></span>
             </div>
         </div>
 

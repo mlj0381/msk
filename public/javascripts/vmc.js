@@ -19,6 +19,7 @@ $.validator.regex = {
 	'idcard'    : /^(\d{6})()?(\d{4})(\d{2})(\d{2})(\d{3})(\w)$/,
 	'tel'       : /^(\d{3,4}-?)?\d{7,9}$/g,
 	'password'	: /^[a-zA-Z0-9_]{6,26}$/,
+	'time'		: /^(([01]?[0-9])|(2[0-3])):[0-5]?[0-9]$/,
 	'ip'        : /^(([1-9]|([1-9]\d)|(1\d\d)|(2([0-4]\d|5[0-5])))\.)(([1-9]|([1-9]\d)|(1\d\d)|(2([0-4]\d|5[0-5])))\.){2}([1-9]|([1-9]\d)|(1\d\d)|(2([0-4]\d|5[0-5])))$/
 };
 $.validator.messages = {
@@ -275,14 +276,13 @@ $.VMC.validator = function(form){
 		errorClass: "error",
 		validClass: "right",
 		errorElement: "label",
-		focusInvalid: true,
+		focusInvalid: false,
 		errorContainer: $( [] ),
 		errorLabelContainer: $( [] ),
 		onsubmit: true,
 		ignore: ":hidden",
 		ignoreTitle: false,
-		success : function(label) {
-			console.log(label);
+		success : function(label) {			
 			label.html("&nbsp;").addClass('right');
 		},
 		onkeyup : function(element, event){
@@ -296,7 +296,7 @@ $.VMC.validator = function(form){
 		errorPlacement : function(error, element) {
 			if(element.parents('.form-item').length >0)
 			{
-				error.appendTo ( element.parents('.form-item'));
+				error.appendTo ( element.parents('.form-item').parent());
 				return ;
 			}
 			if(element.is(":radio") || element.is(":checkbox") || element.is("input[name=captcha]"))
