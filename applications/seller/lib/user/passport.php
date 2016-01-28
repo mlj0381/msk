@@ -591,7 +591,7 @@ class seller_user_passport
     }
 
     //保存注册信息
-    public function entry($params, $seller_id)
+    public function entry($params, $seller_id, &$msg)
     {
         $db = vmc::database();
         $db->beginTransaction();
@@ -604,6 +604,7 @@ class seller_user_passport
             $params['company']['company_id'] && $sqlType = true;
             if (!app::get('base')->model('company')->save($params['company'])) {
                 $db->rollback();
+                $msg = '公司信息';
                 return false;
             }
         }
@@ -615,6 +616,7 @@ class seller_user_passport
             $params['contact']['contact_id'] && $sqlType = true;
             if (!app::get('base')->model('contact')->save($params['contact'])) {
                 $db->rollback();
+                $msg = '联系人信息';
                 return false;
             }
         }
@@ -625,16 +627,18 @@ class seller_user_passport
             if (!$params['brand']['brand_id']) {
                 if (!$barand_id = app::get('b2c')->model('brand')->insert($params['brand'])) {
                     $db->rollback();
+                    $msg = '品牌信息';
                     return false;
                 }
                 $params['brand_id'] = $barand_id;
             } else if (!app::get('b2c')->model('brand')->save($params['brand'])) {
+                $msg = '品牌信息';
                 $db->rollback();
                 return false;
             }
 
             if (!$this->app->model('brand')->save($params['brand'])) {
-
+                $msg = '品牌信息';
                 $db->rollback();
                 return false;
             }
@@ -645,6 +649,7 @@ class seller_user_passport
             $params['store']['seller_id'] = $seller_id;
             if (!app::get('store')->model('store')->save($params['store'])) {
                 $db->rollback();
+                $msg = '店铺信息';
                 return false;
             }
         }
@@ -661,6 +666,7 @@ class seller_user_passport
                 if (is_array(reset($params[$key]['value']))) {
                     if (!$this->_save_array($key, $params[$key], $seller_id)) {
                         $db->rollback();
+                        $msg = '扩展信息';
                         return false;
                     }
                     continue;

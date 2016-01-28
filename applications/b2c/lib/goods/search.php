@@ -28,10 +28,11 @@ class b2c_goods_search
             return array();
         }
         $search_info = array();
+        $search_label = app::get('b2c')->getConf('search_label');
         if (isset($params['brand']) && is_numeric($params['brand'])) {
             $brand = $this->mBrand->getRow('brand_id, brand_name', array('brand_id' => $params['brand']));
             $search_info['brand'] = array(
-                'label' => '品牌',
+                'label' => $search_label['brand'],
                 'id' => $brand['brand_id'],
                 'name' => $brand['brand_name'],
             );
@@ -42,6 +43,7 @@ class b2c_goods_search
             foreach ($this->conf[$k] as $value) {
                 if ($value['id'] == $v) {
                     $search_info[$k] = $value;
+                    $search_info[$k]['label'] = $search_label[$k];
                     $search_info[$k]['url'] = http_build_query($query);
                     break;
                 }

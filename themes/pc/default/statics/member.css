@@ -2247,8 +2247,7 @@ ol {
 }
 .store_banner {
   width: 100%;
-  height: 499px;
-  background: url(images/store_ban.png) no-repeat top center;
+  height: 500px;
 }
 .store_carousel h2 {
   text-align: center;

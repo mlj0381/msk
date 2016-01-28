@@ -19,11 +19,12 @@ class store_ctl_site_store extends site_controller
 
     }
     public function index($store_id){
-        $this->pagedata['store_id'] = $store_id ? $store_id : $this->_request->get_get('store');
+        $this->pagedata['store_id'] = $store_id = 5;//$store_id ? $store_id : $this->_request->get_get('store');
         $this->page('site/index.html');
     }
 
     public function store_list($store_id){
+        $store_id = 5;
         $this->pagedata['store_id'] = $store_id;
         if(!is_numeric($store_id)) $this->splash('error', '', '非法请求');
         $params = utils::_filter_input($_GET);
