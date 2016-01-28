@@ -57,7 +57,9 @@ class b2c_ctl_admin_setting extends desktop_controller {
 
     //添加热门关键词
     public function add_keywords($hot_id) {
-        is_numeric($hot_id) && $this->pagedata['hot'] = $this->mSetting->getRow('*', array('id' => $hot_id));
+        if(is_numeric($hot_id)){
+            $this->pagedata['hot'] = $this->mSetting->getRow('*', array('id' => $hot_id));
+        }
         if ($_POST) {
             $this->save_setting($_POST);
         }
@@ -66,7 +68,10 @@ class b2c_ctl_admin_setting extends desktop_controller {
 
     //添加导航
     public function add_nav($nav_id) {
-        is_numeric($nav_id) && $this->pagedata['nav'] = $this->mSetting->getRow('*', array('id' => $nav_id));
+        if(is_numeric($nav_id)){
+            $this->pagedata['nav'] = $this->mSetting->getRow('*', array('id' => $nav_id));
+        }
+
         if ($_POST) {
             $this->save_setting($_POST, 'nav');
         }

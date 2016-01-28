@@ -49,8 +49,9 @@ class site_ctl_admin_setting extends desktop_controller
     }
     
     public function add_map(){
-        $this->begin('index.php?app=site&ctl=admin_setting&act=index');
         $post = $_POST;
+        $act = $post['id'] ? 'website' : 'index';
+        $this->begin('index.php?app=site&ctl=admin_setting&act='.$act);
         $post['createtime'] = time();
         if(!$post) $this->end(false, '非法请求');
         if(!$this->mMap->save($post)) $this->end(false, '操作失败');

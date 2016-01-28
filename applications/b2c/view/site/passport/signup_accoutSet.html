@@ -36,13 +36,13 @@
                     <div class="col-xs-8">
                         <input type="password" required="true" format="password" name="pam_account[psw_confirm]" class="form-control" id="input_psw_confirm" placeholder="再次输入登录密码" equalTo="#input_login_password">
                         <span class="msgTip" data-message="format">必须是6-11位字母、数字、下划线组合</span>
-                        <span class="msgTip" data-message="equalto">两次密码输入不一致</span>
+                        <span class="msgTip" data-message="error">两次密码输入不一致</span>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="input_psw_confirm" class="col-xs-3 control-label"><span class="text-danger">*</span>验证手机：</label>
                     <div class="col-xs-8">
-                        <input type="text" name="pam_account[mobile]" class="form-control" id="input_mobile" required="true" format="mobile">
+                        <input type="text" name="pam_account[mobile]" class="form-control" remote="<{link app=b2c ctl=site_passport act=is_exists_mobile}>" id="input_mobile" required="true" format="mobile">
                         <span class="msgTip" data-message="error">请输入正确的手机号码</span>
                     </div>
                 </div>
@@ -50,7 +50,7 @@
                     <label for="input_psw_confirm" class="col-xs-3 control-label"><span class="text-danger">*</span>短信验证码：</label>
                     <div class="col-xs-4">
                         <input type="text" name="smscode" class="form-control" id="mobile_vcode" required="true">
-                        <span class="msgTip" data-message="error"></span>
+                        
                     </div>
                     <div class="col-xs-4">
                         <div class="mobile-vcode">
@@ -71,13 +71,12 @@
 /*
  * 会员注册脚本
  */
-
 void function(signup_form){
 
     var alert_timer = 0;
     var _alert_error = function(msg){
         signup_form.find('.alert-error').remove();
-        signup_form.append($('<div class="alert alert-danger">'+msg+'</div>'));
+        //signup_form.append($('<div class="alert alert-danger">'+msg+'</div>'));
         alert_timer = setTimeout(function(){
             clearTimeout(alert_timer);
             signup_form.find('.alert-danger').fadeOut('fast',function(){

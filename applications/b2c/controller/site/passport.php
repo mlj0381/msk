@@ -312,7 +312,6 @@ class b2c_ctl_site_passport extends b2c_frontpage
         }else{
             $this->page('site/passport/signup_baseInfo.html');
         }
-
     }
 
     //注册页面--注册完成
@@ -340,7 +339,6 @@ class b2c_ctl_site_passport extends b2c_frontpage
     //注册的时，检查用户名
     public function check_login_name()
     {
-
         if ($this->passport_obj->check_signup_account(trim($_POST['pam_account']['login_name']), $msg)) {
             if ($msg == 'mobile') { //用户名为手机号码
                 $this->splash('success', null, array(
@@ -356,6 +354,30 @@ class b2c_ctl_site_passport extends b2c_frontpage
         } else {
             $this->splash('error', null, $msg, true);
         }
+    }
+
+    /*
+     * 判断前台用户联系手机是否存在
+     */
+
+    public function is_exists_mobile() {
+        $mobile = $_POST['pam_account']['mobile'];
+        if (empty($mobile)) {
+            $this->splash('error', '', '手机号不能为空');
+        }
+        $mobile_type = $this->passport_obj->get_login_account_type($mobile);
+
+        if($mobile_type != 'mobile'){
+            $this->splash('error', '', '请填写正确的手机号');
+        }
+        $mdl_members = $this->app->model('members');
+        $flag = $mdl_members->getList('member_id', array(
+            'mobile' => trim($mobile),
+        ));
+        if($flag){
+            $this->splash('error', '', '该手机号已被使用');
+        }
+        $this->splash('success', '', '该手机号可以使用');
     }
 
     /**
@@ -422,9 +444,6 @@ class b2c_ctl_site_passport extends b2c_frontpage
                     'ctl' => 'index',
                 ));
             }
-            // if(!vmc::singleton('b2c_user_passport')-is_exists_login_name($params['account'])){
-            //     $this->splash('error', null, '未知账号!');
-            // }
             if (empty($params['new_password'])) {
                 $this->splash('error', $redirect_here, '请输入新密码!');
             }
@@ -435,9 +454,13 @@ class b2c_ctl_site_passport extends b2c_frontpage
             if (!vmc::singleton('b2c_user_vcode')->verify($params['vcode'], $params['account'], 'reset')) {
                 $this->splash('error', $redirect_here, '验证码错误！');
             }
-            $p_m = app::get('pam')->model('members')->getRow('member_id', array('login_account' => $params['account']));
+            $result = $this->app->model('members')->getRow('member_id', array('mobile' => $params['account']));
+            if(empty($result)){
+                $this->splash('error', $redirect_here, '未知帐号!');
+            }
+            $p_m = app::get('pam')->model('members')->getRow('member_id', array('member_id' => $result['member_id']));
             if (empty($p_m['member_id'])) {
-                $this->splash('error', $redirect_here, '账号异常!');
+                $this->splash('error', $redirect_here, '帐号异常!');
             }
             $member_id = $p_m['member_id'];
             if (!$this->passport_obj->reset_password($member_id, $params['new_password'])) {
@@ -447,13 +470,13 @@ class b2c_ctl_site_passport extends b2c_frontpage
             /**
              * 直接登录操作
              */
-            $this->unset_member();
-            //设置session
-            $this->user_obj->set_member_session($member_id);
-            //设置客户端cookie
-            $this->bind_member($member_id);
-
-            $this->splash('success', $forward, '密码重置成功');
+//            $this->unset_member();
+//            //设置session
+//            $this->user_obj->set_member_session($member_id);
+//            //设置客户端cookie
+//            $this->bind_member($member_id);
+            $redirect = $this->gen_url(array('app' => 'b2c', 'ctl' => 'site_passport', 'act' => 'login'));
+            $this->splash('success', $redirect, '密码重置成功，请重新登录');
         } else {
             $this->set_tmpl('passport');
             $this->page('site/passport/reset_password.html');
@@ -468,12 +491,13 @@ class b2c_ctl_site_passport extends b2c_frontpage
         if ($login_type != 'mobile' && $login_type != 'email') {
             $this->splash('error', null, '请输入正确的手机或邮箱!');
         }
-        if (!$this->passport_obj->is_exists_login_name($account)) {
-            $this->splash('error', null, '未知账号!');
+        if (!$this->passport_obj->is_exists_mobile($account)) {
+            $this->splash('error', null, '验证手机不正确!');
         }
         if (!$vcode = vmc::singleton('b2c_user_vcode')->set_vcode($account, 'reset', $msg)) {
             $this->splash('error', null, $msg);
         }
+        $this->splash('success', $vcode, '短信已发送');
         //$data[$login_type] = $account;
         $data['vcode'] = $vcode;
         switch ($login_type) {

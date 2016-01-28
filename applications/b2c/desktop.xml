@@ -87,7 +87,6 @@
 			<menu action="index" controller="admin_setting" display="true" order='10' permission='shopsetting'>商城设置</menu>
 			<menu action="hot_keywords" controller="admin_setting" display="true" order='20' permission='shopsetting'>热门关键词</menu>
 			<menu action="nav_manage" controller="admin_setting" display="true" order='30' permission='shopsetting'>导航管理</menu>
-			<menu action="page_manage" controller="admin_setting" display="true" order='40' permission='shopsetting'>页面管理</menu>
 			<menu app="site" controller='admin_setting' action='website' permission='shopsetting' display='true' order="55">站点地图</menu>
 		</menugroup>
 	</workground>

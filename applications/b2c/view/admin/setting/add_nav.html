@@ -37,7 +37,7 @@
                             <label class="col-md-4 control-label">是否启用
                            </label>
                             <div class="col-md-8">
-                                <{input type='checkbox' name='status' value=$nav.ordernum}>
+                                <input type='checkbox' name='status' <{if $nav.status eq 'true'}>checked<{/if}>>
                             </div>
                         </div>
                         <hr>

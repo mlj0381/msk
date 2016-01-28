@@ -119,6 +119,23 @@ class b2c_user_passport {
         return $flag ? true : false;
     }
 
+    /*
+    * 判断前台用户名是否存在
+    * */
+
+    public function is_exists_mobile($mobile) {
+        if (empty($mobile)) {
+            return false;
+        }
+        $mdl_members = app::get('b2c')->model('members');
+        $flag = $mdl_members->getList('member_id', array(
+            'login_account' => trim($mobile),
+        ));
+
+        return $flag ? true : false;
+    }
+
+
     /**
      * 组织注册需要的数据.
      */
