@@ -340,7 +340,6 @@ class b2c_ctl_site_passport extends b2c_frontpage
     //注册的时，检查用户名
     public function check_login_name()
     {
-
         if ($this->passport_obj->check_signup_account(trim($_POST['pam_account']['login_name']), $msg)) {
             if ($msg == 'mobile') { //用户名为手机号码
                 $this->splash('success', null, array(
@@ -356,6 +355,30 @@ class b2c_ctl_site_passport extends b2c_frontpage
         } else {
             $this->splash('error', null, $msg, true);
         }
+    }
+
+    /*
+     * 判断前台用户联系手机是否存在
+     */
+
+    public function is_exists_mobile() {
+        $mobile = $_POST['pam_account']['mobile'];
+        if (empty($mobile)) {
+            $this->splash('error', '', '手机号不能为空');
+        }
+        $mobile_type = $this->passport_obj->get_login_account_type($mobile);
+
+        if($mobile_type != 'mobile'){
+            $this->splash('error', '', '请填写正确的手机号');
+        }
+        $mdl_members = $this->app->model('members');
+        $flag = $mdl_members->getList('member_id', array(
+            'mobile' => trim($mobile),
+        ));
+        if($flag){
+            $this->splash('error', '', '该手机号已被使用');
+        }
+        $this->splash('success', '', '该手机号可以使用');
     }
 
     /**
@@ -469,8 +492,8 @@ class b2c_ctl_site_passport extends b2c_frontpage
         if ($login_type != 'mobile' && $login_type != 'email') {
             $this->splash('error', null, '请输入正确的手机或邮箱!');
         }
-        if (!$this->passport_obj->is_exists_login_name($account)) {
-            $this->splash('error', null, '未知账号!');
+        if (!$this->passport_obj->is_exists_mobile($account)) {
+            $this->splash('error', null, '验证手机不正确!');
         }
         if (!$vcode = vmc::singleton('b2c_user_vcode')->set_vcode($account, 'reset', $msg)) {
             $this->splash('error', null, $msg);

@@ -113,11 +113,28 @@ class b2c_user_passport {
         }
         $pam_members_model = app::get('pam')->model('members');
         $flag = $pam_members_model->getList('member_id', array(
-            'mobile' => trim($login_account),
+            'login_account' => trim($login_account),
         ));
 
         return $flag ? true : false;
     }
+
+    /*
+    * 判断前台用户名是否存在
+    * */
+
+    public function is_exists_mobile($mobile) {
+        if (empty($mobile)) {
+            return false;
+        }
+        $mdl_members = app::get('b2c')->model('members');
+        $flag = $mdl_members->getList('member_id', array(
+            'login_account' => trim($mobile),
+        ));
+
+        return $flag ? true : false;
+    }
+
 
     /**
      * 组织注册需要的数据.
