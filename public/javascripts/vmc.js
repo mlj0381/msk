@@ -18,6 +18,7 @@ $.validator.regex = {
 	'zipcode'   : /^[0-9]{6}$/,
 	'idcard'    : /^(\d{6})()?(\d{4})(\d{2})(\d{2})(\d{3})(\w)$/,
 	'tel'       : /^(\d{3,4}-?)?\d{7,9}$/g,
+	'time'		:  /^(([01]?[0-9])|(2[0-3])):[0-5]?[0-9]$/,
 	'password'	: /^[a-zA-Z0-9_]{6,26}$/,
 	'ip'        : /^(([1-9]|([1-9]\d)|(1\d\d)|(2([0-4]\d|5[0-5])))\.)(([1-9]|([1-9]\d)|(1\d\d)|(2([0-4]\d|5[0-5])))\.){2}([1-9]|([1-9]\d)|(1\d\d)|(2([0-4]\d|5[0-5])))$/
 };
@@ -466,7 +467,6 @@ $.VMC.uploader = function() {
 					message = $.validator.format('<label id="{0}-error" class="error" for="{1}">{2}</label>', [labelName, labelName, '上传失败'])
 				}
 				$(box).find('label.error,label.right').remove();
-				console.log(message);
 				$(box).append(message);
 			}
 		};
