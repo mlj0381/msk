@@ -50,8 +50,8 @@
         <div class="col-md-5 pay_method">
           <div class="form-item">
          		<span><input type="checkbox" name="deliveryInfo[value][pay][]" value="<{$extra.deliveryInfo.deliveryInfo.value.pay}>"  required="true"> 网银</span>
-         		<span><input type="checkbox" name="deliveryInfo[value][pay][]" value="<{$extra.deliveryInfo.deliveryInfo.value.pay}>"> POS机</span>
-         		<span><input type="checkbox" name="deliveryInfo[value][pay][]" value="<{$extra.deliveryInfo.deliveryInfo.value.pay}>"> 会员卡</span>
+         		<span><input type="checkbox" name="deliveryInfo[value][pay][]" value="<{$extra.deliveryInfo.deliveryInfo.value.pay}>" required="true"> POS机</span>
+         		<span><input type="checkbox" name="deliveryInfo[value][pay][]" value="<{$extra.deliveryInfo.deliveryInfo.value.pay}>" required="true"> 会员卡</span>
           </div>
           <span class="msgTip" data-message="error"></span>
         </div>
@@ -70,14 +70,14 @@
 	<div class="form-group">
 		<label for="" class="col-md-2 control-label"><span class="text-danger">*</span>最早收货时间：</label>
         <div class="col-md-5">
-       		<input type="text" class="form-control" value="<{$extra.deliveryInfo.deliveryInfo.value.delivery_early}>" name="deliveryInfo[value][delivery_early]" placeholder="例如：06:30" required="true" format="date">
+       		<input type="text" class="form-control" value="<{$extra.deliveryInfo.deliveryInfo.value.delivery_early}>" name="deliveryInfo[value][delivery_early]" placeholder="例如：06:30" required="true" format="time">
           <span class="msgTip" data-message="format">请输入正确时间格式</span>
         </div>
 	</div>
 	<div class="form-group">
 		<label for="" class="col-md-2 control-label"><span class="text-danger">*</span>最晚收货时间：</label>
         <div class="col-md-5">
-       		<input type="text" class="form-control" value="<{$extra.deliveryInfo.deliveryInfo.value.delivery_late}>" name="deliveryInfo[value][delivery_late]" placeholder="例如：22:30" required="true" format="date" >
+       		<input type="text" class="form-control" value="<{$extra.deliveryInfo.deliveryInfo.value.delivery_late}>" name="deliveryInfo[value][delivery_late]" placeholder="例如：22:30" required="true" format="time" >
           <span class="msgTip" data-message="format">请输入正确时间格式</span>
         </div>
 	</div>
