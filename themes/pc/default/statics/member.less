@@ -2504,6 +2504,7 @@ ul,ol{
 				&.default{
 					background: #a40001;
 					border:none;
+					position: relative;
 					a{
 						width:190px;
 						margin:0 auto;
@@ -2519,7 +2520,30 @@ ul,ol{
 						&:hover{
 							background: none;
 						}
+					}
+					.cat_ul{
+						width:190px;
+						background: #1c0001;
+                		opacity:0.95;
+						position: absolute;
+						z-index: 50;
+						height:500px;
+						display: none;
+						li{
+							width:190px;
+							height:36px;
+							line-height: 36px;
 
+							a{
+								width:190px;
+								height:36px;
+								line-height: 36px;
+								font-size: 14px;
+								&:hover{
+									background: @basecolor;
+								}
+							}
+						}
 					}
 				}
 			}

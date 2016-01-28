@@ -2228,6 +2228,7 @@ ol {
 .store_header .nav_bg .store_nav li.default {
   background: #a40001;
   border: none;
+  position: relative;
 }
 .store_header .nav_bg .store_nav li.default a {
   width: 190px;
@@ -2244,6 +2245,29 @@ ol {
 }
 .store_header .nav_bg .store_nav li.default a:hover {
   background: none;
+}
+.store_header .nav_bg .store_nav li.default .cat_ul {
+  width: 190px;
+  background: #1c0001;
+  opacity: 0.95;
+  position: absolute;
+  z-index: 50;
+  height: 500px;
+  display: none;
+}
+.store_header .nav_bg .store_nav li.default .cat_ul li {
+  width: 190px;
+  height: 36px;
+  line-height: 36px;
+}
+.store_header .nav_bg .store_nav li.default .cat_ul li a {
+  width: 190px;
+  height: 36px;
+  line-height: 36px;
+  font-size: 14px;
+}
+.store_header .nav_bg .store_nav li.default .cat_ul li a:hover {
+  background: #a40001;
 }
 .store_banner {
   width: 100%;

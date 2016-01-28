@@ -5,13 +5,14 @@
 	</div>
 	<div class="nav_bg">
 		<ul class="store_nav">
-
-			<li class="default"><a href="<{link app=store ctl=site_store act=store_list args0=$store_id}>">所有商品分类<i class="glyphicon glyphicon-chevron-down"></i></a>
-				<div class="category-container">
-	                <div class="category">
-	                    <{WIDGET_B2C_GOODS_CAT}>
-	                </div>
-	            </div>
+			<li class="default">
+				<a href="<{link app=store ctl=site_store act=store_list args0=$store_id}>">所有商品分类</a>
+				<ul class="cat_ul">
+					<li><a href="#">鸡鸭类<i class="icon-chevron-right"></i></a></li>
+					<li><a href="#">猪肉类<i class="icon-chevron-right"></i></a></li>
+					<li><a href="#">牛羊类<i class="icon-chevron-right"></i></a></li>
+					<li><a href="#">海鲜类<i class="icon-chevron-right"></i></a></li>
+				</ul>
 			</li>
 			<li><a href="<{link app=store ctl=site_store act=index args0=$store_id}>">首页</a></li>
 			<li>|</li>
