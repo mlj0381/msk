@@ -108,15 +108,15 @@ $setting = array(
     ),
     'store_type' => array(
         'default' => array(
-            array(
+            1 => array(
                 'id' => '1',
                 'label' => '工厂店铺',
             ),
-            array(
+            2 => array(
                 'id' => '2',
                 'label' => '代理店铺',
             ),
-            array(
+            3 => array(
                 'id' => '3',
                 'label' => 'OEM店铺',
             ),
