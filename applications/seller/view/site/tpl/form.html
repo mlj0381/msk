@@ -2,17 +2,10 @@
     .tip{display:none}
     label.valid{background:#FF0}
 </style>
-<form id="myform1" action="#" method="post" class="form" data-module="validator">
-     <div class="form-group">
-        <label class="col-sm-2 control-label"><span class="text-danger">*</span>固定电话：</label>
-        <div class="col-sm-8">
-            <input type="text" name="tel" class="form-control" required="true" format="tel" />            
-        </div>
-    </div>
 
-</form>
 <form id="myform" action="#" method="post" class="form" data-module="validator">
 <div class="form-body form-horizontal">
+<!--
     <div class="form-group">
         <label class="col-sm-2 control-label"><span class="text-danger">*</span>用户名：</label>
         <div class="col-sm-4">
@@ -93,7 +86,7 @@
     <div class="form-group">
         <label class="col-sm-2 control-label"><span class="text-danger">*</span>工作年限：</label>
         <div class="col-sm-8">
-            <input type="date" name="years" class="form-control" required="true"  digits="true" range="1,10" />            
+            <input type="text" name="years" class="form-control" required="true"  digits="true" range="1,10" />            
         </div>
     </div>
 
@@ -127,19 +120,31 @@
     <div class="form-group">
         <label class="col-sm-2 control-label"><span class="text-danger">*</span>上传头像：</label>
         <div class="col-sm-8">
-            <{input type="imageupload" tag="图片上传" name="content[image_id]" value=$content.image_id required='true' accept="jpg|png|gif"}>
+            <{input type="imageupload" tag="图片上传" name="content[image_id]" value=$content.image_id required='false' accept="jpg|png|gif"}>
             <span class="tip" data-message="accept">图片格式不正确</span>
         </div>
 
     </div>
-    
+ -->   
     <div class="form-group">
         <label class="col-sm-2 control-label"><span class="text-danger">*</span>上传头像：</label>
         <div class="col-sm-8">
-            <{input type="imageupload" tag="图片上传" name="contents[image_id]" value=$content.image_id required='true'}>            
+            <{input type="imageupload" tag="图片上传" name="contents[image_id]" value=$content.image_id required='true' accept="jpg|png|gif"}>   
+            <span class="msgTip" data-message="error">上传失败</span>            
         </div>
     </div>
 
+    <div class="form-group">
+        <label class="col-sm-2 control-label"><span class="text-danger">*</span>上传头像：</label>
+        <div class="col-sm-8">
+            <input type="file" name="xxx" class="handle" required=true accept="jpg|gif|png" />
+            <span class="msgTip" data-message="error">没有文件</span>
+        </div>
+    </div>
+
+    
+
+    <!--
     <div class="form-group">
         <label class="col-sm-2 control-label"><span class="text-danger">*</span>服务器IP：</label>
         <div class="col-sm-8">
@@ -154,6 +159,7 @@
             我已阅读并接受用户协议
         </div>
     </div>
+    -->
     <div class="form-group">
         <div class="col-sm-offset-2 col-sm-4">
             <button type="submit" data-loading-text="正在提交..." class="btn btn-danger">立即注册</button>

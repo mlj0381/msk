@@ -210,8 +210,6 @@ $.validator.messages = {
 		}
 		if(typeof param != 'string' || param == '') return false;
 		var regex = $.validator.regex;
-		console.log(param, param in regex);
-
 		if(param.indexOf("|") > 0){
 			var REs = param.split("|");
 			for(i in REs){
@@ -232,7 +230,6 @@ $.validator.messages = {
 			return true;
 		}else if( param in regex)
 		{
-			console.log(value, param);
 			return regex[param].test(value);
 		}else{
 			try{
@@ -263,6 +260,10 @@ $.VMC = {
 			if(setting[i] === true && typeof this[i] == 'function')
 				var operator = this[i]();
 		}
+	},
+	format : function(source, params)
+	{
+		return $.validator.format(source, params);
 	}
 };
 //------------------------------------------------------------------
@@ -279,11 +280,11 @@ $.VMC.validator = function(form){
 		errorContainer: $( [] ),
 		errorLabelContainer: $( [] ),
 		onsubmit: true,
-		ignore: ":hidden",
+		ignore: "",
 		ignoreTitle: false,
 		success : function(label) {
-			console.log(label);
-			label.html("&nbsp;").addClass('right');
+			$(label).parents(".form-group").find('label.error').remove();
+			label.text(" ").addClass('right');
 		},
 		onkeyup : function(element, event){
 			if($(element).attr('remote')) return ;
@@ -294,9 +295,11 @@ $.VMC.validator = function(form){
 			}
 		},
 		errorPlacement : function(error, element) {
+			var label = element.parents('.form-item').find('label.error,label.right');
+			if(label.length > 0) label.remove();
 			if(element.parents('.form-item').length >0)
 			{
-				error.appendTo ( element.parents('.form-item'));
+				error.appendTo ( element.parents('.form-item').parent());
 				return ;
 			}
 			if(element.is(":radio") || element.is(":checkbox") || element.is("input[name=captcha]"))
@@ -318,7 +321,7 @@ $.VMC.validator = function(form){
 				var attr = attrs[i].name;
 				var value = attrs[i].value;
 				if(typeof $.validator.methods[attr] != 'function' && attr != 'format') continue;
-				if(attr == 'required' && value == 'false') continue ;
+				if(attr == 'required' && value != 'true') continue ;
 				if(attr == 'format' && typeof $.validator.methods[value] == 'function')
 				{
 					attr = value;
@@ -348,9 +351,8 @@ $.VMC.validator = function(form){
 					case 'accept' :
 					case 'fun' :
 						value = value;
-						break;  
+						break;
 					default :
-						//console.log(attr);
 						value = true;
 						break;
 				}
@@ -380,7 +382,7 @@ $.VMC.validator = function(form){
 			});
 
 			if('format' in _define){
-				for(i in rules[inputName]) // format = mobile, email = true
+				for(i in rules[inputName])
 				{
 					var rule = rules[inputName][i];
 					if( i == 'required' ||	(i in messages) ) continue;
@@ -397,7 +399,7 @@ $.VMC.validator = function(form){
 			}
 			return messages;
 		}
-		if($(obj).find('input[required]').length < 1) return ;
+		if($(obj).find('input[data-valid],input.required').length < 1) return ;
 		var rules = {};
 		var messages = {};
 		$(obj).find('input[required]').each(function(i, item){
@@ -414,7 +416,6 @@ $.VMC.validator = function(form){
 			}
 		});
 		var thisSeting = $.extend(true, defaults, {rules : rules, messages : messages});
-		console.log(thisSeting);
 		$(obj).validate(thisSeting);
 	});
 };
@@ -453,14 +454,12 @@ $.VMC.uploader = function() {
 				if(re.image_id)
 				{
 					$(show).prop('src', re.url);
-					$(box).find('input[type="hidden"]').val(re.image_id);
-					$(show).show();
-					//$(this).attr('aria-invalid', false);
-					//$(this).focusout();
-					//validator = $( this.form ).validate();
-					//validator.success = 'valid';
-					//$.validator.onfocusout(this);
-					//$(this).valid();
+					var hidden = $(box).find('input[type="hidden"]')
+					$(hidden).val(re.image_id);
+					$(box).find('label.error,label.error').remove();
+					var labelName = $(hidden).attr('name');
+					$(box).append($.VMC.format('<label id="{0}-error" class="right" for="{1}">&nbsp;</label>', labelName, labelName));										
+					$(show).show();				
 				}else if($('.uploadError').length < 1)
 				{
 					$(thumb).append(ErrorTip);

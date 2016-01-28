@@ -1,15 +1,7 @@
-<style>
-.uploader {overflow:hidden;}
-.uploader .handle, .uploader .thumb{CURSOR:POINTER}
-.uploader .thumb{height:120px; width:120px; border:1px solid #CCC;overflow:hidden;}
-.uploader .thumb img{min-height:118px; height:118px}
-.uploader .handle{position: absolute; top:0;left: 0;margin: 0;opacity: 0; -ms-filter: 'alpha(opacity=0)';width:120px; height:120px;   
-}
-</style>
 <div data-module="uploader" class="uploader" name="<{$id}>" tag="<{$tag}>" >    
     <div class="thumb showImg" data-toggle="show">        
         <img <{if $value}>src="<{$value|storager:'xs'}>"<{/if}> />     
     </div>
-    <input type="file" name="<{$id}>" class="handle" required="<{$required}>" accept="<{$accept}>" for="<{$name}>" data-url="<{link app=image ctl=site_upload act=site}>" />
-    <input type="hidden" name="<{$name}>" id="<{$id}>-<{$name}>" value="<{$value}>" />
+    <input type="file" name="<{$id}>" class="handle" accept="<{$accept}>" for="<{$name}>" data-url="<{link app=image ctl=site_upload act=site}>" />
+    <input type="hidden" name="<{$name}>" <{if $required}>required="<{$required}>"<{/if}> id="<{$id}>-<{$name}>" value="<{$value}>" />   
 </div>
