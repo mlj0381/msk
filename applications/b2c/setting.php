@@ -209,4 +209,11 @@ $setting = array(
             ),
         ),
     ),
+    'search_label' => array(
+        'default' => array(
+            'price' => '价格',
+            'ability' => '供货能力',
+            'brand' => '品牌'
+        )
+    ),
 );

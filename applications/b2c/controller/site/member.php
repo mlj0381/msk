@@ -408,6 +408,7 @@ vmc_b2c_orders WHERE `member_id`={$this->member['member_id']} AND `status` = 'ac
      */
     public function favorite($action = 'list', $gid = false, $obj_type = 'goods')
     {
+        $this->set_tmpl('passport');
         $member_id = $this->member['member_id'];
         $member_discout = $this->member['member_discout'];
         $mdl_member_goods = app::get('b2c')->model('member_goods');
