@@ -60,7 +60,9 @@ $(function(){
                 $.each(re.data,function(cat_id,cat){
                     options+="<option value='"+cat.cat_id+"'>"+cat.cat_name+"</option>";
                 });
-                $('<select class="form-control"><option value=-1>…</option></select>').append("<optgroup label='"+selected_label+"'>"+options+"</optgroup>").insertAfter(the_select);
+                $('<select class="form-control"><option value=-1>…</option></select>')
+                        .append("<optgroup label='"+selected_label+"'>"+options+"</optgroup>")
+                        .insertAfter(the_select);
             }
         });
         if(selected_value>0){
