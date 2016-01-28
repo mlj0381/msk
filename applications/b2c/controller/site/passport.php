@@ -312,7 +312,6 @@ class b2c_ctl_site_passport extends b2c_frontpage
         }else{
             $this->page('site/passport/signup_baseInfo.html');
         }
-
     }
 
     //注册页面--注册完成
