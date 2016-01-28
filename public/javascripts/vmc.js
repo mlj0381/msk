@@ -19,6 +19,7 @@ $.validator.regex = {
 	'idcard'    : /^(\d{6})()?(\d{4})(\d{2})(\d{2})(\d{3})(\w)$/,
 	'tel'       : /^(\d{3,4}-?)?\d{7,9}$/g,
 	'password'	: /^[a-zA-Z0-9_]{6,26}$/,
+	'time'		: /^(([01]?[0-9])|(2[0-3])):[0-5]?[0-9]$/,
 	'ip'        : /^(([1-9]|([1-9]\d)|(1\d\d)|(2([0-4]\d|5[0-5])))\.)(([1-9]|([1-9]\d)|(1\d\d)|(2([0-4]\d|5[0-5])))\.){2}([1-9]|([1-9]\d)|(1\d\d)|(2([0-4]\d|5[0-5])))$/
 };
 $.validator.messages = {
@@ -42,50 +43,10 @@ $.validator.messages = {
 	accept : $.validator.format("仅支持{0}文件！"),
 	size : $.validator.format("文件大小控制在{0}以内！"),
 	username : $.validator.format("文件大小控制在{0}以内！"),
-	format : $.validator.format("格式{0}错误！")
+	//format : $.validator.format("格式{0}错误！")
 };
-$.extend($.validator.methods, {
-	format : function(value, element, param)
-	{
-		console.log(param);
-		if (this.optional( element ) ) {
-			return "dependency-mismatch";
-		}
-		if(typeof param != 'string' || param == '') return false;
-		var regex = $.validator.regex;
-		if(param.indexOf("|"))
-		{
-			var REs = param.split("|");
-			for(i in REs)
-			{
-				if (typeof regex[REs[i]] != 'undefined' &&  regex[REs[i]].test(value))
-				{
-					return true;
-				}
-			}
-			return false;
-		}else if(param.indexOf("&")){
-			var REs = param.split("&");
-			for(i in REs)
-			{
-				if (typeof regex[REs[i]] == 'undefined' || !regex[REs[i]].test(value))
-				{
-					return false;
-				}
-			}
-			return true;
-		}else if(regex[param] != 'undefined' && regex[param].test(value))
-		{
-			return true;
-		}else{
-			try{
-				var Re = new RegExp(input);
-				return Re.text(value);
-			}catch(e){
-				return false;
-			}
-		}
-	},
+ $.extend(true, $.validator.methods, {
+
 	size : function(value, element, param)
 	{
 		if (this.optional(element)) {
@@ -242,7 +203,48 @@ $.extend($.validator.methods, {
 			});
 		}
 		return value === target.val();
-	}
+	},
+	fun : function(value, element, param)
+	{
+		if (this.optional( element ) ) {
+			return "dependency-mismatch";
+		}
+		if(typeof param != 'string' || param == '') return false;
+		var regex = $.validator.regex;
+		console.log(param, param in regex);
+
+		if(param.indexOf("|") > 0){
+			var REs = param.split("|");
+			for(i in REs){
+				if (typeof regex[REs[i]] != 'undefined' &&  regex[REs[i]].test(value)){
+					return true;
+				}
+			}
+			return false;
+		}else if(param.indexOf("&") > 0){
+			var REs = param.split("&");
+			for(i in REs)
+			{
+				if (typeof regex[REs[i]] == 'undefined' || !regex[REs[i]].test(value))
+				{
+					return false;
+				}
+			}
+			return true;
+		}else if( param in regex)
+		{
+			console.log(value, param);
+			return regex[param].test(value);
+		}else{
+			try{
+				var Re = new RegExp(param);
+				return Re.text(value);
+			}catch(e){
+				return false;
+			}
+		}
+		return true;
+	},
 });
 //------------------------------------------------------------------
 $.VMC = {
@@ -274,13 +276,13 @@ $.VMC.validator = function(form){
 		errorClass: "error",
 		validClass: "right",
 		errorElement: "label",
-		focusInvalid: true,
+		focusInvalid: false,
 		errorContainer: $( [] ),
 		errorLabelContainer: $( [] ),
 		onsubmit: true,
 		ignore: ":hidden",
 		ignoreTitle: false,
-		success : function(label) {
+		success : function(label) {			
 			label.html("&nbsp;").addClass('right');
 		},
 		onkeyup : function(element, event){
@@ -294,7 +296,7 @@ $.VMC.validator = function(form){
 		errorPlacement : function(error, element) {
 			if(element.parents('.form-item').length >0)
 			{
-				error.appendTo ( element.parents('.form-item'));
+				error.appendTo ( element.parents('.form-item').parent());
 				return ;
 			}
 			if(element.is(":radio") || element.is(":checkbox") || element.is("input[name=captcha]"))
@@ -315,14 +317,13 @@ $.VMC.validator = function(form){
 			{
 				var attr = attrs[i].name;
 				var value = attrs[i].value;
-				if(typeof $.validator.methods[attr] != 'function') continue;
+				if(typeof $.validator.methods[attr] != 'function' && attr != 'format') continue;
 				if(attr == 'required' && value == 'false') continue ;
-				if(attr == 'format')
+				if(attr == 'format' && typeof $.validator.methods[value] == 'function')
 				{
-					if(! attr in $.validator.regex && attr in $.validator.methods)
-					{
-						attr = value;
-					}
+					attr = value;
+				}else if(attr == 'format'){
+					attr = 'fun';
 				}
 				switch (attr)
 				{
@@ -342,10 +343,14 @@ $.VMC.validator = function(form){
 						var rang = value.split(",");
 						if(rang.length != 2) break;
 						break;
-					case 'equalTo':
-					case 'format' :
-						break;
+					case 'equalTo' :
+					case 'equalto':
+					case 'accept' :
+					case 'fun' :
+						value = value;
+						break;  
 					default :
+						//console.log(attr);
 						value = true;
 						break;
 				}
@@ -375,14 +380,11 @@ $.VMC.validator = function(form){
 			});
 
 			if('format' in _define){
-
 				for(i in rules[inputName]) // format = mobile, email = true
 				{
 					var rule = rules[inputName][i];
-					if( i == 'required' ||
-						i in messages
-					) continue;
-					if(rule in $.validator.methods || i in $.validator.methods)
+					if( i == 'required' ||	(i in messages) ) continue;
+					if((rule in $.validator.methods) || (i in $.validator.methods))
 					{
 						messages[i] = _define['format'];
 						hasmsg = true;
@@ -412,6 +414,7 @@ $.VMC.validator = function(form){
 			}
 		});
 		var thisSeting = $.extend(true, defaults, {rules : rules, messages : messages});
+		console.log(thisSeting);
 		$(obj).validate(thisSeting);
 	});
 };
@@ -438,7 +441,6 @@ $.VMC.uploader = function() {
 				var show = $(box).find('.thumb img');
 				$(thumb).append('<span class="loading icon-spinner icon-spin"></span>');
 				$(show).hide();
-				console.log(data);
 				data.submit();
 			},
 			done : function(e, data){
@@ -447,17 +449,22 @@ $.VMC.uploader = function() {
 				var show = $(box).find('.thumb img');
 				var re = $.parseJSON(data.result);
 				$(thumb).find('.loading').remove();
+				var ErrorTip = '<span class="uploadError">上传失败</span>';
 				if(re.image_id)
 				{
 					$(show).prop('src', re.url);
 					$(box).find('input[type="hidden"]').val(re.image_id);
 					$(show).show();
-				}else{
-					$(thumb).append('<span class="uploadError">ÉÏ´«Ê§°Ü£¡</span>');
+					//$(this).attr('aria-invalid', false);
+					//$(this).focusout();
+					//validator = $( this.form ).validate();
+					//validator.success = 'valid';
+					//$.validator.onfocusout(this);
+					//$(this).valid();
+				}else if($('.uploadError').length < 1)
+				{
+					$(thumb).append(ErrorTip);
 				}
-				$(thumb).unbind("click").bind('click', function(){
-					$(box).find("input[type='file']").trigger('click');
-				});
 			}
 		};
 		if( typeof $(box.showBox).prop('src') != 'string' || $(box.showBox).prop('src') == '')

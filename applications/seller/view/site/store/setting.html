@@ -15,7 +15,8 @@
 		<div class="form-group">
 			<label class="col-xs-2 control-label"><span class="text-danger">*</span>店铺类型:</label>
 			<div class="col-xs-5">
-                <{input type=select required="true" noselect="true"  value=$store_info.store_type name="request[subject]" rows=$store_type valueColumn="id" labelColumn="label"}>
+                <{input type=text required="true" noselect="true"  value=$store_info.store_type name="request[subject]" rows=$store_type valueColumn="id" labelColumn="label"}>
+                <input type="text">
 
 			</div>
 		</div>

@@ -180,7 +180,8 @@ $(function() {
                 $(inputfile).siblings('.showImg').find('.loading').addClass('hidden');
                 $(inputfile).siblings('.showImg').find('img').removeClass('hidden');
             }
-            setTimeout(loadinghide, 0);
+            //setTimeout(loadinghide, 0);
+            loadinghide();
             var re = $.parseJSON(data.result);
             var input = e.target || e.srcElement;
             $(input).parents('.filebox').find('input[type="hidden"]').attr('value', re.image_id);
