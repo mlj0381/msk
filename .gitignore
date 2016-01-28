@@ -11,6 +11,7 @@ config/certi.php
 config/config.php
 config/install.lock.php
 config/dev.zl
+public/images
 tmp/
 data/
 logs/
