@@ -18,8 +18,8 @@ $.validator.regex = {
 	'zipcode'   : /^[0-9]{6}$/,
 	'idcard'    : /^(\d{6})()?(\d{4})(\d{2})(\d{2})(\d{3})(\w)$/,
 	'tel'       : /^(\d{3,4}-?)?\d{7,9}$/g,
+	'time'		:  /^(([01]?[0-9])|(2[0-3])):[0-5]?[0-9]$/,
 	'password'	: /^[a-zA-Z0-9_]{6,26}$/,
-	'time'		: /^(([01]?[0-9])|(2[0-3])):[0-5]?[0-9]$/,
 	'ip'        : /^(([1-9]|([1-9]\d)|(1\d\d)|(2([0-4]\d|5[0-5])))\.)(([1-9]|([1-9]\d)|(1\d\d)|(2([0-4]\d|5[0-5])))\.){2}([1-9]|([1-9]\d)|(1\d\d)|(2([0-4]\d|5[0-5])))$/
 };
 $.validator.messages = {
@@ -276,13 +276,14 @@ $.VMC.validator = function(form){
 		errorClass: "error",
 		validClass: "right",
 		errorElement: "label",
-		focusInvalid: false,
+		focusInvalid: true,
 		errorContainer: $( [] ),
 		errorLabelContainer: $( [] ),
 		onsubmit: true,
-		ignore: ":hidden",
+		ignore: "",
 		ignoreTitle: false,
-		success : function(label) {			
+		success : function(label) {
+			//$(label).parents(".form-group").find('label.error,label.right').remove();
 			label.html("&nbsp;").addClass('right');
 		},
 		onkeyup : function(element, event){
@@ -296,7 +297,7 @@ $.VMC.validator = function(form){
 		errorPlacement : function(error, element) {
 			if(element.parents('.form-item').length >0)
 			{
-				error.appendTo ( element.parents('.form-item').parent());
+				error.appendTo ( element.parents('.form-item'));
 				return ;
 			}
 			if(element.is(":radio") || element.is(":checkbox") || element.is("input[name=captcha]"))
@@ -414,7 +415,7 @@ $.VMC.validator = function(form){
 			}
 		});
 		var thisSeting = $.extend(true, defaults, {rules : rules, messages : messages});
-		console.log(thisSeting);
+		//console.log(thisSeting);
 		$(obj).validate(thisSeting);
 	});
 };
@@ -445,26 +446,29 @@ $.VMC.uploader = function() {
 			},
 			done : function(e, data){
 				var box = $(this).parents('[data-module="uploader"]');
+				console.log(box);
 				var thumb = $(box).find('.thumb');
 				var show = $(box).find('.thumb img');
 				var re = $.parseJSON(data.result);
 				$(thumb).find('.loading').remove();
 				var ErrorTip = '<span class="uploadError">上传失败</span>';
+				var labelName = $(hidden).attr('name');	
+				var message = '';
 				if(re.image_id)
 				{
 					$(show).prop('src', re.url);
+					var hidden = $(box).find('input[type="hidden"]');
+					$(hidden).val(re.image_id);
 					$(box).find('input[type="hidden"]').val(re.image_id);
-					$(show).show();
-					//$(this).attr('aria-invalid', false);
-					//$(this).focusout();
-					//validator = $( this.form ).validate();
-					//validator.success = 'valid';
-					//$.validator.onfocusout(this);
-					//$(this).valid();
+					$(show).show();				
+					message = $.validator.format('<label id="{0}-error" class="right" for="{1}">&nbsp;</label>', [labelName, labelName]);
 				}else if($('.uploadError').length < 1)
 				{
 					$(thumb).append(ErrorTip);
+					message = $.validator.format('<label id="{0}-error" class="error" for="{1}">{2}</label>', [labelName, labelName, '上传失败'])
 				}
+				$(box).find('label.error,label.right').remove();
+				$(box).append(message);
 			}
 		};
 		if( typeof $(box.showBox).prop('src') != 'string' || $(box.showBox).prop('src') == '')

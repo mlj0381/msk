@@ -3,5 +3,5 @@
         <img <{if $value}>src="<{$value|storager:'xs'}>"<{/if}> />     
     </div>
     <input type="file" name="<{$id}>" class="handle" accept="<{$accept}>" for="<{$name}>" data-url="<{link app=image ctl=site_upload act=site}>" />
-    <input type="hidden" name="<{$name}>" id="<{$id}>-<{$name}>" value="<{$value}>" />
+    <input type="hidden" name="<{$name}>" <{if $required}>required="<{$required}>"<{/if}> id="<{$id}>-<{$name}>" value="<{$value}>" />   
 </div>
