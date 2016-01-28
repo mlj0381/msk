@@ -2,7 +2,7 @@
 <div class="cart-container">
     <{if !$member_id}>
     <div class="alert alert-warning">
-    <i class="glyphicon glyphicon-warning-sign"></i>    您当前未登录，登录后享受会员专属折扣及优惠促销，更可长久保存购物车数据
+    <i class="glyphicon glyphicon-warning-sign"></i>    您当前未登录
         <a href="<{link app=b2c ctl=site_passport act=login}>" class="btn btn-xs btn-danger">立即登录</a>
     </div>
     <{/if}>
@@ -65,20 +65,20 @@
             </ul>
 
             <ul class="list-unstyled promotion-list plist-order">
-                <{foreach from=$cart_result.promotions.order key=key item=item}>
-                    <li data-ruleid="<{$item.rule_id}>">
-                        <{if $item.rule_type == 'coupon'}>
-                        <span class="btn-group bg-label">
-                            <span class="btn btn-xs btn-danger"><{$item.tag}></span>
-                            <span class="btn btn-xs btn-danger">券</span>
-                            <a class="btn btn-xs btn-default" href="<{link app=b2c ctl=site_cart act=remove_coupon}>?obj_ident=<{$item.coupon_obj_ident}>">取消</a>
-                        </span>
-                        <{else}>
-                        <span class="label label-danger"><{$item.tag}></span>
-                        <{/if}>
-                        <{$item.desc}>
-                    </li>
-                <{/foreach}>
+                <!--<{foreach from=$cart_result.promotions.order key=key item=item}>-->
+                    <!--<li data-ruleid="<{$item.rule_id}>">-->
+                        <!--<{if $item.rule_type == 'coupon'}>-->
+                        <!--<span class="btn-group bg-label">-->
+                            <!--<span class="btn btn-xs btn-danger"><{$item.tag}></span>-->
+                            <!--<span class="btn btn-xs btn-danger">券</span>-->
+                            <!--<a class="btn btn-xs btn-default" href="<{link app=b2c ctl=site_cart act=remove_coupon}>?obj_ident=<{$item.coupon_obj_ident}>">取消</a>-->
+                        <!--</span>-->
+                        <!--<{else}>-->
+                        <!--<span class="label label-danger"><{$item.tag}></span>-->
+                        <!--<{/if}>-->
+                        <!--<{$item.desc}>-->
+                    <!--</li>-->
+                <!--<{/foreach}>-->
             </ul>
         </div>
         <div class="col-xs-2 c-cf-opt"><a href="<{link app=b2c ctl=site_checkout}>" class="checkout-btn btn btn-lg btn-danger <{if $cart_all.cart_count<1}>disabled<{/if}>" >去结算</a></div>
@@ -216,6 +216,7 @@ void function(){
                 var path = $(el).attr('data-bind'),
                 handler=$(el).attr('data-bind-handler'),
                 v=eval('obj["'+path.replace(/\//g,'"]["')+'"]');
+                if(path == 'finally_cart_amount') v=v+ '.00';
                 $(el).text(v);
                 _data_bind_handler.apply(el,[path,v,obj]);
             });
@@ -247,12 +248,13 @@ void function(){
             _fill_plist(item,plist_goods?plist_goods[object_item['obj_ident']]:false);
             
         });
+
         _data_bind($('.cart-footer'),cart_result);
         _fill_plist($('.cart-footer'),plist_order);
         //什么都没选，无法结算
         $('.checkout-btn')[cart_result['goods_count']<1?'addClass':'removeClass']('disabled');
         //包邮提前提示
-        $('.shipping-tip').text(cart_result['free_shipping']?'包邮':'不含运费');
+       // $('.shipping-tip').text(cart_result['free_shipping']?'包邮':'不含运费');
     }
 
 
@@ -277,7 +279,6 @@ void function(){
                 if(re.success && re.data){
                     //location = re.redirect;
                     _update(re.data);
-                    console.log(re.data);
                     ipt.attr('data-now',cur_val);
                 }
             });

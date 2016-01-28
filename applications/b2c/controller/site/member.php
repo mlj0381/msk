@@ -216,9 +216,7 @@ class b2c_ctl_site_member extends b2c_frontpage
     {
         $this->menuSetting = 'setting';
         $user_obj = vmc::singleton('b2c_user_object');
-        $pam_data = $user_obj->get_pam_data('*', $this->member['member_id']);
-        $pam_data['memberData']['addon'] = unserialize($pam_data['memberData']['addon']);
-        $this->pagedata['pam_data'] = $pam_data;
+        $this->pagedata['conf'] = $user_obj->page_company();
         $this->output();
     }
     public function save_setting()

@@ -174,13 +174,13 @@ class b2c_ctl_site_passport extends b2c_frontpage
     {
         switch ($pageIndex) {
             case 1:
-                $conf = $this->_page_company();
+                $conf = $this->user_obj->page_company();
                 break;
             case 2:
-                $conf = $this->_page_manage();
+                $conf = $this->user_obj->page_manage();
                 break;
             case 3:
-                $conf = $this->_page_delivery();
+                $conf = $this->user_obj->page_delivery();
                 break;
         }
         $page_setting = $this->app->getConf('member_extra_column');
@@ -195,59 +195,7 @@ class b2c_ctl_site_passport extends b2c_frontpage
         return $conf;
     }
 
-    /*
-     * 会员注册页面配置 企业联系人信息
-     * return pageSetting array()
-     * */
-    private function _page_company()
-    {
-        //读取会员注册配置
-        $conf = $this->app->getConf('main_products');
-        //读取收货时间
-        $conf['time'] = $this->app->getConf('receiving_time');
-        //读取分类
-        $conf['cat'] = $this->app->model('goods_cat')->get_tree();
-        //获取页面信息
-        $mdl_company = app::get('base')->model('company');
-        $mdl_contact = app::get('base')->model('contact');
 
-        $filter = array('uid' => $this->member['member_id'], 'from' => '0');
-
-        $conf['info']['company'] = $mdl_company->getRow('*', $filter);
-        $conf['info']['contact'] = $mdl_contact->getRow('*', $filter);
-        $conf['info']['company_extra'] = app::get('base')->model('company_extra')->getList('*', $filter);
-        return $conf;
-    }
-
-    /*
-     * 会员注册页面配置  经营信息
-     * @param $pageIndex 配置页面索引
-     * return pageSetting array()
-     * */
-    private function _page_manage()
-    {
-        //使用方向  经营场所
-        $conf['info'] = $this->app->getConf('main_products');
-        $filter = array('uid' => $this->member['member_id'], 'from' => '0', 'key');
-        $conf['info']['manageInfo'] = app::get('base')->model('company_extra')->getList('*', $filter);
-        return $conf;
-    }
-
-    /*
-     * 会员注册页面配置 配送信息
-     * @param $pageIndex 配置页面索引
-     * return pageSetting array()
-     * */
-    private function _page_delivery()
-    {
-        //配送信息
-        $conf['info'] = $this->app->getConf('main_products');
-        //读取收货时间信息
-        $conf['info']['time'] = $this->app->getConf('receiving_time');
-        $filter = array('uid' => $this->member['member_id'], 'from' => '0');
-        $conf['info']['deliveryInfo'] = app::get('base')->model('company_extra')->getList('*', $filter);
-        return $conf;
-    }
 
 
 

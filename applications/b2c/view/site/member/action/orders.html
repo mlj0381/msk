@@ -156,7 +156,7 @@
                             <{/if}>
                             <{if ($order.confirm eq 'Y' && $order.ship_status eq '1') && $order.status eq 'active'}>
                             <a class="btn btn-xs btn-block btn-default" <{if $order.request eq ''}>href="<{link app=aftersales ctl=site_member
-                            act=newrequest args0=$order.order_id args1=$item.product_id args2=input args3=price}>"<{else}>disabled<{/if}>>申请售后</a>
+                            act=newrequest args0=$order.order_id args1=$item.product_id args2=input}>"<{else}>disabled<{/if}>>申请售后</a>
                             <{/if}>
                             <{/if}>
                         </div>

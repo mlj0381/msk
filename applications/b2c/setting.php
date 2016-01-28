@@ -182,7 +182,7 @@ $setting = array(
                 'contact_extra',
             ),
             2 => array('manageInfo'),
-            3 => array('deliveryInfo'),
+            //3 => array('deliveryInfo'),
         )
     ),
     'serach' => array(

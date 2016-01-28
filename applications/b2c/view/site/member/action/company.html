@@ -14,85 +14,77 @@
     <div class="form-group">
         <label for="" class="col-md-2 control-label"><span class="text-danger">*</span>客户名称：</label>
         <div class="col-md-4">
-            <input type="text" required="true" name="addon[company_name]" value="<{$pam_data.memberData.addon.company_name}>" class="form-control" id="">
+            <input type="text" required="true" name="addon[company_name]" value="<{$conf.info.company.name}>" class="form-control" id="">
         </div>
     </div>
+
+
     <div class="form-group">
         <label for="" class="col-md-2 control-label"><span class="text-danger">*</span>客户地区：</label>
         <div class="col-md-5 customer_address">
-            <{input type=region name="addon[company_area]" value=$pam_data.memberData.addon.company_area}>
+            <{input type=region name="addon[company_area]" value=$conf.info.company.area}>
         </div>
     </div>
     <div class="form-group">
         <label for="" class="col-md-2 control-label"><span class="text-danger">*</span>客户地址：</label>
         <div class="col-md-4 customer_address">
-            <input type="text" required="true" name="addon[company_addr]" value="<{$pam_data.memberData.addon.company_addr}>" class="form-control" id="">
+            <input type="text" required="true" name="addon[company_addr]" value="<{$conf.info.company.address}>" class="form-control" id="">
         </div>
     </div>
     <div class="form-group">
         <label for="" class="col-md-2 control-label"><span class="text-danger">*</span>客户营业电话：</label>
         <div class="col-md-4">
-            <input type="text" required="true" name="addon[company_phone]" value="<{$pam_data.memberData.addon.company_phone}>" class="form-control" id="">
+            <input type="text" required="true" name="company[tel]" value="<{$conf.info.company.tel}>" class="form-control" id="">
         </div>
     </div>
     <div class="form-group">
         <label for="" class="col-md-2 control-label"><span class="text-danger">*</span>老板姓名：</label>
         <div class="col-md-4">
-            <input type="text" required="true" name="addon[boss_name]" value="<{$pam_data.memberData.addon.boss_name}>" class="form-control" id="" placeholder="">
-        </div>
-    </div>
-    <div class="form-group">
-        <label for="" class="col-md-2 control-label"><span class="text-danger">*</span>老板名片照：</label>
-        <div class="col-md-4">
-            <div class="filebox">
-                <input type="hidden" name="addon[boss_image]" value="<{$pam_data.memberData.addon.boss_image}>" />
-                <input type="file" vtype='required' data-url="<{link app=image ctl=site_upload act=index}>" accept="image/*" class="file_input" />
-                <div class="showImg">
-                    <img src="<{if $pam_data.memberData.addon.boss_image eq ''}>./../../themes/pc/default/statics/images/file_add.jpg<{else}><{$pam_data.memberData.addon.boss_image|storager:'xs'}><{/if}>">
-                </div>
-            </div>
+            <input type="text" required="true" name="contact[boss_name]" value="<{$conf.info.contact.boss_name}>" class="form-control" id="" placeholder="">
         </div>
     </div>
     <div class="form-group">
         <label for="" class="col-md-2 control-label"><span class="text-danger">*</span>老板电话：</label>
         <div class="col-md-4">
-            <input type="text" required="true" name="addon[boss_phone]" value="<{$pam_data.memberData.addon.boss_phone}>" class="form-control" id="">
+            <input type="text" required="true" name="contact[boss_mobile]" value="<{$conf.info.contact.boss_mobile}>" class="form-control" id="">
         </div>
     </div>
     <div class="form-group">
         <label for="" class="col-md-2 control-label">老板QQ号：</label>
         <div class="col-md-4">
-            <input type="text" required="true" name="addon[boss_qq]" value="<{$pam_data.memberData.addon.boss_qq}>" class="form-control" id="">
+            <input type="text" required="true" name="contact[boss_qq]" value="<{$conf.info.contact.boss_qq}>" class="form-control" id="">
         </div>
     </div>
+
+
     <div class="form-group">
         <label for="" class="col-md-2 control-label">老板微信号：</label>
         <div class="col-md-4">
-            <input type="text" required="true" name="addon[boss_wechat]" value="<{$pam_data.memberData.addon.boss_wechat}>" class="form-control" id="">
+            <input type="text" required="true" name="contact[boss_wechat]" value="<{$conf.info.contact.boss_wechat}>" class="form-control" id="">
         </div>
     </div>
     <div class="form-group">
         <label for="" class="col-md-2 control-label"><span class="text-danger">*</span>有权联系人姓名：</label>
         <div class="col-md-4">
-            <input type="text" required="true" name="addon[pressing_name]" value="<{$pam_data.memberData.addon.pressing_name}>" class="form-control" id="">
+            <input type="text" required="true" name="contact[name]" value="<{$conf.info.contact.name}>" class="form-control" id="">
         </div>
     </div>
     <div class="form-group">
         <label for="" class="col-md-2 control-label"><span class="text-danger">*</span>有权联系人电话:</label>
         <div class="col-md-4">
-            <input type="text" required="true" name="addon[pressing_phone]" value="<{$pam_data.memberData.addon.pressing_phone}>" class="form-control" id="">
+            <input type="text" required="true" name="contact[tel]" value="<{$conf.info.contact.tel}>" class="form-control" id="">
         </div>
     </div>
     <div class="form-group">
         <label for="" class="col-md-2 control-label">有权联系人QQ号：</label>
         <div class="col-md-4">
-            <input type="text" required="true" name="addon[pressing_qq]" value="<{$pam_data.memberData.addon.pressing_qq}>" class="form-control" id="">
+            <input type="text" required="true" name="contact_wechat[contact_qq]" value="<{$conf.info.contact.contact_qq}>" class="form-control" id="">
         </div>
     </div>
     <div class="form-group">
         <label for="" class="col-md-2 control-label">有权联系人微信号：</label>
         <div class="col-md-4">
-            <input type="text" required="true" name="addon[pressing_wechat]" value="<{$pam_data.memberData.addon.pressing_wechat}>" class="form-control" id="">
+            <input type="text" required="true" name="contact_wechat[contact_wechat]" value="<{$conf.info.contact.contact_wechat}>" class="form-control" id="">
         </div>
     </div>
     <div class="form-group">
@@ -112,10 +104,10 @@
         <label for="" class="col-md-2 control-label"><span class="text-danger">*</span>企业营业执照或许可证：</label>
         <div class="col-md-4">
             <div class="filebox">
-                <input type="hidden" name="addon[company_license]" value="<{$pam_data.memberData.addon.company_license}>" />
+                <input type="hidden" name="business_licence[company_license]" value="<{$conf.info.company_extra.business_licence.attach}>" />
                 <input type="file" data-url="<{link app=image ctl=site_upload act=index}>" accept="image/*" class="file_input" />
                 <div class="showImg">
-                    <img src="<{if $pam_data.memberData.addon.company_license eq ''}>./../../themes/pc/default/statics/images/file_add.jpg<{else}><{$pam_data.memberData.addon.company_license|storager:'xs'}><{/if}>">
+                    <img src="<{if $conf.info.company_extra.business_licence.attach eq ''}>./../../themes/pc/default/statics/images/file_add.jpg<{else}><{$conf.info.company_extra.business_licence.attach|storager:'xs'}><{/if}>">
                 </div>
             </div>
         </div>

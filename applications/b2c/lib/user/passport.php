@@ -42,7 +42,6 @@ class b2c_user_passport {
     public function check_signup_account($login_name, &$msg) {
         if (empty($login_name)) {
             $msg = ('请输入用户名');
-
             return false;
         }
         //获取到注册时账号类型
