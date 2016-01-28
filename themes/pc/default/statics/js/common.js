@@ -116,16 +116,8 @@ $(function() {
 
 
     /*
-     *首页分类导航下拉显示效果 
+     *分类导航下拉显示效果 
      */
-/*     var cat = $('.category-container');
-     var speed = 400;
-     cat.hide();
-     $('.nav_ul .default').hover(function(){
-        cat.stop().slideDown(speed);
-     },function(){
-        cat.stop().slideUp(speed);
-     })*/
 
      function cateSlider(parent,child,speed){
         var speed = speed;

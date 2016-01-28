@@ -2276,6 +2276,10 @@ ol {
 .store_banner .carousel .carousel-inner {
   height: 500px;
 }
+.store_banner .carousel .carousel-inner .item img {
+  height: 500px;
+  width: 100%;
+}
 .store_carousel h2 {
   text-align: center;
   color: #222;

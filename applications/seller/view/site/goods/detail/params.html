@@ -1,5 +1,5 @@
 <div id="param">
-    <h4><span class="text-danger">*</span>å•†å“å‚æ•°</h4>
+    <h4><span class="text-danger">*</span>ÉÌÆ·²ÎÊı</h4>
     <div class="form-body">
         <{foreach from=$params.goods_type item=porps}>
         <input name="goods[type_id]" type="hidden" value="<{$porps.type_id}>"/>
@@ -20,11 +20,11 @@
         <hr>
         <!-- <div class="form-group">
             <label class="col-xs-2 control-label">
-                <span>ç±»å‹</span>
+                <span>ÀàĞÍ</span>
             </label>
             <div class="col-xs-5">
                 <select name="goods[type][type_id]" class="form-control">
-                    <option value='0'>æ™®é€šå•†å“ç±»å‹</option>
+                    <option value='0'>ÆÕÍ¨ÉÌÆ·ÀàĞÍ</option>
                     <{foreach from=$gtype item=type}>
                         <option value='<{$type.type_id}>' <{if $type.type_id==$goods_prototype.type_id}>selected
                             <{/if}>>
@@ -36,7 +36,7 @@
         </div>
         <div class="form-group">
             <label class="col-xs-2 control-label">
-                <span>å“ç‰Œ</span>
+                <span>Æ·ÅÆ</span>
             </label>
             <div class="col-xs-5">
                 <{input class="form-control" type="select" name="goods[brand][brand_id]" nulloption="1" rows=$brandList valueColumn="brand_id" labelColumn="brand_name" value=$goods.brand.brand_id}>
@@ -44,3 +44,30 @@
         </div> -->
     </div>
 </div>
+
+<!--
+<div id="param-hidden">
+    <div class="form-group">
+        <label class="col-xs-2 control-label">
+            <span>{0}</span>
+        </label>
+        <div class="col-xs-5">
+            <select name="{1}">{2}</select>
+        </div>
+    </div>
+</div>
+
+function callback(data)
+{
+    if(typeof data != 'object') return false;
+    for(i in data.props.props_value){
+        var html = $("#param-hidden").html();
+        var optionHtml = "";
+        for(m in props_value)
+        {
+            optionHtml += format('<option value="{0}">{1}</option>', optos['props_id'], optos['props_id']
+        }
+        format(html, [name, selectname, optionHtml]);
+    }
+}
+-->
