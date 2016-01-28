@@ -85,7 +85,7 @@ class seller_ctl_site_tpl extends seller_frontpage
         $redirect = $this->redirect_url($urlParams);
 		$this->begin($redirect);
 		$mContent = app::get('b2c')->model('pages_content');
-		if($content['type'] != 1) $content['extra'] = array();
+		if($content['type'] != 2) $content['extra'] = array();
         if($content['content_id']){            
             if(!$mContent->save($content)){
                 $this->end(false, '添加失败', $redirect);
