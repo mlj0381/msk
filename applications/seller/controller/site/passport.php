@@ -326,6 +326,31 @@ class seller_ctl_site_passport extends seller_frontpage
         }
     }
 
+    /*
+     * 判断前台用户联系手机是否存在
+     */
+
+    public function is_exists_mobile() {
+        $mobile = $_POST['pam_account']['mobile'];
+        if (empty($mobile)) {
+            $this->splash('error', '', '手机号不能为空');
+        }
+        $mobile_type = $this->passport_obj->get_login_account_type($mobile);
+
+        if($mobile_type != 'mobile'){
+            $this->splash('error', '', '请填写正确的手机号');
+        }
+        $mdl_sellers = $this->app->model('sellers');
+        $flag = $mdl_sellers->getList('seller_id', array(
+            'mobile' => trim($mobile),
+        ));
+        if($flag){
+            $this->splash('error', '', '该手机号已被使用');
+        }
+        $this->splash('success', '', '该手机号可以使用');
+    }
+
+
     //发送短信验证码
     public function send_vcode_sms($type = 'signup')
     {

@@ -47,7 +47,7 @@
                 <div class="form-group">
                     <label for="input_psw_confirm" class="col-md-2 control-label"><span class="text-danger">*</span>验证手机：</label>
                     <div class="col-md-4">
-                        <input type="text" required="true" name="pam_account[mobile]" class="form-control" id="input_mobile" required="true" format="mobile" remote="<{link app=seller ctl=site_passport act=check_login_name}>">
+                        <input type="text" required="true" name="pam_account[mobile]" class="form-control" id="input_mobile" required="true" format="mobile" remote="<{link app=seller ctl=site_passport act=is_exists_mobile}>">
                         <span class="msgTip" data-message="error">请输入正确的手机号码</span>
                     </div>
                 </div>
