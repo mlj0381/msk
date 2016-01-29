@@ -55,7 +55,6 @@
         </label>
         <div class="col-xs-4">
             <select class="form-control" name="company[enterprise_type]" required="true">
-                <option value="0">请选择</option>
                 <option value="1">公司类型一</option>
                 <option value="2">公司类型二</option>
                 <option value="3">公司类型三</option>
@@ -105,8 +104,8 @@
         </label>
         <div class="col-xs-4">
             <div class="form-item">
-                <input type="date" name="company[business_scope][begin]" value='<{$extra.company.business_scope.begin}>' class="form-control" style="width:175px; display: inline-block;"> 至 
-                <input type="date" name="company[business_scope][end]" value='<{$extra.company.business_scope.end}>' class="form-control"  style="width:175px; display: inline-block;" required="true">
+                <input type="text" name="company[business_scope][begin]" value='<{$extra.company.business_scope.begin}>' class="form-control" placeholder="2010-10-20" style="width:175px; display: inline-block;"> 至 
+                <input type="text" placeholder="2010-10-20" name="company[business_scope][end]" value='<{$extra.company.business_scope.end}>' class="form-control"  style="width:175px; display: inline-block;" required="true">
             </div>
             <span class="msgTip" data-message="error"></span>
         </div>

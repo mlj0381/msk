@@ -7,6 +7,7 @@
 		</label>
 		<div class="col-xs-4">
 			<input type="text" value="<{$extra.ec_group_manager.value.name}>" name="ec_group_manager[value][name]" class="form-control" required="true">
+			<span class="msgTip" data-message="error"></span>
 		</div>
 	</div>
 	<div class="form-group">
@@ -14,8 +15,8 @@
 			<span class="text-danger">*</span>年龄：
 		</label>
 		<div class="col-xs-4">
-			<input type="text" value="<{$extra.ec_group_manager.value.age}>" name="ec_group_manager[value][age]" class="form-control" required="true">
-			<span class="msgTip" data-message="error"></span>
+			<input type="text" value="<{$extra.ec_group_manager.value.age}>" name="ec_group_manager[value][age]" class="form-control" required="true" format="digits">
+			<span class="msgTip" data-message="format">请输入正确的年龄</span>
 		</div>
 	</div>
 	<div class="form-group">
@@ -24,6 +25,7 @@
 		</label>
 		<div class="col-xs-4">
 			<{include file="site/passport/companyInfo/grade.html" data=array("ec_group_manager[value][edu]","{$extra.ec_group_manager.value.edu}")}>
+			<span class="msgTip" data-message="error"></span>
 		</div>
 	</div>
 	<div class="form-group">
