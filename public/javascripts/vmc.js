@@ -232,8 +232,7 @@ $.validator.messages = {
 			}
 			return true;
 		}else if( param in regex)
-		{
-			console.log(value, param);
+		{			
 			return regex[param].test(value);
 		}else{
 			try{
@@ -448,7 +447,7 @@ $.VMC.uploader = function() {
 				var box = $(this).parents('[data-module="uploader"]');
 				var thumb = $(box).find('.thumb');
 				var show = $(box).find('.thumb img');
-				$(box).find(".uploadError").remove();
+				thumb.find(".uploadError").hide();				
 				$(thumb).append('<span class="loading icon-spinner icon-spin"></span>');
 				$(show).hide();
 				data.submit();
@@ -460,18 +459,18 @@ $.VMC.uploader = function() {
 				var re = $.parseJSON(data.result);
 				$(thumb).find('.loading').remove();
 				var ErrorTip = '<span class="uploadError">上传失败</span>';
-				var labelName = $(hidden).attr('name');	
+				var hidden = $(box).find('input[type="hidden"]');
+				var labelName = $(hidden).attr('name');
 				var message = '';
 				if(re.image_id)
 				{
-					$(show).prop('src', re.url);
-					var hidden = $(box).find('input[type="hidden"]');
+					$(show).prop('src', re.url);					
 					$(hidden).val(re.image_id);
 					$(box).find('input[type="hidden"]').val(re.image_id);
 					$(show).show();				
 					message = $.validator.format('<label id="{0}-error" class="right" for="{1}">&nbsp;</label>', [labelName, labelName]);
 					
-				}else if($('.uploadError').length < 1)
+				}else if($(box).find('.uploadError').length < 1)
 				{
 					$(thumb).append(ErrorTip);
 					message = $.validator.format('<label id="{0}-error" class="error" for="{1}">{2}</label>', [labelName, labelName, '上传失败'])
