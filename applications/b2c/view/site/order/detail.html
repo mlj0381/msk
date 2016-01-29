@@ -164,7 +164,7 @@
             </table>
          </li>
         <{/foreach}>
-        <li class="list-group-item clearfix">
+        <!-- <li class="list-group-item clearfix">
             <div class="row">
                 <div class="col-xs-7 col-xs-offset-1">
                     <{if $order_pmt}>
@@ -179,25 +179,25 @@
                         </ul>
                     <{/if}>
                 </div>
-                <!--<div class="col-xs-4">-->
-                    <!--<dl class="dl-horizontal">-->
-                        <!--<br>-->
-                        <!--<dt>订单应付总金额：</dt>-->
-                        <!--<dd class="text-danger">-->
-                            <!--￥<strong><{$order.order_total|cur}></strong>-->
-                        <!--</dd>-->
-                        <!--&lt;!&ndash; <{if $order.memberlv_discount>0}>-->
-                            <!--<dt>会员身份节省了：</dt>-->
-                            <!--<dd>￥<span><{$order.memberlv_discount|cur}></span></dd>-->
-                        <!--<{/if}>-->
-                        <!--<{if $cart_result.pmt_goods||$order.pmt_order}>-->
-                            <!--<dt>促销活动优惠节省了：</dt>-->
-                            <!--<dd>￥<span><{$order.pmt_goods+$order.pmt_order|cur}></span></dd>-->
-                        <!--<{/if}> &ndash;&gt;-->
-                    <!--</dl>-->
-                <!--</div>-->
+                <div class="col-xs-4">
+                    <dl class="dl-horizontal">
+                        <br>
+                        <dt>订单应付总金额：</dt>
+                        <dd class="text-danger">
+                            ￥<strong><{$order.order_total|cur}></strong>
+                        </dd>
+                        &lt;!&ndash; <{if $order.memberlv_discount>0}>
+                            <dt>会员身份节省了：</dt>
+                            <dd>￥<span><{$order.memberlv_discount|cur}></span></dd>
+                        <{/if}>
+                        <{if $cart_result.pmt_goods||$order.pmt_order}>
+                            <dt>促销活动优惠节省了：</dt>
+                            <dd>￥<span><{$order.pmt_goods+$order.pmt_order|cur}></span></dd>
+                        <{/if}> &ndash;&gt;
+                    </dl>
+                </div>
             </div>
-        </li>
+        </li> -->
 
     </ul>
 
