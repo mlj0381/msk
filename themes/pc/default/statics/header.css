@@ -860,3 +860,11 @@ label.right {
 .form-group .input-group label.right {
   right: -30px;
 }
+.region,
+.category_select {
+  width: 100%;
+}
+.region select,
+.category_select select {
+  width: 33.333333333% !important;
+}

@@ -297,7 +297,7 @@ $.VMC.validator = function(form){
 			element.parents('.form-group').find('label.error,label.right').remove();
 			if(element.parents('.form-item').length >0)
 			{
-				error.appendTo ( element.parents('.form-item'));
+				error.appendTo ( element.parents('.form-item').parent());
 				return ;
 			}			
 			if(element.is(":radio") || element.is(":checkbox") || element.is("input[name=captcha]"))
