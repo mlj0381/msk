@@ -63,8 +63,8 @@
                 <ul class="list-group">
                     <{foreach from=$paymentapps key=k item=papp}>
                     <li  class="list-group-item <{if $papp.selected}>active<{/if}> clearfix">
-                        <input type="radio" <{if $papp.app_id neq 'alipay'}>disabled<{else}>checked<{/if}>
-                        <{if $papp.selected}>checked<{/if}> name="payapp_id" value="<{$papp.app_id}>">
+                        <input type="radio" <{if $papp.app_id eq 'alipay'}> checked <{else}> disabled<{/if}>
+                        name="payapp_id" value="<{$papp.app_id}>">
                                <span class="payapp-name"><{$papp.display_name|default:$papp.name}></span>
                         <{if $papp.description}>
                         <i  data-toggle="popover" class="glyphicon glyphicon-question-sign"></i>
