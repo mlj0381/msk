@@ -33,6 +33,7 @@ class seller_user_passport
 
         return $login_type;
     } //end function
+
     /*
      * 检查注册账号合法性
      * */
@@ -45,7 +46,7 @@ class seller_user_passport
 
         //获取到注册时账号类型
         // $login_type = $this->get_login_account_type($login_name);
-		$login_type = 'mobile'; // 只允许手机登录、注册
+        $login_type = 'mobile'; // 只允许手机登录、注册
 
         switch ($login_type) {
             case 'local':
@@ -66,8 +67,8 @@ class seller_user_passport
 
                     return false;
                 }
-                $exists_msg = $this->app->_('用户名'.$login_name.'已经被占用，请换一个重试');
-            break;
+                $exists_msg = $this->app->_('用户名' . $login_name . '已经被占用，请换一个重试');
+                break;
             case 'email':
                 if (!preg_match('/^(?:[a-z\d]+[_\-\+\.]?)*[a-z\d]+@(?:([a-z\d]+\-?)*[a-z\d]+\.)+([a-z]{2,})+$/i', trim($login_name))) {
                     $msg = $this->app->_('邮件格式不正确');
@@ -75,10 +76,10 @@ class seller_user_passport
                     return false;
                 }
                 $exists_msg = $this->app->_('该邮箱已被注册，请更换一个');
-            break;
+                break;
             case 'mobile':
                 $exists_msg = $this->app->_('该手机号已被注册，请更换一个');
-            break;
+                break;
         }
         //判断账号是否存在
         if ($this->is_exists_login_name($login_name)) {
@@ -90,6 +91,7 @@ class seller_user_passport
 
         return true;
     } //end function
+
     /*
      * 判断前台用户名是否存在
      * */
@@ -105,6 +107,7 @@ class seller_user_passport
 
         return $flag ? true : false;
     }
+
     /**
      *组织注册需要的数据.
      */
@@ -244,12 +247,15 @@ class seller_user_passport
         //TODO $obj_account->fireEvent('chgpass', $aData, $seller_id);
         return true;
     }
+
     /*
      * 根据会员ID 修改用户密码
      **/
-    public function reset_password($seller_id,$password){
-        return $this->reset_passport($seller_id,$password);
+    public function reset_password($seller_id, $password)
+    {
+        return $this->reset_passport($seller_id, $password);
     }
+
     public function reset_passport($seller_id, $password)
     {
         $pamsellersModel = app::get('pam')->model('sellers');
@@ -266,7 +272,8 @@ class seller_user_passport
                 'login_password' => $login_password,
             ), array(
                 'login_account' => $row['login_account'],
-            ))) {
+            ))
+            ) {
                 $db->rollBack();
 
                 return false;
@@ -298,7 +305,7 @@ class seller_user_passport
         }
         if ($msg != 'local') {
             $type = ($msg == 'mobile') ? ('手机号') : ('邮箱');
-            $msg = ('用户名不能为').$type;
+            $msg = ('用户名不能为') . $type;
 
             return false;
         }
@@ -429,7 +436,7 @@ class seller_user_passport
                 $attr[] = $item;
             } //筛选显示项
         }
-        foreach ((array) $attr as $key => $item) {
+        foreach ((array)$attr as $key => $item) {
             $sdfpath = $mem_schema[$item['attr_column']]['sdfpath'];
             if ($sdfpath) {
                 $a_temp = explode('/', $sdfpath);
@@ -437,7 +444,7 @@ class seller_user_passport
                     $name = array_shift($a_temp);
                     if (count($a_temp)) {
                         foreach ($a_temp as $value) {
-                            $name .= '['.$value.']';
+                            $name .= '[' . $value . ']';
                         }
                     }
                 }
@@ -448,34 +455,34 @@ class seller_user_passport
                 switch ($attr[$key]['attr_column']) {
                     case 'area':
                         $attr[$key]['attr_value'] = $mem['contact']['area'];
-                    break;
+                        break;
                     case 'birthday':
                         $attr[$key]['attr_value'] = $mem['profile']['birthday'];
-                    break;
+                        break;
                     case 'name':
                         $attr[$key]['attr_value'] = $mem['contact']['name'];
-                    break;
+                        break;
                     case 'mobile':
                         $attr[$key]['attr_value'] = $mem['contact']['phone']['mobile'];
-                    break;
+                        break;
                     case 'tel':
                         $attr[$key]['attr_value'] = $mem['contact']['phone']['telephone'];
-                    break;
+                        break;
                     case 'zip':
                         $attr[$key]['attr_value'] = $mem['contact']['zipcode'];
-                    break;
+                        break;
                     case 'addr':
                         $attr[$key]['attr_value'] = $mem['contact']['addr'];
-                    break;
+                        break;
                     case 'sex':
                         $attr[$key]['attr_value'] = $mem['profile']['gender'];
-                    break;
+                        break;
                     case 'pw_answer':
                         $attr[$key]['attr_value'] = $mem['account']['pw_answer'];
-                    break;
+                        break;
                     case 'pw_question':
                         $attr[$key]['attr_value'] = $mem['account']['pw_question'];
-                    break;
+                        break;
                 }
             }
             if ($item['attr_group'] == 'contact' || $item['attr_group'] == 'input' || $item['attr_group'] == 'select') {
@@ -526,7 +533,7 @@ class seller_user_passport
     }
 
 
-	public function unset_seller()
+    public function unset_seller()
     {
         $auth = pam_auth::instance(pam_account::get_account_type('seller'));
         foreach (vmc::servicelist('passport') as $k => $passport) {
@@ -534,7 +541,7 @@ class seller_user_passport
         }
         $this->app->seller_id = 0;
         vmc::singleton('base_session')->set_cookie_expires(0);
-        $this->cookie_path = vmc::base_url().'/';
+        $this->cookie_path = vmc::base_url() . '/';
         $this->set_cookie('UNAME', '', time() - 3600); //用户名
         $this->set_cookie('SELLER_IDENT', 0, time() - 3600);//会员ID
         foreach (vmc::servicelist('seller.logout_after') as $service) {
@@ -543,7 +550,8 @@ class seller_user_passport
     }
 
     //商家入驻页面配置
-    public function page_setting($step, $licence_type){
+    public function page_setting($step, $licence_type)
+    {
         $conf = $this->app->getConf('seller_entry');
         $columns = array_flip($conf['comm'][$step]['page']);
 
@@ -568,7 +576,8 @@ class seller_user_passport
     }
 
     //获取基本信息页面配置
-    public function columns(){
+    public function columns()
+    {
         $result['company'] = app::get('seller')->getConf('company_type');
         $result['store'] = app::get('seller')->getConf('store_type');
         return $result;
@@ -582,8 +591,8 @@ class seller_user_passport
         $mdl_base_extra = app::get('base')->model('company_extra');
         $company_extra = $mdl_base_extra->getList('*', array_merge($filter, array('key|in' => array_keys($columns))));
         $conf = $this->app->getConf('seller_entry');
-        foreach($conf['array_info'] as $value){
-            if(in_array($value, $columns)){
+        foreach ($conf['array_info'] as $value) {
+            if (in_array($value, $columns)) {
                 $company_extra[$value] = $mdl_base_extra->arrayInfo('*', array_merge($filter, array('key' => $value)));
             }
         }
@@ -592,7 +601,7 @@ class seller_user_passport
         $info['company_extra']['store'] = app::get('store')->model('store')->getRow('*', array('seller_id' => $filter['uid']));
         $info['company_extra']['company'] = app::get('base')->model('company')->getRow('*', $filter);
         $info['company_extra']['contact'] = app::get('base')->model('contact')->getRow('*', $filter);
-        $info['company_extra']['brand'] = $this->app->model('brand')->getRow('*', array('seller_id' => $this->seller['seller_id']));
+        $info['company_extra']['brand'] = $this->app->model('brand')->getRow('*', array('seller_id' => $seller_id));
         return $info;
     }
 
@@ -684,7 +693,7 @@ class seller_user_passport
 
             }
         }
-        if(!$sqlType){
+        if (!$sqlType) {
             $data = array('seller_id' => $seller_id, 'schedule' => $params['pageIndex']);
             if (!$this->app->model('sellers')->save($data)) {
                 $db->rollback();
