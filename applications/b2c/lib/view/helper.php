@@ -205,4 +205,7 @@ class b2c_view_helper extends b2c_view_widget
         return '%AVATAR_'.$member_id.'_S_'.$size.'_AVATAR%';
     }
 
+    public function modifier_checkIn($k, $array){
+        if(in_array($k, $array)) return 'checked';
+    }
 }

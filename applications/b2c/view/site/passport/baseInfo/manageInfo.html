@@ -14,7 +14,7 @@
         <div class="col-xs-5 use_dir">
             <div class="form-item">
             <{foreach name="manage" from=$extra.use item=item}>
-            <span><input type="checkbox" value="<{$item.id}>" name="manageInfo[value][use][]" <{if $env.foreach.manage.last}> required="true" <{/if}> > <{$item.label}></span>
+            <span><input type="checkbox" value="<{$item.id}>" <{$item.id|checkIn:$extra.manageInfo.manageInfo.value.use}> name="manageInfo[value][use][]" <{if $env.foreach.manage.last}> required="true" <{/if}> > <{$item.label}></span>
             <{/foreach}>
             <span class="msgTip" data-message="error"></span>
             </div>
@@ -59,7 +59,7 @@
         <div class="col-xs-5">
             <div class="input-group form-item">
             	<input type="text" name="manageInfo[value][day_sale]" value="<{$extra.manageInfo.manageInfo.value.day_sale}>" class="form-control" required="true">
-            	<span class="input-group-addon">元</span> 
+            	<span class="input-group-addon">元</span>
             </div>
             <span class="msgTip" data-message="error"></span>
         </div>

@@ -5,11 +5,8 @@
         <span class="text-danger">*</span>店铺类型：
     </label>
     <div class="col-xs-4">
-        <select name="store[store_type]" value="<{$extra.store.store_type}>" class="form-control" required="true">
-            <option value="1">工厂店铺</option>
-            <option value="2">代理店铺</option>
-            <option value="3">OEM店铺</option>
-        </select>
+        <{input type=select required="true" name="store[store_type]" rows=$extra.page_setting.store valueColumn="id"
+        labelColumn="label" value=$extra.store.store_type}>
         <span class="msgTip" data-message="error"></span>
     </div>
 </div>

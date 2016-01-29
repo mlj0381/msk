@@ -54,11 +54,8 @@
             <span class="text-danger">*</span>类型：
         </label>
         <div class="col-xs-4">
-            <select class="form-control" name="company[enterprise_type]" required="true">
-                <option value="1">公司类型一</option>
-                <option value="2">公司类型二</option>
-                <option value="3">公司类型三</option>
-            </select>
+            <{input type=select required="true" name="company[enterprise_type]" rows=$extra.page_setting.company valueColumn="id"
+            labelColumn="label" value=$extra.company.enterprise_type}>
             <span class="msgTip" data-message="error"></span>
         </div>
     </div>

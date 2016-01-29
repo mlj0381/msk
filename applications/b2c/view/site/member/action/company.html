@@ -8,10 +8,11 @@
         <li class="active"><a href="<{link app=b2c ctl=site_member act=company}>">公司信息</a></li>
     </ul>
 </div>
-<form id="member_setting_form" class="form-horizontal m-companyInfo_form" action="<{link app=b2c ctl=site_member act=save_setting}>" method="post">
-    
-    <h3>企业基本信息</h3>
+<form id="member_setting_form" class="form-horizontal m-companyInfo_form" action="<{link app=b2c ctl=site_member act=save_company}>" method="post">
+    <{include file="site/passport/baseInfo/company_extra.html"}>
+    <{include file="site/passport/baseInfo/manageInfo.html"}>
     <div class="form-group">
+
         <label for="" class="col-md-2 control-label"><span class="text-danger">*</span>客户名称：</label>
         <div class="col-md-5">
             <input type="text" required="true" name="addon[company_name]" value="<{$conf.info.company.name}>" class="form-control" id="">
