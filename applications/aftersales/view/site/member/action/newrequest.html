@@ -29,7 +29,7 @@
                             <{if $type eq 'price'}>
                             <option value='5'>退款</option>
                             <{else}>
-                            <option value='1'>退货/退款</option>
+                            <option value='1'>退货</option>
                             <{/if}>
 <!--                            <option value="">换货</option>-->
                         </select>
@@ -38,44 +38,57 @@
                 <{/if}>
                 <hr>
                 <div class="form-group" data-extend="req_type">
-                    <label class="col-xs-2 control-label">申请售后原因</label>
+                    <label class="col-xs-2 control-label">申请<{if $type neq 'price'}>售后<{else}>服务<{/if}>原因<span class="text-danger">*</span></label>
                     <div class="col-xs-7" >
                         <{input type=select required="true" name="request[subject]" rows=$conf valueColumn="id" labelColumn="label"}>
-
-
                     </div>
                 </div>
+                <{if $type eq 'price'}>
+                <{foreach from=$order.items item=item}>
+                <{assign var=price1 value=$price1+$item.amount}>
+                <{/foreach}>
+                <div class="form-group" data-extend="req_type">
+                    <label class="col-xs-2 control-label">退款金额<span class="text-danger">*</span></label>
+                    <div class="col-xs-7" >
+                        <input type="text" disabled value="￥：<{$price1|cur}>" class="form-control">
+                    </div>
+                </div>
+                <{/if}>
                 <!-- <div class="form-group" data-extend="req_type">
                     <label class="col-xs-2 control-label">商品返回方式</label>
                     <div class="col-xs-7">
                         <span class="help-block"><{$env.conf.aftersales.return_item_helpinfo}></span>
                     </div>
                 </div> -->
-                <{if $type neq 'price'}>
-                <{foreach from=$order.items item=item}>
-                <div class="form-group" data-extend="req_type">
-                    <label class="col-xs-2 control-label">退货数量<span class="text-danger">*</span></label>
-                    <div class="col-xs-3">
-                        <div class="product-quantity input-group" style="width:150px;">
-                            <div class="spinner-buttons input-group-btn">
-                                <button type="button" class="btn btn-default">
-                                    -
-                                </button>
-                            </div>
-                            <input type="text" name="product_return_num" class="spinner-input form-control" value=1
-                                   data-max="<{$item.sendnum}>">
-                            <div class="spinner-buttons input-group-btn">
-                                <button type="button" class="btn btn-default">
-                                    +
-                                </button>
-                            </div>
-                        </div>
+                <!--<{if $type neq 'price'}>-->
+                <!--<{foreach from=$order.items item=item}>-->
+                <!--<div class="form-group" data-extend="req_type">-->
+                    <!--<label class="col-xs-2 control-label">退货数量<span class="text-danger">*</span></label>-->
+                    <!--<div class="col-xs-3">-->
+                        <!--<input type="checkbox" class="required-checkbox"/>-->
+                        <!--商品名称：<{$item.name}>-->
+                    <!--</div>-->
+                    <!--<div class="col-xs-3">-->
+                        <!--<div class="product-quantity input-group" style="width:150px;">-->
+                            <!--<div class="spinner-buttons input-group-btn">-->
+                                <!--<button type="button" class="btn btn-default">-->
+                                    <!----->
+                                <!--</button>-->
+                            <!--</div>-->
+                            <!--<input type="text" name="product_return_num[]" class="spinner-input form-control" value=1-->
+                                   <!--data-max="<{$item.sendnum}>">-->
+                            <!--<div class="spinner-buttons input-group-btn">-->
+                                <!--<button type="button" class="btn btn-default">-->
+                                    <!--+-->
+                                <!--</button>-->
+                            <!--</div>-->
+                        <!--</div>-->
 
-                    </div>
-                    <div class="col-xs-3"><{$item.name}></div>
-                </div>
-                <{/foreach}>
-                <{/if}>
+                    <!--</div>-->
+
+                <!--</div>-->
+                <!--<{/foreach}>-->
+                <!--<{/if}>-->
                 <div class="form-group">
                     <label class="col-xs-2 control-label">问题描述<span class="text-danger">*</span></label>
                     <div class="col-xs-7">
@@ -259,53 +272,55 @@
     <iframe src="about:blank" class="hide" name="new_request_frame"></iframe>
 </div>
 <script type="text/javascript">
-//图片选择输入框自动复制
-$('.request-image').on('change', function() {
-    $(this).off('change', arguments.callee);
-    var images_length = $('.request-image').length;
-    if (images_length > 4) return;
-    var file_ipt_clone = $($(this).clone());
-    file_ipt_clone.insertAfter($(this));
-    file_ipt_clone.on('change', arguments.callee);
-    //file_ipt_clone.prop('name','images['+images_length+']');
-});
-//提交处理
-$('#ass_newrequest_form').on('submit', function() {
-    var sub_btn = $(this).find('button[type=submit]');
-    sub_btn.attr('data-loading-text', '正在提交...').button('loading');
-    $('iframe[name=new_request_frame]').on('load', function() {
-        $(this).off('load', arguments.callee);
-        sub_btn.button('reset');
-        try {
-            var response = $(this.contentWindow.document.body.innerHTML).text();
-            response = $.parseJSON(response);
-        } catch (e) {
+
+
+    //图片选择输入框自动复制
+    $('.request-image').on('change', function() {
+        $(this).off('change', arguments.callee);
+        var images_length = $('.request-image').length;
+        if (images_length > 4) return;
+        var file_ipt_clone = $($(this).clone());
+        file_ipt_clone.insertAfter($(this));
+        file_ipt_clone.on('change', arguments.callee);
+        //file_ipt_clone.prop('name','images['+images_length+']');
+    });
+    //提交处理
+    $('#ass_newrequest_form').on('submit', function() {
+        var sub_btn = $(this).find('button[type=submit]');
+        sub_btn.attr('data-loading-text', '正在提交...').button('loading');
+        $('iframe[name=new_request_frame]').on('load', function() {
+            $(this).off('load', arguments.callee);
+            sub_btn.button('reset');
             try {
-                var response = this.contentWindow.document.body.innerHTML;
+                var response = $(this.contentWindow.document.body.innerHTML).text();
                 response = $.parseJSON(response);
             } catch (e) {
+                try {
+                    var response = this.contentWindow.document.body.innerHTML;
+                    response = $.parseJSON(response);
+                } catch (e) {
 
+                }
             }
-        }
-        if (typeof(response) != 'object') {
-            alert('提交失败!请稍后重试');
-        }
-        if ('fipt_idx' in response) {
-            //上传错误
-            var error_info = $('<span class="span-info dropup text-danger"><span class="caret"></span>' + response.error + '</span>'),
-                ipt = $('.request-image').eq(response.fipt_idx);
-            error_info.insertAfter(ipt);
-            return setTimeout(function() {
-                error_info.fadeOut(function() {
-                    error_info.remove();
-                });
-            }, 5000);
-        }
-        if ('error' in response) {
-            //其他异常
-            alert('提交失败!' + response.error);
-        }
-        location = "<{link app=aftersales ctl=site_member act=request}>";
+            if (typeof(response) != 'object') {
+                alert('提交失败!请稍后重试');
+            }
+            if ('fipt_idx' in response) {
+                //上传错误
+                var error_info = $('<span class="span-info dropup text-danger"><span class="caret"></span>' + response.error + '</span>'),
+                    ipt = $('.request-image').eq(response.fipt_idx);
+                error_info.insertAfter(ipt);
+                return setTimeout(function() {
+                    error_info.fadeOut(function() {
+                        error_info.remove();
+                    });
+                }, 5000);
+            }
+            if ('error' in response) {
+                //其他异常
+                alert('提交失败!' + response.error);
+            }
+            location = "<{link app=aftersales ctl=site_member act=request}>";
+        });
     });
-});
 </script>

@@ -216,9 +216,37 @@ class b2c_ctl_site_member extends b2c_frontpage
     {
         $this->menuSetting = 'setting';
         $user_obj = vmc::singleton('b2c_user_object');
-        $this->pagedata['conf'] = $user_obj->page_company();
+        $company = $user_obj->page_company();
+        $manage = $user_obj->page_manage();
+        $this->pagedata['extra'] = $company['info'];
+        $this->pagedata['extra']['manageInfo'] = $manage['info']['manageInfo'];
+        $this->pagedata['extra']['use'] = $manage['info']['use'];
+        $this->pagedata['extra']['plant'] = $manage['info']['plant'];
+        $this->pagedata['extra']['member_cat'] = $manage['info']['member_cat'];
         $this->output();
     }
+
+    public function save_company(){
+        if ($_POST) {
+            $pageSetting = $this->app->getConf('member_extra_column');
+            $obj_passport = vmc::singleton('b2c_user_passport');
+            foreach($pageSetting as $key => $val){
+                $_POST['pageIndex'] = $key + 1;
+                $_POST['member_id'] = $this->member['member_id'];
+                $result = $obj_passport->save_company($_POST);
+                $redirect = $this->gen_url(array(
+                    'app' => 'b2c',
+                    'ctl' => 'site_member',
+                    'act' => 'company',
+                ));
+                if(!$result){
+                    $this->splash('error', $redirect, '修改失败');
+                }
+            }
+            $this->splash('success', $redirect, '修改成功');
+        }
+    }
+
     public function save_setting()
     {
         $url = $this->gen_url(array(

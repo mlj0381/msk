@@ -457,11 +457,10 @@ class seller_ctl_site_passport extends seller_frontpage
             if(!$licence_type){
                 $licence_type = $this->passport_obj->new_or_old($this->seller['seller_id']);
             }
-
         }
-
         $columns = $this->passport_obj->page_setting($step, $licence_type);
         $this->pagedata['info'] = $this->passport_obj->edit_info($columns, $this->seller['seller_id']);
+        $this->pagedata['info']['company_extra']['page_setting'] = $this->passport_obj->columns();
         $this->pagedata['page'] = $columns;
         $this->pagedata['pageIndex'] = $step;
         if ($step == 10) {

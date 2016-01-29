@@ -211,47 +211,18 @@ class b2c_ctl_site_passport extends b2c_frontpage
         $pageIndex >=  $pageIndexMax && $pageIndex = $pageIndexMax;
         $this->pagedata['conf'] = $this->_page_setting($pageIndex);
         if ($_POST) {
+            $_POST['pageIndex'] = $pageIndex;
+            $_POST['member_id'] = $this->member['member_id'];
+            $result = $this->passport_obj->save_company($_POST);
             $redirect = $this->gen_url(array(
                 'app' => 'b2c',
                 'ctl' => 'site_passport',
                 'act' => 'business_info',
                 'args0' => $pageIndex - 1,
             ));
-
-            $db = vmc::database();
-            $db->beginTransaction();
-            $extra_columns = $this->app->getConf('member_extra_column');
-            $params = $_POST;
-
-            if (!empty($params['company'])) {
-                $params['company']['uid'] = $this->member['member_id'];
-                if (!app::get('base')->model('company')->save($params['company'])) {
-                    $db->rollback();
-                    $this->splash('error', $redirect, '注册失败');
-                }
+            if(!$result){
+                $this->splash('error', $redirect, '注册失败');
             }
-
-            if (!empty($params['contact'])) {
-                $params['contact']['uid'] = $this->member['member_id'];
-                if (!app::get('base')->model('contact')->save($params['contact'])) {
-                    $db->rollback();
-                    $this->splash('error', $redirect, '注册失败');
-                }
-            }
-            $mdl_company_extra = app::get('base')->model('company_extra');
-            foreach ($extra_columns[$pageIndex - 1] as $col) {
-
-                if (isset($params[$col]) && !empty($params[$col])) {
-
-                    $params[$col]['uid'] = $this->member['member_id'];
-                    $params[$col]['from'] = 0;
-                    if (!$mdl_company_extra->extra_save($col, $params)) {
-                        $db->rollback();
-                        $this->splash('error', $redirect, '注册失败');
-                    }
-                }
-            }
-            $db->commit();
         }
         $this->set_tmpl('passport');
         $this->pagedata['pageIndex'] = $pageIndex;
