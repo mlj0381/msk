@@ -93,7 +93,7 @@
 			<span class="text-danger">*</span>成立日期：
 		</label>
 		<div class="col-xs-4">
-			<input type="text" value='<{$extra.company.establishment_date}>' name="company[establishment_date]" class="form-control" required="true" format="date">
+			<input type="text" value='<{$extra.company.establishment_date}>' name="company[establishment_date]" class="form-control" placeholder="2010-10-20" required="true" format="date">
 			<span class="msgTip" data-message="format">请填写正确的日期格式</span>
 		</div>
 	</div>
@@ -103,8 +103,8 @@
 		</label>
 		<div class="col-xs-4">
 			<div class="form-item">
-				<input type="text" value='<{$extra.company.business_scope.begin}>' name="company[business_scope][begin]" class="form-control" style="width:175px; display: inline-block;"> 至 
-				<input type="text" value='<{$extra.company.business_scope.end}>' name="company[business_scope][end]" class="form-control"  style="width:175px; display: inline-block;" required="true">
+				<input type="date" value='<{$extra.company.business_scope.begin}>' name="company[business_scope][begin]" class="form-control"  placeholder="2010-10-20"  style="width:175px; display: inline-block;"> 至 
+				<input type="date" value='<{$extra.company.business_scope.end}>' name="company[business_scope][end]" class="form-control"  placeholder="2010-10-20"   style="width:175px; display: inline-block;" required="true">
 			</div>
 			<span class="msgTip" data-message="error"></span>
 		</div>

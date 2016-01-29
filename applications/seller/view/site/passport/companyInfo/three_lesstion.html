@@ -95,8 +95,8 @@
             <span class="text-danger">*</span>成立日期：
         </label>
         <div class="col-xs-4">
-            <input type="text" name="company[establishment_date]" value='<{$extra.company.establishment_date}>' class="form-control" required="true" format="dateiso">
-            <span class="msgTip" data-message="format">sss</span>
+            <input type="text" name="company[establishment_date]" value='<{$extra.company.establishment_date}>' class="form-control" placeholder="2010-10-20" required="true" format="date">
+            <span class="msgTip" data-message="format"></span>
         </div>
     </div>
     <div class="form-group">
@@ -105,8 +105,8 @@
         </label>
         <div class="col-xs-4">
             <div class="form-item">
-                <input type="text" name="company[business_scope][begin]" value='<{$extra.company.business_scope.begin}>' class="form-control" style="width:175px; display: inline-block;"> 至 
-                <input type="text" name="company[business_scope][end]" value='<{$extra.company.business_scope.end}>' class="form-control"  style="width:175px; display: inline-block;" required="true">
+                <input type="date" name="company[business_scope][begin]" value='<{$extra.company.business_scope.begin}>' class="form-control" style="width:175px; display: inline-block;"> 至 
+                <input type="date" name="company[business_scope][end]" value='<{$extra.company.business_scope.end}>' class="form-control"  style="width:175px; display: inline-block;" required="true">
             </div>
             <span class="msgTip" data-message="error"></span>
         </div>

@@ -42,18 +42,18 @@
         </div>
     </div>
     <div class="form-group">
-        <label for="" class="col-xs-2 control-label"><span class="text-danger">*</span>主营品类：</label>
+        <label for="" class="col-xs-2 control-label"><span class="text-danger">*</span>经营品类：</label>
         <div class="col-xs-5">
             <{input type="category" name="manageInfo[value][main]" value=$extra.manageInfo.manageInfo.value.main required="true"}>
             <span class="msgTip" data-message="error"></span>
         </div>
     </div>
-    <div class="form-group">
+    <!-- <div class="form-group">
         <label for="" class="col-xs-2 control-label" name="business_info[value][engaged_category]">兼营品类：</label>
         <div class="col-xs-5">
             <{input type="category" name="manageInfo[value][vice]" value=$extra.manageInfo.manageInfo.value.vice}>
         </div>
-    </div>
+    </div> -->
     <div class="form-group">
         <label for="" class="col-xs-2 control-label"><span class="text-danger">*</span>日均销售额：</label>
         <div class="col-xs-5">
@@ -61,7 +61,7 @@
             	<input type="text" name="manageInfo[value][day_sale]" value="<{$extra.manageInfo.manageInfo.value.day_sale}>" class="form-control" required="true">
             	<span class="input-group-addon">元</span> 
             </div>
-            <span class="msgTip" data-message="format">格式错误</span>
+            <span class="msgTip" data-message="error"></span>
         </div>
     </div>
 	<hr>
