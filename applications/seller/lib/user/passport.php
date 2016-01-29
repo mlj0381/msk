@@ -567,6 +567,13 @@ class seller_user_passport
         return $columns;
     }
 
+    //获取基本信息页面配置
+    public function columns(){
+        $result['company'] = app::get('seller')->getConf('company_type');
+        $result['store'] = app::get('seller')->getConf('store_type');
+        return $result;
+    }
+
     //查询已注册的信息
     public function &edit_info($columns, $seller_id)
     {

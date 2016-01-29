@@ -253,8 +253,8 @@ $db['members'] = array(
             ),
             'default' => '0',
             'required' => true,
-            'in_list' => true,
-            'default_in_list' => true,
+            'in_list' => false,
+            'default_in_list' => false,
         ) ,
         'source' => array(
             'type' => array(

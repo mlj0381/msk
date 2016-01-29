@@ -174,13 +174,13 @@ class b2c_ctl_site_passport extends b2c_frontpage
     {
         switch ($pageIndex) {
             case 1:
-                $conf = $this->_page_company();
+                $conf = $this->user_obj->page_company();
                 break;
             case 2:
-                $conf = $this->_page_manage();
+                $conf = $this->user_obj->page_manage();
                 break;
             case 3:
-                $conf = $this->_page_delivery();
+                $conf = $this->user_obj->page_delivery();
                 break;
         }
         $page_setting = $this->app->getConf('member_extra_column');
@@ -195,59 +195,7 @@ class b2c_ctl_site_passport extends b2c_frontpage
         return $conf;
     }
 
-    /*
-     * 会员注册页面配置 企业联系人信息
-     * return pageSetting array()
-     * */
-    private function _page_company()
-    {
-        //读取会员注册配置
-        $conf = $this->app->getConf('main_products');
-        //读取收货时间
-        $conf['time'] = $this->app->getConf('receiving_time');
-        //读取分类
-        $conf['cat'] = $this->app->model('goods_cat')->get_tree();
-        //获取页面信息
-        $mdl_company = app::get('base')->model('company');
-        $mdl_contact = app::get('base')->model('contact');
 
-        $filter = array('uid' => $this->member['member_id'], 'from' => '0');
-
-        $conf['info']['company'] = $mdl_company->getRow('*', $filter);
-        $conf['info']['contact'] = $mdl_contact->getRow('*', $filter);
-        $conf['info']['company_extra'] = app::get('base')->model('company_extra')->getList('*', $filter);
-        return $conf;
-    }
-
-    /*
-     * 会员注册页面配置  经营信息
-     * @param $pageIndex 配置页面索引
-     * return pageSetting array()
-     * */
-    private function _page_manage()
-    {
-        //使用方向  经营场所
-        $conf['info'] = $this->app->getConf('main_products');
-        $filter = array('uid' => $this->member['member_id'], 'from' => '0', 'key');
-        $conf['info']['manageInfo'] = app::get('base')->model('company_extra')->getList('*', $filter);
-        return $conf;
-    }
-
-    /*
-     * 会员注册页面配置 配送信息
-     * @param $pageIndex 配置页面索引
-     * return pageSetting array()
-     * */
-    private function _page_delivery()
-    {
-        //配送信息
-        $conf['info'] = $this->app->getConf('main_products');
-        //读取收货时间信息
-        $conf['info']['time'] = $this->app->getConf('receiving_time');
-        $filter = array('uid' => $this->member['member_id'], 'from' => '0');
-        $conf['info']['deliveryInfo'] = app::get('base')->model('company_extra')->getList('*', $filter);
-        return $conf;
-    }
 
 
 
@@ -263,47 +211,18 @@ class b2c_ctl_site_passport extends b2c_frontpage
         $pageIndex >=  $pageIndexMax && $pageIndex = $pageIndexMax;
         $this->pagedata['conf'] = $this->_page_setting($pageIndex);
         if ($_POST) {
+            $_POST['pageIndex'] = $pageIndex;
+            $_POST['member_id'] = $this->member['member_id'];
+            $result = $this->passport_obj->save_company($_POST);
             $redirect = $this->gen_url(array(
                 'app' => 'b2c',
                 'ctl' => 'site_passport',
                 'act' => 'business_info',
                 'args0' => $pageIndex - 1,
             ));
-
-            $db = vmc::database();
-            $db->beginTransaction();
-            $extra_columns = $this->app->getConf('member_extra_column');
-            $params = $_POST;
-
-            if (!empty($params['company'])) {
-                $params['company']['uid'] = $this->member['member_id'];
-                if (!app::get('base')->model('company')->save($params['company'])) {
-                    $db->rollback();
-                    $this->splash('error', $redirect, '注册失败');
-                }
+            if(!$result){
+                $this->splash('error', $redirect, '注册失败');
             }
-
-            if (!empty($params['contact'])) {
-                $params['contact']['uid'] = $this->member['member_id'];
-                if (!app::get('base')->model('contact')->save($params['contact'])) {
-                    $db->rollback();
-                    $this->splash('error', $redirect, '注册失败');
-                }
-            }
-            $mdl_company_extra = app::get('base')->model('company_extra');
-            foreach ($extra_columns[$pageIndex - 1] as $col) {
-
-                if (isset($params[$col]) && !empty($params[$col])) {
-
-                    $params[$col]['uid'] = $this->member['member_id'];
-                    $params[$col]['from'] = 0;
-                    if (!$mdl_company_extra->extra_save($col, $params)) {
-                        $db->rollback();
-                        $this->splash('error', $redirect, '注册失败');
-                    }
-                }
-            }
-            $db->commit();
         }
         $this->set_tmpl('passport');
         $this->pagedata['pageIndex'] = $pageIndex;

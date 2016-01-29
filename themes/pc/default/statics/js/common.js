@@ -116,18 +116,21 @@ $(function() {
 
 
     /*
-     *首页分类导航下拉显示效果 
+     *分类导航下拉显示效果 
      */
-     var cat = $('.category-container');
-     var speed = 400;
-     cat.hide();
-     $('.nav_ul .default').hover(function(){
-        cat.stop().slideDown(speed);
-     },function(){
-        cat.stop().slideUp(speed);
-     })
-     
 
+     function cateSlider(parent,child,speed){
+        var speed = speed;
+        var parent = parent;
+        var child = child;
+        $(parent).hover(function(){
+            $(child).stop().slideDown(speed);
+        },function(){
+            $(child).stop().slideUp(speed);
+        })
+     }
+     cateSlider('.nav_ul .default','.category-container',400);   //首页分类下拉
+     cateSlider('.store_nav .default','.cat_ul',400);   //店铺首页分类下拉
 
 
     /*
@@ -180,7 +183,8 @@ $(function() {
                 $(inputfile).siblings('.showImg').find('.loading').addClass('hidden');
                 $(inputfile).siblings('.showImg').find('img').removeClass('hidden');
             }
-            setTimeout(loadinghide, 0);
+            //setTimeout(loadinghide, 0);
+            loadinghide();
             var re = $.parseJSON(data.result);
             var input = e.target || e.srcElement;
             $(input).parents('.filebox').find('input[type="hidden"]').attr('value', re.image_id);

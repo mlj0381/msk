@@ -116,13 +116,13 @@ $setting = array(
     'main_products' => array(
         'default' => array(
             'use' => array( //使用方向
-                array('id' => '1', 'label' => '菜场（含AK）'),
-                array('id' => '2', 'label' => '团膳'),
-                array('id' => '3', 'label' => '火锅'),
-                array('id' => '4', 'label' => '中餐'),
-                array('id' => '5', 'label' => '西餐'),
-                array('id' => '6', 'label' => '烧烤'),
-                array('id' => '7', 'label' => '加工厂'),
+                1 => array('id' => '1', 'label' => '菜场（含AK）'),
+                2 => array('id' => '2', 'label' => '团膳'),
+                3 => array('id' => '3', 'label' => '火锅'),
+                4 => array('id' => '4', 'label' => '中餐'),
+                5 => array('id' => '5', 'label' => '西餐'),
+                6 => array('id' => '6', 'label' => '烧烤'),
+                7 => array('id' => '7', 'label' => '加工厂'),
             ),
             'plant' => array( //经营场所
                 array('id' => 1, 'label' => '批发市场'),
@@ -182,7 +182,7 @@ $setting = array(
                 'contact_extra',
             ),
             2 => array('manageInfo'),
-            3 => array('deliveryInfo'),
+            //3 => array('deliveryInfo'),
         )
     ),
     'serach' => array(

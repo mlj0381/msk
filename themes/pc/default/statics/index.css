@@ -34,10 +34,13 @@
   padding: 0;
   margin: 0;
   min-width: 1200px;
+  overflow: hidden;
 }
 .index_page .firstContainer .sliderbox {
   position: relative;
-  width: 100%;
+  width: 1920px;
+  left: 50%;
+  margin-left: -960px;
 }
 .index_page .firstContainer .sliderbox .slide {
   position: absolute;

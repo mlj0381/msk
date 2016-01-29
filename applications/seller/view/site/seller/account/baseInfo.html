@@ -8,10 +8,10 @@
             <img class="img-thumbnail img-circle" src="<{$seller.avatar|storager:'avatar'}>" alt="<{$seller.uname}>头像" style="width:100px; height:100px;" />
         </div>
         <div class="col-xs-5">
-            <!--<a class="btn btn-link"  href="#avatar"  role="tab" data-toggle="tab">-->
-                <!--<i class="glyphicon glyphicon-pencil"></i>编辑头像-->
-            <!--</a>-->
-            <span class="help-block">建议头像图片长宽为1:1尺寸</span>
+            <!-- <a class="btn btn-link"  href="#avatar"  role="tab" data-toggle="tab">
+                <i class="glyphicon glyphicon-pencil"></i>编辑头像
+            </a>
+            <span class="help-block">建议头像图片长宽为1:1尺寸</span> -->
         </div>
     </div>
     <div class="form-group">
@@ -19,7 +19,7 @@
             手机号码
         </label>
         <div class="col-xs-4">
-            <input type="text" name="seller[mobile]" value="<{$seller.mobile}>" class="form-control">
+            <input type="text" disabled="disabled" name="seller[mobile]" value="<{$seller.mobile}>" class="form-control">
         </div>
     </div>
     <div class="form-group">

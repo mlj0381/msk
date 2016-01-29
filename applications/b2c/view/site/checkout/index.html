@@ -63,7 +63,8 @@
                 <ul class="list-group">
                     <{foreach from=$paymentapps key=k item=papp}>
                     <li  class="list-group-item <{if $papp.selected}>active<{/if}> clearfix">
-                        <input type="radio" <{if $papp.selected}>checked<{/if}> name="payapp_id" value="<{$papp.app_id}>">
+                        <input type="radio" <{if $papp.app_id eq 'alipay'}> checked <{else}> disabled<{/if}>
+                        name="payapp_id" value="<{$papp.app_id}>">
                                <span class="payapp-name"><{$papp.display_name|default:$papp.name}></span>
                         <{if $papp.description}>
                         <i  data-toggle="popover" class="glyphicon glyphicon-question-sign"></i>
@@ -108,11 +109,11 @@
                     </li>
                     <li class="list-group-item clearfix">
                         <span>习惯正常收货最早时间：</span>
-                        <input type="text" name="addon[consignee_time][best][early]" class="form-control time_text" placeholder="开始时间">
+                        <input type="text" name="addon[consignee_time][best][early]" class="form-control time_text" placeholder="08:00">
                     </li>
                     <li class="list-group-item clearfix">
                         <span>习惯正常收货最晚时间：</span>
-                        <input type="text" name="addon[consignee_time][best][night]" class="form-control time_text" placeholder="结束时间">
+                        <input type="text" name="addon[consignee_time][best][night]" class="form-control time_text" placeholder="16:00">
                     </li>
                 </ul>
                 
@@ -354,7 +355,7 @@
                     </div>
                     <div class="form-group">
                         <label for="maddr_addr" class="col-sm-2 control-label"><em class="text-danger">*</em>距离门店最近停车距离</label>
-                        <div class="col-sm-10">
+                        <div class="col-sm-5">
                             <input type="text"  name="maddr[addn][stop]"  class="form-control" id="maddr_addr">
                         </div>
                     </div>

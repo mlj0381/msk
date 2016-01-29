@@ -48,20 +48,20 @@
                 <div class="distr_info">
                     配送：
                     <span>上海 至 上海松江区</span>
-                    <span>运费 ￥:10.00</span>
+                    <!--<span>运费 ￥:10.00</span>-->
                 </div>
 
                 <div class="turnover_info">
                     <ul>
-                        <li>总成交量<span>186<small>笔</small></span></li>
-                        <li>累计评价<span>100<small>条</small></span></li>
+                        <li>总成交量<span><{$data_detail.buy_count|default:0}><small>笔</small></span></li>
+                        <li>累计评价<span><{$data_detail.comment_count|default:0}><small>条</small></span></li>
                         <li>
                             <!-- <i class="icon-star"></i>
                             <i class="icon-star"></i>
                             <i class="icon-star"></i>
                             <i class="icon-star"></i>
                             <i class="icon-star-empty"></i> -->
-                            <{$data_detail.mark_star|star}>
+                            <{*$data_detail.mark_star|star*}>
                         </li>
                     </ul>
                 </div>

@@ -14,7 +14,7 @@
         <div class="col-xs-5 use_dir">
             <div class="form-item">
             <{foreach name="manage" from=$extra.use item=item}>
-            <span><input type="checkbox" value="<{$item.id}>" name="manageInfo[value][use][]" <{if $env.foreach.manage.last}> required="true" <{/if}> > <{$item.label}></span>
+            <span><input type="checkbox" value="<{$item.id}>" <{$item.id|checkIn:$extra.manageInfo.manageInfo.value.use}> name="manageInfo[value][use][]" <{if $env.foreach.manage.last}> required="true" <{/if}> > <{$item.label}></span>
             <{/foreach}>
             <span class="msgTip" data-message="error"></span>
             </div>
@@ -42,26 +42,26 @@
         </div>
     </div>
     <div class="form-group">
-        <label for="" class="col-xs-2 control-label"><span class="text-danger">*</span>主营品类：</label>
+        <label for="" class="col-xs-2 control-label"><span class="text-danger">*</span>经营品类：</label>
         <div class="col-xs-5">
             <{input type="category" name="manageInfo[value][main]" value=$extra.manageInfo.manageInfo.value.main required="true"}>
             <span class="msgTip" data-message="error"></span>
         </div>
     </div>
-    <div class="form-group">
+    <!-- <div class="form-group">
         <label for="" class="col-xs-2 control-label" name="business_info[value][engaged_category]">兼营品类：</label>
         <div class="col-xs-5">
             <{input type="category" name="manageInfo[value][vice]" value=$extra.manageInfo.manageInfo.value.vice}>
         </div>
-    </div>
+    </div> -->
     <div class="form-group">
         <label for="" class="col-xs-2 control-label"><span class="text-danger">*</span>日均销售额：</label>
         <div class="col-xs-5">
             <div class="input-group form-item">
             	<input type="text" name="manageInfo[value][day_sale]" value="<{$extra.manageInfo.manageInfo.value.day_sale}>" class="form-control" required="true">
-            	<span class="input-group-addon">元</span> 
+            	<span class="input-group-addon">元</span>
             </div>
-            <span class="msgTip" data-message="format">格式错误</span>
+            <span class="msgTip" data-message="error"></span>
         </div>
     </div>
 	<hr>

@@ -5,7 +5,7 @@
     <div class="form-group">
         <label class="col-xs-2 control-label"><span class="text-danger">*</span><span>商品类目</span></label>
         <div class="col-xs-8">
-            <{input type="category" name="goods[category][cat_id]" value=$goods.category.cat_id}>
+            <{input type="category" class="study" name="goods[category][cat_id]" value=$goods.category.cat_id callback="callBack"}>
         </div>
     </div>
     <div class="form-group">
@@ -49,46 +49,26 @@
         <label class="col-xs-2 control-label"><span class="text-danger">*</span><span>产品相册</span></label>
         <{input type="siteimagearray" name="goods[images]" default="image_default" default_val=$goods.image_default_id value=$goods.images}>
     </div>
-
-
-    <!-- <{if !$goods.spec_desc && !count($goods.spec_desc)> 0}>
-        <div class="form-group">
-            <label class="col-xs-2 control-label"><span>商品信息</span></label>
-            <div class="col-xs-5">
-                <div class="goods_infobox" id="no_spec">
-                    <dl>
-                        <dd><span class="text-danger">*</span>货号</dd>
-                        商品编号 SKC
-                        <dt>
-                            <input type="text" id="goods_gid" data-map='bn' value="<{$goods.product.bn}>" name="goods[product][new_0][bn]" class="form-control input_bianhao">
-                        </dt>
-                    </dl>
-                    <input type="hidden" name="goods[product][new_0][marketable]" value="true">
-                    <dl>
-                        <dd>条码</dd>
-                        SKU
-                        <dt>
-                            <input class="form-control form-control" value="<{$product.barcode}>" name="goods[product][new_0][barcode]" data-map='barcode' required="1" type="text">
-                        </dt>
-                    </dl>
-                    <p class="clearfix"></p>
-                    <div class="row">
-                        <div class="col-xs-4">
-                            销售价
-                            <input type="text" class=" form-control input_xsj" data-map='price' value="<{$product.mktprice}>" name="goods[product][new_0][mktprice]">
-                        </div>
-                        <div class="col-xs-4">
-                            重量
-                            <input type="text" class="form-control input_weight" data-map='weight' type="text" value="<{$product.weight}>" name="goods[product][new_0][weight]">
-                        </div>
-                        <div class="col-xs-4">
-                            单位
-                            <input type="text" class="form-control input_danwei" data-map='unit' value="<{$product.unit|default:'件'}>" name="goods[product][new_0][unit]">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <{/if}> -->
     <hr>
 </div>
+
+
+<script>
+
+    var callBack = function(cat_id) {
+        var url = "<{link app=seller ctl=site_goods act=selfParams}>";
+        $.post(url, {cat_id : cat_id}, function(re){
+            if(!re.data.son) return false;
+            var parent = $('#param');
+            var option = '';
+            for(prop in re.data.son.props ){
+                option += '<option value="'+re.data.son.props[prop].props_id+'">'+re.data.son.props[prop].name+'</option>';
+            }
+            parent.append($(option));
+        });
+    }
+
+
+
+
+</script>

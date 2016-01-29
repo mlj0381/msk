@@ -119,7 +119,8 @@
         <input type="hidden"
                name="ec_group_employees[content_id][]"
                value="<{$extra.content_id}>"
-               class="form-control">
+               class="form-control" >
+
 
         <div class="form-group">
             <label class="col-xs-2 control-label">
@@ -130,7 +131,8 @@
                 <input type="text"
                        value="<{$extra.ec_group_employees.value.name}>"
                        name="ec_group_employees[value][name][]"
-                       class="form-control" >
+                       class="form-control" required="true">
+                       <span class="msgTip" data-message="error"></span>
             </div>
         </div>
         <div class="form-group">
@@ -142,7 +144,8 @@
                 <input type="text"
                        value="<{$extra.ec_group_employees.value.age}>"
                        name="ec_group_employees[value][age][]"
-                       class="form-control" >
+                       class="form-control"  required="true" format="digits">
+            <span class="msgTip" data-message="format">请输入正确的年龄</span>
             </div>
         </div>
         <div class="form-group">
@@ -165,7 +168,9 @@
                 <input type="text"
                        value="<{$extra.ec_group_employees.value.contact}>"
                        name="ec_group_employees[value][contact][]"
-                       class="form-control">
+                       class="form-control" required="true" format="mobile">
+                        <span class="msgTip" data-message="format">请输入正确手机号码</span>
+
             </div>
         </div>
         <div class="form-group">

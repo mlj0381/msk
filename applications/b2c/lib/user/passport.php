@@ -42,7 +42,6 @@ class b2c_user_passport {
     public function check_signup_account($login_name, &$msg) {
         if (empty($login_name)) {
             $msg = ('请输入用户名');
-
             return false;
         }
         //获取到注册时账号类型
@@ -87,6 +86,42 @@ class b2c_user_passport {
         }
         $msg = $login_type;
 
+        return true;
+    }
+
+    public function save_company($params){
+
+        $db = vmc::database();
+        $db->beginTransaction();
+        $extra_columns = app::get('b2c')->getConf('member_extra_column');
+        if (!empty($params['company'])) {
+            $params['company']['uid'] = $params['member_id'];
+            if (!app::get('base')->model('company')->save($params['company'])) {
+                $db->rollback();
+                return false;
+            }
+        }
+
+        if (!empty($params['contact'])) {
+            $params['contact']['uid'] = $params['member_id'];
+            if (!app::get('base')->model('contact')->save($params['contact'])) {
+                $db->rollback();
+                return false;
+            }
+        }
+        $mdl_company_extra = app::get('base')->model('company_extra');
+        foreach ($extra_columns[$params['pageIndex'] - 1] as $col) {
+            if (isset($params[$col]) && !empty($params[$col])) {
+
+                $params[$col]['uid'] = $params['member_id'];
+                $params[$col]['from'] = 0;
+                if (!$mdl_company_extra->extra_save($col, $params)) {
+                    $db->rollback();
+                    return false;
+                }
+            }
+        }
+        $db->commit();
         return true;
     }
 

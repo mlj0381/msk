@@ -108,18 +108,28 @@ $setting = array(
     ),
     'store_type' => array(
         'default' => array(
-            array(
+            1 => array(
                 'id' => '1',
                 'label' => '工厂店铺',
             ),
-            array(
+            2 => array(
                 'id' => '2',
                 'label' => '代理店铺',
             ),
-            array(
+            3 => array(
                 'id' => '3',
                 'label' => 'OEM店铺',
             ),
+        ),
+    ),
+    'company_type' => array(
+        'default' => array(
+            1 => array('id' => '1', 'label' => '国营'),
+            2 => array('id' => '2', 'label' => '私营'),
+            3 => array('id' => '3', 'label' => '中外合资'),
+            4 => array('id' => '4', 'label' => '外资'),
+            5 => array('id' => '5', 'label' => '政府机关/事业单位'),
+            6 => array('id' => '6', 'label' => '其他'),
         ),
     ),
 );
