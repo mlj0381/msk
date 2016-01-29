@@ -227,7 +227,8 @@
             $('.equipment-items:last').find('.file_input').fileupload(fileObj);
         };
         (function () {
-            if (!$('#items').find('equipment-items').size()) {
+            if ($('#items').find('.equipment-items').size() <= 0) {
+                alert($('#items').find('.equipment-items').size());
                 init();
             }
         })();
