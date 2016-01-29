@@ -2,7 +2,7 @@
     <h4><span class="text-danger">*</span>商品参数</h4>
     <div class="form-body">
         <{foreach from=$params.goods_type item=porps}>
-        <input name="goods[type_id]" type="hidden" value="<{$porps.type_id}>"/>
+        <input name="goods[type_id]" type="hidden" value="0"/>
         <{assign var="props_value_id" value='1'}>
         <{foreach from=$porps.props item=porps_value}>
         <div class="form-group">
@@ -17,7 +17,7 @@
         <{/foreach}>
         <{/foreach}>
 
-        <hr>
+
         <!-- <div class="form-group">
             <label class="col-xs-2 control-label">
                 <span>类型</span>
@@ -43,6 +43,6 @@
             </div>
         </div> -->
     </div>
-
+    <hr>
 </div>
 

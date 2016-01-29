@@ -76,6 +76,7 @@ class seller_ctl_site_seller extends seller_frontpage {
         $this->pagedata['company'] = $companyInfo;
         $this->pagedata['info'] = $this->passport_obj->edit_info($columns, $this->seller['seller_id']);
         $this->pagedata['info']['company_extra']['type'] = 'center';
+        $this->pagedata['info']['company_extra']['page_setting'] = $this->passport_obj->columns();
         $this->pagedata['activePage'] = $step;
         $this->menuSetting = 'account';
         $this->output();

@@ -579,17 +579,16 @@ class seller_user_passport
     {
         $info = array();
         $filter = array('uid' => $seller_id, 'from' => '1');
-        $company_extra = app::get('base')->model('company_extra')->
-        getList('*', array_merge($filter, array('key|in' => array_keys($columns))));
+        $mdl_base_extra = app::get('base')->model('company_extra');
+        $company_extra = $mdl_base_extra->getList('*', array_merge($filter, array('key|in' => array_keys($columns))));
         $conf = $this->app->getConf('seller_entry');
-        foreach ($company_extra as $value) {
-
-            if (in_array($value['key'], $conf['array_info'])) {
-                $info['company_extra'][$value['key']][] = $value;
-                continue;
+        foreach($conf['array_info'] as $value){
+            if(in_array($value, $columns)){
+                $company_extra[$value] = $mdl_base_extra->arrayInfo('*', array_merge($filter, array('key' => $value)));
             }
-            $info['company_extra'][$value['key']] = $value;
         }
+        $info['company_extra'] = $company_extra;
+        unset($company_extra);
         $info['company_extra']['store'] = app::get('store')->model('store')->getRow('*', array('seller_id' => $filter['uid']));
         $info['company_extra']['company'] = app::get('base')->model('company')->getRow('*', $filter);
         $info['company_extra']['contact'] = app::get('base')->model('contact')->getRow('*', $filter);

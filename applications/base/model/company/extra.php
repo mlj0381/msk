@@ -34,5 +34,10 @@ class base_mdl_company_extra extends base_db_model{
         unset($rows);
         return $result;
     }
+    //
+    public function arrayInfo($cols = '*', $filter = array(), $offset = 0, $limit = -1, $orderby = null)
+    {
+        return parent::getList($cols, $filter, $offset, $limit, $orderby);
+    }
 }
 

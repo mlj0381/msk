@@ -13,7 +13,7 @@
         <div class="equipment-items">
             <div class="form-group">
                 <label class="col-xs-2 control-label">
-                    <span class="text-danger">*</span>主要设备1：
+                    <span class="text-danger">*</span>主要设备：
                 </label>
 
                 <div class="col-xs-4">
@@ -97,7 +97,7 @@
     <div class="equipment-items">
         <div class="form-group">
             <label class="col-xs-2 control-label">
-                <span class="text-danger">*</span>主要设备1：
+                <span class="text-danger">*</span>主要设备：
             </label>
 
             <div class="col-xs-4">
@@ -227,7 +227,8 @@
             $('.equipment-items:last').find('.file_input').fileupload(fileObj);
         };
         (function () {
-            if (!$('#items').find('equipment-items').size()) {
+            if ($('#items').find('.equipment-items').size() <= 0) {
+                alert($('#items').find('.equipment-items').size());
                 init();
             }
         })();
