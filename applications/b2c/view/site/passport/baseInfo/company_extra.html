@@ -1,7 +1,7 @@
 <style>
-    .fileinput-new input[type='file']{
+    /* .fileinput-new input[type='file']{
         height:0px;
-    }
+    } */
 </style>
 <div id="buyerInfo">
     <h2>企业信息</h2>
@@ -15,9 +15,9 @@
     </div>
     <div class="form-group">
         <label for="" class="col-md-2 control-label"><span class="text-danger">*</span>营业地区：</label>
-        <div class="col-md-10 customer_region">
-            <{input type=region name='company[area]' value=$extra.company.area}>
-            <span class="msgTip" data-message="error"></span>
+        <div class="col-md-5 customer_region form-item">
+            <{input type="region" name="company[area]" required="true" callback="region_union_require"}>
+            <!-- <span class="msgTip" data-message="error"></span> -->
         </div>
     </div>
     <div class="form-group">
@@ -74,15 +74,6 @@
         <div class="col-md-5">
             <{input type="imageupload" tag="图片上传" name="organization_licence[attach]" value=$extra.company_extra.organization_licence.attach required='false' accept="jpg|png|gif" size="2m" required="true"}>
             <span class="msgTip" data-message="required">上传失败</span>
-            <!-- <div class="filebox">
-                <input type="hidden" name="organization_licence[content_id]" value="<{$extra.company_extra.organization_licence.content_id}>" />
-                <input type="hidden" name="organization_licence[attach]" value="<{$extra.company_extra.organization_licence.attach}>" />
-            
-                <input type="file" data-url="<{link app=image ctl=site_upload act=index}>" accept="image/*" class="file_input" id="boss_card_photo" />
-                <div class="showImg">
-                    <img src="<{if $extra.company_extra.organization_licence.attach eq ''}>./../../themes/pc/default/statics/images/file_add.jpg<{else}><{$extra.company_extra.organization_licence.attach|storager:'xs'}><{/if}>">
-                </div>
-            </div> -->
         </div>
     </div>
     <div class="form-group">
@@ -90,15 +81,6 @@
         <div class="col-md-5">
             <{input type="imageupload" tag="图片上传" name="tax_licence[attach]" value=$extra.company_extra.tax_licence.attach  accept="jpg|png|gif" size="2m" required="true"}>
             <span class="msgTip" data-message="required">上传失败</span>
-            <!-- <div class="filebox">
-                <input type="hidden" name="tax_licence[content_id]" value="<{$extra.company_extra.tax_licence.content_id}>" />
-                <input type="hidden" name="tax_licence[attach]" value="<{$extra.company_extra.tax_licence.attach}>" />
-            
-                <input type="file" data-url="<{link app=image ctl=site_upload act=index}>" accept="image/*" class="file_input" id="boss_card_photo" />
-                <div class="showImg">
-                    <img src="<{if $extra.company_extra.tax_licence.attach eq ''}>./../../themes/pc/default/statics/images/file_add.jpg<{else}><{$extra.company_extra.tax_licence.attach|storager:'xs'}><{/if}>">
-                </div>
-            </div> -->
         </div>
     </div>
     <div class="form-group">
@@ -106,15 +88,6 @@
         <div class="col-md-5">
             <{input type="imageupload" tag="图片上传" name="food_flow_licence[attach]" value=$extra.company_extra.food_flow_licence.attach accept="jpg|png|gif" size="2m" required="true"}>
             <span class="msgTip" data-message="required">上传失败</span>
-            <!-- <div class="filebox">
-                <input type="hidden" name="food_flow_licence[content_id]" value="<{$extra.company_extra.food_flow_licence.content_id}>" />
-                <input type="hidden" name="food_flow_licence[attach]" value="<{$extra.company_extra.food_flow_licence.attach}>" />
-            
-                <input type="file" data-url="<{link app=image ctl=site_upload act=index}>" accept="image/*" class="file_input" id="boss_card_photo" />
-                <div class="showImg">
-                    <img src="<{if $extra.company_extra.food_flow_licence.attach eq ''}>./../../themes/pc/default/statics/images/file_add.jpg<{else}><{$extra.company_extra.food_flow_licence.attach|storager:'xs'}><{/if}>">
-                </div>
-            </div> -->
         </div>
     </div>
     <h2>联系人信息</h2>
