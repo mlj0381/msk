@@ -357,10 +357,9 @@ $.VMC.validator = function(form){
 					case 'equalto':
 					case 'accept' :
 					case 'fun' :
-						value = value;
+						//value = value;
 						break;  
-					default :
-						//console.log(attr);
+					default :						
 						value = true;
 						break;
 				}
@@ -488,6 +487,30 @@ $.VMC.uploader = function() {
 		$(box.handle).fileupload(settings);
 	});
 };
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+$.VMC.format = function( source, params ) {
+	if ( arguments.length === 1 ) {
+		return function() {
+			var args = $.makeArray( arguments );
+			args.unshift( source );
+			return $.VMC.format.apply( this, args );
+		};
+	}
+	if ( arguments.length > 2 && params.constructor !== Array  ) {
+		params = $.makeArray( arguments ).slice( 1 );
+	}
+	if ( params.constructor !== Array ) {
+		params = [ params ];
+	}
+	$.each( params, function( i, n ) {
+		source = source.replace( new RegExp( "\\{" + i + "\\}", "g" ), function() {
+			return n;
+		});
+	});
+	return source;
+};
+//Example : $.VMC.format("<label type='{0}'>{1}</label>", 'A', 'B')
 //------------------------------------------------------------------
 //$("input[format='region'][required]").region();
 //------------------------------------------------------------------
