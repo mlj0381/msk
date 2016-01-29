@@ -54,11 +54,11 @@
 <textarea class="hide last-add">
     <div class="form-group last-option">
         <label class="col-xs-2 control-label">
-            <span>{label}</span>
+            <span>{0}</span>
         </label>
         <div class="col-xs-5">
-            <select class=" form-control" required="true" name="{name}" type="select" >
-                {option}
+            <select class=" form-control" required="true" name="{1}" type="select" >
+                {2}
             </select>
         </div>
     </div>
@@ -69,16 +69,28 @@
 
     var callBack = function(cat_id) {
         var url = "<{link app=seller ctl=site_goods act=selfParams}>";
+        if(!cat_id) return false;
         $.post(url, {cat_id : cat_id}, function(re){
+            $('#param div.last-option').remove();
+            var length = $('#param select').size();
+            $('#param .form-body input[name="goods[type_id]"]').val('0');
             if(!re.data.son) return false;
-            var parent = $('#param');
-            for()
-            replaceOption('');
-           // parent.append($(option));
+            var tpl = $('.last-add').val();
+            var selectStr = '';
+            for(select in re.data.son.props){
+                var optionStr = '';
+                for(option in re.data.son.props[select].props_value){
+                    optionStr += '<option value="'+re.data.son.props[select].props_value[option].props_value_id+'">'
+                    +re.data.son.props[select].props_value[option].name+'</option>';
+                }
+                selectStr += $.VMC.format(tpl, re.data.son.props[select].name, 'goods[props][p_' + ++length + '][value]', optionStr);
+            }
+            $('#param .form-body input[name="goods[type_id]"]').val(re.data.son.type_id);
+            $('#param .form-body').append($(selectStr));
         });
     }
     var replaceOption = function(obj){
-        var parent = $('.last-add').val();
+
         parent.replace(/\\?\{([^{}]+)\}/g, function(match, name){
             alert(name);
         });
