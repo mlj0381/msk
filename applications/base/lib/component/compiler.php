@@ -158,7 +158,7 @@ class base_component_compiler
                 return $this->right_delimiter;
             case 'dump':
                 $args = $this->_parse_arguments($arguments, false);
-                return '<?php vmc::'.'dump('.$args['var'].'); ?>';
+                return '<?php var_dump('.$args['var'].'); ?>';
             case 'link':
                 $_args = $this->_parse_arguments($arguments);
                 if (!isset($_args['app'])) {
