@@ -51,7 +51,19 @@
     </div>
     <hr>
 </div>
+<textarea class="hide last-add">
+    <div class="form-group last-option">
+        <label class="col-xs-2 control-label">
+            <span>{label}</span>
+        </label>
+        <div class="col-xs-5">
+            <select class=" form-control" required="true" name="{name}" type="select" >
+                {option}
+            </select>
+        </div>
+    </div>
 
+</textarea>
 
 <script>
 
@@ -60,13 +72,17 @@
         $.post(url, {cat_id : cat_id}, function(re){
             if(!re.data.son) return false;
             var parent = $('#param');
-            var option = '';
-            for(prop in re.data.son.props ){
-                option += '<option value="'+re.data.son.props[prop].props_id+'">'+re.data.son.props[prop].name+'</option>';
-            }
-            parent.append($(option));
+            for()
+            replaceOption('');
+           // parent.append($(option));
         });
     }
+    var replaceOption = function(obj){
+        var parent = $('.last-add').val();
+        parent.replace(/\\?\{([^{}]+)\}/g, function(match, name){
+            alert(name);
+        });
+    };
 
 
 

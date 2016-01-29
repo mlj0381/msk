@@ -281,7 +281,6 @@ class seller_ctl_site_goods extends seller_frontpage
                 $this->splash('error', $redirect_url, '保存失败');
             }
         }
-
         $db->commit();
         $this->splash('success', $redirect_url, '商品添加成功');
     }
