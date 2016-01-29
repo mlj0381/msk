@@ -1,28 +1,38 @@
-<div class="input-group  region" id="<{$params.id}>">
-<input name="<{$params.name}>" data-v="<{$params.value}>" package="<{$params.package}>"  type="hidden" value="<{$params.value}>" />
-<{foreach from=$area_depth item=item}>
+<div class="input-group  region" id="<{$params.id}>" >
+<input name="<{$params.name}>" data-v="<{$params.value}>" <{if isset($params.required)}>required="true" format="<{$params.format}>"<{/if}> package="<{$params.package}>"  type="hidden" value="<{$params.value}>" />
+<{foreach from=$area_depth item=item key=key}>
 <{if $item === 0}>
 <select data-level-index="<{$item}>" class="form-control input-xsmall"><option value="_NULL_">请选择</option></select>
 <{else}>
-<select data-level-index="<{$item}>" class="form-control input-xsmall" style="visibility:hidden"></select>
+<select data-level-index="<{$item}>"  class="form-control input-xsmall" style="visibility:hidden"></select>
 <{/if}>
 <{/foreach}>
 </div>
-
 <script>
 
-!function(){
+// 地区联动验证 返回 callback
+function region_union_require(e){
+    var obj = $(e[0]).parents('.input-group');
+    var label = $(obj).find('label');
+    if(label.length > 0)
+    {
+        label.removeClass('error').addClass('right').html("&nbsp;");	
+    }else{
+        var name = $(e[0]).parent().find("input[type=hidden]").attr("name");
+        $(obj).parent().append($('<label id="' + name + '-error" for="' + name + '" class="right"></label>').html("&nbsp;"));
+    }
+}
 
-
+!function(){    
     var region_js_path ='<{$env.statics_host_url}>/javascripts/';
     var region_data_path ='<{$env.base_url}>/data/misc/';
     var callback = '';
     <{if $params.callback}>
         callback = "<{$params.callback}>";
     <{/if}>
-
     var _region_init = function(region_panel_id,region_data,callback){
         region_sel.init(region_panel_id,region_data, callback);//REGION_DATA FROM SCRIPT
+
     }
     function region_init(){
         if( typeof(region_sel)!='undefined'){
@@ -49,6 +59,4 @@
         region_init();
     }
 }();
-
-
 </script>

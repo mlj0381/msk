@@ -2,9 +2,9 @@
     .tip{display:none}
     label.valid{background:#FF0}
 </style>
-
 <form id="myform" action="#" method="post" class="form" data-module="validator">
 <div class="form-body form-horizontal">
+
     <div class="form-group">
         <label class="col-sm-2 control-label"><span class="text-danger">*</span>用户名：</label>
         <div class="col-sm-4">
@@ -35,9 +35,9 @@
 
     <div class="form-group">
         <label class="col-sm-2 control-label"><span class="text-danger">*</span>性别：</label>
-        <div class="col-sm-8">
+        <div class="col-sm-8 form-item" >           
             <input type="radio" name="sex" class="" value="1" required="true" /> 男 
-            <input type="radio" name="sex" class="" value="0" /> 女
+            <input type="radio" name="sex" class="" value="0" required="true" /> 女            
             <span class="tip" data-message="required">性别为必选</span>       
         </div>
     </div>
@@ -98,14 +98,8 @@
 
     <div class="form-group">
         <label class="col-sm-2 control-label"><span class="text-danger">*</span>地区：</label>
-        <div class="col-sm-8">
-            <select name="address" class="required" required="true">
-            <option value="">请选择</option>
-            <option value="1">长沙市</option>
-            <option value="2">石河子市</option>
-            <option value="3">北京市</option>
-            <option value="4">东莞市</option>
-            </select>            
+        <div class="col-sm-8 form-item">
+             <{input type="region" name="address" id="address" required=2 format="region" callback="region_union_require"}>
         </div>
     </div>
 
@@ -141,24 +135,38 @@
         </div>
     </div>
 
-    
-
-    <!--
+   
     <div class="form-group">
         <label class="col-sm-2 control-label"><span class="text-danger">*</span>服务器IP：</label>
         <div class="col-sm-8">
             <input type="text" name="ip" class="form-control" required="false" format="ip" />            
         </div>
     </div>
-
+     
     <div class="form-group">
         <label class="col-sm-2 control-label"><span class="text-danger">*</span>同意：</label>
         <div class="col-sm-8">
-            <input type="checkbox" name="agree" class="" required="true" />
+            <input type="checkbox" name="agree" class="" required="true" value="1" /> 
+            <input type="checkbox" name="agree" class="" required="true" value="3" />
             我已阅读并接受用户协议
         </div>
+    </div>  
+
+    <div class="form-group">
+        <label class="col-sm-2 control-label"><span class="text-danger">*</span>服务器IP：</label>
+        <div class="col-sm-8">
+            <input type="text" name="ip" class="form-control" required="false" format="ip" />            
+        </div>
     </div>
-    -->
+    
+    <div class="form-group">
+        <label class="col-sm-2 control-label"><span class="text-danger">*</span>服务器IP：</label>
+        <div class="col-sm-8">
+            <input type="text" name="start" class="form-control" required="true" format="date" compare="lb" /> 至  
+            <input type="text" name="end" class="form-control" required="true" format="date" compare="ub" />   
+        </div>
+    </div>
+
     <div class="form-group">
         <div class="col-sm-offset-2 col-sm-4">
             <button type="submit" data-loading-text="正在提交..." class="btn btn-danger">立即注册</button>
@@ -167,3 +175,6 @@
 </div>
 </form>
 </div>
+<script>
+
+</script>

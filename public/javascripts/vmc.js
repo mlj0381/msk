@@ -244,7 +244,7 @@ $.validator.messages = {
 			}
 		}
 		return true;
-	},
+	}	
 });
 //------------------------------------------------------------------
 $.VMC = {
@@ -294,17 +294,19 @@ $.VMC.validator = function(form){
 				this.element( element );
 			}
 		},
-		errorPlacement : function(error, element) {
+		errorPlacement : function(error, element){			
+			element.parents('.form-group').find('label.error,label.right').remove();
 			if(element.parents('.form-item').length >0)
 			{
 				error.appendTo ( element.parents('.form-item'));
 				return ;
-			}
+			}			
 			if(element.is(":radio") || element.is(":checkbox") || element.is("input[name=captcha]"))
 			{
 				error.appendTo ( element.parent() );
 				return ;
 			}
+			
 			error.insertAfter(element);
 		}
 	};
@@ -319,7 +321,7 @@ $.VMC.validator = function(form){
 				var attr = attrs[i].name;
 				var value = attrs[i].value;
 				if(typeof $.validator.methods[attr] != 'function' && attr != 'format') continue;
-				if(attr == 'required' && value == 'false') continue ;
+				// if(attr == 'required' && value == 'false') continue ;
 				if(attr == 'format' && typeof $.validator.methods[value] == 'function')
 				{
 					attr = value;
@@ -344,14 +346,20 @@ $.VMC.validator = function(form){
 						var rang = value.split(",");
 						if(rang.length != 2) break;
 						break;
+					case 'required' : 
+						if(value != 'true')
+							value = false;
+						else
+							value = true;
+						break;
+					case 'accept' :
 					case 'equalTo' :
 					case 'equalto':
 					case 'accept' :
 					case 'fun' :
-						value = value;
+						//value = value;
 						break;  
-					default :
-						//console.log(attr);
+					default :						
 						value = true;
 						break;
 				}
@@ -440,13 +448,13 @@ $.VMC.uploader = function() {
 				var box = $(this).parents('[data-module="uploader"]');
 				var thumb = $(box).find('.thumb');
 				var show = $(box).find('.thumb img');
+				$(box).find(".uploadError").remove();
 				$(thumb).append('<span class="loading icon-spinner icon-spin"></span>');
 				$(show).hide();
 				data.submit();
 			},
 			done : function(e, data){
-				var box = $(this).parents('[data-module="uploader"]');
-				console.log(box);
+				var box = $(this).parents('[data-module="uploader"]');				
 				var thumb = $(box).find('.thumb');
 				var show = $(box).find('.thumb img');
 				var re = $.parseJSON(data.result);
@@ -462,6 +470,7 @@ $.VMC.uploader = function() {
 					$(box).find('input[type="hidden"]').val(re.image_id);
 					$(show).show();				
 					message = $.validator.format('<label id="{0}-error" class="right" for="{1}">&nbsp;</label>', [labelName, labelName]);
+					
 				}else if($('.uploadError').length < 1)
 				{
 					$(thumb).append(ErrorTip);
@@ -479,4 +488,30 @@ $.VMC.uploader = function() {
 	});
 };
 //------------------------------------------------------------------
-$.VMC.init();}))
+//------------------------------------------------------------------
+$.VMC.format = function( source, params ) {
+	if ( arguments.length === 1 ) {
+		return function() {
+			var args = $.makeArray( arguments );
+			args.unshift( source );
+			return $.VMC.format.apply( this, args );
+		};
+	}
+	if ( arguments.length > 2 && params.constructor !== Array  ) {
+		params = $.makeArray( arguments ).slice( 1 );
+	}
+	if ( params.constructor !== Array ) {
+		params = [ params ];
+	}
+	$.each( params, function( i, n ) {
+		source = source.replace( new RegExp( "\\{" + i + "\\}", "g" ), function() {
+			return n;
+		});
+	});
+	return source;
+};
+//Example : $.VMC.format("<label type='{0}'>{1}</label>", 'A', 'B')
+//------------------------------------------------------------------
+//$("input[format='region'][required]").region();
+//------------------------------------------------------------------
+$.VMC.init();}));
