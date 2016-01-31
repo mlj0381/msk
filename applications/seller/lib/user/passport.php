@@ -623,7 +623,7 @@ class seller_user_passport
                 return false;
             }
         }
-        //联第人信息
+        //联系人信息
 
         if (isset($params['contact']) && !empty($params['contact'])) {
             $params['contact']['uid'] = $seller_id;

@@ -35,7 +35,7 @@ class seller_ctl_site_brand extends seller_frontpage {
             $this->_post($_POST);
         }
         if (is_numeric($brand_id)) {
-            $this->pagedata['brand'] = app::get('b2c')->model('brand')->getRow('*', array('id' => $brand_id, 'seller_id' => $this->seller['seller_id']));
+            $this->pagedata['brand'] = app::get('b2c')->model('brand')->getRow('*', array('brand_id' => $brand_id, 'seller_id' => $this->seller['seller_id']));
         }
         $this->output();
     }
