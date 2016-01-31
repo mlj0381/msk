@@ -142,6 +142,18 @@ class b2c_goods_search
         $goods_list = $this->mGoods->getList($goods_cols, $filter, $params['page']['size'] * ($params['page']['index'] - 1), $params['page']['size'], $params['orderby']);
         $obj_goods_stage = vmc::singleton('b2c_goods_stage');
         //set_member
+
+        $mdl_store = app::get('store')->model('store');
+        $mdl_goods_mark = app::get('b2c')->model('goods_mark');
+        foreach($goods_list as &$value){
+            //店铺信息
+            $value['store_info'] = $mdl_store->getRow('store_name, store_id', array('store_id' => $value['store_id']));
+            //商品好评数
+            //$value['count_mark'] = $mdl_goods_mark->count(array('goods_id' => $value['goods_id']));
+            $value['count_mark'] = $mdl_goods_mark->getRow(array('goods_id' => $value['goods_id']));
+        }
+        $jg = $mdl_goods_mark->getRow('count(*)',array('goods_id' => 41));
+        //var_dump($jg);
         if ($this->app->member_id = vmc::singleton('b2c_user_object')->get_member_id()) {
             $obj_goods_stage->set_member($this->app->member_id);
         }

@@ -335,7 +335,7 @@ class b2c_cart_object_goods implements b2c_interface_cart_object {
             $products[$key]['brand_id'] = $goods['brand_id'];
             $products[$key]['type_id'] = $goods['type_id'];
             //价格扩展
-            
+
             //计算价盘价格
             $product['price'] = $parice[$product['product_id']] > $product['price_interval'] ?
                     $product['price_up'] : $product['price_dn'];

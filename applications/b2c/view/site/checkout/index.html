@@ -63,7 +63,7 @@
                 <ul class="list-group">
                     <{foreach from=$paymentapps key=k item=papp}>
                     <li  class="list-group-item <{if $papp.selected}>active<{/if}> clearfix">
-                        <input type="radio" <{if $papp.app_id eq 'alipay'}> checked <{else}> disabled<{/if}>
+                        <input type="radio" <{if $papp.app_id eq 'offline'}> checked <{else}> disabled<{/if}>
                         name="payapp_id" value="<{$papp.app_id}>">
                                <span class="payapp-name"><{$papp.display_name|default:$papp.name}></span>
                         <{if $papp.description}>
@@ -356,7 +356,7 @@
                     <div class="form-group">
                         <label for="maddr_addr" class="col-sm-2 control-label"><em class="text-danger">*</em>距离门店最近停车距离</label>
                         <div class="col-sm-5">
-                            <input type="text"  name="maddr[addn][stop]"  class="form-control" id="maddr_addr">
+                            <input type="text"  value="<{$maddr.cart_stop_distance}>" name="maddr[cart_stop_distance]"  class="form-control" id="maddr_addr">
                         </div>
                     </div>
                     <hr>
@@ -387,7 +387,7 @@
                     <div class="form-group">
                         <label for="maddr_tel" class="col-sm-2 control-label">单次配送规模</label>
                         <div class="col-sm-5">
-                            <input type="text" name="maddr[addn][delivery]"  class="form-control input-sm" id="maddr_tel" >
+                            <input type="text" value="<{$maddr.delivery_scale}>" name="maddr[delivery_scale]" class="form-control input-sm" id="maddr_tel" >
                         </div>
                     </div>
                 </div>

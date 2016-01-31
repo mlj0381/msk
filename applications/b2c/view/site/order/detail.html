@@ -154,7 +154,31 @@
                                     <div class="col-xs-2 center"><{$item.buy_price|cur}></div>
                                     <div class="col-xs-2 center"><{$item.nums}></div>
                                     <div class="col-xs-1 center">0.00</div>
-                                    <div class="col-xs-2 center"><div><{$order.pay_status|order_pay_status}></div><{$order.ship_status|order_ship_status}></div>
+                                    <div class="col-xs-2 center">
+                                        <{if $order.pay_status eq '0' && $order.status eq 'active' && $order.is_cod eq 'N' &&$order.status eq 'active'}>
+                                        待付款
+                                        <{/if}>
+                                        <{if ($order.pay_status eq '1' || $order.is_cod eq 'Y') &&$order.ship_status eq '0' &&$order.status eq 'active'}>
+                                        待发货
+                                        <{/if}>
+                                        <{if ($order.pay_status eq '1' || $order.is_cod eq 'Y') &&$order.ship_status eq '1' && $order.confirm eq 'N' &&$order.status eq 'active'}>
+                                        待收货
+                                        <{/if}>
+
+                                        <{if ($order.pay_status eq '1' || $order.is_cod eq 'Y') && $order.ship_status eq '1' && $order.confirm eq 'Y' &&
+                                        $order.comment_type eq '0' &&$order.status eq 'active'}>
+                                        待评价<br />
+                                        <{/if}>
+
+                                        <{if $order.pay_status eq '1' &&$order.ship_status eq '1' && $order.confirm eq 'Y' && $order.comment_type neq '0'}>
+                                        交易成功
+                                        <{/if}>
+
+                                        <{if $order.status eq 'dead'}>
+                                        交易关闭
+                                        <{/if}>
+
+                                    </div>
                               </div>
                             </div>
                         </td>
