@@ -45,14 +45,12 @@ class seller_user_passport
         }
 
         //获取到注册时账号类型
-        // $login_type = $this->get_login_account_type($login_name);
-        $login_type = 'mobile'; // 只允许手机登录、注册
-
+         $login_type = $this->get_login_account_type($login_name);
+        //$login_type = 'mobile'; // 只允许手机登录、注册
         switch ($login_type) {
             case 'local':
                 if (strlen(trim($login_name)) < 4) {
                     $msg = $this->app->_('登录账号最少4个字符');
-
                     return false;
                 } elseif (strlen($login_name) > 100) {
                     $msg = $this->app->_('登录账号过长，请换一个重试');

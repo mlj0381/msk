@@ -295,8 +295,6 @@ class seller_ctl_site_passport extends seller_frontpage
     //检查验证码
     public function vcode_verify(){
         if(!$_POST) $this->splash('error', '', '请填写验证码');
-        $params = func_get_args();
-        print_r($params);
         extract($_POST);
         if (!vmc::singleton('seller_user_vcode')->verify($smscode, $pam_account['mobile'], 'signup')) {
             $this->splash('error', '', '手机短信验证码不正确');
