@@ -41,13 +41,8 @@
 			照片：
 		</label>
 		<div class="col-xs-4">
-			<div class="filebox">
-	            <input type="hidden" value="<{$extra.sale_manager.attach}>" name="sale_manager[attach]"/>
-	            <input type="file" data-url="<{link app=image ctl=site_upload act=index}>" accept="image/*" class="file_input" />
-	            <div class="showImg">
-	                 <img src="<{if $extra.sale_manager.attach eq ''}><{$base_url}>/themes/pc/default/statics/images/file_add.jpg<{else}><{$extra.sale_manager.attach|storager:'xs'}><{/if}>">    
-	            </div>
-	        </div>
+	        <{input type="imageupload" tag="图片上传" name="sale_manager[attach]" value=$extra.sale_manager.attach  accept="jpg|png|gif"}>   
+            <span class="msgTip" data-message="error">不能为空</span>
 		</div>
 	</div>
 </div>

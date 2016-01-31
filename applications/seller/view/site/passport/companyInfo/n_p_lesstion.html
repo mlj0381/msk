@@ -17,8 +17,8 @@
 		</label>
 		<div class="col-xs-4">
 			<div class="form-item">
-				<input type="text" value="<{$extra.n_p_lesstion.value.validity_start}>" name="n_p_lesstion[value][validity_start]" class="form-control" placeholder="2010-10-20" style="width:175px; display: inline-block;"> 至 
-				<input type="text" value="<{$extra.n_p_lesstion.value.validity_end}>" name="n_p_lesstion[value][validity_end]" class="form-control" placeholder="2010-10-20" style="width:175px; display: inline-block;" required="true" format="date">
+				<input type="text" value="<{$extra.n_p_lesstion.value.validity_start}>" name="n_p_lesstion[value][validity_start]" class="form-control" placeholder="2010-10-20" style="width:46%; display: inline-block;"> 至 
+				<input type="text" value="<{$extra.n_p_lesstion.value.validity_end}>" name="n_p_lesstion[value][validity_end]" class="form-control" placeholder="2010-10-20" style="width:46%; display: inline-block;" required="true" format="date">
 			</div>
 			<span class="msgTip" data-message="format">请输入有效的日期格式</span>
 		</div>
@@ -29,13 +29,8 @@
 			<span class="text-danger">*</span>食品生产许可证副本：
 		</label>
 		<div class="col-xs-4">
-			<div class="filebox">
-	            <input type="hidden" value="<{$extra.n_p_lesstion.attach}>" name="n_p_lesstion[attach]"/>
-	            <input type="file" data-url="<{link app=image ctl=site_upload act=index}>" accept="image/*" class="file_input" />
-	            <div class="showImg">
-	                 <img src="<{if $extra.n_p_lesstion.attach eq ''}><{$base_url}>/themes/pc/default/statics/images/file_add.jpg<{else}><{$extra.n_p_lesstion.attach|storager:'xs'}><{/if}>">    
-	            </div>
-	        </div>
+	        <{input type="imageupload" tag="图片上传" name="n_p_lesstion[attach]" value=$extra.n_p_lesstion.attach required='true' accept="jpg|png|gif"}>   
+            <span class="msgTip" data-message="error">不能为空</span>
 		</div>
 	</div>
 </div>

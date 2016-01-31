@@ -24,13 +24,9 @@
 			<span class="text-danger">*</span>税务登记人电子版:
 		</label>
 		<div class="col-xs-4">
-			<div class="filebox">
-	            <input type="hidden" value="<{$extra.tax_licence.attach}>" name="tax_licence[attach]"/>
-	            <input type="file" data-url="<{link app=image ctl=site_upload act=index}>" accept="image/*" class="file_input" />
-	            <div class="showImg">
-	                 <img src="<{if $extra.tax_licence.attach eq ''}><{$base_url}>/themes/pc/default/statics/images/file_add.jpg<{else}><{$extra.tax_licence.attach|storager:'xs'}><{/if}>">    
-	            </div>
-	        </div>
+	        <{input type="imageupload" tag="图片上传" name="tax_licence[attach]" value=$extra.tax_licence.attach required='true' accept="jpg|png|gif"}>   
+            <span class="msgTip" data-message="error">不能为空</span>
 		</div>
+
 	</div>
 </div>

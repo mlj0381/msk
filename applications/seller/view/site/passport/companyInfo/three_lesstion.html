@@ -83,7 +83,7 @@
         </label>
         <div class="col-xs-4">
             <input type="text" name="company[registered_capital]" value='<{$extra.company.registered_capital}>' class="form-control" required="true" format="number">
-            <span class="msgTip" data-message="error">sss</span>
+            <span class="msgTip" data-message="error"></span>
         </div>
     </div>
     <div class="form-group">
@@ -101,8 +101,8 @@
         </label>
         <div class="col-xs-4">
             <div class="form-item">
-                <input type="text" name="company[business_scope][begin]" value='<{$extra.company.business_scope.begin}>' class="form-control" placeholder="2010-10-20" style="width:175px; display: inline-block;"> 至 
-                <input type="text" placeholder="2010-10-20" name="company[business_scope][end]" value='<{$extra.company.business_scope.end}>' class="form-control"  style="width:175px; display: inline-block;" required="true">
+                <input type="text" name="company[business_scope][begin]" value='<{$extra.company.business_scope.begin}>' class="form-control" placeholder="2010-10-20" style="width:46%; display: inline-block;"> 至 
+                <input type="text" placeholder="2010-10-20" name="company[business_scope][end]" value='<{$extra.company.business_scope.end}>' class="form-control"  style="width:46%; display: inline-block;" required="true">
             </div>
             <span class="msgTip" data-message="error"></span>
         </div>
@@ -121,13 +121,8 @@
             <span class="text-danger">*</span>营业执照电子版：
         </label>
         <div class="col-xs-4">
-            <div class="filebox">
-                <input type="hidden" value="<{$extra.three_lesstion.attach}>" name="three_lesstion[attach]"/>
-                <input type="file" data-url="<{link app=image ctl=site_upload act=index}>" accept="image/*" class="file_input" />
-                <div class="showImg">
-                    <img src="<{if $extra.three_lesstion.attach eq ''}><{$base_url}>/themes/pc/default/statics/images/file_add.jpg<{else}><{$extra.three_lesstion.attach|storager:'xs'}><{/if}>">    
-                </div>
-            </div>
+            <{input type="imageupload" tag="图片上传" name="three_lesstion[attach]" value=$extra.three_lesstion.attach required='true' accept="jpg|png|gif"}>   
+            <span class="msgTip" data-message="error">不能为空</span>
         </div>
     </div>
 </div>

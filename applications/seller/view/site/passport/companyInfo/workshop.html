@@ -29,16 +29,11 @@
 	</div>
 	<div class="form-group">
 		<label class="col-xs-2 control-label">
-			<span class="text-danger">*</span>营业执照电子版：
+			<span class="text-danger">*</span>上传车间照片：
 		</label>
 		<div class="col-xs-4">
-			<div class="filebox">
-	            <input type="hidden" value="<{$extra.workshop.attach}>" name="workshop[attach]"/>
-	            <input type="file" data-url="<{link app=image ctl=site_upload act=index}>" accept="image/*" class="file_input" />
-	            <div class="showImg">
-	                 <img src="<{if $extra.workshop.attach eq ''}><{$base_url}>/themes/pc/default/statics/images/file_add.jpg<{else}><{$extra.workshop.attach|storager:'xs'}><{/if}>">    
-	            </div>
-	        </div>
+	        <{input type="imageupload" tag="图片上传" name="workshop[attach]" value=$extra.workshop.attach required='true' accept="jpg|png|gif"}>   
+            <span class="msgTip" data-message="error">不能为空</span>
 		</div>
 	</div>
 </div>
