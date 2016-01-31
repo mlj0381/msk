@@ -30,7 +30,7 @@
         <menu app='b2c' controller='site_member' action='receiver' display='true' order="60">收货地址</menu>
         <!-- <menu app='b2c' controller='site_comment' action='show_list' display='true' order="60">增票资质</menu> -->
         <menu app='site' controller='index' action='build' display='true' order="60">增票资质</menu>
-        <menu app='b2c' controller='site_comment' action='show_list' display='true' order="60">我的会员卡</menu>
+        <menu app='site' controller='index' action='build' display='true' order="60">我的会员卡</menu>
     </menugroup>
 
     <menugroup name="message" label="消息中心">
