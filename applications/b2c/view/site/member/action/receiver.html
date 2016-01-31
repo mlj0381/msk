@@ -77,16 +77,14 @@
       <div class="form-group">
           <label  class="col-xs-2 control-label">习惯正常收货时间段<span class="text-danger">*</span></label>
           <div class="col-xs-7 time_period">
-              <ul class="list-group">
-                  <li class="list-group-item clearfix">
-                      <{foreach from=$receiving key=key item=item}>
+              <ul class="receiverTime_list">
+                  <{foreach from=$receiving key=key item=item}>
+                  <li class="list_item" data-id="<{$key}>">
                       <input type="hidden" value="<{$item}>" disabled name="maddr[habit_normal_time][]"/>
-                      <span class="timespan" data-id="<{$key}>"><{$item}></span>
-                      <{/foreach}>
+                      <{$item}>
                   </li>
+                  <{/foreach}>
                   </ul>
-            <!--<input type="text" class="form-control" placeholder="例如：10:00"> 至 -->
-            <!--<input type="text" class="form-control" placeholder="例如：18:30">-->
           </div>
       </div>
       <div class="form-group">
@@ -171,3 +169,12 @@
   </div>
   <{/switch}>
 </div>
+
+
+<script type="text/javascript">
+  $(function(){
+    $('.receiverTime_list .list_item').bind('click', function(){
+      $(this).toggleClass('active');
+    })
+  })
+</script>
