@@ -49,15 +49,14 @@ class seller_user_passport
         //$login_type = 'mobile'; // 只允许手机登录、注册
         switch ($login_type) {
             case 'local':
-                if (strlen(trim($login_name)) < 4) {
-                    $msg = $this->app->_('登录账号最少4个字符');
+                if (strlen(trim($login_name)) < 6) {
+                    $msg = $this->app->_('登录账号最少6个字符');
                     return false;
-                } elseif (strlen($login_name) > 100) {
+                } elseif (strlen($login_name) > 19) {
                     $msg = $this->app->_('登录账号过长，请换一个重试');
                 }
                 if (is_numeric($login_name)) {
-                    $msg = $this->app->_('登录账号不能全为数字');
-
+                    $msg = $this->app->_('请输入正确的手机号');
                     return false;
                 }
                 if (!preg_match('/^[^\x00-\x2d^\x2f^\x3a-\x3f]+$/i', trim($login_name))) {

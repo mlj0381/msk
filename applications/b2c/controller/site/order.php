@@ -27,7 +27,7 @@ class b2c_ctl_site_order extends b2c_frontpage
     //PC端前台会员创建订单
     public function create($fastbuy = false)
     {
-        
+
         $member_id = $this->app->member_id;
         //parent method
         //$member_info = $this->get_member_info($member_id);
