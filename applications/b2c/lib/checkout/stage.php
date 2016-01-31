@@ -55,16 +55,16 @@ class b2c_checkout_stage
         //根据地区获得送货方式
         $dlytypes = $mdl_dltype->getAvailable($area_id);
         $dlytypes = utils::array_change_key($dlytypes, 'dt_id');
-        if ($dlytype_id = $dlytype_id ? $dlytype_id : $last_checkout['dlytype_id']) {
-            if ($dlytypes[$dlytype_id]) {
-                $dlytypes[$dlytype_id]['selected'] = 'true';
-                if ($dlytypes[$dlytype_id]['has_cod'] == 'true') {
-                    $is_cod = true; //为了货到付款锁定在线支付
-                }
-            } else {
-                $dlytypes[key($dlytypes) ]['selected'] = 'true';
-            }
-        }
+//        if ($dlytype_id = $dlytype_id ? $dlytype_id : $last_checkout['dlytype_id']) {
+//            if ($dlytypes[$dlytype_id]) {
+//                $dlytypes[$dlytype_id]['selected'] = 'true';
+//                if ($dlytypes[$dlytype_id]['has_cod'] == 'true') {
+//                    $is_cod = true; //为了货到付款锁定在线支付
+//                }
+//            } else {
+//                $dlytypes[key($dlytypes) ]['selected'] = 'true';
+//            }
+//        }
         if ($is_cod) {
             $payapp_filter['app_id'] = 'cod';
         }

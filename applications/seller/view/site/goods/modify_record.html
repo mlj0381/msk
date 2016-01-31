@@ -18,7 +18,8 @@
 			<th class="col-xs-4">价格</th>
 			<th class="col-xs-2">修改时间</th>
 		</tr>
-        <{foreach from=$product_list.product item=item}>
+        <{foreach from=$product_list.products item=items}>
+        <{foreach from=$items item=item}>
 		<tr>
 			<td><{$item.bn}></td>
 			<td><{$item.spec_info}></td>
@@ -30,6 +31,7 @@
                 <{$item.createTime|cdate}>
 			</td>
 		</tr>
+        <{/foreach}>
         <{/foreach}>
 	</table>
 

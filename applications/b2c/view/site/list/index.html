@@ -181,7 +181,7 @@
                           <a href="<{link app=store ctl=site_store args0=$item.store_id}>"><{$item.store_info.store_name|cut:50:'...'}></a>
                       </div>
                       <p class="avg-mark">
-                          <span class="text-warning"><{$item.mark_star|star}></span> <small><{$item.mark_star|number_format:'1'}></small>
+                          <small><{$count_mark|default:0}></small>  <span class="text-warning">个好评</span>
                       </p>
                       <ul class="list-inline">
                           ￥<{if $item.product.promotion.sale_price && $item.product.promotion.sale_price!='null'}>

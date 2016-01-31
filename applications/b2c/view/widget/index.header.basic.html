@@ -334,11 +334,11 @@ $('.search_btn').click(function(){
 (function(){
     var searchbox = $('.searchbox span');
     $(searchbox).removeClass('active');
-    if('<{$type}>' == 'goods'){
-        $(searchbox).eq(0).addClass('active');
+    if('<{$type}>' == 'store'){
+        $(searchbox).eq(1).addClass('active');
         return ;
     }
-    $(searchbox).eq(1).addClass('active');  
+    $(searchbox).eq(0).addClass('active');
 })();
 $('.search_label span').click(function() {
     $(this).addClass('active').siblings().removeClass('active');

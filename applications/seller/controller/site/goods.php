@@ -97,7 +97,7 @@ class seller_ctl_site_goods extends seller_frontpage
     //添加商品
     public function add($goods_id)
     {
-        if(is_numeric($goods_id)){
+        if (is_numeric($goods_id)) {
             $this->pagedata['goods'] = $this->mB2cGoods->dump($goods_id, '*', 'default');
             //获取商品库存信息
             $mdl_stock = app::get('b2c')->model('stock');
@@ -114,14 +114,15 @@ class seller_ctl_site_goods extends seller_frontpage
         $this->output();
     }
 
-    public function selfParams(){
+    public function selfParams()
+    {
         //商品参数配置
 
         $cat_id = $_POST['cat_id'];
         $mdl_goods_type = app::get('b2c')->model('goods_type');
         $return = $mdl_goods_type->getRow('*', array('cat' => $cat_id));
         $return['son'] = $mdl_goods_type->get_props($return['type_id']);
-        $this->splash('success', '', $return) ;
+        $this->splash('success', '', $return);
     }
 
     //获取商品添加所需基本参数
@@ -344,7 +345,7 @@ class seller_ctl_site_goods extends seller_frontpage
             $this->pagedata['pager']['current'] = $page;
             $this->pagedata['pager']['link'] = $this->gen_url(
                     array('app' => 'seller', 'ctl' => 'site_goods', 'act' => 'price')
-                ).'?page='.$this->pagedata['pager']['token'];
+                ) . '?page=' . $this->pagedata['pager']['token'];
             $this->pagedata['_PAGE_'] = 'goods_price.html';
         }
         $this->output();
@@ -361,10 +362,11 @@ class seller_ctl_site_goods extends seller_frontpage
         $mdl_goods = app::get('b2c')->model('goods');
         $result = array();
         $result['gid'] = $mdl_goods->getRow('gid', array('goods_id', $goods_id));
-        foreach($product_list as $key => $value){
+        foreach ($product_list as $key => $value) {
             base_kvstore::instance('goods_price')->fetch("goods_price_{$this->store['store_id']}_{$value['product_id']}", $data);
-            if(!empty($data)){
-                $result['product'][] = $data;
+
+            if (!empty($data)) {
+                $result['products'][] = $data;
 
             }
         }
@@ -416,36 +418,29 @@ class seller_ctl_site_goods extends seller_frontpage
     {
         extract($_POST);
         $redirect = $this->gen_url(
-                            array('app' => 'seller',
-                                'ctl' => 'site_goods',
-                                'act' => 'price',
-                                'args0' => $product['goods_id']));
+            array('app' => 'seller',
+                'ctl' => 'site_goods',
+                'act' => 'price',
+                'args0' => $product['goods_id']));
         if (empty($_POST)) $this->splash('error', $redirect, '非法请求');
+        $mdl_product = app::get('b2c')->model('products');
+        if(!$mdl_product->save($product)){
+            $this->splash('error', $redirect, '操作失败');
+        }
         $product['createTime'] = time();
-        $result = base_kvstore::instance('goods_price')->store("goods_price_{$this->store['store_id']}_{$product['product_id']}", $product);
-        //base_kvstore::instance('goods_price')->fetch("goods_price_{$this->store['store_id']}_{$product['product_id']}", $data);
+        base_kvstore::instance('goods_price')->fetch("goods_price_{$this->store['store_id']}_{$product['product_id']}", $products);
+        if(empty($products)){
+            $products = array( 0 => $product);
+        }else{
+          array_unshift($products, $product);
+        }
+        $result = base_kvstore::instance('goods_price')->store("goods_price_{$this->store['store_id']}_{$product['product_id']}",
+            $products);
+        base_kvstore::instance('goods_price')->fetch("goods_price_{$this->store['store_id']}_{$product['product_id']}", $data);
         if ($result) {
             $this->splash('success', $redirect, '操作成功');
         }
         $this->splash('error', $redirect, '操作失败');
     }
 
-//    public function comment($order_id, $product_id, $type = 'comment', $reply = null){
-//        $this->pagedata['reply'] = $reply;
-//        $mdl_order = app::get('b2c')->model('orders');
-//        $order = $mdl_order->dump($order_id, '*', array('items' => array('*')));
-//        if ($order['ship_status'] == '0' || $order['status'] == 'dead') {
-//            $this->splash('error', '', '暂不能评价!');
-//        }
-//        $order['store_info'] = app::get('store')->model('store')->getRow('store_id, store_name', array('store_id' => $order['store_id']));
-//        $this->pagedata['order'] = $order;
-//        $this->pagedata['product_id'] = $product_id;
-//        //$this->pagedata['exits_comment'] = $exits_comment;
-//        $this->pagedata['member_avatar'] = $this->member['avatar'];
-//        $this->title = '评价#' . $order_id . ' 商品';
-//        $this->set_tmpl('comment_form');
-//        $this->pagedata['_PAGE_'] = 'site/comment/form.html';
-//        //$this->output();
-//        $this->page('site/goods/comment.html');
-//    }
 }

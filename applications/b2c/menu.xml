@@ -6,7 +6,8 @@
 	<menugroup name="index" label="全部功能">
         <menu app='b2c' controller='site_cart' action='index' display='true' order="60">我的购物车</menu>
         <menu app='b2c' controller='site_member' action='orders' display='true' order="60">已买到的商品</menu>
-		<menu app='b2c' controller='site_member' action='buy_store' display='true' order="60">购买过的店铺</menu>
+		<menu app='site' controller='index' action='build' display='true' order="60">购买过的店铺</menu>
+        <!--<menu app='b2c' controller='site_member' action='buy_store' display='true' order="60">购买过的店铺</menu>-->
 		<menu app='b2c' controller='site_member' action='favorite' display='true' order="60">我的收藏</menu>
 		<!-- <menu app='b2c' controller='site_member' action='coupon' display='false' order="60">我的优惠信息</menu> -->
         <menu app='site' controller='index' action='build' display='true' order="60">我的优惠信息</menu>
@@ -30,7 +31,7 @@
         <menu app='b2c' controller='site_member' action='receiver' display='true' order="60">收货地址</menu>
         <!-- <menu app='b2c' controller='site_comment' action='show_list' display='true' order="60">增票资质</menu> -->
         <menu app='site' controller='index' action='build' display='true' order="60">增票资质</menu>
-        <menu app='b2c' controller='site_comment' action='show_list' display='true' order="60">我的会员卡</menu>
+        <menu app='site' controller='index' action='build' display='true' order="60">我的会员卡</menu>
     </menugroup>
 
     <menugroup name="message" label="消息中心">

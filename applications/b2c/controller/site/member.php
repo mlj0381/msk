@@ -100,7 +100,7 @@ class b2c_ctl_site_member extends b2c_frontpage
         }else{
             $this->pagedata['upload_max'] = $conf_max;
         }
-        $this->output();
+        $this->output('', array('act' => 'setting'));
     }
     public function set_pam_uname($action=false){
         $user_obj = vmc::singleton('b2c_user_object');
@@ -223,7 +223,7 @@ class b2c_ctl_site_member extends b2c_frontpage
         $this->pagedata['extra']['use'] = $manage['info']['use'];
         $this->pagedata['extra']['plant'] = $manage['info']['plant'];
         $this->pagedata['extra']['member_cat'] = $manage['info']['member_cat'];
-        $this->output();
+        $this->output('', array('act' => 'setting'));
     }
 
     public function save_company(){
@@ -617,6 +617,7 @@ vmc_b2c_orders WHERE `member_id`={$this->member['member_id']} AND `status` = 'ac
         $mdl_maddr = $this->app->model('member_addrs');
         $member_id = $this->member['member_id'];
         $redirect = array('app' => 'b2c', 'ctl' => 'site_member', 'act' => 'receiver');
+        $this->pagedata['receiving'] = $this->app->getConf('receiving_time');
         switch ($action) {
             case 'set_default':
                 if (!$mdl_maddr->set_default($addr_id, $member_id)) {
@@ -643,6 +644,7 @@ vmc_b2c_orders WHERE `member_id`={$this->member['member_id']} AND `status` = 'ac
                 $this->splash('success', $redirect, '保存成功');
                 break;
             default:
+
                 $this->pagedata['list'] = $mdl_maddr->getList('*', array('member_id' => $member_id));
                 $this->output();
                 break;
@@ -712,7 +714,6 @@ vmc_b2c_orders WHERE `member_id`={$this->member['member_id']} AND `status` = 'ac
         $this->menuSetting = 'setting';
         $user_obj = vmc::singleton('b2c_user_object');
         $this->pagedata['pam_data'] = $user_obj->get_pam_data('*', $this->member['member_id']);
-        print_r($this->pagedata['pam_data']);
         $this->output();
     }
     /**
