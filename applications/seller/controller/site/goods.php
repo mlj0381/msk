@@ -25,13 +25,14 @@ class seller_ctl_site_goods extends seller_frontpage
     }
 
     //商品页
-    public function index()
+    public function index($page = 1)
     {
         // 入商品库
+        !is_numeric($page) && $page = 1;
         $search = $_POST['goods'] ? $_POST['goods'] : '';
         $mdl_goods_cat = app::get('b2c')->model('goods_cat');
         $this->pagedata['cat'] = $mdl_goods_cat->get_tree();
-        $this->pagedata['goodList'] = $this->_good_list(1, $search);
+        $this->pagedata['goodList'] = $this->_good_list(1, $search, $page);
         $this->output();
     }
 
@@ -74,11 +75,18 @@ class seller_ctl_site_goods extends seller_frontpage
             $product['product'][$v['goods_id']] = $v;
         }
         $filter['goods_id|in'] = $product['goods_id'];
-
         $filter['store_id'] = $this->store['store_id'];
         $filter['seller_id'] = $this->seller['seller_id'];
         $goodsList = $this->mB2cGoods->getList('*', $filter, (($page - 1) * $limit), $limit);
         $this->pagedata['pager']['total'] = ceil($this->mB2cGoods->count($filter) / $limit);
+        $this->pagedata['pager']['current'] = $page;
+        $this->pagedata['pager']['token'] = time();
+        $this->pagedata['pager']['link'] = $this->gen_url(array(
+                'app' => 'seller',
+                'ctl' => 'site_goods',
+                'act' => 'index',
+                'args0' => $this->pagedata['pager']['token']
+            ));
         foreach ($goodsList as $key => $value) {
             $goodsList[$key]['price_interval'] = $product['product'][$value['goods_id']]['price_interval'];
             $goodsList[$key]['price_up'] = $product['product'][$value['goods_id']]['price_up'];

@@ -74,17 +74,12 @@ class b2c_goods_search
         unset($params['page']);
         unset($params['page_size']);
         //价格区间
-        if ($params['price_min'] || $params['price_max']) {
-            $params['price'] = ($params['price_min'] ? $params['price_min'] : '0') . '~' . ($params['price_max'] ? $params['price_max'] : '99999999');
+        if($params['price']){
+            $price_search = app::get('b2c')->getConf('serach');
+            $params['price'] = $price_search['price'][$params['price']]['params'];
         }
-        unset($params['price_min']);
-        unset($params['price_max']);
         $params['marketable'] = 'true';
         $tmp_filter = $params;
-        //价格区间筛选
-        if ($tmp_filter['price']) {
-            $tmp_filter['price'] = explode('~', $tmp_filter['price']);
-        }
         $params['filter'] = $tmp_filter;
         $params['orderby'] = $orderby;
         $params['page'] = $page;
@@ -126,6 +121,8 @@ class b2c_goods_search
             return $return;
         }
         cachemgr::co_start();
+        extract($params['filter']);
+        //关键词查询
         if (!empty($params['keywords']['keywords'])) {
             $goods = $this->mKeywords->getList('goods_id', array('keyword|has' => $params['keywords']['keywords'], 'res_type' => 'goods'));
             if(empty($goods)) return array();
@@ -133,13 +130,20 @@ class b2c_goods_search
                 $filter['goods_id|in'][$key] = $value['goods_id'];
             }
         }
+        //价格查询
+        if($price){
+            $where = count($price) == 2 ? array('price_dn|between' => $price) : array('price_dn|than' => $price[0]);
+            $goods = app::get('b2c')->model('products')->getList('goods_id', $where);
+            if(empty($goods)) return  array();
+            $last = count($filter['goods_id|in']);
+            foreach ($goods as $key => $value) {
+                $filter['goods_id|in'][$last + $key] = $value['goods_id'];
+            }
+        }
         $goods_cols = '*';
-        $filter['cat_id'] = $params['filter']['cat'];
-        $filter['brand_id'] = $params['filter']['brand'];
-        $filter['store_id'] = $params['filter']['store_id'];
-        $filter['marketable'] = 'true';
-
+        $filter = compact('cat', 'brand', 'store_id', 'marketable');
         $goods_list = $this->mGoods->getList($goods_cols, $filter, $params['page']['size'] * ($params['page']['index'] - 1), $params['page']['size'], $params['orderby']);
+
         $obj_goods_stage = vmc::singleton('b2c_goods_stage');
         //set_member
 
@@ -149,11 +153,8 @@ class b2c_goods_search
             //店铺信息
             $value['store_info'] = $mdl_store->getRow('store_name, store_id', array('store_id' => $value['store_id']));
             //商品好评数
-            //$value['count_mark'] = $mdl_goods_mark->count(array('goods_id' => $value['goods_id']));
-            $value['count_mark'] = $mdl_goods_mark->getRow(array('goods_id' => $value['goods_id']));
+            $value['count_mark'] = $mdl_goods_mark->getRow('count(*) as count_mark',array('goods_id' => $value['goods_id']));
         }
-        $jg = $mdl_goods_mark->getRow('count(*)',array('goods_id' => 41));
-        //var_dump($jg);
         if ($this->app->member_id = vmc::singleton('b2c_user_object')->get_member_id()) {
             $obj_goods_stage->set_member($this->app->member_id);
         }
