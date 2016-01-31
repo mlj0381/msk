@@ -26,13 +26,8 @@
 			<span class="text-danger">*</span>授权书电子版：
 		</label>
 		<div class="col-xs-4">
-			<div class="filebox">
-	            <input type="hidden" value="<{$extra.oem_auth_lesstion.attach}>" name="oem_auth_lesstion[attach]"/>
-	            <input type="file" data-url="<{link app=image ctl=site_upload act=index}>" accept="image/*" class="file_input" />
-	            <div class="showImg">
-	                 <img src="<{if $extra.oem_auth_lesstion.attach eq ''}><{$base_url}>/themes/pc/default/statics/images/file_add.jpg<{else}><{$extra.oem_auth_lesstion.attach|storager:'xs'}><{/if}>">    
-	            </div>
-	        </div>
+	        <{input type="imageupload" tag="图片上传" name="oem_auth_lesstion[attach]" value=$extra.oem_auth_lesstion.attach required='true' accept="jpg|png|gif"}>   
+            <span class="msgTip" data-message="error">不能为空</span>
 		</div>
 	</div>
 </div>

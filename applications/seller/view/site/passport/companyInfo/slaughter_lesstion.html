@@ -26,13 +26,8 @@
 			生猪定点屠宰许可证电子版：
 		</label>
 		<div class="col-xs-4">
-			<div class="filebox">
-	            <input type="hidden" value="<{$extra.slaughter_lesstion.attach}>" name="slaughter_lesstion[attach]"/>
-	            <input type="file" data-url="<{link app=image ctl=site_upload act=index}>" accept="image/*" class="file_input" />
-	            <div class="showImg">
-	                 <img src="<{if $extra.slaughter_lesstion.attach eq ''}><{$base_url}>/themes/pc/default/statics/images/file_add.jpg<{else}><{$extra.slaughter_lesstion.attach|storager:'xs'}><{/if}>">    
-	            </div>
-	        </div>
+	        <{input type="imageupload" tag="图片上传" name="slaughter_lesstion[attach]" value=$extra.slaughter_lesstion.attach required='true' accept="jpg|png|gif"}>   
+            <span class="msgTip" data-message="error">不能为空</span>
 		</div>
 	</div>
 </div>
