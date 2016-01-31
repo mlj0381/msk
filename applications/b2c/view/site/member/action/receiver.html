@@ -79,7 +79,7 @@
           <div class="col-xs-7 time_period">
               <ul class="receiverTime_list">
                   <{foreach from=$receiving key=key item=item}>
-                  <li class="list_item" data-id="<{$key}>">
+                  <li class="list_item <{if in_array($item, $maddr.habit_normal_time)}>active<{/if}>"  data-id="<{$key}>">
                       <input type="hidden" value="<{$item}>" disabled name="maddr[habit_normal_time][]"/>
                       <{$item}>
                   </li>
@@ -172,9 +172,22 @@
 
 
 <script type="text/javascript">
-  $(function(){
-    $('.receiverTime_list .list_item').bind('click', function(){
-      $(this).toggleClass('active');
-    })
-  })
+    $(function(){
+        $('.receiverTime_list .list_item').bind('click', function(){
+            $(this).toggleClass('active');
+            active($(this));
+        });
+        var active = function(obj){
+            if(obj.hasClass('active')){
+                obj.find('input').removeAttr('disabled');
+            }else{
+                obj.find('input').prop('disabled', 'true');
+            }
+        };
+        (function(){
+            $('.receiverTime_list .list_item').each(function(idx, itm){
+                active($(itm));
+            });
+        })();
+    });
 </script>
