@@ -14,12 +14,12 @@
 $.validator.regex = {
 	'mobile'    : /^(13[0-9]|14[0-9]|15[0-9]|18[0-9]|17[0-9])\d{8}$/i,
 	'email'     : /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/,
-	'username'  : /^[a-zA-z][a-zA-Z0-9_]{5,15}$/,
+	'username'  : /^[a-zA-Z0-9_]{6,18}$/,
 	'zipcode'   : /^[0-9]{6}$/,
 	'idcard'    : /^(\d{6})()?(\d{4})(\d{2})(\d{2})(\d{3})(\w)$/,
 	'tel'       : /^(\d{3,4}-?)?\d{7,9}$/g,
 	'time'		:  /^(([01]?[0-9])|(2[0-3])):[0-5]?[0-9]$/,
-	'password'	: /^[a-zA-Z0-9_]{6,26}$/,
+	'password'	: /^[a-zA-Z0-9_]{6,20}$/,
 	'ip'        : /^(([1-9]|([1-9]\d)|(1\d\d)|(2([0-4]\d|5[0-5])))\.)(([1-9]|([1-9]\d)|(1\d\d)|(2([0-4]\d|5[0-5])))\.){2}([1-9]|([1-9]\d)|(1\d\d)|(2([0-4]\d|5[0-5])))$/
 };
 $.validator.messages = {
@@ -211,7 +211,6 @@ $.validator.messages = {
 		}
 		if(typeof param != 'string' || param == '') return false;
 		var regex = $.validator.regex;
-		console.log(param, param in regex);
 
 		if(param.indexOf("|") > 0){
 			var REs = param.split("|");
