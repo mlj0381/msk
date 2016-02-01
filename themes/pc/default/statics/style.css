@@ -195,10 +195,14 @@ ol {
 .glist-container .goods-listbox .heading_rt .pageNav nav ul {
   margin: 0;
 }
+.glist-container .goods-listbox .store_list {
+  min-height: 500px;
+}
 .glist-container .goods-listbox .store_list .store_item {
   border: 1px solid #ddd;
   padding: 10px 0;
   margin-bottom: 15px;
+  background: #fff;
 }
 .glist-container .goods-listbox .store_list .store_item .store_bar {
   height: 80px;
@@ -212,7 +216,7 @@ ol {
 }
 .glist-container .goods-listbox .store_list .store_item .store_bar .store_info {
   float: left;
-  width: 255px;
+  width: 500px;
   margin-left: 15px;
 }
 .glist-container .goods-listbox .store_list .store_item .store_bar .store_info a {
