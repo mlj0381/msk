@@ -151,7 +151,7 @@
                             <a class="btn btn-xs btn-block btn-default" <{if $order.comment_type eq '2'}>disabled  href="javascript:;"<{else}> href="<{link app=b2c ctl=site_comment act=form args0=$order.order_id args1=$item.product_id}> <{/if}>">追加评价</a>
                             <{/if}>
                             <{/if}>
-                            <{if ($order.confirm eq 'N' && $order.ship_status eq '1') || ($order.ship_status eq '0' && $order.pay_status eq '1') && $order.status eq 'active'}>
+                            <{if $order.confirm neq 'N' && $order.ship_status eq '1' || ($order.ship_status eq '0' && $order.pay_status eq '1') && $order.status eq 'active'}>
                             <a class="btn btn-xs btn-block btn-default" <{if $order.request eq ''}>href="<{link app=aftersales ctl=site_member act=newrequest args0=$order.order_id args1=$item.product_id args2=input args3=price}>"<{else}>disabled<{/if}>>申请退款</a>
                             <{/if}>
                             <{if ($order.confirm eq 'Y' && $order.ship_status eq '1') && $order.status eq 'active'}>
@@ -216,7 +216,7 @@
                            class="btn_link btn-block order-del">订单删除</a>
                         <{/if}>
 
-                              <{if $order.pay_status eq '1' &&$order.ship_status eq '1' && $order.status eq 'active' && $order.confirm eq 'N'}>
+                              <{if ($order.pay_status eq '1' || $order.is_cod eq 'Y') && $order.ship_status eq '1' && $order.status eq 'active' && $order.confirm eq 'N'}>
                               <a href="<{link app=b2c ctl=site_order act=detail args0=$order.order_id args1=logistics_tracker}>" class="btn_link btn-block">追踪物流</a>
 
                         <a href="javascript:;" data-url="<{link app=b2c ctl=site_order act=confirm args0=$order.order_id}>" class="btn_link btn-block confirm">确认收货</a>
