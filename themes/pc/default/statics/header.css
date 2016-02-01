@@ -501,10 +501,46 @@ nav.mainNav ul.nav_ul li .category-container .category .tab-pane .tab-pane-brand
   height: 200px;
   float: right;
 }
+.partnerbox {
+  width: 100%;
+  background: #fff;
+}
+.partnerbox .partner {
+  margin: 0 auto;
+  width: 1200px;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 15px;
+}
+.partnerbox .partner ul li {
+  padding: 10px 0;
+  float: left;
+  width: 171px;
+  border-right: 1px solid #ddd;
+}
+.partnerbox .partner ul li:last-child {
+  border-right: none;
+}
+.partnerbox .partner ul li span {
+  display: block;
+  height: 82px;
+  width: 100%;
+}
+.partnerbox .partner ul li span img {
+  display: block;
+  max-height: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+.partnerbox .partner ul li i {
+  display: block;
+  text-align: center;
+  margin-top: 10px;
+  font-weight: bold;
+}
 .footerbox {
   width: 100%;
-  padding: 0 0 0 0;
-  margin: 20px 0 0 0;
+  padding: 20px 0 0 0;
+  margin: 0px;
   background: #fff;
   min-width: 1200px;
 }
@@ -512,39 +548,9 @@ nav.mainNav ul.nav_ul li .category-container .category .tab-pane .tab-pane-brand
   width: 100%;
   margin: 0 auto;
 }
-.footerbox footer .partner {
-  border-bottom: 1px solid #ddd;
-  padding-bottom: 15px;
-}
-.footerbox footer .partner ul li {
-  padding: 10px 0;
-  float: left;
-  width: 171px;
-  border-right: 1px solid #ddd;
-}
-.footerbox footer .partner ul li:last-child {
-  border-right: none;
-}
-.footerbox footer .partner ul li span {
-  display: block;
-  height: 82px;
-  width: 100%;
-}
-.footerbox footer .partner ul li span img {
-  display: block;
-  max-height: 100%;
-  margin-left: auto;
-  margin-right: auto;
-}
-.footerbox footer .partner ul li i {
-  display: block;
-  text-align: center;
-  margin-top: 10px;
-  font-weight: bold;
-}
 .footerbox footer .footer_link {
   width: 1000px;
-  margin: 15px auto;
+  margin: 0px auto 15px;
 }
 .footerbox footer .footer_link dl {
   float: left;

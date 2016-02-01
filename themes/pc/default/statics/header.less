@@ -527,53 +527,61 @@ nav.mainNav {
     }
 }
 
+//页面底部合作伙伴
+.partnerbox{
+    width:100%;
+    background: #fff; 
+    .partner {
+        margin:0 auto;
+        width:1200px;
+        border-bottom:1px solid #ddd;
+        padding-bottom:15px;
+        ul {
+
+            li {
+                padding:10px 0;
+                .fl;
+                width: 171px;
+                border-right:1px solid #ddd;
+                &:last-child{
+                    border-right:none;
+                }
+                span {
+                    display: block;
+                    height: 82px;
+                    width: 100%;
+                    img {
+                        display: block;
+                        max-height: 100%;
+                        margin-left: auto;
+                        margin-right: auto;
+                    }
+                }
+                i {
+                    display: block;
+                    text-align: center;
+                    margin-top: 10px;
+                    font-weight: bold;
+                }
+            }
+        }
+    }
+
+}
+
 //页面底部样式
 .footerbox {
     width: 100%;
-    padding: 0 0 0 0;
-    margin: 20px 0 0 0;
+    padding: 20px 0 0 0;
+    margin: 0px;
     background: #fff;
-    //border-top: 1px solid #ddd;
     min-width: 1200px;
     footer {
         width: 100%;
         margin: 0 auto;
-        .partner {
-            border-bottom:1px solid #ddd;
-            padding-bottom:15px;
-            ul {
-
-                li {
-                    padding:10px 0;
-                    .fl;
-                    width: 171px;
-                    border-right:1px solid #ddd;
-                    &:last-child{
-                        border-right:none;
-                    }
-                    span {
-                        display: block;
-                        height: 82px;
-                        width: 100%;
-                        img {
-                            display: block;
-                            max-height: 100%;
-                            margin-left: auto;
-                            margin-right: auto;
-                        }
-                    }
-                    i {
-                        display: block;
-                        text-align: center;
-                        margin-top: 10px;
-                        font-weight: bold;
-                    }
-                }
-            }
-        }
         .footer_link {
             width: 1000px;
-            margin: 15px auto;
+            margin: 0px auto 15px;
             dl {
                 .fl;
                 width: 140px;
