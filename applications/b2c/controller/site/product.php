@@ -116,4 +116,21 @@ class b2c_ctl_site_product extends b2c_frontpage {
         );
     }
 
+    public function stock_confirm()
+    {
+        $args = $_POST;
+        $sku = $args['sku'];
+        if(!$sku){
+            $this->failure('缺少参数');
+        }
+        $_echo = array();
+        $sku_bn = explode(',', $sku);
+        if (count($sku_bn) > 0) {
+            $result = app::get('b2c')->model('stock')->getList('sku_bn,warehouse,quantity-freez_quantity as num', array(
+                'sku_bn' => $sku_bn,
+            ));
+            $_echo = utils::array_change_key($result, 'sku_bn');
+        }
+        $this->splash('success', '',$_echo);
+    }
 }

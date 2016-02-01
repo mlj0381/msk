@@ -519,9 +519,11 @@
                 }
             }
         });
+
         <{if $data_detail.nostore_sell != '1'}>
             //库存确认openAPI
-            var stock_confirm_api = "<{$base_url}>/openapi/stock/confirm/";
+            //var stock_confirm_api = "<{$base_url}>/openapi/stock/confirm/";
+            var stock_confirm_api = "<{link app=b2c ctl=site_product act=stock_confirm}>";
             $.post(stock_confirm_api, {sku:'<{$data_detail.product.bn}>'}, function (recv) {
                 try {
                     data = recv.data;
