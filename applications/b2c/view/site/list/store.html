@@ -13,7 +13,7 @@
                                 <a href="<{link app=store ctl=site_store act=index args0=$item.store_id}>"><{$item.store_name}></a>
                                 <p>主营品牌：
                                     <{foreach from=$item.brand item=brand}>
-                                        <{$brand.brand_name}>
+                                        <{$brand.brand_name}>,
                                     <{/foreach}>
                                 </p>
                                 <p>所在地区：<{$item.store_area|region}></p>
