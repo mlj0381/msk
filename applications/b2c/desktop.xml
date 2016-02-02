@@ -126,7 +126,7 @@
             <menu action='index' controller='admin_goods_type' display='true' order='40' permission='typegoods'>商品类型</menu>
             <menu action='add' controller='admin_goods_type' display='false' order='50' permission='typegoods'>添加类型</menu>
             <menu action='set' controller='admin_goods_type' display='false' order='50' permission='typegoods'>编辑类型</menu>
-            <menu action='index' controller='admin_goods_cat' display='false' order='30' permission='catgoods'>商品分类</menu>
+            <menu action='index' controller='admin_goods_cat' display='true' order='30' permission='catgoods'>商品分类</menu>
             <menu action='addnew' controller='admin_goods_cat' display='false' order='90' permission='catgoods'>添加分类</menu>
             <menu action='create' controller='admin_brand' display='false' order='130' permission='brandgoods'>添加品牌</menu>
             <menu action='edit' controller='admin_brand' display='false' order='130' permission='brandgoods'>编辑品牌</menu>
