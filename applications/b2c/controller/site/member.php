@@ -298,7 +298,7 @@ class b2c_ctl_site_member extends b2c_frontpage
         $mdl_order = $this->app->model('orders');
         $mdl_order_items = $this->app->model('order_items');
         $limit = 5;
-        $status_filter = $mdl_order->filter();
+        $status_filter = $mdl_order->status_filter();
 
         $this->pagedata['status'] = $status;
         $filter = $status_filter[$status];
@@ -355,62 +355,6 @@ vmc_b2c_orders WHERE `member_id`={$this->member['member_id']} AND `status` = 'ac
             'token' => $token,
         );
         $this->output();
-    }
-    //会员订单筛选条组合
-    public function filter(){
-        return array(
-            'all' => array(
-                'member_id' => $this->member['member_id'],
-            ) ,
-            's1' => array(
-                'member_id' => $this->member['member_id'],
-                'status' => 'active',
-                'pay_status' => array(
-                    '0',
-                    '3',
-                    '5',
-                ),
-            ) ,
-            's2' => array(
-                'member_id' => $this->member['member_id'],
-                'status' => 'active',
-                'pay_status' => array(
-                    '1',
-                    '2',
-                ) ,
-                'ship_status|notin' => array(
-                    '1',
-                ),
-            ) ,
-            's3' => array(
-                'member_id' => $this->member['member_id'],
-                'status' => 'active',
-                'ship_status' => array(
-                    '1',
-                    '2',
-                ),
-                'confirm' => 'N'
-            ) ,
-            's4' => array(
-                'member_id' => $this->member['member_id'],
-                'status' => 'active',
-                'confirm'=> 'Y',
-                'comment_type' => '0'
-            ),
-            's5' => array(
-                'member_id' => $this->member['member_id'],
-                'status' => 'active',
-                'confirm'=> 'Y',
-            ),
-            's6' => array(
-                'member_id' => $this->member['member_id'],
-                'status' => 'dead',
-            ),
-            's7' => array(
-                'member_id' => $this->member['member_id'],
-                'status' => 'del',
-            ),
-        );
     }
 
     //购买过的店铺

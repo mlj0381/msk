@@ -496,6 +496,7 @@
         var store_id = "<{$store_info.store_id}>";
 
         //商品促销
+        /*
         var goods_promotions_api = "<{link app=b2c ctl=site_list act=promotions}>?goods_id=<{$data_detail.goods_id}>&price=<{$data_detail.product.buy_price}>";
 
         $.getJSON(goods_promotions_api, function (recv) {
@@ -519,6 +520,7 @@
                 }
             }
         });
+        */
 
         <{if $data_detail.nostore_sell != '1'}>
             //库存确认openAPI

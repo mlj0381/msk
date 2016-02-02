@@ -240,7 +240,7 @@ class b2c_user_object{
      * 会员注册页面配置 企业联系人信息
      * return pageSetting array()
      * */
-    public function page_company()
+    public function page_company($uid = null)
     {
         //读取会员注册配置
         $conf = app::get('b2c')->getConf('main_products');
@@ -251,9 +251,8 @@ class b2c_user_object{
         //获取页面信息
         $mdl_company = app::get('base')->model('company');
         $mdl_contact = app::get('base')->model('contact');
-
-        $filter = array('uid' => $this->get_member_id(), 'from' => '0');
-
+        $uid = $uid ? $uid : $this->get_member_id();
+        $filter = array('uid' => $uid, 'from' => '0');
         $conf['info']['company'] = $mdl_company->getRow('*', $filter);
         $conf['info']['contact'] = $mdl_contact->getRow('*', $filter);
         $conf['info']['company_extra'] = app::get('base')->model('company_extra')->getList('*', $filter);
@@ -265,11 +264,12 @@ class b2c_user_object{
      * @param $pageIndex 配置页面索引
      * return pageSetting array()
      * */
-    public function page_manage()
+    public function page_manage($uid = null)
     {
         //使用方向  经营场所
+        $uid = $uid ? $uid : $this->get_member_id();
         $conf['info'] = app::get('b2c')->getConf('main_products');
-        $filter = array('uid' => $this->get_member_id(), 'from' => '0', 'key');
+        $filter = array('uid' => $uid, 'from' => '0', 'key');
         $conf['info']['manageInfo'] = app::get('base')->model('company_extra')->getList('*', $filter);
         return $conf;
     }

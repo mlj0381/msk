@@ -554,6 +554,7 @@ class b2c_ctl_admin_order extends desktop_controller
             $this->end(false, $msg);
         }
         $db->commit($this->transaction_status); //事务提交
+
         $this->end(true, '发货成功！');
     }
     /**

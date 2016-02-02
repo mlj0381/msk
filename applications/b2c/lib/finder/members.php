@@ -27,10 +27,16 @@ class b2c_finder_members
 
     public function detail_basic($row)
     {
-        $memberItem = $this->app->model('members')->getRow('*', array('member_id' => $row));
-        $memberItem['addon'] = unserialize($memberItem['addon']);
         $render = $this->app->render();
-        $render->pagedata['memberItem'] = $memberItem;
+        $user_obj = vmc::singleton('b2c_user_object');
+
+        $company = $user_obj->page_company($row);
+        $manage = $user_obj->page_manage($row);
+        $render->pagedata['extra'] = $company['info'];
+        $render->pagedata['extra']['manageInfo'] = $manage['info']['manageInfo'];
+        $render->pagedata['extra']['use'] = $manage['info']['use'];
+        $render->pagedata['extra']['plant'] = $manage['info']['plant'];
+        $render->pagedata['extra']['member_cat'] = $manage['info']['member_cat'];
         return $render->fetch('admin/member/finder/detail.html');
     }
     public function column_editbutton($row)

@@ -274,7 +274,7 @@ class b2c_mdl_orders extends dbeav_model {
     }
     
     //会员订单筛选条组合
-    public function filter(){
+    public function status_filter(){
         return array(
             'all' => array(
                 

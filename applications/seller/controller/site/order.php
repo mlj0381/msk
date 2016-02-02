@@ -28,7 +28,7 @@ class seller_ctl_site_order extends seller_frontpage
         $mdl_order_items = app::get('b2c')->model('order_items');
         $limit = 5;
 
-        $status_filter = $mdl_order->filter();
+        $status_filter = $mdl_order->status_filter();
         $this->pagedata['status'] = $status;
         $filter = $status_filter[$status];
         $obj_order_search = vmc::singleton('b2c_order_search');
