@@ -208,13 +208,15 @@ class b2c_cart_stage
                             $cart_result['objects']['goods'][$j]['item']['product']['buy_price'] = number_format($price_interval['price_up'], 2);
                         }
                         $cart_result['objects']['goods'][$j]['amount'] = $ecmath->formatNumber($cart_result['objects']['goods'][$j]['item']['product']['buy_price'] * $cart_result['objects']['goods'][$j]['quantity'], $f1, $f2);
-                        $price[$j] = $cart_result['objects']['goods'][$j]['amount'];
+                        if(empty($v2['disabled']) || $v2['disabled'] == 'false') {
+                            $price[$j] = $cart_result['objects']['goods'][$j]['amount'];
+                        }
 
                     }
                 break;
             }
         }
-        $cart_result['cart_amount'] = array_sum($price);
+        $cart_result['cart_amount'] = array_sum($price) ? array_sum($price) : 0;
         $cart_result['finally_cart_amount'] = $cart_result['cart_amount'];
         
         //优惠价格暂时去掉
