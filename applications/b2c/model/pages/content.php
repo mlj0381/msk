@@ -13,7 +13,9 @@
 
 class b2c_mdl_pages_content extends dbeav_model{
 
-    
+    public $defaultOrder = array(
+        'ordernum ASC',
+    );
 
     public function modifier_ordernum($col,$row)
     {
