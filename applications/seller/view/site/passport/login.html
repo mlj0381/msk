@@ -6,67 +6,11 @@
     <div class="login_panel_rt">
         <div class="panel panel-default login-panel">
             <div class="panel-heading clearfix">
-                <span class="login_normal">买家登录</span>
-                <span class="login_fast active">卖家登录</span>
+                <a href="<{link app=b2c ctl=site_passport act=login}>"><span class="login_normal">买家登录</span></a>
+                <a href="<{link app=seller ctl=site_passport act=login}>"><span class="login_fast active">卖家登录</span></a>
 
             </div>
             <div class="panel-body">
-                <form id="member_login_form" class="form-horizontal hidden" action="<{link app=b2c ctl=site_passport act=post_login}>" method="post">
-                    <!-- 登陆后跳转地址 -->
-                    <input type="hidden" name="forward" value="<{$forward}>">
-                    <div class="reg_link">
-                           <a href="<{link app=b2c ctl=site_passport act=signup}>">立即注册 <i class="icon-circle-arrow-right"></i></a>                      
-
-                    </div>
-                    <div class="form-group">
-                        <div class="col-md-12">
-                            <div class="input-group">
-                                <div class="input-group-addon">
-                                    <i class="icon-user"></i>
-                                </div>
-                                <input type="text" required="true" autocomplete='off' name="uname" class="form-control" id="input_uname" placeholder="手机号/邮箱/用户名">
-                            </div> 
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-md-12">
-                            <div class="input-group">
-                                <div class="input-group-addon">
-                                    <i class="icon-lock"></i>
-                                </div>
-                                <input type="password" required="true" name="password" class="form-control" id="input_password" placeholder="登录密码">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-md-5">
-                            <input type="text" required="true" name="vcode" class="form-control" id="input_password" placeholder="验证码">
-                        </div>
-                        <div class="col-md-7" style="text-align:right;">
-                            <img src="<{link app=site ctl=vcode act=index args0='passport'}>" alt="验证码" />
-                            <button type="button" class="btn btn-link btn-sm" onclick="$(this).prev().prop('src',$(this).attr('data-src')+'?'+new Date().getTime())" data-src="<{link app=site ctl=vcode act=index args0='passport'}>">更换验证码</button>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-md-6">
-                            <div class="checkbox">
-                                <label>
-                                    <!-- <input type="checkbox" class="autologin-checkbox"> 自动登录 -->
-                                </label>
-                            </div>
-                        </div>
-                        <div class="col-md-6 text-right">
-                            <a href="<{link app=b2c ctl=site_passport act=reset_password}>">忘记密码?</a>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-md-12">
-                            <button type="submit" data-loading-text="正在登录..." class="btn btn-danger submit_btn">登录</button>
-                        </div>
-                    </div>
-
-                </form>
-
                 <form id="member_login_form" class="form-horizontal" action="<{link app=seller ctl=site_passport act=post_login}>" method="post">
                     <!-- 登陆后跳转地址 -->
                     <input type="hidden" name="forward" value="<{$forward}>">
@@ -170,20 +114,3 @@ function(login_form) {
 }($('#member_login_form'));
 </script>
 
-
-<script type="text/javascript">
-/**
- * 会员登录方式切换
- */
-$(function(){
-    $('.login-panel .panel-heading span').each(function(i,ele){
-        $(this).click(function(){
-            $(this).addClass('active').siblings().removeClass('active');
-            $('.panel-body').children().eq(i).removeClass('hidden').siblings().addClass('hidden');
-
-        })
-
-    })
-
-})
-</script>
