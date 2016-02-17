@@ -16,7 +16,7 @@
   </div>
   <{switch from=$action}>
   <{case value='edit'}>
-  <form class="form-horizontal receiver_form" action="<{link app=b2c ctl=site_member act=receiver args0=save}>" method="post" id="receiver_form">
+  <form class="form-horizontal receiver_form" action="<{link app=b2c ctl=site_member act=receiver args0=save}>" method="post" id="receiver_form" data-module="validator">
       <{if $maddr.addr_id}>
       <input type="hidden" name="maddr[addr_id]" value="<{$maddr.addr_id}>">
       <{/if}>
@@ -25,12 +25,16 @@
           <div class="col-xs-7">
             <input name="maddr[name]" style="display:none" disabled="disabled">
             <input type="text" required="true" autocomplete='off' name="maddr[name]" class="form-control"  value="<{$maddr.name}>" placeholder="收货人姓名">
+            <span class="msgTip" data-message="error"></span>
           </div>
       </div>
       <div class="form-group">
           <label  class="col-xs-2 control-label">收货地区<span class="text-danger">*</span></label>
           <div class="col-xs-7">
-              <{input type=region app=ectools name="maddr[area]" value=$maddr.area}>
+              <div class="form-item">
+                <{input type=region required="true" app=ectools name="maddr[area]" value=$maddr.area}>
+              </div>
+              <span class="msgTip" data-message="error"></span>
           </div>
       </div>
       <div class="form-group">
@@ -38,6 +42,7 @@
           <div class="col-xs-7">
             <input type="text" required="true" autocomplete='off' name="maddr[addr]" class="form-control"  value="<{$maddr.addr}>" placeholder="请填写详细的地址门牌号码,无需重复填写地区">
           </div>
+          <span class="msgTip" data-message="error"></span>
       </div>
       <div class="form-group">
           <label  class="col-xs-2 control-label">邮编</label>
@@ -48,7 +53,8 @@
       <div class="form-group">
           <label  class="col-xs-2 control-label">手机<span class="text-danger">*</span></label>
           <div class="col-xs-7">
-            <input type="text" required="true" autocomplete='off' name="maddr[mobile]" class="form-control"  value="<{$maddr.mobile}>" placeholder="收货人手机号码">
+            <input type="text" required="true" format="mobile" autocomplete='off' name="maddr[mobile]" class="form-control"  value="<{$maddr.mobile}>" placeholder="收货人手机号码">
+            <span class="msgTip" data-message="format">请输入正确的手机号</span>
           </div>
       </div>
       <div class="form-group">
@@ -63,17 +69,6 @@
             <input type="text" autocomplete='off' name="maddr[email]" class="form-control"  value="<{$maddr.email}>" placeholder="请输入您常用的电子邮箱">
           </div>
       </div>
-      <!--<div class="form-group">-->
-          <!--<label  class="col-xs-2 control-label">支付方式<span class="text-danger">*</span></label>-->
-          <!--<div class="col-xs-7">-->
-            <!--<select class="form-control">-->
-              <!--<option value="">请选择</option>-->
-              <!--<option value="">网银</option>-->
-              <!--<option value="">会员卡</option>-->
-              <!--<option value="">POS机</option>-->
-            <!--</select>-->
-          <!--</div>-->
-      <!--</div>-->
       <div class="form-group">
           <label  class="col-xs-2 control-label">习惯正常收货时间段<span class="text-danger">*</span></label>
           <div class="col-xs-7 time_period">
@@ -90,31 +85,32 @@
       <div class="form-group">
           <label  class="col-xs-2 control-label">习惯最早收货时间<span class="text-danger">*</span></label>
           <div class="col-xs-7">
-            <input type="text" value="<{$maddr.habit_normal_first}>" name="maddr[habit_normal_first]" class="form-control" placeholder="例如：06:00">
+            <input type="text" value="<{$maddr.habit_normal_first}>" name="maddr[habit_normal_first]" required="true" format="time" class="form-control" placeholder="例如：06:00">
+            <span class="msgTip" data-message="format">请输入正确时间格式</span>
           </div>
       </div>
       <div class="form-group">
           <label  class="col-xs-2 control-label">习惯最晚收货时间<span class="text-danger">*</span></label>
           <div class="col-xs-7">
-            <input type="text" value="<{$maddr.habit_normal_last}>" name="maddr[habit_normal_last]" class="form-control" placeholder="例如：23:00">
+            <input type="text" value="<{$maddr.habit_normal_last}>" name="maddr[habit_normal_last]" required="true" format="time" class="form-control" placeholder="例如：23:00">
+            <span class="msgTip" data-message="format">请输入正确时间格式</span>
           </div>
       </div>
       <div class="form-group">
           <label  class="col-xs-2 control-label">门店距离最近停车距离<span class="text-danger">*</span></label>
           <div class="col-xs-7">
-            <div class="input-group">
-              <input type="text" value="<{$maddr.cart_stop_distance}>" name="maddr[cart_stop_distance]" class="form-control" id="exampleInputAmount">
+            <div class="input-group form-item">
+              <input type="text" value="<{$maddr.cart_stop_distance}>" name="maddr[cart_stop_distance]" class="form-control" required="true" format="digits">
               <div class="input-group-addon">米</div>
             </div>
+            <span class="msgTip" data-message="format">请输入正整数</span>
           </div>
       </div>
       <div class="form-group">
           <label  class="col-xs-2 control-label">单次配送规模<span class="text-danger">*</span></label>
           <div class="col-xs-7">
-            <div class="input-group">
-              <input type="text" value="<{$maddr.delivery_scale}>" name="maddr[delivery_scale]" class="form-control" id="exampleInputAmount">
-              <div class="input-group-addon">箱</div>
-            </div>
+            <input type="text" value="<{$maddr.delivery_scale}>" name="maddr[delivery_scale]" class="form-control" required="true">
+            <span class="msgTip" data-message="error"></span>
           </div>
       </div>
       <div class="form-group">
