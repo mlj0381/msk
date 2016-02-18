@@ -463,7 +463,9 @@
                 var href = button.attr('data-url').replace(/([\s\S]*?)-([\d]+?)-([\d]+?)\.html/, function () {
                     var args = arguments;
                     return [args[1], args[2], cur_val].join('-') + '.html';
+
                 });
+
                 button.attr('data-url', href);
             });
         }).trigger('_change', [$('.product-quantity .spinner-input').val(), 0]);

@@ -21,38 +21,35 @@ class b2c_ctl_site_member extends b2c_frontpage
         //刷新经验值和会员等级
         //vmc::singleton('b2c_member_exp')->renew($this->member['member_id']);
     }
-    /**
-     * 会员中心菜单排序.
-     */
-    public static function sort_menu($a, $b)
-    {
-        if ($a['ordernum'] == $b['ordernum']) {
-            return 0;
-        }
-        return $a['ordernum'] > $b['ordernum'] ? +1 : -1;
-    }
+
     /**
      * 会员中心首页.
      */
-    public function index(){
+    public function index($page = 1){
         $mdl_member_goods = $this->app->model('member_goods');
         $this->pagedata['order_count'] = $this->app->model('orders')->type_count(array('member_id' => $this->member['member_id']));
         $user_obj = vmc::singleton('b2c_user_object');
         $this->pagedata['pam_data'] = $user_obj->get_pam_data('*', $this->member['member_id']);
         //查询最近浏览
-        $scan = $mdl_member_goods->getList('*', array('member_id' => $this->member['member_id'], 'type'=>'scan'));
+        $pageSize = 8;
+        $filter = array('member_id' => $this->member['member_id'], 'type'=>'scan');
+        $scan = $mdl_member_goods->getList('*', $filter, ($page - 1) * $pageSize, $pageSize, 'gnotify_id desc');
         $mdl_goods = $this->app->model('goods');
         foreach($scan as &$value){
             $value['store'] = $mdl_goods->getRow('store_id', array('goods_id' => $value['goods_id']));
-
         }
+        $token = time();
+        $this->pagedata['pager'] = array(
+            'total' => ceil($mdl_member_goods->count($filter) / $pageSize),
+            'token' => $token,
+            'current' => $page,
+            'link' => $this->gen_url(array('app' => 'b2c', 'ctl' => 'site_member', 'act' => 'index', 'args0' => $token)),
+        );
         $this->pagedata['scan'] = $scan;
         $scan['store'] = app::get('store')->model('store')->getRow('store_name, store_id', array());
         $this->pagedata['member_type'] = 'index';
         $this->output();
     }
-
-
 
     public function home(){
         $this->page('site/member/home.html');
@@ -373,6 +370,7 @@ vmc_b2c_orders WHERE `member_id`={$this->member['member_id']} AND `status` = 'ac
     public function refund(){
         $this->output();
     }
+
     /**
      * 我的收藏.
      */
@@ -380,7 +378,6 @@ vmc_b2c_orders WHERE `member_id`={$this->member['member_id']} AND `status` = 'ac
     {
         $this->set_tmpl('passport');
         $member_id = $this->member['member_id'];
-        $member_discout = $this->member['member_discout'];
         $mdl_member_goods = app::get('b2c')->model('member_goods');
         $redirect_here = array('app' => 'b2c','ctl' => 'site_member','act' => 'favorite');
         switch ($action) {
@@ -388,7 +385,8 @@ vmc_b2c_orders WHERE `member_id`={$this->member['member_id']} AND `status` = 'ac
                 if (!$gid) {
                     $this->splash('error', $redirect_here, '删除收藏失败!');
                 } else {
-                    if ($mdl_member_goods->delete(array('member_id' => $member_id, 'goods_id' => $gid,'type'=>'fav'))) {
+                    if ($mdl_member_goods->delete($jg = array('member_id' => $member_id, 'goods_id' => $gid,'type'=>'fav'))) {
+                        print_r($jg);
                         $this->splash('success', $redirect_here, '删除成功!');
                     } else {
                         $this->splash('error', $redirect_here, '删除收藏失败!');
@@ -404,11 +402,13 @@ vmc_b2c_orders WHERE `member_id`={$this->member['member_id']} AND `status` = 'ac
                 }
             default:
                 $list_tmp = $mdl_member_goods->getList('*', array('member_id' => $member_id, 'type'=>'fav'));
+                $mdl_goods = $this->app->model('goods');
                 $this->pagedata['favorite_count'] = count($list_tmp);
                 $list = array();
                 foreach($list_tmp as $key => &$value){
                     if($value['object_type'] == 'goods'){
                         $list['goods'][$key] = $value;
+                        $list['goods'][$key]['store'] = $mdl_goods->getRow('store_id', array('goods_id' => $value['goods_id']));
                     }else{
                         $list['store'][$key] = $value;
                     }
@@ -459,7 +459,6 @@ vmc_b2c_orders WHERE `member_id`={$this->member['member_id']} AND `status` = 'ac
             $data['tag'] = $tag_array;
         }else if($type == 'del'){
             $tmp = array_flip($tag_array);
-
             unset($tmp[$tagId]);
             $data['tag'] =  array_flip($tmp);
         }
