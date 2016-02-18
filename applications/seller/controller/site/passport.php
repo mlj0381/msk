@@ -502,7 +502,7 @@ class seller_ctl_site_passport extends seller_frontpage
         if (!$_POST) {
             $this->splash('error', '', '非法请求');
         }
-        $data = array('content_id' => $_POST['content_id'], 'uid' => $this->member['member_id']);
+        $data = array('content_id' => $_POST['content_id'], 'uid' => $this->seller['seller_id']);
         if (!app::get('base')->model('company_extra')->delete($data)) {
             $this->splash('error', '', '操作失败');
         }

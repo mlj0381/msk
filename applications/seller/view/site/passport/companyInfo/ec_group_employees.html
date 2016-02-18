@@ -5,7 +5,7 @@
     <div id="items">
 
         <{foreach
-        from=$extra.ec_group_employees
+        from=$extra.ec_group_employees key=key
         item=item}>
         <div class="team-item equipment-items">
             <input type="hidden"
@@ -22,8 +22,10 @@
                     <input type="text"
                            value="<{$item.value.name}>"
                            name="ec_group_employees[value][name][]"
-                           class="form-control" required="true">
-                           <span class="msgTip" data-message="error"></span>
+                           class="form-control"
+                           required="true">
+                    <span class="msgTip"
+                          data-message="error"></span>
                 </div>
             </div>
             <div class="form-group">
@@ -35,8 +37,10 @@
                     <input type="text"
                            value="<{$item.value.age}>"
                            name="ec_group_employees[value][age][]"
-                           class="form-control" required="true">
-                           <span class="msgTip" data-message="error"></span>
+                           class="form-control"
+                           required="true">
+                    <span class="msgTip"
+                          data-message="error"></span>
                 </div>
             </div>
             <div class="form-group">
@@ -59,8 +63,11 @@
                     <input type="text"
                            value="<{$item.value.contact}>"
                            name="ec_group_employees[value][contact][]"
-                           class="form-control" required="true" format="mobile">
-                           <span class="msgTip" data-message="format">请输入正确手机号码</span>
+                           class="form-control"
+                           required="true"
+                           format="mobile">
+                    <span class="msgTip"
+                          data-message="format">请输入正确手机号码</span>
                 </div>
             </div>
             <div class="form-group">
@@ -84,26 +91,25 @@
                     </div>
                 </div>
             </div>
-            <!-- <div class="form-group">
+            <{if $key neq '0'}>
+            <div class="form-group">
                 <label class="col-xs-2 control-label">
                 </label>
-            
+
                 <div class="col-xs-4">
-                    <button class="team"
-                            type="button">
-                        删除
-                    </button>
+                    <button class="del-team" type="button">删除</button>
                 </div>
-            </div> -->
+            </div>
+            <{/if}>
             <hr>
         </div>
         <{/foreach}>
     </div>
     <div class="form-group">
         <label class="col-xs-2 control-label">
-    
+
         </label>
-    
+
         <div class="col-xs-4">
             <button class="team btn-default btn"
                     type="button">
@@ -119,7 +125,7 @@
         <input type="hidden"
                name="ec_group_employees[content_id][]"
                value="<{$extra.content_id}>"
-               class="form-control" >
+               class="form-control">
 
 
         <div class="form-group">
@@ -131,8 +137,10 @@
                 <input type="text"
                        value="<{$extra.ec_group_employees.value.name}>"
                        name="ec_group_employees[value][name][]"
-                       class="form-control" required="true">
-                       <span class="msgTip" data-message="error"></span>
+                       class="form-control"
+                       required="true">
+                <span class="msgTip"
+                      data-message="error"></span>
             </div>
         </div>
         <div class="form-group">
@@ -144,8 +152,11 @@
                 <input type="text"
                        value="<{$extra.ec_group_employees.value.age}>"
                        name="ec_group_employees[value][age][]"
-                       class="form-control"  required="true" format="digits">
-            <span class="msgTip" data-message="format">请输入正确的年龄</span>
+                       class="form-control"
+                       required="true"
+                       format="digits">
+                <span class="msgTip"
+                      data-message="format">请输入正确的年龄</span>
             </div>
         </div>
         <div class="form-group">
@@ -168,8 +179,11 @@
                 <input type="text"
                        value="<{$extra.ec_group_employees.value.contact}>"
                        name="ec_group_employees[value][contact][]"
-                       class="form-control" required="true" format="mobile">
-                        <span class="msgTip" data-message="format">请输入正确手机号码</span>
+                       class="form-control"
+                       required="true"
+                       format="mobile">
+                <span class="msgTip"
+                      data-message="format">请输入正确手机号码</span>
 
             </div>
         </div>
@@ -193,7 +207,15 @@
                     </div>
                 </div>
             </div>
-            
+
+        </div>
+        <div class="form-group">
+            <label class="col-xs-2 control-label">
+            </label>
+
+            <div class="col-xs-4">
+                <button class="del-team" type="button">删除</button>
+            </div>
         </div>
         <hr>
     </div>
@@ -221,9 +243,8 @@
 
         ec_group.find('.team').click(function (e) {
             e.stopPropagation();
-            var data = ec_group.find('.team-item:last input, select').serializeArray();
+            var data = ec_group.find('.team-item:last').find('*').serializeArray();
             var url = '<{link app=seller ctl=site_passport act=save_ecgroup}>';
-
             $.post(url, data, function (re) {
                 if (re.success) {
                     $('.team-item:last').find('input[name="ec_group_employees[content_id][]"]').val(re.data.content_id);
@@ -231,8 +252,8 @@
                     $(item).insertAfter($('#items .team-item:last'));
                     //$('.team-item:last').find('input [type="text"]').val('');
                     $('.team-item:last').find('.file_input').fileupload(fileObj);
-                    $('.team-item:last').find('.del-team').click(function(){
-                        del($('.team-item:last').find('.del-team'));
+                    $('.team-item:last').find('.del-team').click(function () {
+                        del($(this))
                     });
                 }
             });
@@ -240,16 +261,17 @@
 
         var init = function () {
             var item = $('.ex-group').val();
-            if (!$('#items').find('equipment-items').size()) {
+            if (!$('#items').find('.equipment-items').size()) {
+                $(item).find('.del-team').remove();
                 $(item).appendTo($('#items'));
-            } else {
-                $(item).insertAfter($('#items .equipment-items:last'));
-                $(item).click(function(){
-                    del($(item));
-                });
-                //$('.team-item:last').find('input [type="text"]').val('');
-
             }
+//            else {
+//                $(item).insertAfter($('#items .equipment-items:last'));
+//                $(item).click(function () {
+//                    del($(item));
+//                });
+//                //$('.team-item:last').find('input [type="text"]').val('');
+//            }
             $('.equipment-items:last').find('.file_input').fileupload(fileObj);
         };
         (function () {
@@ -258,13 +280,14 @@
             }
         })();
 
-        ec_group.find('del-team').click(function () {
+        ec_group.find('.del-team').click(function () {
+            if(!confirm('确定删除？')) return false;
             del($(this));
         });
 
         var del = function (obj) {
             var parent = $(obj).closest('div.team-item');
-            var content_id = parent.find('input [name="ec_group_employees[content_id][]"]').val();
+            var content_id = parent.find('input[name="ec_group_employees[content_id][]"]').val();
             var url = '<{link app=seller ctl=site_passport act=del_extra}>';
             $.post(url, {content_id: content_id}, function (re) {
                 if (re.success) {

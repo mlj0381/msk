@@ -10,7 +10,7 @@
         <{foreach
         from=$extra.equipment
         item=item}>
-        <div class="equipment-items">
+        <div class="equipment-items team-item">
             <div class="form-group">
                 <label class="col-xs-2 control-label">
                     <span class="text-danger">*</span>主要设备：
@@ -64,7 +64,7 @@
                     </div>
                 </div>
             </div>
-            <!-- <div class="form-group">
+             <div class="form-group">
                 <label class="col-xs-2 control-label">
                 </label>
             
@@ -74,7 +74,7 @@
                         删除
                     </button>
                 </div>
-            </div> -->
+            </div>
             <hr>
         </div>
         <{/foreach}>
@@ -148,7 +148,7 @@
                 </div>
             </div>
         </div>
-        <!-- <div class="form-group">
+         <div class="form-group">
             <label class="col-xs-2 control-label">
             </label>
         
@@ -158,7 +158,7 @@
                     删除
                 </button>
             </div>
-        </div> -->
+        </div>
         <hr>
     </div>
 </textarea>
@@ -184,24 +184,52 @@
 
         ec_group.find('.team').click(function (e) {
             e.stopPropagation();
-            var data = ec_group.find('.equipment-items:last input').serializeArray();
+            var data = ec_group.find('.equipment-items:last').find('*').serializeArray();
+            console.table(data);
             var url = '<{link app=seller ctl=site_passport act=save_ecgroup}>';
             $.post(url, data, function (re) {
                 if (re.success) {
                     $('.equipment-items:last').find('input[name="equipment[content_id][]"]').val(re.data.content_id);
-                    init();
+                    var item = $('.ex-group').val();
+                    $(item).insertAfter($('#items .equipment-items:last'));
+                    //$('.team-item:last').find('input [type="text"]').val('');
+                    $('.equipment-items:last').find('.file_input').fileupload(fileObj);
+                    $('.equipment-items:last').find('.del-team').click(function () {
+                        del($(this))
+                    });
                 }
             });
         });
 
+        var init = function () {
+            var item = $('.ex-group').val();
+            if (!$('#items').find('.equipment-items').size()) {
+                $(item).find('.del-team').remove();
+                $(item).appendTo($('#items'));
+            }
+//            else {
+//                $(item).insertAfter($('#items .equipment-items:last'));
+//                $(item).click(function () {
+//                    del($(item));
+//                });
+//                //$('.team-item:last').find('input [type="text"]').val('');
+//            }
+            $('.equipment-items:last').find('.file_input').fileupload(fileObj);
+        };
+        (function () {
+            if (!$('#items').find('.equipment-items').size()) {
+                init();
+            }
+        })();
 
-        ec_group.find('del-team').click(function () {
+        ec_group.find('.del-team').click(function () {
+            if(!confirm('确定删除？')) return false;
             del($(this));
         });
 
         var del = function (obj) {
-            var parent = $(obj).closest('div.team-item');
-            var content_id = parent.find('input [name="ec_group_employees[content_id][]"]').val();
+            var parent = $(obj).closest('div.equipment-items');
+            var content_id = parent.find('input[name="equipment[content_id][]"]').val();
             var url = '<{link app=seller ctl=site_passport act=del_extra}>';
             $.post(url, {content_id: content_id}, function (re) {
                 if (re.success) {
@@ -211,26 +239,5 @@
                 }
             });
         };
-
-        var init = function () {
-            var item = $('.ex-group').val();
-            if (!$('#items').find('equipment-items').size()) {
-                $(item).appendTo($('#items'));
-            } else {
-                $(item).insertAfter($('#items .equipment-items:last'));
-                $(item).click(function(){
-                    del($(item));
-                });
-                //$('.team-item:last').find('input [type="text"]').val('');
-
-            }
-            $('.equipment-items:last').find('.file_input').fileupload(fileObj);
-        };
-        (function () {
-            if ($('#items').find('.equipment-items').size() <= 0) {
-                //alert($('#items').find('.equipment-items').size());
-                init();
-            }
-        })();
     }($('#companyInfo_form'));
 </script>
