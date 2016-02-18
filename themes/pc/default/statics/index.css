@@ -257,55 +257,6 @@
 .index_page .shop_show .bd ul li .title {
   line-height: 24px;
 }
-.index_page .fixed_slidebar {
-  width: 35px;
-  height: 100%;
-  background: #000;
-  position: fixed;
-  top: 0px;
-  right: 0px;
-  z-index: 999999;
-  float: right;
-}
-.index_page .fixed_slidebar ul {
-  padding-top: 150px;
-}
-.index_page .fixed_slidebar ul li {
-  width: 36px;
-  text-align: center;
-  margin: 10px 0;
-  min-height: 36px;
-  padding: 10px;
-  cursor: pointer;
-}
-.index_page .fixed_slidebar ul li a {
-  display: block;
-  color: #fff;
-}
-.index_page .fixed_slidebar ul li a span {
-  display: block;
-  width: 16px;
-}
-.index_page .fixed_slidebar ul li i {
-  font-size: 16px !important;
-  color: #fff;
-}
-.index_page .fixed_slidebar ul li i.icon-shopping-cart {
-  color: #a40001;
-}
-.index_page .fixed_slidebar ul li:hover {
-  background: #a40001;
-  color: #fff;
-}
-.index_page .fixed_slidebar ul li:hover i.icon-shopping-cart {
-  color: #fff;
-}
-.index_page .fixed_slidebar ul .tooltip {
-  right: 36px;
-  margin-right: 36px;
-  width: 100px;
-  line-height: 20px;
-}
 .index_page .fixed_floorNav {
   position: fixed;
   left: 50px;

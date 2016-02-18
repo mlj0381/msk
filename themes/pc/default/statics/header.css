@@ -739,6 +739,55 @@ nav.mainNav ul.nav_ul li .category-container .category .tab-pane .tab-pane-brand
   min-height: 16px;
   top: 45px;
 }
+.fixed_slidebar {
+  width: 35px;
+  height: 100%;
+  background: #000;
+  position: fixed;
+  top: 0px;
+  right: 0px;
+  z-index: 999999;
+  float: right;
+}
+.fixed_slidebar ul {
+  padding-top: 150px;
+}
+.fixed_slidebar ul li {
+  width: 36px;
+  text-align: center;
+  margin: 10px 0;
+  min-height: 36px;
+  padding: 10px;
+  cursor: pointer;
+}
+.fixed_slidebar ul li a {
+  display: block;
+  color: #fff;
+}
+.fixed_slidebar ul li a span {
+  display: block;
+  width: 16px;
+}
+.fixed_slidebar ul li i {
+  font-size: 16px !important;
+  color: #fff;
+}
+.fixed_slidebar ul li i.icon-shopping-cart {
+  color: #a40001;
+}
+.fixed_slidebar ul li:hover {
+  background: #a40001;
+  color: #fff;
+}
+.fixed_slidebar ul li:hover i.icon-shopping-cart {
+  color: #fff;
+}
+.fixed_slidebar ul .tooltip {
+  right: 36px;
+  margin-right: 36px;
+  width: 100px;
+  line-height: 20px;
+}
 #quickLogin {
   top: 50%;
   margin-top: -220px;

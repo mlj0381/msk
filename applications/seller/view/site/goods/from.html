@@ -15,7 +15,7 @@
     <div class="page-header">
         <h1><{if $goods}>编辑商品<{else}>添加商品<{/if}></h1>
     </div>
-    <form class="form-horizontal addgoods_form" action="<{link app=seller ctl=site_goods act=save}>" method="post" id="goods_edit_form">
+    <form class="form-horizontal addgoods_form" action="<{link app=seller ctl=site_goods act=save}>" method="post" id="goods_edit_form" data-module="validator">
         <div class="goods_tabbox">
 
             <!-- 商品基本信息 -->
@@ -38,7 +38,7 @@
         </div>
         <div class="form_action">
             <a class="save_goods btn-default" href="<{link app=seller ctl=site_goods act=index}>">返回商品列表</a>
-            <a href='javascript:;' class="save_goods btn-danger" data-redirect="<{link app=seller ctl=site_goods act=save}>&p[0]={goods_id}">保存</a>
+            <button href='javascript:;' class="save_goods btn-danger" data-redirect="<{link app=seller ctl=site_goods act=save}>&p[0]={goods_id}">保存</button>
         </div>
     </form>
 </div>
@@ -57,141 +57,14 @@ $(function() {
         width: 'auto',
         'defaultText': '输入新词',
     });
-
-    /**
-     * 切换
-     */
-    $('#myTabs a').click(function(e) {
-        e.preventDefault()
-        $(this).tab('show')
-    })
 })
 </script>
-<script charset="utf-8">
-! function() {
 
-    /**
-     * 新增粘贴事件
-     *
-     *    $("input[type='text']").on("postpaste", function() {
-     *        // code...
-     *    }).pasteEvents();
-     *
-     *
-     */
-    $.fn.pasteEvents = function(delay) {
-        if (delay == undefined) delay = 20;
-        return $(this).each(function() {
-            var $el = $(this);
-            $el.on("paste", function() {
-                $el.trigger("prepaste");
-                setTimeout(function() {
-                    $el.trigger("postpaste");
-                }, delay);
-            });
-        });
-    };
-
-
-    $('#spec_edit_pane .checker :checkbox').on('change', function() {
-        var checked = $(this).is(':checked');
-        $('#spec_edit_pane .spec-edit,#spec_edit_pane .product-items')[checked ? 'removeClass' : 'addClass']('hide');
-        $('#spec_edit_pane .spec-edit,#spec_edit_pane .product-items').find('input,:checkbox,:radio,textarea').attr('disabled', checked ? false : true);
-        $(this).parent('span')[checked ? 'addClass' : 'removeClass']('checked');
-    });
-    var type = "<{$goods.spec_desc}>";
-    if (!type && !type.length > 0) {
-        $('#spec_edit_pane .checker :checkbox').change();
-    }
-
-    var substitute = function(str, obj) {
-        return str.replace(/\\?\{([^{}]+)\}/g, function(match, name) {
-            if (match.charAt(0) == '\\') return match.slice(1);
-            return (obj[name] != undefined) ? obj[name] : '';
-        });
-    }
-
-    var tagsinput_options = {
-        width: 'auto',
-        'defaultText': '新规格项',
-        onAddTag: function() {
-            product_items_change();
-        },
-        onRemoveTag: function() {
-            product_items_change();
-        }
-    };
-    $('#spec_edit_pane .spec-edit .spec-v').tagsInput(tagsinput_options);
-    $('#spec_edit_pane .spec-edit .new-spec-item').on('click', function() {
-        $('#spec_edit_pane .spec-edit tbody').append($('.spec-item-tpl').val());
-        $('#spec_edit_pane .spec-edit tbody tr:last .spec-v').tagsInput(tagsinput_options);
-    });
-    $('#spec_edit_pane .spec-edit').on('click', '.spec-del', function(e) {
-        e.stopPropagation();
-        if (!confirm('确定删除？')) return;
-        $(this).closest('tr').remove();
-        product_items_change();
-    });
-    /**
-     * 货号、条码 粘贴监听
-     * @see desktop.js
-     */
-    var listen_postpaste = function(els) {
-
-        //只监听第一个
-        $(els).eq(0).on("postpaste", function(e) {
-            var val = $(this).val(),
-                val_arr = val.split(/\s/);;
-            if (val_arr.length && val_arr.length > 1) {
-                $.each(val_arr, function(i, v) {
-                    $(els).eq(i).val(v);
-                });
-            }
-        }).pasteEvents();
-
-        //便捷性提示
-        $(els).eq(0).wrap('<div class="input-icon right"></div>');
-        $('<i class="fa fa-paste text-success tooltips" data-container="body" data-toggle="tooltip" data-placement="top" title="粘贴含有`空格`或`换行`的数据,将自动被分隔填充。例：你可以从Excel批量复制粘贴数据到此"></i>').tooltip().insertBefore($(els).eq(0));
-
-    }
-
-   
-    
-    var product_items_change = function() {
-        if ($('#spec_edit_pane .product-items tbody > tr').length) {
-            $('#spec_edit_pane .create-product-items').trigger('click');
-        }
-    };
-}();
-//
-</script>
 <script>
 String.prototype.trim = function() {
     return this.replace(/(^\s*)|(\s*$)/g, '');
 };
 
-//商品规则生成
-function generate_goods_name() {
-    //品牌＋一级（男或女）＋最小级＋商品编号
-    var select_brand = $("#select_brand").val().trim();
-    var index = $("#select_cat select").length;
-    var cat_name = '';
-    if (index > 1) {
-        cat_name = $("#select_cat").children().children('select').eq(0).find("option:selected").text().trim();
-        var last_cat_name = $("#select_cat").children().children('select').eq(index - 1).find("option:selected").text();
-        if (last_cat_name != '…') {
-            cat_name += last_cat_name;
-        } else if (index > 2) {
-            cat_name += $("#select_cat").children().children('select').eq(index - 2).find("option:selected").text();
-        }
-
-    } else {
-        cat_name = $("#select_cat").children().children('select').eq(index - 1).find("option:selected").text();
-    }
-    cat_name = cat_name.replace('•', '').trim();
-    var gid = $("input[name='goods[gid]']").val().trim();
-    $(".input_goodsname").val(select_brand + cat_name + gid);
-}
 
 //出厂货号和货号同步
 $("#goods_gid").blur(function() {
@@ -205,19 +78,6 @@ $("#goods_gid").blur(function() {
 //提交表单添加商品
 $(".save_goods").click(function() {
     var formdata = $("#goods_edit_form").serialize();
-    // if (!$("#goods_prototype").val()) {
-    //     alert('品类不可为空');
-    //     return;
-    // }
-//    var cat_val = $("select[name='goods[category][cat_id]']").val();
-//    if (!cat_val || cat_val == 0) {
-//        alert('品名不可为空');
-//        return;
-//    }
-    // if (!$("#select_brand").val()) {
-    //     alert('品牌不可为空');
-    //     return;
-    // }
 
     $.ajax({
         url: '<{link app=seller ctl=site_goods act=save}>',
@@ -234,27 +94,6 @@ $(".save_goods").click(function() {
     });
 });
 
-
-$(function() {
-    /*分类树逻辑*/
-    (function() {
-        var empty_nbsp = '&nbsp&nbsp&nbsp&nbsp&nbsp';
-        $.each($('#select_cat option'), function(i, n) {
-            var step = $(n).data('step');
-
-            if (step > 1) {
-                var pid = $(this).data('pid');
-                $(this).insertAfter($('#select_cat option[value=' + pid + ']'));
-            }
-            while (step > 1) {
-                $(n).html(empty_nbsp + $(n).html());
-                step--;
-            }
-        });
-    })();
-
-
-});
 </script>
 
 
@@ -296,24 +135,6 @@ $(function() {
 
         }
     });
-    //图片删除
-    /*$('.pro_imgs').on('click','.glyphicon-trash',function(e){
-        e.stopPropagation();
-        var _parent=$(this).parents('.pro_img_item');
-        if(!confirm('确认删除？')){
-            return;
-        }else{
-            _parent.remove();
-            var len=$('.pro_imgs .pro_img_item').size();
-            if(len==1){
-               $('.pro_imgs .pro_img_item').find('.default').addClass('selected');
-               var default_val=$('.pro_imgs .pro_img_item .item_con').find('input[type="hidden"]').val();
-               $('#images_add').attr('value',default_val);
-            }
-
-
-        }
-    })*/
 
     //设置默认图片
 

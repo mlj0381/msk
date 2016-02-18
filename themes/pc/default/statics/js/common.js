@@ -82,37 +82,41 @@ $(function() {
     /**
      *首页楼层滚动效果
      */
+    if($('.floorBox').length > 0 ){
+        $(window).scroll(function() {
 
-    $(window).scroll(function() {
-
-        var scrollTop = $(this).scrollTop(); //获取滚动条滚动的距离
-        var documH = $(document).height();
-        var footerH =$('.footerbox').height();
-        if (scrollTop > 340 && scrollTop < (documH-footerH)) {
-            $('.fixed_floorNav').removeClass('hidden');
-        } else {
-            $('.fixed_floorNav').addClass('hidden');
-        }
-        $('.floor').each(function() {
-            var offsetTop = $(this).offset().top; //获取每个区块距离页面顶部的距离
-            var index = $('.floor').index(this);
-
-            if (offsetTop - scrollTop <= $(this).innerHeight() / 2) {
-                $('.fixed_floorNav li:eq(' + index + ')').addClass('active').siblings().removeClass('active');
-            }else {
-                return false;
+            var scrollTop = $(this).scrollTop(); //获取滚动条滚动的距离
+            if (scrollTop > $('.floorBox').offset().top && scrollTop < $('.floorBox').height()) {
+                $('.fixed_floorNav').removeClass('hidden');
+            } else {
+                $('.fixed_floorNav').addClass('hidden');
             }
-        })
-    })
+            $('.floor').each(function() {
+                var offsetTop = $(this).offset().top; //获取每个区块距离页面顶部的距离
+                var index = $('.floor').index(this);
 
-    $('.fixed_floorNav li').click(function() {
+                if (offsetTop - scrollTop <= $(this).innerHeight() / 2) {
+                    $('.fixed_floorNav li:eq(' + index + ')').addClass('active').siblings().removeClass('active');
+                }else {
+                    return false;
+                }
+            })
+        })
+    }
+    //自动生成楼层导航
+     var lis = '';
+     var floorCount = $('.floorBox .floor').size();
+     for( var i = 1; i<=floorCount; i++){
+        lis += "<li>"+i+"F</li>"
+     }
+     $('.fixed_floorNav ul').append(lis);
+     $('.fixed_floorNav').on('click','li',function(){
         var index = $('.fixed_floorNav li').index(this);
         var val = $('.floor').eq(index).offset().top;
         $("html,body").stop().animate({
             scrollTop: val
         }, 1000);
-
-    })
+     })
 
 
     /*
