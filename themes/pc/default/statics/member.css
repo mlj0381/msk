@@ -1811,9 +1811,9 @@ ol {
 }
 .buyer_container .addgoods_form .form_action {
   margin: 50px auto;
-  margin-left: 125px;
+  text-align: center;
 }
-.buyer_container .addgoods_form .form_action a {
+.buyer_container .addgoods_form .form_action .btn-default {
   display: inline-block;
   text-decoration: none;
   width: 165px;
@@ -1824,17 +1824,33 @@ ol {
   -ms-border-radius: 20px;
   -o-border-radius: 20px;
   border-radius: 20px;
-  background: #fff;
-  color: #555;
+  background: #333;
+  color: #fff;
   text-align: center;
-  border: 1px solid #ddd;
   margin-right: 20px;
   outline: none;
+  border: none;
+}
+.buyer_container .addgoods_form .form_action .btn-danger {
+  display: inline-block;
+  text-decoration: none;
+  width: 165px;
+  height: 40px;
+  line-height: 40px;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  -ms-border-radius: 20px;
+  -o-border-radius: 20px;
+  border-radius: 20px;
+  color: #fff;
+  text-align: center;
+  margin-right: 20px;
+  outline: none;
+  border: none;
 }
 .buyer_container .addgoods_form .form_action a:hover {
   background: #222;
   color: #fff;
-  border: 1px solid #222;
 }
 .buyer_container .addgoods_form .editerbox {
   width: 100%;

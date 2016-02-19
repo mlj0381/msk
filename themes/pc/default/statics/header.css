@@ -615,6 +615,12 @@ nav.mainNav ul.nav_ul li .category-container .category .tab-pane .tab-pane-brand
   text-align: center;
   padding-bottom: 20px;
 }
+.note-image-input {
+  border: none !important;
+  padding: 0;
+  height: 30px;
+  margin-bottom: 15px;
+}
 .filebox {
   display: inline-block;
   position: relative;

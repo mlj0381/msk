@@ -34,14 +34,14 @@
                         <button class="btn-danger manage_cancel hidden">取消管理</button>
                         <button class="btn-danger manage_batch">批量管理</button>
                     </span>
-                    <form class="form-inline">
+                    <!-- <form class="form-inline">
                         <div class="form-group">
                             <div class="input-group">
                                 <input type="text" class="form-control" placeholder="请输入商品名称">
                                 <span class="input-group-addon"><i class="icon-search"></i></span>
                             </div>
                         </div>
-                    </form>
+                    </form> -->
                 </div>
             </div>
 
@@ -104,14 +104,6 @@
                         <button class="btn-danger s_manage_cancel hidden">取消管理</button>
                         <button class="btn-danger s_manage_batch">批量管理</button>
                     </span>
-                    <form class="form-inline">
-                        <div class="form-group">
-                            <div class="input-group">
-                                <input type="text" class="form-control" placeholder="请输入商品名称">
-                                <span class="input-group-addon"><i class="icon-search"></i></span>
-                            </div>
-                        </div>
-                    </form>
                 </div>
             </div>
 
@@ -121,7 +113,7 @@
                     <div class="row shop_item">
                         <div class="col-xs-1">
                             <input type="checkbox" value="<{$item.goods_id}>" class="shop_check">
-                        <!--</div>-->
+                        </div>
                         <div class="col-xs-5">
                             <div class="shop_info">
                                 <a href="<{link app=store ctl=site_store act=index args0=$item.goods_id}>" class="shop_logoimg">
@@ -275,14 +267,8 @@
             </ul>
         </div>
     </div>
-
-
     <!-- 猜你喜欢结束 -->
 </div>
-
-<script type="text/javascript">
-
-</script>
 
 <script type="text/javascript">
     jQuery(".best_sellers").slide({titCell: ".hd ul", mainCell: ".bd ul", autoPage: true, effect: "left", autoPlay: false, vis: 6, trigger: "click"});

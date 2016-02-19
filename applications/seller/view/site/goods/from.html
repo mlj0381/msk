@@ -79,7 +79,7 @@ $("#goods_gid").blur(function() {
 $(".save_goods").click(function() {
     var formdata = $("#goods_edit_form").serialize();
 
-    $.ajax({
+    /*$.ajax({
         url: '<{link app=seller ctl=site_goods act=save}>',
         type: 'POST',
         data: formdata,
@@ -91,7 +91,7 @@ $(".save_goods").click(function() {
                 alert(data.error);
             }
         }
-    });
+    });*/
 });
 
 </script>
