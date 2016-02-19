@@ -172,6 +172,7 @@ class b2c_ctl_site_order extends b2c_frontpage
     }
     public function detail($order_id, $showlogistics = false)
     {
+        $this->set_tmpl('order');
         $mdl_order = $this->app->model('orders');
         $bills = app::get('ectools')->model('bills');
         $mdl_order_log = $this->app->model('order_log');
@@ -231,7 +232,7 @@ class b2c_ctl_site_order extends b2c_frontpage
         //$this->pagedata['menu'] = $this->get_menu();
         $this->pagedata['_PAGE_'] = 'site/order/detail.html';
         $this->output();
-        $this->set_tmpl('order');
+       
        // $this->page('site/order/detail.html');
     }
 
