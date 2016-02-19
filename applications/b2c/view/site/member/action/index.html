@@ -79,21 +79,21 @@
     <div class="row active_list">
         <{if $scan}>
         <{foreach from=$scan item=item}>
-            <div class="col-xs-3 active_item">
-                <div class="goods_item thumbnail">
-                    <a href="<{link app=b2c ctl=site_product act=index args0=$item.product_id args1=$item.store.store_id}>" class="item_pic">
-                        <img src="<{$item.image_default_id|storager:'x'}>">
-                    </a>
-                    <div class="caption">
-                        <a href="<{link app=b2c ctl=site_product act=index args0=$item.product_id args1=$item.store.store_id}>"><{$item.goods_name}></a>
-                        <span class="text-danger">￥：<{$item.goods_price}></span>
-                    </div>
+        <div class="col-xs-3 active_item">
+            <div class="goods_item thumbnail">
+                <a href="<{link app=b2c ctl=site_product act=index args0=$item.product_id args1=$item.store.store_id}>" class="item_pic">
+                    <img src="<{$item.image_default_id|storager:'x'}>">
+                </a>
+                <div class="caption">
+                    <a href="<{link app=b2c ctl=site_product act=index args0=$item.product_id args1=$item.store.store_id}>"><{$item.goods_name}></a>
+                    <span class="text-danger">￥：<{$item.goods_price}></span>
                 </div>
             </div>
+        </div>
         <{/foreach}>
-        
+
         <{else }>
-            <h3>暂无记录</h3>
+        <h3>暂无记录</h3>
         <{/if}>
     </div>
     <{pagers data=$pager}>

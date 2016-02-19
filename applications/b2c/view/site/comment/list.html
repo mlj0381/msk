@@ -1,6 +1,6 @@
+<{if $comment_list}>
 <table>
     <tbody>
-    <{}>
     <{foreach from=$comment_list item=items}>
         <tr>
             <td class="col-xs-8 comment_con">
@@ -24,7 +24,9 @@
     <{/foreach}>
     </tbody>
 </table>
-
+<{else}>
+    暂无评价
+<{/if}>
 
 <!--<{foreach from=$comment_list item=comment name=fec_cl}>-->
     <!--<div class="row">-->

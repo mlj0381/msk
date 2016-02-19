@@ -87,15 +87,16 @@
     <div class="cart_like">
         <div class="like_menu">
             <span>
-                <a class="active">掌柜热卖</a>
-                <a>商家推荐</a>
-                <a>最近浏览</a>
-                <a>猜你喜欢</a>
+                <a data-toggle="tab" href="#hot" class="active">掌柜热卖</a>
+                <a data-toggle="tab" href="#choose">商家推荐</a>
+                <a data-toggle="tab" href="#lately">最近浏览</a>
+                <a data-toggle="tab" href="#guess">猜你喜欢</a>
             </span>
            <!--  <a class="sc_btan" href="#">进入我的收藏</a> -->
         </div>
-        <div class="like_con">
-            <ul>
+        <div class="like_con tab-content">
+            <div class="tab-pane fade in active" id="hot">
+                <ul>
                 <li>
                     <a href="#">
                         <p><span>￥:128.00</span><span>神农客精选五花肉</span></p>
@@ -128,17 +129,16 @@
                 </li>
 
             </ul>
-            <{WIDGET_B2C_GOOD_HOT app=b2c}><!--  -->
 
             <!-- 最近收藏 -->
-            
-
-            <ul>
-                <li>最近浏览暂无记录</li>
-            </ul>
-            <ul>
-                <li>猜你喜欢暂无记录</li>
-            </ul>
+            </div>
+            <div class="tab-pane fade" id="choose">
+                <{WIDGET_B2C_GOOD_HOT app=b2c}><!--  -->
+            </div>
+            <div class="tab-pane fade" id="lately">
+            </div>
+            <div class="tab-pane fade" id="guess">
+            </div>
         </div>
     </div>
 </div>
@@ -156,6 +156,27 @@
  * @version 1.150528
  */
 void function(){
+    //异步加载最近浏览
+    $('.like_menu a[data-toggle="tab"]').on('shown.bs.tab', function(e){
+        var pane_sel = $(this).attr('href');
+        $(this).off('shown.bs.tab');
+        switch (pane_sel){
+            case '#hot':
+                break;
+            case '#choose':
+                break;
+            case '#lately':
+                $(pane_sel).load('<{link app=b2c ctl=site_member act=lately args0=1 args1=load}>');
+                break;
+            case '#guess':
+                break;
+        }
+        $(pane_sel).on('click', 'a', function (e) {
+            e.stopPropagation();
+            $(pane_sel).load(this.href);
+        });
+    });
+    //>>
     $('.c-ci-price').each(function(index){
         var interval = parseInt($(this).attr('data-interval')), price_up = parseFloat($(this).attr('data-up')), price_dn = parseFloat($(this).attr('data-dn'));
         var input_obj = $('.c-ci-quantity input[type=text]').eq(index);

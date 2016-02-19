@@ -133,4 +133,35 @@ class b2c_ctl_site_product extends b2c_frontpage {
         }
         $this->splash('success', '',$_echo);
     }
+
+    //商品详情页评论显示
+    public function comment($goods_id, $page = 1){
+        $mdl_comment = $this->app->model('member_comment');
+        $this->_response->set_header('Cache-Control', 'no-store');
+        $limit = 20;
+        $filter = array(
+            'goods_id' => $goods_id,
+            'display' => 'true'
+        );
+        $comment_list = $mdl_comment->groupList('*', $filter, ($page - 1) * $limit, $limit, '', 'goods_id');
+        $comment_list = $mdl_comment->memberGroup($comment_list);
+        $count = $mdl_comment->count($filter);
+        $this->pagedata['comment_list'] = $comment_list;
+        $this->pagedata['comment_count'] = $count;
+        $this->pagedata['pager'] = array(
+            'total' => ceil($count / $limit),
+            'current' => $page,
+            'link' => array(
+                'app' => 'b2c',
+                'ctl' => 'site_product',
+                'act' => 'comment',
+                'args' => array(
+                    $goods_id,
+                    ($token = time()),
+                ),
+            ),
+            'token' => $token,
+        );
+        $this->display('site/comment/list.html');
+    }
 }

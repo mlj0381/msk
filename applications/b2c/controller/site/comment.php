@@ -154,15 +154,13 @@ class b2c_ctl_site_comment extends b2c_frontpage
         $this->_response->set_header('Cache-Control', 'no-store');
         $limit = 20;
         $filter = array(
-//            'goods_id' => $goods_id,
-            'goods_id' => 1,
+            'goods_id' => $goods_id,
             'display' => 'true'
         );
         $comment_list = $this->mComment->groupList('*', $filter, ($page - 1) * $limit, $limit, '', 'goods_id');
         $comment_list = $this->mComment->memberGroup($comment_list);
         $count = $this->mComment->count($filter);
         $this->pagedata['comment_list'] = $comment_list;
-//        print_r($comment_list);
         $this->pagedata['comment_count'] = $count;
         $this->pagedata['pager'] = array(
             'total' => ceil($count / $limit),

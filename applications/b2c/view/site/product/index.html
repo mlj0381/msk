@@ -328,7 +328,7 @@
                         </div>
                         <div class="tab-pane fade" id="comment">
                             <table>
-                                32
+
                             </table>
                         </div>
                     </div>
@@ -362,10 +362,7 @@
 <{script src="jquery.zoom.js"}>
 <script charset="utf-8">
     //收藏店铺/商品
-    $('')
-
-
-    //快速登录  data-toggle="modal" data-target="#quickLogin"
+    //快速登录
     $('.cart').click(function (e) {
         var _self = $(this);
         $.post('<{link app=b2c ctl=site_passport act=check_login}>', '', function (re) {
@@ -619,15 +616,15 @@
                     switch (pane_sel) {
                         case '#comment':
                             $(this).off('shown.bs.tab');
-                            $(pane_sel).load('<{link app=b2c ctl=site_comment act=show args0=$data_detail.goods_id}>');
+                                console.log($(pane_sel));
+                            $(pane_sel).load('<{link app=b2c ctl=site_product act=comment args0=$data_detail.goods_id}>');
                             $(pane_sel).on('click', 'a', function (e) {
                                 e.stopPropagation();
                                 $(pane_sel).load(this.href);
                             });
                             break;
                     }
-                })
-
+                });
             });
 
 </script>
