@@ -84,61 +84,59 @@
         <div class="col-xs-2 c-cf-opt"><a href="<{link app=b2c ctl=site_checkout}>" class="checkout-btn btn btn-lg btn-danger <{if $cart_all.cart_count<1}>disabled<{/if}>" >去结算</a></div>
     </div>
 
-    <div class="cart_like">
-        <div class="like_menu">
-            <span>
-                <a data-toggle="tab" href="#hot" class="active">掌柜热卖</a>
-                <a data-toggle="tab" href="#choose">商家推荐</a>
-                <a data-toggle="tab" href="#lately">最近浏览</a>
-                <a data-toggle="tab" href="#guess">猜你喜欢</a>
+    <div class="cart_like" data-module="tab-slider">
+        <div class="like_menu hd">
+            <span data-menu="tab-menu">
+                <a class="active">掌柜热卖</a>
+                <a>商家推荐</a>
+                <a>最近浏览</a>
+                <a>猜你喜欢</a>
             </span>
-           <!--  <a class="sc_btan" href="#">进入我的收藏</a> -->
+            <div class="slider_btn fr">
+                <a class="prev icon-angle-left"></a>
+                <a class="next icon-angle-right"></a>
+            </div>
         </div>
-        <div class="like_con tab-content">
-            <div class="tab-pane fade in active" id="hot">
+        <div class="like_con tab-content bd">
                 <ul>
-                <li>
-                    <a href="#">
-                        <p><span>￥:128.00</span><span>神农客精选五花肉</span></p>
-                        <img src="<{$baseurl}>/themes/pc/default/statics/images/bestsellers.jpg">
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <p><span>￥:128.00</span><span>神农客精选五花肉</span></p>
-                        <img src="<{$baseurl}>/themes/pc/default/statics/images/bestsellers_01.jpg">
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <p><span>￥:128.00</span><span>神农客精选五花肉</span></p>
-                        <img src="<{$baseurl}>/themes/pc/default/statics/images/bestsellers_02.jpg">
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <p><span>￥:128.00</span><span>神农客精选五花肉</span></p>
-                        <img src="<{$baseurl}>/themes/pc/default/statics/images/bestsellers_03.jpg">
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <p><span>￥:128.00</span><span>神农客精选五花肉</span></p>
-                        <img src="<{$baseurl}>/themes/pc/default/statics/images/bestsellers_04.jpg">
-                    </a>
-                </li>
-
-            </ul>
-
+                    <li>
+                        <a href="#">
+                            <p><span>￥:128.00</span><span>神农客精选五花肉</span></p>
+                            <img src="<{$baseurl}>/themes/pc/default/statics/images/bestsellers.jpg">
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <p><span>￥:128.00</span><span>神农客精选五花肉</span></p>
+                            <img src="<{$baseurl}>/themes/pc/default/statics/images/bestsellers_01.jpg">
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <p><span>￥:128.00</span><span>神农客精选五花肉</span></p>
+                            <img src="<{$baseurl}>/themes/pc/default/statics/images/bestsellers_02.jpg">
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <p><span>￥:128.00</span><span>神农客精选五花肉</span></p>
+                            <img src="<{$baseurl}>/themes/pc/default/statics/images/bestsellers_03.jpg">
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <p><span>￥:128.00</span><span>神农客精选五花肉</span></p>
+                            <img src="<{$baseurl}>/themes/pc/default/statics/images/bestsellers_04.jpg">
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <p><span>￥:128.00</span><span>神农客精选五花肉</span></p>
+                            <img src="<{$baseurl}>/themes/pc/default/statics/images/bestsellers_04.jpg">
+                        </a>
+                    </li>
+                </ul>
             <!-- 最近收藏 -->
-            </div>
-            <div class="tab-pane fade" id="choose">
-                <{WIDGET_B2C_GOOD_HOT app=b2c}><!--  -->
-            </div>
-            <div class="tab-pane fade" id="lately">
-            </div>
-            <div class="tab-pane fade" id="guess">
-            </div>
         </div>
     </div>
 </div>
@@ -148,18 +146,25 @@
 
 
 <script charset="utf-8">
+//掌柜热卖、商家推荐、最近浏览、猜你喜欢
 
+jQuery(".cart_like").slide({titCell: ".hd ul", mainCell: ".bd ul", autoPage: true, effect: "left", autoPlay: false, vis: 5, trigger: "click"});
+
+$('div[data-module="tab-slider"] [data-menu="tab-menu"]').on('click','a,span',function(){
+    $(this).addClass('active').siblings().removeClass('active');
+})
 /**
  * 购物车处理JS闭包
- * 主要处理购物车编辑时的数据及时更新
  * @author vmcshop.com
  * @version 1.150528
  */
 void function(){
     //异步加载最近浏览
-    $('.like_menu a[data-toggle="tab"]').on('shown.bs.tab', function(e){
+
+    /*$('.like_menu a[data-toggle="tab"]').on('shown.bs.tab', function(e){
         var pane_sel = $(this).attr('href');
         $(this).off('shown.bs.tab');
+ * 主要处理购物车编辑时的数据及时更新
         switch (pane_sel){
             case '#hot':
                 break;
@@ -175,8 +180,8 @@ void function(){
             e.stopPropagation();
             $(pane_sel).load(this.href);
         });
-    });
-    //>>
+    });*/
+    
     $('.c-ci-price').each(function(index){
         var interval = parseInt($(this).attr('data-interval')), price_up = parseFloat($(this).attr('data-up')), price_dn = parseFloat($(this).attr('data-dn'));
         var input_obj = $('.c-ci-quantity input[type=text]').eq(index);

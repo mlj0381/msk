@@ -1196,10 +1196,20 @@ ul,ol{
 						border-bottom:2px solid @basecolor;
 					}
 				}
-				a.sc_btan{
-					.fr;
-					color:@basecolor;
-
+				.slider_btn{
+					display: inline-block;
+					float: right;
+					margin-top:13px;
+					a{
+						background: #eaeaea none repeat scroll 0 0;
+					    border: 1px solid #ddd;
+					    cursor: pointer;
+					    display: block;
+					    float: left;
+					    line-height: 18px;
+					    text-align: center;
+					    width: 19px;
+					}
 				}
 			}
 			.like_con{
@@ -1229,6 +1239,12 @@ ul,ol{
 								display: block;
 								color:#fff;
 								cursor: pointer;
+								width:100%;
+								height:20px;
+								line-height: 20px;
+								overflow: hidden;
+								white-space: nowrap;
+								text-overflow: ellipsis;
 							}
 						}
 

@@ -1115,9 +1115,20 @@ ol {
 .cart-html .cart-container .cart_like .like_menu span a.active {
   border-bottom: 2px solid #a40001;
 }
-.cart-html .cart-container .cart_like .like_menu a.sc_btan {
+.cart-html .cart-container .cart_like .like_menu .slider_btn {
+  display: inline-block;
   float: right;
-  color: #a40001;
+  margin-top: 13px;
+}
+.cart-html .cart-container .cart_like .like_menu .slider_btn a {
+  background: #eaeaea none repeat scroll 0 0;
+  border: 1px solid #ddd;
+  cursor: pointer;
+  display: block;
+  float: left;
+  line-height: 18px;
+  text-align: center;
+  width: 19px;
 }
 .cart-html .cart-container .cart_like .like_con {
   width: 100%;
