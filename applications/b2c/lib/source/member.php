@@ -126,5 +126,7 @@ class b2c_source_member extends base_source {
         $data['goods_price'] = $goods['price_dn'];
         $data['image_default_id'] = $goods['image_id'];
         $mdl_member_goods->save($data);
+        //一个月之外的浏览记录删除
+        $mdl_member_goods->delete(array('member_id' => $data['member_id'], 'create_time|than' => (time() - 2592000)));
     }
 }

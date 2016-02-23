@@ -87,6 +87,8 @@ class b2c_ctl_site_cart extends b2c_frontpage {
         $this->page('site/cart/index.html');
     }
 
+    //购物车页面查询商品推荐内容
+
     //空购物车提示页
     public function blank() {
         $this->set_tmpl('cart');

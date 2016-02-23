@@ -81,12 +81,12 @@
                             <{$order.createtime|cdate}>
                         </li>
                         <li>#<a class="text-muted" href="<{link app=b2c ctl=site_order act=detail args0=$order.order_id}>"><strong><{$order.order_id}></strong></a></li>
-                        <li>
-                            <{$order.pay_status|order_pay_status}>
-                        </li>
-                        <li>
-                            <{$order.ship_status|order_ship_status}>
-                        </li>
+                        <!--<li>-->
+                            <!--<{$order.pay_status|order_pay_status}>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<{$order.ship_status|order_ship_status}>-->
+                        <!--</li>-->
                         <li><a href="<{link app=store ctl=site_store act=index args0=$order.store_id}>"><{$order.store_name}></a></li>
                         <li><a href="#"><img src="<{$baseurl}>/themes/pc/default/statics/images/customer_03.jpg"></a></li>
                         <{if $status eq 's7'}>

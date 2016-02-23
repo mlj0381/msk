@@ -399,7 +399,43 @@ vmc_b2c_orders WHERE `member_id`={$this->member['member_id']} AND `status` = 'ac
     //我的足迹
     public function sleuth()
     {
+        $current_time = time();
+        $week = date('w', $current_time);
+
+        //计算当天之后还要补几天加上当前天
+        $after_day = $week == '0' ? 0 : 8 - $week;
+        //计算日期要往前推多少天
+        $week_num = date('w', $current_time - 30 * 86400);
+        $before_day = $week_num == '0' ? 6 : $week_num - 1;
+        $sum_day = $before_day + $after_day + 30;
+        $days = array();
+        for($i = 0; $i < $sum_day; $i++){
+            $index = floor($i / 7);
+            if($i > $before_day + 30){
+                $time = $current_time + ($i - $before_day - 30) * 86400;
+                $date = date('Y-m-d', $current_time - ($sum_day - $before_day - $i) * 86400);
+                $week = date('w', $current_time - ($sum_day - $before_day - $i) * 86400);
+            }else{
+                $time = $current_time - ($sum_day - $after_day - $i) * 86400;
+                $date = date('Y-m-d',$current_time - ($sum_day - $after_day - $i) * 86400);
+                $week = date('w',$current_time - ($sum_day - $after_day - $i) * 86400);
+            }
+            $type = 'green';
+            if($i < $before_day || $i > $before_day + 30){
+                $type = 'gray';
+            }
+            $days[$index][$i] = array(
+                        'type' => $type,
+                        'date' => $date,
+                        'week' => $week,
+                        'time' => $time,);
+        }
+        $this->pagedata['days'] = $days;
         $this->output();
+    }
+
+    public function date(){
+
     }
 
     //退货与维权

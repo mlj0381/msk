@@ -294,6 +294,21 @@ class seller_ctl_site_goods extends seller_frontpage
         $this->splash('success', $redirect_url, '商品添加成功');
     }
 
+    //ajax检查商品gid
+    public function check_gid(){
+
+        $params = $this->_request->get_get();
+        $goods_id = $params['goods']['gid'];
+        if (!empty($goods_id) && $this->mB2cGoods->count(array('gid' => $goods_id)) > 0) {
+            $this->splash('error', '',  '重复的商品ID'.$goods_id);
+        }
+        $this->splash('success', '',  '可用');
+    }
+    //ajax检查商品货品
+    public function check_bn(){
+
+    }
+
     //修改
     public function edit()
     {
