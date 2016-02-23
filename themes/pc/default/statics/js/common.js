@@ -7,7 +7,7 @@ $(function() {
     var webMenu = $('.website_menu')[0];
     var timer = null;
     webMenu.onmouseover = siteNav.onmouseover = function() {
-        clearInterval(timer);
+        clearTimeout(timer);
         webMenu.style.display = "block";
         $('.site_nav a i').attr('class', 'icon-angle-up');
     }

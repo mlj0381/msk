@@ -2177,13 +2177,66 @@ ul,ol{
 				text-align: center;
 				vertical-align:middle;
 				.price_area{
-					span{
-						margin:0 5px;
-						display: inline-block;
+					position: relative;
+					height:30px;
+					line-height: 30px;
+					&:hover{
+						background: #fff;
+						cursor: pointer;
+						border:1px solid #ddd;
+						border-bottom:none;
 					}
-					input{
-						width:80px;
+					.text-danger{
+						width:100%;
+						padding:5px 10px;
+						cursor: pointer;
 					}
+					.price_set{
+						position:absolute;
+						top:28px;
+						right:-1px;
+						background: #fff;
+						width:500px;
+						min-height:100px;
+						border:1px solid #ddd;
+						z-index: 100;
+						padding:10px;
+						display: none;
+						table{
+							width:100%;
+							th{
+								height:30px;
+							}
+							td{
+								padding:5px 0px;
+								height:30px;
+								input,select{
+									width:80%;
+									height:20px;
+								}
+								.ctl_span{
+									cursor: pointer;
+									display: inline-block;
+									height:30px;
+									width:30px;
+									line-height: 30px;
+								}
+								.disabled{
+									color:#ddd;
+									cursor: default;
+								}
+							}
+						}
+						.priceSet_ctl{
+							width:100%;
+							margin-top:20px;
+							text-align: center;
+							a{
+								margin:0 15px;
+							}
+						}
+					}
+					
 				}
 			}
 		}
