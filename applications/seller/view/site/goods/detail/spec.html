@@ -130,7 +130,7 @@
         };
 
         String.prototype.trim = function () {
-
+            
             return this.replace(/(^\s*)|(\s*$)/g, '');
         }
 
@@ -147,7 +147,7 @@
                 if (_self.hasClass('sect')) {
                     _self.find('input').removeAttr('disabled');
                     specDesc += ',' + addText;
-
+                    
                 } else {
                     var arr = specDesc.split(',');
                     for (var i = 0; i < arr.length; i++) {
@@ -194,10 +194,12 @@
 
             $.each(ul, function (index, items) {
                 var select = new Array();
+                var idx = 0;
                 for (var i = 0; i < $(items).find('li').size(); i++) {
                     var item = $(items).find('li').eq(i);
                     if (item.hasClass('sect')) {
-                        select[i] = item.text().trim();
+                        select[idx] = item.text().trim();
+                        idx ++;
                         not_null = true;
                     }
                 }
@@ -215,9 +217,9 @@
             if (!not_null) {
                 Messagebox.warning('您还没有填写任何规格值。', '操作提醒');
             }
-
+            
             var root_arr = spec_v_item.shift();
-
+            
             var loop_arr;
             var lnk_arr = function (r, a) {
                 var _return = [];

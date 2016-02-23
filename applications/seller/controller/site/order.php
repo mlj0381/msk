@@ -38,7 +38,8 @@ class seller_ctl_site_order extends seller_frontpage
         if($status == 's2'){
             $where = $search['sql'];
             $sql = "SELECT
-* FROM  vmc_b2c_orders WHERE `store_id`={$this->store['store_id']} AND `status` = 'active' AND `confirm` = 'N' AND (`is_cod`='Y' OR
+* FROM
+ vmc_b2c_orders WHERE `store_id`={$this->store['store_id']} AND `status` = 'active' AND `confirm` = 'N' AND `ship_status` = '0'  (`is_cod`='Y' OR
 `pay_status`='1')  {$where}   ORDER BY createtime desc LIMIT ". (($page - 1) * $limit). ", {$limit}";
             $order_list = vmc::database()->select($sql);
         }else{

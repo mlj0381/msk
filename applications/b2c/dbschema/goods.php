@@ -247,12 +247,10 @@ $db['goods'] = array(
        ) ,
        // by bibin 商品推荐 2015、11、16
        'choose' => array(
-           'type' => array(
-               'shop' => ('店铺推荐'),
-               'win' => ('橱窗推荐'),
-           ),
+           'type' => 'number',
            'in_list' => true,
            'label' => ('商品推荐'),
+           'comment' => '商品推荐',
        ),
        //>>
         'params' =>

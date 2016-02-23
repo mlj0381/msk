@@ -313,6 +313,7 @@ class b2c_mdl_orders extends dbeav_model {
                 
                 'status' => 'active',
                 'confirm'=> 'Y',
+                'ship_status' => array(1, 2),
                 'comment_type' => '0'
             ),
             's5' => array(

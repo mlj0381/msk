@@ -196,12 +196,12 @@ class b2c_ctl_site_order extends b2c_frontpage
         if ($order['member_id'] != $this->app->member_id) {
             $this->splash('error', '非法操作!');
         }
-        foreach ($mdl_order_log->getList('behavior,log_time', array(
+        $logs = $mdl_order_log->getList('behavior,log_time', array(
             'order_id' => $order['order_id'],
             'result' => 'success',
             //会员端只显示成功日志
-
-        )) as $log) {
+        ));
+        foreach ($logs as $log) {
             $order['process'][$log['behavior']] = $log['log_time'];
         }
         $this->pagedata['order'] = $order;
