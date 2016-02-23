@@ -526,9 +526,78 @@ ol {
 .buyer_container .my-main .my-page .sleuth_page .top_panel {
   background: #f2f2f2;
 }
+.buyer_container .my-main .my-page .sleuth_page .top_panel .panel-body {
+  padding: 10px 20px 10px 15px;
+}
 .buyer_container .my-main .my-page .sleuth_page .top_panel .panel_body_lt span,
 .buyer_container .my-main .my-page .sleuth_page .top_panel .panel_body_lt select {
   margin-right: 15px;
+}
+.buyer_container .my-main .my-page .sleuth_page .top_panel .panel_body_lt .calendar_wrap {
+  position: relative;
+  left: 0;
+  top: 0px;
+  width: auto;
+  float: left;
+}
+.buyer_container .my-main .my-page .sleuth_page .top_panel .panel_body_lt .calendar_wrap .calendar_btn {
+  width: 80px;
+  float: left;
+  height: 34px;
+  padding-left: 10px;
+  line-height: 30px;
+  background: #e1e1e1;
+  cursor: pointer;
+}
+.buyer_container .my-main .my-page .sleuth_page .top_panel .panel_body_lt .calendar_wrap .calendar_btn:hover {
+  background: #fff;
+  border: 1px solid #ddd;
+  border-right: 0px;
+}
+.buyer_container .my-main .my-page .sleuth_page .top_panel .panel_body_lt .calendar_wrap .sleuth_calendar {
+  position: absolute;
+  left: 80px;
+  top: 0px;
+  width: 780px;
+  border: 1px solid #ddd;
+  background: #fff;
+  z-index: 500;
+}
+.buyer_container .my-main .my-page .sleuth_page .top_panel .panel_body_lt .calendar_wrap .sleuth_calendar .title {
+  width: 94%;
+  background: #fff;
+  height: 33px;
+  line-height: 33px;
+  font-size: 24px;
+  padding-left: 20px;
+  margin-left: -1px;
+}
+.buyer_container .my-main .my-page .sleuth_page .top_panel .panel_body_lt .calendar_wrap .sleuth_calendar ul {
+  width: 700px;
+  margin: 0 auto;
+  margin-bottom: 15px;
+  padding-top: 10px;
+}
+.buyer_container .my-main .my-page .sleuth_page .top_panel .panel_body_lt .calendar_wrap .sleuth_calendar ul li {
+  float: left;
+  width: 100px;
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
+  border-bottom: 1px solid #ddd;
+}
+.buyer_container .my-main .my-page .sleuth_page .top_panel .panel_body_lt .calendar_wrap .sleuth_calendar table {
+  box-sizing: border-box;
+  width: 700px;
+  margin: 0 auto;
+  border-collapse: collapse;
+  border-color: 1px solid #ddd;
+}
+.buyer_container .my-main .my-page .sleuth_page .top_panel .panel_body_lt .calendar_wrap .sleuth_calendar table td {
+  width: 100px;
+  height: 100px;
+  text-align: center;
+  border: 1px solid #ddd;
 }
 .buyer_container .my-main .my-page .sleuth_page .top_panel .classpanel_body_rt span {
   margin-right: 15px;
@@ -1158,6 +1227,12 @@ ol {
   display: block;
   color: #fff;
   cursor: pointer;
+  width: 100%;
+  height: 20px;
+  line-height: 20px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 .cart-html .cart-container .cart_like .like_con ul li img {
   width: 216px;

@@ -554,9 +554,80 @@ ul,ol{
 			.sleuth_page{
 				.top_panel{
 					background: #f2f2f2;
+					.panel-body{
+						padding:10px 20px 10px 15px;
+					}
 					.panel_body_lt{
+
 						span,select{
 							margin-right:15px;
+						}
+						.calendar_wrap{
+							position:relative;
+							left: 0;
+							top:0px;
+							width:auto;
+							float: left;
+
+							.calendar_btn{
+								width:80px;
+								float: left;
+								height:34px;
+								padding-left:10px;
+								line-height: 30px;
+								background: #e1e1e1;
+								cursor: pointer;
+								&:hover{
+									background: #fff;
+									border:1px solid #ddd;
+									border-right:0px;
+								}
+							}
+							.sleuth_calendar{
+								position: absolute;
+								left: 80px;
+								top:0px;
+								width:780px;
+								border:1px solid #ddd;
+								background: #fff;
+								z-index: 500;
+								.title{
+									width:94%;
+									background: #fff;
+									height:33px;
+									line-height: 33px;
+									font-size: 24px;
+									padding-left:20px;
+									margin-left:-1px;
+								}
+								ul{
+									width:700px;
+									margin:0 auto;
+									margin-bottom:15px;
+									padding-top:10px;
+									li{
+										float: left;
+										width:100px;
+										height:30px;
+										line-height: 30px;
+										text-align: center;
+										border-bottom:1px solid #ddd;
+									}
+								}
+								table{
+									box-sizing: border-box;
+									width:700px;
+									margin:0 auto;
+									border-collapse: collapse;
+									border-color: 1px solid #ddd;
+									td{
+										width:100px;
+										height:100px;
+										text-align: center;
+										border:1px solid #ddd;
+									}
+								}
+							}
 						}
 					}
 					.classpanel_body_rt{
