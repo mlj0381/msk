@@ -160,6 +160,9 @@ class seller_ctl_site_goods extends seller_frontpage
         $return['store']['store_type'] = $store_type[$return['store']['store_type']]['name'];
         //获取展示位置
         $return['setting'] = $this->app->getConf('goods_setting');
+
+        //获取仓库信息
+
         return $return;
     }
 
@@ -239,6 +242,8 @@ class seller_ctl_site_goods extends seller_frontpage
 
     public function save($type = null)
     {
+        header('Content-Type:text/html;charset=utf-8');
+
         $redirect_url = $this->gen_url(array('app' => 'seller', 'ctl' => 'site_goods', 'act' => $type ? 'add' : 'index'));
         if (!$_POST) {
             $this->splash(false, $redirect_url, '非法请求');
@@ -255,6 +260,7 @@ class seller_ctl_site_goods extends seller_frontpage
 
         $db = vmc::database();
         $db->beginTransaction();
+
         if (!$this->mB2cGoods->save($goods)) {
             $db->rollback();
             $this->splash('error', $redirect_url, '保存失败');

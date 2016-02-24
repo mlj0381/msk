@@ -15,6 +15,12 @@
         </div>
     </div>
     <div class="form-group">
+        <label class="col-xs-2 control-label"><span class="text-danger">*</span><span>所在仓库</span></label>
+        <div class="col-xs-5">
+            <{input type=region name="goods[stock]" detail=1 value=$goods.stock required="true"}>
+        </div>
+    </div>
+    <div class="form-group">
         <label class="col-xs-2 control-label"><span>商品编号</span></label>
         <div class="col-xs-5">
             <input type="text" value="<{$goods.gid}>" remote="<{link app=seller ctl=site_goods act=check_gid}>"

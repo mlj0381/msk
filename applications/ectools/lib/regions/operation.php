@@ -25,10 +25,16 @@ class ectools_regions_operation
      */
     public $regions;
     /**
+     * @param string 查询数据类型 0 三级联动 1 仓库
+     */
+    public $type = 0;
+    /**
      * 构造方法.
      *
      * @param object 当前app的
      */
+
+
     public function __construct($app)
     {
         $this->app = $app;
@@ -43,7 +49,7 @@ class ectools_regions_operation
      */
     public function getTreeSize()
     {
-        $cnt = $this->model->count();
+        $cnt = $this->model->count(array('type' => $this->type));
         if ($cnt > 100) {
             return true;
         } else {
@@ -79,13 +85,14 @@ class ectools_regions_operation
         //$aTemp=$this->db->select($sql);
         if ($regionId) {
             $aTemp = $this->model->getList('region_id,p_region_id,local_name,ordernum,region_path', array(
-            'p_region_id' => $regionId,
-        ), 0, -1, 'ordernum ASC,region_id ASC');
+            'p_region_id' => $regionId, 'type' => $this->type
+            ), 0, -1, 'ordernum ASC,region_id ASC');
         } else {
             $aTemp = $this->model->getList('region_id,p_region_id,local_name,ordernum,region_path', array(
-            'region_grade' => '1',
-        ), 0, -1, 'ordernum ASC,region_id ASC');
+            'region_grade' => '1', 'type' => $this->type
+            ), 0, -1, 'ordernum ASC,region_id ASC');
         }
+
         if (is_array($aTemp) && count($aTemp) > 0) {
             foreach ($aTemp as $key => $val) {
                 $aTemp[$key]['p_region_id'] = intval($val['p_region_id']);
@@ -106,9 +113,13 @@ class ectools_regions_operation
     public function getMap($prId = '')
     {
         if ($prId) {
-            $sql = 'select region_id,region_grade,local_name,ordernum,(select count(*) from '.$this->model->table_name(1).' where p_region_id=r.region_id) as child_count from '.$this->model->table_name(1).' as r where r.p_region_id='.intval($prId).' order by ordernum asc,region_id';
+            $sql = 'select
+region_id,region_grade,local_name,ordernum,(select count(*) from '.$this->model->table_name(1).' where p_region_id=r.region_id) as
+child_count from '.$this->model->table_name(1).' as r where r.p_region_id='.intval($prId).' AND  `type`='.$this->type.'  order by ordernum asc,region_id';
         } else {
-            $sql = 'select region_id,region_grade,local_name,ordernum,(select count(*) from '.$this->model->table_name(1).' where p_region_id=r.region_id) as child_count from '.$this->model->table_name(1).' as r where r.p_region_id is null order by ordernum asc,region_id';
+            $sql = 'select
+region_id,region_grade,local_name,ordernum,(select count(*) from '.$this->model->table_name(1).' where p_region_id=r.region_id) as
+child_count from '.$this->model->table_name(1).' as r where r.p_region_id is null  AND `type`='.$this->type.' order by ordernum asc,region_id';
         }
         $row = $this->model->db->select($sql);
         if (isset($row) && $row) {
@@ -135,13 +146,11 @@ class ectools_regions_operation
     {
         if (!trim($aData['local_name'])) {
             $msg = '地区名称不能为空！';
-
             return false;
         }
         $aData['ordernum'] = $aData['ordernum'] ? $aData['ordernum'] : '50';
-        if ($this->model->checkDlArea($aData['local_name'], $aData['p_region_id'])) {
+        if ($this->model->checkDlArea($aData['local_name'], $aData['p_region_id'], $aData['type'])) {
             $msg = '该地区名称已经存在！';
-
             return false;
         }
         //$tmp = $this->model->db->selectrow('select region_path from '.$this->model->table_name(1).' where region_id='.intval($aData['p_region_id']));
@@ -276,9 +285,11 @@ class ectools_regions_operation
     {
         $show_depth = $this->app->getConf('system_area_depth');
         if ($p_regionid) {
-            $sql = 'select region_id,region_grade,local_name,ordernum,(select count(*) from '.$this->model->table_name(1).' where p_region_id=r.region_id) as child_count from '.$this->model->table_name(1).' as r where r.p_region_id='.intval($p_regionid).' order by ordernum asc,region_id';
+            $sql = 'select
+region_id,region_grade,local_name,ordernum,(select count(*) from '.$this->model->table_name(1).' where p_region_id=r.region_id) as child_count from '.$this->model->table_name(1).' as r where  `type`='.$this->type.' AND r.p_region_id='.intval($p_regionid).' order by ordernum asc,region_id';
         } else {
-            $sql = 'select region_id,region_grade,local_name,ordernum,(select count(*) from '.$this->model->table_name(1).' where p_region_id=r.region_id) as child_count from '.$this->model->table_name(1).' as r where r.p_region_id is null order by ordernum asc,region_id';
+            $sql = 'select
+region_id,region_grade,local_name,ordernum,(select count(*) from '.$this->model->table_name(1).' where p_region_id=r.region_id) as child_count from '.$this->model->table_name(1).' as r where  `type`='.$this->type.' AND  r.p_region_id is null order by ordernum asc,region_id';
         }
         $row = $this->model->db->select($sql);
         if (isset($row) && $row) {
@@ -317,22 +328,37 @@ class ectools_regions_operation
      *
      * @reutrn boolean
      */
+    public function arrayTmp(Array $regions){
+        $return = array();
+        foreach ($regions as $v) {
+            if(is_array($v)){
+                $this->arrayTmp($v);
+            }
+            $return[] = $v;
+        }
+        return $return;
+    }
     public function updateRegionData()
     {
+
         $this->getAllRegions();
+
         $this->regions = (array) $this->regions;
         $regions = array();
         foreach ($this->regions as $v) {
             $regions[] = $v;
         }
+        //$regions = $this->arrayTmp($this->regions);
         unset($this->regions);
         // 文件数据
         if (!is_dir(DATA_DIR.'/misc')) {
             utils::mkdir_p(DATA_DIR.'/misc');
         }
-
         $script = 'var REGION_DATA='.json_encode($regions).';';
         $filename = DATA_DIR.'/misc/region_data.js';
+        if($this->type == 1){
+            $filename = DATA_DIR.'/misc/warehouse_data.js';
+        }
         $handle = fopen($filename, 'w');
         if (!$handle) {
             fclose($handle);

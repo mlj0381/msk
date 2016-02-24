@@ -1,11 +1,12 @@
 <h3 class="page-title">
-			地区管理
+			<{if $type}>仓库<{else}>地区<{/if}>管理
 </h3>
 
 <div class="table-toolbar">
     <div class="btn-group">
-        <a class="btn green" data-target="#area_edit" data-toggle="modal" label="添加新地区" icon="fa-plus" href="index.php?app=ectools&ctl=regions&act=edit">
-                添加新地区&nbsp;<i class="fa fa-plus"></i>
+        <a class="btn green" data-target="#area_edit" data-toggle="modal" label="添加新<{if $type}>仓库<{else}>地区<{/if}>"
+           icon="fa-plus" href="index.php?app=ectools&ctl=regions&act=edit&p[0]=0&p[1]=0&p[2]=<{$type}>">
+                添加新<{if $type}>仓库<{else}>地区<{/if}>&nbsp;<i class="fa fa-plus"></i>
         </a>
     </div>
 </div>
@@ -37,7 +38,8 @@
           <td>
               <a data-target="#area_edit" data-toggle="modal" href="index.php?app=ectools&ctl=regions&act=edit&p[0]=<{$item.region_id}>&p[1]=<{$item.p_region_id}>" class="btn btn-xs btn-default"><i class="fa fa-edit"></i> 编辑</a>
               <button type="button" data-areaname="<{$item.local_name}>"  data-action="index.php?app=ectools&ctl=regions&act=toRemoveArea&p[0]=<{$item.region_id}>" class="btn btn-xs btn-default area-del"><i class="fa fa-trash-o"></i> 删除</button>
-              <a data-target="#area_edit" data-toggle="modal" href="index.php?app=ectools&ctl=regions&act=edit&p[0]=false&p[1]=<{$item.region_id}>" class="btn btn-xs btn-default"><i class="fa fa-plus"></i> 添加子地区</a>
+              <a data-target="#area_edit" data-toggle="modal"
+                 href="index.php?app=ectools&ctl=regions&act=edit&p[0]=false&p[1]=<{$item.region_id}>&p[2]=<{$type}>" class="btn btn-xs btn-default"><i class="fa fa-plus"></i> 添加子地区</a>
 
           </td>
         </tr>
@@ -96,7 +98,7 @@
         $.ajax({
             url: 'index.php?app=ectools&ctl=regions&act=getChildNode',
             type: 'post',
-            data: {regionId:regionid},
+            data: {regionId:regionid, type : '<{$type}>'},
             success:function(re){
                 $(re).insertAfter(_this.closest('tr'));
                 _this.find('.fa').removeClass('fa-plus-square-o').addClass('fa-minus-square-o');

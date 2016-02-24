@@ -17,6 +17,7 @@
         <div class="col-xs-5">
             <ul class="quality">
                 <input type="hidden" name="goods[spec_desc][v][]" value="<{$goods.spec_desc.v[$i]}>"/>
+
                 <{foreach from=$items.props_value item=item}>
                 <li <{if $item.name|in:$goods.spec_desc.v[$i]}>
                     class ="sect"
@@ -88,21 +89,24 @@
                                 </tr>
                             </thead>
                             <tbody>
+                            <{foreach from=$items.interval.price key=idx item=item}>
                                 <tr class="spec_addRow">
                                     <td>
-                                        <input type="text" >
+                                        <input type="text" name="goods[product][{key}][interval][num_dn][]"
+                                               value="<{$items.interval.num_dn[$idx]}>">
                                     </td>
                                     <td>
-                                        <input type="text" >
+                                        <input type="text" name="goods[product][{key}][interval][num_up][]" value="<{$items.interval.num_up[$idx]}>">
                                     </td>
                                     <td>
-                                        <input type="text" >
+                                        <input type="text" name="goods[product][{key}][interval][price][]" value="<{$items.interval.price[$idx]}>">
                                     </td>
                                     <td>
                                         <span class="ctl_span icon-plus" title="增加价盘区间"></span>
                                         <span class="ctl_span icon-trash disabled" title="删除价盘区间"></span>
                                     </td>
                                 </tr>
+                            <{/foreach}>
                             </tbody>
                         </table>
                     </div>
@@ -154,13 +158,13 @@
                             <tbody>
                                 <tr class="spec_addRow">
                                     <td>
-                                        <input type="text" >
+                                        <input type="text" name="goods[product][{key}][interval][num_dn][]" >
                                     </td>
                                     <td>
-                                        <input type="text" >
+                                        <input type="text" name="goods[product][{key}][interval][num_up][]" >
                                     </td>
                                     <td>
-                                        <input type="text" >
+                                        <input type="text" name="goods[product][{key}][interval][price][]" >
                                     </td>
                                     <td>
                                         <span class="ctl_span icon-plus" title="增加价盘区间"></span>
@@ -226,7 +230,7 @@
 
 
         var ul = $('#sepcInfo  ul');
-        $('ul').each(function (idx, item) {
+        $(ul).each(function (idx, item) {
             $(item).find('li').click(function () {
                 if('<{$goods.product}>') return false;
                 var _self = $(this);

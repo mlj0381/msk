@@ -131,14 +131,14 @@ class ectools_mdl_regions extends dbeav_model
      * @params string name
      * @params int region id
      */
-    public function checkDlArea($name, $p_region_id)
+    public function checkDlArea($name, $p_region_id, $type)
     {
         /*$aTemp = $this->db->selectrow("SELECT area_id FROM vmc_dly_area WHERE name='".$sName."' order by ordernum desc");
         return $aTemp['area_id']; */
         if ($p_region_id) {
-            $aTemp = $this->dump(array('local_name' => $name, 'p_region_id' => $p_region_id), 'region_id');
+            $aTemp = $this->dump(array('local_name' => $name, 'p_region_id' => $p_region_id, 'type' => $type), 'region_id');
         } else {
-            $aTemp = $this->dump(array('local_name' => $name), 'region_id');
+            $aTemp = $this->dump(array('local_name' => $name, 'type' => $type), 'region_id');
         }
         //$aTemp = $this->db->selectrow("SELECT region_id FROM ".$this->table_name(1)." WHERE local_name='".$name."' and p_region_id".($p_region_id?('='.intval($p_region_id)):' is null'));
         return $aTemp['region_id'];

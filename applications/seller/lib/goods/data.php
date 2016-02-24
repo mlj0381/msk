@@ -58,7 +58,8 @@ class seller_goods_data
                 }
             }
         }
-        if(!$goods['spec_desc'] || empty($goods['spec_desc']) || empty($goods['spec_desc']['v']) ||empty($goods['spec_desc']['t']) || count($goods['product'])<2){
+        if(empty($goods['spec_desc']) || empty($goods['spec_desc']['v']) ||empty($goods['spec_desc']['t'])){
+            // || count($goods['product'])<2
             $goods['spec_desc'] = null;
         }
         //关键词
