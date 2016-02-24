@@ -174,23 +174,28 @@
                           </a>
                       </div>
                     <div class="caption">
-                      <h3 class="g-name">
-                          <a href="<{link app=b2c ctl=site_product args0=$item.product.product_id args1=$item.store_id}>"><{$item.name}></a>
-                      </h3>
-                      <div class="g-name">
-                          <a href="<{link app=store ctl=site_store args0=$item.store_id}>"><{$item.store_info.store_name|cut:50:'...'}></a>
-                      </div>
-                      <p class="avg-mark">
-                          <small><{$item.count_mark.count_mark|default:0}></small>  <span class="text-warning">个评价</span>
-                      </p>
                       <ul class="list-inline">
                           ￥<{if $item.product.promotion.sale_price && $item.product.promotion.sale_price!='null'}>
                           <li class="text-muted"><del><{$item.product.buy_price|cur}></del></li>
-                          <li class="price-1 text-danger"><{$item.product.promotion.sale_price|cur}></li>
+                          <li class="price-1"><{$item.product.promotion.sale_price|cur}></li>
                           <{else}>
-                          <li class="price-1 text-danger"><{$item.product.price_dn|cur}></li>
+                          <li class="price-1"><{$item.product.price_dn|cur}></li>
                           <{/if}>
                       </ul>
+                      <h3 class="g-name">
+                          <a href="<{link app=b2c ctl=site_product args0=$item.product.product_id args1=$item.store_id}>" title='<{$item.name}>'><{$item.name}></a>
+                      </h3>
+                      <div class="g-ctl clearfix">
+                        <a class="add_cart fl"><i class="icon-shopping-cart"></i>加入购物车</a>
+                        <a class="add_fav fr"><i class="icon-heart"></i>收藏</a>
+                      </div>
+                      <div class="store-name">
+                          <a href="<{link app=store ctl=site_store args0=$item.store_id}>"><{$item.store_info.store_name|cut:50:'...'}></a>
+                      </div>
+                      <!-- <p class="avg-mark">
+                          <small><{$item.count_mark.count_mark|default:0}></small>  <span class="text-warning">个评价</span>
+                      </p> -->
+                      
                     </div>
                   </div>
                 </div>
