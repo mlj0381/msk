@@ -174,7 +174,6 @@ class b2c_goods_search
             ),
         );
         cachemgr::set($cache_key, $return, cachemgr::co_end());
-//print_r($return['data']);
         return $return;
     }
 

@@ -124,6 +124,7 @@
 		
         <menugroup name="商品配置">
             <menu action='index' controller='admin_goods_type' display='true' order='40' permission='typegoods'>商品类型</menu>
+            <menu action='index' controller='admin_goods_type' params="p[0]:1" display='true' order='40' permission='typegoods'>商品规格</menu>
             <menu action='add' controller='admin_goods_type' display='false' order='50' permission='typegoods'>添加类型</menu>
             <menu action='set' controller='admin_goods_type' display='false' order='50' permission='typegoods'>编辑类型</menu>
             <menu action='index' controller='admin_goods_cat' display='true' order='30' permission='catgoods'>商品分类</menu>
@@ -131,7 +132,7 @@
             <menu action='create' controller='admin_brand' display='false' order='130' permission='brandgoods'>添加品牌</menu>
             <menu action='edit' controller='admin_brand' display='false' order='130' permission='brandgoods'>编辑品牌</menu>
             <menu action='index' controller='admin_brand' display='true' order='140' permission='brandgoods'>商品品牌</menu>
-            <menu action='index' controller='admin_stock' display='true' order='150' permission='stock'>商品库存</menu>
+            <menu action='index' controller='admin_stock' display='false' order='150' permission='stock'>商品库存</menu>
             <menu action='stock_batch_save' controller='admin_stock' display='false' order='150' permission='stock'>商品库存批量编辑</menu>
             <menu action='stock_quick_update' controller='admin_stock' display='false' order='150' permission='stock'>商品库存快速编辑</menu>
         </menugroup>

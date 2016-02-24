@@ -76,7 +76,7 @@
 <script>
 
     var callBack = function(cat_id) {
-        var url = "<{link app=seller ctl=site_goods act=selfParams}>";
+        var url = "<{link app=seller ctl=site_goods act=getProp}>";
         if(!cat_id) return false;
         $.post(url, {cat_id : cat_id}, function(re){
             $('#param div.last-option').remove();

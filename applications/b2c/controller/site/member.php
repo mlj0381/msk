@@ -421,7 +421,7 @@ vmc_b2c_orders WHERE `member_id`={$this->member['member_id']} AND `status` = 'ac
                 $week = date('w',$current_time - ($sum_day - $after_day - $i) * 86400);
             }
             $type = 'green';
-            if($i < $before_day || $i > $before_day + 30){
+            if($i <= $before_day || $i > $before_day + 30){
                 $type = 'gray';
             }
             $days[$index][$i] = array(
