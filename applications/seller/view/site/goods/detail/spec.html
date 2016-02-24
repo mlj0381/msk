@@ -50,7 +50,7 @@
         <th class="col-xs-2">货号</th>
         <th class="col-xs-2">质量等级</th>
         <th class="col-xs-2">包装</th>
-        <th class="col-xs-2">销售价</th>
+        <th class="col-xs-2">销售价盘</th>
         <th class="col-xs-2">库存</th>
         <th class="col-xs-2">是否上架</th>
     </tr>
@@ -75,6 +75,38 @@
                         <input type="text" value="<{$items.price_dn}>" name="goods[product][<{$key}>][price_up]" placeholder="元">
                     </span>
                 </div> -->
+                <div class="price_area">
+                    <a class="text-danger priceSet_btn">设置销售价盘</a>
+                    <div class="price_set">
+                        <table class="price_settable">
+                            <thead>
+                                <tr>
+                                    <th class="col-xs-3">数量下限</th>
+                                    <th class="col-xs-3">数量上限</th>
+                                    <th class="col-xs-3">价格</th>
+                                    <th class="col-xs-3">操作</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="spec_addRow">
+                                    <td>
+                                        <input type="text" >
+                                    </td>
+                                    <td>
+                                        <input type="text" >
+                                    </td>
+                                    <td>
+                                        <input type="text" >
+                                    </td>
+                                    <td>
+                                        <span class="ctl_span icon-plus" title="增加价盘区间"></span>
+                                        <span class="ctl_span icon-trash disabled" title="删除价盘区间"></span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </td>
             <td>
                 <input type="hidden" name="goods[product][<{$key}>][stock_id]" value="<{$items.stock.stock_id}>" style="width:60px;">
@@ -110,16 +142,20 @@
                 <div class="price_area">
                     <a class="text-danger priceSet_btn">设置销售价盘</a>
                     <div class="price_set">
-                        <table>
+                        <table class="price_settable">
                             <thead>
                                 <tr>
-                                    <th class="col-xs-4">数量</th>
-                                    <th class="col-xs-4">价格</th>
-                                    <th class="col-xs-4">操作</th>
+                                    <th class="col-xs-3">数量下限</th>
+                                    <th class="col-xs-3">数量上限</th>
+                                    <th class="col-xs-3">价格</th>
+                                    <th class="col-xs-3">操作</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr class="spec_addRow">
+                                    <td>
+                                        <input type="text" >
+                                    </td>
                                     <td>
                                         <input type="text" >
                                     </td>
@@ -133,10 +169,6 @@
                                 </tr>
                             </tbody>
                         </table>
-                        <!-- <div class="priceSet_ctl">
-                            <a class="btn btn-md btn-default cancle-btn">取消设置</a>
-                            <a class="btn btn-md btn-danger save-btn">保存设置</a>
-                        </div> -->
                     </div>
                 </div>
             </td>
@@ -162,11 +194,11 @@
         })
         //新增价盘设置
         $('.new-products').on('click','.icon-plus',function(){
-            //if($parRow>=10) return;
-            var html = $(this).parent().parent().html();
+            var rows = $(this).parents('.price_settable').children('tbody').find('tr').size();
+            if(rows >= 10) return;   //不得超过十个
             var $parRow = $(this).parent().parent('tr');
+            var html = $(this).parent().parent().html();
             $parRow.after('<tr>'+html+'</tr>');
-
             $parRow.parent('tbody').find('.icon-trash').removeClass('disabled');
             $parRow.parent('tbody').find('.icon-trash:first').addClass('disabled');
 
