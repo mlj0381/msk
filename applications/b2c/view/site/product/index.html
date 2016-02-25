@@ -113,16 +113,13 @@
                                 </tr>
                             </thead>
                             <tbody>
+                            <{foreach from=$data_detail.product.interval.price key=key item=interval}>
                                 <tr>
-                                    <td>0</td>
-                                    <td>100</td>
-                                    <td>￥ 100</td>
+                                    <td><{$data_detail.product.interval.num_dn[$key]|default:1}></td>
+                                    <td><{$data_detail.product.interval.num_up[$key]|default:不限}></td>
+                                    <td>￥ <{$data_detail.product.interval.price[$key]|cur}></td>
                                 </tr>
-                                <tr>
-                                    <td>0</td>
-                                    <td>100</td>
-                                    <td>￥ 100</td>
-                                </tr>
+                            <{/foreach}>
                             </tbody>
                         </table>
                     </div>
@@ -146,7 +143,7 @@
                     </div>
                     <div class="price-availability-block">
                         <span class="price text-danger">
-                            <strong>￥<{$data_detail.product.buy_price|cur}></strong>
+                            <strong>￥<{$data_detail.product.interval.price[0]|cur}></strong>
                         </span>
                     </div>
                     <hr>
@@ -448,7 +445,6 @@
      */
     $(function () {
         //计算价格
-
 
         //模板填充
         var substitute = function (str, obj) {
