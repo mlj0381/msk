@@ -569,36 +569,40 @@ ul,ol{
 							width:auto;
 							float: left;
 
-							.calendar_btn{
+							.calendar_open{
 								width:80px;
 								float: left;
 								height:34px;
 								padding-left:10px;
-								line-height: 30px;
+								line-height: 34px;
 								background: #e1e1e1;
 								cursor: pointer;
-								&:hover{
-									background: #fff;
-									border:1px solid #ddd;
-									border-right:0px;
-								}
 							}
 							.sleuth_calendar{
+								display: none;
 								position: absolute;
 								left: 80px;
 								top:0px;
-								width:780px;
+								width:730px;
 								border:1px solid #ddd;
 								background: #fff;
 								z-index: 500;
+								padding-bottom:15px;
 								.title{
-									width:94%;
+									margin-top:10px;
+									width:100%;
 									background: #fff;
 									height:33px;
 									line-height: 33px;
 									font-size: 24px;
 									padding-left:20px;
-									margin-left:-1px;
+									.calendar_close{
+										color:#666;
+										cursor: pointer;
+										&:hover{
+											color:@basecolor;
+										}
+									}
 								}
 								ul{
 									width:700px;
@@ -625,7 +629,62 @@ ul,ol{
 										height:100px;
 										text-align: center;
 										border:1px solid #ddd;
+										.pic-box{
+											a{
+												display: inline-block;
+												width:96px;
+												height:96px;
+												margin:2px;
+												img{
+													width:96px;
+													height:96px;
+
+												}
+											}
+											
+										}
+										.cal-item{
+											position: relative;
+											.cal-day {
+											    background: rgba(255, 255, 255, 0.7) none repeat scroll 0 0;
+											    border-radius: 20px;
+											    color: #ddd;
+											    font-family: Arial;
+											    font-size: 20px;
+											    height: 37px;
+											    left: 42px;
+											    line-height: 37px;
+											    position: absolute;
+											    text-align: center;
+											    top: 42px;
+											    width: 37px;
+											    z-index: 2;
+											}
+											.cal-count{
+												background: rgba(0, 0, 0, 0.5) none repeat scroll 0 0;
+											    color: #fff;
+											    cursor: pointer;
+											    display: none;
+											    font-family: Helvetica,Tahoma,Arial,STXihei,"Microsoft YaHei",sans-serif;
+											    height: 135px;
+											    left: -6px;
+											    pointer-events: none;
+											    position: absolute;
+											    top: -6px;
+											    transition: opacity 0.4s ease-in 0s;
+											    width: 135px;
+											    z-index: 3;
+											     span {
+												    display: block;
+												    font-family: Arial;
+												    font-size: 36px;
+												    text-indent: -3px;
+												}
+											}
+										}
+
 									}
+									
 								}
 							}
 						}

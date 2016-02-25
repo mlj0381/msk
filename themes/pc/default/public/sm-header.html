@@ -7,58 +7,43 @@
                         <a id="cityPlan">
                             <span>所在城市：<small>上海</small></span> <i class="icon-angle-down"></i>
                         </a>
-                        <ul class="location-menu clearfix">
-                            <li class="active"><a href="">北京</a></li>
-                            <li><a>上海</a></li>
-                            <li><a>天津</a></li>
-                            <li><a>重庆</a></li>
-                            <li><a>河北</a></li>
-                            <li><a>山西</a></li>
-                            <li><a>河南</a></li>
-                            <li><a>辽宁</a></li>
-                            <li><a>吉林</a></li>
-                            <li><a>黑龙江</a></li>
-                            <li><a>内蒙古</a></li>
-                            <li><a>江苏</a></li>
-                            <li><a>山东</a></li>
-                            <li><a>安徽</a></li>
-                            <li><a>浙江</a></li>
-                            <li><a>福建</a></li>
-                            <li><a>湖北</a></li>
-                            <li><a>湖南</a></li>
-                            <li><a>广东</a></li>
-                            <li><a>广西</a></li>
-                            <li><a>江西</a></li>
-                            <li><a>四川</a></li>
-                            <li><a>海南</a></li>
-                            <li><a>贵州</a></li>
-                            <li><a>云南</a></li>
-                            <li><a>西藏</a></li>
-                            <li><a>陕西</a></li>
-                            <li><a>甘肃></a></li>
-                            <li><a>青海</a></li>
-                            <li><a>宁夏</a></li>
-                            <li><a>新疆</a></li>
-                            <li><a>台湾</a></li>
-                            <li><a>香港</a></li>
-                            <li><a>澳门</a></li>
-                            <li><a>钓鱼岛</a></li>
-                            <li><a>海外</a></li>
-                        </ul>
+                        <div class="location-menu clearfix">
+                            <dl class="clearfix">
+                                <dt>上海：</dt>
+                                <dd class="active">
+                                    <a data-url="<{link app=site ctl=index act=index args0=1}>">上海</a>
+                                </dd>
+                            </dl>
+                            <dl class="clearfix">
+                                <dt>无锡：</dt>
+                                <dd>
+                                    <a data-url="">无锡</a>
+                                </dd>
+                                <dd>
+                                    <a data-url="">苏州</a>
+                                </dd>
+                                <dd>
+                                    <a data-url="">常州</a>
+                                </dd>
+                                <dd>
+                                    <a data-url="">南通</a>
+                                </dd>
+                            </dl>
+                        </div>
+                        
                     </div>
                     <div class="loginStatus">
-                    <span>您好，请<a href="<{link app=b2c ctl=site_passport act=login}>">登录</a></span>|<a href="<{link app=b2c ctl=site_passport act=signup args0=$forward}>" class="freeReg">免费注册</a>
+                        <span>您好，请<a href="<{link app=b2c ctl=site_passport act=login}>">登录</a></span>|<a href="<{link app=b2c ctl=site_passport act=signup args0=$forward}>" class="freeReg">免费注册</a>
                     </div>
                 </div>
                 <div class="topRight">
                     <ul>
                         <li class="seller dropdown">
-                            <a id="mySnk" class="dropdown-toggle"  href="<{link app=b2c ctl=site_member act=index}>">我的美侍客
+                            <a id="mySnk" class="dropdown-toggle" href="<{link app=b2c ctl=site_member act=index}>">我的美侍客
                             </a>
-
                         </li>
-                        <li class="cart"><a href="<{link app=b2c ctl=site_cart act=index}>"><i class="icon-shopping-cart"></i> 购物车 <span style="color:red;"> ( 0 )</span></a></li>
-                        <!-- <li class="userCenter"><a href="<{link app=b2c ctl=site_member act=index}>">会员中心</a></li> -->
+                        <li class="cart"><a href="javascript:;" ><i class="icon-shopping-cart"></i> 购物车 <span style="color:red;"> ( 0 )</span></a></li>
+                        <!-- <li class="userCenter"><a href="<{link app=site ctl=index act=build}>">会员中心</a></li> -->
                         <li class="favorite"><a target="_blank" href="<{link app=b2c ctl=site_member act=favorite}>"><i class="icon-star"></i> 收藏夹</a></li>
                         <li>|</li>
                         <li class="sellerSignup"><a href="<{link app=seller ctl=site_passport act=settled_index}>">商家入驻 <i class=" icon-circle-arrow-right"></i></a></li>
@@ -75,34 +60,30 @@
                     <{WIDGET_B2C_GOODS_INDEX_WEB_NAV target=index}>
                 </div>
             </div>
-
         </div>
     </div>
-    <div class="container-fulid">
-        <div class="topAdv">
-            <a href="#"><img src="<{$base_url}>/themes/pc/default/statics/images/topadv.png"></a>
-        </div>
-    </div>
+    <{WIDGET_AD app=b2c page=1 type=2 position=1}>
     <!-- Search Box -->
     <div class="container-fulid searchbar">
+        
         <div class="row searchbar_con">
             <div class="logo col-xs-4">
-                <a href="<{link app=site ctl=index act=index}>"><img src="statics/images/logo.jpg" alt="美侍客" title="美侍客" /></a>
+                <a href="<{link app=site ctl=index act=index}>"><img src="<{$base_url}>/themes/pc/default/statics/images/logo.jpg" alt="美侍客" title="美侍客" /></a>
             </div>
             <div class="searchbox col-xs-5">
                 <div class="search_label">
                     <span class="active">商品</span>
-                    <span >店铺</span>
+                    <span>店铺</span>
                 </div>
                 <form class="search_form" action="<{link app=b2c ctl=site_list act=index}>" method="post">
-                    <span class="search_txt"><input type="text" name="keywords" value="" placeholder="请输入您要查找的商品"/></span>
-                    <button type="submit" class="search_btn">搜索</button>
+                    <input type="hidden" name="search_type" value="<{$type|default:goods}>"/>
+                    <span class="search_txt"><input type="text" name="keywords" value="<{$keywords}>" placeholder="请输入您要查找的商品"/></span>
+                    <button type="button" class="search_btn">搜索</button>
                 </form>
                 <ul class="hotSearch">
-                    <li><a href="">鸡腿</a></li>
-                    <li><a href="">鸡翅</a></li>
-                    <li><a href="">鸭腿</a></li>
-                    <li><a href="">三黄鸡</a></li>
+                    <{foreach from=$basic.search item=item}>
+                    <li><a href="<{$item.url}>"><{$item.title}></a></li>
+                    <{/foreach}>
                 </ul>
             </div>
             <div class="col-xs-3 kefu">
@@ -113,12 +94,85 @@
                 </a> -->
                 <span class="hotLine">
                     24小时客服专线
-                    <b>400-6017-123</b>
+                    <b>400-6107-123</b>
                 </span>
             </div>
         </div>
     </div>
+    <!-- 快捷登录弹层 -->
+    <form method="post" class="quickLogin" action="<{link app=b2c ctl=site_passport act=post_login}>">
+        <div class="modal fade" id="quickLogin">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">美侍客会员登录<small>Login</small></h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="login_panel">
+                            <ul>
+                                <li>账户密码登录</li>
+                                <li>快速登录</li>
+                            </ul>
+                            <div class="login_cont">
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="icon-user"></i></div>
+                                      <input type="text" class="form-control" name="uname" placeholder="手机号/用户名/邮箱">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class=" icon-lock"></i></div>
+                                      <input type="password" class="form-control" name="password"  placeholder="密码">
+                                      <input type="hidden" name="vcode" value="quick">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <span class="rmb_pwd">
+                                        <input type="checkbox">自动登录
+                                    </span>
+                                    <a href="#" class="forget_pwd">忘记密码？</a>
+                                </div>
+                                <div class="form-group">
+                                    <button type="button" class="btn btn-danger login_btn">登 录</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <p>还没有账号？快来<a href="">注册</a>吧!</p>
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+        <!-- /.modal -->
+    </form>
+    <!--END 快捷登录弹层 -->
 </header>
+<!-- 右侧固定边栏 -->
+<div class="container-fulid">
+    <div class="fixed_slidebar">
+        <ul>
+            <li data-toggle="tooltip" data-placement="left" title="神农客商城"><a href="#"><i class="icon-certificate" ></i></a></li>
+            <li data-toggle="tooltip" data-placement="left" title="在线客服"><a href="#"><i class="icon-comment-alt" ></i></a></li>
+            <li><a class="cart" href="javascript:;"><i class="icon-shopping-cart"></i> 购物车<span>0</span></a></li>
+            <li data-toggle="tooltip" data-placement="left" title="我的收藏"><a class="cart" data-url="<{link app=b2c ctl=site_member act=favorite}>" href="javascript:;"><i class="icon-star-empty" ></i></a></li>
+            <li data-toggle="tooltip" data-placement="left" title="我的足迹"><a class="cart" data-url="<{link app=b2c ctl=site_member act=sleuth}>" href="javascript:;"><i class="icon-eye-open"></i></a></li>
+            <li data-toggle="tooltip" data-placement="left" title="我要充值"><a href="#"><i class="icon-credit-card"></i></a></li>
+            <li data-toggle="tooltip" data-placement="left" title="用户反馈"><i class="icon-file-alt"></i></li>
+            <li class="gotoTop" data-toggle="tooltip" data-placement="left" title="返回顶部"><a href="#"><i class="icon-arrow-up"></i></a></li>
+        </ul>
+        <script type="text/javascript">
+        $(function() {
+            $('.fixed_slidebar ul li[data-toggle="tooltip"]').tooltip();
+        });
+        </script>
+    </div>
+    
+</div>
 <script type="text/template" id="minicart_item_tpl">
     <li class="mc-item">
         <div class="row">
@@ -160,6 +214,16 @@ $(function() {
         $('.loginStatus span').text('你好，' + $.cookie('UNAME'));
         $('.loginStatus > a').text('注销').attr('href', '<{link app=seller ctl=site_passport act=logout}>');
     }
+    
+    //地区切换
+    $('.location-menu a').click(function(e){
+        var url = $(this).attr('data-url');
+        $.getJSON(url, function(re){
+            if(re.success){
+                location = window.location.href;
+            }
+        });
+    });
     /**
      * 迷你购物车
      */
@@ -168,10 +232,10 @@ $(function() {
         try {
             var cart_count = 0;
             if (re.data.objects.goods.length > 0) {
-                for(var index in re.data.objects.goods){
+                for (var index in re.data.objects.goods) {
                     cart_count += parseInt(re.data.objects.goods[index].quantity);
                 }
-                $('.cart span').text('('+ cart_count +')')
+                $('.cart span').text('(' + cart_count + ')')
             }
         } catch (e) {
 
@@ -226,39 +290,91 @@ $(function() {
     });
 
 });
+
+  
+   //快速登录  data-toggle="modal" data-target="#quickLogin"
+   $('.cart').click(function(e){
+       var _self = $(this);
+       $.post('<{link app=b2c ctl=site_passport act=check_login}>', '', function(re){
+           if(re.success){
+                var url = $(_self).attr('data-url') ? $(_self).attr('data-url') : '<{link app=b2c ctl=site_cart act=index}>';
+                location = url;
+           }else{
+               $('#quickLogin').modal('show');
+           }
+       });
+   });
+   $('.quickLogin').on('click', 'button', function(e){
+        var login_form = $('.quickLogin');
+        login_form.find('button[type=submit]').button('loading');
+        $.post(login_form.prop('action'), login_form.serialize(), function(re) {
+            if (re.error) {
+                login_form.find('.alert-error').remove();
+                if($('.quickLogin .alert').length <= 0){
+                    $('.login_cont').append($('<div class="alert alert-danger">' + re.error + '</div>'));
+                }
+                alert_timer = setTimeout(function() {
+                    clearTimeout(alert_timer);
+                    login_form.find('.alert-danger').fadeOut('fast', function() {
+                        $(this).remove();
+                    });
+                }, 3000);
+            }
+            if (re.success) {
+                location = window.location.href;
+            }
+            login_form.find('button[type=submit]').button('reset');
+        }, 'json');
+        return false;
+   });
+    
+/**
+ * 顶部商品或店铺搜索
+ */
+$('.search_btn').click(function(){
+    var keywords = $('.search_form input[type="text"]').val() ? $('.search_form input[type="text"]').val() : '牛肉';
+    var url = '<{link app=b2c ctl=site_list act=index}>?';
+    url += 'keywords='+  keywords;
+    url += '&type='+ $('.search_form input[type="hidden"]').val();
+    location = url;
+});
+(function(){
+    var searchbox = $('.searchbox span');
+    $(searchbox).removeClass('active');
+    if('<{$type}>' == 'store'){
+        $(searchbox).eq(1).addClass('active');
+        return ;
+    }
+    $(searchbox).eq(0).addClass('active');
+})();
+$('.search_label span').click(function() {
+    $(this).addClass('active').siblings().removeClass('active');
+    var index = $('.search_label span').index(this);
+//    var url_list = "<{link app=b2c ctl=site_list act=index}>";
+//    var url_store = "<{link app=seller ctl=site_store act=index}>";
+    if (index == "0") {
+        $('.search_form input[type="hidden"]').attr('value', 'goods');
+        $('.search_form .search_txt input').attr('value', '');
+        $('.search_form .search_txt input').attr('placeholder', '请输入你要查找的商品');
+    } else {
+
+        $('.search_form input[type="hidden"]').attr('value', 'store');
+        $('.search_form .search_txt input').attr('value', '');
+        $('.search_form .search_txt input').attr('placeholder', '请输入你要查找的店铺名');
+    }
+});
+
+/*$('.search_btn').click(function(){
+    var keyword = $('.search_form .search_txt input').val();
+    var tips="亲，您还没输入关键词";
+
+    if(!keyword||keyword==tips){
+        $('.search_form .search_txt input').attr('value',tips);
+        $('.search_form .search_txt input').focus(function(){
+            $(this).attr('value','');
+        })
+        return false;
+    }
+})*/
 </script>
 
-<script type="text/javascript">
-    /**
-     * 顶部商品或店铺搜索
-     */
-    $('.search_label span').click(function(){
-        $(this).addClass('active').siblings().removeClass('active');
-        var index = $('.search_label span').index(this);
-        var url_list="<{link app=b2c ctl=site_list act=index}>";
-        var url_store="<{link app=seller ctl=site_store act=index}>";
-        if(index=="0"){
-            $('.search_form').attr('action',url_list);
-            $('.search_form .search_txt input').attr('value','');
-            $('.search_form .search_txt input').attr('placeholder','请输入你要查找的商品');
-        }else{
-
-            $('.search_form').attr('action',url_store);
-            $('.search_form .search_txt input').attr('value','');
-            $('.search_form .search_txt input').attr('placeholder','请输入你要查找的店铺名');
-        }
-    })
-
-    /*$('.search_btn').click(function(){
-        var keyword = $('.search_form .search_txt input').val();
-        var tips="亲，您还没输入关键词";
-
-        if(!keyword||keyword==tips){
-            $('.search_form .search_txt input').attr('value',tips);
-            $('.search_form .search_txt input').focus(function(){
-                $(this).attr('value','');
-            })
-            return false;
-        }
-    })*/
-</script>

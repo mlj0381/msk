@@ -7,9 +7,9 @@
 	        <div class="panel-body clearfix">
 	            <div class="panel_body_lt fl">
 	            	<div class="calendar_wrap">
-	            		<span class="calendar_btn">足迹日历 <i class="icon-caret-down"></i></span>
+	            		<span class="calendar_open">足迹日历 <i class="icon-calendar"></i></span>
 	            		<div class="sleuth_calendar">
-	            			<p class="title">我的足迹日历</p>
+	            			<p class="title">我的足迹日历 <span class="calendar_close glyphicon glyphicon-remove fr" title="关闭"></span></p>
 	            			<ul class="clearfix">
 	            				<li>星期一</li>
 	            				<li>星期二</li>
@@ -24,8 +24,22 @@
                                 <{foreach from=$days item=weeks}>
 	            					<tr>
                                         <{foreach from=$weeks item=day}>
-	            						<td><{$day.time|cdate}>
-                                        <{if $day.type eq 'gray'}>灰掉<{else}>显示<{/if}>
+	            						<td class="has-record">
+	            							<div class="cla-item">
+	            								<div class="pic-box">
+	            									<a data-id=''>
+	            										<img class="cal-img" src="<{$base_url}>/themes/pc/default/statics/images/store_goods.jpg">
+	            									</a>
+	            								</div>
+	            								<div class="cal-day"><{$day.time|cdate}></div>
+	            								<div class="cal-count">
+													<div class="cal-date">2016-02-19</div>
+													<span> 2 </span>
+													个足迹
+												</div>
+	            							</div>
+                                        <!-- <{if $day.type eq 'gray'}>灰掉<{else}>显示<{/if}> -->
+
                                         </td>
                                         <{/foreach}>
 	            					</tr>
@@ -164,6 +178,16 @@
 <script type="text/javascript">
 
 	$(function(){
+
+		/**
+		 * 足迹日历
+		 */
+		$('.calendar_open').bind('click',function(){
+			$('.sleuth_calendar').fadeIn();
+		});
+		$('.calendar_close').bind('click',function(){
+			$('.sleuth_calendar').fadeOut();
+		})
 
 		/**
 		 * 批量删除
