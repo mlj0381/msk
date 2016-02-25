@@ -554,7 +554,7 @@ ol {
   position: absolute;
   left: 80px;
   top: 0px;
-  width: 730px;
+  width: 870px;
   border: 1px solid #ddd;
   background: #fff;
   z-index: 500;
@@ -577,14 +577,14 @@ ol {
   color: #a40001;
 }
 .buyer_container .my-main .my-page .sleuth_page .top_panel .panel_body_lt .calendar_wrap .sleuth_calendar ul {
-  width: 700px;
+  width: 840px;
   margin: 0 auto;
   margin-bottom: 15px;
   padding-top: 10px;
 }
 .buyer_container .my-main .my-page .sleuth_page .top_panel .panel_body_lt .calendar_wrap .sleuth_calendar ul li {
   float: left;
-  width: 100px;
+  width: 120px;
   height: 30px;
   line-height: 30px;
   text-align: center;
@@ -592,65 +592,92 @@ ol {
 }
 .buyer_container .my-main .my-page .sleuth_page .top_panel .panel_body_lt .calendar_wrap .sleuth_calendar table {
   box-sizing: border-box;
-  width: 700px;
+  width: 840px;
   margin: 0 auto;
   border-collapse: collapse;
   border-color: 1px solid #ddd;
 }
 .buyer_container .my-main .my-page .sleuth_page .top_panel .panel_body_lt .calendar_wrap .sleuth_calendar table td {
-  width: 100px;
-  height: 100px;
+  width: 120px;
+  height: 120px;
   text-align: center;
   border: 1px solid #ddd;
 }
-.buyer_container .my-main .my-page .sleuth_page .top_panel .panel_body_lt .calendar_wrap .sleuth_calendar table td .pic-box a {
-  display: inline-block;
-  width: 96px;
-  height: 96px;
-  margin: 2px;
-}
-.buyer_container .my-main .my-page .sleuth_page .top_panel .panel_body_lt .calendar_wrap .sleuth_calendar table td .pic-box a img {
-  width: 96px;
-  height: 96px;
-}
 .buyer_container .my-main .my-page .sleuth_page .top_panel .panel_body_lt .calendar_wrap .sleuth_calendar table td .cal-item {
   position: relative;
+  width: 120px;
+  height: 120px;
+  cursor: pointer;
+}
+.buyer_container .my-main .my-page .sleuth_page .top_panel .panel_body_lt .calendar_wrap .sleuth_calendar table td .cal-item .pic-box a {
+  display: inline-block;
+  width: 116px;
+  height: 116px;
+  margin: 2px;
+}
+.buyer_container .my-main .my-page .sleuth_page .top_panel .panel_body_lt .calendar_wrap .sleuth_calendar table td .cal-item .pic-box a img {
+  width: 116px;
+  height: 116px;
 }
 .buyer_container .my-main .my-page .sleuth_page .top_panel .panel_body_lt .calendar_wrap .sleuth_calendar table td .cal-item .cal-day {
   background: rgba(255, 255, 255, 0.7) none repeat scroll 0 0;
   border-radius: 20px;
-  color: #ddd;
   font-family: Arial;
   font-size: 20px;
-  height: 37px;
-  left: 42px;
-  line-height: 37px;
+  height: 40px;
+  width: 40px;
+  line-height: 40px;
   position: absolute;
   text-align: center;
-  top: 42px;
-  width: 37px;
+  top: 40px;
+  left: 40px;
   z-index: 2;
+  border-radius: 50%;
+  color: #222;
+  overflow: hidden;
 }
 .buyer_container .my-main .my-page .sleuth_page .top_panel .panel_body_lt .calendar_wrap .sleuth_calendar table td .cal-item .cal-count {
+  display: none;
   background: rgba(0, 0, 0, 0.5) none repeat scroll 0 0;
   color: #fff;
   cursor: pointer;
-  display: none;
   font-family: Helvetica, Tahoma, Arial, STXihei, "Microsoft YaHei", sans-serif;
-  height: 135px;
-  left: -6px;
+  height: 120px;
+  left: 0px;
   pointer-events: none;
   position: absolute;
-  top: -6px;
+  top: 0px;
   transition: opacity 0.4s ease-in 0s;
-  width: 135px;
+  width: 120px;
   z-index: 3;
+}
+.buyer_container .my-main .my-page .sleuth_page .top_panel .panel_body_lt .calendar_wrap .sleuth_calendar table td .cal-item .cal-count .cal-date {
+  margin-top: 15px;
 }
 .buyer_container .my-main .my-page .sleuth_page .top_panel .panel_body_lt .calendar_wrap .sleuth_calendar table td .cal-item .cal-count span {
   display: block;
+  width: 120px;
+  text-align: center;
   font-family: Arial;
   font-size: 36px;
-  text-indent: -3px;
+}
+.buyer_container .my-main .my-page .sleuth_page .top_panel .panel_body_lt .calendar_wrap .sleuth_calendar table td.has-record .cal-item:hover .cal-count {
+  display: block;
+}
+.buyer_container .my-main .my-page .sleuth_page .top_panel .panel_body_lt .calendar_wrap .sleuth_calendar table td.no-record .cal-item {
+  cursor: auto;
+}
+.buyer_container .my-main .my-page .sleuth_page .top_panel .panel_body_lt .calendar_wrap .sleuth_calendar table td.no-record .cal-item .pic-box {
+  display: none;
+}
+.buyer_container .my-main .my-page .sleuth_page .top_panel .panel_body_lt .calendar_wrap .sleuth_calendar table td.no-record .cal-item .cal-count {
+  display: none;
+}
+.buyer_container .my-main .my-page .sleuth_page .top_panel .panel_body_lt .calendar_wrap .sleuth_calendar table td.no-record .cal-item:hover .cal-count {
+  display: none;
+}
+.buyer_container .my-main .my-page .sleuth_page .top_panel .panel_body_lt .calendar_wrap .sleuth_calendar table td.gray .cal-day {
+  color: #ddd;
 }
 .buyer_container .my-main .my-page .sleuth_page .top_panel .classpanel_body_rt span {
   margin-right: 15px;
