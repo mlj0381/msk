@@ -90,6 +90,13 @@ $db['regions']=array (
             'default' => 'false',
             
         ),
+        'type' =>
+            array (
+                'type' => 'number',
+                'label' => '地区类型', // 0 三级联动 1 仓库地址
+                'comment' => '地区类型',
+                'default' => 0,
+            ),
     ),
     'index' =>
   array (

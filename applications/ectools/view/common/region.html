@@ -49,8 +49,13 @@ function region_union_require(e){
         }
     }
     if(typeof(REGION_DATA)=='undefined'){
+        var url = region_data_path + 'region_data.js';
+        var type = '<{$params.detail}>';
+        if(type){
+            url = region_data_path + 'warehouse_data.js';
+        }
         $.ajax({
-            url:region_data_path + 'region_data.js',
+            url: url,
             dataType:'script',
             complete:function(){
                 region_init();

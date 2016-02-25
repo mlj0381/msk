@@ -19,9 +19,9 @@ class ectools_ctl_regions extends desktop_controller
         header('cache-control: no-store, no-cache, must-revalidate');
     }
 
-    public function index()
+    public function index($type = '0')
     {
-        $this->showarea();
+        $this->showarea($type);
     }
 
     /**
@@ -29,28 +29,30 @@ class ectools_ctl_regions extends desktop_controller
      *
      * @params null
      */
-    private function showarea()
+    private function showarea($type)
     {
         //$dArea = $this->app->model('regions');
         $obj_regions_op = vmc::service('ectools_regions_apps', array('content_path' => 'ectools_regions_operation'));
+        $obj_regions_op->type = $type;
         $this->path[] = array('text' => '配送地区列表');
-
         if ($obj_regions_op->getTreeSize()) {
             //超过100条
             $this->pagedata['area'] = $obj_regions_op->getRegionById();
-            $this->page('regions/area_treeList.html');
         } else {
-            $obj_regions_op->getMap();
-            $this->pagedata['area'] = $obj_regions_op->regions;
-            $this->page('regions/area_map.html');
+            $this->pagedata['area'] = $obj_regions_op->getRegionById();
+//            $obj_regions_op->getMap();
+//            $this->pagedata['area'] = $obj_regions_op->regions;
         }
+        $this->pagedata['type'] = $type;
+        $this->page('regions/area_treeList.html');
     }
 
     public function getChildNode()
     {
         $obj_regions_op = vmc::service('ectools_regions_apps', array('content_path' => 'ectools_regions_operation'));
-
+        $obj_regions_op->type = $_POST['type'];
         $this->pagedata['area'] = $obj_regions_op->getRegionById($_POST['regionId']);
+
         $this->display('regions/area_sub_treeList.html');
     }
 
@@ -61,9 +63,12 @@ class ectools_ctl_regions extends desktop_controller
      */
     public function save()
     {
-        $this->begin('index.php?app=ectools&ctl=regions&act=index');
+        $redirect  = 'index.php?app=ectools&ctl=regions&act=index';
+        if($_POST['region']['type'] === '1') $redirect .= '&p[0]=1';
+        $this->begin($redirect);
         $obj_regions_op = vmc::service('ectools_regions_apps', array('content_path' => 'ectools_regions_operation'));
         $region_data = $_POST['region'];
+        $obj_regions_op->type = $region_data['type'];
         if (!empty($region_data['p_region'])) {
             list($package, $region_name_path, $region_id) = explode(':', $region_data['p_region']);
             $region_data['p_region_id'] = $region_id;
@@ -88,14 +93,15 @@ class ectools_ctl_regions extends desktop_controller
      *
      * @params string 地区的regions id
      */
-    public function edit($region_id, $p_region_id)
+    public function edit($region_id, $p_region_id, $type = 0)
     {
         $mdl_regions = $this->app->model('regions');
         $this->pagedata['area'] = $mdl_regions->getDlAreaById($region_id);
         $p_region = $mdl_regions->dump($p_region_id);
         if ($p_region) {
             $path_name = array();
-            $p_region_rel = $mdl_regions->getList('local_name', array('package' => $p_region['package'], 'region_id' => explode(',', $p_region['region_path'])));
+            $p_region_rel = $mdl_regions->getList('local_name', array('package' => $p_region['package'], 'region_id' => explode(',',
+                $p_region['region_path']), 'type' => $type));
             foreach ($p_region_rel as $i) {
                 $path_name[] = $i['local_name'];
             }
@@ -105,6 +111,7 @@ class ectools_ctl_regions extends desktop_controller
                 $p_region['region_id'],
             ));
         }
+        $this->pagedata['type'] = $type;
         $this->pagedata['p_region'] = $p_region;
         $this->display('regions/area_edit.html');
     }

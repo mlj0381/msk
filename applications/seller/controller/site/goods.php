@@ -122,16 +122,16 @@ class seller_ctl_site_goods extends seller_frontpage
         $this->output();
     }
 
-    public function selfParams()
-    {
-        //商品参数配置
-
-        $cat_id = $_POST['cat_id'];
-        $mdl_goods_type = app::get('b2c')->model('goods_type');
-        $return = $mdl_goods_type->getRow('*', array('cat' => $cat_id));
-        $return['son'] = $mdl_goods_type->get_props($return['type_id']);
-        $this->splash('success', '', $return);
-    }
+//    public function selfParams()
+//    {
+//        //商品参数配置
+//
+//        $cat_id = $_POST['cat_id'];
+//        $mdl_goods_type = app::get('b2c')->model('goods_type');
+//        $return = $mdl_goods_type->getRow('*', array('cat' => $cat_id));
+//        $return['son'] = $mdl_goods_type->get_props($return['type_id']);
+//        $this->splash('success', '', $return);
+//    }
 
     //获取商品添加所需基本参数
     private function basic()
@@ -144,11 +144,8 @@ class seller_ctl_site_goods extends seller_frontpage
         //商品品牌
         $return['brand'] = $this->app->model('brand')->getList('*', array('seller_id' => $this->seller['seller_id']));
         //商品参数配置
+        $return['goods_type'] = $this->getProp();
         $mdl_goods_type = app::get('b2c')->model('goods_type');
-        $return['goods_type'] = $mdl_goods_type->getList('*', array('cat' => '0', 'belong_type' => '0'));
-        foreach ($return['goods_type'] as &$value) {
-            $value = $mdl_goods_type->get_props($value['type_id']);
-        }
         //商品规格
         $return['goods_norms'] = $mdl_goods_type->getList('*', array('cat' => '0', 'belong_type' => '1'));
         foreach ($return['goods_norms'] as &$value) {
@@ -160,6 +157,29 @@ class seller_ctl_site_goods extends seller_frontpage
         $return['store']['store_type'] = $store_type[$return['store']['store_type']]['name'];
         //获取展示位置
         $return['setting'] = $this->app->getConf('goods_setting');
+
+        //获取仓库信息
+
+        return $return;
+    }
+
+    public function getProp(){
+        $filter = array('cat' => '0', 'belong_type' => '0');
+        $mdl_goods_type = app::get('b2c')->model('goods_type');
+        if(!empty($_POST['cat_id'])){
+            //ajax调用
+            $filter['cat'] = $_POST['cat_id'];
+        }
+
+        $return = $mdl_goods_type->getList('*', $filter);
+        foreach ($return as &$value) {
+            $value = $mdl_goods_type->dump($value['type_id'], '*');
+        }
+
+        if(!empty($_POST['cat_id'])){
+            $this->splash('success', '', $return);
+            die;
+        }
         return $return;
     }
 
@@ -239,6 +259,8 @@ class seller_ctl_site_goods extends seller_frontpage
 
     public function save($type = null)
     {
+        header('Content-Type:text/html;charset=utf-8');
+
         $redirect_url = $this->gen_url(array('app' => 'seller', 'ctl' => 'site_goods', 'act' => $type ? 'add' : 'index'));
         if (!$_POST) {
             $this->splash(false, $redirect_url, '非法请求');
@@ -255,6 +277,7 @@ class seller_ctl_site_goods extends seller_frontpage
 
         $db = vmc::database();
         $db->beginTransaction();
+
         if (!$this->mB2cGoods->save($goods)) {
             $db->rollback();
             $this->splash('error', $redirect_url, '保存失败');

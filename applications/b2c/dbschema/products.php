@@ -65,28 +65,28 @@ $db['products'] = array(
             'default_in_list' => true,
             'is_title' => true,
         ) ,
-        'price_interval' => array(
-            'type' => 'number',
-            'label' => ('区间段') ,
-            'default' => 0,
+        'interval' => array(
+            'type' => 'serialize',
+            'label' => ('货品价盘') ,
+            'default' => '',
             'in_list' => true,
         ) ,
-        'price_up' => array(
-            'type' => 'decimal(20,3)',
-            'label' => ('上行价格') ,
-            'filtertype' => 'number',
-
-            'default' => 0,
-            'in_list' => true,
-        ) ,
-        'price_dn' => array(
-            'type' => 'decimal(20,3)',
-            'label' => ('下行价格') ,
-            'filtertype' => 'number',
-
-            'default' => 0,
-            'in_list' => true,
-        ) ,
+//        'price_up' => array(
+//            'type' => 'decimal(20,3)',
+//            'label' => ('上行价格') ,
+//            'filtertype' => 'number',
+//
+//            'default' => 0,
+//            'in_list' => true,
+//        ) ,
+//        'price_dn' => array(
+//            'type' => 'decimal(20,3)',
+//            'label' => ('下行价格') ,
+//            'filtertype' => 'number',
+//
+//            'default' => 0,
+//            'in_list' => true,
+//        ) ,
         'weight' => array(
             'type' => 'decimal(20,3)',
             'label' => ('单位重量') ,

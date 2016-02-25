@@ -253,6 +253,15 @@ $db['goods'] = array(
            'comment' => '商品推荐',
        ),
        //>>
+
+        'stock' => array(
+            'type' => 'region',
+            'in_list' => true,
+            'required' => true,
+            'label' => ('所属仓库'),
+            'comment' => '所属仓库',
+        ),
+
         'params' =>
             array (
               'type' => 'serialize',
