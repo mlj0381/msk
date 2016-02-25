@@ -24,10 +24,10 @@
                                 <{foreach from=$days item=weeks}>
 	            					<tr>
                                         <{foreach from=$weeks item=day}>
-	            						<td class="has-record">
-	            							<div class="cla-item">
+	            						<td class="no-record <{if $day.type eq 'gray'}>gray<{/if}>">   <!-- 如果没有记录就是no-record -->
+	            							<div class="cal-item" data-href="">
 	            								<div class="pic-box">
-	            									<a data-id=''>
+	            									<a>
 	            										<img class="cal-img" src="<{$base_url}>/themes/pc/default/statics/images/store_goods.jpg">
 	            									</a>
 	            								</div>
@@ -38,7 +38,6 @@
 													个足迹
 												</div>
 	            							</div>
-                                        <!-- <{if $day.type eq 'gray'}>灰掉<{else}>显示<{/if}> -->
 
                                         </td>
                                         <{/foreach}>
@@ -57,13 +56,13 @@
 	            		<label><input type="checkbox"> 只看促销产品</label>
 	            	</span>
 	            </div>
-	            <div class="classpanel_body_rt fr">
+	            <!-- <div class="classpanel_body_rt fr">
 	            	<span class="btn btn-danger del_batch">批量删除</span>
 	            	<div class="input-group">
 	            		<input type='text' class="form-control" placeholder="请输入">
 	            		<span class="input-group-addon"><i class="icon-search"></i></span>
 	            	</div>
-	            </div>
+	            </div> -->
 	        </div>
 	    </div>
     </form>
