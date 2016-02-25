@@ -19,6 +19,7 @@ class b2c_goods_search
         $this->mBrand = app::get('b2c')->model('brand');
         $this->mKeywords = app::get('b2c')->model('goods_keywords');
         $this->mGoods = app::get('b2c')->model('goods');
+        $this->mCat = app::get('b2c')->model('goods_cat');
     }
 
     //属性查找面包屑组合
@@ -112,6 +113,37 @@ class b2c_goods_search
         cachemgr::set($cache_key, $return, cachemgr::co_end());
         return $result;
     }
+    //顶部搜索框搜索
+    private function _keywords($keywords){
+        $search = array(
+            'mKeywords' => array('filter' => 'keyword', 'result' => 'goods_id'),
+            'mGoods' => array('filter' => 'name', 'result' => 'goods_id'),
+            //'mBrand' => array('filter' => 'brand_name', 'result' => 'brand_id'),
+            //'mCat' => array('filter' => 'cat_name', 'result' => 'cat_id'),
+            );
+        $filter = array(
+            'mKeywords' => array('res_type' => 'goods'),
+            'mGoods' => array(),
+            //'mBrand' => array(),
+           // 'mCat' => array(),
+        );
+        $result = Array();
+        foreach($search as $mdlName => $column){
+            //var_dump($mdlName);
+             $return = $this->$mdlName->getList($column['result'],
+                 array_merge($filter[$mdlName], array($column['filter'] . '|has' => $keywords)));
+            if($column['result'] != 'goods_id'){
+                $return = $this->mGoods->getList('goods_id', array('goods_id|in' => join(',', $return[$column['result']])));
+            }
+            foreach($return as $goods){
+                $result[] = $goods['goods_id'];
+            }
+            //$mdlName .'==>'; print_r($return);
+        }
+        //print_r(array_unique($result));
+        return array_unique($result);
+    }
+
 
     public function goods_list($params)
     {
@@ -124,11 +156,8 @@ class b2c_goods_search
         extract($params['filter']);
         //关键词查询
         if (!empty($params['keywords']['keywords'])) {
-            $goods = $this->mKeywords->getList('goods_id', array('keyword|has' => $params['keywords']['keywords'], 'res_type' => 'goods'));
-            if(empty($goods)) return array();
-            foreach ($goods as $key => $value) {
-                $filter['goods_id|in'][$key] = $value['goods_id'];
-            }
+            $filter['goods_id|in'] = $this->_keywords($params['keywords']['keywords']);
+            if(!$filter['goods_id|in']) return array();
         }
         //价格查询
         if($price){
