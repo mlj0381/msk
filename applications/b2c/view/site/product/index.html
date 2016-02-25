@@ -39,6 +39,11 @@
                 <!-- <p class="pro_No">
                     货号：<span class="text-warning"><{$data_detail.product.product_id}>&nbsp;&nbsp;<{$data_detail.mark_star|star}></span> <small><{$data_detail.mark_star|number_format:'1'}></small>
                 </p> -->
+                <div ><!-- class="pref_info"-->
+                    <p><span>采购数量</span><span>&gt;<{$data_detail.product.price_interval}>箱</span><span>&lt;<{$data_detail.product.price_interval}>箱</span></p>
+                    <p><span>价格</span><span>￥<{$data_detail.product.price_up|cur}>/箱</span><span>￥<{$data_detail.product.price_dn|cur}>/箱</span></p>
+                </div>
+
                 <div class="distr_info">
                     配送：
                     <span>上海 至 上海松江区</span>
@@ -98,32 +103,32 @@
                 </div>
                 <{/if}>
                 <div class="pref_info clearfix">
-                    <!-- <p><span>采购数量</span><span>&gt;<{$data_detail.product.price_interval}>箱</span><span>&lt;<{$data_detail.product.price_interval}>箱</span></p>
-                    <p><span>价格</span><span>￥<{$data_detail.product.price_up|cur}>/箱</span><span>￥<{$data_detail.product.price_dn|cur}>/箱</span></p> -->
-                    <label class="col-xs-2">
-                        商品价盘
-                    </label>
-                    <div class="col-xs-8 pref_table">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>数量下限</th>
-                                    <th>数量上限</th>
-                                    <th>销售价格</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            <{foreach from=$data_detail.product.interval.price key=key item=interval}>
-                                <tr>
-                                    <td><{$data_detail.product.interval.num_dn[$key]|default:1}></td>
-                                    <td><{$data_detail.product.interval.num_up[$key]|default:不限}></td>
-                                    <td>￥ <{$data_detail.product.interval.price[$key]|cur}></td>
-                                </tr>
-                            <{/foreach}>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+                     <p><span>采购数量</span><span>&gt;<{$data_detail.product.price_interval}>箱</span><span>&lt;<{$data_detail.product.price_interval}>箱</span></p>
+                    <p><span>价格</span><span>￥<{$data_detail.product.price_up|cur}>/箱</span><span>￥<{$data_detail.product.price_dn|cur}>/箱</span></p>
+                    <!--<label class="col-xs-2">-->
+                        <!--商品价盘-->
+                    <!--</label>-->
+                    <!--<div class="col-xs-8 pref_table">-->
+                        <!--<table>-->
+                            <!--<thead>-->
+                                <!--<tr>-->
+                                    <!--<th>数量下限</th>-->
+                                    <!--<th>数量上限</th>-->
+                                    <!--<th>销售价格</th>-->
+                                <!--</tr>-->
+                            <!--</thead>-->
+                            <!--<tbody>-->
+                            <!--<{foreach from=$data_detail.product.interval.price key=key item=interval}>-->
+                                <!--<tr>-->
+                                    <!--<td><{$data_detail.product.interval.num_dn[$key]|default:1}></td>-->
+                                    <!--<td><{$data_detail.product.interval.num_up[$key]|default:不限}></td>-->
+                                    <!--<td>￥ <{$data_detail.product.interval.price[$key]|cur}></td>-->
+                                <!--</tr>-->
+                            <!--<{/foreach}>-->
+                            <!--</tbody>-->
+                        <!--</table>-->
+                    <!--</div>-->
+                <!--</div>-->
 
                 <!--购买区-->
                 <div class="product-page-cart clearfix">
@@ -143,7 +148,7 @@
                     </div>
                     <div class="price-availability-block">
                         <span class="price text-danger">
-                            <strong>￥<{$data_detail.product.interval.price[0]|cur}></strong>
+                            <strong>￥<{$data_detail.product.price_up|cur}></strong>
                         </span>
                     </div>
                     <hr>
