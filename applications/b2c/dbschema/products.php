@@ -71,22 +71,32 @@ $db['products'] = array(
             'default' => '',
             'in_list' => true,
         ) ,
-//        'price_up' => array(
-//            'type' => 'decimal(20,3)',
-//            'label' => ('上行价格') ,
-//            'filtertype' => 'number',
-//
-//            'default' => 0,
-//            'in_list' => true,
-//        ) ,
-//        'price_dn' => array(
-//            'type' => 'decimal(20,3)',
-//            'label' => ('下行价格') ,
-//            'filtertype' => 'number',
-//
-//            'default' => 0,
-//            'in_list' => true,
-//        ) ,
+        'price_interval' => array(
+
+            'type' => 'number',
+            'label' => ('价格区间') ,
+            'default' => 0,
+            'in_list' => true,
+        ) ,
+        'price_up' => array(
+
+
+            'type' => 'decimal(20,3)',
+            'label' => ('上行价格') ,
+            'filtertype' => 'number',
+
+            'default' => 0,
+            'in_list' => true,
+        ) ,
+        'price_dn' => array(
+
+            'type' => 'decimal(20,3)',
+            'label' => ('下行价格') ,
+            'filtertype' => 'number',
+
+            'default' => 0,
+            'in_list' => true,
+        ) ,
         'weight' => array(
             'type' => 'decimal(20,3)',
             'label' => ('单位重量') ,

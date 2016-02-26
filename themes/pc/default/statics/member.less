@@ -569,45 +569,49 @@ ul,ol{
 							width:auto;
 							float: left;
 
-							.calendar_btn{
+							.calendar_open{
 								width:80px;
 								float: left;
 								height:34px;
 								padding-left:10px;
-								line-height: 30px;
+								line-height: 34px;
 								background: #e1e1e1;
 								cursor: pointer;
-								&:hover{
-									background: #fff;
-									border:1px solid #ddd;
-									border-right:0px;
-								}
 							}
 							.sleuth_calendar{
+								display: none;
 								position: absolute;
 								left: 80px;
 								top:0px;
-								width:780px;
+								width:870px;
 								border:1px solid #ddd;
 								background: #fff;
 								z-index: 500;
+								padding-bottom:15px;
 								.title{
-									width:94%;
+									margin-top:10px;
+									width:100%;
 									background: #fff;
 									height:33px;
 									line-height: 33px;
 									font-size: 24px;
 									padding-left:20px;
-									margin-left:-1px;
+									.calendar_close{
+										color:#666;
+										cursor: pointer;
+										&:hover{
+											color:@basecolor;
+										}
+									}
 								}
 								ul{
-									width:700px;
+									width:840px;
 									margin:0 auto;
 									margin-bottom:15px;
 									padding-top:10px;
 									li{
 										float: left;
-										width:100px;
+										width:120px;
 										height:30px;
 										line-height: 30px;
 										text-align: center;
@@ -616,16 +620,114 @@ ul,ol{
 								}
 								table{
 									box-sizing: border-box;
-									width:700px;
+									width:840px;
 									margin:0 auto;
 									border-collapse: collapse;
 									border-color: 1px solid #ddd;
 									td{
-										width:100px;
-										height:100px;
+										width:120px;
+										height:120px;
 										text-align: center;
-										border:1px solid #ddd;
+										border:1px solid #ddd;	
+										.cal-item{
+											position: relative;
+											width:120px;
+											height:120px;
+											cursor: pointer;
+											.pic-box{
+
+												a{
+													display: inline-block;
+													width:116px;
+													height:116px;
+													margin:2px;
+													img{
+														width:116px;
+														height:116px;
+
+													}
+												}
+												
+											}
+											.cal-day {
+											    background: rgba(255, 255, 255, 0.7) none repeat scroll 0 0;
+											    border-radius: 20px;
+											    font-family: Arial;
+											    font-size: 20px;
+											    height: 40px;
+											    width: 40px;
+											    line-height: 40px;
+											    position: absolute;
+											    text-align: center;
+											    top: 40px;
+											    left: 40px;
+											    z-index: 2;
+											    border-radius: 50%;
+											    color:#222;
+											    overflow: hidden;
+
+											}
+											.cal-count{
+												cursor: pointer;
+												display: none;
+												background: rgba(0, 0, 0, 0.5) none repeat scroll 0 0;
+											    color: #fff;
+											    cursor: pointer;	
+											    font-family: Helvetica,Tahoma,Arial,STXihei,"Microsoft YaHei",sans-serif;
+											    height: 120px;
+											    left: 0px;
+											    pointer-events: none;
+											    position: absolute;
+											    top: 0px;
+											    transition: opacity 0.4s ease-in 0s;
+											    width: 120px;
+											    z-index: 3;
+											    .cal-date{
+													margin-top:15px;
+												}
+											     span {
+												    display: block;
+												    width:120px;
+												    text-align: center;
+												    font-family: Arial;
+												    font-size: 36px;
+												}
+											}
+											
+										}									
 									}
+									td.has-record{
+										.cal-item{
+											&:hover{
+												.cal-count{
+													display: block;
+												}
+											}
+										}
+										
+									}
+									td.no-record{
+										.cal-item{
+											cursor: auto;
+											.pic-box{
+												display: none;
+											}
+											.cal-count{
+												display: none;
+											}
+											&:hover{
+												.cal-count{
+													display: none;
+												}
+											}
+										}
+									}
+									td.gray{
+										.cal-day{
+											color:#ddd;
+										}
+									}
+									
 								}
 							}
 						}

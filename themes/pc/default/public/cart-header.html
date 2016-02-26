@@ -7,44 +7,30 @@
                         <a id="cityPlan">
                             <span>所在城市：<small>上海</small></span> <i class="icon-angle-down"></i>
                         </a>
-                        <ul class="location-menu clearfix">
-                            <li class="active"><a href="javascript:;" data-url="<{link app=site ctl=index act=index args0=1}>">北京</a></li>
-                            <li><a>上海</a></li>
-                            <li><a>天津</a></li>
-                            <li><a>重庆</a></li>
-                            <li><a>河北</a></li>
-                            <li><a>山西</a></li>
-                            <li><a>河南</a></li>
-                            <li><a>辽宁</a></li>
-                            <li><a>吉林</a></li>
-                            <li><a>黑龙江</a></li>
-                            <li><a>内蒙古</a></li>
-                            <li><a>江苏</a></li>
-                            <li><a>山东</a></li>
-                            <li><a>安徽</a></li>
-                            <li><a>浙江</a></li>
-                            <li><a>福建</a></li>
-                            <li><a>湖北</a></li>
-                            <li><a>湖南</a></li>
-                            <li><a>广东</a></li>
-                            <li><a>广西</a></li>
-                            <li><a>江西</a></li>
-                            <li><a>四川</a></li>
-                            <li><a>海南</a></li>
-                            <li><a>贵州</a></li>
-                            <li><a>云南</a></li>
-                            <li><a>西藏</a></li>
-                            <li><a>陕西</a></li>
-                            <li><a>甘肃</a></li>
-                            <li><a>青海</a></li>
-                            <li><a>宁夏</a></li>
-                            <li><a>新疆</a></li>
-                            <li><a>台湾</a></li>
-                            <li><a>香港</a></li>
-                            <li><a>澳门</a></li>
-                            <li><a>钓鱼岛</a></li>
-                            <li><a>海外</a></li>
-                        </ul>
+                        <div class="location-menu clearfix">
+                            <dl class="clearfix">
+                                <dt>上海：</dt>
+                                <dd class="active">
+                                    <a data-url="<{link app=site ctl=index act=index args0=1}>">上海</a>
+                                </dd>
+                            </dl>
+                            <dl class="clearfix">
+                                <dt>无锡：</dt>
+                                <dd>
+                                    <a data-url="">无锡</a>
+                                </dd>
+                                <dd>
+                                    <a data-url="">苏州</a>
+                                </dd>
+                                <dd>
+                                    <a data-url="">常州</a>
+                                </dd>
+                                <dd>
+                                    <a data-url="">南通</a>
+                                </dd>
+                            </dl>
+                        </div>
+                        
                     </div>
                     <div class="loginStatus">
                         <span>您好，请<a href="<{link app=b2c ctl=site_passport act=login}>">登录</a></span>|<a href="<{link app=b2c ctl=site_passport act=signup args0=$forward}>" class="freeReg">免费注册</a>
@@ -57,7 +43,7 @@
                             </a>
                         </li>
                         <li class="cart"><a href="javascript:;" ><i class="icon-shopping-cart"></i> 购物车 <span style="color:red;"> ( 0 )</span></a></li>
-                        <!-- <li class="userCenter"><a href="<{link app=site ctl=index act=build}>">会员中心</a></li> -->
+                        <li class="userCenter"><a href="<{link app=site ctl=index act=build}>">会员中心</a></li>
                         <li class="favorite"><a target="_blank" href="<{link app=b2c ctl=site_member act=favorite}>"><i class="icon-star"></i> 收藏夹</a></li>
                         <li>|</li>
                         <li class="sellerSignup"><a href="<{link app=seller ctl=site_passport act=settled_index}>">商家入驻 <i class=" icon-circle-arrow-right"></i></a></li>
@@ -378,5 +364,17 @@ $('.search_label span').click(function() {
     }
 });
 
+/*$('.search_btn').click(function(){
+    var keyword = $('.search_form .search_txt input').val();
+    var tips="亲，您还没输入关键词";
+
+    if(!keyword||keyword==tips){
+        $('.search_form .search_txt input').attr('value',tips);
+        $('.search_form .search_txt input').focus(function(){
+            $(this).attr('value','');
+        })
+        return false;
+    }
+})*/
 </script>
 
