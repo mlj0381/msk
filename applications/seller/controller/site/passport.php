@@ -443,7 +443,7 @@ class seller_ctl_site_passport extends seller_frontpage
         if ($_POST) {
             $params = utils::_filter_input($_POST);
             unset($_POST);
-           $result = $this->passport_obj->entry($params, $this->seller['seller_id']);
+           $result = $this->passport_obj->entry($params);
             if(!$result) $this->splash('error', $redirect, '操作失败');
         }
         $step = $params['pageIndex'] ? $params['pageIndex'] : $step;
@@ -456,10 +456,15 @@ class seller_ctl_site_passport extends seller_frontpage
                 $licence_type = $this->passport_obj->new_or_old($this->seller['seller_id']);
             }
         }
-        $columns = $this->passport_obj->page_setting($step, $licence_type);
+        if($params['typeId']) $storeType = $params['typeId'];
+        if(!$storeType &&  $this->seller['ident'] & 1) $storeType = 1;
+        if(!$storeType &&  $this->seller['ident'] & 2) $storeType = 2;
+        if(!$storeType &&  $this->seller['ident'] & 4) $storeType = 4;
+        $columns = $this->passport_obj->page_setting($step, $licence_type, $storeType);
+
         $this->pagedata['info'] = $this->passport_obj->edit_info($columns, $this->seller['seller_id']);
         $this->pagedata['info']['company_extra']['page_setting'] = $this->passport_obj->columns();
-        $this->pagedata['page'] = $columns;
+        $this->pagedata['pageSet'] = $columns;
         $this->pagedata['pageIndex'] = $step;
         if ($step == 10) {
             $this->page('site/passport/signup_complete.html');

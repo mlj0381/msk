@@ -547,29 +547,27 @@ class seller_user_passport
     }
 
     //商家入驻页面配置
-    public function page_setting($step, $licence_type)
+    public function page_setting($step, $licence_type, $storeType)
     {
         $conf = $this->app->getConf('seller_entry');
-        $columns = array_flip($conf['comm'][$step]['page']);
-
+        $seller_info = vmc::singleton('seller_user_object')->get_current_seller();
+        if(!$seller_info['ident'] & $storeType) return array();
+        if ($storeType && $conf[$storeType]['pageSet'][$step]) {
+            $columns['page'] = array_flip($conf[$storeType]['pageSet'][$step]['page']);
+            $columns['label'] = $conf[$storeType]['pageSet'][$step]['label'];
+            $columns['companyType'] = $conf[$storeType]['companyType'];
+            $columns['typeId'] = $storeType;
+        }
         if ($licence_type == 'new') {
-            unset($columns['business_licence']);
-            unset($columns['tax_licence']);
-            unset($columns['organization_licence']);
+            unset($columns['page']['business_licence']);
+            unset($columns['page']['tax_licence']);
+            unset($columns['page']['organization_licence']);
         } else if ($licence_type == 'old') {
-            unset($columns['three_lesstion']);
+            unset($columns['page']['three_lesstion']);
         }
-        $ident = $this->seller['ident'];
-        if ($ident & 1 && $conf[1][$step]) {
-            $columns = array_merge($columns, array_flip($conf[1][$step]));
-        }
-        if ($ident & 2 && $conf[2][$step]) {
-            $columns = array_merge($columns, array_flip($conf[2][$step]));
-        }
-        if ($ident & 4 && $conf[4][$step]) {
-            $columns = array_merge($columns, array_flip($conf[4][$step]));
-        }
+        $columns['page'] = array_flip($columns['page']);
         return $columns;
+
     }
 
     //获取基本信息页面配置
@@ -603,15 +601,16 @@ class seller_user_passport
     }
 
     //保存注册信息
-    public function entry($params, $seller_id, &$msg)
+    public function entry($params, &$msg)
     {
         $db = vmc::database();
         $db->beginTransaction();
-        $extra_columns = $this->page_setting($params['pageIndex'], '');
+        $extra_columns = $this->page_setting($params['pageIndex'], '', $params['typeId']);
         $sqlType = false;
+        $seller = vmc::singleton('seller_user_object')->get_current_seller();
         //公司信息
         if (isset($params['company']) && !empty($params['company'])) {
-            $params['company']['uid'] = $seller_id;
+            $params['company']['uid'] = $seller['seller_id'];
             $params['company']['from'] = '1';
             $params['company']['company_id'] && $sqlType = true;
             if (!app::get('base')->model('company')->save($params['company'])) {
@@ -623,7 +622,7 @@ class seller_user_passport
         //联系人信息
 
         if (isset($params['contact']) && !empty($params['contact'])) {
-            $params['contact']['uid'] = $seller_id;
+            $params['contact']['uid'] = $seller['seller_id'];
             $params['contact']['from'] = '1';
             $params['contact']['contact_id'] && $sqlType = true;
             if (!app::get('base')->model('contact')->save($params['contact'])) {
@@ -635,7 +634,7 @@ class seller_user_passport
         //品牌
         if (isset($params['brand']) && !empty($params['brand'])) {
             $params['brand']['brand_id'] && $sqlType = true;
-            $params['brand']['seller_id'] = $seller_id;
+            $params['brand']['seller_id'] = $seller['seller_id'];
             if (!$params['brand']['brand_id']) {
                 if (!$barand_id = app::get('b2c')->model('brand')->insert($params['brand'])) {
                     $db->rollback();
@@ -658,7 +657,7 @@ class seller_user_passport
         //店铺
         if (isset($params['store']) && !empty($params['store'])) {
             $params['store']['store_id'] && $sqlType = true;
-            $params['store']['seller_id'] = $seller_id;
+            $params['store']['seller_id'] = $seller['seller_id'];
             if (!app::get('store')->model('store')->save($params['store'])) {
                 $db->rollback();
                 $msg = '店铺信息';
@@ -668,15 +667,16 @@ class seller_user_passport
         //扩展
 
         $mdl_company_extra = app::get('base')->model('company_extra');
-        foreach ($extra_columns as $key => $col) {
+        foreach ($extra_columns['page'] as $key => $col) {
             if (isset($params[$key]) && !empty($params[$key])) {
                 $params[$key]['content_id'] && $sqlType = true;
                 $params[$key]['content_id'] = $params[$key]['content_id'];
-                $params[$key]['uid'] = $seller_id;
+                $params[$key]['uid'] = $seller['seller_id'];
                 $params[$key]['from'] = 1;
                 //电商成员信息
+
                 if (is_array(reset($params[$key]['value']))) {
-                    if (!$this->_save_array($key, $params[$key], $seller_id)) {
+                    if (!$this->_save_array($key, $params[$key], $seller['seller_id'])) {
                         $db->rollback();
                         $msg = '扩展信息';
                         return false;
@@ -691,7 +691,7 @@ class seller_user_passport
             }
         }
         if (!$sqlType) {
-            $data = array('seller_id' => $seller_id, 'schedule' => $params['pageIndex']);
+            $data = array('seller_id' => $seller['seller_id'], 'schedule' => $params['pageIndex']);
             if (!$this->app->model('sellers')->save($data)) {
                 $db->rollback();
                 return false;

@@ -40,12 +40,12 @@
                 </dl>
             </div>
             <form id="companyInfo_form" action="<{link app=seller ctl=site_passport act=entry}>" class="form-horizontal companyInfo_form" method="post" data-module="validator">
+                <h3><{$pageSet.companyType}>  <small>  <{$pageSet.label}></small></h3>
+                <input type="hidden" name="typeId" value="<{$pageSet.typeId}>"/>
                 <input type='hidden' name='pageIndex' value='<{$pageIndex}>'/>
                 <!-- 三证合一 -->
-                <{foreach from=$page key=key item=item}>
-                
-                <{include file="site/passport/companyInfo/{$key}.html" extra=$info.company_extra}>
-                
+                <{foreach from=$pageSet.page key=key item=item}>
+                    <{include file="site/passport/companyInfo/{$item}.html" extra=$info.company_extra}>
                 <{/foreach}>
                 <div class="form-group">
                     <label class="col-xs-2"></label>

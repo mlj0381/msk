@@ -354,24 +354,28 @@ region_id,region_grade,local_name,ordernum,(select count(*) from '.$this->model-
         if (!is_dir(DATA_DIR.'/misc')) {
             utils::mkdir_p(DATA_DIR.'/misc');
         }
+
         $script = 'var REGION_DATA='.json_encode($regions).';';
         $filename = DATA_DIR.'/misc/region_data.js';
         if($this->type == 1){
             $filename = DATA_DIR.'/misc/warehouse_data.js';
         }
-        $handle = fopen($filename, 'w');
-        if (!$handle) {
-            fclose($handle);
-
+//        $handle = fopen($filename, 'w');
+//        if (!$handle) {
+//            fclose($handle);
+//
+//            return false;
+//        }
+//        if (!fwrite($handle, $script)) {
+//            fclose($handle);
+//
+//            return false;
+//        }
+//        fclose($handle);
+        if(file_put_contents($filename, $script) === false){
             return false;
+        }else{
+            return true;
         }
-        if (!fwrite($handle, $script)) {
-            fclose($handle);
-
-            return false;
-        }
-        fclose($handle);
-
-        return true;
     }
 }
