@@ -79,6 +79,8 @@ $db['products'] = array(
             'in_list' => true,
         ) ,
         'price_up' => array(
+
+
             'type' => 'decimal(20,3)',
             'label' => ('上行价格') ,
             'filtertype' => 'number',
