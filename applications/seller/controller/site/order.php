@@ -31,6 +31,7 @@ class seller_ctl_site_order extends seller_frontpage
         $status_filter = $mdl_order->status_filter();
         $this->pagedata['status'] = $status;
         $filter = $status_filter[$status];
+        $status == 'all' && $filter['status|notin'] = 'del';
         $obj_order_search = vmc::singleton('b2c_order_search');
         $search = $obj_order_search->search($_POST);
         $filter['store_id'] = $this->store['store_id'];
@@ -69,9 +70,9 @@ class seller_ctl_site_order extends seller_frontpage
             'total' => ceil($order_count / $limit),
             'current' => $page,
             'link' => array(
-                'app' => 'b2c',
-                'ctl' => 'site_member',
-                'act' => 'orders',
+                'app' => 'seller',
+                'ctl' => 'site_order',
+                'act' => 'index',
                 'args' => array(
                     $status,
                     ($token = time()),

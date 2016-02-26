@@ -51,8 +51,8 @@
         <th class="col-xs-2">货号</th>
         <th class="col-xs-2">质量等级</th>
         <th class="col-xs-2">包装</th>
-        <th class="col-xs-3">销售价盘</th>
-        <th class="col-xs-2">库存</th>
+        <th class="col-xs-4">销售价盘</th>
+        <th class="col-xs-1">库存</th>
         <th class="col-xs-1">是否上架</th>
     </tr>
     <tbody class="new-products">
@@ -67,7 +67,7 @@
             <td><{$items.spec[0]}></td>
             <td><{$items.spec[1]}></td>
             <td>
-                 <div class="price_area">
+                 <div ><!--class="price_area"-->
                     <input class="price_interval" type="hidden" name="goods[product][<{$key}>][price_interval]" value="<{$items.price_interval}>">
                     <span>小于<{$items.price_interval}><{$items.spec[1]}>
                         <input type="text" style="width:60px"  value="<{$items.price_up}>" name="goods[product][<{$key}>][price_up]" placeholder="元">
