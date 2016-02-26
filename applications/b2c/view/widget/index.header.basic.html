@@ -331,12 +331,20 @@ $(function() {
 /**
  * 顶部商品或店铺搜索
  */
-$('.search_btn').click(function(){
+function urlConcat(){
     var keywords = $('.search_form input[type="text"]').val() ? $('.search_form input[type="text"]').val() : '牛肉';
     var url = '<{link app=b2c ctl=site_list act=index}>?';
     url += 'keywords='+  keywords;
     url += '&type='+ $('.search_form input[type="hidden"]').val();
     location = url;
+}
+$('.search_btn').click(function(){
+    urlConcat();
+});
+$('.search_txt input').keyup(function(e){ //回车事件
+    if(e.keyCode == '13'){
+        urlConcat();
+    }
 });
 (function(){
     var searchbox = $('.searchbox span');
@@ -364,17 +372,5 @@ $('.search_label span').click(function() {
     }
 });
 
-/*$('.search_btn').click(function(){
-    var keyword = $('.search_form .search_txt input').val();
-    var tips="亲，您还没输入关键词";
-
-    if(!keyword||keyword==tips){
-        $('.search_form .search_txt input').attr('value',tips);
-        $('.search_form .search_txt input').focus(function(){
-            $(this).attr('value','');
-        })
-        return false;
-    }
-})*/
 </script>
 
