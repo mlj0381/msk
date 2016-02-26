@@ -446,10 +446,12 @@ class seller_ctl_site_passport extends seller_frontpage
            $result = $this->passport_obj->entry($params);
             if(!$result) $this->splash('error', $redirect, '操作失败');
         }
+        //页面总步骤
+        $countPage = $this->passport_obj->countPage();
         $step = $params['pageIndex'] ? $params['pageIndex'] : $step;
         $step = $type == 'up' ? $step - 1 : $step + 1;
         $step <= 1 && $step = 1;
-        $step >= 10 && $step = 10;
+        $step >= $countPage['sum'] && $step = $countPage['sum'];
         if ($step == '1') {
             $licence_type = $this->_request->get_get('card');
             if(!$licence_type){
@@ -461,12 +463,11 @@ class seller_ctl_site_passport extends seller_frontpage
         if(!$storeType &&  $this->seller['ident'] & 2) $storeType = 2;
         if(!$storeType &&  $this->seller['ident'] & 4) $storeType = 4;
         $columns = $this->passport_obj->page_setting($step, $licence_type, $storeType);
-
         $this->pagedata['info'] = $this->passport_obj->edit_info($columns, $this->seller['seller_id']);
         $this->pagedata['info']['company_extra']['page_setting'] = $this->passport_obj->columns();
         $this->pagedata['pageSet'] = $columns;
         $this->pagedata['pageIndex'] = $step;
-        if ($step == 10) {
+        if ($step == $countPage['sum']) {
             $this->page('site/passport/signup_complete.html');
         } else {
             $this->page('site/passport/signup_companyInfo.html');
