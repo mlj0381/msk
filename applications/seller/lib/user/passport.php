@@ -554,15 +554,15 @@ class seller_user_passport
         $conf = $this->app->getConf('seller_entry');
         $countPage = $this->countPage();
         $columns = Array();
+        $index = $step;
         if($step > count($conf[$storeType]['pageSet'])){
-            $this->_entry($step, $storeType);
+            $this->_entry($step, $storeType, $index);
         }
-        echo $step, $storeType;
         if ($step <= $countPage['sum'] - count($conf['comm']['pageSet'])) {
             if (!$seller_info['ident'] & $storeType) return array();
-            if ($storeType && $conf[$storeType]['pageSet'][$step]) {
-                $columns['page'] = array_flip($conf[$storeType]['pageSet'][$step]['page']);
-                $columns['label'] = $conf[$storeType]['pageSet'][$step]['label'];
+            if ($storeType && $conf[$storeType]['pageSet'][$index]) {
+                $columns['page'] = array_flip($conf[$storeType]['pageSet'][$index]['page']);
+                $columns['label'] = $conf[$storeType]['pageSet'][$index]['label'];
                 $columns['companyType'] = $conf[$storeType]['companyType'];
                 $columns['typeId'] = $storeType;
             }
@@ -576,21 +576,38 @@ class seller_user_passport
             if ($step != '1') unset($columns['page']['bank_lesstion']);
             $columns['page'] = array_flip($columns['page']);
         }else{
-            $index = $step - ($countPage - count($conf['comm']['pageSet']));
+            //最后两步品牌添加店铺申请
+            $index = $step - ($countPage['sum'] - count($conf['comm']['pageSet']));
             $columns['page'] = $conf['comm']['pageSet'][$index]['page'];
             $columns['label'] = $conf['comm']['pageSet'][$index]['label'];
             $columns['companyType'] = $countPage['label'];
             $columns['typeId'] = $storeType;
         }
-
         return $columns;
     }
 
     //判断组合身份当前填写到哪一种身份
-    private function _entry(&$step, &$storeType){
+    private function _entry($step, &$storeType, &$index){
         $seller_info = vmc::singleton('seller_user_object')->get_current_seller();
         $conf = $this->app->getConf('seller_entry');
-
+        $storeGroup = Array();
+        if($seller_info['ident'] & 1){
+            $storeGroup[] = 1;
+        }
+        if($seller_info['ident'] & 2){
+            $storeGroup[] = 2;
+        }
+        if($seller_info['ident'] & 4){
+            $storeGroup[] = 4;
+        }
+        $countPage = 0;
+        foreach($storeGroup as $key => $value){
+            $countPage += count($conf[$storeGroup[$key - 1]]['pageSet']);
+            if($storeType != $value && $step > $countPage){
+                $storeType = $value;
+                $index = $step - $countPage;
+            }
+        }
     }
 
     //获取当前身份所需填写资料页面总数
@@ -605,11 +622,11 @@ class seller_user_passport
         }
         if ($seller_info['ident'] & 2) {
             $sum['sum'] += count($conf[2]['pageSet']);
-            $sum['label'] .= $conf[1]['companyType'] . ' +  ';
+            $sum['label'] .= $conf[2]['companyType'] . ' +  ';
         }
         if ($seller_info['ident'] & 4) {
             $sum['sum'] += count($conf[4]['pageSet']);
-            $sum['label'] .= $conf[1]['companyType'] . ' +  ';
+            $sum['label'] .= $conf[4]['companyType'];
         }
         $sum['sum'] += count($conf['comm']['pageSet']);
         return $sum;

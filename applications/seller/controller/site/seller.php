@@ -60,6 +60,7 @@ class seller_ctl_site_seller extends seller_frontpage {
         if(!$this->seller['ident'] & 1) unset($companyInfo[1]);
         if(!$this->seller['ident'] & 2) unset($companyInfo[2]);
         if(!$this->seller['ident'] & 4) unset($companyInfo[4]);
+        unset($companyInfo['comm']);
         $this->pagedata['company'] = $companyInfo;
         $this->pagedata['info'] = $this->passport_obj->edit_info($columns, $this->seller['seller_id']);
         $this->pagedata['info']['company_extra']['type'] = 'center';
