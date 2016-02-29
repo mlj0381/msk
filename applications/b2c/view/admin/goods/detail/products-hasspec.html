@@ -110,7 +110,7 @@
                     </td>
                     <td style="padding:2px;">
                         <div class="product-image-select btn-xs btn" data-target="#product_image_select_modal" data-toggle="modal" data-specinfo="<{$product.spec_info}>">
-                            <img src="<{$product.image_id|default:$goods.image_default_id|storager:'xs'}>" class="img-thumbnail" />
+                            <img style="width:50px" src="<{$product.image_id|default:$goods.image_default_id|storager:'xs'}>" class="img-thumbnail" />
                             <input type="hidden" name="goods[product][<{$key}>][image_id]" value="<{$product.image_id|default:$goods.image_default_id}>">
                         </div>
                     </td>
