@@ -4,7 +4,7 @@
         <{if $extra.type eq 'center'}>
         <a href="<{link app=seller ctl=site_seller act=businessInfo}>?card=old"></a>
         <{else}>
-        <a href="<{link app=seller ctl=site_passport act=entry}>?card=old">
+        <a href="<{link app=seller ctl=site_passport act=entry args0=$extra.pageIndex-1}>?card=old">
          <{/if}>
             <small class="text-danger">还没换证，填写旧版</small>
         </a>

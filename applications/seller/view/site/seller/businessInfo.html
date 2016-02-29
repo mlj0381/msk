@@ -4,10 +4,12 @@
 	</div>
 	<form action="<{link app=seller ctl=site_seller act=save_businessInfo}>" id="companyInfo_form" method="post" class="edit_form form-horizontal">
         <input type="hidden" name="pageIndex" value="<{$activePage}>"/>
-        <{foreach from=$company key=key item=items}>
+        <{foreach from=$company key=companyType item=pageSet}>
+        <h2><{$pageSet.companyType}></h2>
+        <{foreach from=$pageSet.pageSet key=key item=items}>
         <div class="area_box">
-            <a href="<{link app=seller ctl=site_seller act=businessInfo args0=$key}>" ><h2><{$items.label}><i class="icon-chevron-down" ></i></h2></a>
-            <div class="<{if $key eq $activePage}> area_con show<{else}> hide<{/if}>">
+            <a href="<{link app=seller ctl=site_seller act=businessInfo args0=$key args1=$companyType}>"><h2><{$items.label}><i class="icon-chevron-down" ></i></h2></a>
+            <div class="<{if $key eq $activePage && $companyType eq $storeType}> area_con show<{else}> hide<{/if}>">
                 <{if $key eq $activePage}>
                 <{foreach from=$items.page  item=item}>
                 <{include file="site/passport/companyInfo/{$item}.html" extra=$info.company_extra}>
@@ -16,7 +18,7 @@
                 <{/if}>
             </div>
         </div>
-
+        <{/foreach}>
         <{/foreach}>
 	</form>
 </div>	

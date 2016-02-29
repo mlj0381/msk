@@ -341,11 +341,12 @@ function urlConcat(){
 $('.search_btn').click(function(){
     urlConcat();
 });
-/*$('.search_txt input').keyup(function(e){ //回车事件
+$('.search_txt input').keyup(function(e){ //回车事件
     if(e.keyCode == '13'){
         urlConcat();
     }
-});*/
+});
+
 (function(){
     var searchbox = $('.searchbox span');
     $(searchbox).removeClass('active');

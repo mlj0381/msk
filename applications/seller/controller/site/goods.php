@@ -166,17 +166,17 @@ class seller_ctl_site_goods extends seller_frontpage
     public function getProp(){
         $filter = array('cat' => '0', 'belong_type' => '0');
         $mdl_goods_type = app::get('b2c')->model('goods_type');
-        if(!empty($_POST['cat_id'])){
+
             //ajax调用
-            $filter['cat'] = $_POST['cat_id'];
-        }
+        $filter['cat'] = $this->_request->get_get('cat_id') ?: 0;
 
         $return = $mdl_goods_type->getList('*', $filter);
         foreach ($return as &$value) {
             $value = $mdl_goods_type->dump($value['type_id'], '*');
         }
-
-        if(!empty($_POST['cat_id'])){
+        if($filter['cat']){
+//            $this->pagedata['params']['goods_type'] = $return;
+//            $this->display('site/goods/detail/params.html');die;
             $this->splash('success', '', $return);
             die;
         }

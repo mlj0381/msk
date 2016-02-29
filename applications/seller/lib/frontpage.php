@@ -41,13 +41,13 @@ class seller_frontpage extends site_controller {
 
     //查询入驻进度
     private function _schedule() {
-		return true;
+		//return true;
         $this->verify();
         $seller = $this->get_current_seller();
         $store = app::get('store')->model('store')->getRow('store_id', array('seller_id' => $seller['seller_id']));
         if (empty($store)) {
-            $redriect = $this->gen_url(array('app' => 'seller', 'ctl' => 'site_passport', 'act' => 'entry', 'args0' => $seller['schedule']));
-            $this->splash('success', $redriect, '登录成功,请先完善入驻信息');
+            $redirect = $this->gen_url(array('app' => 'seller', 'ctl' => 'site_passport', 'act' => 'entry', 'args0' => $seller['schedule']));
+            $this->splash('success', $redirect, '登录成功,请先完善入驻信息');
         }
     }
 

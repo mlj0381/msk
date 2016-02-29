@@ -39,6 +39,11 @@
                 <!-- <p class="pro_No">
                     货号：<span class="text-warning"><{$data_detail.product.product_id}>&nbsp;&nbsp;<{$data_detail.mark_star|star}></span> <small><{$data_detail.mark_star|number_format:'1'}></small>
                 </p> -->
+                <div style="background-color:#D77F71; height:80px; color:#fff; font-size:14px; padding:10px;"><!-- class="pref_info"-->
+                    <p><span style="margin-right:55px;display:inline-block; width:100px;">采购数量</span><span style="margin-right:55px;display:inline-block; width:100px;">&gt;<{$data_detail.product.price_interval}>箱</span><span >&lt;<{$data_detail.product.price_interval}>箱</span></p>
+                    <p><span style="margin-right:55px;display:inline-block; width:100px;">价格</span><span style="margin-right:55px;display:inline-block; width:100px;">￥<{$data_detail.product.price_up|cur}>/箱</span><span>￥<{$data_detail.product.price_dn|cur}>/箱</span></p>
+                </div>
+
                 <div class="distr_info">
                     配送：
                     <span>上海 至 上海松江区</span>
@@ -98,35 +103,32 @@
                 </div>
                 <{/if}>
                 <div class="pref_info clearfix">
-                    <!-- <p><span>采购数量</span><span>&gt;<{$data_detail.product.price_interval}>箱</span><span>&lt;<{$data_detail.product.price_interval}>箱</span></p>
-                    <p><span>价格</span><span>￥<{$data_detail.product.price_up|cur}>/箱</span><span>￥<{$data_detail.product.price_dn|cur}>/箱</span></p> -->
-                    <label class="col-xs-2">
-                        商品价盘
-                    </label>
-                    <div class="col-xs-8 pref_table">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>数量下限</th>
-                                    <th>数量上限</th>
-                                    <th>销售价格</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>0</td>
-                                    <td>100</td>
-                                    <td>￥ 100</td>
-                                </tr>
-                                <tr>
-                                    <td>0</td>
-                                    <td>100</td>
-                                    <td>￥ 100</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+                     <!--<p><span>采购数量</span><span>&gt;<{$data_detail.product.price_interval}>箱</span><span>&lt;<{$data_detail.product.price_interval}>箱</span></p>-->
+                    <!--<p><span>价格</span><span>￥<{$data_detail.product.price_up|cur}>/箱</span><span>￥<{$data_detail.product.price_dn|cur}>/箱</span></p>-->
+                    <!--<label class="col-xs-2">-->
+                        <!--商品价盘-->
+                    <!--</label>-->
+                    <!--<div class="col-xs-8 pref_table">-->
+                        <!--<table>-->
+                            <!--<thead>-->
+                                <!--<tr>-->
+                                    <!--<th>数量下限</th>-->
+                                    <!--<th>数量上限</th>-->
+                                    <!--<th>销售价格</th>-->
+                                <!--</tr>-->
+                            <!--</thead>-->
+                            <!--<tbody>-->
+                            <!--<{foreach from=$data_detail.product.interval.price key=key item=interval}>-->
+                                <!--<tr>-->
+                                    <!--<td><{$data_detail.product.interval.num_dn[$key]|default:1}></td>-->
+                                    <!--<td><{$data_detail.product.interval.num_up[$key]|default:不限}></td>-->
+                                    <!--<td>￥ <{$data_detail.product.interval.price[$key]|cur}></td>-->
+                                <!--</tr>-->
+                            <!--<{/foreach}>-->
+                            <!--</tbody>-->
+                        <!--</table>-->
+                    <!--</div>-->
+                <!--</div>-->
 
                 <!--购买区-->
                 <div class="product-page-cart clearfix">
@@ -146,7 +148,7 @@
                     </div>
                     <div class="price-availability-block">
                         <span class="price text-danger">
-                            <strong>￥<{$data_detail.product.buy_price|cur}></strong>
+                            <strong>￥<{$data_detail.product.price_up|cur}></strong>
                         </span>
                     </div>
                     <hr>
@@ -335,7 +337,7 @@
                             </div>
                             <{/if}>
                             <div class="description">
-                                <!--<{$data_detail.description}>-->
+
                                 <!-- <img src="<{$base_url}>/themes/pc/default/statics/images/details.jpg" /> -->
                                 <ul class="pro_param clearfix">
                                     <li title="鸡大腿">商品名称：鸡大腿</li>
@@ -346,6 +348,7 @@
                                     <li title="28kg">商品毛重：28kg</li>
                                     <li title="25kg">商品净重：25kg</li>
                                 </ul>
+                                <{$data_detail.description}>
                             </div>
                         </div>
                         <div class="tab-pane fade" id="record">
@@ -448,7 +451,6 @@
      */
     $(function () {
         //计算价格
-
 
         //模板填充
         var substitute = function (str, obj) {
