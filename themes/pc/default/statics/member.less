@@ -114,7 +114,63 @@ ul,ol{
 
 					dt{
 						padding:0 10px;
+						.icon-caret-right{
+							visibility: hidden;
+						}
+						.menu-wrap{
+							display: none;
+						}
 					}
+					dt.all-menu{
+						position: relative;	
+						.icon-caret-right{
+							visibility: visible;
+						}
+						&:hover{
+							background: #ddd;
+							
+							.menu-wrap{
+								display: block;
+							}
+						}
+						.menu-wrap{
+							display: none;
+							position: absolute;
+							top:0;
+							left:50%;
+							width:750px;
+							height:auto;
+							z-index: 10;
+							background: #ddd;
+							border:1px solid #ddd;
+							padding:15px;
+							ul{
+								.fl;
+								width:140px;
+								li.first-li{
+									font-size: 14px;
+									color:#222;
+									font-weight: normal;
+								}
+								li{
+									height:30px;
+									line-height: 30px;
+									a{
+										font-weight: normal;
+										font-size: 12px;
+										color:#666;
+										&:hover{
+											color:@basecolor;
+
+										}
+									}
+								}
+
+							}
+						}
+
+					}
+
 					dd{
 						ul{
 							li{
@@ -806,69 +862,83 @@ ul,ol{
 							}
 						}
 					}
-				}
-				/* .gl_item_box{
-					overflow: hidden;
-					.goods-item{
-						border-radius: 0px;
-						position: relative;
-						padding:0px;
-				
-						.gi-image-wrapper{
-							height:190px;
-							img{
-								display: block;
-								max-height: 190px;
-								max-width: 100%;
+				}	
+			}
+			//END 我的足迹
+
+			//增票资质
+			.ticket-form{
+				padding:20px 0;
+			}
+			
+			//END 增票资质
+
+			//站内信
+			.msg-list{
+				width:100%;
+				ul{
+					.msg-item{
+						width:100%;
+						border-bottom:1px dashed #ddd;
+						&:hover{
+							.icon-envelope{
+								color:#222;
+							}
+							.msg-info{
+								height:24px;
 							}
 						}
-						.g_checker{
-							display: none;
+						.icon-envelope{
+							font-size: 48px;
+							display: inline-block;
 							position: absolute;
-							width:100%;
-							height:100%;
-							background: rgba(255, 255, 255, 0.6);
-							z-index: 10;
-							cursor: pointer;
-							span{
-								position: absolute;
-								bottom:0px;
-								right:0px;
-								display: block;
-								width:55px;
-								height:55px;
-								line-height: 80px;
-								text-align: center;
-								font-size: 36px;
-								color:#c40000;
-								background: url(images/checked.png) no-repeat left bottom;
-								&.selected{
-									background: url(images/checked.png) no-repeat right bottom;
-								}
-							}
+							color:#ccc;
+
 						}
-				
-						.caption{
-							.g-name{
-								width:100%;
-								height:36px;
-								line-height: 18px;
-								margin:0 0 20px 0;
-								a{
-									font-size: 14px;
-								}
+						.msg-wrap{
+							width:100%;
+							padding-left:60px;
+							padding-top:8px;
+							.msg-title{
+								font-weight: bold;
+								color:#222;
 							}
-							p{
-								margin:10px auto;
+							.msg-con{
+								color:#666;
+								font-size: 12px;
+								margin-top:3px;
 							}
+							
+						}
+						.msg-info{
+							height:0;
+							overflow: hidden;
+							padding-left:60px;
+							color:#666;
+							transition: height .5s;
+							-webkit-transition: height .5s; /* Safari */
 						}
 					}
+				}
 				
-				} */
 			}
 
+			.sendmsg_form{
+				.btn-wrap{
+					width:100%;
+					margin-top:10px;
+					input{
+						width:110px;
+					}
+				}
+				textarea{
+					width:100%;
+					max-width:100%;
+					min-width:100%;
+				}
+			}
 
-			//END 我的足迹
+			//END 站内信
 
 
 

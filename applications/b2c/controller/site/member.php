@@ -746,6 +746,36 @@ vmc_b2c_orders WHERE `member_id`={$this->member['member_id']} AND `status` = 'ac
     }
 
     /**
+     * 增票资质.
+     */
+    public function ticket()
+    {
+        $this->menuSetting = 'setting';
+        $user_obj = vmc::singleton('b2c_user_object');
+        $this->pagedata['pam_data'] = $user_obj->get_pam_data('*', $this->member['member_id']);
+        $this->output();
+    }
+
+    /**
+     * 站内信.
+     */
+    public function sitemsg()
+    {
+        $this->menuSetting = 'message';
+        $user_obj = vmc::singleton('b2c_user_object');
+        $this->pagedata['pam_data'] = $user_obj->get_pam_data('*', $this->member['member_id']);
+        $this->output();
+    }
+
+    public function sendmsg()
+    {
+        $this->menuSetting = 'message';
+        $user_obj = vmc::singleton('b2c_user_object');
+        $this->pagedata['pam_data'] = $user_obj->get_pam_data('*', $this->member['member_id']);
+        $this->output();
+    }
+
+    /**
      * 我的积分概览
      */
     public function integral($page = 1)
