@@ -46,6 +46,24 @@ $db['company'] = array(
             'default_in_list' => false,
             'comment' => '公司类型',
         ),
+        'business' => array(
+            'type' => 'varchar(20)',
+            'default' => '',
+            'comment' => '营业执照号',
+            'label' => '营业执照号',
+        ),
+        'business_type' => array(
+            'type' => array('0','1'),
+            'default' => '0',
+            'comment' => '营业执类型(0 旧版 1 新版)', //0 旧版营业执照 1 新版三证合一
+            'label' => '营业执类型(0 旧版 1 新版)',
+        ),
+        'info_type' => array(
+            'type' => 'number',
+            'default' => '0',
+            'comment' => '公司信息类型（1 工厂 2 代理 4 OEM）',
+            'label' => '公司信息类型（1 工厂 2 代理 4 OEM）',
+        ),
         'area' => array(
             'type' => 'region',
             'required' => true,
@@ -147,6 +165,13 @@ $db['company'] = array(
             'default' => 0,
             'label' => '用户ID',
             'comment' => '用户ID',
+        ),
+    ),
+    'index' => array(
+        'idn_business' => array(
+            'columns' => array(
+                0 => 'business'
+            ),
         ),
     ),
     'version' => '$Rev$',

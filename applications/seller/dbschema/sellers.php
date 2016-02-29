@@ -99,6 +99,12 @@ $db['sellers'] = array(
             'default' => 0,
             'comment' => '身份类型(1生产型\2代理型\4OEM)',
         ),
+        'company_extra' => array(
+            'type' => 'serialize',
+            'label' => '商家扩展信息', //关联扩展表信息
+            'default' => 0,
+            'comment' => '身份类型(1生产型\2代理型\4OEM)扩展信息',
+        ),
 		'schedule' => array(
             'type' => 'number',
             'label' => '入驻进度',

@@ -39,6 +39,34 @@ $db['company_extra'] = array(
             'default_in_list' => false,
             'comment' => '所属',
         ),
+        //2016 2 29 11:23
+        'identity' => array(
+            'type' => 'number',
+            'default' => 0,
+            'comment' => '身份类型', //1 工厂 2 代理 4 OEM
+            'label' => '身份类型',
+        ),
+        'extra_id' => array(
+            'type' => 'number',
+            'default' => 0,
+            'comment' => '所属公司',
+            'label' => '所属公司',
+        ),
+        'createtime' => array(
+            'type' => 'time',
+            'defalut' => '',
+            'label' => '创建时间',
+            'comment' => '创建时间',
+        ),
+        'last_modify' => array(
+            'type' => 'last_modify',
+            'label' => '更新时间',
+            'in_list' => true,
+            'default_in_list' => true,
+            'orderby' => true,
+        ),
+        //>>
+
         'key' => array(
             'type' => 'varchar(20)',
             'required' => true,
@@ -57,6 +85,13 @@ $db['company_extra'] = array(
             'default' => '',
             'label' => '图片id',
             'comment' => '图片id',
+        ),
+    ),
+    'index' => array(
+        'idn_extra' => array(
+            'columns' => array(
+                0 => 'extra_id'
+            ),
         ),
     ),
 );
