@@ -443,7 +443,7 @@ class seller_ctl_site_passport extends seller_frontpage
         if ($_POST) {
             $params = utils::_filter_input($_POST);
             unset($_POST);
-           $result = $this->passport_obj->entry($params);
+            $result = $this->passport_obj->entry($params);
             if(!$result) $this->splash('error', $redirect, '操作失败');
         }
         $licence_type = $this->_request->get_get('card');
@@ -462,7 +462,8 @@ class seller_ctl_site_passport extends seller_frontpage
         if(!$storeType &&  $this->seller['ident'] & 2) $storeType = 2;
         if(!$storeType &&  $this->seller['ident'] & 4) $storeType = 4;
         $columns = $this->passport_obj->page_setting($step, $licence_type, $storeType);
-        $this->pagedata['info'] = $this->passport_obj->edit_info($columns, $this->seller['seller_id']);
+        $this->passport_obj->_entry($step, $storeType);
+        $this->pagedata['info'] = $this->passport_obj->edit_info($columns, $this->seller['seller_id'], $storeType);
         $this->pagedata['info']['company_extra']['page_setting'] = $this->passport_obj->columns();
         $this->pagedata['info']['company_extra']['pageIndex'] = $step;
         $this->pagedata['pageSet'] = $columns;

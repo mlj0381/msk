@@ -25,16 +25,22 @@ $setting = array(
             'comm' => array(
                 'companyType' => '',
                 'pageSet' => array(
-                    1 =>array('label' => '生产商企业产品品牌',
+                    1 => array(
+                        'label' => '生产商企业电商团队',
+                        'page' => array(
+                            'ec_group_manager', 'ec_group_employees')
+                    ),
+                    2 =>array('label' => '生产商企业产品品牌',
                         'page' => array(
                             'brand_lesstion', 'packing', 'brand_touted'
                         )
                     ),
-                    2 => array(
+                    3 => array(
                         'label' => '店铺及产品信息',
                         'page' => array(
                             'store_info', 'store_principal', 'goods_info')
                     ),
+
                 ),
             ),
             1 => array(
@@ -70,11 +76,6 @@ $setting = array(
                         'label' => '生产商企业管理团队',
                         'page' => array(
                             'president', 'general_manager', 'vice_general_manager', 'sale_manager', 'qa_manager', 'finance_manager')
-                    ),
-                    7 => array(
-                        'label' => '生产商企业电商团队',
-                        'page' => array(
-                            'ec_group_manager', 'ec_group_employees')
                     ),
                 ),
             ),
@@ -113,11 +114,6 @@ $setting = array(
                         'page' => array(
                             'president', 'general_manager', 'vice_general_manager', 'sale_manager', 'qa_manager', 'finance_manager')
                     ),
-                    7 => array(
-                        'label' => '生产商企业电商团队',
-                        'page' => array(
-                            'ec_group_manager', 'ec_group_employees')
-                    ),
                 ),
             ),
             4 => array(
@@ -154,11 +150,6 @@ $setting = array(
                         'label' => '生产商企业管理团队',
                         'page' => array(
                             'president', 'general_manager', 'vice_general_manager', 'sale_manager', 'qa_manager', 'finance_manager')
-                    ),
-                    7 => array(
-                        'label' => '生产商企业电商团队',
-                        'page' => array(
-                            'ec_group_manager', 'ec_group_employees')
                     ),
                 ),
             ),
