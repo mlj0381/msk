@@ -117,7 +117,7 @@ class seller_ctl_site_goods extends seller_frontpage
             }
         }
         $this->pagedata['params'] = $this->basic();
-        $this->pagedata['_PAGE_'] = 'from.html';
+        $this->pagedata['_PAGE_'] = 'new_from.html';
         $this->_editor();
         $this->output();
     }

@@ -1548,6 +1548,9 @@ ol {
   display: inline-block;
   margin-right: 5px;
 }
+.buyer_container .seller_regbox .panel-lt .menu-list li ul li.active {
+  color: red;
+}
 .buyer_container .seller_regbox .panel-lt .menu-list li ul > li:last-child {
   border-bottom: none;
 }
@@ -1964,81 +1967,21 @@ ol {
   height: 24px;
   line-height: 24px;
 }
-.buyer_container .addgoods_form .filebox {
-  position: relative;
-  height: 120px;
-}
-.buyer_container .addgoods_form .filebox .file_input {
-  position: absolute;
-  z-index: 10;
-  width: 120px;
-  height: 120px;
-  opacity: 0;
-  cursor: pointer;
-}
-.buyer_container .addgoods_form .filebox .showImg {
-  z-index: 5;
-  position: absolute;
-  width: 118px;
-  height: 118px;
-  overflow: hidden;
-  border: 1px solid #ccc;
-}
-.buyer_container .addgoods_form .filebox .showImg img {
-  width: 118px;
-  height: 118px;
-}
-.buyer_container .addgoods_form .filebox .file_ctr {
-  position: absolute;
-  margin-left: 130px;
-  top: 40px;
-}
-.buyer_container .addgoods_form .filebox .file_ctr a {
-  display: block;
-  font-size: 14px;
-}
-.buyer_container .addgoods_form .guige_add_box {
+.buyer_container .addgoods_form .spec_add_box {
   width: 100%;
+  margin-top: 25px;
 }
-.buyer_container .addgoods_form .guige_add_box .guige_yanse {
-  width: 540px;
-  margin-left: 125px;
-  margin-top: 20px;
-  margin-bottom: 30px;
-  height: 34px;
-  line-height: 34px;
-}
-.buyer_container .addgoods_form .guige_add_box .guige_yanse .checkbox_gg {
-  vertical-align: middle;
-  margin: 0px;
-  padding: 0px;
-  margin-right: 10px;
-}
-.buyer_container .addgoods_form .guige_add_box .guige_yanse a.chima_list {
-  display: inline-block;
-  width: 100px;
-  height: 34px;
-  line-height: 34px;
-  background: #c6c6c6;
-  color: #222;
-  text-align: center;
-  float: right;
-  text-decoration: none;
-}
-.buyer_container .addgoods_form .guige_add_box .spec-edit {
-  margin-left: 125px;
-}
-.buyer_container .addgoods_form .guige_add_box .spec_add_table td {
+.buyer_container .addgoods_form .spec_add_box .spec_add_table td {
   height: 40px;
 }
-.buyer_container .addgoods_form .guige_add_box .spec_add_table td div.input-group .spec-t {
+.buyer_container .addgoods_form .spec_add_box .spec_add_table td div.input-group .spec-t {
   height: 40px;
   border: 1px solid #ccc;
 }
-.buyer_container .addgoods_form .guige_add_box .spec_add_table td div.input-group .spec-t:focus {
+.buyer_container .addgoods_form .spec_add_box .spec_add_table td div.input-group .spec-t:focus {
   border: 1px solid #ccc;
 }
-.buyer_container .addgoods_form .guige_add_box .spec_add_table td div.tagsinput {
+.buyer_container .addgoods_form .spec_add_box .spec_add_table td div.tagsinput {
   min-height: 30px;
   height: auto !important;
   margin: 0;
@@ -2046,28 +1989,31 @@ ol {
   overflow: auto;
   border: 1px solid #ccc;
 }
-.buyer_container .addgoods_form .guige_add_box .spec_add_table td div.tagsinput span.tag {
+.buyer_container .addgoods_form .spec_add_box .spec_add_table td div.tagsinput span.tag {
   display: block;
   float: left;
   background: #404040;
   border: 1px solid #000;
   color: #fff;
 }
-.buyer_container .addgoods_form .guige_add_box .spec_add_table td div.tagsinput span.tag a {
+.buyer_container .addgoods_form .spec_add_box .spec_add_table td div.tagsinput span.tag a {
   color: #fff;
 }
-.buyer_container .addgoods_form .guige_add_box .new-spec-item,
-.buyer_container .addgoods_form .guige_add_box .create-product-items {
+.buyer_container .addgoods_form .spec_add_box .new-spec-item,
+.buyer_container .addgoods_form .spec_add_box .create-product-items {
   -webkit-border-radius: 0px;
   -moz-border-radius: 0px;
   -ms-border-radius: 0px;
   -o-border-radius: 0px;
   border-radius: 0px;
-  background: #adadad;
+  background: #45b6af;
   color: #fff;
   margin-top: 15px;
   margin-right: 20px;
   margin-bottom: 10px;
+}
+.buyer_container .addgoods_form .spec_add_box .create-product-items {
+  background: #67809f;
 }
 .buyer_container .addgoods_form .tab-content {
   padding-top: 50px;
@@ -2143,13 +2089,9 @@ ol {
 .buyer_container #sepcInfo ul li.sect {
   border-color: #a40001;
 }
-.buyer_container #sepcInfo table {
-  border: 1px solid #ddd;
-}
 .buyer_container #sepcInfo table th {
-  text-align: center;
-  background: #ddd;
-  border-bottom: 1px solid #ccc;
+  text-align: left;
+  background: #f1f1f1;
 }
 .buyer_container #sepcInfo table td {
   text-align: center;
@@ -2216,6 +2158,9 @@ ol {
 }
 .buyer_container #sepcInfo table td .price_area .price_set .priceSet_ctl a {
   margin: 0 15px;
+}
+.buyer_container #sepcInfo table tfoot td {
+  text-align: left;
 }
 .buyer_container .price_page .goods_info .thumbnail {
   width: 84px;

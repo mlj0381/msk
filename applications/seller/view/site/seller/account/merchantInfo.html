@@ -276,29 +276,29 @@
                         <{input type=$item.attr_type name=$item.attr_column value=$item.attr_value options=$item.attr_option}>
                     </div>
                 </div>
-                <{elseif $item.attr_type=='date' }>
-                    <div class="form-group">
-                        <label class="col-xs-2 control-label">
-                            <{$item.attr_name}>
-                        </label>
-                        <div class="col-xs-5">
-                            <input type="date" class="form-control" name="<{$item.attr_column}>" value="<{$item.attr_value|default:'YYYY-MM-DD'}>">
-                        </div>
+            <{elseif $item.attr_type=='date' }>
+                <div class="form-group">
+                    <label class="col-xs-2 control-label">
+                        <{$item.attr_name}>
+                    </label>
+                    <div class="col-xs-5">
+                        <input type="date" class="form-control" name="<{$item.attr_column}>" value="<{$item.attr_value|default:'YYYY-MM-DD'}>">
                     </div>
-                    <{else}>
-                        <div class="form-group">
-                            <label class="col-xs-2 control-label">
-                                <{$item.attr_name}>
-                            </label>
-                            <div class="col-xs-5">
-                                <{input type=$item.attr_type name=$item.attr_column value=$item.attr_value}>
-                            </div>
-                        </div>
-                        <{/if}>
-                            <{/foreach}>
-                                <div class="form-group">
-                                    <div class="col-xs-offset-2 col-xs-5">
-                                        <button type="submit" data-loading-text="正在提交..." class="btn btn-danger">保存修改</button>
-                                    </div>
-                                </div>
+                </div>
+                <{else}>
+                <div class="form-group">
+                    <label class="col-xs-2 control-label">
+                        <{$item.attr_name}>
+                    </label>
+                    <div class="col-xs-5">
+                        <{input type=$item.attr_type name=$item.attr_column value=$item.attr_value}>
+                    </div>
+                </div>
+                <{/if}>
+                <{/foreach}>
+                <div class="form-group">
+                    <div class="col-xs-offset-2 col-xs-5">
+                        <button type="submit" data-loading-text="正在提交..." class="btn btn-danger">保存修改</button>
+                    </div>
+                </div>
 </form>

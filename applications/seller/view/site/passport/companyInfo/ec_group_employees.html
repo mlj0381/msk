@@ -1,301 +1,73 @@
 <div id="ec_group_employees">
-    <h4>
-        电商团队成员</h4>
-
-    <div id="items">
-
-        <{foreach
-        from=$extra.ec_group_employees key=key
-        item=item}>
-        <div class="team-item equipment-items">
-            <input type="hidden"
-                   name="ec_group_employees[content_id][]"
-                   value="<{$item.content_id}>"
-                   class="form-control">
-
-            <div class="form-group">
-                <label class="col-xs-2 control-label">
-                    <span class="text-danger">*</span>姓名：
-                </label>
-
-                <div class="col-xs-4">
-                    <input type="text"
-                           value="<{$item.value.name}>"
-                           name="ec_group_employees[value][name][]"
-                           class="form-control"
-                           required="true">
-                    <span class="msgTip"
-                          data-message="error"></span>
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-xs-2 control-label">
-                    <span class="text-danger">*</span>年龄：
-                </label>
-
-                <div class="col-xs-4">
-                    <input type="text"
-                           value="<{$item.value.age}>"
-                           name="ec_group_employees[value][age][]"
-                           class="form-control"
-                           required="true">
-                    <span class="msgTip"
-                          data-message="error"></span>
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-xs-2 control-label">
-                    <span class="text-danger">*</span>学历：
-                </label>
-
-                <div class="col-xs-4">
-                    <{include
-                    file="site/passport/companyInfo/grade.html"
-                    data=array("ec_group_employees[value][edu][]","{$item.value.edu}")}>
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-xs-2 control-label">
-                    <span class="text-danger">*</span>联系方式：
-                </label>
-
-                <div class="col-xs-4">
-                    <input type="text"
-                           value="<{$item.value.contact}>"
-                           name="ec_group_employees[value][contact][]"
-                           class="form-control"
-                           required="true"
-                           format="mobile">
-                    <span class="msgTip"
-                          data-message="format">请输入正确手机号码</span>
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-xs-2 control-label">
-                    照片：
-                </label>
-
-                <div class="col-xs-4">
-                    <div class="filebox">
-                        <input type="hidden"
-                               value="<{$item.attach}>"
-                               name="ec_group_employees[attach][]"/>
-                        <input type="file"
-                               data-url="<{link app=image ctl=site_upload act=index}>"
-                               accept="image/*"
-                               class="file_input"/>
-
-                        <div class="showImg">
-                            <img src="<{if $item.attach eq ''}><{$base_url}>/themes/pc/default/statics/images/file_add.jpg<{else}><{$item.attach|storager:'xs'}><{/if}>">
-                        </div>
+    <h4>电商团队成员</h4>
+    <div class="creat-wrap" data-module="creater">
+        <div id="items" data-items="itemList">
+            <{*foreach from=$extra.ec_group_employees key=key item=item*}>
+            <div class="team-item equipment-items" data-item="creat-item">
+                <input type="hidden" name="ec_group_employees[content_id][]" value="<{$item.content_id}>" class="form-control">
+                <div class="form-group">
+                    <label class="col-xs-2 control-label">
+                        <span class="text-danger">*</span>姓名：
+                    </label>
+                    <div class="col-xs-4">
+                        <input type="text" value="<{$item.value.name}>" name="ec_group_employees[value][name][]" class="form-control" required="true">
+                        <span class="msgTip" data-message="error"></span>
                     </div>
                 </div>
-            </div>
-            <{if $key neq '0'}>
-            <div class="form-group">
-                <label class="col-xs-2 control-label">
-                </label>
-
-                <div class="col-xs-4">
-                    <button class="del-team" type="button">删除</button>
-                </div>
-            </div>
-            <{/if}>
-            <hr>
-        </div>
-        <{/foreach}>
-    </div>
-    <div class="form-group">
-        <label class="col-xs-2 control-label">
-
-        </label>
-
-        <div class="col-xs-4">
-            <button class="team btn-default btn"
-                    type="button">
-                保存并继续添加成员
-            </button>
-        </div>
-    </div>
-
-</div>
-<textarea
-        class="ex-group hide">
-    <div class="team-item">
-        <input type="hidden"
-               name="ec_group_employees[content_id][]"
-               value="<{$extra.content_id}>"
-               class="form-control">
-
-
-        <div class="form-group">
-            <label class="col-xs-2 control-label">
-                <span class="text-danger">*</span>姓名：
-            </label>
-
-            <div class="col-xs-4">
-                <input type="text"
-                       value="<{$extra.ec_group_employees.value.name}>"
-                       name="ec_group_employees[value][name][]"
-                       class="form-control"
-                       required="true">
-                <span class="msgTip"
-                      data-message="error"></span>
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="col-xs-2 control-label">
-                <span class="text-danger">*</span>年龄：
-            </label>
-
-            <div class="col-xs-4">
-                <input type="text"
-                       value="<{$extra.ec_group_employees.value.age}>"
-                       name="ec_group_employees[value][age][]"
-                       class="form-control"
-                       required="true"
-                       format="digits">
-                <span class="msgTip"
-                      data-message="format">请输入正确的年龄</span>
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="col-xs-2 control-label">
-                <span class="text-danger">*</span>学历：
-            </label>
-
-            <div class="col-xs-4">
-                <{include
-                file="site/passport/companyInfo/grade.html"
-                data=array("ec_group_employees[value][edu][]","{$extra.value.edu}")}>
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="col-xs-2 control-label">
-                <span class="text-danger">*</span>联系方式：
-            </label>
-
-            <div class="col-xs-4">
-                <input type="text"
-                       value="<{$extra.ec_group_employees.value.contact}>"
-                       name="ec_group_employees[value][contact][]"
-                       class="form-control"
-                       required="true"
-                       format="mobile">
-                <span class="msgTip"
-                      data-message="format">请输入正确手机号码</span>
-
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="col-xs-2 control-label">
-                照片：
-            </label>
-
-            <div class="col-xs-4">
-                <div class="filebox">
-                    <input type="hidden"
-                           value="<{$extra.ec_group_employees.value.attach}>"
-                           name="ec_group_employees[value][attach][]"/>
-                    <input type="file"
-                           data-url="<{link app=image ctl=site_upload act=index}>"
-                           accept="image/*"
-                           class="file_input"/>
-
-                    <div class="showImg">
-                        <img src="<{if $company.business_license_image eq ''}><{$base_url}>/themes/pc/default/statics/images/file_add.jpg<{else}><{$company.business_license_image|storager:'xs'}><{/if}>">
+                <div class="form-group">
+                    <label class="col-xs-2 control-label">
+                        <span class="text-danger">*</span>年龄：
+                    </label>
+                    <div class="col-xs-4">
+                        <input type="text" value="<{$item.value.age}>" name="ec_group_employees[value][age][]"
+                               class="form-control" required="true">
+                        <span class="msgTip" data-message="error"></span>
                     </div>
                 </div>
+                <div class="form-group">
+                    <label class="col-xs-2 control-label">
+                        <span class="text-danger">*</span>学历：
+                    </label>
+                    <div class="col-xs-4">
+                        <{include file="site/passport/companyInfo/grade.html" data=array("ec_group_employees[value][edu][]","{$item.value.edu}")}>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-2 control-label">
+                        <span class="text-danger">*</span>联系方式：
+                    </label>
+                    <div class="col-xs-4">
+                        <input type="text" value="<{$item.value.contact}>" name="ec_group_employees[value][contact][]" class="form-control" required="true" format="mobile">
+                        <span class="msgTip" data-message="format">请输入正确手机号码</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-2 control-label"> 照片：</label>
+                    <div class="col-xs-4">
+                        <{input type="imageupload" tag="图片上传" name="ec_group_employees[attach][]" value=$item.attach required='true' accept="jpg|png|gif" }>
+                        <span class="msgTip" data-message="error">不能为空</span>
+                    </div>
+                </div>
+                <{if $key neq '0'}>
+                <div class="form-group">
+                    <label class="col-xs-2 control-label"></label>
+                    <div class="col-xs-4">
+                        <button class="del-team btn btn-danger delBtn" type="button">删除</button>
+                    </div>
+                </div>
+                <{/if}>
             </div>
-
-        </div>
-        <div class="form-group">
-            <label class="col-xs-2 control-label">
-            </label>
-
-            <div class="col-xs-4">
-                <button class="del-team" type="button">删除</button>
-            </div>
+            <{*/foreach*}>
         </div>
         <hr>
-    </div>
-</textarea>
+        <div class="form-group">
+            <label class="col-xs-2 control-label"></label>
+            <div class="col-xs-4">
+                <button class="team btn btn-danger addBtn" type="button">
+                    保存并继续添加成员
+                </button>
+            </div>
+        </div>
+    </div> 
+</div>
 
-
-<script>
-    void function (ec_group) {
-        var fileObj = {
-            add: function (e, data) {
-                if (!data.files[0]['type'].match(/^image/)) {
-                    alert('非法上传，不是图片类型');
-                }
-                data.submit();
-            },
-            done: function (e, data) {
-                var re = $.parseJSON(data.result);
-                var input = e.target || e.srcElement;
-                var parent = $(input).closest('div');
-                $(parent).find('input[type="hidden"]').attr('value', re.image_id);
-                $(parent).find('img').attr('src', re.url);
-
-            }
-        };
-
-        ec_group.find('.team').click(function (e) {
-            e.stopPropagation();
-            var data = ec_group.find('.team-item:last').find('*').serializeArray();
-            var url = '<{link app=seller ctl=site_passport act=save_ecgroup}>';
-            $.post(url, data, function (re) {
-                if (re.success) {
-                    $('.team-item:last').find('input[name="ec_group_employees[content_id][]"]').val(re.data.content_id);
-                    var item = $('.ex-group').val();
-                    $(item).insertAfter($('#items .team-item:last'));
-                    //$('.team-item:last').find('input [type="text"]').val('');
-                    $('.team-item:last').find('.file_input').fileupload(fileObj);
-                    $('.team-item:last').find('.del-team').click(function () {
-                        del($(this))
-                    });
-                }
-            });
-        });
-
-        var init = function () {
-            var item = $('.ex-group').val();
-            if (!$('#items').find('.equipment-items').size()) {
-                $(item).find('.del-team').remove();
-                $(item).appendTo($('#items'));
-            }
-//            else {
-//                $(item).insertAfter($('#items .equipment-items:last'));
-//                $(item).click(function () {
-//                    del($(item));
-//                });
-//                //$('.team-item:last').find('input [type="text"]').val('');
-//            }
-            $('.equipment-items:last').find('.file_input').fileupload(fileObj);
-        };
-        (function () {
-            if (!$('#items').find('.equipment-items').size()) {
-                init();
-            }
-        })();
-
-        ec_group.find('.del-team').click(function () {
-            if(!confirm('确定删除？')) return false;
-            del($(this));
-        });
-
-        var del = function (obj) {
-            var parent = $(obj).closest('div.team-item');
-            var content_id = parent.find('input[name="ec_group_employees[content_id][]"]').val();
-            var url = '<{link app=seller ctl=site_passport act=del_extra}>';
-            $.post(url, {content_id: content_id}, function (re) {
-                if (re.success) {
-                    parent.remove();
-                } else {
-                    alert('操作失败');
-                }
-            });
-        };
-    }($('#companyInfo_form'));
-</script>

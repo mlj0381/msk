@@ -1,0 +1,89 @@
+<div id="sepcInfo">
+    <h4><span class="text-danger">*</span>商品规格</h4>
+    <!-- spec -->
+    <div class="row spec_add_box"  id="spec_edit_pane">
+        <div class="checker hide">
+            <span class="checked"><input type="checkbox" checked="checked"  class="checkbox_gg" ></span>自定义多种规格
+        </div>
+        <div class="spec-edit">
+            <table class="table spec_add_table">
+                <thead>
+                    <tr>
+                        <th width="25%">规格名称</th>
+                        <th>规格项 <i class="fa fa-lightbulb-o"></i> <span class="text-danger">每输入一个规格项后，回车确认</span></th>
+                        <th width="10%"><span style="padding-left:25px;">操作</span></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <div class="input-group">
+                                <input class="form-control spec-t" name="goods[spec_desc][t][]" type="text" placeholder="如:质量等级">
+                            </div>
+                        </td>
+                        <td>
+                            <input  class='form-control spec-v'  name="goods[spec_desc][v][]" type="text"  value="" id="color_input">
+                        </td>
+                        <td>
+                            <button type=button class="btn btn-sm default hide"><i class="glyphicon glyphicon-trash"></i></button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="input-group">
+                                <input class="form-control spec-t" name="goods[spec_desc][t][]" type="text" value="" placeholder="如:包装规格">
+                            </div>
+                        </td>
+                        <td>
+                            <input  class='form-control spec-v' width="100px" name="goods[spec_desc][v][]" type="text"  value="">
+                        </td>
+                        <td>
+                            <button type=button class="btn btn-sm default spec-del" ><i class="glyphicon glyphicon-trash"></i></button>
+                        </td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan=3>
+                            <button type=button class="btn btn-sm blue-madison new-spec-item"><i class="fa fa-plus"></i> 新增其他名称</button>
+                            <button type=button class="btn btn-sm green-meadow create-product-items"><i class="fa fa-cogs"></i> 根据以上信息生成多规格货品</button>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+        <div class="product-items">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th width="150px">规格</th>
+                        <th>
+                            货号
+                        </th>
+                        <th>
+                            条码
+                        </th>
+                        <th>
+                            销售价
+                        </th>
+                        <th>
+                            市场价
+                        </th>
+                        <th>
+                            重量
+                        </th>
+                        <th>
+                            单位
+                        </th>
+                        <th width="50px;">
+                            上架
+                        </th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+    <!-- sepc end -->
+</div>
+    
