@@ -1677,6 +1677,60 @@ ul,ol{
 		}
 
 		/*公司信息提交*/
+		.panel-lt{
+			width:240px;
+			min-height: 400px;
+			box-sizing: border-box;
+			border:1px solid #ddd;
+			background: #fff;
+			.menu-root{
+				font-size: 14px;
+				background:@basecolor;
+				color:#fff;
+				padding:0 10px;
+				margin:0;
+				height:40px;
+				line-height: 40px;
+				width:100%;
+				font-weight:bold;
+			}
+			.menu-list{
+				li{
+					p{
+						height:30px;
+						background: #ddd;
+						line-height: 30px;
+						padding:0 10px;
+						margin-bottom:0px;
+						font-size:13px;
+						font-weight:bold;
+					}
+					ul{
+						width:100%;
+						padding:0 20px;
+						li{
+							border-bottom:1px dashed #ddd;
+							height:30px;
+							line-height: 30px;
+							color:#666;
+							i{
+								display: inline-block;
+								margin-right:5px;
+								
+							}
+						}
+						&>li:last-child{
+							border-bottom:none;
+						}
+					}
+				}
+			}
+		}
+		.panel-rt{
+			width:960px;
+			padding:0px;
+			padding-left:15px;
+		}
 		.settled_warning{
 			background: #fffdf0;
 			border:1px solid #ffd119;

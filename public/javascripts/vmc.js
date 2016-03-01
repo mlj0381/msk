@@ -483,6 +483,7 @@ $.VMC.uploader = function() {
 			 $(box.showBox).prop('src', box.thumbDefault);
 		}
 		$(box.handle).fileupload(settings);
+		
 	});
 };
 //------------------------------------------------------------------

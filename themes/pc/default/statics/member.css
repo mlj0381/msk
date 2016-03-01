@@ -1507,6 +1507,55 @@ ol {
 .buyer_container .seller_regbox .company_btns a {
   margin: 0 10px;
 }
+.buyer_container .seller_regbox .panel-lt {
+  width: 240px;
+  min-height: 400px;
+  box-sizing: border-box;
+  border: 1px solid #ddd;
+  background: #fff;
+}
+.buyer_container .seller_regbox .panel-lt .menu-root {
+  font-size: 14px;
+  background: #a40001;
+  color: #fff;
+  padding: 0 10px;
+  margin: 0;
+  height: 40px;
+  line-height: 40px;
+  width: 100%;
+  font-weight: bold;
+}
+.buyer_container .seller_regbox .panel-lt .menu-list li p {
+  height: 30px;
+  background: #ddd;
+  line-height: 30px;
+  padding: 0 10px;
+  margin-bottom: 0px;
+  font-size: 13px;
+  font-weight: bold;
+}
+.buyer_container .seller_regbox .panel-lt .menu-list li ul {
+  width: 100%;
+  padding: 0 20px;
+}
+.buyer_container .seller_regbox .panel-lt .menu-list li ul li {
+  border-bottom: 1px dashed #ddd;
+  height: 30px;
+  line-height: 30px;
+  color: #666;
+}
+.buyer_container .seller_regbox .panel-lt .menu-list li ul li i {
+  display: inline-block;
+  margin-right: 5px;
+}
+.buyer_container .seller_regbox .panel-lt .menu-list li ul > li:last-child {
+  border-bottom: none;
+}
+.buyer_container .seller_regbox .panel-rt {
+  width: 960px;
+  padding: 0px;
+  padding-left: 15px;
+}
 .buyer_container .seller_regbox .settled_warning {
   background: #fffdf0;
   border: 1px solid #ffd119;
