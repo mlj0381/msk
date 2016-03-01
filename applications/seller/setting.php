@@ -40,11 +40,10 @@ $setting = array(
                         'page' => array(
                             'store_info', 'store_principal', 'goods_info')
                     ),
-
                 ),
             ),
             1 => array(
-                'companyType' => '工厂店铺',
+                'companyType' => '工厂',
                 'pageSet' => array(
                     1 => array(
                         'label' => '生产商企业基本资质',
@@ -80,7 +79,7 @@ $setting = array(
                 ),
             ),
             2 => array(
-                'companyType' => '代理店铺',
+                'companyType' => '代理',
                 'pageSet' => array(
                     1 => array(
                         'label' => '生产商企业基本资质',
@@ -117,7 +116,7 @@ $setting = array(
                 ),
             ),
             4 => array(
-                'companyType' => 'OEM店铺',
+                'companyType' => 'OEM',
                 'pageSet' => array(
                     1 => array(
                         'label' => '生产商企业基本资质',
@@ -154,6 +153,42 @@ $setting = array(
                 ),
             ),
             'array_info' => array('equipment', 'ec_group_employees'),
+        ),
+    ),
+    'seller_group' => array(
+        'default' => array(
+            array(
+                'title' => '公司资质审批',
+                'setting' => array(
+                    'label' => array('卖家资质审批', '被代理生产商资质审批', 'OEM生产商资质审批'),
+                    'type' => array('1', '2', '4'),
+                    'page' => array('1', '2'),
+                ),
+            ),
+            array(
+                'title' => '公司基本信息提交',
+                'setting' => array(
+                    'label' => array('卖家基本信息提交', '被代理生产商基本信息提交', 'OEM生产商基本信息提交'),
+                    'type' => array('1', '2', '4'),
+                    'page' => array('3', '4', '5')
+                ),
+            ),
+            array(
+                'title' => '公司管理团队信息',
+                'setting' => array(
+                    'label' => array('卖家管理团队信息', '被代理生产商管理团队信息', 'OEM生产商管理团队信息'),
+                    'type' => array('1', '2', '4'),
+                    'page' => array('6'),
+                ),
+            ),
+            array(
+                'title' => '公司电商团队信息',
+                'setting' => array(
+                    'label' => array('电商团队信息'),
+                    'type' => array('comm'),
+                    'page' => array('1'),
+                ),
+            ),
         ),
     ),
     'goods_setting' => array(

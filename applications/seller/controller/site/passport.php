@@ -462,10 +462,13 @@ class seller_ctl_site_passport extends seller_frontpage
         if(!$storeType &&  $this->seller['ident'] & 2) $storeType = 2;
         if(!$storeType &&  $this->seller['ident'] & 4) $storeType = 4;
         $columns = $this->passport_obj->page_setting($step, $licence_type, $storeType);
-        $this->passport_obj->_entry($step, $storeType);
+        $this->pagedata['leftMenu'] = $this->app->getConf('seller_group');
+        $index = $step;
+        $this->passport_obj->_entry($step, $storeType, $index);
         $this->pagedata['info'] = $this->passport_obj->edit_info($columns, $this->seller['seller_id'], $storeType);
         $this->pagedata['info']['company_extra']['page_setting'] = $this->passport_obj->columns();
         $this->pagedata['info']['company_extra']['pageIndex'] = $step;
+        $this->pagedata['menu'] = array('storeType' => $storeType, 'activeMenu' => $index);
         $this->pagedata['pageSet'] = $columns;
         $this->pagedata['pageIndex'] = $step;
         if ($step > $countPage['sum']) {

@@ -26,42 +26,31 @@
         </li>
     </ol>
 </div>
+<style>
+    .menu-list li ul li.active{
+        color:red;
+        background:green;
+    }
+</style>
 <div class="passport-signup-container seller_regbox">
     <div class="panel panel-default signup-panel clearfix">
         <div class="panel-lt panel-menu pull-left">
-            <h4 class="menu-root">公司信息提交(工厂+代理+OEM)</h4>
+
+            <h4 class="menu-root">公司信息提交(<{$pageSet.identityLabel}> )</h4>
             <ul class="menu-list">
+                <{foreach from=$leftMenu item=items}>
                 <li>
-                    <p>公司资质审批</p>
+                    <p><{$items.title}></p>
                     <ul>
-                        <li><i class="icon-caret-right"></i>卖家资质审批</li>
-                        <li><i class="icon-caret-right"></i>被代理生产商资质审批</li>
-                        <li><i class="icon-caret-right"></i>OEM生产商资质审批</li>
+                        <{foreach from=$items.setting.label key=key item=item}>  <!-- active 被选中-->
+                        <li
+                                class="<{if $menu.storeType eq $items.setting.type[$key] && $menu.activeMenu eq $items.setting.page[$key]}> active <{/if}>"
+                        ><i class="icon-caret-right "></i><{$item}></li>
+
+                        <{/foreach}>
                     </ul>
                 </li>
-                <li>
-                    <p>公司基本信息提交</p>
-                    <ul>
-                        <li><i class="icon-caret-right"></i>卖家基本信息提交</li>
-                        <li><i class="icon-caret-right"></i>被代理生产商基本信息提交</li>
-                        <li><i class="icon-caret-right"></i>OEM生产商基本信息提交</li>
-                    </ul>
-                </li>
-                <li>
-                    <p>公司管理团队信息</p>
-                    <ul>
-                        <li><i class="icon-caret-right"></i>卖家管理团队信息</li>
-                        <li><i class="icon-caret-right"></i>被代理生产商管理团队信息</li>
-                        <li><i class="icon-caret-right"></i>OEM生产商管理团队信息</li>
-                    </ul>
-                </li>
-                <li>
-                    <p>公司电商团队信息</p>
-                    <ul>
-                        <li><i class="icon-caret-right"></i>卖家电商团队信息</li>
-                    </ul>
-                </li>
-                <li></li>
+                <{/foreach}>
             </ul>
         </div>
         <div class="panel-body panel-rt pull-right">
@@ -76,7 +65,7 @@
                 </dl>
             </div>
             <form id="companyInfo_form" action="<{link app=seller ctl=site_passport act=entry}>" class="form-horizontal companyInfo_form" method="post" data-module="validator">
-                <h3><{$pageSet.companyType}>  <small>  <{$pageSet.label}></small></h3>
+                <h3><{$pageSet.companyType}>  <small> <{$pageSet.label}></small></h3>
                 <input type="hidden" name="typeId" value="<{$pageSet.typeId}>"/>
                 <input type='hidden' name='pageIndex' value='<{$pageIndex}>'/>
                 <!-- 三证合一 -->
