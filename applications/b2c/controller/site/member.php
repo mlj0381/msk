@@ -458,8 +458,7 @@ vmc_b2c_orders WHERE `member_id`={$this->member['member_id']} AND `status` = 'ac
                 if (!$gid) {
                     $this->splash('error', $redirect_here, '删除收藏失败!');
                 } else {
-                    if ($mdl_member_goods->delete($jg = array('member_id' => $member_id, 'goods_id' => $gid, 'type' => 'fav'))) {
-                        print_r($jg);
+                    if ($mdl_member_goods->delete(array('member_id' => $member_id, 'goods_id' => $gid, 'type' => 'fav'))) {
                         $this->splash('success', $redirect_here, '删除成功!');
                     } else {
                         $this->splash('error', $redirect_here, '删除收藏失败!');

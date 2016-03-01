@@ -9,8 +9,8 @@
     <div class="row itemnav">
         <div class="nav_item">
             <span class="active">全部商品<small>(<{$cart_all.cart_count}>)</small></span>
-            <span class="hide">大促会商品<small>(<{$cart_all.big.goods_count}>)</small></span>
-            <span class="hide">神农客商品<small>(<{$cart_all.god.goods_count}>)</small></span>
+            <span>大促会商品<small>(<{$cart_all.big.goods_count}>)</small></span>
+            <span>神农客商品<small>(<{$cart_all.god.goods_count}>)</small></span>
         </div>
         <!--<div class="nav_right c-cf-amount">-->
             <!--<p>已选 <em data-bind="goods_count"><{$cart_result.goods_count}></em> 商品<small><{$cart_result.finally_cart_amount|cur}></small> <a href="<{link app=b2c ctl=site_checkout}>" class="checkout-btn btn btn-danger <{if $cart_result.goods_count<1}>disabled<{/if}>" >去结算</a></p>-->
@@ -248,21 +248,21 @@ void function(){
             });
     }
     //促销即时展示隐藏
-    var _fill_plist= function(scop,plist){
-        var plist_ul = $($(scop).find('.promotion-list')),lis='';
-        if(!plist_ul.length)return;
-        plist_ul.empty();
-        if(!plist)return;
-        $.each(plist,function(idx,p){
-            if(p.rule_type=='coupon'){
-                lis+='<li data-ruleid="'+p.rule_id+'"><span class="btn-group bg-label"><span class="btn btn-xs btn-danger">'+p.tag+'</span><span class="btn btn-danger btn-xs">券</span><a class="btn btn-xs btn-default" href="<{link app=b2c ctl=site_cart act=remove_coupon}>?obj_ident='+p.coupon_obj_ident+'">取消</a></span>&nbsp;'+p.desc+'</li>';
-            }else{
-                lis+='<li data-ruleid="'+p.rule_id+'"><span class="label label-danger">'+p.tag+'</span>&nbsp;'+p.desc+'</li>';
-            }
-
-        });
-        plist_ul.append(lis);
-    }
+//    var _fill_plist= function(scop,plist){
+//        var plist_ul = $($(scop).find('.promotion-list')),lis='';
+//        if(!plist_ul.length)return;
+//        plist_ul.empty();
+//        if(!plist)return;
+//        $.each(plist,function(idx,p){
+//            if(p.rule_type=='coupon'){
+//                lis+='<li data-ruleid="'+p.rule_id+'"><span class="btn-group bg-label"><span class="btn btn-xs btn-danger">'+p.tag+'</span><span class="btn btn-danger btn-xs">券</span><a class="btn btn-xs btn-default" href="<{link app=b2c ctl=site_cart act=remove_coupon}>?obj_ident='+p.coupon_obj_ident+'">取消</a></span>&nbsp;'+p.desc+'</li>';
+//            }else{
+//                lis+='<li data-ruleid="'+p.rule_id+'"><span class="label label-danger">'+p.tag+'</span>&nbsp;'+p.desc+'</li>';
+//            }
+//
+//        });
+//        plist_ul.append(lis);
+//    }
 
     var _update = function(cart_result){
         var plist_goods = cart_result['promotions']&&cart_result['promotions']['goods']?cart_result['promotions']['goods']:false,

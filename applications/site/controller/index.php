@@ -25,6 +25,10 @@ class site_ctl_index extends site_controller{
         }
     }
 
+    public function changeAddr($region_id){
+        $_SESSION['addrs'] = $region_id;
+    }
+
 //网站正在建设中
     public function build(){
     	$this->display('build.html');

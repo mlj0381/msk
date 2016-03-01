@@ -102,8 +102,15 @@ class b2c_source_addrs extends base_source {
      * return true/false     
      */
 
-    public function basic($params) {
-        
+    public function &basic($params) {
+        $obj_regions_op = vmc::service('ectools_regions_apps', array('content_path' => 'ectools_regions_operation'));
+        $obj_regions_op->type = 1;
+        $stockList = $obj_regions_op->getRegionById(); // 0 三级联动 1 仓库地址
+        foreach($stockList as &$value){
+            $value['childNode'] = $obj_regions_op->getRegionById($value['region_id']);
+        }
+        $_SESSION['addrs'] = $_SESSION['addrs'] ?: $stockList[0]['childNode'][0]['region_id'];
+        return $stockList;
     }
     
     /*
