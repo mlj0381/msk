@@ -21,6 +21,8 @@ class b2c_frontpage extends site_controller
         $this->member = $this->get_current_member();
         $this->controller = $this->_request->get_ctl_name();
         $this->menuSetting = 'index';
+        $base_url = vmc::base_url(1);
+        $this->pagedata['base_url'] = $base_url; 
     }
 
     /**

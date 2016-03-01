@@ -166,7 +166,7 @@
           <div class="row goods-list gl-default">
               <{foreach from=$data_list item=item}>
                 <div class="col-xs-3">
-                  <div class="thumbnail goods-item">
+                  <div class="thumbnail goods-item" data-goods="<{$item.product.goods_id}>" data-store="<{$item.store_id}>">
                       <div class="gi-image-wrapper">
                           <a href="<{link app=b2c ctl=site_product args0=$item.product.product_id args1=$item.store_id}>">
                               <img src="<{$base_url}>/themes/pc/default/statics/images/loading.gif"
@@ -175,6 +175,16 @@
                       </div>
                     <div class="caption">
                       <ul class="list-inline">
+
+
+                          <{assign var=max value=$item.product.interval.price[0]}>
+                          <{assign var=min value=$item.product.interval.price[0]}>
+                          <{foreach from=$item.product.interval.price item=item}>
+                                <span class="hide"><{if $max < $item }><{$max=$item}><{/if}>
+                                <{if $min > $item}><{$min=$item}><{/if}></span>
+                          <{/foreach}>
+                          <!-- 显示价格区间-->
+
                           ￥<{if $item.product.promotion.sale_price && $item.product.promotion.sale_price!='null'}>
                           <li class="text-muted"><del><{$item.product.buy_price|cur}></del></li>
                           <li class="price-1"><{$item.product.promotion.sale_price|cur}></li>
@@ -186,8 +196,10 @@
                           <a href="<{link app=b2c ctl=site_product args0=$item.product.product_id args1=$item.store_id}>" title='<{$item.name}>'><{$item.name}></a>
                       </h3>
                       <div class="g-ctl clearfix">
-                        <a class="add_cart fl"><i class="icon-shopping-cart"></i>加入购物车</a>
-                        <a class="add_fav fr"><i class="icon-heart"></i>收藏</a>
+                        <a class="add_cart fl" data-url="<{link app=b2c ctl=site_cart act=add args0=$item.product.product_id
+                        args1=$item.store_id args2=1 }>" href="javascript:;"><i class="icon-shopping-cart"></i>加入购物车</a>
+                        <a class="add_fav fr favorite-button"data-url="<{link app=b2c ctl=site_member act=favorite args0=add
+                        args1=$item.product.goods_id args2=goods}>" herf="javascript:;"><i class="icon-heart"></i>收藏</a>
                       </div>
                       <div class="store-name">
                           <a href="<{link app=store ctl=site_store args0=$item.store_id}>"><{$item.store_info.store_name|cut:50:'...'}></a>
@@ -297,5 +309,96 @@
         $('.five_goods').bind('click',function(){
           $(this).parents('.store_bar').siblings('.store_goods').slideToggle(400);
         })
-    })
+    });
+
+
+
+    $('.add_cart').click(function (e) {
+        var _self = $(this);
+        if($.cookie('MEMBER_IDENT')) {
+                var url = $(_self).attr('data-url');
+                $.getJSON(url, function(re){
+                    if(re.success){
+                        alert('加入成功');
+                    }else{
+                        alert('加入失败');
+                    }
+                });
+            } else {
+                $('#quickLogin').modal('show');
+            }
+
+    });
+    $('.quickLogin').on('click', 'button', function (e) {
+        var login_form = $('.quickLogin');
+        login_form.find('button[type=submit]').button('loading');
+        $.post(login_form.prop('action'), login_form.serialize(), function (re) {
+            if (re.error) {
+                login_form.find('.alert-error').remove();
+                if ($('.quickLogin .alert').length <= 0) {
+                    $('.login_cont').append($('<div class="alert alert-danger">' + re.error + '</div>'));
+                }
+                alert_timer = setTimeout(function () {
+                    clearTimeout(alert_timer);
+                    login_form.find('.alert-danger').fadeOut('fast', function () {
+                        $(this).remove();
+                    });
+                }, 3000);
+            }
+            if (re.success) {
+                location = window.location.href;
+            }
+            login_form.find('button[type=submit]').button('reset');
+        }, 'json');
+        return false;
+    });
+
+    //喜欢收藏openAPI
+    var  checkFav = function(goods_id, store_id, idx){
+        var check_fav_api = "<{link app=b2c ctl=site_member act=check_favorite}>";
+        $.getJSON(check_fav_api, {member_id: $.cookie('MEMBER_IDENT'), 'goods_id': goods_id, 'store_id': store_id}, function (recv) {
+            try {
+                var data = recv.data;
+                if (data.goods_id && data.goods_id > 0) {
+                    $('.favorite-button').eq(idx).addClass('disabled');
+                    $('.favorite-button').eq(idx).text('已收藏');
+                }
+//                if (data.store_id && data.store_id > 0) {
+//                    $('.favorite-button i').eq(1).removeClass('glyphicon-heart-empty').eq(1).addClass('glyphicon-heart');
+//                    $('.favorite-button').eq(1).addClass('disabled');
+//                    //$('.favorite-button em').eq(1).text('已收藏');
+//                }
+            } catch (e) {
+            }
+        });
+    };
+    if($.cookie('MEMBER_IDENT')) {
+        $('.goods-list .thumbnail').each(function (idx, item) {
+            var goods_id = $(this).attr('data-goods');
+            var store_id = $(this).attr('data-store');
+            checkFav(goods_id, store_id, idx);
+        });
+    }
+    $('.favorite-button').on('click', function (e) {
+        e.stopPropagation();
+        var _this = $(this);
+        $.get(_this.attr('data-url'), function (re) {
+            if (re && re.success) {
+                _this.fadeOut(function () {
+                    _this.find('i').removeClass('glyphicon-heart-empty').addClass('glyphicon-heart');
+                    var current_count = parseInt(_this.find('em').text().replace(/[\(|\)]/g, ''));
+                    if (isNaN(current_count))
+                        current_count = 0;
+                    _this.text('已收藏(' + (++current_count) + ')');
+                }).fadeIn(function () {
+                    _this.addClass('disabled');
+                });
+            } else {
+                if (re.error == '未登录') {
+                    $('#quickLogin').modal('show');
+                }
+            }
+        }, 'json');
+        return false;
+    });
 </script>

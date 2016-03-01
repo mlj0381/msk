@@ -250,7 +250,7 @@
                         <dd>
                             <p>联系卖家:<span><a href=""><i class="icon-comment"></i></a></span></p>
                             <p>经营品牌:<span>双汇</span></p>
-                            <p>所在地区:<span>上海 上海市松江区<{$store_info.store_area}></span></p>
+                            <p>所在地区:<span><{$store_info.store_area}> <{$store_info.store_address}></span></p>
                         </dd>
                     </dl>
                     <div class="server_info">
@@ -336,14 +336,14 @@
                                 <{/foreach}>
                             </div>
                             <{/if}>
-                            <div class="description">
 
+                            <div class="description">
                                 <!-- <img src="<{$base_url}>/themes/pc/default/statics/images/details.jpg" /> -->
                                 <ul class="pro_param clearfix">
-                                    <li title="鸡大腿">商品名称：鸡大腿</li>
-                                    <li title="v23423324">商品编号：v23423324</li>
-                                    <li title="美侍客">品牌：美侍客</li>
-                                    <li title="2015-11-30 12:05:01">上架时间：2015-11-30 12:05:01</li>
+                                    <li title="<{$data_detail.name}>">商品名称：<{$data_detail.name}></li>
+                                    <li title="<{$data_detail.gid}>">商品编号：<{$data_detail.gid}></li>
+                                    <li title="<{$data_detail.brand.brand_name}>">品牌：<{$data_detail.brand.brand_name}></li>
+                                    <li title="<{$data_detail.uptime|cdate}>">上架时间：<{$data_detail.uptime|cdate}></li>
                                     <li title="中国大陆">商品产地：中国大陆</li>
                                     <li title="28kg">商品毛重：28kg</li>
                                     <li title="25kg">商品净重：25kg</li>

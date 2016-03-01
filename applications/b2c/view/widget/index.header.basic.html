@@ -7,28 +7,19 @@
                         <a id="cityPlan">
                             <span>所在城市：<small>上海</small></span> <i class="icon-angle-down"></i>
                         </a>
+
                         <div class="location-menu clearfix">
+                            <{foreach from=$basic.addrs item=addrs}>
                             <dl class="clearfix">
-                                <dt>上海：</dt>
-                                <dd class="active">
-                                    <a data-url="<{link app=site ctl=index act=index args0=1}>">上海</a>
+                                <dt><{$addrs.local_name}>：</dt>
+                                <{foreach from=$addrs.childNode item=item}>
+                                <dd <{if $activeAddrs eq $item.region_id}>class="active"<{/if}>>
+                                    <a title="<{$item.local_name}>"
+                                       data-url="<{link app=site ctl=index act=changeAddr args0=$item.region_id}>"><{$item.local_name}></a>
                                 </dd>
+                                <{/foreach}>
                             </dl>
-                            <dl class="clearfix">
-                                <dt>无锡：</dt>
-                                <dd>
-                                    <a data-url="">无锡</a>
-                                </dd>
-                                <dd>
-                                    <a data-url="">苏州</a>
-                                </dd>
-                                <dd>
-                                    <a data-url="">常州</a>
-                                </dd>
-                                <dd>
-                                    <a data-url="">南通</a>
-                                </dd>
-                            </dl>
+                            <{/foreach}>
                         </div>
                         
                     </div>
