@@ -37,6 +37,8 @@ class seller_frontpage extends site_controller {
         $this->set_tmpl('seller');
         $this->user_obj = vmc::singleton('seller_user_object');
         $this->passport_obj = vmc::singleton('seller_user_passport');
+        $base_url = vmc::base_url(1);
+        $this->pagedata['base_url'] = $base_url; 
     }
 
     //查询入驻进度
