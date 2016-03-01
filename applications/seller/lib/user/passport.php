@@ -581,9 +581,9 @@ class seller_user_passport
             $columns['page'] = $conf['comm']['pageSet'][$index]['page'];
             $columns['label'] = $conf['comm']['pageSet'][$index]['label'];
             $columns['companyType'] = $countPage['label'];
-            $columns['typeId'] = $storeType;
+            $columns['typeId'] = 'comm';//$storeType;
         }
-
+        $columns['identityLabel'] = $countPage['label'];
         return $columns;
     }
 
@@ -620,11 +620,11 @@ class seller_user_passport
         $sum = Array();
         if ($seller_info['ident'] & 1) {
             $sum['sum'] += count($conf[1]['pageSet']);
-            $sum['label'] .= $conf[1]['companyType'] . ' +  ';
+            $sum['label'] .= $conf[1]['companyType'] . '+';
         }
         if ($seller_info['ident'] & 2) {
             $sum['sum'] += count($conf[2]['pageSet']);
-            $sum['label'] .= $conf[2]['companyType'] . ' +  ';
+            $sum['label'] .= $conf[2]['companyType'] . '+';
         }
         if ($seller_info['ident'] & 4) {
             $sum['sum'] += count($conf[4]['pageSet']);
