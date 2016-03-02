@@ -115,6 +115,9 @@ class b2c_ctl_site_cart extends b2c_frontpage {
                 'store_id' => $store_id,
             ),
         );
+        //加入购物车产生需求
+        $result = vmc::singleton('b2c_source_cart')->add_cart($object);
+
         $ident = $this->cart_stage->add('goods', $object, $msg);
         if (!$ident) {
             $this->splash('error', '', $msg);

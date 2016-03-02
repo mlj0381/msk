@@ -156,7 +156,7 @@ class b2c_view_widget {
         $render->pagedata['basic'] = vmc::service('view_datasetting')->basic($params);
         $render->pagedata['keywords'] = $params['keywords'];
         $render->pagedata['type'] = $params['type'];
-        $render->pagedata['activeAddrs'] = $_SESSION['addrs'];
+        $render->pagedata['activeAddrs'] = $_SESSION['account']['addr'];
         return $render->fetch('widget/index.header.basic.html');
     }
 

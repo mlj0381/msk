@@ -41,7 +41,7 @@ class b2c_source_cart extends base_source {
      */
     
     public function add_cart($params){
-        
+        return true;
     }
     
     /**
