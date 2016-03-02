@@ -32,10 +32,10 @@ $(function() {
             $(this).find('i').attr('class', 'icon-angle-down')
         }
     )
-    $('.location-menu dl dd').click(function() {
-        $(this).parents('.location-menu').find('dd').removeClass('active');
-        $(this).addClass('active')
-        var provName = $(this).children('a').text();
+    $('.location-menu dl dd a').click(function() {
+        $(this).parents('.location-menu').find('a').removeClass('active');
+        $(this).addClass('active').siblings('a').removeClass('active');
+        var provName = $(this).text();
         $('#cityPlan small').text(provName);
     })
 

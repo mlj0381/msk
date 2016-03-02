@@ -112,30 +112,32 @@ header {
                             top: 40px;
                             z-index: 100;
                             padding-bottom: 5px;
+                            padding-top:5px;
                             dl{
                                 margin-left:10px;
+                                margin-bottom:0px;
+                                position: relative;
+                                padding-left:60px;
+                                min-height: 30px;
                                 dt{
-                                    .fl;
-                                    .height(30px);
-                                    padding: 2px 0;
+                                    height:30px;
+                                    line-height: 30px;
                                     font-size: 14px;
+                                    width:60px;
+                                    overflow: hidden;
+                                    position: absolute;
+                                    left:0px;
                                 }
                                 dd {
-                                    .fl;
-                                    width: 60px;
-                                    padding: 2px 0;
-                                    height: 30px;
                                     line-height: 30px;
-                                    text-align: center;
                                     a {
                                         padding: 4px 8px;
+                                        white-space:nowrap; 
                                         &:hover {
                                             background: #f5f5f5;
                                             color: #C81623;
                                         }
-                                    }
-                                    &.active {
-                                        a {
+                                        &.active {
                                             background: #C81623;
                                             color: #fff;
                                         }

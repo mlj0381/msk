@@ -110,33 +110,36 @@ header .container-fulid .topbar .top .topLeft .location .location-menu {
   top: 40px;
   z-index: 100;
   padding-bottom: 5px;
+  padding-top: 5px;
 }
 header .container-fulid .topbar .top .topLeft .location .location-menu dl {
   margin-left: 10px;
+  margin-bottom: 0px;
+  position: relative;
+  padding-left: 60px;
+  min-height: 30px;
 }
 header .container-fulid .topbar .top .topLeft .location .location-menu dl dt {
-  float: left;
   height: 30px;
   line-height: 30px;
-  padding: 2px 0;
   font-size: 14px;
+  width: 60px;
+  overflow: hidden;
+  position: absolute;
+  left: 0px;
 }
 header .container-fulid .topbar .top .topLeft .location .location-menu dl dd {
-  float: left;
-  width: 60px;
-  padding: 2px 0;
-  height: 30px;
   line-height: 30px;
-  text-align: center;
 }
 header .container-fulid .topbar .top .topLeft .location .location-menu dl dd a {
   padding: 4px 8px;
+  white-space: nowrap;
 }
 header .container-fulid .topbar .top .topLeft .location .location-menu dl dd a:hover {
   background: #f5f5f5;
   color: #C81623;
 }
-header .container-fulid .topbar .top .topLeft .location .location-menu dl dd.active a {
+header .container-fulid .topbar .top .topLeft .location .location-menu dl dd a.active {
   background: #C81623;
   color: #fff;
 }
