@@ -516,15 +516,51 @@ nav.mainNav {
                             .fl;
                             word-break: break-all;
                             word-wrap: break-word;
-                            a {
-                                color: #333;
-                                font-size: 14px;
-                                padding: 0px 10px;
-                                border-right: 1px solid #ddd;
-                                &:hover {
-                                    color: #c92d22;
+                            dl{
+                                position: relative;
+                                padding-left: 80px;
+                                dt{
+                                    width:80px;
+                                    position: absolute;
+                                    left: 0;
+                                    &:hover{
+                                        a,i{
+                                            color:@basecolor;
+                                        }
+                                    }
+                                    a{
+                                        padding-left:0;
+                                        font-size:12px;
+                                        color:#666;
+                                        i{
+                                            font: 400 9px/14px consolas;
+                                            height: 14px;
+                                            position: absolute;
+                                            right: 18px;
+                                            top: 6px;
+                                            width: 4px;
+                                        }
+                                    }
+                                }
+                                dd{
+                                    word-break: break-all;
+                                    word-wrap: break-word;
+                                    border-bottom:1px solid #f1f1f1;
+                                    padding-bottom:2px;
+                                    a{
+                                        color: #666;
+                                        font-size: 12px;
+                                        padding: 0px 10px;
+                                        margin-bottom:3px;
+                                        display: inline-block;
+                                        border-left: 1px solid #e1e1e1;
+                                        &:hover {
+                                            color: #c92d22;
+                                        }
+                                    }
                                 }
                             }
+                            
                         }
                         .tab-pane-brand {
                             width: 200px;
