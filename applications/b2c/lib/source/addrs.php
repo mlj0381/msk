@@ -109,6 +109,7 @@ class b2c_source_addrs extends base_source {
         foreach($stockList as &$value){
             $value['childNode'] = $obj_regions_op->getRegionById($value['region_id']);
         }
+        var_dump($_SESSION['addrs']);
         $_SESSION['addrs'] = $_SESSION['addrs'] ?: $stockList[0]['childNode'][0]['region_id'];
         return $stockList;
     }

@@ -26,7 +26,9 @@ class site_ctl_index extends site_controller{
     }
 
     public function changeAddr($region_id){
+        if(!is_numeric($region_id)) $this->splash('error', '', '非法请求');
         $_SESSION['addrs'] = $region_id;
+        $this->splash('success', '', $_SESSION['addrs']);
     }
 
 //网站正在建设中

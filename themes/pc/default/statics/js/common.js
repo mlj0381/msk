@@ -37,7 +37,19 @@ $(function() {
         $(this).addClass('active').siblings('a').removeClass('active');
         var provName = $(this).text();
         $('#cityPlan small').text(provName);
-    })
+    });
+
+    //地区切换
+    $('.location-menu a').click(function(e){
+        var url = $(this).attr('data-url');
+        $.getJSON(url, function(re){
+            if(re.success){
+                location = window.location.href;
+            }else{
+                alert('切换失败');
+            }
+        });
+    });
 
     /**
      * tab选项卡切换

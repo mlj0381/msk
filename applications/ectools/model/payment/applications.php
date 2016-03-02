@@ -51,10 +51,10 @@ class ectools_mdl_payment_applications {
         $tmp_list = array();
         $index = 0;
         foreach ($list as $key => $value) {
-            if ($filter && $filter['app_id'] != 'cod' && $value['app_id'] == 'cod') {
-                unset($list[$key]);
-                continue;
-            }
+//            if ($filter && $filter['app_id'] != 'cod' && $value['app_id'] == 'cod') {
+//                unset($list[$key]);
+//                continue;
+//            }
             $index = $value['order_num'];
             while (true) {
                 if (!isset($tmp_list[$index])) break;
@@ -62,6 +62,7 @@ class ectools_mdl_payment_applications {
             }
             $tmp_list[$index] = $value;
         }
+
         ksort($tmp_list);
         return array_values($tmp_list);
     }

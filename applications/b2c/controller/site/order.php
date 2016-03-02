@@ -27,7 +27,6 @@ class b2c_ctl_site_order extends b2c_frontpage
     //PC端前台会员创建订单
     public function create($fastbuy = false)
     {
-
         $member_id = $this->app->member_id;
         //parent method
         //$member_info = $this->get_member_info($member_id);
@@ -74,14 +73,14 @@ class b2c_ctl_site_order extends b2c_frontpage
             //COD FIX
             if ($order_sdf['pay_app'] == '-1' || $order_sdf['pay_app'] == 'cod') {
                 $order_sdf['is_cod'] = 'Y';
-            } else {
-                $dlytype = app::get('b2c')->model('dlytype')->dump($params['dlytype_id']);
-                if ($dlytype['has_cod'] == 'true') {
-                    $order_sdf['pay_app'] = 'cod';
-                    $order_sdf['is_cod'] = 'Y';
-                }
             }
-
+//          else {
+//                $dlytype = app::get('b2c')->model('dlytype')->dump($params['dlytype_id']);
+//                if ($dlytype['has_cod'] == 'true') {
+//                    $order_sdf['pay_app'] = 'cod';
+//                    $order_sdf['is_cod'] = 'Y';
+//                }
+//            }
             if (!$params['addr_id']) {
                 $this->logger->fail('create', '无收货人信息', $params);
                 $this->splash('error', $redirect_checkout, '无收货人信息');

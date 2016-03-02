@@ -206,15 +206,7 @@ $(function() {
         $('.loginStatus > a').text('注销').attr('href', '<{link app=seller ctl=site_passport act=logout}>');
     }
     
-    //地区切换
-    $('.location-menu a').click(function(e){
-        var url = $(this).attr('data-url');
-        $.getJSON(url, function(re){
-            if(re.success){
-                location = window.location.href;
-            }
-        });
-    });
+
     /**
      * 迷你购物车
      */
