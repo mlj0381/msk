@@ -1,8 +1,8 @@
 <desktop>
     <permissions>
-	<!--        
-		<permission display='false' id="shipment">配送设置</permission>
-        <permission display='false' id="printstylesetting">单据打印样式配置</permission>
+
+		<permission display='true' id="shipment">配送设置</permission>
+      <!--   <permission display='false' id="printstylesetting">单据打印样式配置</permission>
 	-->        
 		<permission display='true' workground="b2c.wrokground.shop" id="shopsetting">商城设置</permission>        
 	<!--商品-->
@@ -20,7 +20,8 @@
         <permission display='false' id="stock_quick_update">商品库存快速编辑</permission>
         <permission display='false' id="editmktprice">市场价</permission>
         <permission display='false' id="editprice">销售价</permission>
-		
+
+
 	<!--订单-->
 
 		<permission display='true' id="order_list">订单列表</permission>
@@ -72,9 +73,10 @@
 		<adminpanel action="index" controller="admin_setting" display="false" group="desktop_setting" order='1' permission="shopsetting">商店配置</adminpanel>
 		<adminpanel action="index" controller="admin_dlytype" display="false" group="b2c_shipment" order='20' permission="shipment">配送方式</adminpanel>
 		<adminpanel action="add_dlytype" controller="admin_dlytype" display="false" group="b2c_shipment" order='21' permission="shipment">添加配送方式</adminpanel>
-		<adminpanel action="index" controller="admin_dlycorp" display="false" group="b2c_shipment" order='30' permission="shipment">物流公司</adminpanel>
-		<adminpanel action="index" controller="admin_dlyplace" display="false" group="b2c_shipment" order='30' permission="shipment">发货地点</adminpanel>
-		<adminpanel action="edit" controller="admin_dlyplace" display="false" group="b2c_shipment" order='30' permission="shipment">编辑发货地点</adminpanel>
+		<adminpanel action="index" controller="admin_dlycorp" display="false" group="b2c_shipment" order='30' permission="shipment">物流公司</adminpanel>-->
+		<!--<adminpanel action="index" controller="admin_dlyplace" display="false" group="b2c_shipment" order='30' permission="shipment">发货地点</adminpanel>-->
+<!--
+    <adminpanel action="edit" controller="admin_dlyplace" display="false" group="b2c_shipment" order='30' permission="shipment">编辑发货地点</adminpanel>
 		<adminpanel action='index' controller='admin_member_attr' display='false' group="desktop_setting" order="40" permission="shopsetting">会员注册项</adminpanel>
 		<adminpanel action='index' controller='admin_member_messenger' display='false' group="desktop_setting" order="30" permission="shopsetting">消息通知设置</adminpanel>
 		<adminpanel action="showPrintStyle" controller="admin_order" display="false" group="desktop_setting" order='50' permission="printstylesetting">单据打印样式配置</adminpanel>
@@ -155,14 +157,15 @@
 		</menugroup>
     </workground>
 
-	<!--
+
     <workground icon="fa  fa-truck" id="b2c.wrokground.delivery" name="物流" order="21">
         <menugroup name="物流管理">
-            <menu action='index' controller='admin_delivery' display='false' order='40' permission='order_delivery'>发货单</menu>
-            <menu action='index' controller='admin_reship' display='false' order='60' permission='order_delivery'>退货单</menu>
+            <!--<menu action='index' controller='admin_delivery' display='false' order='40' permission='order_delivery'>发货单</menu>-->
+            <!--<menu action='index' controller='admin_reship' display='false' order='60' permission='order_delivery'>退货单</menu>-->
+            <menu action='index' controller='admin_dlyplace' display='true' order='60' permission='shipment'>仓库管理</menu>
         </menugroup>
     </workground>
-	-->
+
 
     <workground icon="icon-users" id="b2c.wrokground.member" name="会员" order='30'>
         <menugroup name="会员管理">

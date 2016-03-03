@@ -1,12 +1,13 @@
-<h3 class="page-title"><{if $dlyplace.dp_id }>编辑发货地点<{else}>添加发货地点<{/if}></h3>
+<h3
+        class="page-title"><{if $dlyplace.dp_id }>编辑仓库<{else}>添加仓库<{/if}></h3>
 <div class="page-bar">
     <ul class="page-breadcrumb">
         <li>
-            <a href="index.php?app=b2c&ctl=admin_dlycorp&act=index">发货地点列表</a>
+            <a href="index.php?app=b2c&ctl=admin_dlycorp&act=index">仓库地点列表</a>
             <i class="fa fa-angle-right"></i>
         </li>
         <li>
-            <a href="javascript:;"><{if $dlyplace.dp_id }>编辑发货地点<{else}>添加发货地点<{/if}></a>
+            <a href="javascript:;"><{if $dlyplace.dp_id }>编辑仓库地点<{else}>添加仓库地点<{/if}></a>
         </li>
     </ul>
 </div>
@@ -15,17 +16,18 @@
     <{if $dlyplace.dp_id }><input type="hidden" name="dp_id" value="<{$dlyplace.dp_id}>"><{/if}>
     <div class="form form-horizontal">
         <div class="form-body">
-            <div class="form-group">
-                <label class="col-md-2 control-label">发货地点类型<span class="required" aria-required="true">*</span></label>
-                <div class="col-md-5">
-                    <select class="form-control" name="dp_type">
-                        <option value='warehouse'>仓库</option>
-                        <option value='store' <{if $dlyplace.dp_type=='store'}>selected<{/if}>>门店</option>
-                    </select>
-                </div>
-            </div>
+            <!--<div class="form-group">-->
+                <!--<label class="col-md-2 control-label">发货仓库类型<span class="required" aria-required="true">*</span></label>-->
+                <!--<div class="col-md-5">-->
+                    <!--<select class="form-control" name="dp_type">-->
+                        <!--<option value='warehouse'>仓库</option>-->
+                        <!--&lt;!&ndash;<option value='store' <{if $dlyplace.dp_type=='store'}>selected<{/if}>>门店</option>&ndash;&gt;-->
+                    <!--</select>-->
+                <!--</div>-->
+            <!--</div>-->
+            <input type="hidden" name="dp_type" value="warehouse"/>
              <div class="form-group">
-                 <label class="col-md-2 control-label">发货地点名称<span class="required" aria-required="true">*</span></label>
+                 <label class="col-md-2 control-label">仓库名称<span class="required" aria-required="true">*</span></label>
                  <div class="col-md-5">
                      <input type="text"  name="dp_title"  required="true" value="<{$dlyplace.dp_title}>" class="form-control" autocomplete="off">
                  </div>

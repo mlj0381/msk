@@ -30,12 +30,12 @@ $setting = array(
                         'page' => array(
                             'ec_group_manager', 'ec_group_employees')
                     ),
-                    2 =>array('label' => '生产商企业产品品牌',
-                        'page' => array(
-                            'brand_lesstion', 'packing', 'brand_touted'
-                        )
-                    ),
-                    3 => array(
+//                    2 =>array('label' => '生产商企业产品品牌',
+//                        'page' => array(
+//                            'brand_lesstion', 'packing', 'brand_touted'
+//                        )
+//                    ),
+                    2 => array(
                         'label' => '店铺及产品信息',
                         'page' => array(
                             'store_info', 'store_principal', 'goods_info')
@@ -51,27 +51,21 @@ $setting = array(
                             'three_lesstion', 'business_licence', 'tax_licence', 'organization_licence', 'bank_lesstion',)
                     ),
                     2 => array(
-                        'label' => '生产商企业专业资质',
-                        'page' => array(
-                            'animal_certificate', 'slaughter_lesstion', 'f_p_lesstion', 'n_p_lesstion', 'entry_lesstion', 'iso9001_lesstion',
-                            'iso22000_lesstion', 'iso14001_lesstion', 'food_mosque_lesstion',)
-                    ),
-                    3 => array(
                         'label' => '生产商企业基本生产能力',
                         'page' => array(
                             'company_touted', 'factory',)
                     ),
-                    4 => array(
+                    3 => array(
                         'label' => '生产商企业生产车间、设备、产品工艺流程',
                         'page' => array(
                             'workshop', 'storage',)
                     ),
-                    5 => array(
+                    4 => array(
                         'label' => '生产商企业实验室、检测设备及产品质量控制系统',
                         'page' => array(
                             'laboratory', 'equipment', 'qa_department', 'q_c_department')
                     ),
-                    6 => array(
+                    5 => array(
                         'label' => '生产商企业管理团队',
                         'page' => array(
                             'president', 'general_manager', 'vice_general_manager', 'sale_manager', 'qa_manager', 'finance_manager')
@@ -88,27 +82,21 @@ $setting = array(
                             'food_business_licence', 'food_flow_licence', 'agent_auth_lesstion')
                     ),
                     2 => array(
-                        'label' => '生产商企业专业资质',
-                        'page' => array(
-                            'animal_certificate', 'slaughter_lesstion', 'f_p_lesstion', 'n_p_lesstion', 'entry_lesstion', 'iso9001_lesstion',
-                            'iso22000_lesstion', 'iso14001_lesstion', 'food_mosque_lesstion',)
-                    ),
-                    3 => array(
                         'label' => '生产商企业基本生产能力',
                         'page' => array(
                             'company_touted', 'factory',)
                     ),
-                    4 => array(
+                    3 => array(
                         'label' => '生产商企业生产车间、设备、产品工艺流程',
                         'page' => array(
                             'workshop', 'storage',)
                     ),
-                    5 => array(
+                    4 => array(
                         'label' => '生产商企业实验室、检测设备及产品质量控制系统',
                         'page' => array(
                             'laboratory', 'equipment', 'qa_department', 'q_c_department')
                     ),
-                    6 => array(
+                    5 => array(
                         'label' => '生产商企业管理团队',
                         'page' => array(
                             'president', 'general_manager', 'vice_general_manager', 'sale_manager', 'qa_manager', 'finance_manager')
@@ -124,28 +112,28 @@ $setting = array(
                             'three_lesstion', 'business_licence', 'tax_licence', 'organization_licence', 'bank_lesstion',
                             'food_business_licence', 'food_flow_licence', 'oem_auth_lesstion')
                     ),
+//                    2 => array(
+//                        'label' => '生产商企业专业资质',
+//                        'page' => array(
+//                            'animal_certificate', 'slaughter_lesstion', 'f_p_lesstion', 'n_p_lesstion', 'entry_lesstion', 'iso9001_lesstion',
+//                            'iso22000_lesstion', 'iso14001_lesstion', 'food_mosque_lesstion',)
+//                    ),
                     2 => array(
-                        'label' => '生产商企业专业资质',
-                        'page' => array(
-                            'animal_certificate', 'slaughter_lesstion', 'f_p_lesstion', 'n_p_lesstion', 'entry_lesstion', 'iso9001_lesstion',
-                            'iso22000_lesstion', 'iso14001_lesstion', 'food_mosque_lesstion',)
-                    ),
-                    3 => array(
                         'label' => '生产商企业基本生产能力',
                         'page' => array(
                             'company_touted', 'factory',)
                     ),
-                    4 => array(
+                    3 => array(
                         'label' => '生产商企业生产车间、设备、产品工艺流程',
                         'page' => array(
                             'workshop', 'storage',)
                     ),
-                    5 => array(
+                    4 => array(
                         'label' => '生产商企业实验室、检测设备及产品质量控制系统',
                         'page' => array(
                             'laboratory', 'equipment', 'qa_department', 'q_c_department')
                     ),
-                    6 => array(
+                    5 => array(
                         'label' => '生产商企业管理团队',
                         'page' => array(
                             'president', 'general_manager', 'vice_general_manager', 'sale_manager', 'qa_manager', 'finance_manager')
@@ -162,7 +150,7 @@ $setting = array(
                 'setting' => array(
                     'label' => array('卖家资质审批', '被代理生产商资质审批', 'OEM生产商资质审批'),
                     'type' => array('1', '2', '4'),
-                    'page' => array('1', '2'),
+                    'page' => array('1'),
                 ),
             ),
             array(
@@ -170,7 +158,7 @@ $setting = array(
                 'setting' => array(
                     'label' => array('卖家基本信息提交', '被代理生产商基本信息提交', 'OEM生产商基本信息提交'),
                     'type' => array('1', '2', '4'),
-                    'page' => array('3', '4', '5')
+                    'page' => array('2', '3', '4')
                 ),
             ),
             array(
@@ -178,7 +166,7 @@ $setting = array(
                 'setting' => array(
                     'label' => array('卖家管理团队信息', '被代理生产商管理团队信息', 'OEM生产商管理团队信息'),
                     'type' => array('1', '2', '4'),
-                    'page' => array('6'),
+                    'page' => array('5'),
                 ),
             ),
             array(

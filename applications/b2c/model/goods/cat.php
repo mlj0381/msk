@@ -101,6 +101,9 @@ class b2c_mdl_goods_cat extends dbeav_model
              $children = $this->getList('*', array('parent_id' => $parent_id), 0, -1, ' p_order ASC');
              $children = utils::array_change_key($children, 'cat_id');
              cacheobject::set('b2c-gcat-tree-cache-'.$parent_id, $children, time()+60*60*24*30);
+             foreach($children as $key => &$value){
+                $value['son'] = $this->children($value['cat_id']);
+             }
              return $children;
          }
      }
