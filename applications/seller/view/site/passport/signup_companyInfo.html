@@ -37,7 +37,7 @@
                     <p><{$items.title}></p>
                     <ul>
                         <{foreach from=$items.setting.label key=key item=item}>  <!-- active 被选中-->
-                        <li class="<{if $menu.storeType eq $items.setting.type[$key] && $menu.activeMenu eq $items.setting.page[$key]}> active <{/if}>">
+                        <li class="<{if $menu.storeType eq $items.setting.type[$key] && in_array($menu.activeMenu, $items.setting.page)}> active <{/if}>">
                             <i class="icon-caret-right "></i><{$item}>
                         </li>
                         <{/foreach}>

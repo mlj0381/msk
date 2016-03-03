@@ -577,7 +577,7 @@ class seller_user_passport
             $columns['page'] = array_flip($columns['page']);
         }else{
             //最后两步品牌添加店铺申请
-            $index = $step - ($countPage['sum'] - count($conf['comm']['pageSet']));
+            //$index = $step - ($countPage['sum'] - count($conf['comm']['pageSet']));
             $columns['page'] = $conf['comm']['pageSet'][$index]['page'];
             $columns['label'] = $conf['comm']['pageSet'][$index]['label'];
             $columns['companyType'] = $countPage['label'];
@@ -602,13 +602,17 @@ class seller_user_passport
             $storeGroup[] = 4;
         }
         $countPage = 0;
-
         foreach($storeGroup as $key => $value){
             $countPage += count($conf[$storeGroup[$key - 1]]['pageSet']);
             if($storeType != $value && $step > $countPage){
                 $storeType = $value;
                 $index = $step - $countPage;
             }
+        }
+        $sumPage = $this->countPage();
+        if ($step > $sumPage['sum'] - count($conf['comm']['pageSet'])) {
+            $storeType = 'comm';
+            $index = $step - ($sumPage['sum'] - count($conf['comm']['pageSet']));
         }
     }
 

@@ -16,12 +16,12 @@ class b2c_ctl_admin_dlyplace extends desktop_controller {
     }
     public function index() {
         $action = array(
-            'label' => ('添加发货地点') ,
+            'label' => ('添加仓库') ,
             'href' => 'index.php?app=b2c&ctl=admin_dlyplace&act=edit',
             'icon' => 'fa fa-plus',
         );
         $this->finder('b2c_mdl_dlyplace', array(
-            'title' => ('发货地点') ,
+            'title' => ('仓库列表') ,
             'actions' => array(
                 $action
             ) ,
