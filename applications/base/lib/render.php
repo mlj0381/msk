@@ -26,6 +26,8 @@ class base_render
     {
         $this->app = $app;
         $this->params = vmc::request()->request_params;
+        $base_url = vmc::base_url(1);
+        $this->pagedata['base_url'] = $base_url;
         //$this->pagedata = $this->$_vars;
     }
 

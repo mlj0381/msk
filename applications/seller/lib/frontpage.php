@@ -20,6 +20,8 @@ class seller_frontpage extends site_controller {
         $this->_response->set_header('Cache-Control', 'no-store');
         $this->_response->set_header('Cache-Control', 'no-cache');
         $this->_response->set_header('Cache-Control', 'must-revalidate');
+        $base_url = vmc::base_url(1);
+        $this->pagedata['base_url'] = $base_url;
 
         // header('cache-control: no-store, no-cache, must-revalidate');
         header('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // 强制查询etag
@@ -37,8 +39,6 @@ class seller_frontpage extends site_controller {
         $this->set_tmpl('seller');
         $this->user_obj = vmc::singleton('seller_user_object');
         $this->passport_obj = vmc::singleton('seller_user_passport');
-        $base_url = vmc::base_url(1);
-        $this->pagedata['base_url'] = $base_url; 
     }
 
     //查询入驻进度
