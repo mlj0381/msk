@@ -111,6 +111,8 @@ class b2c_source_addrs extends base_source {
         }
         $_SESSION['account']['addr'] = $_SESSION['account']['addr'] ?: $stockList[0]['childNode'][0]['region_id'];
         return $stockList;
+//        $dlyplace = app::get('b2c')->model('dlyplace')->getDlyplaceAll();
+//        $_SESSION['account']['addr'] = $_SESSION['account']['addr'] ?: $dlyplace[0]['warehouse'][0]['addr_id'];
     }
     
     /*
