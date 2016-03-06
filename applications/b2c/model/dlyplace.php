@@ -21,7 +21,7 @@ class b2c_mdl_dlyplace extends dbeav_model
         $mdl_warehouse = $this->app->model('warehouse');
         foreach($dlyplace as $key => &$value)
         {
-            $value['warehouse'] = $mdl_warehouse->getList('*', array('dlyplace_id' => $dlyplace['dp_id']));
+            $value['warehouse'] = $mdl_warehouse->getList('*', array('dlyplace_id' => $value['dp_id']));
         }
         return $dlyplace;
     }

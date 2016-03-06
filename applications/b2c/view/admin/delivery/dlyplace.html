@@ -32,12 +32,6 @@
                      <input type="text"  name="dp_title"  required="true" value="<{$dlyplace.dp_title}>" class="form-control" autocomplete="off">
                  </div>
              </div>
-            <div class="form-group">
-                <label class="col-md-2 control-label">父级仓库<span class="required" aria-required="true">*</span></label>
-                <div class="col-md-5">
-                    <{input type=region name='dp_parent_label' value=$dlyplace.dp_parent_label}>
-                </div>
-            </div>
              <div class="form-group">
                  <label class="col-md-2 control-label">所在地区<span class="required" aria-required="true">*</span></label>
                  <div class="col-md-5">
@@ -67,6 +61,7 @@
                                 <div class="delWarehouse">
                                     <input type="hidden" name="warehouse[addr_id][]" value="{0}"/>
                                     <input type="hidden" class="form-control" readonly name="warehouse[addr][]" value="{1}"/>
+									<input type="hidden" class="form-control" readonly name="warehouse[title][]" value="{2}"/>
                                     <li class="list-group-item">
                                         {1}
                                         <span class="pull-right">是否启用 <input type="checkbox"  name="warehouse[disabled][]"
@@ -80,6 +75,7 @@
                                 <input type="hidden" name="warehouse[id][]" value="<{$item.id}>"/>
                                 <input type="hidden" name="warehouse[addr_id][]" value="<{$item.addr_id}>"/>
                                 <input type="hidden" name="warehouse[addr][]" value="<{$item.addr}>"/>
+								<input type="hidden" name="warehouse[title][]" value="<{$item.title}>"/>
                                 <li class="list-group-item">
                                     <{$item.addr}>
                                     <span class="pull-right">是否启用 <input type="checkbox"  name="warehouse[disabled][]"
@@ -153,6 +149,7 @@
                 text += idx == 0 ? '' : '-';
                 text +=  $(item).find("option:selected").text();
                 value = $(item).find("option:selected").val();
+				title = $(item).find("option:selected").text();
             }
         });
         if(!text) return false;
@@ -167,7 +164,7 @@
             return false;
         }
         var html = $('.Warehouse textarea').val();
-        html = substitute(html, value, text);
+        html = substitute(html, value, text, title);
         parent.append(html);
         $(parent).on('click', 'i:last', function(){
             delWarehouse($(this));

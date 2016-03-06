@@ -44,6 +44,12 @@ $db['warehouse'] = array(
             'commit' => '覆盖地区',
             'label' => '覆盖地区',
         ),
+		'title' => array(
+            'type' => 'varchar(30)',
+            'default' => '',
+            'commit' => '覆盖地区名称',
+            'label' => '覆盖地区名称',
+        ),
         'disabled' =>
         array(
             'type' => 'bool',
