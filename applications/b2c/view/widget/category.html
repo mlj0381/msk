@@ -18,7 +18,7 @@
             <{foreach from=$one_cat.son item=two_item}>
             <dl>
                 <dt>
-                    <a href="#"><{$two_item.cat_name}><i>></i></a>
+                    <a href="<{link app=b2c ctl=site_list act=index}>?cat=<{$two_item.cat_id}>"><{$two_item.cat_name}><i>></i></a>
                 </dt>
                 <dd>
                     <{foreach from=$two_item.son item=three_item}>

@@ -96,9 +96,35 @@ class seller_ctl_site_passport extends seller_frontpage
         $this->splash('success', $forward, '登录成功');
     }
 
+    //添加品牌资质
+    public function brand_aptitude($pageIndex = 1)
+    {
+        $params = $this->_request->get_get();
+        $identity = $params['type'];
+        $business_type = $params['card'] ?: 'new';
+        $tpl = 'brand_companyType';
+        if (is_numeric($identity)) {
+            $columns = $this->app->getConf('seller_entry');
+            $selfPage['page'] = array_flip($columns[$identity]['pageSet'][$pageIndex]['page']);
+            $this->passport_obj->unsetColumns($business_type, $selfPage);
+            $selfPage = array_flip($selfPage['page']);
+            $this->pagedata['pageSet'] = $selfPage;
+            $this->pagedata['info']['company_extra']['page_setting'] = $this->passport_obj->columns();
+            $tpl = 'brand_companyInfo';
+        }
+        $this->pagedata['ident'] = $this->seller['ident'];
+        $this->page('site/passport/' . $tpl . '.html');
+    }
+
+    //保存新增品牌资质
+    public function save_brand_aptitude($params)
+    {
+
+    }
+
 //end function
     //注册页面
-    public function signup($step)
+    public function signup($step, $type)
     {
         $this->title = '注册成为商家';
         $this->set_tmpl('passport');
@@ -110,6 +136,7 @@ class seller_ctl_site_passport extends seller_frontpage
         switch ($step) {
             case '1':
                 $tpl = 'signup_companyType';
+                $this->pagedata['type'] = $type;
                 break;
             case '2':
                 $tpl = 'signup_companyInfo';
@@ -293,8 +320,9 @@ class seller_ctl_site_passport extends seller_frontpage
     }
 
     //检查验证码
-    public function vcode_verify(){
-        if(!$_POST) $this->splash('error', '', '请填写验证码');
+    public function vcode_verify()
+    {
+        if (!$_POST) $this->splash('error', '', '请填写验证码');
         extract($_POST);
         if (!vmc::singleton('seller_user_vcode')->verify($smscode, $pam_account['mobile'], 'signup')) {
             $this->splash('error', '', '手机短信验证码不正确');
@@ -302,16 +330,15 @@ class seller_ctl_site_passport extends seller_frontpage
         $this->splash('success', '', '验证成功');
     }
 
-     //检查用户名
+    //检查用户名
     public function check_login_name()
     {
-        if(isset($_POST['pam_account']['login_name'])) 
-        {
-            $name =  trim($_POST['pam_account']['login_name']);
-        }else{
-            $name =  trim($_POST['pam_account']['mobile']);
+        if (isset($_POST['pam_account']['login_name'])) {
+            $name = trim($_POST['pam_account']['login_name']);
+        } else {
+            $name = trim($_POST['pam_account']['mobile']);
         }
-       
+
         if ($this->passport_obj->check_signup_account($name, $msg)) {
             if ($msg == 'mobile') { //用户名为手机号码
                 $this->splash('success', null, array(
@@ -328,21 +355,22 @@ class seller_ctl_site_passport extends seller_frontpage
      * 判断前台用户联系手机是否存在
      */
 
-    public function is_exists_mobile() {
+    public function is_exists_mobile()
+    {
         $mobile = $_POST['pam_account']['mobile'];
         if (empty($mobile)) {
             $this->splash('error', '', '手机号不能为空');
         }
         $mobile_type = $this->passport_obj->get_login_account_type($mobile);
 
-        if($mobile_type != 'mobile'){
+        if ($mobile_type != 'mobile') {
             $this->splash('error', '', '请填写正确的手机号');
         }
         $mdl_sellers = $this->app->model('sellers');
         $flag = $mdl_sellers->getList('seller_id', array(
             'mobile' => trim($mobile),
         ));
-        if($flag){
+        if ($flag) {
             $this->splash('error', '', '该手机号已被使用');
         }
         $this->splash('success', '', '该手机号可以使用');
@@ -384,11 +412,10 @@ class seller_ctl_site_passport extends seller_frontpage
     }
 
 
-
     //重置密码
     public function reset_password()
     {
-        if(!empty($_POST)) {
+        if (!empty($_POST)) {
             $redirect = $this->gen_url(array(
                 'app' => 'seller',
                 'ctl' => 'site_passport',
@@ -397,7 +424,7 @@ class seller_ctl_site_passport extends seller_frontpage
             extract($_POST);
             $seller = $this->app->model('sellers')->getRow('seller_id', array('mobile' => $pam_account['mobile']));
 
-            if(empty($seller)){
+            if (empty($seller)) {
                 $this->splash('error', $redirect, '不存在的用户');
             }
             if (!vmc::singleton('seller_user_vcode')->verify($smscode, $pam_account['mobile'], 'signup')) {
@@ -444,10 +471,10 @@ class seller_ctl_site_passport extends seller_frontpage
             $params = utils::_filter_input($_POST);
             unset($_POST);
             $result = $this->passport_obj->entry($params);
-            if(!$result) $this->splash('error', $redirect, '操作失败');
+            if (!$result) $this->splash('error', $redirect, '操作失败');
         }
         $licence_type = $this->_request->get_get('card');
-        if(!$licence_type){
+        if (!$licence_type) {
             $licence_type = $this->passport_obj->new_or_old($this->seller['seller_id']);
         }
         //页面总步骤
@@ -457,10 +484,10 @@ class seller_ctl_site_passport extends seller_frontpage
         $step <= 1 && $step = 1;
         $step > $countPage['sum'] && $step = $countPage['sum'] + 1;
 
-        if($params['typeId']) $storeType = $params['typeId'];
-        if(!$storeType &&  $this->seller['ident'] & 1) $storeType = 1;
-        if(!$storeType &&  $this->seller['ident'] & 2) $storeType = 2;
-        if(!$storeType &&  $this->seller['ident'] & 4) $storeType = 4;
+        if ($params['typeId']) $storeType = $params['typeId'];
+        if (!$storeType && $this->seller['ident'] & 1) $storeType = 1;
+        if (!$storeType && $this->seller['ident'] & 2) $storeType = 2;
+        if (!$storeType && $this->seller['ident'] & 4) $storeType = 4;
         $columns = $this->passport_obj->page_setting($step, $licence_type, $storeType);
         $this->pagedata['leftMenu'] = $this->app->getConf('seller_group');
         $index = $step;
@@ -533,4 +560,17 @@ class seller_ctl_site_passport extends seller_frontpage
         $this->splash('error', '', '非法请求');
     }
 
+    //ajax判断所填写的营业执照号是否已经填写过并返回信息
+    public function check_company()
+    {
+        if (!is_numeric($_POST['business'])) $this->splash('error', '', '请输入正确的格式');
+        $mdl_company = app::get('base')->model('company');
+        $mdl_company_extra = app::get('base')->model('company_extra');
+        $company = $mdl_company->getRow('*', array('business' => $_POST['business'], 'business_type' => $_POST['business_type']));
+        if (!empty($company)) {
+            $company['extra'] = $mdl_company_extra->getList('*', array('extra_id' => $company['company_id'], 'identity' =>
+                $_POST['typeId']));
+        }
+        $this->splash('success', '', $company);
+    }
 }

@@ -2,9 +2,10 @@
     <h4>电商团队成员</h4>
     <div class="creat-wrap" data-module="creater">
         <div id="items" data-items="itemList">
-            <{*foreach from=$extra.ec_group_employees key=key item=item*}>
+            <{foreach from=$extra.ec_group_employees key=key item=item}>
             <div class="team-item equipment-items" data-item="creat-item">
-                <input type="hidden" name="ec_group_employees[content_id][]" value="<{$item.content_id}>" class="form-control">
+                <input type="hidden" name="ec_group_employees[content_id][]" value="<{$item.content_id}>"
+                       class="form-control content_id">
                 <div class="form-group">
                     <label class="col-xs-2 control-label">
                         <span class="text-danger">*</span>姓名：
@@ -57,7 +58,7 @@
                 </div>
                 <{/if}>
             </div>
-            <{*/foreach*}>
+            <{/foreach}>
         </div>
         <hr>
         <div class="form-group">

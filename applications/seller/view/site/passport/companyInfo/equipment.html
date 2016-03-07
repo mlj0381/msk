@@ -1,16 +1,17 @@
-<input type="hidden" name="equipment[content_id]" value="<{$extra.equipment.content_id}>" class="form-control">
+<!--<input type="hidden" name="equipment[content_id]" value="<{$extra.equipment.content_id}>" class="form-control">-->
 <div id="equipment">
     <h4>检测设备</h4>
     <div class="creat-wrap" data-module="creater">
         <div id="items" data-items="itemList">
-            <{*foreach from=$extra.equipment item=item*}>
+            <{foreach from=$extra.equipment item=item}>
                 <div class="equipment-items team-item" data-item="creat-item">
                     <div class="form-group">
                         <label class="col-xs-2 control-label">
                             <span class="text-danger">*</span>主要设备：
                         </label>
                         <div class="col-xs-4">
-                            <input type="hidden" name="equipment[content_id][]" value="<{$item.content_id}>" class="form-control">
+                            <input type="hidden" name="equipment[content_id][]" value="<{$item.content_id}>"
+                                   class="form-control content_id">
                             <input type="text" value="<{$item.value.main_device}>" name="equipment[value][main_device][]" class="form-control" required="true">
                             <span class="msgTip" data-message="error"></span>
                         </div>
@@ -41,7 +42,7 @@
                         </div>
                     </div>
                 </div>
-            <{*/foreach*}>    
+            <{/foreach}>
         </div>
         <hr>
         <div class="form-group">
