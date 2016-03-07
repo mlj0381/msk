@@ -1729,6 +1729,19 @@ ul,ol{
 				}
 			}
 		}
+
+		/*店铺信息*/
+		.companyInfo_form{
+			#store_info{
+				.brand_add_modal{
+					h4{
+						margin:0;
+					}
+				}
+			}
+		}
+
+		/*END 店铺信息*/
 		.panel-rt{
 			width:960px;
 			padding:0px;
@@ -2323,7 +2336,53 @@ ul,ol{
 	}	
 
 	#sepcInfo{
-		ul{
+
+		.price_set{
+			.set_panel{
+				position: relative;
+				z-index: 9;
+				.set_trigger{
+					font-weight: bold;
+					display: inline-block;
+					width:auto;
+					padding:0 10px;
+					height:30px;
+					line-height: 30px;
+					color:#67809f;
+					cursor: pointer;
+					position: absolute;
+					z-index: 10;
+					box-sizing: border-box;
+					i{
+						padding-right:5px;
+					}
+					&.active{
+						background: #fff;
+						border:1px solid #67809f;
+						padding:0 10px;
+						border-bottom:none;
+					}
+				}
+				.price_list{
+					width:615px;
+					position: absolute;
+					left:0px;
+					top:30px;
+					//display: none;
+					background: #fff;
+					border:1px solid #67809f;
+					margin-bottom:0px;
+					margin-top:-1px;
+					li{
+						border-radius:0px;
+						height:30px;
+						line-height: 30px;
+						border:none;
+					}
+				}
+			}
+		}
+		/* ul{
 			li{
 				cursor: pointer;
 				display: inline-block;
@@ -2413,7 +2472,7 @@ ul,ol{
 					text-align: left;
 				}
 			}
-		}
+		} */
 	}
 
 	//END 商品添加

@@ -1475,6 +1475,8 @@ ol {
 .buyer_container .seller_regbox {
   /*企业类型选择*/
   /*公司信息提交*/
+  /*店铺信息*/
+  /*END 店铺信息*/
 }
 .buyer_container .seller_regbox .company_type_t {
   text-align: center;
@@ -1553,6 +1555,9 @@ ol {
 }
 .buyer_container .seller_regbox .panel-lt .menu-list li ul > li:last-child {
   border-bottom: none;
+}
+.buyer_container .seller_regbox .companyInfo_form #store_info .brand_add_modal h4 {
+  margin: 0;
 }
 .buyer_container .seller_regbox .panel-rt {
   width: 960px;
@@ -2078,89 +2083,140 @@ ol {
   padding: 10px;
   outline: none;
 }
-.buyer_container #sepcInfo ul li {
-  cursor: pointer;
-  display: inline-block;
-  height: 30px;
-  line-height: 30px;
-  border: 2px solid #ddd;
-  padding: 0 20px;
+.buyer_container #sepcInfo {
+  /* ul{
+			li{
+				cursor: pointer;
+				display: inline-block;
+				height:30px;
+				line-height: 30px;
+				border:2px solid #ddd;
+				padding:0 20px;
+				
+				&.sect{
+					border-color:@basecolor;
+				}
+			}
+		}
+		table{
+			th{
+				text-align: left;
+				background: #f1f1f1;
+			}
+			td{
+				text-align: center;
+				vertical-align:middle;
+				.price_area{
+					position: relative;
+					height:30px;
+					line-height: 30px;
+					&:hover{
+						background: #fff;
+						cursor: pointer;
+						border:1px solid #ddd;
+						border-bottom:none;
+					}
+					.text-danger{
+						width:100%;
+						padding:5px 10px;
+						cursor: pointer;
+					}
+					.price_set{
+						position:absolute;
+						top:28px;
+						right:-1px;
+						background: #fff;
+						width:500px;
+						min-height:100px;
+						border:1px solid #ddd;
+						z-index: 100;
+						padding:10px;
+						display: none;
+						table{
+							width:100%;
+							th{
+								height:30px;
+							}
+							td{
+								padding:5px 0px;
+								height:30px;
+								input,select{
+									width:80%;
+									height:20px;
+								}
+								.ctl_span{
+									cursor: pointer;
+									display: inline-block;
+									height:30px;
+									width:30px;
+									line-height: 30px;
+								}
+								.disabled{
+									color:#ddd;
+									cursor: default;
+								}
+							}
+						}
+						.priceSet_ctl{
+							width:100%;
+							margin-top:20px;
+							text-align: center;
+							a{
+								margin:0 15px;
+							}
+						}
+					}
+					
+				}
+			}
+			tfoot{
+				td{
+					text-align: left;
+				}
+			}
+		} */
 }
-.buyer_container #sepcInfo ul li.sect {
-  border-color: #a40001;
-}
-.buyer_container #sepcInfo table th {
-  text-align: left;
-  background: #f1f1f1;
-}
-.buyer_container #sepcInfo table td {
-  text-align: center;
-  vertical-align: middle;
-}
-.buyer_container #sepcInfo table td .price_area {
+.buyer_container #sepcInfo .price_set .set_panel {
   position: relative;
+  z-index: 9;
+}
+.buyer_container #sepcInfo .price_set .set_panel .set_trigger {
+  font-weight: bold;
+  display: inline-block;
+  width: auto;
+  padding: 0 10px;
   height: 30px;
   line-height: 30px;
-}
-.buyer_container #sepcInfo table td .price_area:hover {
-  background: #fff;
+  color: #67809f;
   cursor: pointer;
-  border: 1px solid #ddd;
+  position: absolute;
+  z-index: 10;
+  box-sizing: border-box;
+}
+.buyer_container #sepcInfo .price_set .set_panel .set_trigger i {
+  padding-right: 5px;
+}
+.buyer_container #sepcInfo .price_set .set_panel .set_trigger.active {
+  background: #fff;
+  border: 1px solid #67809f;
+  padding: 0 10px;
   border-bottom: none;
 }
-.buyer_container #sepcInfo table td .price_area .text-danger {
-  width: 100%;
-  padding: 5px 10px;
-  cursor: pointer;
-}
-.buyer_container #sepcInfo table td .price_area .price_set {
+.buyer_container #sepcInfo .price_set .set_panel .price_list {
+  width: 615px;
   position: absolute;
-  top: 28px;
-  right: -1px;
+  left: 0px;
+  top: 30px;
   background: #fff;
-  width: 500px;
-  min-height: 100px;
-  border: 1px solid #ddd;
-  z-index: 100;
-  padding: 10px;
-  display: none;
+  border: 1px solid #67809f;
+  margin-bottom: 0px;
+  margin-top: -1px;
 }
-.buyer_container #sepcInfo table td .price_area .price_set table {
-  width: 100%;
-}
-.buyer_container #sepcInfo table td .price_area .price_set table th {
+.buyer_container #sepcInfo .price_set .set_panel .price_list li {
+  border-radius: 0px;
   height: 30px;
-}
-.buyer_container #sepcInfo table td .price_area .price_set table td {
-  padding: 5px 0px;
-  height: 30px;
-}
-.buyer_container #sepcInfo table td .price_area .price_set table td input,
-.buyer_container #sepcInfo table td .price_area .price_set table td select {
-  width: 80%;
-  height: 20px;
-}
-.buyer_container #sepcInfo table td .price_area .price_set table td .ctl_span {
-  cursor: pointer;
-  display: inline-block;
-  height: 30px;
-  width: 30px;
   line-height: 30px;
-}
-.buyer_container #sepcInfo table td .price_area .price_set table td .disabled {
-  color: #ddd;
-  cursor: default;
-}
-.buyer_container #sepcInfo table td .price_area .price_set .priceSet_ctl {
-  width: 100%;
-  margin-top: 20px;
-  text-align: center;
-}
-.buyer_container #sepcInfo table td .price_area .price_set .priceSet_ctl a {
-  margin: 0 15px;
-}
-.buyer_container #sepcInfo table tfoot td {
-  text-align: left;
+  border: none;
 }
 .buyer_container .price_page .goods_info .thumbnail {
   width: 84px;
