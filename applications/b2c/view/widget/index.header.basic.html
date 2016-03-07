@@ -11,10 +11,13 @@
                         <div class="location-menu clearfix">
                             <{foreach from=$basic.addrs item=addrs}>
                             <dl class="clearfix">
-                                <dt title="<{$addrs.local_name}>"><{$addrs.local_name}>：</dt>
+                                <dt title="<{$addrs.local_name}>"><{$addrs.dp_title}>：</dt>
                                 <dd>
-                                    <{foreach from=$addrs.childNode item=item}>
-                                    <a title="<{$item.local_name}>" <{if $activeAddrs eq $item.region_id}>class="active"<{/if}>" data-url="<{link app=site ctl=index act=changeAddr args0=$item.region_id}>"><{$item.local_name}></a>
+                                    <{foreach from=$addrs.warehouse item=item}>
+									<{if $item.disabled eq 'false'}>
+									<{break}>
+									<{/if}>
+                                    <a title="<{$item.title}>" <{if $activeAddrs eq $item.addr_id}>class="active"<{/if}>" data-url="<{link app=site ctl=index act=changeAddr args0=$item.addr_id}>"><{$item.title}></a>
                                     <{/foreach}>
                                 </dd>
                                 
