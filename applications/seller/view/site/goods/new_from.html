@@ -40,75 +40,8 @@
 </div>
 
 
-
-<textarea class="spec-item-tpl hide">
- <tr>
-     <td>
-         <div class="input-group">
-             <input class="form-control spec-t" name="goods[spec_desc][t][]" type="text" value="" placeholder="规格名称">
-         </div>
-     </td>
-     <td>
-         <input  class='form-control spec-v' name="goods[spec_desc][v][]" type="text"  value="">
-     </td>
-     <td>
-         <button type=button class="btn btn-sm spec-del default"><i class="glyphicon glyphicon-trash"></i></button>
-     </td>
- </tr>
-</textarea>
-<textarea class="product-item-tpl hide">
-<tr>
-    <td>
-        <input type="text"  name="goods[product][{key}][spec_info]" class="form-control input-sm spec-info" value="{spec_info}" readonly=true>
-        <input type="hidden" name="goods[product][{key}][spec_desc]" class="spec-desc"  value="{spec_desc}" >
-    </td>
-    <td>
-        <input type="text" required="true" data-map="bn" class="form-control input-sm" name="goods[product][{key}][bn]" value="">
-    </td>
-    <td>
-        <input type="text" data-map="barcode" class="form-control input-sm" name="goods[product][{key}][barcode]" value="">
-    </td>
-    <td>
-        <input type="text" data-map="price" class="form-control input-sm" name="goods[product][{key}][price]" value="">
-    </td>
-    <td>
-        <input type="text" data-map="mktprice" class="form-control input-sm" name="goods[product][{key}][mktprice]" value="">
-    </td>
-    <td>
-        <input type="text" data-map="weight" name="goods[product][{key}][weight]" class="form-control input-sm input-xsmall" value="" placeholder="克">
-    </td>
-    <td>
-        <input type="text" data-map="unit" name="goods[product][{key}][unit]" class="form-control input-sm input-xsmall" value="">
-    </td>
-    <td>
-        <input type="checkbox"  name="goods[product][{key}][marketable]" value="true" checked>
-    </td>
-</tr>
-</textarea>
-
-
 <script>
     !function(){
-
-            /**
-             * 新增粘贴事件
-             *
-             *    $("input[type='text']").on("postpaste", function() {
-             *        // code...
-             *    }).pasteEvents();
-             *
-             *
-             */
-            /*$.fn.pasteEvents = function( delay ) {
-                if (delay == undefined) delay = 20;
-                return $(this).each(function() {
-                    var $el = $(this);
-                    $el.on("paste", function() {
-                        $el.trigger("prepaste");
-                        setTimeout(function() { $el.trigger("postpaste"); }, delay);
-                    });
-                });
-            };*/
 
 
             $('#spec_edit_pane .checker :checkbox').on('change',function(){
@@ -146,27 +79,7 @@
                 $(this).closest('tr').remove();
                 product_items_change();
             });
-            /**
-             * 货号、条码 粘贴监听
-             * @see desktop.js
-             */
-            var listen_postpaste = function(els){
 
-                //只监听第一个
-                $(els).eq(0).on("postpaste", function(e) {
-                    var val = $(this).val(),val_arr = val.split(/\s/);;
-                    if(val_arr.length && val_arr.length>1){
-                        $.each(val_arr,function(i,v){
-                            $(els).eq(i).val(v);
-                        });
-                    }
-                }).pasteEvents();
-
-                //便捷性提示
-                $(els).eq(0).wrap('<div class="input-icon right"></div>');
-                $('<i class="fa fa-paste text-success tooltips" data-container="body" data-toggle="tooltip" data-placement="top" title="粘贴含有`空格`或`换行`的数据,将自动被分隔填充。例：你可以从Excel批量复制粘贴数据到此"></i>').tooltip().insertBefore($(els).eq(0));
-
-            }
 
             var create_product_items_func = function(){
 
@@ -179,9 +92,9 @@
                 });
 
                 $('#spec_edit_pane .product-items table')[spec_v_item.length?'removeClass':'addClass']('hide');
-                if(!spec_v_item.length){
+                /*if(!spec_v_item.length){
                     return Messagebox.warning('您还没有填写任何规格值。','操作提醒');
-                }
+                }*/
 
                 var root_arr = spec_v_item.shift();
                 var loop_arr;
@@ -212,10 +125,6 @@
                     pit_content += substitute($('.product-item-tpl').val(),{key:'new_'+idx,spec_info:n.replace(/:::/g,'/'),spec_desc:n});
                 });
                 $('.product-items tbody').empty().append(pit_content);
-
-                /*支持货号条码换行字符粘贴*/
-                listen_postpaste($('.product-items tbody input[name$="[bn]"]'));
-                listen_postpaste($('.product-items tbody input[name$="[barcode]"]'));
 
                 var item_length = $('.product-items tbody').find('> tr').length;
                 $(this).next('.text-success').remove();

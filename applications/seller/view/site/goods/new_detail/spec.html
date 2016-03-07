@@ -1,10 +1,11 @@
 <div id="sepcInfo">
     <h4><span class="text-danger">*</span>商品规格</h4>
     <!-- spec -->
-    <div class="row spec_add_box"  id="spec_edit_pane">
+    <div class="row spec_add_box" id="spec_edit_pane">
         <div class="checker hide">
             <span class="checked"><input type="checkbox" checked="checked"  class="checkbox_gg" ></span>自定义多种规格
         </div>
+
         <div class="spec-edit">
             <table class="table spec_add_table">
                 <thead>
@@ -22,7 +23,7 @@
                             </div>
                         </td>
                         <td>
-                            <input  class='form-control spec-v'  name="goods[spec_desc][v][]" type="text"  value="" id="color_input">
+                            <input class='form-control spec-v' name="goods[spec_desc][v][]" type="text" value="" id="color_input">
                         </td>
                         <td>
                             <button type=button class="btn btn-sm default hide"><i class="glyphicon glyphicon-trash"></i></button>
@@ -35,10 +36,10 @@
                             </div>
                         </td>
                         <td>
-                            <input  class='form-control spec-v' width="100px" name="goods[spec_desc][v][]" type="text"  value="">
+                            <input class='form-control spec-v' width="100px" name="goods[spec_desc][v][]" type="text" value="">
                         </td>
-                        <td>
-                            <button type=button class="btn btn-sm default spec-del" ><i class="glyphicon glyphicon-trash"></i></button>
+                        <td align="center">
+                            <button type=button class="btn btn-sm default spec-del"><i class="glyphicon glyphicon-trash"></i></button>
                         </td>
                     </tr>
                 </tbody>
@@ -61,19 +62,10 @@
                             货号
                         </th>
                         <th>
-                            条码
+                            价盘设置
                         </th>
                         <th>
-                            销售价
-                        </th>
-                        <th>
-                            市场价
-                        </th>
-                        <th>
-                            重量
-                        </th>
-                        <th>
-                            单位
+                            库存
                         </th>
                         <th width="50px;">
                             上架
@@ -85,5 +77,49 @@
         </div>
     </div>
     <!-- sepc end -->
+    <textarea class="spec-item-tpl hide">
+        <tr>
+            <td>
+                <div class="input-group">
+                    <input class="form-control spec-t" name="goods[spec_desc][t][]" type="text" value="" placeholder="规格名称">
+                </div>
+            </td>
+            <td>
+                <input class='form-control spec-v' name="goods[spec_desc][v][]" type="text" value="">
+            </td>
+            <td align="center">
+                <button type=button class="btn btn-sm spec-del default"><i class="glyphicon glyphicon-trash"></i></button>
+            </td>
+        </tr>
+    </textarea>
+    <textarea class="product-item-tpl hide">
+        <tr>
+            <td>
+                <input type="text" name="goods[product][{key}][spec_info]" class="form-control input-sm spec-info" value="{spec_info}" readonly=true>
+                <input type="hidden" name="goods[product][{key}][spec_desc]" class="spec-desc" value="{spec_desc}">
+            </td>
+            <td>
+                <input type="text" required="true" data-map="bn" class="form-control input-sm" name="goods[product][{key}][bn]" value="">
+            </td> 
+            <td width="400" class="price_set">
+                <!-- <input type="text" data-map="price" class="form-control input-sm" name="goods[product][{key}][price]" value=""> -->
+                <div class="set_panel">
+                    <span class="set_trigger active"><i class="icon-cogs"></i> 设置价盘</span>
+                    <ul class="list-group price_list">
+                        <li class="list-group-item">
+                            1
+                        </li>
+                        <li class="list-group-item">2</li>
+                    </ul>    
+                </div>
+                
+            </td>
+            <td>
+                <input type="text" data-map="storage" class="form-control input-sm" name="goods[product][{key}][storage]" value="">
+            </td>
+            <td>
+                <input type="checkbox" name="goods[product][{key}][marketable]" value="true" checked>
+            </td>
+        </tr>
+    </textarea>
 </div>
-    
