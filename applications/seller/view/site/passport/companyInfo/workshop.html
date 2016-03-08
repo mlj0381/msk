@@ -1,0 +1,65 @@
+<!--<input type="hidden" name="workshop[content_id]"  value="<{$extra.workshop.content_id}>" class="form-control">-->
+<div id="workshop">
+	<h4>车间概括</h4>
+	<div class="creat-wrap" data-module="creater">
+		<div data-items="itemList">
+			<{foreach from=$extra.workshop item=item}>
+			<div data-item="creat-item">
+				<div class="form-group">
+					<label class="col-xs-2 control-label">
+						<span class="text-danger">*</span>车间名称：
+					</label>
+					<div class="col-xs-4">
+                        <input type="hidden" name="workshop[content_id][]" class="content_id"  value="<{$item.content_id}>">
+						<input type="text" value="<{$extra.workshop.value.name}>" name="workshop[value][name][]" class="form-control" required="true">
+						<span class="msgTip" data-message="error"></span>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-2 control-label">
+						<span class="text-danger">*</span>生产产品：
+					</label>
+					<div class="col-xs-4">
+						<input type="text" value="<{$extra.workshop.value.pro}>" name="workshop[value][pro][]" class="form-control"required="true">
+						<span class="msgTip" data-message="error"></span>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-2 control-label">
+						工艺流程特点：
+					</label>
+					<div class="col-xs-4">
+						<input type="text" value="<{$extra.workshop.value.trait}>" name="workshop[value][trait][]" class="form-control">
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-2 control-label">
+						<span class="text-danger">*</span>上传车间照片：
+					</label>
+					<div class="col-xs-4">
+				        <{input type="imageupload" tag="图片上传" name="workshop[attach][]" value=$extra.workshop.attach required='true' accept="jpg|png|gif"}>
+			            <span class="msgTip" data-message="error">不能为空</span>
+					</div>
+				</div>
+				<div class="form-group">
+                    <label class="col-xs-2 control-label">
+                    </label>
+                    <div class="col-xs-4">
+                        <button class="del-team btn btn-danger delBtn" type="button">删除</button>
+                    </div>
+                </div>
+			</div>
+			<{/foreach}>
+		</div>
+		<hr>
+        <div class="form-group">
+            <label class="col-xs-2 control-label">
+            </label>
+            <div class="col-xs-4">
+                <button class="team btn btn-danger addBtn" type="button">
+                    保存并继续添加车间概况
+                </button>
+            </div>
+        </div>
+	</div>
+</div>

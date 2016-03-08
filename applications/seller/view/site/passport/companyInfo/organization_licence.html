@@ -1,0 +1,31 @@
+<input type="hidden" name="organization_licence[content_id]"  value="<{$extra.organization_licence.content_id}>" class="form-control">
+<div id="organization_licence">
+
+	<h4>组织机构代码证</h4>
+	
+	<div class="form-group">
+		<label class="col-xs-2 control-label">
+			<span class="text-danger">*</span>组织机构代码:
+		</label>
+		<div class="col-xs-4">
+			<input type="text" name="organization_licence[value][code]" value="<{$extra.organization_licence.value.code}>" class="form-control" required="true">
+			<span class="msgTip" data-message="error"></span>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-xs-2 control-label">
+			<span class="text-danger">*</span>组织机构代码证电子版:
+		</label>
+		<div class="col-xs-4">
+			<!--<div class="filebox">-->
+	            <!--<input type="hidden" value="<{$extra.organization_licence.attach}>" name="organization_licence[attach]"/>-->
+	            <!--<input type="file" data-url="<{link app=image ctl=site_upload act=index}>" accept="image/*" class="file_input" />-->
+	            <!--<div class="showImg">-->
+	                 <!--<img src="<{if $extra.organization_licence.attach eq ''}><{$base_url}>/themes/pc/default/statics/images/file_add.jpg<{else}><{$extra.organization_licence.attach|storager:'xs'}><{/if}>">    -->
+	            <!--</div>-->
+	        <!--</div>-->
+
+            <{input type="imageupload" tag="图片上传" name="organization_licence[attach]" value=$extra.organization_licence.attach accept="jpg|png|gif"}>
+        </div>
+	</div>
+</div>

@@ -1,0 +1,61 @@
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">关闭</button>
+    <h3 class="modal-title">价格修改</h3>
+</div>
+<div class="modal-body form-horizontal">
+    <form class="pricedit_form" action="<{link app=seller ctl=site_goods act=save_price}>" method="post">
+        <input type="hidden" value="<{$product.product_id}>" name="product[product_id]"class="form-control">
+        <input type="hidden" value="<{$product.goods_id}>" name="product[goods_id]"class="form-control">
+        <input type="hidden" value="<{$product.bn}>" name="product[bn]"class="form-control">
+        <input type="hidden" value="<{$product.spec_info}>" name="product[spec_info]" class="form-control">
+        <div class="form-group clearfix">
+            <label class="col-xs-2">
+                <span class="text-danger"></span>
+                货号
+            </label>
+            <div class="col-xs-5">
+                <input type="text" value="<{$product.bn}>" readonly class="form-control">
+            </div>
+        </div>
+        <div class="form-group clearfix">
+            <label class="col-xs-2">
+                <span class="text-danger"></span>
+                商品名称
+            </label>
+            <div class="col-xs-5">
+                <input type="text" value="<{$product.name}>" readonly class="form-control">
+            </div>
+        </div>
+        <div class="form-group clearfix">
+            <label class="col-xs-2">
+                <span class="text-danger"></span>
+                商品规格
+            </label>
+            <div class="col-xs-5">
+                <input type="text" value="<{$product.spec_info}>" readonly class="form-control">
+            </div>
+        </div>
+        <div class="form-group clearfix">
+            <label class="col-xs-2">
+                <span class="text-danger">*</span>
+                临界值
+            </label>
+            <div class="col-xs-5">
+                <input type="text" value="<{$product.price_interval}>" name="product[price_interval]" class="form-control">
+            </div>
+        </div>
+        <div class="form-group clearfix">
+            <label class="col-xs-2">
+                <span class="text-danger">*</span>
+                商品价格
+            </label>
+            <div class="col-xs-5">
+                <div>小于等于临界值 <input type="text" name="product[price_up]" value="<{$product.price_up}>" class="form-control" ></div>
+                <div>大于临界值<input type="text" name="product[price_dn]" value="<{$product.price_dn}>" class="form-control"></div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="submit" class="btn btn-primary">保存修改</button>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,246 @@
+nav.main-nav {
+    position: absolute;
+    height: 44px;
+    z-index: 99;
+    .tab-item {
+        height: 44px;
+        padding: 0;
+        margin: 0;
+    }
+    .tab-label {
+        line-height: 16px;
+    }
+}
+.promotion-list {
+    list-style: none;
+    padding: 0;
+    li {
+        font-size: 12px;
+        line-height: 25px;
+        padding: 0;
+        margin: 0;
+    }
+}
+.goods-item {
+    .gi-image-wrapper {
+        a {
+            display: block;
+        }
+        text-align: center;
+        img {
+            max-width: 100%;
+        }
+    }
+    .caption {
+        padding: 15px;
+        h5 {
+            margin-top: 0;
+        }
+        a {
+            color: #333;
+            font-size: 12px;
+            line-height: 14px;
+        }
+    }
+}
+.fa-shopping-cart {
+    .cart-count {
+        font-size: 12px;
+        .fn_rounded_corners(25px);
+        .fn_box_shadow();
+        background: #d9534f;
+        color: #fff;
+        padding: 2px 5px;
+        position: relative;
+        top: -18px;
+        left: -15px;
+    }
+}
+.msgbox {
+    position: fixed;
+    z-index: 999;
+    background: #333;
+    opacity: 0.8;
+    color: #fff;
+    left: 50%;
+    top: 50%;
+    padding: 10px;
+    .fn_box_shadow();
+    .fn_rounded_corners(3px);
+    &.msgbox-error {
+        background-color: #d9534f;
+    }
+}
+.content-splash {
+    text-align: center;
+    .fa {
+        color: #999;
+    }
+    .fa-shopping-cart {
+        color: #ccc;
+    }
+}
+.content-form {
+    h5 {
+        margin-top: 0;
+    }
+    label.control-label {
+        margin-bottom: 15px;
+        display: inline-block;
+    }
+}
+.product-quantity {
+    max-width: 180px;
+    button,
+    input {
+        height: 27px;
+        background-color: #fff;
+        .fn_rounded_corners(0);
+    }
+    button {
+        width: 30%;
+        text-align: center;
+        padding: 7px 8px;
+        .fn_rounded_corners_cs(0,3px,3px,0);
+        &.pull-left {
+            .fn_rounded_corners_cs(3px,0,0,3px);
+        }
+    }
+    input {
+        width: 40%;
+        border-color: rgb(146, 146, 146);
+        text-align: center;
+        border-left: none;
+        border-right: none;
+        font-size: 12px;
+        margin: 0;
+    }
+}
+.table-view-cell-right {
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    font-size: 14px;
+    text-align: right;
+}
+.table-view-cell {
+    .right-center {
+        position: absolute;
+        right: 15px;
+        top: 50%;
+        -webkit-transform: translateY(-50%);
+        -ms-transform: translateY(-50%);
+        transform: translateY(-50%);
+    }
+}
+.i-select {
+
+}
+.i-check {
+    display: none;
+    + label {
+        font-size: 25px;
+        color: #666;
+        vertical-align: middle;
+        &:active {
+            color: #333;
+        }
+        &:before {
+            content: "\f096";
+        }
+        span {
+            font-size: 14px;
+            line-height: 25px;
+            display: inline-block;
+            vertical-align: middle;
+            height: 25px;
+        }
+    }
+    &:checked {
+        + label {
+            color: #007aff;
+            &:before {
+                content: "\f046";
+            }
+        }
+    }
+}
+.i-radio {
+    display: none;
+    + label {
+        font-size: 25px;
+        color: #666;
+        vertical-align: middle;
+        &:active {
+            color: #333;
+        }
+        &:before {
+            content: "\f10c";
+        }
+    }
+    &:checked {
+        + label {
+            color: #007aff;
+            &:before {
+                content: "\f192";
+            }
+        }
+    }
+}
+.text-success {
+    color: #5cb85c;
+}
+.text-danger {
+    color: #d9534f;
+}
+.text-warning {
+    color: #ec971f;
+}
+.img-thumbnail {
+    padding: 1px;
+    background: #fff;
+    border: 1px #e9e9e9 solid;
+}
+.img-circle {
+    .fn_rounded_corners(50%);
+}
+.mobile-img-upload {
+    .img-preview {
+        width: 200px;
+        height: 200px;
+        margin: 0 auto;
+        background-color: #fff;
+        .fn_box_shadow(3px,2px,1px,#ccc);
+        text-align: center;
+        img {
+            max-width: 100%;
+            max-height: 100%;
+            vertical-align: middle;
+        }
+    }
+    .btn-fileupload {
+        width: 200px;
+        margin: 10px auto 0;
+        position: relative;
+        input[type=file] {
+            position: absolute;
+            left: 0;
+            top: 0;
+            padding: 0;
+            margin: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+            opacity: 0;
+        }
+    }
+    p {
+        text-align: center;
+        padding: 10px;
+    }
+}
+.hot-keywords{
+    .btn{
+        margin-bottom: 5px;
+    }
+}

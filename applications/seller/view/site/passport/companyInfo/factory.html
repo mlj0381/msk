@@ -1,0 +1,93 @@
+<input type="hidden" name="factory[content_id]"  value="<{$extra.factory.content_id}>" class="form-control">
+<div id="factory">
+	<h4>厂区平面</h4>
+	<div class="form-group">
+		<label class="col-xs-2 control-label">
+			<span class="text-danger">*</span>总资产：
+		</label>
+		<div class="col-xs-4">
+			<input type="text" value="<{$extra.factory.value.general}>" name="factory[value][general]" class="form-control" required="true" format="number">
+			<span class="msgTip" data-message="number"></span>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-xs-2 control-label">
+			<span class="text-danger">*</span>占地面积：
+		</label>
+		<div class="col-xs-4">
+			<input type="text" value="<{$extra.factory.value.soil_area}>" name="factory[value][soil_area]" class="form-control" required="true">
+			<span class="msgTip" data-message="error"></span>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-xs-2 control-label">
+			<span class="text-danger">*</span>厂房面积：
+		</label>
+		<div class="col-xs-4">
+			<input type="text" value="<{$extra.factory.value.plant_area}>" name="factory[value][plant_area]" class="form-control" required="true">
+			<span class="msgTip" data-message="error"></span>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-xs-2 control-label">
+			<span class="text-danger">*</span>主要设备：
+		</label>
+		<div class="col-xs-4">
+			<input type="text" value="<{$extra.factory.value.main_device}>" name="factory[value][main_device]" class="form-control" required="true">
+			<span class="msgTip" data-message="error"></span>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-xs-2 control-label">
+			<span class="text-danger">*</span>设计产能：
+		</label>
+		<div class="col-xs-4">
+			<input type="text" value="<{$extra.factory.value.design_capacity}>" name="factory[value][design_capacity]" class="form-control" required="true">
+			<span class="msgTip" data-message="error"></span>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-xs-2 control-label">
+			<span class="text-danger">*</span>实际产能：
+		</label>
+		<div class="col-xs-4">
+			<input type="text" value="<{$extra.factory.value.actual_capacity}>" name="factory[value][actual_capacity ]" class="form-control" required="true">
+			<span class="msgTip" data-message="error"></span>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-xs-2 control-label">
+			外贸销售占比：
+		</label>
+		<div class="col-xs-4">
+			<input type="text" value="<{$extra.factory.value.foreign_trade}>" name="factory[value][foreign_trade]" class="form-control">
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-xs-2 control-label">
+			<span class="text-danger">*</span>直销占比：
+		</label>
+		<div class="col-xs-4">
+			<input type="text" value="<{$extra.factory.value.direct_selling}>" name="factory[value][direct_selling]" class="form-control" required="true">
+			<span class="msgTip" data-message="error"></span>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-xs-2 control-label">
+			<span class="text-danger">*</span>代理销售占比：
+		</label>
+		<div class="col-xs-4">
+			<input type="text" value="<{$extra.factory.value.seller_agency}>" name="factory[value][seller_agency]" class="form-control" required="true">
+			<span class="msgTip" data-message="error"></span>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-xs-2 control-label">
+			<span class="text-danger">*</span>上传厂区照片：
+		</label>
+		<div class="col-xs-4">
+	        <{input type="imageupload" tag="图片上传" name="factory[attach]" value=$extra.factory.attach required='true' accept="jpg|png|gif"}>   
+            <span class="msgTip" data-message="error">不能为空</span>
+		</div>
+	</div>
+</div>

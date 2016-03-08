@@ -1,0 +1,22 @@
+    <ul>
+        <{if $scan}>
+        <{foreach from=$scan item=item}>
+        <li>
+            <a href="<{link app=b2c ctl=site_product act=index args0=$item.product_id args1=$item.store.store_id}>">
+                <p><span>￥:<{$item.goods_price|cur}></span>
+                    <span>
+                        <a href="<{link app=b2c ctl=site_product act=index args0=$item.product_id args1=$item.store.store_id}>">
+                            <{$item.goods_name}>
+                        </a>
+                    </span>
+                </p>
+                <a href="<{link app=b2c ctl=site_product act=index args0=$item.product_id args1=$item.store.store_id}>">
+                    <img src="<{$item.image_default_id|storager:'x'}>">
+                </a>
+            </a>
+        </li>
+        <{/foreach}>
+        <{else }>
+        <h3>暂无记录</h3>
+        <{/if}>
+    </ul>

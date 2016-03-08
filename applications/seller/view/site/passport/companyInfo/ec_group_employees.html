@@ -1,0 +1,74 @@
+<div id="ec_group_employees">
+    <h4>电商团队成员</h4>
+    <div class="creat-wrap" data-module="creater">
+        <div id="items" data-items="itemList">
+            <{foreach from=$extra.ec_group_employees key=key item=item}>
+            <div class="team-item equipment-items" data-item="creat-item">
+                <input type="hidden" name="ec_group_employees[content_id][]" value="<{$item.content_id}>"
+                       class="form-control content_id">
+                <div class="form-group">
+                    <label class="col-xs-2 control-label">
+                        <span class="text-danger">*</span>姓名：
+                    </label>
+                    <div class="col-xs-4">
+                        <input type="text" value="<{$item.value.name}>" name="ec_group_employees[value][name][]" class="form-control" required="true">
+                        <span class="msgTip" data-message="error"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-2 control-label">
+                        <span class="text-danger">*</span>年龄：
+                    </label>
+                    <div class="col-xs-4">
+                        <input type="text" value="<{$item.value.age}>" name="ec_group_employees[value][age][]"
+                               class="form-control" required="true">
+                        <span class="msgTip" data-message="error"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-2 control-label">
+                        <span class="text-danger">*</span>学历：
+                    </label>
+                    <div class="col-xs-4">
+                        <{include file="site/passport/companyInfo/grade.html" data=array("ec_group_employees[value][edu][]","{$item.value.edu}")}>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-2 control-label">
+                        <span class="text-danger">*</span>联系方式：
+                    </label>
+                    <div class="col-xs-4">
+                        <input type="text" value="<{$item.value.contact}>" name="ec_group_employees[value][contact][]" class="form-control" required="true" format="mobile">
+                        <span class="msgTip" data-message="format">请输入正确手机号码</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-2 control-label"> 照片：</label>
+                    <div class="col-xs-4">
+                        <{input type="imageupload" tag="图片上传" name="ec_group_employees[attach][]" value=$item.attach required='true' accept="jpg|png|gif" }>
+                        <span class="msgTip" data-message="error">不能为空</span>
+                    </div>
+                </div>
+                <{if $key neq '0'}>
+                <div class="form-group">
+                    <label class="col-xs-2 control-label"></label>
+                    <div class="col-xs-4">
+                        <button class="del-team btn btn-danger delBtn" type="button">删除</button>
+                    </div>
+                </div>
+                <{/if}>
+            </div>
+            <{/foreach}>
+        </div>
+        <hr>
+        <div class="form-group">
+            <label class="col-xs-2 control-label"></label>
+            <div class="col-xs-4">
+                <button class="team btn btn-danger addBtn" type="button">
+                    保存并继续添加成员
+                </button>
+            </div>
+        </div>
+    </div> 
+</div>
+

@@ -1,0 +1,139 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8" />
+    <meta name="renderer" content="webkit"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <title>
+        <{$title}>
+    </title>
+    <{SYSTEM_HEADER}>
+        <link rel="stylesheet" href="statics/theme.css">
+        <link rel="stylesheet" href="statics/font-awesome.min.css">
+        <link rel="stylesheet" href="statics/header.css">
+        <link rel="stylesheet" href="statics/index.css">
+        <script type="text/javascript" src="statics/js/jquery.shopScroll.js"></script>
+        <script type="text/javascript" src="statics/js/common.js"></script>
+        <script type="text/javascript" src="statics/js/jquery.lazyload.js"></script>
+        <script type="text/javascript">
+        $(function() {
+            $("img").lazyload({
+                placeholder: "<{$base_url}>/themes/pc/default/statics/images/loading.gif",
+                effect: "fadeIn"
+            });
+        });
+        </script>
+</head>
+
+<body class="index_page" style="background: #f2f2f2;">
+<{WIDGET_B2C_INDEX_HEADER_BASIC page=index}>
+<{WIDGET_B2C_PUBLIC_NAV}>
+<div class="firstContainer">
+    <div class="sliderbox">
+        <{WIDGET_B2C_INDEX_SLIDER app=b2c position_id=1 num=3}>
+    </div>
+</div>
+<div class="container floorBox">
+    <div class="floor">
+        <!-- 商品楼层列表 -->
+        <div class="pro_list">
+                <{WIDGET_B2C_INDEX_FLOOR_TITLE app=b2c position_id=7 key=0}>
+            <div class="list_con clearfix">
+                <{WIDGET_B2C_INDEX_LEFT_GOOD app=b2c position_id=5}>
+                <{WIDGET_B2C_GOODS_INDEX_GOOD_FLOOR position_id=6}>
+             </div>
+             <{WIDGET_B2C_INDEX_FLOOR_BANNER app=b2c position_id=7}>
+        </div>
+    </div>
+    <div class="floor">
+        <div class="pro_list">
+                <{WIDGET_B2C_INDEX_FLOOR_TITLE app=b2c position_id=10 key=1}>
+            <div class="list_con clearfix">
+                <{WIDGET_B2C_INDEX_LEFT_GOOD app=b2c position_id=8}>
+                <{WIDGET_B2C_GOODS_INDEX_GOOD_FLOOR position_id=9}>
+             </div>
+             <{WIDGET_B2C_INDEX_FLOOR_BANNER app=b2c position_id=10}>
+        </div>
+    </div>
+    <div class="floor">
+        <div class="pro_list">
+                <{WIDGET_B2C_INDEX_FLOOR_TITLE app=b2c position_id=13 key=2}>
+            <div class="list_con clearfix">
+                <{WIDGET_B2C_INDEX_LEFT_GOOD app=b2c position_id=11}>
+                <{WIDGET_B2C_GOODS_INDEX_GOOD_FLOOR position_id=12}>
+             </div>
+             <{WIDGET_B2C_INDEX_FLOOR_BANNER app=b2c position_id=13}>
+        </div>
+    </div>
+    <div class="floor">
+        <div class="pro_list">
+                <{WIDGET_B2C_INDEX_FLOOR_TITLE app=b2c position_id=16 key=3}>
+            <div class="list_con clearfix">
+                <{WIDGET_B2C_INDEX_LEFT_GOOD app=b2c position_id=14}>
+                <{WIDGET_B2C_GOODS_INDEX_GOOD_FLOOR position_id=15}>
+             </div>
+             <{WIDGET_B2C_INDEX_FLOOR_BANNER app=b2c position_id=16}>
+        </div>
+    </div>
+    <div class="floor">
+        <div class="pro_list">
+                <{WIDGET_B2C_INDEX_FLOOR_TITLE app=b2c position_id=19 key=4}>
+            <div class="list_con clearfix">
+                <{WIDGET_B2C_INDEX_LEFT_GOOD app=b2c position_id=17}>
+                <{WIDGET_B2C_GOODS_INDEX_GOOD_FLOOR position_id=18}>
+             </div>
+             <{WIDGET_B2C_INDEX_FLOOR_BANNER app=b2c position_id=19}>
+        </div> 
+    </div>
+</div>
+
+<!-- 楼层导航 -->
+<div class="fixed_floorNav hidden">
+    <ul></ul>
+</div>
+<{require file="public/par-footer.html"}>
+<{WIDGET_B2C_GOODS_INDEX_FOOTER}>
+<{SYSTEM_FOOTER}>
+</body>
+
+</html>
+
+    <script type="text/javascript">
+   //快速登录  data-toggle="modal" data-target="#quickLogin"
+   $('.cart').click(function(e){
+       var _self = $(this);
+       $.post('<{link app=b2c ctl=site_passport act=check_login}>', '', function(re){
+           if(re.success){
+                var url = $(_self).attr('data-url') ? $(_self).attr('data-url') : '<{link app=b2c ctl=site_cart act=index}>';
+                location = url;
+           }else{
+               $('#quickLogin').modal('show');
+           }
+       });
+   });
+   $('.quickLogin').on('click', 'button', function(e){
+        var login_form = $('.quickLogin');
+        login_form.find('button[type=submit]').button('loading');
+        $.post(login_form.prop('action'), login_form.serialize(), function(re) {
+            if (re.error) {
+                login_form.find('.alert-error').remove();
+                if($('.quickLogin .alert').length <= 0){
+                    $('.login_cont').append($('<div class="alert alert-danger">' + re.error + '</div>'));
+                }
+                alert_timer = setTimeout(function() {
+                    clearTimeout(alert_timer);
+                    login_form.find('.alert-danger').fadeOut('fast', function() {
+                        $(this).remove();
+                    });
+                }, 3000);
+            }
+            if (re.success) {
+                location = window.location.href;
+            }
+            login_form.find('button[type=submit]').button('reset');
+        }, 'json');
+        return false;
+   });
+    
+    
+</script>

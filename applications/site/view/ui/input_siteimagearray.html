@@ -1,0 +1,112 @@
+<div class="tiles goods-images-pane" id="image_upload_array_<{$id}>">
+<div class="col-xs-5 pro_imgs">
+    <{foreach from=$imageList item=item}>
+        <div class="pro_img_item">
+
+            <div class="item_panel">
+
+                <span class="default <{if $item.image_id eq $default_val}>selected<{/if}>">默认图</span>
+
+                <span class="glyphicon glyphicon-trash"></span>
+            </div>
+
+            <div class="item_con">
+                <input type="hidden" name="<{$name}>[]" value="<{$item.image_id}>">
+                <img src="<{$item.image_id|storager:'xs'}>" width="120" height="120" />
+            </div>
+        </div>
+    <{/foreach}>
+    <div class="filebox">
+        <input type="hidden" id="images_add" value="" name="<{$default}>">
+        <input type="file" data-url="<{link app=image ctl=site_upload act=index}>" accept="image/*" class="file_input">
+        <div class="showImg">
+            <img src="<{$base_url}>/themes/pc/default/statics/images/file_add.jpg">
+        </div>
+    </div>
+</div>
+<div class="item_progress hidden">
+    <i class="icon-spinner icon-spin"></i>
+</div>
+<textarea class="hidden pro_img_showbox">
+    <div class="pro_img_item">
+
+        <div class="item_panel">
+            <span class="default">默认图</span>
+            <span class="glyphicon glyphicon-trash"></span>
+        </div>
+        <div class="item_con">
+            <input type="hidden" name="<{$name}>[]" value="{image_id}">
+            <img src="{url}" width="120" height="120" />
+        </div>
+    </div>
+</textarea>
+</div>
+
+<script>
+/**
+ *产品图片添加
+ */
+$(function() {
+    var substitute = function(str, obj) {
+        return str.replace(/\\?\{([^{}]+)\}/g, function(match, name) {
+            if (match.charAt(0) == '\\') return match.slice(1);
+            return (obj[name] != undefined) ? obj[name] : '';
+        });
+    }
+    $('#image_upload_array_<{$id}> input[type="file"]').fileupload({
+
+        add: function(e, data) {
+            if (!data.files[0]['type'].match(/^image/)) {
+                alert('非法上传，不是图片类型');
+            }
+            data.submit();
+        },
+        progress:function(e){
+
+        },
+        done: function(e, data) {
+
+            var re = $.parseJSON(data.result);
+            var input = e.target || e.srcElement;
+            var content = $('.pro_img_showbox').val();
+            $('.filebox').before(substitute(content, re));
+
+            if($('.pro_imgs .pro_img_item').size()==1){
+                $('.pro_imgs .pro_img_item').find('.default').addClass('selected');
+                var default_val=$('.pro_imgs .pro_img_item:first-child').find('input[type="hidden"]').val();
+                $('#images_add').attr('value',default_val);
+            }
+
+        }
+    });
+    //图片删除
+    $('.pro_imgs').on('click','.glyphicon-trash',function(e){
+        e.stopPropagation();
+        var _parent=$(this).parents('.pro_img_item');
+        if(!confirm('确认删除？')){
+            return;
+        }else{
+            _parent.remove();
+            var len=$('.pro_imgs .pro_img_item').size();
+            if(len==1){
+               $('.pro_imgs .pro_img_item').find('.default').addClass('selected');
+               var default_val=$('.pro_imgs .pro_img_item .item_con').find('input[type="hidden"]').val();
+               $('#images_add').attr('value',default_val);
+            }
+
+
+        }
+    })
+
+    //设置默认图片
+
+    $('.pro_imgs').on('click','.item_panel',function(){
+        $(this).children('.default').addClass('selected');
+        $(this).parents('.pro_img_item').siblings().find('.default').removeClass('selected');
+
+        var default_val=$(this).siblings('.item_con').find('input[type="hidden"]').val();
+        $('#images_add').attr('value',default_val);
+    })
+
+});
+</script>

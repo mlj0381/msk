@@ -1,0 +1,63 @@
+<h3 class="page-title">
+    页面管理
+</h3>
+
+<div class="table-toolbar">
+    <div class="btn-group">
+        <a class="btn green" data-target="#page_edit" data-toggle="modal" label="添加页面" icon="fa-plus" href="index.php?app=b2c&ctl=admin_pages&act=add">
+            添加页面&nbsp;<i class="fa fa-plus"></i>
+        </a>
+    </div>
+</div>
+
+<div class="table-scrollable">
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+				<th>页面ID</th>
+                <th>页面名称名称</th>                
+                <th>操作</th>
+            </tr>
+        </thead>
+    <tbody id="pages_list">
+        <{foreach from=$list item=item name="item"}>
+        <{assign var="pages_id" value=$item.pages_id}>
+        <tr data-id="<{$item.pages_id}>">
+            <td>
+            	<{$item.pages_id}>
+            </td>
+			<td>
+                <{$item.name|t:'content'}>
+            </td>            
+            <td>
+            <a data-target="#pages_edit" data-toggle="modal" class="btn btn-xs btn-default" href="index.php?app=b2c&ctl=admin_pags_position&act=add&page_id=<{$item.page_id}>">
+            <i class="fa fa-sitemap"></i> 查看</a>
+
+            <a data-target="#node_edit" data-toggle="modal" class="btn btn-xs btn-default" href="index.php?app=b2c&ctl=admin_pages&act=edit&page_id=<{$item.page_id}>">
+            <i class="fa fa-edit"></i> 编辑</a>
+
+            <a target="_command" data-confirm="确定删除 <{$item.name|t:'content'}>？" class="btn btn-xs btn-default" href="index.php?app=b2c&ctl=admin_pages&act=del&page_id=<{$item.page_id}>">
+            <i class="fa fa-trash"></i> 删除</a>
+
+            </td>
+        </tr>
+        <{/foreach}>
+    </tbody>
+    </table>
+</div>
+</form>
+
+
+<div class="modal fade" id="pages_edit" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-full">
+        <div class="modal-content">
+        </div>
+    </div>
+</div>
+
+
+<script charset="utf-8">
+$('#pages_edit').on('hidden.bs.modal',function(){
+	$('#pages_edit .modal-content').empty();
+})
+</script>

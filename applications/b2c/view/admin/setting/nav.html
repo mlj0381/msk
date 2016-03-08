@@ -1,0 +1,70 @@
+<h3 class="page-title">
+    站点导航
+</h3>
+
+<div class="table-toolbar">
+    <div class="btn-group">
+        <a class="btn green" data-target="#node_edit" data-toggle="modal" label="站点导航" icon="fa-plus" href="index.php?app=b2c&ctl=admin_setting&act=add_nav">
+            添加站点&nbsp;<i class="fa fa-plus"></i>
+        </a>
+    </div>
+</div>
+<form  action="index.php?app=b2c&ctl=admin_setting&act=update" method="post">
+    <div class="table-scrollable">
+        <table class="table  table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>站点ID</th>
+                    <th>名称</th>
+                    <th width="5%">同级排名<button class="btn btn-xs default" type="submit"><i class="fa fa-refresh"></i> 更新排名</button></th>
+                    <th>url</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody id="node_list">
+                <{foreach from=$nav item=item name="item"}>
+                <tr>
+                    <td>
+                        <{$item.id}>
+                    </td>
+                    <td>
+                        <{$item.title}>
+                    </td>
+                    <td>
+                        <input class="form-control input-xsmall input-sm" type="number"  name="ordernum[<{$item.id}>]" value="<{$item.ordernum|default:0}>" />
+                    </td>
+                    <td><{$item.url}></td>
+                    <td>
+
+
+                        <a data-target="#node_edit" data-toggle="modal" class="btn btn-xs btn-default" href="index.php?app=b2c&ctl=admin_setting&act=add_nav&p[0]=<{$item.id}>">
+                            <i class="fa fa-edit"></i> 编辑站点</a>
+
+                        <a target="_command" data-confirm="确定删除 <{$item.node_name|t:'content'}>？" class="btn btn-xs btn-default" href="index.php?app=b2c&ctl=admin_setting&act=del_setting&p[0]=<{$item.id}>">
+                            <i class="fa fa-trash"></i> 删除</a>
+                        <label><input class="status" <{if $item.status eq 'true'}>checked<{/if}> data-aid="<{$item.id}>" type="checkbox">是否启用</label>
+                    </td>
+                </tr>
+                <{/foreach}>
+            </tbody>
+        </table>
+    </div>
+</form>
+
+<div class="modal fade" id="node_edit" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function(){
+        $('.status').click(function(){
+            var url = 'index.php?app=b2c&ctl=admin_setting&act=setting_publish&p[0]=' + $(this).prop('checked') +'&p[1]=' + $(this).attr('data-aid');
+            $.getJSON(url, function(re){
+                
+            });
+        });
+    });
+</script>

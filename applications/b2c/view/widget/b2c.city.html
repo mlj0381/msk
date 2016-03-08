@@ -1,0 +1,10 @@
+<div class="location dropdown">
+    <a id="cityPlan" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false" aria-haspopup="true" role="button" href="">
+        所在城市 <i class="icon-angle-down"></i>
+    </a>
+    <ul class="dropdown-menu" role="menu" aria-labelledby="cityPlan">
+        <{foreach from=$city item=item}>
+        <li><a href=""><{$item.name}></a></li>
+        <{/foreach}>
+    </ul>
+</div>

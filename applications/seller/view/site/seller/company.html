@@ -1,0 +1,68 @@
+<{if $company.seller_id neq ''}>
+    <{if $seller.checkin eq '-1'}>
+        <div>审核未通过</div>
+    <{elseif $seller.checkin eq '0'}>
+        <div>资料正在审核中</div>
+    <{/if}>
+<{else}>
+    <div>还未填写公司信息</div>
+<{/if}>
+<div class="passport-signup-container">
+    <div class="panel panel-default signup-panel">
+        <div class="panel-heading clearfix">
+           <button type="button" class="btn btn-danger tab"  company="sellers" icon="fa fa-plus" >基本作息&nbsp;<i class="fa fa fa-plus"></i></button>
+           <button type="button" class="btn btn-default tab"  company="companys" icon="fa fa-plus" >公司信息&nbsp;<i class="fa fa fa-plus"></i></button>
+           <button type="button" class="btn btn-default tab"  company="legal" icon="fa fa-plus" >法人信息&nbsp;<i class="fa fa fa-plus"></i></button>
+           <button type="button" class="btn btn-default tab"  company="business" icon="fa fa-plus" >营业执照&nbsp;<i class="fa fa fa-plus"></i></button>
+           <button type="button" class="btn btn-default tab"  company="organization" icon="fa fa-plus" >组织机构&nbsp;<i class="fa fa fa-plus"></i></button>
+           <!-- <button type="button" class="btn btn-default tab"  company="bank" icon="fa fa-plus" >银行帐户&nbsp;<i class="fa fa fa-plus"></i></button> -->
+      </div>
+      <div class="panel-body">
+          <form id="seller_signup_form" class="form-horizontal" action="<{link app=seller ctl=site_seller act=company}>" method="post">
+              <div id="sellers">
+                  <{include file='site/seller/company/apply.sellers.html'}>
+              </div>
+              <div id="companys">
+                  <{include file='site/seller/company/apply.company.html'}>
+              </div>
+              <div id="legal">
+                  <{include file='site/seller/company/apply.legal.html'}>
+              </div>
+              <div id="business">
+                  <{include file='site/seller/company/apply.business.html'}>
+              </div>
+              <div id="organization">
+                  <{include file='site/seller/company/apply.organization.html'}>
+              </div>
+              <!-- <div id="bank">
+                  <include file='site/seller/company/apply.bank.html'>
+              </div> -->
+
+              <div class="form-group">
+                  <div class="col-xs-offset-2 col-xs-5">
+                    <button type="submit" data-loading-text="正在提交..." class="btn btn-warning">修改</button>
+                  </div>
+              </div>
+          </form>
+      </div>
+</div>
+    </div>
+
+</div>
+</div>
+</div>
+
+<script type="text/javascript">
+$(function(){
+
+	$("#legal, #business, #bank, #organization, #companys").addClass("hide");
+  $(".tab").click(function(){
+      $(".tab").each(function(){
+        $(this).addClass("btn-default").removeClass("btn-danger");
+        $("#"+$(this).attr("company")).addClass("hide");
+      });
+      $(this).addClass("btn-danger").removeClass("btn-default");
+      $("#"+$(this).attr("company")).removeClass("hide");
+    });
+});
+</script>

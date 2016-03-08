@@ -1,0 +1,40 @@
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">关闭</button>
+    <h3 class="modal-title"><{if $node.node_id}>编辑<{else}>添加<{/if}>页面</h3>
+</div>
+<form method="post" action="index.php?app=b2c&ctl=admin_pages&act=save" id='pages_edit_form' class="form">
+    <input type="hidden" name="pages_id" value="<{$pages.pages_id}>">
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-md-9">
+                <div class="form-horizontal">
+                    <div class="form-body">
+                        <div class="form-group ">
+                           <label class="col-md-4 control-label">页面名称
+                                <span class="required">*</span>
+                           </label>
+                            <div class="col-md-6">
+                                <{input required='true' type='text' name='pages[name]' value=$pages.name }>
+                            </div>
+                        </div>                        
+                    </div>
+                    <div class="form-body">
+                        <div class="form-group ">
+                           <label class="col-md-4 control-label">所属平台
+                                <span class="required">*</span>
+                           </label>
+                            <div class="col-md-8">
+                                 <{input type='select' name='pages[type]' options=$plats value=$position.type required='true'}>
+                            </div>
+                        </div>                        
+                    </div>
+                </div>
+
+            </div>            
+        </div>
+    </div>
+<div class="modal-footer">
+        <button type="button" class="btn default" data-dismiss="modal">关闭</button>
+        <button type="submit" class="btn blue">保存</button>
+</div>
+</form>

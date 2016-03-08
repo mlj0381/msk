@@ -1,0 +1,39 @@
+
+<form id="member_setting_form" class="form-horizontal m-baseInfo_form" action="<{link app=seller ctl=site_seller act=account}>" method="post">
+    <div class="form-group">
+        <label class="col-xs-2 control-label">
+            当前头像
+        </label>
+        <div class="col-xs-2">
+            <img class="img-thumbnail img-circle" src="<{$seller.avatar|storager:'avatar'}>" title="<{$seller.uname}>头像" style="width:100px; height:100px;" />
+        </div>
+        <div class="col-xs-5">
+            <!-- <a class="btn btn-link"  href="#avatar"  role="tab" data-toggle="tab">
+                <i class="glyphicon glyphicon-pencil"></i>编辑头像
+            </a>
+            <span class="help-block">建议头像图片长宽为1:1尺寸</span> -->
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-xs-2 control-label">
+            手机号码
+        </label>
+        <div class="col-xs-4">
+            <input type="text" disabled="disabled" name="seller[mobile]" value="<{$seller.mobile}>" class="form-control">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-xs-2 control-label">
+            电子邮箱
+        </label>
+        <div class="col-xs-4">
+            <input type="text" name="seller[email]" value="<{$seller.email}>" class="form-control">
+        </div>
+    </div>
+    
+    <div class="form-group">
+        <div class="col-xs-offset-2 col-xs-5">
+            <button type="submit" data-loading-text="正在提交..." class="btn btn-danger">保存修改</button>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,106 @@
+<div id="baseinfo">
+    <h4>基本信息</h4>
+    <input name="goods[goods_id]" value="<{$goods.goods_id}>" type="hidden" />
+    <input name="goods[checkin]" value="1" type="hidden" />
+    <div class="form-group">
+        <label class="col-xs-2 control-label"><span class="text-danger">*</span><span>商品类目</span></label>
+        <div class="col-xs-8">
+            <{input type="category" class="study" name="goods[category][cat_id]" value=$goods.category.cat_id callback="callBack"}>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-xs-2 control-label"><span class="text-danger">*</span><span>所属品牌</span></label>
+        <div class="col-xs-5">
+            <{input type=select name="goods[brand][brand_id]" rows=$params.brand labelColumn="brand_name" valueColumn="brand_id" value=$goods.brand.brand_id required="true"}>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-xs-2 control-label"><span class="text-danger">*</span><span>所在仓库</span></label>
+        <div class="col-xs-5">
+            <{input type=region name="goods[stock]" detail=1 value=$goods.stock required="true"}>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-xs-2 control-label"><span>商品编号</span></label>
+        <div class="col-xs-5">
+            <input type="text" value="<{$goods.gid}>" remote="<{link app=seller ctl=site_goods act=check_gid}>"
+            <{if $goods.gid}> readonly=true<{/if}>name="goods[gid]" placeholder="不填则系统自动生成" class="form-control" >
+            <span class="msgTip" data-message="error"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-xs-2 control-label"><span class="text-danger">*</span><span>商品名称</span></label>
+        <div class="col-xs-5">
+            <input type="text" name="goods[name]" value="<{$goods.name}>" placeholder="请输入商品名称" class="form-control" required="true">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-xs-2 control-label"><span>文字描述</span></label>
+        <div class="col-xs-5">
+            <input type="text" value="<{$goods.brief}>" name="goods[brief]" placeholder="请输文字描述" class="form-control">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-xs-2 control-label"><span>关键词</span></label>
+        <div class="col-xs-5">
+   
+              <{foreach from=$goods.keywords item=keywords}>
+            <{assign var='keyword' value="{$keyword},{$keywords.keyword}"}>
+            <{/foreach}>
+            <div class="goods_keywords_box">
+                <input type="text" id="goods_keywords_input" name="keywords" value="<{$keyword|trim:'|'}>" style="display: none;">
+            </div>
+            
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-xs-2 control-label"><span class="text-danger">*</span><span>产品相册</span></label>
+        <{input type="siteimagearray" name="goods[images]" default="image_default" default_val=$goods.image_default_id value=$goods.images}>
+    </div>
+    <hr>
+</div>
+<textarea class="hide last-add">
+    <div class="form-group last-option">
+        <label class="col-xs-2 control-label">
+            <span>{0}</span>
+        </label>
+        <div class="col-xs-5">
+            <select class=" form-control" required="true" name="{1}" type="select" >
+                {2}
+            </select>
+        </div>
+    </div>
+
+</textarea>
+
+<script>
+
+    var callBack = function(cat_id) {
+        var url = "<{link app=seller ctl=site_goods act=getProp}>";
+        if(!cat_id) return false;
+        $.post(url, {cat_id : cat_id}, function(re){
+            $('#param div.last-option').remove();
+            var length = $('#param select').size();
+            $('#param .form-body input[name="goods[type_id]"]').val('0');
+            if(!re.data.son) return false;
+            var tpl = $('.last-add').val();
+            var selectStr = '';
+            for(select in re.data.son.props){
+                var optionStr = '';
+                for(option in re.data.son.props[select].props_value){
+                    optionStr += '<option value="'+re.data.son.props[select].props_value[option].props_value_id+'">'
+                    +re.data.son.props[select].props_value[option].name+'</option>';
+                }
+                selectStr += $.VMC.format(tpl, re.data.son.props[select].name, 'goods[props][p_' + ++length + '][value]', optionStr);
+            }
+            $('#param .form-body input[name="goods[type_id]"]').val(re.data.son.type_id);
+            $('#param .form-body').append($(selectStr));
+        });
+    }
+
+//    var callBack = function(cat_id){
+//        if(!cat_id) return;
+//
+//            load_page('<{link app=seller ctl=site_goods act=getProp}>?cat_id='+cat_id,$('#param'));
+//    };
+</script>

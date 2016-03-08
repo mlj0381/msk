@@ -1,0 +1,474 @@
+@import "com/fn.less";
+/*reset*/
+@import "com/reset.less";
+/*model*/
+@import "com/model.less";
+/*table*/
+@import "com/tables.less";
+/*列表页*/
+.glist-container {
+    .table-view {
+        .table-view-cell { 
+            .g-link {
+                padding: 0;
+                &:active {
+                    background-color: #fff;
+                }
+            }
+            background-position: left bottom;
+            .g-image {
+                margin: 0;
+                text-align: center;
+                margin-bottom: 5px;
+                background-color: #fff;
+                min-height: 200px;
+            }
+            .g-info {
+                padding: 12px;
+            }
+        }
+    }
+}
+.screen-body {
+    .btn {
+        margin-bottom: 5px;
+    }
+}
+/*商品详情*/
+.product-container {
+    padding-bottom: 100px;
+    .table-view-cell.product-images {
+        padding: 0;
+        .slider {
+            background: #fff;
+            .history-go-1 {
+                background: #fff;
+                color: #666;
+                width: 40px;
+                height: 40px;
+                line-height: 40px;
+                text-align: center;
+                border: 1px #ddd solid;
+                .fn_rounded_corners(25px);
+                position: absolute;
+                left: 10px;
+                top: 10px;
+                opacity: 0.8;
+            }
+        }
+        .slide {
+            text-align: center;
+        }
+        img {
+            max-width: 100%;
+        }
+    }
+    .table-view-cell.product-info {
+        padding-right: 100px;
+        p {
+            margin-bottom: 5px;
+        }
+    }
+    .table-view-cell {
+        .g-price {
+            position: static;
+            left: auto;
+            top: auto;
+        }
+    }
+    .product-spec-options {
+        h5 {
+            margin-top: 10px;
+        }
+        .btn {
+            margin-bottom: 5px;
+        }
+        .has-pimg {
+            padding: 0 8px 0 0;
+            vertical-align: center;
+            text-align: right;
+            height: 40px;
+            line-height: 38px;
+            img {
+                max-height: 100%;
+                margin-right: 5px;
+                border: 1px #fff solid;
+                border-right-color: #ececec;
+                .fn_rounded_corners_cs(3px,0,0,3px);
+            }
+            &.active {
+                img {
+                    border-color: #efefef;
+                    border-right-color: #e9e9e9;
+                }
+            }
+        }
+    }
+}
+.goods-rel-items {
+    .column {
+        float: left;
+        width: 50%;
+        overflow: hidden;
+    }
+}
+.product-bar-footer {
+    .btn-buy {
+        padding: 10px 15px;
+        top: 5px;
+    }
+    .fa-shopping-cart {
+        top: 3px;
+        position: relative;
+    }
+}
+.goods-desc{
+    font-size: 14px;
+    a{
+        color: #666;
+    }
+    .content-desc{
+        background-color: #fff;
+        padding: 15px;
+        overflow: hidden;
+        img{
+            max-width: 100%;
+        }
+    }
+}
+/*购物车页*/
+.cart-container {
+    margin-bottom: 85px;
+    .btn-remove {
+        color: #d9534f;
+    }
+    .product-quantity {
+        width: 60%;
+        margin-top: 10px;
+    }
+    .cart-item {
+        padding-right: 15px;
+        .media-body {
+            p {
+                font-size: 12px;
+            }
+        }
+        .ci-price {
+            font-size: 14px;
+        }
+        .ci-img {
+            .img-cover {
+                width: 50%;
+                height: 100%;
+                position: absolute;
+                left: -15px;
+                top: 0;
+                display: block;
+                .linear_bg(rgba(255,255,255,1),rgba(255,255,255,0));
+            }
+            width: 25%;
+            position: relative;
+            margin-right: 10px;
+            img {
+                max-width: 100%;
+                position: relative;
+                margin-left: -15px;
+
+                //.fn_box_shadow(1px,2px,3px,#ccc);
+                //.fn_rounded_corners_cs(0,3px,3px,0);
+            }
+            input[type=checkbox] {
+                display: none;
+            }
+            input[type=checkbox] + label {
+                -webkit-transform: translateY(-50%);
+                -ms-transform: translateY(-50%);
+                transform: translateY(-50%);
+                position: absolute;
+                font-size: 20px;
+                left: 0;
+                top: 45%;
+                color: #666;
+                &:active {
+                    color: #333;
+                }
+                &:before {
+                    content: "\f096";
+                }
+            }
+            input[type=checkbox]:checked +label {
+                color: #007aff;
+                &:before {
+                    content: "\f14a";
+                }
+            }
+        }
+        &.enabled {
+
+            //background-color: #fffcec;
+        }
+        .promotion-list {
+            clear: both;
+            margin-top: 5px;
+            li {
+                text-align: left;
+                width: auto;
+            }
+        }
+    }
+}
+#ck_ident_all {
+    display: none;
+    + label {
+        font-size: 20px;
+        color: #666;
+        vertical-align: middle;
+        &:active {
+            color: #333;
+        }
+        &:before {
+            content: "\f096";
+        }
+        span {
+            display: none;
+        }
+    }
+    &:checked + label {
+        color: #007aff;
+        &:before {
+            content: "\f14a";
+        }
+    }
+}
+.cart-bar-footer {
+    .cfb-amount {
+        font-size: 12px;
+        text-align: right;
+        padding-right: 15px;
+        color: #333;
+        strong {
+            font-size: 18px;
+        }
+    }
+    .cfb-checkout {
+        background-color: #d9534f;
+        a {
+            color: #fff;
+        }
+        padding: 0;
+    }
+    .checkout-btn {
+        display: block;
+        line-height: 50px;
+    }
+}
+.bar.cart-bar-secondary {
+    font-size: 14px;
+    bottom: 50px;
+    border-bottom: 1px #ccc solid;
+    height: 35px;
+    line-height: 35px;
+    padding-left: 15px;
+    a {
+        display: inline-block;
+        margin-left: 15px;
+        color: #333;
+    }
+}
+/*checkout*/
+.table-view-cell.checkout-item {
+    padding-right: 100px;
+    img {
+        border: 1px #efefef solid;
+        padding: 2px;
+    }
+}
+.checkout-container {
+    margin-bottom: 50px;
+    .i-radio + label {
+        position: absolute;
+        right: 15px;
+        top: 30%;
+    }
+    textarea {
+        font-size: 12px;
+    }
+}
+.checkout-bar-footer {
+    .tab-total {
+        color: #333;
+    }
+    .tab-submit {
+        background-color: #d9534f;
+        padding: 0;
+        button {
+            line-height: 50px;
+            margin: 0;
+            padding: 0;
+            top: 0;
+            color: #fff;
+        }
+        a {
+            line-height: 50px;
+            display: block;
+            color: #fff;
+        }
+    }
+}
+.invoice-cell {
+    select,
+    input {
+        margin-bottom: 0;
+        padding: 5px 10px;
+    }
+}
+
+/*my*/
+/*会员中心*/
+.my-main {
+    .my-baseinfo {
+        height: 100px;
+        margin: 0!important;
+        p {
+            font-size: 12px;
+            padding-right: 15px;
+        }
+
+        //.linear_bg1(#fff,#efefef);
+        .go-avatar {
+            width: 50px;
+            img {
+                border: 1px #ddd solid;
+                background-color: #fff;
+                .fn_rounded_corners(50%);
+                padding: 1px;
+                width: 50px;
+                height: 50px;
+            }
+        }
+        .btn-logout {
+            font-size: 12px;
+        }
+    }
+    .tv-allorder {
+        margin-bottom: 0;
+    }
+    .my-total {
+        background-color: #fff;
+        .fn_rounded_corners(0);
+        border: none;
+        border-bottom: 1px #ccc solid;
+        .control-item {
+            line-height: 30px;
+            border-right: 1px #e9e9e9 solid;
+            border-left: none;
+            .fn_rounded_corners(0);
+            &:last-child {
+                border-right: none;
+            }
+        }
+    }
+    .my-order-status-menu {
+        .control-item {
+            position: relative;
+        }
+        .fa {
+            display: block;
+        }
+        .badge {
+            position: absolute;
+            right: 10px;
+            top: 5px;
+        }
+    }
+    .tv-mmenu {
+        .mm-mobile_member-orders {
+            display: none;
+        }
+    }
+}
+.maddr-item {
+    label {
+        position: absolute;
+        top: 50%;
+        right: 15px;
+        vertical-align: middle;
+        -webkit-transform: translateY(-50%);
+        -ms-transform: translateY(-50%);
+        transform: translateY(-50%);
+    }
+}
+.tv-orderitem {
+    .table-view-cell {
+        padding-right: 15px;
+    }
+}
+/*评价*/
+.tv-comment {
+    .table-view-cell {
+        padding-right: 15px;
+    }
+    .comment-images {
+        display: table;
+        margin: 5px 0;
+        a {
+            display: table-cell;
+            width: 60px;
+            height: 60px;
+            padding: 5px;
+            text-align: center;
+            vertical-align: middle;
+            img {
+                border: 1px #e9e9e9 solid;
+                padding: 1px;
+                background: #fff;
+                max-width: 100%;
+                max-height: 100%;
+                vertical-align: middle;
+            }
+
+        }
+    }
+}
+/*图片上传*/
+.five-images-upload{
+    .clearfix();
+    .upload-item{
+        float: left;
+        overflow: hidden;
+        position: relative;
+        width: 20%;
+        height: 60px;
+        .img-preview{
+            width: 98%;
+            margin: 0 auto;
+            border:1px #ccc solid;
+            height:100%;
+            text-align: center;
+            img{
+                vertical-align: middle;
+                max-width: 100%;
+                max-height: 100%;
+            }
+        }
+        .fa{
+            position: absolute;
+            right:5px;
+            bottom:5px;
+
+        }
+        input[type=file]{
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            display: block;
+            margin: 0;
+            padding: 0;
+            border: 0;
+            position: absolute;
+            z-index: 8;
+            top:0;
+            left:0;
+        }
+    }
+}

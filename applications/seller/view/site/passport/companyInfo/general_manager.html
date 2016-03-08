@@ -1,0 +1,48 @@
+<input type="hidden" name="general_manager[content_id]"  value="<{$extra.general_manager.content_id}>" class="form-control">
+<div id="general_manager">
+	<h4>公司总经理</h4>
+	<div class="form-group">
+		<label class="col-xs-2 control-label">
+			<span class="text-danger">*</span>姓名：
+		</label>
+		<div class="col-xs-4">
+			<input type="text" value="<{$extra.general_manager.value.name}>" name="general_manager[value][name]" class="form-control" required="true">
+			<span class="msgTip" data-message="error"></span>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-xs-2 control-label">
+			<span class="text-danger">*</span>年龄：
+		</label>
+		<div class="col-xs-4">
+			<input type="text" value="<{$extra.general_manager.value.age}>" name="general_manager[value][age]" class="form-control" required="true" format="digits">
+			<span class="msgTip" data-message="format">请输入正确的年龄</span>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-xs-2 control-label">
+			<span class="text-danger">*</span>学历：
+		</label>
+		<div class="col-xs-4">
+			<{include file="site/passport/companyInfo/grade.html" data=array("general_manager[value][edu]","{$extra.general_manager.value.edu}")}>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-xs-2 control-label">
+			<span class="text-danger">*</span>联系方式：
+		</label>
+		<div class="col-xs-4">
+			<input type="text" value="<{$extra.general_manager.value.contact}>" name="general_manager[value][contact]" class="form-control" required="true" format="mobile">
+			<span class="msgTip" data-message="format">请输入正确手机号码</span>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-xs-2 control-label">
+			照片：
+		</label>
+		<div class="col-xs-4">
+	        <{input type="imageupload" tag="图片上传" name="general_manager[attach]" value=$extra.general_manager.attach accept="jpg|png|gif"}>   
+            <span class="msgTip" data-message="error">不能为空</span>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,38 @@
+<div class="modify_record_page">
+	<div class="page-header">
+		<h1>价格修改记录</h1>
+	</div>
+	<div class="clearfix">
+		<div class="col-xs-6 goods_num">
+			<span>商品编号：</span><{$product_list.gid.gid}>
+		</div>
+		<div class="col-xs-6" style="text-align: right;">
+			<a href="<{link app=seller ctl=site_goods act=price}>" class="btn btn-danger">返回列表</a>
+		</div>
+	</div>
+	
+	<table class="table table-hover modify_list">
+		<tr>
+			<th class="col-xs-3">货号</th>
+			<th class="col-xs-3">规格</th>
+			<th class="col-xs-4">价格</th>
+			<th class="col-xs-2">修改时间</th>
+		</tr>
+        <{foreach from=$product_list.products item=items}>
+        <{foreach from=$items item=item}>
+		<tr>
+			<td><{$item.bn}></td>
+			<td><{$item.spec_info}></td>
+			<td>
+				<p><{$item.price_dn|cur}>(小于<{$item.price_interval}>箱)</p>
+				<p><{$item.price_up|cur}>(大于<{$item.price_interval}>箱)</p>
+			</td>
+			<td>
+                <{$item.createTime|cdate}>
+			</td>
+		</tr>
+        <{/foreach}>
+        <{/foreach}>
+	</table>
+
+</div>

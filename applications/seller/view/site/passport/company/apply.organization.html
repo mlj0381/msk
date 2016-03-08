@@ -1,0 +1,39 @@
+
+  <div class="form-group">
+    <label for="input_addr" class="col-xs-2 control-label">组织机构代码<span class="text-danger">*</span></label>
+    <div class="col-xs-5">
+      <{input type="text" required="true" name="seller[organization_number]"  value=$company.organization_number class="form-control" id="input_company_addr" placeholder="组织机构代码"}>
+    </div>
+</div>
+<div class="form-group">
+  <label for="input_addr" class="col-xs-2 control-label">代码有效期<span class="text-danger">*</span></label>
+  <div class="col-xs-5">
+    <{input type=data name="seller[organization_outtime]"  value=$company.organization_outtime placehoder="开始时间"}>
+  </div>
+</div>
+<div class="form-group">
+    <label for="input_addr" class="col-xs-2 control-label">代码证图片<span class="text-danger">*</span></label>
+    <div class="col-xs-5">
+      <input type="file" accept="image/*" data-url="<{link app=image ctl=site_upload act=index}>" class="form-control" value="">
+      <input type="hidden" name="seller[organization_image]"  value=""/>
+      <span class="hide">上传成功</span>
+    </div>
+</div>
+<script>
+        $('input[type="file"]').fileupload({
+
+            add:function(e, data){
+                if(!data.files[0]['type'].match(/^image/)){
+                    alert('非法上传，不是图片类型');
+                }
+                data.submit();
+            },
+            done:function(e, data){
+                var re = $.parseJSON(data.result);
+                var input= e.target || e.srcElement;
+                $(input).next('input').val(re.image_id);
+                $(input).next('input').nextAll().removeClass('hide');
+            }
+        });
+
+</script>

@@ -1,0 +1,37 @@
+<input type="hidden" name="food_flow_licence[content_id]"  value="<{$extra.food_flow_licence.content_id}>" class="form-control">
+<div id="food_flow_licence">
+	<h4>食品流通许可证</h4>
+	<div class="form-group">
+		<label class="col-xs-2 control-label">
+			许可证编号：
+		</label>
+		<div class="col-xs-4">
+			<input type="text" name="food_flow_licence[value][code]" value="<{$extra.food_flow_licence.value.code}>" class="form-control">
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-xs-2 control-label">
+			有效期限：
+		</label>
+		<div class="col-xs-4">
+			<input type="text" name="food_flow_licence[value][date_start]" value="<{$extra.food_flow_licence.value.date_start}>" class="form-control" style="width:175px; display: inline-block;"> 至 
+			<input type="text" name="food_flow_licence[value][date_end]" value="<{$extra.food_flow_licence.value.date_end}>" class="form-control"  style="width:175px; display: inline-block;">
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-xs-2 control-label">
+			许可证电子版：
+		</label>
+		<div class="col-xs-4">
+			<div class="filebox">
+	            <input type="hidden" value="<{$extra.food_flow_licence.attach}>" name="food_flow_licence[attach]"/>
+	            <input type="file" data-url="<{link app=image ctl=site_upload act=index}>" accept="image/*" class="file_input" />
+	            <div class="showImg">
+	                 <img src="<{if $extra.food_flow_licence.attach eq ''}><{$base_url}>/themes/pc/default/statics/images/file_add.jpg<{else}><{$extra.food_flow_licence.attach|storager:'xs'}><{/if}>">    
+	            </div>
+	        </div>
+		</div>
+	</div>
+</div>
+
+

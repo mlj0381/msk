@@ -1,0 +1,32 @@
+<div  class="my-main">
+  <div class="row">
+      <div class="col-xs-2 member_left">
+          <dl class="my-menu">
+              <span class="notice"></span>
+              <{foreach from=$menu item=i key=k}>
+                    <dt class="mm-root"><{$i.label}></dt>
+                    <dd>
+                        <ul class="mm-list list-unstyled">
+                            <{foreach from=$i.items item=m key=j}>
+								<{if $m.display == 'true'}>
+                               <li data-myaction="<{$m.action}>"
+                                   class="mm-<{$m.controller}>-<{$m.items.action}> <{if $current_controller ==$m.controller && $m.action == $current_action}> active<{/if}>">
+                                   <a target="<{if $m.app != 'seller'}>_blank<{else}>_self<{/if}>" data-target="main"
+                                      href="<{link app=$m.app ctl=$m.controller act=$m.action}><{if $m.controller eq 'site_store'}>?store=<{$store.store_id}><{/if}>">
+                                       <span><{$m.label}></span>
+                                   </a>
+                               </li>
+							   <{/if}>
+                            <{/foreach}>
+                        </ul>
+                    </dd>
+              <{/foreach}>
+          </dl>
+      </div>
+      <div class="col-xs-10 my-page">
+          <{include file=$_PAGE_ app=$app_id}>
+      </div>
+  </div>
+</div>
+
+
