@@ -566,13 +566,7 @@ class seller_user_passport
                 $columns['companyType'] = $conf[$storeType]['companyType'];
                 $columns['typeId'] = $storeType;
             }
-            if ($licence_type == 'new') {
-                unset($columns['page']['business_licence']);
-                unset($columns['page']['tax_licence']);
-                unset($columns['page']['organization_licence']);
-            } else if ($licence_type == 'old') {
-                unset($columns['page']['three_lesstion']);
-            }
+            $this->unsetColumns($licence_type, $columns);
             if ($step != '1') unset($columns['page']['bank_lesstion']);
             $columns['page'] = array_flip($columns['page']);
         }else{
@@ -585,6 +579,18 @@ class seller_user_passport
         }
         $columns['identityLabel'] = $countPage['label'];
         return $columns;
+    }
+
+    //判断营业执照是否为新版并移除不相关字段
+    public function unsetColumns($licence_type, &$columns)
+    {
+        if ($licence_type == 'new') {
+            unset($columns['page']['business_licence']);
+            unset($columns['page']['tax_licence']);
+            unset($columns['page']['organization_licence']);
+        } else if ($licence_type == 'old') {
+            unset($columns['page']['three_lesstion']);
+        }
     }
 
     //判断组合身份当前填写到哪一种身份
@@ -754,15 +760,28 @@ class seller_user_passport
             }
         }
         if (!$sqlType) {
+            $mdl_company_seller = app::get('base')->model('company_seller');
             $company_extra['company_extra'][$params['typeId']] = $company_id ?: $company_extra['company_extra'][$params['typeId']];
-            $data = array(
+            $extra_data = array(
                 'seller_id' => $seller['seller_id'],
                 'schedule' => $params['pageIndex'],
                 'company_extra' => $company_extra['company_extra']);
-            if (!$mdl_seller->save($data)) {
+            $company_seller = array(
+                'uid' => $seller['seller_id'],
+                'from' => '1',
+                'identity' => $params['typeId'],
+                'company_id' => $company_extra['company_extra'][$params['typeId']],
+                'createtime' => time(),
+            );
+            if (!$mdl_seller->save($extra_data)) {
                 $db->rollback();
                 return false;
             }
+            if(!$mdl_company_seller->save($company_seller)){
+                $db->rollback();
+                return false;
+            }
+
         }
         $db->commit();
         return true;
@@ -807,4 +826,5 @@ class seller_user_passport
         $licence_type = $checked['key'] == 'three_lesstion' ? 'new' : 'old';
         return $licence_type;
     }
+
 }

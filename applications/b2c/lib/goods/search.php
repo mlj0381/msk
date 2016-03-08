@@ -162,7 +162,7 @@ class b2c_goods_search
             $filter['goods_id|in'] = $this->_keywords($params['keywords']['keywords'], 'goods');
             if(!$filter['goods_id|in']) return array();
         }
-        $filter['cat'] = $cat;
+        $filter['cat_id'] = $cat;
         $filter['brand'] = $brand;
         $filter['store_id'] = $store_id;
         $filter['marketable'] = $marketable;
@@ -178,7 +178,6 @@ class b2c_goods_search
         }
         $goods_cols = '*';
         $goods_list = $this->mGoods->getList($goods_cols, $filter, $params['page']['size'] * ($params['page']['index'] - 1), $params['page']['size'], $params['orderby']);
-
         $obj_goods_stage = vmc::singleton('b2c_goods_stage');
         //set_member
 

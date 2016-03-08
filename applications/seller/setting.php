@@ -140,7 +140,7 @@ $setting = array(
                     ),
                 ),
             ),
-            'array_info' => array('equipment', 'ec_group_employees'),
+            'array_info' => array('equipment', 'ec_group_employees', 'company_touted', 'workshop'),
         ),
     ),
     'seller_group' => array(
