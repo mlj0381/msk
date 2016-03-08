@@ -101,16 +101,58 @@
             <td>
                 <input type="text" required="true" data-map="bn" class="form-control input-sm" name="goods[product][{key}][bn]" value="">
             </td> 
-            <td width="400" class="price_set">
+            <td class="price_set">
                 <!-- <input type="text" data-map="price" class="form-control input-sm" name="goods[product][{key}][price]" value=""> -->
                 <div class="set_panel">
-                    <span class="set_trigger active"><i class="icon-cogs"></i> 设置价盘</span>
-                    <ul class="list-group price_list">
-                        <li class="list-group-item">
-                            1
-                        </li>
-                        <li class="list-group-item">2</li>
-                    </ul>    
+                    <div class="panel_title">
+                        <span class="set_trigger"><i class="icon-cogs"></i> 设置价盘</span>
+                        <span class="text-danger"><i class="icon-info-sign"></i>（价盘直接影响价格，请认真填写）</span>
+                    </div>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>数量下限</th>
+                                    <th>数量上限</th>
+                                    <th>商品价格</th>
+                                    <th>是否分销</th>
+                                    <th>折扣率</th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><input type="text" class="form-control"></td>
+                                    <td><input type="text" class="form-control"></td>
+                                    <td><input type="text" class="form-control"></td>
+                                    <td><input type="checkbox"></td>
+                                    <td>
+                                        <div class="input-group">
+                                          <input type="text" class="form-control">
+                                          <span class="input-group-addon">%</span>
+                                        </div>
+                                    </td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td><input type="text" class="form-control"></td>
+                                    <td><input type="text" class="form-control"></td>
+                                    <td><input type="text" class="form-control"></td>
+                                    <td><input type="checkbox"></td>
+                                    <td>
+                                        <div class="input-group">
+                                          <input type="text" class="form-control">
+                                          <span class="input-group-addon">%</span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <span class="icon-trash delbtn"></span>
+                                        <span class="icon-plus addbtn"></span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table> 
+                    </div>  
                 </div>
                 
             </td>
