@@ -8,6 +8,7 @@ class seller_user_passport
     public function __construct(&$app)
     {
         $this->app = $app;
+        $this->entryType = 'entry'; //entry 商家入驻 brand 品牌添加资质
         $this->user_obj = vmc::singleton('seller_user_object');
         vmc::singleton('base_session')->start();
     }
@@ -656,8 +657,10 @@ class seller_user_passport
     public function &edit_info($columns, $seller_id, $storeType)
     {
         $info = array();
-        $extra_id = app::get('seller')->model('sellers')->getRow('company_extra', array('seller_id' => $seller_id));
-        $filter = array('extra_id' => $extra_id['company_extra'][$storeType], 'identity' => $storeType);
+        $company = app::get('base')->model('company_seller')->getRow('*', array(
+            'uid' => $seller_id, 'from' => '1', 'identity' => $storeType));
+        //$extra_id = app::get('seller')->model('sellers')->getRow('company_extra', array('seller_id' => $seller_id));
+        $filter = array('extra_id' => $company['company_id'], 'identity' => $storeType);
         $mdl_base_extra = app::get('base')->model('company_extra');
         $company_extra = $mdl_base_extra->getList('*', array_merge($filter, array('key|in' => array_values($columns['page']))));
         $conf = $this->app->getConf('seller_entry');
@@ -670,7 +673,7 @@ class seller_user_passport
         unset($company_extra);
         $info['company_extra']['store'] = app::get('store')->model('store')->getRow('*', array('seller_id' => $seller_id));
         $info['company_extra']['company'] = app::get('base')->model('company')->getRow('*',
-            array('company_id' => $extra_id['company_extra'][$storeType], 'info_type' => $storeType));
+            array('company_id' => $company['company_id'], 'info_type' => $storeType));
         $info['company_extra']['contact'] = app::get('base')->model('contact')->getRow('*', array('uid' => $seller_id, 'from' => '1'));
         $info['company_extra']['brand'] = $this->app->model('brand')->getRow('*', array('seller_id' => $seller_id));
         return $info;

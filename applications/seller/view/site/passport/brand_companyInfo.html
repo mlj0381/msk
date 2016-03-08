@@ -15,19 +15,19 @@
                     </dd>
                 </dl>
             </div>
-            <form id="companyInfo_form" action="<{link app=seller ctl=site_passport act=entry}>" class="form-horizontal companyInfo_form" method="post" data-module="validator">
+            <form id="companyInfo_form" action="<{link app=seller ctl=site_passport act=brand_aptitude}>?type=<{$identity}>" class="form-horizontal companyInfo_form" method="post" data-module="validator">
                 <h3><{$pageSet.companyType}>  <small> <{$pageSet.label}></small></h3>
-                <input type="hidden" name="typeId" value="<{$pageSet.typeId}>"/>
+                <input type="hidden" name="typeId" value="<{$identity}>"/>
                 <input type='hidden' name='pageIndex' value='<{$pageIndex}>'/>
                 <!-- 三证合一 -->
-                <{foreach from=$pageSet key=key item=item}>
+                <{foreach from=$pageSet.page key=key item=item}>
                     <{include file="site/passport/companyInfo/{$item}.html" extra=$info.company_extra}>
                 <{/foreach}>
                 <hr>
                 <div class="form-group">
                     <label class="col-xs-2"></label>
                     <div class="col-xs-4">
-                        <a type="submit" href="<{link app=seller ctl=site_passport act=entry args0=$pageIndex args1=up}>" data-loading-text="正在提交..." class="btn btn-default">返回上一步</a>
+                        <a type="submit" href="<{link app=seller ctl=site_passport act=brand_aptitude args0=$pageIndex args1=up}>" data-loading-text="正在提交..." class="btn btn-default">返回上一步</a>
                         <button type="submit" data-loading-text="正在提交..." class="btn btn-danger" style="margin-left: 20px;">保存并进行下一步</button>
                     </div>
                 </div>

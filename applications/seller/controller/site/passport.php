@@ -97,29 +97,40 @@ class seller_ctl_site_passport extends seller_frontpage
     }
 
     //添加品牌资质
-    public function brand_aptitude($pageIndex = 1)
+    public function brand_aptitude($step = 0, $type)
     {
         $params = $this->_request->get_get();
         $identity = $params['type'];
         $business_type = $params['card'] ?: 'new';
         $tpl = 'brand_companyType';
-        if (is_numeric($identity)) {
+        if($_POST)
+        {
+            $params = utils::_filter_input($_POST);
+            unset($_POST);
+            $result = $this->passport_obj->entry($params, $msg);
+            if(!$result) $this->splash('error', '', $msg . '信息注册失败');
+            $step ++;
+        }
+        if (is_numeric($identity))
+        {
             $columns = $this->app->getConf('seller_entry');
-            $selfPage['page'] = array_flip($columns[$identity]['pageSet'][$pageIndex]['page']);
+            $countPage = count($columns[$identity]);
+            $step = $params['pageIndex'] ? $params['pageIndex'] : $step;
+            $step = $type == 'up' ? $step - 1 : $step + 1;
+            $step <= 1 && $step = 1;
+            $step > $countPage && $step = $countPage + 1;
+            $selfPage['page'] = array_flip($columns[$identity]['pageSet'][$step]['page']);
             $this->passport_obj->unsetColumns($business_type, $selfPage);
-            $selfPage = array_flip($selfPage['page']);
+            $selfPage['page'] = array_flip($selfPage['page']);
             $this->pagedata['pageSet'] = $selfPage;
+            $this->pagedata['identity'] = $identity;
+            $this->pagedata['info'] = $this->passport_obj->edit_info($selfPage, $this->seller['seller_id'], $identity);
+            $this->pagedata['pageIndex'] = $step;
             $this->pagedata['info']['company_extra']['page_setting'] = $this->passport_obj->columns();
             $tpl = 'brand_companyInfo';
         }
         $this->pagedata['ident'] = $this->seller['ident'];
         $this->page('site/passport/' . $tpl . '.html');
-    }
-
-    //保存新增品牌资质
-    public function save_brand_aptitude($params)
-    {
-
     }
 
 //end function
@@ -470,7 +481,7 @@ class seller_ctl_site_passport extends seller_frontpage
         if ($_POST) {
             $params = utils::_filter_input($_POST);
             unset($_POST);
-            $result = $this->passport_obj->entry($params);
+            $result = $this->passport_obj->entry($params, $msg);
             if (!$result) $this->splash('error', $redirect, '操作失败');
         }
         $licence_type = $this->_request->get_get('card');
@@ -568,9 +579,7 @@ class seller_ctl_site_passport extends seller_frontpage
         $mdl_company_extra = app::get('base')->model('company_extra');
         $company = $mdl_company->getRow('*', array('business' => $_POST['business'], 'business_type' => $_POST['business_type']));
         if (!empty($company)) {
-            $company['extra'] = $mdl_company_extra->getList('*', array('extra_id' => $company['company_id'], 'identity' =>
-                $_POST['typeId']));
+            $company['extra'] = $mdl_company_extra->getList('*', array('extra_id' => $company['company_id'], 'identity' =>''));
         }
-        $this->splash('success', '', $company);
     }
 }
