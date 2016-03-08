@@ -96,6 +96,11 @@ class seller_ctl_site_passport extends seller_frontpage
         $this->splash('success', $forward, '登录成功');
     }
 
+    //品牌添加
+    public function brand_add(){
+        $this->display('ui/brand_add_modal.html');
+    }
+
     //添加品牌资质
     public function brand_aptitude($step = 0, $type)
     {

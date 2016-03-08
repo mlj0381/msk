@@ -651,6 +651,7 @@ ol {
   color: #666;
   font-size: 12px;
   margin-left: 20px;
+  overflow: hidden;
 }
 .product-container .product-page .goods-detailRow .product-page-content .tab-content #record {
   margin-top: 25px;
