@@ -120,6 +120,7 @@ class seller_ctl_site_passport extends seller_frontpage
         }
         if (is_numeric($identity))
         {
+            $tpl = 'brand_companyInfo';
             $columns = $this->app->getConf('seller_entry');
             $countPage = count($columns[$identity]);
             $step = $params['pageIndex'] ?: $step;
@@ -135,7 +136,7 @@ class seller_ctl_site_passport extends seller_frontpage
                 $this->pagedata['info'] = $this->passport_obj->edit_info($selfPage, $this->seller['seller_id'], $identity);
             $this->pagedata['pageIndex'] = $step;
             $this->pagedata['info']['company_extra']['page_setting'] = $this->passport_obj->columns();
-            $tpl = 'brand_companyInfo';
+
         }
         $this->pagedata['ident'] = $this->seller['ident'];
         $this->pagedata['type'] = $params['type'];

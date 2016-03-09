@@ -1,7 +1,54 @@
+<style>
+    div[data-module="uploader"] {
+        overflow: hidden;
+        position: relative;
+        background:none;@important
+        height:120px;@important
+    }
+    div[data-module="uploader"] .handle, div[data-module="uploader"] .thumb {
+        cursor: pointer;
+        
+    }
+    div[data-module="uploader"] .thumb {
+        height: 120px;
+        width: 120px;
+        border: 1px solid #CCC;
+        overflow: hidden;
+        display: table-cell;
+        text-align: center;
+        vertical-align: middle;
+    }
+    div[data-module="uploader"] .thumb span.loading {
+        font-size: 30px;
+    }
+    div[data-module="uploader"] .thumb img {
+        display: block;
+        margin: auto;
+        max-height: 118px;
+        max-width: 118px;
+    }
+    div[data-module="uploader"] .handle {
+        position: absolute;
+        top: 0;
+        left: 0;
+        margin: 0;
+        opacity: 0;
+        -ms-filter: 'alpha(opacity=0)';
+        width: 120px;
+        height: 120px;
+    }
+    div[data-module="uploader"] label.right {
+        display: inline-block;
+        position: absolute;
+        left: 130px;
+        min-height: 16px;
+        top: 45px;
+    }
+</style>
 <div class="passport-signup-container seller_regbox">
     <div class="panel panel-default signup-panel clearfix">
 
-        <div class="panel-body panel-rt pull-right">
+        <div class="panel-body">
 
             <form id="companyInfo_form" action="<{link app=seller ctl=site_passport act=entry}>" class="form-horizontal companyInfo_form" method="post" data-module="validator">
                 <h3><{$pageSet.companyType}>  <small> <{$pageSet.label}></small></h3>
@@ -15,10 +62,9 @@
                 <div class="form-group">
                     <label class="col-xs-2"></label>
                     <div class="col-xs-4">
-                        <{if $pageIndex neq '1'}><a type="submit"
-                                                    href="<{link app=seller ctl=site_passport act=entry args0=$pageIndex args1=up}>"
-                                                    data-loading-text="正在提交..." class="btn btn-default">返回上一步</a><{/if}>
-                        <button type="submit" data-loading-text="正在提交..." class="btn btn-danger" style="margin-left: 20px;">保存并进行下一步</button>
+                        <a href="<{link app=seller ctl=site_passport act=entry args0=$pageIndex args1=up}>"
+                        <{if $pageIndex neq '1'}> disabled <{/if}>  class="btn btn-default">上一页</a>
+                        <a class="btn btn-danger" style="margin-left: 20px;">下一页</a>
                     </div>
                 </div>
 

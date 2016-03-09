@@ -15,7 +15,7 @@
                     </dd>
                 </dl>
             </div>
-            <form id="companyInfo_form" action="<{link app=seller ctl=site_passport act=brand_aptitude}>?type=<{$identity}>" class="form-horizontal companyInfo_form" method="post" data-module="validator">
+            <form id="companyInfo_form" action="<{link app=seller ctl=site_passport act=brand_aptitude}>?identity=<{$identity}>" class="form-horizontal companyInfo_form" method="post" data-module="validator">
                 <h3><{$pageSet.companyType}>  <small> <{$pageSet.label}></small></h3>
                 <input type="hidden" name="typeId" value="<{$identity}>"/>
                 <input type='hidden' name='pageIndex' value='<{$pageIndex}>'/>
