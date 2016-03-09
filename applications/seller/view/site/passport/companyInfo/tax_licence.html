@@ -6,8 +6,8 @@
 			<span class="text-danger">*</span>税务登记证号：
 		</label>
 		<div class="col-xs-4">
-			<input type="text" name="tax_licence[value][code]" value="<{$extra.tax_licence.value.code}>" class="form-control" required="true">
-			<span class="msgTip" data-message="error"></span>
+			<input type="text" name="tax_licence[value][code]" value="<{$extra.tax_licence.value.code}>" class="form-control" required="true" format="digits">
+			<span class="msgTip" data-message="format">格式不正确</span>
 		</div>
 	</div>
 	<div class="form-group">
@@ -15,8 +15,8 @@
 			<span class="text-danger">*</span>一般纳税人资格认定编号：
 		</label>
 		<div class="col-xs-4">
-			<input type="text" name="tax_licence[value][num]" value="<{$extra.tax_licence.value.num}>" class="form-control" required="true">
-			<span class="msgTip" data-message="error"></span>
+			<input type="text" name="tax_licence[value][num]" value="<{$extra.tax_licence.value.num}>" class="form-control" required="true" format="digits">
+			<span class="msgTip" data-message="format">格式不正确</span>
 		</div>
 	</div>
 	<div class="form-group">

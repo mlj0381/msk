@@ -6,8 +6,11 @@
 			<span class="text-danger">*</span>总资产：
 		</label>
 		<div class="col-xs-4">
-			<input type="text" value="<{$extra.factory.value.general}>" name="factory[value][general]" class="form-control" required="true" format="number">
-			<span class="msgTip" data-message="number"></span>
+			<div class="input-group form-item">
+				<input type="text" value="<{$extra.factory.value.general}>" name="factory[value][general]" class="form-control" required="true" format="positive">
+				<span class="input-group-addon">万</span>
+			</div>
+			<span class="msgTip" data-message="format">请输入正数</span>
 		</div>
 	</div>
 	<div class="form-group">
@@ -15,8 +18,11 @@
 			<span class="text-danger">*</span>占地面积：
 		</label>
 		<div class="col-xs-4">
-			<input type="text" value="<{$extra.factory.value.soil_area}>" name="factory[value][soil_area]" class="form-control" required="true">
-			<span class="msgTip" data-message="error"></span>
+			<div class="input-group form-item">
+				<input type="text" value="<{$extra.factory.value.soil_area}>" name="factory[value][soil_area]" class="form-control" required="true" format="positive">
+				<span class="input-group-addon">m²</span>
+			</div>
+			<span class="msgTip" data-message="format">请输入正数</span>
 		</div>
 	</div>
 	<div class="form-group">
@@ -24,8 +30,11 @@
 			<span class="text-danger">*</span>厂房面积：
 		</label>
 		<div class="col-xs-4">
-			<input type="text" value="<{$extra.factory.value.plant_area}>" name="factory[value][plant_area]" class="form-control" required="true">
-			<span class="msgTip" data-message="error"></span>
+			<div class="input-group form-item">
+				<input type="text" value="<{$extra.factory.value.plant_area}>" name="factory[value][plant_area]" class="form-control" required="true" format="positive">
+				<span class="input-group-addon">m²</span>
+			</div>
+			<span class="msgTip" data-message="format">请输入正数</span>
 		</div>
 	</div>
 	<div class="form-group">

@@ -20,6 +20,9 @@ $.validator.regex = {
 	'tel'       : /^(\d{3,4}-?)?\d{7,9}$/g,
 	'time'		:  /^(([01]?[0-9])|(2[0-3])):[0-5]?[0-9]$/,
 	'password'	: /^[a-zA-Z0-9_]{6,20}$/,
+	'brankcard'	: /^(\d{16}|\d{19})$/,
+	'positive'	: /^[0-9]+(\.\d+)?$/, //正数
+	'age'		: /^([1-9]|[1-9][0-9]|1[01][0-9])$/,
 	'ip'        : /^(([1-9]|([1-9]\d)|(1\d\d)|(2([0-4]\d|5[0-5])))\.)(([1-9]|([1-9]\d)|(1\d\d)|(2([0-4]\d|5[0-5])))\.){2}([1-9]|([1-9]\d)|(1\d\d)|(2([0-4]\d|5[0-5])))$/
 };
 $.validator.messages = {
@@ -29,8 +32,10 @@ $.validator.messages = {
 	url: "请输入有效的网址",
 	date: "请输入有效的日期",
 	dateISO: "请输入有效的日期 (YYYY-MM-DD)",
+	age:"请输入0-120之间的数字",
 	number: "请输入正确的数字",
-	digits: "只可输入数字",
+	digits: "只可输正整数",
+	positive: "只可输入正数",
 	creditcard: "请输入有效的信用卡号码",
 	equalTo: "你的输入不相同",
 	extension: "请输入有效的后缀",
@@ -43,6 +48,7 @@ $.validator.messages = {
 	accept : $.validator.format("仅支持{0}文件！"),
 	size : $.validator.format("文件大小控制在{0}以内！"),
 	username : $.validator.format("文件大小控制在{0}以内！"),
+	brankcard: $.validator.format("请填写正确的银行卡号！")
 	//format : $.validator.format("格式{0}错误！")
 };
  $.extend(true, $.validator.methods, {

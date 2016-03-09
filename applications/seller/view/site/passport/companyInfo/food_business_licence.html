@@ -7,7 +7,7 @@
 			许可证编号：
 		</label>
 		<div class="col-xs-4">
-			<input type="text" value="<{$extra.food_business_licenc.value.code}>" name="food_business_licenc[value][code]" class="form-control">
+			<input type="text" value="<{$extra.food_business_licenc.value.code}>" name="food_business_licenc[value][code]" class="form-control" >
 		</div>
 	</div>
 	<div class="form-group">
@@ -15,8 +15,8 @@
 			有效期限：
 		</label>
 		<div class="col-xs-4">
-			<input type="text" name="food_business_licenc[value][date_start]" value="<{$extra.food_business_licenc.value.date_start}>" class="form-control" style="width:175px; display: inline-block;"> 至
-			<input type="text" name="food_business_licenc[value][date_end]" value="<{$extra.food_business_licenc.value.date_end}>"  class="form-control"  style="width:175px; display: inline-block;">
+			<input type="text" name="food_business_licenc[value][date_start]" value="<{$extra.food_business_licenc.value.date_start}>" class="form-control" style="width:46%; display: inline-block;" placeholder="2010-10-20"> 至
+			<input type="text" name="food_business_licenc[value][date_end]" value="<{$extra.food_business_licenc.value.date_end}>"  class="form-control"  style="width:46%; display: inline-block;" placeholder="2010-10-20">
 		</div>
 	</div>
 	<div class="form-group">
@@ -24,13 +24,8 @@
 			许可证电子版：
 		</label>
 		<div class="col-xs-4">
-			<div class="filebox">
-	            <input type="hidden"  value="<{$extra.food_business_licenc.attach}>" name="food_business_licenc[attach]"/>
-	            <input type="file" data-url="<{link app=image ctl=site_upload act=index}>" accept="image/*" class="file_input" />
-	            <div class="showImg">
-	                 <img src="<{if $extra.food_business_licenc.attach eq ''}><{$base_url}>/themes/pc/default/statics/images/file_add.jpg<{else}><{$extra.food_business_licenc.attach|storager:'xs'}><{/if}>">
-	            </div>
-	        </div>
+			<{input type="imageupload" tag="图片上传" name="food_business_licenc[attach]" value=$extra.food_business_licenc.attach accept="jpg|png|gif"}>   
+            <span class="msgTip" data-message="error">不能为空</span>
 		</div>
 	</div>
 </div>
