@@ -1,70 +1,15 @@
-<div class="reg_progress clearfix">
-    <ol>
-        <li>
-            <span><i>1</i>卖家账号填写</span>
-        </li>
-        <li>
-            <span><i>2</i>企业类型选择</span>
-        </li>
-        <{if $pageIndex neq '9'}>
-        <li class="active">
-            <span><i>3</i>公司信息提交</span>
-        </li>
-        <li>
-            <span><i>4</i>店铺信息提交</span>
-        </li>
-        <{else}>
-        <li >
-            <span><i>3</i>公司信息提交</span>
-        </li>
-        <li class="active">
-            <span ><i>4</i>店铺信息提交</span>
-        </li>
-        <{/if}>
-        <li>
-            <span><i>5</i>完成入驻</span>
-        </li>
-    </ol>
-</div>
-<a href="<{link app=seller ctl=site_passport act=brand_aptitude}>">添加品牌资质</a>
 <div class="passport-signup-container seller_regbox">
     <div class="panel panel-default signup-panel clearfix">
-        <div class="panel-lt panel-menu pull-left">
 
-            <h4 class="menu-root">公司信息提交(<{$pageSet.identityLabel}> )</h4>
-            <ul class="menu-list">
-                <{foreach from=$leftMenu item=items}>
-                <li>
-                    <p><{$items.title}></p>
-                    <ul>
-                        <{foreach from=$items.setting.label key=key item=item}>  <!-- active 被选中-->
-                        <li class="<{if $menu.storeType eq $items.setting.type[$key] && in_array($menu.activeMenu, $items.setting.page)}> active <{/if}>">
-                            <i class="icon-caret-right "></i><{$item}>
-                        </li>
-                        <{/foreach}>
-                    </ul>
-                </li>
-                <{/foreach}>
-            </ul>
-        </div>
         <div class="panel-body panel-rt pull-right">
-            <div class="settled_warning">
-                <dl class="clearfix">
-                    <dt><i class="icon-warning-sign"></i></dt>
-                    <dd>
-                        <p>1.信息提交前，请务必先了解<a href="">《美侍客招商标准》</a>;</p>
-                        <p>2.公司类需填项较多，建议先查看<a href="">《公司信息注意事项》</a>再填写;</p>
-                        <p>3.以下所需要上传的电子版资质仅支持JPG、GIF、PNG格式图片，大小不超过1M,且必须加盖企业公章;</p>
-                    </dd>
-                </dl>
-            </div>
+
             <form id="companyInfo_form" action="<{link app=seller ctl=site_passport act=entry}>" class="form-horizontal companyInfo_form" method="post" data-module="validator">
                 <h3><{$pageSet.companyType}>  <small> <{$pageSet.label}></small></h3>
                 <input type="hidden" name="typeId" value="<{$pageSet.typeId}>"/>
                 <input type='hidden' name='pageIndex' value='<{$pageIndex}>'/>
                 <!-- 三证合一 -->
                 <{foreach from=$pageSet.page key=key item=item}>
-                    <{include file="site/passport/companyInfo/{$item}.html" extra=$info.company_extra}>
+                <{include file="site/passport/companyInfo/{$item}.html" extra=$info.company_extra}>
                 <{/foreach}>
                 <hr>
                 <div class="form-group">
@@ -83,9 +28,9 @@
 </div>
 
 <script type="text/javascript">
-/**
- *动态添加多项,例如：检测设备，电商团队成员，企业荣誉，车间概况
- */
+    /**
+     *动态添加多项,例如：检测设备，电商团队成员，企业荣誉，车间概况
+     */
     var itemLength = function(obj){
         var items = obj.find('div[data-items="itemList"]');
         var item = items.find('div[data-item="creat-item"]:first');
@@ -110,11 +55,11 @@
             itemLen++;
             $.VMC.init();
         })
-        
+
         //删除
 
         if(itemLen <= 1){
-           item.find($('.delBtn')).hide();
+            item.find($('.delBtn')).hide();
         }
         itemLength(_this);
         _this.on('click','.delBtn',function(){
@@ -135,15 +80,15 @@
                     alert('操作失败');
                 }
             });
-        });    
+        });
     });
 
 
 
-/**
- * 表单验证
- */
- 
+    /**
+     * 表单验证
+     */
+
     void function (signup_form) {
         var _alert_error = function (msg) {
             signup_form.find('.alert-error').remove();
@@ -170,13 +115,13 @@
 
 
 
-$('#companyInfo_form .business').change(function(){
-    var typeId = $('#companyInfo_form input[name="typeId"]').val().trim();
-    var url = '<{link app=seller ctl=site_passport act=check_company}>';
-    $.post(url, {business : $(this).val().trim(), business_type : 0, type_id : typeId}, function(re){
-        console.log(re);
-    })
-});
+    $('#companyInfo_form .business').change(function(){
+        var typeId = $('#companyInfo_form input[name="typeId"]').val().trim();
+        var url = '<{link app=seller ctl=site_passport act=check_company}>';
+        $.post(url, {business : $(this).val().trim(), business_type : 0, type_id : typeId}, function(re){
+            console.log(re);
+        })
+    });
 
 
 </script>

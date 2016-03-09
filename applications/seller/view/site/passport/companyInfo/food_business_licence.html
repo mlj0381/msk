@@ -1,4 +1,4 @@
-<input type="hidden" name="food_business_licenc[content_id]"  value="<{$extra.food_business_licenc.content_id}>" class="form-control">
+<input type="hidden" name="food_business_licence[content_id]"  value="<{$extra.food_business_licence.content_id}>" class="form-control">
 <div id="food_business_licence">
 	<h4>食品经营许可证</h4>
 	<div class="form-group">
@@ -24,7 +24,7 @@
 		</label>
 		<div class="col-xs-4">
 			<div class="filebox">
-	            <input type="hidden"  value="<{$extra.food_business_licenc.attach}>" name="food_business_licenc[attach]"/>
+	            <input type="hidden"  value="<{$extra.food_business_licence.attach}>" name="food_business_licence[attach]"/>
 	            <input type="file" data-url="<{link app=image ctl=site_upload act=index}>" accept="image/*" class="file_input" />
 	            <div class="showImg">
 	                 <img src="<{if $extra.food_business_licenc.attach eq ''}><{$base_url}>/themes/pc/default/statics/images/file_add.jpg<{else}><{$extra.food_business_licenc.attach|storager:'xs'}><{/if}>">
