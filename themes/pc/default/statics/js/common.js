@@ -7,12 +7,12 @@ $(function() {
     var webMenu = $('.website_menu')[0];
     var timer = null;
     webMenu.onmouseover = siteNav.onmouseover = function() {
-        clearTimeout(timer);
+        clearInterval(timer);
         webMenu.style.display = "block";
         $('.site_nav a i').attr('class', 'icon-angle-up');
     }
     webMenu.onmouseout = siteNav.onmouseout = function() {
-        timer = setTimeout(hide, 100);
+        timer = setInterval(hide, 100);
 
         function hide() {
             webMenu.style.display = "none";

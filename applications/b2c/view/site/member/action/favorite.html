@@ -305,7 +305,10 @@
             $.getJSON(url + '?product_id=' + goods_id + '&store_id=' + store_id + '&num=1', function(re){
                 if(re.error){
                     alert('加入失败');
+                }else if(re.success){
+                    //alert('成功加入购车');
                 }
+
             });
         });
     });
