@@ -104,10 +104,12 @@ class seller_ctl_site_passport extends seller_frontpage
     //添加品牌资质
     public function brand_aptitude($step = 0, $type)
     {
+        $this->verify();
         $params = $this->_request->get_get();
-        $identity = $params['type'];
+        $identity = $params['identity'];
         $business_type = $params['card'] ?: 'new';
         $tpl = 'brand_companyType';
+        $this->passport_obj->entryType = 'brand';
         if($_POST)
         {
             $params = utils::_filter_input($_POST);
@@ -120,7 +122,7 @@ class seller_ctl_site_passport extends seller_frontpage
         {
             $columns = $this->app->getConf('seller_entry');
             $countPage = count($columns[$identity]);
-            $step = $params['pageIndex'] ? $params['pageIndex'] : $step;
+            $step = $params['pageIndex'] ?: $step;
             $step = $type == 'up' ? $step - 1 : $step + 1;
             $step <= 1 && $step = 1;
             $step > $countPage && $step = $countPage + 1;
@@ -129,12 +131,14 @@ class seller_ctl_site_passport extends seller_frontpage
             $selfPage['page'] = array_flip($selfPage['page']);
             $this->pagedata['pageSet'] = $selfPage;
             $this->pagedata['identity'] = $identity;
-            $this->pagedata['info'] = $this->passport_obj->edit_info($selfPage, $this->seller['seller_id'], $identity);
+            if($params['type'] != 'add')
+                $this->pagedata['info'] = $this->passport_obj->edit_info($selfPage, $this->seller['seller_id'], $identity);
             $this->pagedata['pageIndex'] = $step;
             $this->pagedata['info']['company_extra']['page_setting'] = $this->passport_obj->columns();
             $tpl = 'brand_companyInfo';
         }
         $this->pagedata['ident'] = $this->seller['ident'];
+        $this->pagedata['type'] = $params['type'];
         $this->page('site/passport/' . $tpl . '.html');
     }
 
