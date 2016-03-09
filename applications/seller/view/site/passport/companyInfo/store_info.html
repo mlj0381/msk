@@ -35,8 +35,7 @@
         <div class="col-xs-4">
             <button type="button" class="btn btn-md btn-default brand_add_btn" data-toggle="modal" data-target=".brand_add_modal" href="<{link app=seller ctl=site_passport act=brand_add}>"><i class="icon-plus"></i> 添加品牌</button>
             <div class="brand_list" data-list="brand_list">
-                <span class="brand_item">GUCCI <i class="icon-remove"></i></span>
-                <span class="brand_item">GUCCI <i class="icon-remove"></i></span>
+
             </div>
         </div>
     </div>
@@ -97,13 +96,45 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                    <button type="button" class="btn btn-primary" data-save="category_save">保存品牌</button>
+                    <button type="button" class="btn btn-primary" data-save="category_save">保存类目</button>
                 </div>
             </div>
         </div>
     </div>
 
-
-
-
 </div>
+
+
+<script type="text/javascript">
+
+    $(function(){
+
+        //创建品牌
+        $('#brand_add_modal').on('click','.brand_save_btn',function(){
+            var brand = $.trim($('.brand_name').val());
+            var brand_html ='<span class="brand_item">'+brand+' <i class="icon-remove"></i></span>';
+            if(brand != '' && brand != null && brand != undefined){
+                $('.brand_list').append(brand_html);
+            }
+            $("#brand_add_modal").modal('hide');
+        })
+
+        //移除品牌
+        $('.brand_list').on('click','.icon-remove',function(){
+            var cfm = confirm("您真的要删除吗？");
+            if(cfm==true){
+                $(this).parent('.brand_item').remove();
+            }  
+        });
+    
+        $('#brand_add_modal').on('shown.bs.modal', function () {
+            $.VMC.init();  //重新绑定图片上传事件
+        });
+        $("#brand_add_modal").on("hidden.bs.modal", function() {  
+            $(this).removeData("bs.modal");  //关闭时清空数据
+        }); 
+
+        $('[data-toggle="tooltip"]').tooltip();
+    })
+
+</script>

@@ -1574,15 +1574,10 @@ ol {
 .buyer_container .seller_regbox .companyInfo_form #store_info .brand_list .brand_item i {
   cursor: pointer;
 }
-.buyer_container .seller_regbox .companyInfo_form #store_info .brand_add_modal div[data-module="brand_add"] {
-  position: relative;
+.buyer_container .seller_regbox .companyInfo_form #store_info .brand_add_modal div[data-module="brand_add"] button.btn-link {
+  margin-bottom: 15px;
 }
-.buyer_container .seller_regbox .companyInfo_form #store_info .brand_add_modal div[data-module="brand_add"] a[data-link="write_apt"] {
-  position: absolute;
-  right: -150px;
-  top: 10px;
-}
-.buyer_container .seller_regbox .companyInfo_form #store_info .brand_add_modal div[data-module="brand_add"] a[data-link="write_apt"]:hover {
+.buyer_container .seller_regbox .companyInfo_form #store_info .brand_add_modal div[data-module="brand_add"] button.btn-link:hover {
   color: #2e6da4;
   text-decoration: underline;
 }
@@ -2016,7 +2011,7 @@ ol {
   height: 40px;
 }
 .buyer_container .addgoods_form .spec_add_box .spec_add_table td div.input-group .spec-t {
-  height: 40px;
+  height: 30px;
   border: 1px solid #ccc;
 }
 .buyer_container .addgoods_form .spec_add_box .spec_add_table td div.input-group .spec-t:focus {

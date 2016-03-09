@@ -11,6 +11,16 @@
 <link rel="stylesheet" href="statics/header.css">
 <link rel="stylesheet" href="statics/style.css">
 <link rel="stylesheet" href="statics/font-awesome.min.css">
+</head>
+<body>
+<{WIDGET_B2C_INDEX_HEADER_BASIC keywords=$serach_keywords type=$serach_type}>
+<{*require file="public/nav.html"*}>
+<{WIDGET_B2C_PUBLIC_NAV}>
+<div class="container main-container">
+    <{MAIN}>
+</div>
+<{WIDGET_B2C_GOODS_INDEX_FOOTER}>
+<{SYSTEM_FOOTER}>
 <script type="text/javascript" src="statics/js/common.js"></script>
 <script type="text/javascript" src="statics/js/jquery.lazyload.js"></script>
 <script type="text/javascript">
@@ -26,15 +36,5 @@
 		$('.category-container').css('display','none')
 	})
 </script>
-</head>
-<body>
-<{WIDGET_B2C_INDEX_HEADER_BASIC keywords=$serach_keywords type=$serach_type}>
-<{*require file="public/nav.html"*}>
-<{WIDGET_B2C_PUBLIC_NAV}>
-<div class="container main-container">
-    <{MAIN}>
-</div>
-<{WIDGET_B2C_GOODS_INDEX_FOOTER}>
-<{SYSTEM_FOOTER}>
 </body>
 </html>
