@@ -52,20 +52,47 @@ class seller_ctl_site_seller extends seller_frontpage {
     }
 
     //商户信息
-    public function businessInfo($step = 1, $storeType = 1) {
+    public function businessInfo($step = 1, $storeType = 1, $index = 1)
+    {
         !is_numeric($step) && $step = 1;
         $companyInfo = $this->app->getConf('seller_entry');
-        $step == 1 && $licence_type = $this->_request->get_get('card') ?: $this->passport_obj->new_or_old($this->seller['seller_id']);
+        $step == 1 && $licence_type = $this->_request->get_get('card') ?:
+            $this->passport_obj->new_or_old($this->seller['seller_id'], $storeType, $index);
+
         $columns = $this->passport_obj->page_setting($step, $licence_type, $storeType);
         if(!$this->seller['ident'] & 1) unset($companyInfo[1]);
         if(!$this->seller['ident'] & 2) unset($companyInfo[2]);
         if(!$this->seller['ident'] & 4) unset($companyInfo[4]);
         unset($companyInfo['comm']);
+        //1为工厂店铺  只有一个
+        $mdl_company_seller = app::get('base')->model('company_seller');
+        $identity = array(2, 4);
+        foreach($identity as $value)
+        {
+            $company_sellers[$value] = $mdl_company_seller->getList('company_id',
+                array('uid' => $this->seller['seller_id'], 'identity' => $value, 'from' => 1));
+        }
+        //1 为工厂店铺 删除多余的营业执照字段 old or new
+        if($step == 1) $this->passport_obj->unsetColumns($licence_type, $companyInfo[$storeType]['pageSet'][1]);
+        foreach($companyInfo as $key => $value)
+        {
+            $companyInfo[$key] = array($value);
+        }
+        foreach($company_sellers as $key => $company_seller)
+        {
+            foreach($company_seller as $k => $v)
+            {
+                $company_columns[$key][$k] = $companyInfo[$key][0];
+            }
+            $companyInfo[$key] = $company_columns[$key] ?: $companyInfo[$key];
+        }
         $this->pagedata['company'] = $companyInfo;
-        $this->pagedata['info'] = $this->passport_obj->edit_info($columns, $this->seller['seller_id'], $storeType);
+        $this->passport_obj->entryType = 'centre';
+        $this->pagedata['info'] = $this->passport_obj->edit_info($columns, $this->seller['seller_id'], $storeType, $index);
         $this->pagedata['info']['company_extra']['type'] = 'center';
         $this->pagedata['info']['company_extra']['page_setting'] = $this->passport_obj->columns();
         $this->pagedata['activePage'] = $step;
+        $this->pagedata['company_index'] = $index - 1;
         $this->pagedata['storeType'] = $storeType;
         $this->menuSetting = 'account';
         $this->output();
