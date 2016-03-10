@@ -50,6 +50,12 @@ class site_theme_base
     } //End Function
     public function get_default()
     {
+        if($_COOKIE['CURRENT_THEME']){
+            $current_theme = utils::decrypt($_COOKIE['CURRENT_THEME']);
+            if($current_theme){
+                return $current_theme;
+            }
+        }
         return app::get('site')->getConf('current_theme');
     } //End Function
     public function update_theme($aData)

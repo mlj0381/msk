@@ -12,48 +12,65 @@
 
 
 $db['goods_type'] = array(
-  'columns' => array(
-    'type_id' => array(
-      'type' => 'number',
-      'required' => true,
-      'pkey' => true,
-      'extra' => 'auto_increment',
-      'label' => ('类型序号'),
-      'width' => 110,
-      'in_list' => false,
+    'columns' => array(
+        'type_id' => array(
+            'type' => 'number',
+            'required' => true,
+            'pkey' => true,
+            'extra' => 'auto_increment',
+            'label' => ('类型序号'),
+            'width' => 110,
+            'in_list' => false,
+        ),
+        'name' => array(
+            'type' => 'varchar(100)',
+            'required' => true,
+            'default' => '',
+            'label' => ('类型名称'),
+            'is_title' => true,
+            'width' => 150,
+            'editable' => true,
+            'in_list' => true,
+            'default_in_list' => true,
+        ),
+        'cat' => array(
+            'type' => 'number',
+            'default' => '0',
+            'label' => ('所属类目'),
+            'is_title' => true,
+            'width' => 150,
+            'editable' => true,
+            'in_list' => true,
+            'default_in_list' => true,
+        ),
+        'params' => array(
+            'type' => 'serialize',
+            'comment' => ('参数表结构(序列化) array(参数组名=>array(参数名1=>别名1|别名2,参数名2=>别名1|别名2))'),
+        ),
+        'setting' => array(
+            'type' => 'serialize',
+            'comment' => ('类型设置'),
+            'width' => 110,
+            'label' => ('类型设置'),
+        ),
+        'belong_type' => array(
+            'type' => 'number',
+            'default' => '0',
+            'label' => '所属类型',
+            'comment' => '所属类型'  // 0、扩展属性 1、规格
+        ),
+        'disabled' => array(
+            'type' => 'bool',
+            'default' => 'false',
+        ),
+
     ),
-    'name' => array(
-      'type' => 'varchar(100)',
-      'required' => true,
-      'default' => '',
-      'label' => ('类型名称'),
-      'is_title' => true,
-      'width' => 150,
-      'editable' => true,
-      'in_list' => true,
-      'default_in_list' => true,
+    'index' => array(
+        'ind_disabled' => array(
+            'columns' => array(
+                0 => 'disabled',
+            ),
+        ),
     ),
-    'params' => array(
-      'type' => 'serialize',
-      'comment' => ('参数表结构(序列化) array(参数组名=>array(参数名1=>别名1|别名2,参数名2=>别名1|别名2))'),
-    ),
-    'setting' => array(
-      'type' => 'serialize',
-      'comment' => ('类型设置'),
-      'width' => 110,
-      'label' => ('类型设置'),
-    ),
-    'disabled' => array(
-      'type' => 'bool',
-      'default' => 'false',
-    ),
-  ),
-  'index' => array(
-    'ind_disabled' => array(
-      'columns' => array(
-        0 => 'disabled',
-      ),
-    ),
-  ),
-  'comment' => ('商品类型表'),
+    'comment' => ('商品类型表'),
 );

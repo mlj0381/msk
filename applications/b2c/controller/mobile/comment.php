@@ -47,12 +47,17 @@ class b2c_ctl_mobile_comment extends b2c_mfrontpage
         $this->member = $this->get_current_member();
         $mdl_mcomment = app::get('b2c')->model('member_comment');
         $new_comment_id = $mdl_mcomment->apply_id($type);
-
+        $redirect = $this->gen_url(array(
+            'app' => 'b2c',
+            'ctl' => 'mobile_comment',
+            'act' => 'form',
+            'args'=>array($_POST['order_id'])
+        ));
         $fipt_idx = -1;
         $max_conf = $this->app->getConf('comment_image_size').'M';
         $max_size = utils::parse_str_size($max_conf); //byte
         if (!$_POST) {
-            $this->end(false, '缺少参数！', 'json_response');
+            $this->splash('error',$redirect ,'缺少参数！');
         }
         //新评价
         if ($comment_data = $_POST[$type]) {
@@ -86,42 +91,27 @@ class b2c_ctl_mobile_comment extends b2c_mfrontpage
                     );
                 }
                 //晒一晒处理
-                $image_upload_arr = array(
-                    'name' => $_FILES[$type]['name'][$product_id],
-                    'tmp_name' => $_FILES[$type]['tmp_name'][$product_id],
-                    'error' => $_FILES[$type]['error'][$product_id],
-                    'size' => $_FILES[$type]['size'][$product_id],
-                    'type' => $_FILES[$type]['type'][$product_id],
-                );
-                $ready_upload = array();
-                $success_upload_images = array();
+                $image_upload_arr = $comment_data['image'][$product_id];
                 //图片上传验证
-                foreach ($image_upload_arr['tmp_name'] as $i => $v) {
-                    $fipt_idx++;
-                    if (!isset($v) || empty($v)) {
+                foreach ($image_upload_arr as $image_base64) {
+                    if (preg_match('/^(data:\s*image\/(\w+);base64,)/', $image_base64, $result)) {
+                        $type = $result[2];
+                        $ready_tmp_file = tempnam(TMP_DIR, $image_name = 'avatar.'.$type);
+                        file_put_contents($ready_tmp_file, base64_decode(str_replace($result[1], '', $image_base64)));
+                    }else{
                         continue;
                     }
-                    $size = $image_upload_arr['size'][$i];
-                    if (isset($image_upload_arr['error'][$i]) && !empty($image_upload_arr['error'][$i]) && $image_upload_arr['error'][$i] > 0) {
-                        $this->_upload_error($fipt_idx, '文件上传失败!'.$image_upload_arr['error'][$i]);
-                    }
-                    if ($size > $max_size) {
-                        $this->_upload_error($fipt_idx, '文件大小不能超过'.$max_conf);
-                    }
-                    list($w, $h, $t) = getimagesize($v);
+                    $size = filesize($ready_tmp_file);
+                    list($w, $h, $t) = getimagesize($ready_tmp_file);
                     if (!in_array($t, array(1, 2, 3, 6))) {
                         //1 = GIF,2 = JPG，3 = PNG,6 = BMP
-                        $this->_upload_error($fipt_idx, '文件类型错误');
+                        $this->splash('error',$redirect ,'文件上传失败.类型错误');
                     }
-                    $ready_upload[] = array(
-                        'tmp' => $v,
-                        'name' => $image_upload_arr['name'][$i],
-                    );
+                    $ready_upload[] = $ready_tmp_file;
                 }
                 $mdl_image = app::get('image')->model('image');
                 foreach ($ready_upload as $k => $item) {
-                    $image_id = $mdl_image->store($item['tmp'], null, null, $item['name']);//保存图片
-                    $mdl_image->rebuild($image_id, array('L', 'XS'));//缩略图片
+                    $image_id = $mdl_image->store($item, null, null, $item['name']);//保存图片
                     $new_comment['images'][] = array(
                          'target_type' => 'comment',
                          'image_id' => $image_id,
@@ -131,7 +121,7 @@ class b2c_ctl_mobile_comment extends b2c_mfrontpage
                 }
 
                 if (!$mdl_mcomment->save($new_comment)) {
-                    $this->_send('error', '提交失败!');
+                    $this->splash('error',$redirect ,'提交失败');
                 } else {
                     //商品评价计数
                     vmc::singleton('b2c_openapi_goods', false)->counter(array(
@@ -162,7 +152,7 @@ class b2c_ctl_mobile_comment extends b2c_mfrontpage
                 }
                 $new_reply['title'] = substr(preg_replace('/\s/','',$new_reply['content']),0,100).'...';
                 if (!$mdl_mcomment->save($new_reply)) {
-                    $this->_send('error', '追加评价失败');
+                    $this->splash('error',$redirect ,'追加评论失败');
                 } else {
                     //更新最后回复时间
                     $mdl_mcomment->update(array('lastreply'=>time()),array('comment_id'=>$key));
@@ -175,12 +165,12 @@ class b2c_ctl_mobile_comment extends b2c_mfrontpage
                 }
             }
         }
-
-        $this->_send('success', '提交成功');
+        $this->splash('success',$redirect ,'提交成功！');
     }
 
     public function show($goods_id, $page = 1)
     {
+
         $this->_response->set_header('Cache-Control', 'no-store');
         $mdl_mcomment = app::get('b2c')->model('member_comment');
         $limit = 20;
@@ -192,6 +182,7 @@ class b2c_ctl_mobile_comment extends b2c_mfrontpage
         $count = $mdl_mcomment->count($filter);
         $this->pagedata['comment_list'] = $comment_list[$goods_id];
         $this->pagedata['comment_count'] = $count;
+        $this->title='商品评价'."($count)";
         $this->pagedata['pager'] = array(
             'total' => ceil($count / $limit) ,
             'current' => $page,
@@ -211,34 +202,12 @@ class b2c_ctl_mobile_comment extends b2c_mfrontpage
             $this->display('site/comment/list.html');
         } else {
             //单独展示
-            $goods_detail = vmc::singleton('b2c_goods_stage')->detail($goods_id);
-            $this->pagedata['goods_detail'] = $goods_detail;
+            // $goods_detail = vmc::singleton('b2c_goods_stage')->detail($goods_id);
+            // $this->pagedata['goods_detail'] = $goods_detail;
             $this->set_tmpl('comment_show');
             $this->page('mobile/comment/show.html');
         }
     }
 
-    private function _send($result, $msg)
-    {
-        if ($result == 'success') {
-            echo json_encode(array(
-                'success' => '成功',
-                'data' => $msg,
-            ));
-        } else {
-            echo json_encode(array(
-                'error' => $msg,
-                'data' => '',
-            ));
-        }
-        exit;
-    }
-    private function _upload_error($index, $error)
-    {
-        echo json_encode(array(
-            'fipt_idx' => $index,
-            'error' => $error,
-        ));
-        exit;
-    }
+
 }

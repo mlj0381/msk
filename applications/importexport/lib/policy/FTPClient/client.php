@@ -1,6 +1,6 @@
 <?php
 
-class importexport_policy_ftpclient_client 
+class importexport_policy_FTPClient_client 
 {
 	/** @var resource */
 	protected $timeout = 90;
@@ -47,7 +47,7 @@ class importexport_policy_ftpclient_client
      *
 	 * @param string $username 用户名
 	 * @param string $password 密码
-	 * @return bool 
+	 * @return bool
 	 */
 	public function login($username, $password)
 	{
@@ -107,7 +107,7 @@ class importexport_policy_ftpclient_client
 	}
 
 	/**
-	 * 获取当前路径地址 
+	 * 获取当前路径地址
      *
 	 * @return string|bool If error, returns FALSE.
 	 */
@@ -185,7 +185,7 @@ class importexport_policy_ftpclient_client
 	}
 
 	/**
-	 * 删除FTP服务器文件 
+	 * 删除FTP服务器文件
      *
 	 * @param string $filename 文件名称
      *
@@ -384,7 +384,7 @@ class importexport_policy_ftpclient_client
 
         $modes = array(
             'MODE_ASCII'  => 'A',
-            'MODE_BINARY' => 'I', 
+            'MODE_BINARY' => 'I',
         );
 
 		$localFilePointer = fopen($localFilename, 'rb');
@@ -515,7 +515,7 @@ class importexport_policy_ftpclient_client
 
             //如果是SSH连接 则跳出
             if( stripos($line,'SSH') !== false ){
-                break; 
+                break;
             }
 
 			if ( preg_match('/^[0-9]{3} /', $line) )

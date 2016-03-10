@@ -29,33 +29,7 @@ class b2c_tasks_order_aftercreate extends base_task_abstract implements base_int
             'member_id' => $order_sdf['member_id'],
         ));
 
-        /* 订单金额为0 **/
-        if ($order_sdf['order_total'] == '0') {
-            // 生成支付账单
-            $obj_bill = vmc::singleton('ectools_bill');
-            $sdf = array(
-                'bill_type' => 'payment',
-                'pay_object' => 'order',
-                'pay_mode' => (in_array($order_sdf['pay_app'], array(
-                    '-1',
-                    'cod',
-                    'offline',
-                )) ? 'offline' : 'online') ,
-                'order_id' => $order_sdf['order_id'],
-                'pay_app_id' => $order_sdf['pay_app'],
-                'pay_fee' => $order_sdf['cost_payment'],
-                'member_id' => $order_sdf['member_id'],
-                'status' => 'succ',
-                'money' => $order_sdf['order_total'],
-                'memo' => '订单0元时自动生成',
-            );
-            if (!$obj_bill->generate($sdf, $msg)) {
-                //TODO 自动支付失败,
-                logger::error('订单0元时自动支付失败!'.$msg);
-
-                return;
-            }
-        }
+        
 
         return true;
     }

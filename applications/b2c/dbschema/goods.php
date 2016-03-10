@@ -42,8 +42,13 @@ $db['goods'] = array(
         ) ,
         'type_id' => array(
             'type' => 'table:goods_type',
-            'sdfpath' => 'type/type_id',
-            'label' => ('类型') ,
+            'required' => true,
+            'label' => ('扩展分类') ,
+        ) ,
+        'norms_id' => array(
+            'type' => 'table:goods_type',
+
+            'label' => ('所属规格') ,
         ) ,
         'cat_id' => array(
             'type' => 'table:goods_cat',
@@ -61,6 +66,26 @@ $db['goods'] = array(
             'type'=>'serialize',
             'label'=>'扩展分类'
         ),
+        'store_id' => array(
+            'type' => 'table:store@store',
+            'label' => ('所属店铺') ,
+            'default' => '0',
+            'required' => true,
+            'in_list' => true,
+        ) ,
+        'showcase' => array(
+            'type' => 'number',
+            'label' => ('所属专区') ,
+            'default' => '0',
+            'in_list' => true,
+        ) ,
+        'assign' => array(
+            'type' => "enum('Y', 'N')",
+            'label' => ('分配状态') ,
+            'required' => true,
+            'default' => 'Y',
+            'in_list' => true,
+        ) ,
         'brand_id' => array(
             'type' => 'table:brand',
             'sdfpath' => 'brand/brand_id',
@@ -199,6 +224,44 @@ $db['goods'] = array(
             'filtertype' => 'normal',
             'label' => ('周购买次数') ,
         ) ,
+        'seller_id' => array(
+            'type' => 'table:sellers@seller',
+            'default' => '0',
+            'label' => '所属商家',
+            'required' => true,
+            'default_in_list' => true,
+            'in_list' => true,
+        ),
+        'checkin' => array(
+           'type' => array(
+               '-1' => ('未通过'),
+               '0' => ('待核'),
+               '1' => ('正常'),
+               ),
+           'default' => '0',
+           'required' => true,
+           'label' => ('审核状态') ,
+           'filtertype' => 'yes',
+           'in_list' => true,
+           'default_in_list' => true,
+       ) ,
+       // by bibin 商品推荐 2015、11、16
+       'choose' => array(
+           'type' => 'number',
+           'in_list' => true,
+           'label' => ('商品推荐'),
+           'comment' => '商品推荐',
+       ),
+       //>>
+
+        'stock' => array(
+            'type' => 'region',
+            'in_list' => true,
+            'required' => true,
+            'label' => ('所属仓库'),
+            'comment' => '所属仓库',
+        ),
+
         'params' =>
             array (
               'type' => 'serialize',

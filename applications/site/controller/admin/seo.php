@@ -1,6 +1,6 @@
 <?php
 
-class site_ctl_admin_seo extends site_admin_controller
+class site_ctl_admin_seo extends desktop_controller
 {
 
     public function index(){

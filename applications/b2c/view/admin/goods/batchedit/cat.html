@@ -6,28 +6,10 @@
     <div class="modal-body">
             <textarea name="filter" style="display:none"><{$filter}></textarea>
             <input type="hidden" name="type" value="cat"/>
-            <select name="set[cat_id]" class="form-control">
-                <{foreach from=$cats item=cat}>
-                    <option data-step='<{$cat.step}>' value="<{$cat.cat_id}>" <{if $goods.category.cat_id == $cat.cat_id}>selected<{/if}>>
-                        <{$cat.cat_name}>
-                    </option>
-                <{/foreach}>
-            </select>
-
+            <{input type="category" name="set[cat_id]"}>
     </div>
     <div class="modal-footer">
             <button type="button" class="btn default" data-dismiss="modal">关闭</button>
             <button type="submit" class="btn blue">确定</button>
     </div>
 </form>
-
-<script charset="utf-8">
-    /*分类树逻辑*/
-    $.each($('select[name="set[cat]"] option'),function(i,n){
-        var step = $(n).attr('data-step');
-        while(step>1){
-            $(n).html('&nbsp&nbsp&nbsp&nbsp'+$(n).html());
-            step--;
-        }
-    });
-</script>

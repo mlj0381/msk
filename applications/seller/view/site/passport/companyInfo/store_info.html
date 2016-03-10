@@ -33,10 +33,9 @@
             <span class="text-danger">*</span>经营品牌：
         </label>
         <div class="col-xs-4">
-            <button type="button" class="btn btn-md btn-default" data-toggle="modal" data-target=".brand_add_modal"><i class="icon-plus"></i> 添加品牌</button>
+            <button type="button" class="btn btn-md btn-default brand_add_btn" data-toggle="modal" data-target=".brand_add_modal" href="<{link app=seller ctl=site_passport act=brand_add}>"><i class="icon-plus"></i> 添加品牌</button>
             <div class="brand_list" data-list="brand_list">
-                <span class="brand_item">GUCCI <i class="icon-remove"></i></span>
-                <span class="brand_item">GUCCI <i class="icon-remove"></i></span>
+
             </div>
         </div>
     </div>
@@ -49,81 +48,10 @@
         </div>
     </div>
     <!-- 品牌添加模态框 -->
-    <div class="modal fade brand_add_modal" tabindex="-1" role="dialog">
+    <div class="modal fade brand_add_modal" id="brand_add_modal" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" required="true"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">品牌添加</h4>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label class="control-label col-xs-2">
-                            <span class="text-danger">*</span>品牌名称
-                        </label>
-                        <div class="col-xs-5">
-                            <input type="text" required="required" class="form-control" placeholder="品牌全系统唯一，不能有重复">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label col-xs-2">
-                            <span class="text-danger">*</span>品牌logo
-                        </label>
-                        <div class="col-xs-5">
-                            <{input type="imageupload" tag="图片上传" name="brand[logo]" value=$extra.store.brand_logo required='true' accept="jpg|png|gif" }>
-                            <span class="msgTip" data-message="error">不能为空</span>
-                        </div>
 
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label col-xs-2">
-                            <span class="text-danger">*</span>品牌类型
-                        </label>
-                        <div class="col-xs-5">
-                            <select class="form-control" name="brand_type" required="true">
-                                <option value="1">自由品牌</option>
-                                <option value="2">代理品牌</option>
-                                <option value="3">OEM委托品牌</option>
-                            </select>
-                            <span class="msgTip" data-message="error">不能为空</span>
-                        </div>
-                    </div>
-                    <div class="form-group" data-module="brand_add">
-                        <label class="control-label col-xs-2">
-                            <span class="text-danger">*</span>品牌持有者
-                        </label>
-                        <div class="col-xs-5">
-                            <select class="form-control" required="true" name="brand_holder">
-                                <option value="1">公司名称一</option>
-                                <option value="2">公司名称二</option>
-                                <option value="3">新增一个</option>
-                            </select>
-                            <span class="msgTip" data-message="error">不能为空</span>
-                            <a href="#" data-link="write_apt">请去填写公司相关资质</a>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label col-xs-2">
-                            <span class="text-danger">*</span>品牌授权书
-                        </label>
-                        <div class="col-xs-5">
-                            <{input type="imageupload" tag="图片上传" name="brand[accredit]" value=$extra.store.brand_accredit required='true' accept="jpg|png|gif" }>
-                            <span class="msgTip" data-message="error">不能为空</span>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label col-xs-2">
-                            注册商标证书
-                        </label>
-                        <div class="col-xs-5">
-                            <{input type="imageupload" tag="图片上传" name="brand[reg_card]" value=$extra.store.brand_reg_card required='true' accept="jpg|png|gif" }>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                    <button type="button" class="btn btn-primary" data-save="brand_save">保存品牌</button>
-                </div>
             </div>
         </div>
     </div>
@@ -168,13 +96,45 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                    <button type="button" class="btn btn-primary" data-save="category_save">保存品牌</button>
+                    <button type="button" class="btn btn-primary" data-save="category_save">保存类目</button>
                 </div>
             </div>
         </div>
     </div>
 
-
-
-
 </div>
+
+
+<script type="text/javascript">
+
+    $(function(){
+
+        //创建品牌
+        $('#brand_add_modal').on('click','.brand_save_btn',function(){
+            var brand = $.trim($('.brand_name').val());
+            var brand_html ='<span class="brand_item">'+brand+' <i class="icon-remove"></i></span>';
+            if(brand != '' && brand != null && brand != undefined){
+                $('.brand_list').append(brand_html);
+            }
+            $("#brand_add_modal").modal('hide');
+        })
+
+        //移除品牌
+        $('.brand_list').on('click','.icon-remove',function(){
+            var cfm = confirm("您真的要删除吗？");
+            if(cfm==true){
+                $(this).parent('.brand_item').remove();
+            }  
+        });
+    
+        $('#brand_add_modal').on('shown.bs.modal', function () {
+            $.VMC.init();  //重新绑定图片上传事件
+        });
+        $("#brand_add_modal").on("hidden.bs.modal", function() {  
+            $(this).removeData("bs.modal");  //关闭时清空数据
+        }); 
+
+        $('[data-toggle="tooltip"]').tooltip();
+    })
+
+</script>

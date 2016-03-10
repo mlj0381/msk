@@ -12,7 +12,7 @@
 
 final class ectools_payment_applications_cod extends ectools_payment_parent implements ectools_payment_interface {
     public $name = '货到付款';
-    public $version = '1.0';
+    public $version = '';
     public $intro = "货到付款";
     public $platform_allow = array(
         'pc',

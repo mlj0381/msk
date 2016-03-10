@@ -158,7 +158,7 @@ class base_component_compiler
                 return $this->right_delimiter;
             case 'dump':
                 $args = $this->_parse_arguments($arguments, false);
-                return '<?php vmc::'.'dump('.$args['var'].'); ?>';
+                return '<?php var_dump('.$args['var'].'); ?>';
             case 'link':
                 $_args = $this->_parse_arguments($arguments);
                 if (!isset($_args['app'])) {
@@ -172,6 +172,12 @@ class base_component_compiler
                     }
                     $_args[$key] = "'$key' => $value";
                 }
+
+				// 商家link
+				if($this->controller->app->app_id == 'seller')
+				{
+					return '<?php echo app::get("seller")->router()->gen_url(array('.implode(',', (array) $_args).')); ?>';
+				}
 
                 return '<?php echo vmc::router()->gen_url(array('.implode(',', (array) $_args).')); ?>';
             case 'foreachelse':

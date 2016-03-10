@@ -76,7 +76,7 @@ class base_storage_upyun implements base_interface_storager
         return $fname;
     } // end function _get_ident
     //图片直接缩略服务
-    public function image_rebuild($url, $size_k = false)
+    public static function image_rebuild($url, $size_k = false)
     {
         if (!$size_k) {
             return false;
@@ -85,9 +85,9 @@ class base_storage_upyun implements base_interface_storager
         return $url.'!'.strtolower($size_k);
     }
     //图片占位符处理
-    public function modifier_process($url, $size_k)
+    public static function modifier_process($url, $size_k)
     {
-        return $this->image_rebuild($url, $size_k);
+        return self::image_rebuild($url, $size_k);
     }
     //替换指定object@bucket
     public function replace($file, $id)

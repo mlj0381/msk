@@ -13,6 +13,11 @@ $(function(){
         if(ipt.attr('data-max') && set_v>parseInt(ipt.attr('data-max'))){
             ipt.val(ipt.attr('data-max'));
         }
+        if(ipt.attr('data-min') && set_v<parseInt(ipt.attr('data-min'))){
+            ipt.val(ipt.attr('data-min'));
+        }
+        if(set_v === parseInt($(ipt).attr('data-now')))return;
+        $(ipt).attr('data-now',set_v);
         ipt.trigger('_change',[ipt.val(),num]);
     }
 

@@ -4,8 +4,8 @@
 <script type="text/javascript">
     $.getJSON('<{$gpromotion_openapi}>',function(recv){
         var phtml = '';
-        if(recv.result == 'success' && recv.data){
-            $.each(recv.data,function(idx,p){
+        if(recv.result == 'success' && recv.data && recv.data.plist){
+            $.each(recv.data.plist,function(idx,p){
                 phtml+='<li class="list-group-item" data-ruleid="'+p.rule_id+'" data-remaining="'+(p.to_time-p.now)+'"><span class="label label-danger">'+p.tag+'</span>&nbsp;<a target="_blank" href="index.php?app=b2c&ctl=admin_sales_goods&act=edit&p[0]='+p.rule_id+'">'+p.description+'</a>&nbsp;&nbsp;&nbsp;&nbsp;<small class="text-muted">'+new Date(p.to_time*1000).toLocaleString()+'后失效</small></li>';
             });
             $('#promotion_list_<{$env.get.id}>').append(phtml);
@@ -68,6 +68,13 @@
 		</div>
 	</div>
 </div>
+<form action="index.php?app=b2c&ctl=admin_goods&act=checkin" method="post">
+    审核状态：
+    <input type="hidden" name="goods_id" value="<{$data_detail.goods_id}>"/>
+    <input type="radio" name="checkin" <{if $data_detail.checkin eq '1'}> checked<{/if}> value="1"/>通过
+    <input type="radio" name="checkin" <{if $data_detail.checkin eq '-1'}> checked<{/if}> value="-1"/>不通过
+    <input type="submit" value="确定" />
+</form>
 <div class="table-scrollable">
 <table class="table">
         <thead>

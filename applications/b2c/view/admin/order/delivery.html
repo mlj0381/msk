@@ -78,3 +78,43 @@
     </div>
     <{/if}>
 </div>
+<form class="form" id="delivery_update_form_<{$env.get.id}>" action="index.php?app=b2c&ctl=admin_delivery&act=update&p[0]=<{$delivery.delivery_id}>" method="post">
+    <div class="form-horizontal">
+        <div class="form-body">
+            <{if $delivery.status=='ready'}>
+            <div class="form-group">
+                <label class="col-md-2 control-label">状态</label>
+                <div class="col-md-3">
+                    <select class="form-control" name="status" <{if $delivery.status=='succ'}>readyonly=true<{/if}>>
+                        <option value='ready'>单据创建成功</option>
+                        <option value='succ' <{if $delivery.status=='succ'}>selected<{/if}>>已经被确认</option>
+                    </select>
+                </div>
+            </div>
+            <{/if}>
+            <div class="form-group">
+                <label class="col-md-2 control-label">备注</label>
+                <div class="col-md-9">
+                    <{if $delivery.memo}>
+                        <div class="well well-sm">
+                            <{$delivery.memo}>
+                        </div>
+                    <{/if}>
+                    <{input name="memo" placeholder="新备注" required="true" type=textarea }>
+                </div>
+            </div>
+            <div class="form-actions">
+                <div class="row">
+                    <div class="col-md-offset-2 col-md-9">
+                        <button type="submit" class="btn blue">保存</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<script type="text/javascript">
+    $('#delivery_update_form_<{$env.get.id}>').data('ajax:success',function(){
+        window['update_finder_<{$env.get.finder_name}>']();
+    });
+</script>

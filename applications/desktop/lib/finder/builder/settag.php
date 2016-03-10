@@ -67,15 +67,4 @@ class desktop_finder_builder_settag extends desktop_finder_builder_prototype
         header('Content-Type:application/json; charset=utf-8');
         echo '{"success":"'.'标签设置成功'.'"}';
     }
-
-    public function __destruct()
-    {
-        #↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓记录管理员操作日志@lujy↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
-        if ($obj_operatorlogs = vmc::service('operatorlog')) {
-            if (method_exists($obj_operatorlogs, 'logSetTagInfo')) {
-                $obj_operatorlogs->logSetTagInfo();
-            }
-        }
-        #↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑记录管理员操作日志@lujy↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
-    }
 }

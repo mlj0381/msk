@@ -7,7 +7,7 @@
 	<form class="row">
     <{foreach from=$columns key=c item=v name=cols}>
 		  <{if !$v.label || $v.label ==''}><{continue;}><{/if}>
-           <div class="col-md-4 col-sm-6 margin-bottom-10">
+           <div class="col-md-4 col-sm-6 margin-bottom-10 filter-item">
                   <dt><{$v.label}></dt>
                   <dd><{$v.inputer}></dd>
            </div>

@@ -19,7 +19,8 @@ class base_syscache_abstract
     {
         return 'syscache_last_modified.'.get_class($this);
     }
-    private function _get_prev_prefix(){
+    private function _get_prev_prefix()
+    {
         return 'syscache_prev_modified.'.get_class($this);
     }
     public function set_last_modify()
@@ -28,9 +29,7 @@ class base_syscache_abstract
 
         $last_modify = time();
         if (base_kvstore::instance('system')->store($this->_get_prefix(), $last_modify)) {
-            $this->_last_modify = $last_modify;
-
-            return true;
+            return $this->_last_modify = $last_modify;
         }
 
         return false;
@@ -50,16 +49,18 @@ class base_syscache_abstract
         return $this->_last_modify;
     }
 
-    public function set_prev_modify(){
+    public function set_prev_modify()
+    {
         $pm = $this->get_last_modify();
         if (base_kvstore::instance('system')->store($this->_get_prev_prefix(), $pm)) {
             return true;
         }
+
         return false;
     }
 
-    public function get_prev_modify(){
-
+    public function get_prev_modify()
+    {
         if (!isset($this->_prev_modify)) {
             if (base_kvstore::instance('system')->fetch($this->_get_prev_prefix(), $prev_modify) === true &&
                 !is_null($prev_modify)) {

@@ -20,7 +20,6 @@ class base_cache_filesystem extends base_cache_filesystem_model implements base_
         $workat = DATA_DIR . '/cache';
         if(!is_dir($workat))    utils::mkdir_p($workat);
         $this->workat($workat . '/filecache');
-        $this->check_vary_list();
     }//End Function
 
     public function status(&$curBytes, &$totalBytes)

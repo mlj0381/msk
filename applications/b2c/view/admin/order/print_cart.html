@@ -1,67 +1,77 @@
-<p class="text-center">
-    <img src="/public/images/vmcshop.png" height=30 alt="" />
-</p>
-<ul class="list-unstyled">
-    <li>客户名称：客户名称A</li>
-    <li>单号：<{$order.order_id}></li>
-    <li>日期：<{$order.createtime|userdate}></li>
-</ul>
-<table class="table">
-    <{foreach from=$cart item=item name="cart_item"}>
-      <tr>
-          <td>
-              <{$item.bn}><br>
-              <{$item.name}><br>
-              <{$item.price|cur}> * <{$item.quantity}>
-              <div class="row">
-                  <div class="col-xs-5">
-                      小计：
-                  </div>
-                  <div class="col-xs-7">
-                      <{$item.price*$item.quantity|cur}>
-                  </div>
-              </div>
-          </td>
-      </tr>
-      <{if $item.gifts}>
-      <tr>
-          <td>
-              赠品：
-              <ul class="list-unstyled">
-                <{foreach from=$item.gifts item=gift}>
-                <li><{$gift.name}> *<{$gift.quantity}></li>
-                <{/foreach}>
-              </ul>
-          </td>
-      </tr>
-      <{/if}>
+<!-- 购物清单（小票） -->
+<table width='100%'>
+    <tr>
+        <th class="text-right">
+            会员：
+        </th>
+        <td class="text-left">
+            <{if $member_info.name}>
+            <{$member_info.name}>
+            <{elseif $member_info.uname}>
+            <{$member_info.uname}>
+            <{elseif $member_info.local_uname}>
+            <{$member_info.local_uname}>
+            <{elseif $member_info.login_account}>
+            <{$member_info.login_account}>
+            <{/if}>
+        </td>
+        <th class="text-right">
+            会员级别：
+        </th>
+        <td class="text-left">
+            <{$member_info.levelname}>
+        </td>
+    </tr>
+    <tr>
+        <th class="text-right">
+            购物时间：
+        </th>
+        <td class="text-left">
+            <{$order.createtime|cdate}>
+        </td>
+        <th class="text-right">
+            订单号：
+        </th>
+        <td class="text-left">
+            <{$order.order_id}>
+        </td>
+    </tr>
 
-    <{/foreach}>
-	 <{if $order_gifts}>
-	 <tr>
-         <td>
-             赠品：
-             <ul class="list-unstyled">
-             <{foreach from=$order_gifts item=o_gift}>
-                <li><{$o_gift.name}> *<{$o_gift.quantity}></li>
-             <{/foreach}>
-             </ul>
-         </td>
-      </tr>
-	  <{/if}>
+</table>
+<hr>
+<table class="table table-striped">
+    <thead>
         <tr>
+            <th>名称</th>
+            <th>价格</th>
+            <th>数量</th>
+            <th>小计</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        <{foreach from=$order.items item=item name="item"}>
+            <tr>
+                <td>
+                    <{$item.name}>&nbsp;
+                    <small><{$item.spec_info}></small>
+                </td>
+                <td><{$item.buy_price|cur}></td>
+                <td><{$item.nums}></td>
+                <td><{$item.amount|cur}></td>
+            </tr>
+        <{/foreach}>
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="3">
+                <ul class="list-unstyled">
+                    <li>积分余额：<{$member_info.integral}></li>
+                </ul>
+            </td>
             <td>
-                <div class="row">
-                    <div class="col-xs-5">
-                        总计：
-                    </div>
-                    <div class="col-xs-7">
-                        <{$order.total_amount|cur}>
-                    </div>
-                </div>
+                <{$order.order_total|cur}>
             </td>
         </tr>
+    </tfoot>
 </table>
-<p class="text-center">
-    您目前的总积分为 <{$memberPoint}> ，累计购物<{$orderSum.sum}>次，累计购物金额<{$orderSum.sum_pay|cur}>
-</p>

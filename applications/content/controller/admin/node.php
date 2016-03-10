@@ -10,8 +10,8 @@
 // +----------------------------------------------------------------------
 
 
-class content_ctl_admin_node extends site_admin_controller {
-    
+class content_ctl_admin_node extends content_admin_controller {
+
     public function __construct($app) {
         parent::__construct($app);
     }

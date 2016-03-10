@@ -32,8 +32,8 @@ class b2c_user_vcode {
                 return false;
             }
             $left_time = (time() - $vcodeData['lastmodify']);
-            if ($left_time < 120) {
-                $msg = '请'.(120 - $left_time).'秒后重试';
+            if ($left_time < 10) {
+                $msg = '请'.(10 - $left_time).'秒后重试';
                 return false;
             }
             if ($vcodeData['createtime'] != date('Ymd')) {
@@ -47,11 +47,7 @@ class b2c_user_vcode {
         $vcodeData['createtime'] = date('Ymd');
         $vcodeData['lastmodify'] = time();
         $key = $this->get_vcode_key($account, $type);
-        if (WITHOUT_CACHE === true) {
-            base_kvstore::instance('vcode/account')->store($key, $vcodeData, $this->ttl);
-        } else {
-            cacheobject::set($key, $vcodeData, $this->ttl + time());
-        }
+        base_kvstore::instance('vcode/account')->store($key, $vcodeData, $this->ttl);
         return $vcode;
     }
     /*
@@ -67,11 +63,7 @@ class b2c_user_vcode {
      * */
     public function get_vcode($account, $type = 'signup') {
         $key = $this->get_vcode_key($account, $type);
-        if (WITHOUT_CACHE === true) {
-            base_kvstore::instance('vcode/account')->fetch($key, $vcode);
-        } else {
-            cacheobject::get($key, $vcode);
-        }
+        base_kvstore::instance('vcode/account')->fetch($key, $vcode);
         return $vcode;
     }
     /*
@@ -81,11 +73,7 @@ class b2c_user_vcode {
         $vcode = $this->randomkeys(6);
         $vcodeData['vcode'] = $vcode;
         $key = $this->get_vcode_key($account, $type);
-        if (WITHOUT_CACHE === true) {
-            base_kvstore::instance('vcode/account')->store($key, $vcodeData, $this->ttl);
-        } else {
-            cacheobject::set($key, $vcodeData, $this->ttl + time());
-        }
+        base_kvstore::instance('vcode/account')->store($key, $vcodeData, $this->ttl);
         return $vcodeData;
     }
     public function send_sms($type ='signup', $mobile, $tmpl_data) {

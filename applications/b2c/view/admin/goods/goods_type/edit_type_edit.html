@@ -1,14 +1,14 @@
-<h3 class="page-title"><{if $gtype.type_id }>类型编辑<{else}>添加新类型<{/if}>
+<h3 class="page-title"><{if $gtype.type_id }><{if $type neq '1'}>类型<{else}>规格<{/if}>编辑<{else}>添加新<{if $type neq '1'}>类型<{else}>规格<{/if}><{/if}>
     <small>类型用于对商品的精细化管理</small>
 </h3>
 <div class="page-bar">
 	<ul class="page-breadcrumb">
 		<li>
-			<a href="index.php?app=b2c&ctl=admin_goods_type&act=index">类型列表</a>
+			<a href="index.php?app=b2c&ctl=admin_goods_type&act=index&p[0]=<{$type}>"><{if $type neq '1'}>类型<{else}>规格<{/if}>列表</a>
 			<i class="fa fa-angle-right"></i>
 		</li>
 		<li>
-			<a href="javascript:;"><{if $gtype.type_id }>类型编辑<{else}>添加新类型<{/if}></a>
+			<a href="javascript:;"><{if $gtype.type_id }><{if $type neq '1'}>类型<{else}>规格<{/if}>编辑<{else}>添加新<{if $type neq '1'}>类型<{else}>规格<{/if}><{/if}></a>
 		</li>
 	</ul>
 </div>
@@ -16,14 +16,17 @@
 <form action="index.php?app=b2c&ctl=admin_goods_type&act=save" method="post" id='type_form' >
     <{if $gtype.type_id }><input type="hidden" name="gtype[type_id]" value=<{$gtype.type_id}>><{/if}>
     <input type='hidden' name='gtype[setting][use_props]' value='1'/>
+    <input type='hidden' name='gtype[belong_type]' value='<{$type}>'/>
     <input type='hidden' name='gtype[setting][use_params]' value='1'/>
     <div class="form form-horizontal">
         <div class="form-body">
-              <{include file="admin/goods/goods_type/form_edit_name.html"}>
-              <{include file="admin/goods/goods_type/form_edit_props.html"}>
-              <{include file="admin/goods/goods_type/form_edit_params.html"}>
-              <hr>
-              <{include file="admin/goods/goods_type/form_edit_setting.html"}>
+            <{include file="admin/goods/goods_type/form_edit_name.html"}>
+            <{include file="admin/goods/goods_type/form_edit_props.html"}>
+            <{if $type neq '1'}>
+            <{include file="admin/goods/goods_type/form_edit_params.html"}>
+            <hr>
+            <{include file="admin/goods/goods_type/form_edit_setting.html"}>
+            <{/if}>
         </div>
         <div class="form-actions">
             <div class="row">

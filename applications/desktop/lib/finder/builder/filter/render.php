@@ -87,6 +87,7 @@ class desktop_finder_builder_filter_render
         //     $tag_inputer = $render->fetch('finder/tag_inputer.html');
         //     $columns['tag'] = array('filtertype'=>true,'filterdefault'=>true,'label'=>'标签','inputer'=>$tag_inputer);
         // }
+
         $render->pagedata['columns'] = $columns;
         $render->pagedata['datatypes'] = $datatypes;
 
@@ -149,7 +150,7 @@ EOF;
             break;
             case 'bool':
             $_return = <<<EOF
-            <select data-label="是否{$params['label']}" class="form-control"  name="{$params['name']}">
+            <select data-label="{$params['label']}" class="form-control"  name="{$params['name']}">
                 <option></option>
                 <option value="true">是</option>
                 <option value="false">否</option>
@@ -158,7 +159,7 @@ EOF;
             break;
             case 'intbool':
             $_return = <<<EOF
-            <select data-label="是否{$params['label']}" class="form-control"  name="{$params['name']}">
+            <select data-label="{$params['label']}" class="form-control"  name="{$params['name']}">
                 <option></option>
                 <option value="1">是</option>
                 <option value="0">否</option>
@@ -166,7 +167,7 @@ EOF;
 EOF;
             case 'tinybool':
             $_return = <<<EOF
-<select data-label="是否{$params['label']}" class="form-control"  name="{$params['name']}">
+<select data-label="{$params['label']}" class="form-control"  name="{$params['name']}">
     <option></option>
     <option value="Y">是</option>
     <option value="N">否</option>
@@ -193,8 +194,9 @@ EOF;
             </div>
 EOF;
             break;
-            // default:
-            // $_return = "<textarea>".var_export($params,1)."</textarea>";
+            case 'region':
+            $_return = vmc::singleton('ectools_view_input')->input_region($params);
+            break;
             default:
             $_return = <<<EOF
                 <div class="form-gruop">

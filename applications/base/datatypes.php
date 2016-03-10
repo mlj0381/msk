@@ -115,4 +115,8 @@ $datatypes = array(
             'nequal' => '等于',
         ) ,
     ) ,
+    // 产品类型
+	'product_type' => array(
+        'sql' => 'enum(\'生鲜\',\'冷冻\')',
+    ),
 );

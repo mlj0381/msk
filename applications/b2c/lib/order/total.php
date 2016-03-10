@@ -63,11 +63,11 @@ class b2c_order_total {
             // @utils::cal_fee($dlytype_info['dt_expressions'], $items_weight, $cost_item, $dlytype_info['firstprice'], $dlytype_info['continueprice']); //TODO  首重续重下的配送费用
 
         }
-        //TODO  开票营业税、支付手续费
+
         $order_total = $obj_math->number_plus(array(
             $finally_cart_amount,
             $cost_protect,
-            $cost_freight
+            //$cost_freight
         ));
 
 
@@ -79,10 +79,10 @@ class b2c_order_total {
             //'object_count' => 0, //购物车项数
             //'weight' => 0, //总重量
             'cart_amount' => 0, //购物车金额（优惠前）
-            'member_discount_amount' => 0, //会员身份优惠小计
-            'order_promotion_discount_amount' => 0, //订单级促销优惠
-            'goods_promotion_discount_amount' => 0, //商品级促销优惠
-            'promotion_discount_amount' => 0, //促销优惠合计
+            //'member_discount_amount' => 0, //会员身份优惠小计
+            //'order_promotion_discount_amount' => 0, //订单级促销优惠
+            //'goods_promotion_discount_amount' => 0, //商品级促销优惠
+           // 'promotion_discount_amount' => 0, //促销优惠合计
             //'finally_cart_amount' => 0, //购物车合计金额（所有优惠后）
             //finally_cart_amount 用到时 用 cart_amount - member_discount_amount - promotion_discount_amount
 
@@ -93,17 +93,19 @@ class b2c_order_total {
         $_return = array(
 
             'cost_protect' => $cost_protect, //保价费
-            'cost_freight' => $cost_freight, //运费
+            //'cost_freight' => $cost_freight, //运费
             'cost_payment' => 0, //TODO //在线支付手续费
             'order_total' => $order_total, //*******订单最终应付总价
             'cost_tax' => 0, //TODO //税
 
         );
         $_return = array_merge($_return, $cart_amount);
+        //TODO  开票营业税、支付手续费计算并赋值
+
         foreach ($_return as $key => $value) {
             //格式化价格数据，小数点位数、四舍五入规则等
             $_return[$key] = $obj_math->formatNumber($value, $f1, $f2);
-            if($_return[$key]<0)$_return[$key] = $obj_math->formatNumber(0, $f1, $f2);;
+            if($_return[$key]<0)$_return[$key] = $obj_math->formatNumber(0, $f1, $f2);
         }
         //获得积分合计,四舍五入，取整
         $_return['gain_score'] = $obj_math->formatNumber($cart_result['gain_score'], 0 , $f2);

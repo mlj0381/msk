@@ -10,27 +10,9 @@
 // +----------------------------------------------------------------------
 
 
- 
+
 abstract class base_cache_abstract
 {
-
-    /*
-     * @var string $_vary_list
-     * @access protected
-     */
-    protected $_vary_list;
-
-    /*
-     * 检查是否取得影响缓存的相关数据，如果无则获取一次
-     * @access public
-     * @return void
-     */
-    protected function check_vary_list()
-    {
-        if(!isset($this->_vary_list)){
-            $this->_vary_list = cachemgr::fetch_vary_list();
-        }
-    }//End Function
 
     /*
      * 取得数据
@@ -41,7 +23,8 @@ abstract class base_cache_abstract
      */
     public function get_modified($type, $key)
     {
-        return $this->_vary_list[strtoupper($type)][strtoupper($key)];
+        base_kvstore::instance('cache/expires/'.strtolower($type))->fetch(strtolower($key), $time);
+        return $time;
     }//End Function
 
     /*
@@ -57,10 +40,10 @@ abstract class base_cache_abstract
         $now = ($time>0) ? $time : time();
         if(is_array($key)){
             foreach($key as $k){
-                $this->_vary_list[strtoupper($type)][strtoupper($k)] = $now;
+                base_kvstore::instance('cache/expires/'.strtolower($type))->store(strtolower($k), $now);
             }
         }else{
-            $this->_vary_list[strtoupper($type)][strtoupper($key)] = $now;
+            base_kvstore::instance('cache/expires/'.strtolower($type))->store(strtolower($key), $now);
         }
         return true;
     }//End Function

@@ -14,7 +14,7 @@
 /**
  * 登录统一调用的类，该类执行验证已经验证后的跳转.
  */
-class pam_callback
+class pam_callback extends base_openapi
 {
     /**
      * 登录调用的方法.

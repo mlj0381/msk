@@ -4,7 +4,7 @@
         <class>content_finder_indexs</class>
     </service>
 
-	
+
 
 	<service id="tpl_source.content">
 		<class>content_service_tplsource</class>
@@ -16,6 +16,12 @@
 	<service id="site_view_helper">
 		<class>content_site_view_helper</class>
 	</service>
+	<service id="view_helper">
+        <class>content_view_helper</class>
+    </service>
 
+	<service id="openapi.content_node" optname="openapi@内容栏目">
+        <class>content_openapi_node</class>
+    </service>
 
 </services>

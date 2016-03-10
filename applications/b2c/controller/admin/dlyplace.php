@@ -13,15 +13,17 @@ class b2c_ctl_admin_dlyplace extends desktop_controller {
     public function __construct($app) {
         parent::__construct($app);
         $this->app = $app;
+        $this->mDlyplace = $this->app->model('dlyplace');
+        $this->mWarehouse = $this->app->model('warehouse');
     }
     public function index() {
         $action = array(
-            'label' => ('添加发货地点') ,
+            'label' => ('添加仓库') ,
             'href' => 'index.php?app=b2c&ctl=admin_dlyplace&act=edit',
             'icon' => 'fa fa-plus',
         );
         $this->finder('b2c_mdl_dlyplace', array(
-            'title' => ('发货地点') ,
+            'title' => ('仓库列表') ,
             'actions' => array(
                 $action
             ) ,
@@ -32,17 +34,42 @@ class b2c_ctl_admin_dlyplace extends desktop_controller {
     }
     public function edit($dlyplace_id) {
         if ($dlyplace_id) {
-            $mdl_dlyplace = $this->app->model('dlyplace');
-            $dlyplace = $mdl_dlyplace->dump($dlyplace_id);
+            $dlyplace = $this->mDlyplace->dump($dlyplace_id);
+            $dlyplace['warehouse'] = $this->mWarehouse->getList('*', array('dlyplace_id' => $dlyplace['dp_id']));
             $this->pagedata['dlyplace'] = $dlyplace;
         }
         $this->page('admin/delivery/dlyplace.html');
     }
     public function save() {
         $this->begin('index?app=b2c&ctl=admin_dlyplace&act=index');
-        $mdl_dlyplace = $this->app->model('dlyplace');
-        $result = $mdl_dlyplace->save($_POST);
-        if ($result) $this->end(true, '保存成功!');
-        else $this->end(false, '保存失败!');
+        $warehouse = $_POST['warehouse'];
+        unset($_POST['warehouse']);
+        $db = vmc::database();
+        $db->beginTransaction();
+        $result = $this->mDlyplace->save($_POST);
+        if (!$result){
+            $db->rollback();
+            $this->end(false, '保存失败!');
+        }
+
+        $warehouse['dlyplace_id'] = $_POST['dp_id'] ?: $db->lastinsertid();
+        foreach($warehouse['addr_id'] as $key => $value)
+        {
+            $disabled = $warehouse['addr_id'][$key] == $warehouse['disabled'][$key] ? 'true' : 'false';
+            $data = array(
+                'addr_id' => $warehouse['addr_id'][$key],
+                'addr' => $warehouse['addr'][$key],
+                'dlyplace_id' => $warehouse['dlyplace_id'],
+                'id' => $warehouse['id'][$key],
+                'disabled' => $disabled,
+            );
+            if(!$result = $this->mWarehouse->save($data))
+            {
+                $db->rollback();
+                $this->end(false, '保存失败!');
+            }
+        }
+        $db->commit();
+        $this->end(true, '保存成功!');
     }
 }

@@ -42,9 +42,10 @@ class b2c_ctl_mobile_order extends b2c_mfrontpage
             'pay_app' => $params['payapp_id'],
             'dlytype_id' => $params['dlytype_id'],
             'createtime' => time() ,
-            'need_invoice'=>$params['need_invoice'],
-            'invoice_title'=>$params['invoice_title'],
-            'platform' => 'pc',
+            'need_shipping' => $params['need_shipping'],
+            'need_invoice' => $params['need_invoice'],
+            'invoice_title' => $params['invoice_title'],
+            'platform' => 'mobile',
         );
         $redirect_cart = $this->gen_url(array(
             'app' => 'b2c',
@@ -57,37 +58,40 @@ class b2c_ctl_mobile_order extends b2c_mfrontpage
                 $fastbuy,
             ),
         ), true);
-        if (!$order_sdf['pay_app']) {
-            $this->logger->fail('create', '未知支付方式', $params);
-            $this->splash('error', $redirect_checkout, '未知支付方式');
-        }
-        if (!$order_sdf['dlytype_id']) {
-            $this->logger->fail('create', '未知配送方式', $params);
-            $this->splash('error', $redirect_checkout, '未知配送方式');
-        }
-        //COD FIX
-        if ($order_sdf['pay_app'] == '-1' || $order_sdf['pay_app'] == 'cod') {
-            $order_sdf['is_cod'] = 'Y';
-        } else {
-            $dlytype = app::get('b2c')->model('dlytype')->dump($params['dlytype_id']);
-            if ($dlytype['has_cod'] == 'true') {
-                $order_sdf['pay_app'] = 'cod';
-                $order_sdf['is_cod'] = 'Y';
-            }
-        }
-
         if ($fastbuy) {
             $filter['is_fastbuy'] = 'true';
         }
-        if (!$params['addr_id']) {
-            $this->logger->fail('create', '无收货人信息', $params);
-            $this->splash('error', $redirect_checkout, '无收货人信息');
-        } else {
-            $consignee = app::get('b2c')->model('member_addrs')->getRow('name,area,addr,zip,tel,mobile,email', array(
-                'member_id' => $member_id,
-                'addr_id' => $params['addr_id'],
-            ));
-            $order_sdf['consignee'] = $consignee;
+        if ($order_sdf['need_shipping'] != 'N') {
+            if ($order_sdf['need_shipping'] != 'N' && !$order_sdf['dlytype_id']) {
+                $this->logger->fail('create', '未知配送方式', $params);
+                $this->splash('error', $redirect_checkout, '未知配送方式');
+            }
+
+            //COD FIX
+            if ($order_sdf['pay_app'] == '-1' || $order_sdf['pay_app'] == 'cod') {
+                $order_sdf['is_cod'] = 'Y';
+            } else {
+                $dlytype = app::get('b2c')->model('dlytype')->dump($params['dlytype_id']);
+                if ($dlytype['has_cod'] == 'true') {
+                    $order_sdf['pay_app'] = 'cod';
+                    $order_sdf['is_cod'] = 'Y';
+                }
+            }
+
+            if (!$params['addr_id']) {
+                $this->logger->fail('create', '无收货人信息', $params);
+                $this->splash('error', $redirect_checkout, '无收货人信息');
+            } else {
+                $consignee = app::get('b2c')->model('member_addrs')->getRow('name,area,addr,zip,tel,mobile,email', array(
+                    'member_id' => $member_id,
+                    'addr_id' => $params['addr_id'],
+                ));
+                $order_sdf['consignee'] = $consignee;
+            }
+        }
+        if (!$order_sdf['pay_app']) {
+            $this->logger->fail('create', '未知支付方式', $params);
+            $this->splash('error', $redirect_checkout, '未知支付方式');
         }
         //购物车数据
         $cart_result = $this->cart_stage->result($filter);
@@ -120,32 +124,33 @@ class b2c_ctl_mobile_order extends b2c_mfrontpage
         $this->logger->set_order_id($order_sdf['order_id']);
         $this->logger->success('create', '订单创建成功', $params);
 
-        /**
+        /*
          * 优惠券冻结,优惠券使用记录
          * 未使用成功in_use!="true"的优惠券不做冻结处理，不做记录
          * @see /Applications/b2c/lib/postfilter/promotion.php line 200
          */
         foreach ($cart_result['objects']['coupon'] as $coupon) {
-            if($coupon['params']['in_use']!='true')continue;
+            if ($coupon['params']['in_use'] != 'true') {
+                continue;
+            }
             $couponlog_data = array(
-                'member_id'=>$member_id,
-                'order_id'=>$order_sdf['order_id'],
-                'cpns_id'=>$coupon['params']['cpns_id'],//优惠券ID
-                'memc_code'=>$coupon['params']['code'],//优惠券号码
-                'cpns_name'=>$coupon['params']['name'],//优惠券名称
-                'coupon_save'=>$coupon['params']['save'],//优惠券在本次订购中抵扣的金额
-                'order_total'=>$order_sdf['order_total']//订单应付金额
+                'member_id' => $member_id,
+                'order_id' => $order_sdf['order_id'],
+                'cpns_id' => $coupon['params']['cpns_id'],//优惠券ID
+                'memc_code' => $coupon['params']['code'],//优惠券号码
+                'cpns_name' => $coupon['params']['name'],//优惠券名称
+                'coupon_save' => $coupon['params']['save'],//优惠券在本次订购中抵扣的金额
+                'order_total' => $order_sdf['order_total'],//订单应付金额
             );
-            vmc::singleton('b2c_coupon_stage')->couponlog($couponlog_data,$msg);
-            if($coupon['params']['cpns_type'] == '1'){
+            vmc::singleton('b2c_coupon_stage')->couponlog($couponlog_data, $msg);
+            if ($coupon['params']['cpns_type'] == '1') {
                 //需冻结会员账户内的相关B类券
-                vmc::singleton('b2c_coupon_stage')->freeze_member_coupon($member_id,$coupon['params']['code'],$msg);
+                vmc::singleton('b2c_coupon_stage')->freeze_member_coupon($member_id, $coupon['params']['code'], $msg);
             }
         }
 
-
         //清理购物车
-        $this->cart_stage->clean($cart_result,$fastbuy);//只删除勾选结算项,对于优惠券，只删除触发促销的项
+        $this->cart_stage->clean($cart_result, $fastbuy);//只删除勾选结算项,对于优惠券，只删除触发促销的项
 
         $redirect_payment = $this->gen_url(array(
             'app' => 'b2c',

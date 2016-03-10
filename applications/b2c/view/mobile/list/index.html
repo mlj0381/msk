@@ -1,115 +1,200 @@
-<{if $brand}>
-    <{include file='site/brand/inlist.html'}>
-<{/if}>
-<div class="glist-container">
-    <{if !$brand}>
-    <ol class="breadcrumb">
-        <{if $cat_path}>
-        <li><a href="<{link app=b2c ctl=mobile_list act=index}>">全部</a></li>
-        <{foreach from=$cat_path item=cat name=cp}>
-        <{if $env.foreach.cp.last}>
-        <li class="active"><{$cat.title}> （<span><{$count}></span>）</li>
-        <{else}>
-        <li><a href="<{link app=b2c ctl=mobile_list act=index}>?cat_id=<{$cat.ident}>"><{$cat.title}></a></li>
-        <{/if}>
-        <{/foreach}>
-        <{else}>
-        <li class="active">全部商品（<span><{$all_count}></span>）</li>
-        <{/if}>
-    </ol>
-    <{/if}>
-    <{if $data_screen}>
-    <div class="panel panel-default gfilter">
-      <div class="panel-body">
-          <dl class="dl-horizontal gfilter-list">
-              <{foreach from=$data_screen key=pkey item=item}>
-              <{assign var=options_count value=count($item.options)}>
-              <{if $options_count<1}><{continue;}><{/if}>
-              <{if !$env.get.cat_id && $pkey!='cat_id'}><{continue;}><{/if}>
-                  <dt>
-                      <{$item.title}>
-                  </dt>
-                  <dd>
-                      <ul class="list-inline">
-                          <{if $pkey!='cat_id'}>
-                          <li><a href="<{link app=b2c ctl=mobile_list act=index}>?<{$query|merge_query:$pkey}>">不限</a></li>
-                          <{/if}>
-                          <{foreach from=$item.options key=vkey item=item}>
-                           <li>
-                               <{if $pkey=='cat_id'}>
-                               <a href="<{link app=b2c ctl=mobile_list act=index}>?cat_id=<{$vkey}>"><{$item}></a>
-                               <{else}>
-                               <a href="<{link app=b2c ctl=mobile_list act=index}>?<{$query|merge_query:$pkey:$vkey}>"><{$item}></a>
-                               <{/if}>
-                           </li>
-                          <{/foreach}>
-                      </ul>
-                  </dd>
-              <{/foreach}>
-          </dl>
-      </div>
+<header class="bar bar-nav">
+  <a class="icon icon-left-nav pull-left history-go-1" href="<{link app=mobile ctl=index}>"></a>
+  <h1 class="title">商品列表</h1>
+</header>
+<div class="bar bar-standard bar-header-secondary">
+    <{assign var=screen_active value=$query|merge_query:'orderby'|merge_query:'page'}>
+    <a class="btn pull-right <{if $screen_active}>active<{/if}>" href="#list_screen">
+        筛选
+        <span class="fa fa-filter"></span>
+    </a>
+    <div class="segmented-control">
+        <a class="control-item <{if !$env.get.orderby}>active<{/if}>" href="<{link app=b2c ctl=mobile_list act=index}>?<{$query|merge_query:'orderby'}>">
+            综合排序
+        </a>
+        <a class="control-item <{if $env.get.orderby=='buy_count-desc'}>active<{/if}>" href="<{link app=b2c ctl=mobile_list act=index}>?<{$query|merge_query:'orderby':'buy_count-desc'}>">
+            销量
+        </a>
+
+        <a class="control-item <{if $env.get.orderby=='comment_count-desc'}>active<{/if}>" href="<{link app=b2c ctl=mobile_list act=index}>?<{$query|merge_query:'orderby':'comment_count-desc'}>">
+            评价数
+
+        </a>
+        <a class="control-item <{if $env.get.orderby=='uptime-desc'}>active<{/if}>" href="<{link app=b2c ctl=mobile_list act=index}>?<{$query|merge_query:'orderby':'uptime-desc'}>">
+            上架时间
+         </a>
     </div>
+
+</div>
+<div class="content">
+    <{if $brand}>
+        <{include file='mobile/brand/inlist.html'}>
     <{/if}>
-    <div class="goods-list">
-        <div class="panel panel-default">
-          <div class="panel-heading">
-                  <div class="form-inline" role="search">
-                      <div class="btn-group order-btn btn-sm" role="group" aria-label="...">
-                          <a class="btn  btn-sm <{if !$env.get.orderby}>btn-danger<{else}>btn-default<{/if}>" href="<{link app=b2c ctl=mobile_list act=index}>?<{$query|merge_query:'orderby'}>">
-                              综合排序
-                              <i class="glyphicon glyphicon-sort-by-attributes-alt"></i>
-                          </a>
-                          <a class="btn  btn-sm <{if $env.get.orderby=='buy_count-desc'}>btn-danger<{else}>btn-default<{/if}>" href="<{link app=b2c ctl=mobile_list act=index}>?<{$query|merge_query:'orderby':'buy_count-desc'}>">
-                              销量
-                              <i class="glyphicon glyphicon-sort-by-order-alt"></i>
-                          </a>
-                          <!-- <{if $env.get.orderby=='price-desc'}>
-                          <a class="btn  btn-sm btn-danger" href="<{link app=b2c ctl=mobile_list act=index}>?<{$query|merge_query:'orderby':'price-asc'}>">价格 <i class="glyphicon glyphicon-sort-by-order-alt"></i></a>
-                          <{elseif $env.get.orderby=='price-asc'}>
-                          <a class="btn  btn-sm btn-danger" href="<{link app=b2c ctl=mobile_list act=index}>?<{$query|merge_query:'orderby':'price-desc'}>">价格 <i class="glyphicon glyphicon-sort-by-order"></i></a>
-                          <{else}>
-                          <a class="btn  btn-sm btn-default" href="<{link app=b2c ctl=mobile_list act=index}>?<{$query|merge_query:'orderby':'price-desc'}>">价格</a>
-                          <{/if}> -->
-                          <a class="btn  btn-sm <{if $env.get.orderby=='comment_count-desc'}>btn-danger<{else}>btn-default<{/if}>" href="<{link app=b2c ctl=mobile_list act=index}>?<{$query|merge_query:'orderby':'comment_count-desc'}>">
-                              评价数
-                              <i class="glyphicon glyphicon-sort-by-order-alt"></i>
-                          </a>
-                          <a class="btn  btn-sm <{if $env.get.orderby=='uptime-desc'}>btn-danger<{else}>btn-default<{/if}>" href="<{link app=b2c ctl=mobile_list act=index}>?<{$query|merge_query:'orderby':'uptime-desc'}>">
-                              上架时间
-                              <i class="glyphicon glyphicon-sort-by-order-alt"></i>
-                           </a>
-                      </div>
-
-                        <input type="text" id="input_keyword" class="form-control input-sm input-small" placeholder="在结果中搜索">
-                        <button type="button" data-action="<{link app=b2c ctl=mobile_list act=index}>?<{$query|merge_query:'keyword'}>" onclick="location=$(this).attr('data-action')+'&keyword='+$('#input_keyword').val()" class="btn btn-sm btn-default">确定</button>
-                  </div>
-            </div>
+    <div class="glist-container">
+        <div class="goods-list">
+            <ul class="table-view">
+                <{foreach from=$data_list item=item name="gdl"}>
+                <li class="table-view-cell">
+                    <a class='g-link' href="<{link app=b2c ctl=mobile_product args0=$item.product.product_id}>">
+                        <div class="g-image">
+                            <img src="data:image/gif;base64,R0lGODlhAQABAIAAAO/v7////yH5BAAHAP8ALAAAAAABAAEAAAICRAEAOw==" data-original="<{$item.image_default_id|storager:'s'}>"  alt="<{$item.name}>">
+                        </div>
+                        <div class="g-info">
+                            <h4 class="g-name">
+                                <{$item.name}>
+                            </h4>
+                            <p class="avg-mark">
+                                <span class="text-warning"><{$item.mark_star|star}></span> <small><{$item.mark_star|number_format:'1'}></small>
+                            </p>
+                            <button type="button" class='btn btn-primary g-price'>
+                                <small>￥</small>
+                                <{if $item.product.promotion.sale_price && $item.product.promotion.sale_price!='null'}>
+                                <{$item.product.promotion.sale_price|cur}>
+                                <{else}>
+                                <{$item.product.buy_price|cur}>
+                                <{/if}>
+                            </button>
+                            <button type="button" class='btn btn-outlined pull-right favorite-button' data-gid="<{$item.goods_id}>" data-fav-action="<{link app=b2c ctl=mobile_member act=favorite args0=add args1=$item.goods_id}>">
+                                <span class="fa fa-heart-o"></span> 喜欢 (<em>0</em>)
+                            </button>
+                        </div>
+                    </a>
+                </li>
+                <{if !$env.foreach.gdl.last}>
+                <li class="table-view-divider"></li>
+                <{/if}>
+                <{/foreach}>
+            </ul>
         </div>
-
-        <div class="row goods-list gl-default">
-            <{foreach from=$data_list item=item}>
-              <div class="col-md-3">
-                <div class="thumbnail goods-item">
-                    <div class="gi-image-wrapper">
-                        <a href="<{link app=b2c ctl=mobile_product args0=$item.product.product_id}>">
-                            <img src="<{$item.image_default_id|storager:'s'}>" alt="<{$item.name}>">
-                        </a>
-                    </div>
-                  <div class="caption">
-                    <h3 class="g-name">
-                        <a href="<{link app=b2c ctl=mobile_product args0=$item.product.product_id}>"><{$item.name}></a>
-                    </h3>
-                    <p class="avg-mark">
-                        <span class="text-warning"><{$item.mark_star|star}></span> <small><{$item.mark_star|number_format:'1'}></small>
-                    </p>
-                    <ul class="list-inline">
-                        <li class="price-1 text-danger"><{$item.product.buy_price|cur}></li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            <{/foreach}>
-        </div>
-        <{pagers data=$pager}>
+    </div>
+    <div class="content-padded">
+        <{morepage data=$pager}>
     </div>
 </div>
+<div id="list_screen" class="modal">
+  <header class="bar bar-nav">
+    <a class="icon icon-close pull-right" href="#list_screen"></a>
+    <h1 class="title">筛选</h1>
+  </header>
+  <form class="bar bar-standard bar-header-secondary" action="<{link app=b2c ctl=mobile_list act=index}>?<{$query|merge_query:'keyword'}>" method="get">
+      <input type="search" name='keyword' value='<{$env.get.keyword}>' placeholder="在结果中搜索">
+  </form>
+  <div class="content screen-body">
+      <div class="content-padded">
+          <{if !$brand}>
+              <{if $cat_path}>
+              <a class="btn btn-outlined btn-primary" href="<{link app=b2c ctl=mobile_list act=index}>">全部商品
+                  <span class="icon icon-right"></span>
+              </a>
+              <{foreach from=$cat_path item=cat name=cp}>
+              <{if $env.foreach.cp.last}>
+              <button type='button' class="btn btn-primary active"><{$cat.title}>
+                  <span class="badge badge-primary"><{$count}></span>
+              </button>
+              <{else}>
+              <a class="btn btn-outlined btn-primary" href="<{link app=b2c ctl=mobile_list act=index}>?cat_id=<{$cat.ident}>"><{$cat.title}>
+                  <span class="icon icon-right"></span>
+              </a>
+              <{/if}>
+              <{/foreach}>
+              <{/if}>
+          <{/if}>
+          <{if $data_screen}>
+                <{foreach from=$data_screen key=pkey item=item}>
+                <{assign var=options_count value=$item.options|count}>
+                <{if $options_count<1}><{continue;}><{/if}>
+                <{if !$env.get.cat_id && $pkey!='cat_id'}><{continue;}><{/if}>
+                    <h5><{$item.title}></h5>
+                    <{if $pkey!='cat_id'}>
+                    <a class="btn btn-outlined btn-primary" href="<{link app=b2c ctl=mobile_list act=index}>?<{$query|merge_query:$pkey}>">不限</a>
+                    <{/if}>
+                    <{foreach from=$item.options key=vkey item=item}>
+                         <{if $pkey=='cat_id'}>
+                         <a class="btn btn-outlined btn-primary" href="<{link app=b2c ctl=mobile_list act=index}>?cat_id=<{$vkey}>"><{$item}></a>
+                         <{else}>
+                         <a class="btn btn-primary<{if $env.get.{$pkey} == $vkey}> active<{else}> btn-outlined<{/if}>" href="<{link app=b2c ctl=mobile_list act=index}>?<{$query|merge_query:$pkey:$vkey}>"><{$item}></a>
+                         <{/if}>
+                    <{/foreach}>
+                <{/foreach}>
+          <{/if}>
+      </div>
+  </div>
+</div>
+<script type="text/javascript">
+/**
+ * @copyright vmcshop.com
+ * @version 20150811
+ */
+ $(function(){
+     var render_glist = function(scope){
+         var fav_btns = $(scope).find('.favorite-button'),gids = [];
+         var gids = [];
+         $.each(fav_btns,function(idx,item){
+             gids.push($(item).attr('data-gid'));
+         });
+         //喜欢收藏openAPI
+         var check_favs_api = "<{$base_url}>/openapi/goods/check_favs/";
+         $.getJSON(check_favs_api,{member_id:$.cookie('MEMBER_IDENT'),'goods_id':gids},function(recv){
+             try{
+                 data = recv.data;
+                 $.each(data,function(idx,obj){
+                     var fav_btn = $('.favorite-button[data-gid="'+obj.goods_id+'"]');
+                     if(!fav_btn.length)return;
+                     fav_btn.find('em').text(obj.fav_count);
+                     if(obj.is_fav){
+                         fav_btn.find('.fa').removeClass('fa-heart-o').addClass('fa-heart');
+                     }
+                 });
+             }catch(e){
+
+             }
+         });
+         fav_btns.on('touchend',function(e){
+             e.stopPropagation();
+             var _this = $(this);
+             if(_this.find('.fa-heart').length)return false;
+             $.get(_this.attr('data-fav-action'),function(re){
+                 if(re && re.success){
+                     _this.find('.fa').removeClass('fa-heart-o').addClass('fa-heart');
+                     var current_count = parseInt(_this.find('em').text());
+                     if(isNaN(current_count))current_count = 0;
+                     _this.find('em').text(++current_count);
+                 }else{
+                     Messagebox('error',re.error);
+                     if(re.redirect){
+                         location = re.redirect;
+                     }
+                 }
+             },'json');
+             return false;
+         });
+         img_lazyload(scope,{container:$('.content').eq(0),load:function(){
+
+         }});
+     };
+     render_glist('.glist-container .goods-list');
+
+     //翻页
+     var current_page = 1;
+     $('.btn-morepage').on('touchend',function(e){
+         e.stopPropagation();
+         var btn = $(this);
+         btn.find('.fa-circle-o-notch').removeClass('hidden');
+         var data_morepage = btn.attr('data-morepage');
+         data_morepage = $.parseJSON(data_morepage);
+         var new_page = $('<div class="goods-list"></div>').insertAfter($('.glist-container .goods-list:last-child'));
+         new_page.load(data_morepage.link.replace(data_morepage.token,++current_page)+" .glist-container .goods-list .table-view",function(){
+             render_glist(new_page);
+             btn.find('.fa-circle-o-notch').addClass('hidden');
+         });
+         if(current_page == data_morepage.total){
+             btn.remove();
+         }
+         return false;
+     });
+
+ });
+
+
+
+</script>

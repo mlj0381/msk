@@ -11,29 +11,26 @@
 // +----------------------------------------------------------------------
 
 
-class b2c_mdl_goods_type extends dbeav_model
-{
+class b2c_mdl_goods_type extends dbeav_model {
+
     public $has_many = array(
         'props' => 'goods_type_props:contrast',
     );
-
     public $subSdf = array(
         'default' => array(
-            'props' => array('*',array('props_value' => array('*',null, array(0,-1,'order_by ASC'))),array(0,-1,'ordernum ASC')),
+            'props' => array('*', array('props_value' => array('*', null, array(0, -1, 'order_by ASC'))), array(0, -1, 'ordernum ASC')),
         ),
     );
-    public function checkDefined()
-    {
+
+    public function checkDefined() {
         return $this->count(array('is_def' => 'false'));
     }
 
-    public function getDefault()
-    {
+    public function getDefault() {
         return $this->getList('*', array('is_def' => 'true'));
     }
 
-    public function save(&$data, $mustUpdate = null, $mustInsert = false)
-    {
+    public function save(&$data, $mustUpdate = null, $mustInsert = false) {
         if ($data['props']) {
             foreach ($data['props'] as $k => $v) {
                 $v['goods_p'] = $k;
@@ -48,6 +45,7 @@ class b2c_mdl_goods_type extends dbeav_model
                         $data['props'][$k]['props_value'][$vk]['order_by'] = $i++;
                     }
                 }
+
                 unset($data['props'][$k]['options']);
             }
         }
@@ -55,8 +53,7 @@ class b2c_mdl_goods_type extends dbeav_model
         return parent::save($data, $mustUpdate);
     }
 
-    public function dump2($filter, $field = '*')
-    {
+    public function dump2($filter, $field = '*') {
         $res = parent::getList($field, $filter);
         $rs = $res[0];
         if ($rs) {
@@ -95,12 +92,8 @@ class b2c_mdl_goods_type extends dbeav_model
         return $rs;
     }
 
-    public function dump($filter, $field = '*', $subSdf = null)
-    {
-        if ((strpos($field, '*') !== false || strpos($field, 'props') !== false) && !isset($subSdf['props'])) {
-            $subSdf = array_merge((array) $subSdf, array('props' => array('*', array('props_value' => array('*', null, array(0, -1, 'order_by ASC'))), array(0, -1, 'ordernum ASC'))));
-        }
-        $rs = parent::dump($filter, $field, $subSdf);
+    public function dump($filter, $field = '*', $subSdf = null) {
+        $rs = $this->get_props($filter, $field, $subSdf);
         $props = array();
         if ($rs['props']) {
             foreach ($rs['props'] as $k => $v) {
@@ -120,23 +113,24 @@ class b2c_mdl_goods_type extends dbeav_model
 
         return $rs;
     }
-    public function pre_recycle($rows)
-    {
+
+    public function get_props($filter, $field = '*', $subSdf = null) {
+        if ((strpos($field, '*') !== false || strpos($field, 'props') !== false) && !isset($subSdf['props'])) {
+            $subSdf = array_merge((array) $subSdf, array('props' => array('*', array('props_value' => array('*', null, array(0, -1, 'order_by ASC'))), array(0, -1, 'ordernum ASC'))));
+        }
+        return parent::dump($filter, $field, $subSdf);
+    }
+
+    public function pre_recycle($rows) {
         foreach ($rows as $v) {
             $type_ids[] = $v['type_id'];
         }
 
-        // $o_type_brand = $this->app->model('goods_cat');
-        // $rows = $o_type_brand->getList('cat_id',array('type_id'=>$type_ids));
-        // if( $rows ){
-        //     $this->recycle_msg = ('该类型已被分类关联');
-        //     return false;
-        // }
 
         $o = $this->app->model('goods');
         $g = $o->getRow('name', array('type_id' => $type_ids), 0, 1);
         if ($g) {
-            $this->recycle_msg = ('存在使用该类型的商品:'.$g['name']);
+            $this->recycle_msg = ('存在使用该类型的商品:' . $g['name']);
 
             return false;
         }
@@ -144,17 +138,16 @@ class b2c_mdl_goods_type extends dbeav_model
         return true;
     }
 
-    public function pre_restore(&$data, $restore_type = 'add')
-    {
+    public function pre_restore(&$data, $restore_type = 'add') {
         if (!($this->is_exists($data['name']))) {
             $data['need_delete'] = true;
 
             return true;
         } else {
             if ($restore_type == 'add') {
-                $new_name = $data['name'].'_1';
+                $new_name = $data['name'] . '_1';
                 while ($this->is_exists($new_name)) {
-                    $new_name = $new_name.'_1';
+                    $new_name = $new_name . '_1';
                 }
                 $data['name'] = $new_name;
                 $data['need_delete'] = true;
@@ -169,8 +162,7 @@ class b2c_mdl_goods_type extends dbeav_model
         }
     }
 
-    public function is_exists($name)
-    {
+    public function is_exists($name) {
         $row = $this->getList('*', array('name' => $name));
         if (!$row) {
             return false;
@@ -179,8 +171,7 @@ class b2c_mdl_goods_type extends dbeav_model
         }
     }
 
-    public function fetchSave($data, &$msg = '')
-    {
+    public function fetchSave($data, &$msg = '') {
         if ($data['props']) {
             foreach ($data['props'] as $key => $val) {
                 $data['props'][$key]['show'] = 'on';
@@ -200,7 +191,7 @@ class b2c_mdl_goods_type extends dbeav_model
             }
         }
         $data['params'] = $this->params_modifier($data['params'], false);
-        if ($this->db->selectrow('select * from vmc_b2c_goods_type where name='.$this->db->quote($data['name']).'')) {
+        if ($this->db->selectrow('select * from vmc_b2c_goods_type where name=' . $this->db->quote($data['name']) . '')) {
             $msg = ('对不起，本类型名已存在，请重新输入。');
 
             return false;
@@ -219,8 +210,7 @@ class b2c_mdl_goods_type extends dbeav_model
         }
     }
 
-    public function params_modifier($data, $forxml = true)
-    {
+    public function params_modifier($data, $forxml = true) {
         $return = array();
         if (is_array($data)) {
             if ($forxml) {
@@ -250,4 +240,5 @@ class b2c_mdl_goods_type extends dbeav_model
 
         return $return;
     }
+
 }

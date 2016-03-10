@@ -1,7 +1,7 @@
 
 <script src="<{$base_url}>/public/javascripts/summernote/summernote.min.js"></script>
 <script src="<{$base_url}>/public/javascripts/summernote/lang/summernote-zh-CN.js"></script>
-<{script app=desktop src="../com/global/plugins/jquery-tags-input/jquery.tagsinput.min.js" }>
+<{script app=desktop src="../com/global/plugins/jquery-tags-input/jquery.tagsinput.min.js"}>
 <script src="<{$base_url}>/public/javascripts/summernote/summernot_set.js"></script>
 
 <link rel="stylesheet" type="text/css" href="<{$base_url}>/public/stylesheets/font-awesome.min.css">
@@ -44,7 +44,7 @@
     !function(){
 
 
-            $('#spec_edit_pane .checker :checkbox').on('change',function(){
+            /*$('#spec_edit_pane .checker :checkbox').on('change',function(){
                 var checked = $(this).is(':checked');
                 $('#spec_edit_pane .spec-edit,#spec_edit_pane .product-items')[checked?'removeClass':'addClass']('hide');
                 $('#spec_edit_pane .spec-edit,#spec_edit_pane .product-items').find('input,:checkbox,:radio,textarea').attr('disabled',checked?false:true);
@@ -78,9 +78,14 @@
                 if(!confirm('确定删除？'))return;
                 $(this).closest('tr').remove();
                 product_items_change();
-            });
+            });*/
 
-
+            var substitute = function(str,obj){
+                return str.replace(/\\?\{([^{}]+)\}/g, function(match, name){
+                    if (match.charAt(0) == '\\') return match.slice(1);
+                    return (obj[name] != undefined) ? obj[name] : '';
+                });
+            }
             var create_product_items_func = function(){
 
                 var spec_v = $('#spec_edit_pane .spec-v');

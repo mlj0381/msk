@@ -46,6 +46,7 @@ $db['orders'] = array(
                 'active' => ('活动订单') ,
                 'dead' => ('已作废') ,
                 'finish' => ('已完成') ,
+                'del' => ('已删除')
             ) ,
             'filtertype' => 'normal',
             'default' => 'active',
@@ -71,6 +72,17 @@ $db['orders'] = array(
             'required' => true,
             'label' => ('付款状态') ,
             'filtertype' => 'normal',
+        ) ,
+        'abolish_why' => array(
+            'type' => array(
+                0 => ('我不想买了') ,
+                1 => ('信息填写错误，重新拍') ,
+                2 => ('卖家缺货') ,
+                3 => ('付款遇到问题(如余额不足、不知道怎么支付等)') ,
+                4 => ('拍错了') ,
+                5 => ('其他原因') ,
+            ) ,
+            'label' => ('退款原因') ,
         ) ,
         'payed' => array(
             'type' => 'money',
@@ -104,6 +116,15 @@ $db['orders'] = array(
             'label' => ('发货状态') ,
             'filtertype' => 'normal',
         ) ,
+        'comment_type' => array(
+            'type' => array(
+                '0' => '未评价',
+                '1' => '已评价',
+                '2' => '已追评',
+            ),
+            'default' => '0',
+            'label' => ('评价状态'),
+        ),
         'pay_app' => array(
             'type' => 'varchar(100)',
             'label' => ('支付方式') ,
@@ -314,6 +335,12 @@ $db['orders'] = array(
         'memo' => array(
             'type' => 'longtext',
             'label' => ('订单创建时附言') ,
+        ) ,
+        'store_id' => array(
+            'type' => 'table:store@store',
+            'label' => ('所属店铺') ,
+            'required' => true,
+            'in_list' => true,
         ) ,
         'remarks' => array(
             'type' => 'longtext',

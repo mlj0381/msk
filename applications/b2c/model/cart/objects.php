@@ -15,6 +15,8 @@
 //GUEST_CART 游客购物车
 class b2c_mdl_cart_objects extends dbeav_model
 {
+
+
     public function save(&$data, $mu = null, $mi = false)
     {
         $data['time'] = time(); //最新时间
@@ -65,6 +67,12 @@ class b2c_mdl_cart_objects extends dbeav_model
             $guest_cart = $_SESSION['GUEST_CART'][$filter['member_ident']];
             return $this->_filter_list($guest_cart, $filter);
         }
+    }
+    public function getPList($cols = '*', $filter = array(), $offset = 0, $limit = -1, $orderType = null){
+        return parent::getList($cols, $filter, $offset, $limit, $orderType);
+    }
+    public function pcount($filter = array()){
+        return parent::count($filter);
     }
     //同步游客购物车到会员级账户
     public function carry_guest_cart($member_id, $member_ident)

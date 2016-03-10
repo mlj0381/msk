@@ -26,6 +26,13 @@ class b2c_mdl_goods extends dbeav_model
     );
     public $has_one = array();
     public $subSdf = array(
+        'goods_list' => array(
+            'product' => array(
+                'price',
+                'marketable',
+                'product_id',
+            ),
+        ),
         'default' => array(
             'tag' => array(
                 'tag_id',
@@ -43,7 +50,7 @@ class b2c_mdl_goods extends dbeav_model
                 'cat_id,cat_name',
             ) ,
             ':brand' => array(
-                'brand_id,brand_name,brand_logo',
+                'brand_id,brand_name,brand_logo,brand_country',
             ) ,
             'images' => array(
                 'image_id',
@@ -60,6 +67,7 @@ class b2c_mdl_goods extends dbeav_model
                 '*',
             ),
         ),
+
     );
     public function __construct($app)
     {
@@ -128,6 +136,7 @@ class b2c_mdl_goods extends dbeav_model
         #↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑记录编辑商品日志-end@lujy↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
         $rs = parent::save($goods, $mustUpdate);
         #↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓记录编辑商品日志-start@lujy↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+        
         if ($obj_operatorlogs = vmc::service('operatorlog.goods')) {
             if (method_exists($obj_operatorlogs, 'goods_log')) {
                 if (isset($addorrestore_goods_flag) && !$addorrestore_goods_flag) {
@@ -137,12 +146,28 @@ class b2c_mdl_goods extends dbeav_model
             }
         }
         #↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑记录编辑商品日志-end@lujy↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
+
+        if($rs){
+            //商品保存成功时执行
+            foreach (vmc::servicelist('b2c.goods.save') as $object) {
+                if (method_exists($object, 'exec')) {
+                    $object->exec($goods);
+                }
+            }
+        }
         return $rs;
     }
     public function delete($filter, $subSdf = 'delete')
     {
         $rs = parent::delete($filter, $subSdf);
-
+        if($rs){
+            //商品删除成功时执行
+            foreach (vmc::servicelist('b2c.goods.delete') as $object) {
+                if (method_exists($object, 'exec')) {
+                    $object->exec($filter);
+                }
+            }
+        }
         return $rs;
     }
 
@@ -204,45 +229,6 @@ class b2c_mdl_goods extends dbeav_model
         return true;
     }
 
-    public function updateRank($gid, $item, $num = 1)
-    {
-        $weekMark = false;
-        switch ($item) {
-            case 'discuss':
-                $item = 'comments_count';
-            break;
-            case 'buy_count':
-                $weekMark = 'buy';
-            break;
-            case 'ask':
-                $item = 'rank_count';
-            break;
-        }
-        if ($weekMark) {
-            #$aGstat = $this->dump(array($gid),'count_stat');
-            $aGstat = $this->parent_getList('count_stat', array(
-                'goods_id' => $gid,
-            ));
-            $aGstat = $aGstat[0];
-            $count_stat = unserialize($aGstat['count_stat']);
-            $dayNum = $this->day(time());
-            $weekNum = $num;
-            if (isset($count_stat[$weekMark])) {
-                foreach ($count_stat[$weekMark] as $day => $countNum) {
-                    if ($dayNum > $day + 30) {
-                        unset($count_stat[$weekMark][$day]);
-                    }
-                    if ($dayNum < $day + 8) {
-                        $weekNum += $countNum;
-                    }
-                }
-            }
-            $count_stat[$weekMark][$dayNum] += $num;
-            $sqlCol = ','.$weekMark.'_w_count='.intval($weekNum).', count_stat=\''.serialize($count_stat).'\'';
-        }
-
-        return $this->db->exec('UPDATE vmc_b2c_goods SET '.$item.' = '.$item.'+'.intval($num).$sqlCol.' WHERE goods_id ='.intval($gid), true); //last_modify不做更新
-    }
 
     public function pre_recycle($rows)
     {
@@ -266,5 +252,15 @@ class b2c_mdl_goods extends dbeav_model
      public function get_spec_history(){
          $spec_desc = $this->getList('spec_desc',array('spec_desc|notin'=>array(null,NULL,'null','NULL')));
          return $spec_desc;
+     }
+
+     public function response_goods($params)
+     {
+         $b2c_api = vmc::singleton('b2c_source_goods');
+         if(method_exists($b2c_api, 'request_params')){
+             return $b2c_api->request($params);
+         }else{
+             //没定义接口调用本地数据
+         }
      }
 }

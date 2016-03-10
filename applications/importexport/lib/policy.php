@@ -64,13 +64,29 @@ class importexport_policy extends base_policy
     {
         $storage = $this->storage_policy();
         if ($storage['is_store_params']) {
-            $params = app::get('importexport')->getConf($storage['setting_key']);
+            if(defined('FTP_STORAGE') && constant('FTP_STORAGE') && preg_match("/ftp:\/\/([^:]+):([^@]+)@([^:]+):([\d]+)\/([\s\S]*)/",FTP_STORAGE,$matches)){
+                //match ftp://uname:password@xxx.domain.com:21/path
+                $params = array(
+                    'defined'=>'true',
+                    'host'=>$matches[3],
+                    'port'=>$matches[4],
+                    'name'=>$matches[1],
+                    'pass'=>$matches[2],
+                    'dir'=>$matches[5]
+                );
+                if(defined('FTP_PASV') && constant('FTP_PASV') === true){
+                    $params['pasv'] = 'Y';
+                }
+            }else{
+                $params = app::get('importexport')->getConf($storage['setting_key']);
+            }
         } else {
             $params = true;
         }
 
         return $params;
     }
+
 
     /**
      * 获取到导入导出存储调用类,并建立连接.

@@ -14,7 +14,7 @@
 class base_session
 {
     private $_sess_id;
-    private $_sess_key = 's';
+    private $_sess_key = 'SID';
     private $_session_started = false;
     private $_sess_expires = 60;
     private $_cookie_expires = 0;
@@ -50,13 +50,13 @@ class base_session
         if (WITHOUT_CACHE === true) {
             return $this->sess_id();
         } else {
-            return 'USER_SESSION:'.$this->sess_id();
+            return 'KV_SESSION:'.$this->sess_id();
         }
     }
 
     private function _get_session()
     {
-        if (WITHOUT_CACHE === true) {
+        if (true || WITHOUT_CACHE === true) {
             if (base_kvstore::instance('sessions')->fetch($this->_get_cache_key(), $return)) {
                 return $return;
             } else {
@@ -73,10 +73,10 @@ class base_session
 
     private function _set_session($value, $ttl)
     {
-        if (WITHOUT_CACHE === true) {
+        if (true || WITHOUT_CACHE === true) {
             return base_kvstore::instance('sessions')->store($this->_get_cache_key(), $value, $ttl);
         } else {
-            return cacheobject::set($this->_get_cache_key(), $value, $ttl + time());
+            return cacheobject::set($this->_get_cache_key(), $value, time() + $ttl );
         }
     }
 
@@ -116,7 +116,6 @@ class base_session
                     header(sprintf('Set-Cookie: %s=%s; path=%s; %s httpOnly;', $this->_sess_key, $this->_sess_id, $cookie_path, $cookie_expires), true);
                 }
             } else {
-                //for ecmobilecenter
                 $_SESSION = $this->_get_session();
             }
 
@@ -129,9 +128,7 @@ class base_session
 
     public function close($writeBack = true)
     {
-
-        //for ecmobilecenter
-        if (strlen($this->_sess_id) != 32 && strpos($this->_sess_id, 'mobile-')) {
+        if (strlen($this->_sess_id) != 32 && strpos($this->_sess_id, 'MOBILE-')) {
             return false;
         }
         if (!$this->_session_started) {

@@ -68,11 +68,15 @@ class desktop_ctl_roles extends desktop_controller {
             #$sdf = $menus->dump($v);
             $menuname = $menus->getList('*', array(
                 'menu_type' => 'menu',
-                'permission' => $v
+                'permission' => $v,
+                'display' => 'true',
             ));
-            foreach ($menuname as $val) {
-                $menu_workground[] = $val['workground'];
+            if($menuname){
+                foreach ($menuname as $val) {
+                    $menu_workground[] = $val['workground'];
+                }
             }
+
         }
         $menu_workground = array_unique((array)$menu_workground);
         $workgrounds = app::get('desktop')->model('menus')->getList('*', array(
@@ -80,18 +84,25 @@ class desktop_ctl_roles extends desktop_controller {
             'disabled' => 'false',
             'display' => 'true'
         ));
-        foreach ($workgrounds as $k => $v) {
-            $workgrounds[$k]['permissions'] = $this->obj_roles->get_permission_per($v['menu_id'], $permissions);
-            if (in_array($v['workground'], (array)$menu_workground)) {
-                $workgrounds[$k]['checked'] = 1;
+        if($workgrounds){
+            foreach ($workgrounds as $k => $v) {
+                $workgrounds[$k]['permissions'] = $this->obj_roles->get_permission_per($v['menu_id'], $permissions);
+                if (in_array($v['workground'], (array)$menu_workground)) {
+                    $workgrounds[$k]['checked'] = 1;
+                }
             }
         }
+
         $widgets = app::get('desktop')->model('menus')->getList('*', array(
-            'menu_type' => 'widgets'
+            'menu_type' => 'widgets',
+            'display' => 'true',
         ));
-        foreach ($widgets as $key => $widget) {
-            if (in_array($widget['addon'], $permissions)) $widgets[$key]['checked'] = true;
+        if($widgets){
+            foreach ($widgets as $key => $widget) {
+                if (in_array($widget['addon'], $permissions)) $widgets[$key]['checked'] = true;
+            }
         }
+
         $this->pagedata['widgets'] = $widgets;
         $this->pagedata['workgrounds'] = $workgrounds;
         $this->pagedata['adminpanels'] = $this->obj_roles->get_adminpanel($param_id, $permissions);

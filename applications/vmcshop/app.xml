@@ -6,7 +6,7 @@
         <email>dev@vmcshop.com</email>
         <url>http://www.vmcshop.com</url>
     </author>
-    <version>1.0</version>
+    <version>1.1</version>
     <license>http://www.vmcshop.com/license</license>
     <depends>
         <app>b2c</app>
@@ -22,5 +22,7 @@
         <app>ruleplus</app>
         <app>system</app>
         <app>serveradm</app>
+        <app>routeplus</app>
+        <app>vmcadmin</app>
     </depends>
 </app>

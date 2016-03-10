@@ -34,6 +34,9 @@
         <class>site_service_seo</class>
     </service>
 
-
+    <!--渲染拦截-->
+    <service id="base_render_pre_display">
+        <class orderby="0">site_view_pre_render</class>
+    </service>
 
 </services>

@@ -12,6 +12,8 @@
 
 
 class b2c_finder_brand{
+	
+	//public $column_control = '操作';
 
     var $column_edit = '编辑';
     function column_edit($row){

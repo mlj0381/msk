@@ -52,5 +52,5 @@ $setting = array(
         'type' => 'textarea',
         'default' => '',
         'desc' => '默认网站简介',
-    ) ,
+    ) ,  
 );

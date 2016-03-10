@@ -6,18 +6,16 @@ define('DES_KEY', 'SCUBEPGW');
 define('HASH_PAD', '0001ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff003021300906052b0e03021a05000414');
 bcscale(0);
 $private_key = array();
-// if(function_exists('hex2bin')){
-//     function hex2bin($hexdata) {
-//         $bindata = '';
-//         if (strlen($hexdata) % 2 == 1) {
-//             $hexdata = '0' . $hexdata;
-//         }
-//         for ($i = 0; $i < strlen($hexdata); $i+=2) {
-//             $bindata .= chr(hexdec(substr($hexdata, $i, 2)));
-//         }
-//         return $bindata;
-//     }
-// }
+function hex2bin2($hexdata) {
+         $bindata = '';
+         if (strlen($hexdata) % 2 == 1) {
+             $hexdata = '0' . $hexdata;
+         }
+        for ($i = 0; $i < strlen($hexdata); $i+=2) {
+            $bindata .= chr(hexdec(substr($hexdata, $i, 2)));
+        }
+        return $bindata;
+}
 
 
 function padstr($src, $len = 256, $chr = '0', $d = 'L')
@@ -75,10 +73,11 @@ function bcdechex($decdata)
 
 function sha1_128($string)
 {
-    $hash = sha1($string);
-    $sha_bin = hex2bin($hash);
-    $sha_pad = hex2bin(HASH_PAD);
 
+    $hash = sha1($string);
+
+    $sha_bin = hex2bin2($hash);
+    $sha_pad = hex2bin2(HASH_PAD);
     return $sha_pad.$sha_bin;
 }
 
@@ -171,7 +170,7 @@ function buildKey($key)
     } else {
         return $ret;
     }
-    $bin = hex2bin($hex);
+    $bin = hex2bin2($hex);
     $private_key['modulus'] = substr($bin, 0, 128);
     $cipher = MCRYPT_DES;
     $iv = str_repeat("\x00", 8);
@@ -226,7 +225,6 @@ function signOrder($merid, $ordno, $amount, $curyid, $transdate, $transtype)
         return false;
     }
     $plain = $merid.$ordno.$amount.$curyid.$transdate.$transtype;
-
     return sign($plain);
 }
 

@@ -34,22 +34,14 @@ class base_vcode {
         $sess_id = vmc::singleton('base_session')->sess_id();
         $key = $key.$sess_id;
         $ttl = 180;
-        if(defined('WITHOUT_CACHE') && !constant('WITHOUT_CACHE')){
-            cacheobject::set($key,$this->obj->get_code(),$ttl+time());
-        }else{
-            base_kvstore::instance('vcode')->store($key,$this->obj->get_code(),$ttl);
-        }
+        base_kvstore::instance('vcode/image')->store($key,$this->obj->get_code(),$ttl);
     }
 
     static function verify($key,$value){
         $value = strtolower($value);
         $sess_id = vmc::singleton('base_session')->sess_id();
         $key = $key.$sess_id;
-        if(defined('WITHOUT_CACHE') && !constant('WITHOUT_CACHE')){
-            cacheobject::get($key,$vcode);
-        }else{
-            base_kvstore::instance('vcode')->fetch($key,$vcode);
-        }
+        base_kvstore::instance('vcode/image')->fetch($key,$vcode);
         if( $vcode == strval($value) ){
             return true;
         }

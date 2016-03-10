@@ -5,7 +5,7 @@
     <service id="desktop_finder.wechat_mdl_replyrule">
         <class>wechat_finder_replyrule</class>
     </service>
-    <service id="openapi.wechat">
+    <service id="openapi.wechat" optname="openapi@微信相关">
         <class>wechat_api</class>
     </service>
     <service id="ectools_payment.applications" optname="支付插件列表">

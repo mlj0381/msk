@@ -22,62 +22,60 @@ class b2c_ctl_admin_order extends desktop_controller
         parent::__construct($app);
         $this->objMath = vmc::singleton('ectools_math');
     }
-    public function index()
+    public function index($s)
     {
-
-        $actions_define = array(
-            array(
-                'label' => ('打印') ,
-                'group' => array(
-                    array(
-                        'label' => ('打印样式配置') ,
-                        'target' => '_blank',
-                        'href' => 'index.php?app=b2c&ctl=admin_order&act=showPrintStyle',
-                    ) ,
-                    array(
-                        'label' => '_SPLIT_',
-                    ) ,
-                    array(
-                        'label' => ('打印订单详情') ,
-                        'data-submit' => 'index.php?app=b2c&ctl=admin_order&act=toprint',
-                        'data-target' => '_blank',
-                    ) ,
-                    array(
-                        'label' => ('打印购物小票') ,
-                        'data-submit' => 'index.php?app=b2c&ctl=admin_order&act=printing&p[0]=1',
-                        'data-target' => '_blank',
-                    ) ,
-                    array(
-                        'label' => ('打印配货清单') ,
-                        'data-submit' => 'index.php?app=b2c&ctl=admin_order&act=printing&p[0]=2',
-                        'data-target' => '_blank',
-                    ) ,
-                    array(
-                        'label' => ('打印快递单') ,
-                        'data-submit' => 'index.php?app=b2c&ctl=admin_order&act=printing&p[0]=8',
-                        'data-target' => '_blank',
-                    ),
-                ),
-            ),
+        $title = '订单列表';
+        $base_filter =  array(
+            'order_refer' => 'local',
+            'disabled' => 'false',
         );
-        $app_express = app::get('express');
-        if (isset($app_express) && $app_express && is_object($app_express) && $app_express->is_actived()) {
-        } else {
-            unset($actions_define['group'][5]);
+        switch ($s) {
+            case 's1': //待付款
+            $title = '待付款订单';
+            $base_filter = array_merge($base_filter,array('status' => 'active',
+            'pay_status' => array(
+                '0',
+                '3',
+                '5',
+            )));
+            break;
+            case 's2': //待发货
+            $title = '待发货订单';
+            $base_filter = array_merge($base_filter,array('status' => 'active',
+            'pay_status' => array(
+                '1',
+                '2',
+            ) ,
+            'ship_status|notin' => array(
+                '1',
+            )));
+            break;
+            case 's3': //已发货
+            $title = '已发货订单';
+            $base_filter = array_merge($base_filter,array(
+            'ship_status' => array(
+                '1',
+                '2',
+            )));
+            break;
+            case 's4': //已作废
+            $title = '已作废订单';
+            $base_filter = array_merge($base_filter,array('status' => 'dead'));
+            break;
+            case 's7': //已完成
+            $title = '已完成订单';
+            $base_filter = array_merge($base_filter,array('status' => 'finish'));
+            break;
         }
+
         $this->finder('b2c_mdl_orders', array(
-            'title' => ('订单列表'),
+            'title' =>$title,
             'allow_detail_popup' => true,
-            'base_filter' => array(
-                'order_refer' => 'local',
-                'disabled' => 'false',
-            ),
+            'base_filter' =>$base_filter,
             'use_buildin_export' => true,
             'use_buildin_set_tag' => true,
             'use_buildin_recycle' => false,
-            'use_buildin_filter' => true,
-            //    'actions' => $actions_define
-
+            'use_buildin_filter' => true
         ));
     }
     /**
@@ -286,6 +284,39 @@ class b2c_ctl_admin_order extends desktop_controller
      */
     public function printing($type, $order_id)
     {
+        if (!$order_id) {
+            trigger_error('未知订单ID', E_USER_ERROR);
+        }
+
+        $mdl_orders = $this->app->model('orders');
+        $subsdf = array(
+            'items' => array(
+                '*',
+            ) ,
+            'promotions' => array(
+                '*',
+            ) ,
+            ':dlytype' => array(
+                '*',
+            ),
+        );
+        $order = $mdl_orders->dump($order_id, '*', $subsdf);
+        $this->pagedata['order'] = $order;
+        $this->pagedata['payapp'] = app::get('ectools')->model('payment_applications')->dump($order['pay_app']);
+        $this->pagedata['member_info'] = vmc::singleton('b2c_user_object')->get_member_info($order['member_id']);
+        $mdl_memtpl = $this->app->model('member_systmpl');
+        switch ($type) {
+            case 1:
+                $this->pagedata['print_content'] = $mdl_memtpl->fetch('admin/order/print_cart',$this->pagedata);
+                break;
+            case 2:
+                $this->pagedata['print_content'] = $mdl_memtpl->fetch('admin/order/print_sheet',$this->pagedata);
+                break;
+            case 3:
+                $this->pagedata['print_content'] = $mdl_memtpl->fetch('admin/order/print_order',$this->pagedata);
+                break;
+        }
+        $this->display('admin/order/print.html');
     }
     /**
      * 产生支付页面.
@@ -384,7 +415,12 @@ class b2c_ctl_admin_order extends desktop_controller
         $params = $_POST;
         $return_score = $params['return_score'];
         unset($params['return_score']);
-        $this->begin('index.php?app=b2c&ctl=admin_order&act=detail&p[0]='.$params['order_id']);
+        if($_POST['in_as'] == 'true'){
+            $this->begin();
+        }else{
+            $this->begin('index.php?app=b2c&ctl=admin_order&act=detail&p[0]='.$params['order_id']);
+        }
+
         $obj_order = $this->app->model('orders');
         $sdf_order = $obj_order->dump($params['order_id']);
         if (!$params['money']) {
@@ -453,7 +489,7 @@ class b2c_ctl_admin_order extends desktop_controller
      *
      * @return string html
      */
-    public function goreship($order_id, $member_addr_id = false)
+    public function goreship($order_id)
     {
         $mdl_orders = $this->app->model('orders');
         $subsdf = array(
@@ -470,10 +506,6 @@ class b2c_ctl_admin_order extends desktop_controller
         $this->pagedata['dlycorp_list'] = $dlycorp_list;
         $this->pagedata['dlyplace_list'] = $this->app->model('dlyplace')->getList();
         $order = $mdl_orders->dump($order_id, '*', $subsdf);
-        if ($member_addr_id) {
-            $member_addr = $this->app->model('member_addrs')->dump($member_addr_id);
-            $order['consignee'] = array_merge($order['consignee'], $member_addr);
-        }
         $dlivery_send = $this->app->model('delivery')->getRow('*', array(
             'order_id' => $order['order_id'],
         ));
@@ -522,6 +554,7 @@ class b2c_ctl_admin_order extends desktop_controller
             $this->end(false, $msg);
         }
         $db->commit($this->transaction_status); //事务提交
+
         $this->end(true, '发货成功！');
     }
     /**
@@ -531,8 +564,12 @@ class b2c_ctl_admin_order extends desktop_controller
      */
     public function doreship()
     {
-        $order_id = $_POST['order_id']; //发货订单
-        $this->begin('index.php?app=b2c&ctl=admin_order&act=detail&p[0]='.$order_id);
+        $order_id = $_POST['order_id']; //退货订单
+        if($_POST['in_as'] == 'true'){
+            $this->begin(); //在售后流程中
+        }else{
+            $this->begin('index.php?app=b2c&ctl=admin_order&act=detail&p[0]='.$order_id);
+        }
         $mdl_orders = $this->app->model('orders');
         $dlycorp_id = $_POST['dlycorp_id']; //物流公司
         $dlyplace_id = $_POST['dp_id']; //收货地
@@ -631,7 +668,7 @@ class b2c_ctl_admin_order extends desktop_controller
     public function showPrintStyle()
     {
         $dbTmpl = $this->app->model('member_systmpl');
-        $filetxt = $dbTmpl->get('/admin/order/orderprint');
+        $filetxt = $dbTmpl->get('/admin/order/print_order');
         $cartfiletxt = $dbTmpl->get('/admin/order/print_cart');
         $sheetfiletxt = $dbTmpl->get('/admin/order/print_sheet');
         $this->pagedata['styleContent'] = $filetxt;
@@ -650,7 +687,7 @@ class b2c_ctl_admin_order extends desktop_controller
         $dbTmpl = $this->app->model('member_systmpl');
         $dbTmpl->set('/admin/order/print_sheet', $_POST['txtcontentsheet']);
         $dbTmpl->set('/admin/order/print_cart', $_POST['txtcontentcart']);
-        $dbTmpl->set('/admin/order/orderprint', $_POST['txtcontent']);
+        $dbTmpl->set('/admin/order/print_order', $_POST['txtcontent']);
         $this->end(true, '保存成功');
     }
     /**
@@ -662,7 +699,7 @@ class b2c_ctl_admin_order extends desktop_controller
         $dbTmpl = $this->app->model('member_systmpl');
         $dbTmpl->clear('/admin/order/print_sheet', $msg);
         $dbTmpl->clear('/admin/order/print_cart', $msg);
-        $is_clear = $dbTmpl->clear('/admin/order/orderprint', $msg);
+        $dbTmpl->clear('/admin/order/print_order', $msg);
         if ($is_clear) {
             $this->end(true, ('恢复默认值成功'));
         } else {

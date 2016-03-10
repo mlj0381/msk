@@ -58,7 +58,7 @@ class ectools_bill {
                 }
             break;
             case 'offline':
-                $sdf['status'] = 'succ';
+                //$sdf['status'] = 'succ';
                 //case 'deposit':
             break;
             default:

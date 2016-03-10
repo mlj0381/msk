@@ -1,7 +1,7 @@
 <?php
 
 
-class base_service_queue
+class base_service_queue extends base_openapi
 {
 
     public function worker(){

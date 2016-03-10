@@ -145,7 +145,7 @@ class base_component_ui
 
     public function getVer($flag = true, $ver = null)
     {
-        return $flag ? '?v'.substr(cachemgr::ask_cache_check_version(true), -4) : ($ver ? '?'.$ver : '');
+        return $flag ? '?v'.substr(cachemgr::ask_cache_check_version(), -4) : ($ver ? '?'.$ver : '');
     }
 
     public function script($params)
@@ -177,6 +177,7 @@ class base_component_ui
 
     public function css($params)
     {
+
         $default = array(
             'rel' => 'stylesheet',
             // 'media' => 'screen, projection',

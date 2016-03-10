@@ -1,4 +1,5 @@
 <?php
+
 // +----------------------------------------------------------------------
 // | VMCSHOP [V M-Commerce Shop]
 // +----------------------------------------------------------------------
@@ -10,23 +11,28 @@
 // +----------------------------------------------------------------------
 
 
-class b2c_order_delivery {
-
-    function __construct($app) {
+class b2c_order_delivery
+{
+    public function __construct($app)
+    {
         $this->app = $app;
         $this->mdl_delivery = app::get('b2c')->model('delivery');
         $this->omath = vmc::singleton('ectools_math');
     }
     /**
-     * 发货\退货单据数组组织
+     * 发货\退货单据数组组织.
+     *
      * @delivery_sdf array - 发\退货单据SDF基础数据
      * @send_arr 发货情况数组   $send_arr = array($order_item_id=>$send_num);
      * @msg string 错误消息
-     * @return boolean - 创建成功与否
+     *
+     * @return bool - 创建成功与否
      */
-    public function generate(&$delivery_sdf, $send_arr, &$msg = '') {
+    public function generate(&$delivery_sdf, $send_arr, &$msg = '')
+    {
         if (!$delivery_sdf['delivery_type']) {
             $msg = '未知货单类型,发货？退货？';
+
             return false;
         }
         $dtype = $delivery_sdf['delivery_type'];
@@ -34,32 +40,35 @@ class b2c_order_delivery {
         if (empty($delivery_sdf['delivery_id'])) {
             try {
                 $delivery_sdf['delivery_id'] = $delivery_id = $this->mdl_delivery->apply_id($delivery_sdf);
-            }
-            catch(Exception $e) {
+            } catch (Exception $e) {
                 $msg = $e->getMessage();
+
                 return false;
             }
             $delivery_sdf['createtime'] = time();
         }
         $order_items = app::get('b2c')->model('order_items')->getList('*', array(
-            'order_id' => $delivery_sdf['order_id']
+            'order_id' => $delivery_sdf['order_id'],
         ));
         if (!$order_items || !count($order_items)) {
-            $msg = '订单' . $delivery_sdf['order_id'] . '明细异常';
+            $msg = '订单'.$delivery_sdf['order_id'].'明细异常';
+
             return false;
         }
         //$partial = false;
         foreach ($order_items as $item) {
             $max_send = ($item['nums'] - $item['sendnum']); //最多应发
-            if($dtype == 'reship'){
+            if ($dtype == 'reship') {
                 $max_send = $item['sendnum']; //当单据类型为退货单据时，计算最多能退
             }
             $real_send = $send_arr[$item['item_id']]; //实际
             if ($max_send - $real_send < 0) {
-                $msg = $item['name'].$item['bn'].($dtype == 'reship'?'退货':'发货').'数量异常';
+                $msg = $item['name'].$item['bn'].($dtype == 'reship' ? '退货' : '发货').'数量异常';
                 return false;
             }
-
+            if($real_send == 0){
+                continue;
+            }
             $delivery_sdf['delivery_items'][] = array(
                 'delivery_id' => $delivery_id,
                 'order_item_id' => $item['item_id'],
@@ -71,10 +80,14 @@ class b2c_order_delivery {
                 'image_id' => $item['image_id'],
                 'weight' => $item['weight'],
                 'name' => $item['name'],
-                'sendnum' => $real_send
+                'sendnum' => $real_send,
             );
         }
-        $service_key = 'b2c.order.delivery.' . $delivery_sdf['delivery_type'] . '.before';
+        if(!isset($delivery_sdf['delivery_items']) || !is_array($delivery_sdf['delivery_items']) ||count($delivery_sdf['delivery_items']) == 0){
+            $msg = ($dtype == 'reship' ? '退货' : '发货').'异常';
+            return false;
+        }
+        $service_key = 'b2c.order.delivery.'.$delivery_sdf['delivery_type'].'.before';
         foreach (vmc::servicelist($service_key) as $service) {
             if (method_exists($service, 'exec')) {
                 if (!$service->exec($delivery_sdf, $send_arr, $msg = '')) {
@@ -86,21 +99,44 @@ class b2c_order_delivery {
         return true;
     }
     //保存单据数据
-    public function save(&$delivery_sdf, &$msg = '') {
-
+    public function save(&$delivery_sdf, &$msg = '')
+    {
         if (!$this->mdl_delivery->save($delivery_sdf)) {
             $msg = '单据保存失败';
+
             return false;
         } else {
             //时同步扩展服务
-            foreach (vmc::servicelist('b2c.order.delivery.' . $delivery_sdf['delivery_type'] . '.finish') as $service) {
+            foreach (vmc::servicelist('b2c.order.delivery.'.$delivery_sdf['delivery_type'].'.finish') as $service) {
                 if (!$service->exec($delivery_sdf, $msg)) {
-                    logger::error($delivery_sdf['delivery_id'] . $delivery_sdf['delivery_type'] . '单据保存出错！' . $msg);
-                    return false; //直接中断
+                    logger::error($delivery_sdf['delivery_id'].$delivery_sdf['delivery_type'].'单据保存出错！'.$msg);
 
+                    return false; //直接中断
                 }
             }
         }
+
+        return true;
+    }
+
+    //更新单据数据
+    public function update(&$delivery_sdf, &$msg = '')
+    {
+        if (!$this->mdl_delivery->save($delivery_sdf)) {
+            $msg = '单据更新失败';
+
+            return false;
+        } else {
+            //时同步扩展服务
+
+            foreach (vmc::servicelist('b2c.order.delivery.'.$delivery_sdf['delivery_type'].'.update') as $service) {
+                if (!$service->exec($delivery_sdf, $msg)) {
+                    logger::error($delivery_sdf['delivery_id'].$delivery_sdf['delivery_type'].'单据更新出错！'.$msg);
+                    return false; //直接中断
+                }
+            }
+        }
+
         return true;
     }
 }

@@ -59,8 +59,7 @@ class b2c_mdl_members extends dbeav_model
         if (is_object($info_object)) {
             $info_object->opinfo($sdf, 'b2c_mdl_members', __FUNCTION__);
         }
-        $flag = parent::save($sdf, $mustUpdate = null, $mustInsert = false);
-
+        $flag = parent::save($sdf, $mustUpdate, $mustInsert);
         return $flag;
     }
 
@@ -170,13 +169,22 @@ class b2c_mdl_members extends dbeav_model
 
     /**
      * 会员等级更新
+     *
      */
     public function touch_lv($member_id){
         $mdl_member_lv = $this->app->model('member_lv');
         $member = $this->dump($member_id);
         $mdl_member_lv->defaultOrder = array('experience',' desc');
         $member['experience'] = $member['experience']?$member['experience']:0;
-        $m_lv = $mdl_member_lv->getList('member_lv_id',array('experience|sthan'=>$member['experience']));
+        $t_experience = $mdl_member_lv->getRow('experience',array('member_lv_id'=>$member['member_lv']['member_group_id']));
+        if($t_experience['experience']>$member['experience']){
+            //会员等级不根据经验值变更降级
+            /*
+            * 如果当前赋予会员的等级对应经验，大于会员实际经验值，则不做等级check 
+            */
+            return true;
+        }
+        $m_lv = $mdl_member_lv->getList('member_lv_id,experience',array('experience|sthan'=>$member['experience']));
         if( $m_lv[0]){
             $member['member_lv']['member_group_id'] = $m_lv[0]['member_lv_id'];
         }else{
@@ -297,7 +305,6 @@ class b2c_mdl_members extends dbeav_model
         $columns = array_merge($columns, array(
             'login_account' => ('登录账号'),
         ));
-
         return $columns;
     }
 

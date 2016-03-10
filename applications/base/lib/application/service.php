@@ -10,7 +10,7 @@
 // +----------------------------------------------------------------------
 
 
- 
+
 class base_application_service extends base_application_prototype_xml{
 
     var $xml='services.xml';
@@ -29,7 +29,7 @@ class base_application_service extends base_application_prototype_xml{
 
     public function install(){
         logger::info('Installing '.$this->content_typename().' '.$this->key());
-        
+
         $data = $this->row();
         $data['content_type'] = 'service_category';
         if($this->current['optname']){
@@ -39,8 +39,8 @@ class base_application_service extends base_application_prototype_xml{
             $data['content_path'] = $this->current['opttype'];
         }
 		$obj_app_content = app::get('base')->model('app_content');
-        $obj_app_content->insert($data);
-        
+        $obj_app_content->save($data);
+
 		$index = 0;
 		$time = time();
 		$service_define = array();
@@ -52,7 +52,7 @@ class base_application_service extends base_application_prototype_xml{
 			else
 				$row['ordernum'] = 50;
 			$row['input_time'] = $time+$index;
-            $obj_app_content->insert($row);
+            $obj_app_content->save($row);
             //$service_define['list'][$class['value']] = $class['value'];
             //todo: interface... check
 			$index++;
@@ -63,11 +63,11 @@ class base_application_service extends base_application_prototype_xml{
 			$service_define['list'][$arr['content_path']] = $arr['content_path'];
 		}
         base_kvstore::instance('service')->store($this->key,$service_define);
-        
+
         //更新service资源最后变更时间
         syscache::instance('service')->set_last_modify();
     }
-    
+
     function clear_by_app($app_id){
         if(!$app_id){
             return false;
@@ -86,11 +86,11 @@ class base_application_service extends base_application_prototype_xml{
                 base_kvstore::instance('service')->store($service_name,$service_define);
             }
         }
-        
-        
+
+
         app::get('base')->model('app_content')->delete(array(
             'app_id'=>$app_id,'content_type'=>'service'));
-            
+
         app::get('base')->model('app_content')->delete(array(
             'app_id'=>$app_id,'content_type'=>'service_category'));
 
@@ -106,7 +106,7 @@ class base_application_service extends base_application_prototype_xml{
         $queue[$app_id] = $app_id;
     }//End Function
 
-    private function check_service_level($app_id) 
+    private function check_service_level($app_id)
     {
         if($app_id == 'base')   return 0;
         $queue = array();
@@ -117,4 +117,3 @@ class base_application_service extends base_application_prototype_xml{
     }//End Function
 
 }
- 

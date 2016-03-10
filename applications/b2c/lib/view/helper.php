@@ -11,12 +11,13 @@
 // +----------------------------------------------------------------------
 
 
-class b2c_view_helper
+class b2c_view_helper extends b2c_view_widget
 {
     public function __construct($app)
     {
         $this->app = $app;
     }
+
     public function function_pagers($params, &$smarty)
     {
         $c = intval($params['data']['current']);
@@ -73,6 +74,7 @@ class b2c_view_helper
         return $html.'</ul>';
     }
 
+
     public function function_minipagers($params, &$smarty)
     {
         if (!$params['data']['current']) {
@@ -128,6 +130,10 @@ class b2c_view_helper
     public function modifier_order_status($v)
     {
         return app::get('b2c')->model('orders')->trasform_status('status', $v);
+    }
+    
+    public function modifier_order_count($v){
+        return count($v);
     }
     //积分变更原因
     public function modifier_integral_reason($v)
@@ -199,4 +205,7 @@ class b2c_view_helper
         return '%AVATAR_'.$member_id.'_S_'.$size.'_AVATAR%';
     }
 
+    public function modifier_checkIn($k, $array){
+        if(in_array($k, $array)) return 'checked';
+    }
 }

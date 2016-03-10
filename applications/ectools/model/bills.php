@@ -12,7 +12,7 @@
 
 class ectools_mdl_bills extends dbeav_model {
     var $defaultOrder = array(
-        'last_modify',
+        'createtime',
         'DESC'
     );
     public function apply_id($bill_sdf) {
@@ -32,8 +32,7 @@ class ectools_mdl_bills extends dbeav_model {
 
         $tb = $this->table_name(1);
         do{
-            $microtime = utils::microtime();
-            mt_srand($microtime);
+
             $i = substr(mt_rand() , -3);
             $bill_id = $key . (date('y')+date('m')+date('d')).date('His') . $i;
             $row = $this->db->selectrow('SELECT bill_id from '.$tb.' where bill_id ='.$bill_id);
@@ -65,7 +64,7 @@ class ectools_mdl_bills extends dbeav_model {
         }
     }
     /**
-     * filter字段显示修改
+     * finder字段显示修改
      * @params string 字段的值
      * @return string 修改后的字段的值
      */
@@ -80,7 +79,7 @@ class ectools_mdl_bills extends dbeav_model {
         return $arr_pam_account[0]['login_name'] ? $arr_pam_account[0]['login_name'] : '未知操作员';
     }
     /**
-     * filter字段显示修改
+     * finder字段显示修改
      * @params string 字段的值
      * @return string 修改后的字段的值
      */
@@ -92,4 +91,9 @@ class ectools_mdl_bills extends dbeav_model {
             return $pay_app['name'].$pay_app['version'].'('.$pay_app['display_name'].')';
         } else return 'app_name';
     }
+
+
+
+
+
 }

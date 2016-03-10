@@ -16,11 +16,7 @@
 		<class>base_view_input</class>
 	</service>
 
-	<service id="openapi.rpc_callback">
-		<class>base_rpc_service</class>
-	</service>
-
-	<service id="openapi.queue">
+	<service id="openapi.queue" optname="openapi@队列">
 		<class>base_service_queue</class>
 	</service>
 

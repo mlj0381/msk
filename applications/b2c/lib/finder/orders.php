@@ -50,13 +50,10 @@ class b2c_finder_orders{
 				<li>
                     <a target="_blank" href="index.php?app=b2c&ctl=admin_order&act=printing&p[0]=2&p[1]=$order_id">打印配货单</a>
 				</li>
-                <!--<li>
-                    <a target="_blank" href="index.php?app=b2c&ctl=admin_order&act=printing&p[0]=3&p[1]=$order_id">打印快递单</a>
-                </li>-->
 				<li class="divider">
 				</li>
                 <li>
-                    <a href="#">打印订单详情</a>
+                    <a target="_blank" href="index.php?app=b2c&ctl=admin_order&act=printing&p[0]=3&p[1]=$order_id">打印订单详情</a>
                 </li>
 			</ul>
         </div>
@@ -79,8 +76,12 @@ HTML;
             $_return .= $this->wrap_label('货到付款','warning');
         }
         //已完成或已作废 归档
-        if($row['status']!='active'){
+        if($row['status']=='dead'){
             $_return .= $this->wrap_label($orders_columns['status']['type'][$row['status']],'default');
+            return $_return;
+        }
+        if($row['status']=='finish'){
+            $_return .= $this->wrap_label($orders_columns['status']['type'][$row['status']],' bg-green-jungle');
             return $_return;
         }
         //待付款 非COD货到付款订单

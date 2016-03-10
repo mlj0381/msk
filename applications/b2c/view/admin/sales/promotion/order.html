@@ -120,6 +120,9 @@
             </label>
             <div class="col-md-5">
                 <ul class="list-inline">
+                    <li>
+                    <label class="control-label"><input type="checkbox" value="-1" name="rule[member_lv_ids][]" <{if ($rule.member_lv_ids == '') || in_array('-1',$rule.member_lv_ids)}>checked<{/if}>/>顾客</label>
+                    </li>
                     <{foreach from=$member_level item=ml}>
                     <li>
                     <label class="control-label"><input type="checkbox" value="<{$ml.member_lv_id}>" name="rule[member_lv_ids][]" <{if ($rule.member_lv_ids == '') || in_array($ml.member_lv_id,$rule.member_lv_ids)}>checked<{/if}>/><{$ml.name}></label>

@@ -12,26 +12,35 @@
 
 class b2c_ctl_admin_goods_type extends desktop_controller
 {
-    public function index()
+    public function index($type)
     {
+        $base_filter = 0; //0 类型 1规格
+        $label = '商品类型';
+        if($type === '1'){
+            $base_filter = 1;
+            $label = '商品规格';
+        }
         $this->finder('b2c_mdl_goods_type', array(
             'actions' => array(
                 array(
-                    'label' => ('添加商品类型'),
+                    'label' => '添加' . $label,
                     'icon' => 'fa fa-plus',
-                    'href' => 'index.php?app=b2c&ctl=admin_goods_type&act=add',
+                    'href' => 'index.php?app=b2c&ctl=admin_goods_type&act=add&p[0]=' . $base_filter,
                 ),
             ),
-            'title' => ('商品类型'),
+            'title' => $label,
             'use_buildin_recycle' => true,
+            'base_filter' => array('belong_type' => $base_filter),
         ));
     }
-    public function add()
+    public function add($type = 0)
     {
+        $this->pagedata['type'] = $type;
         $this->edit();
     }
-    public function set($typeId = 0)
+    public function set($typeId = 0, $type = 0)
     {
+        $this->pagedata['type'] = $type;
         $this->edit($typeId);
     }
     public function edit($type_id)
@@ -74,16 +83,14 @@ class b2c_ctl_admin_goods_type extends desktop_controller
     public function save()
     {
         $gtype = $_POST['gtype'];
-        $this->begin('index.php?app=b2c&ctl=admin_goods_type&act=index');
+        $this->begin('index.php?app=b2c&ctl=admin_goods_type&act=index&p[0]=' . $gtype['belong_type']);
         if (!$gtype['name']) {
             //trigger_error(('请输入类型名称'),E_USER_ERROR);
             $this->end(false, ('请输入类型名称'));
         }
         $oGtype = $this->app->model('goods_type');
-        $typeId = current((array) $oGtype->dump(array(
-            'name' => $gtype['name'],
-            'type_id',
-        )));
+        $checked = $oGtype->dump(array('name' => $gtype['name'], 'belong_type' => $gtype['belong_type'], 'type_id',));
+        $typeId = current($checked);
         if ($typeId && $gtype['type_id'] != $typeId) {
             //trigger_error(('类型名称已存在'),E_USER_ERROR);
             $this->end(false, ('类型名称已存在'));
@@ -99,7 +106,7 @@ class b2c_ctl_admin_goods_type extends desktop_controller
         if ($errorMsg) {
             $this->end(false, $errorMsg);
         }
-
+        
         $this->end($oGtype->save($gtype), ('操作成功'));
     }
 
@@ -171,12 +178,10 @@ class b2c_ctl_admin_goods_type extends desktop_controller
             }
             $props[$propskey] = $aProps;
         }
-        if ($inputIndex > 51) {
-            //trigger_error(('输入属性不能超过30项'),E_USER_ERROR);
-            $this->end(false, ('输入属性不能超过30项'));
+        if ($inputIndex > 50) {
+            $this->end(false, ('输入属性不能超过50项'));
         }
-        if ($selectIndex > 21) {
-            //trigger_error(('选择属性不能超过20项'),E_USER_ERROR);
+        if ($selectIndex > 20) {
             $this->end(false, ('选择属性不能超过20项'));
         }
         $gtype['props'] = $props;

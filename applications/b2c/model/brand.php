@@ -20,10 +20,10 @@ class b2c_mdl_brand extends dbeav_model
     {
         parent::__construct($app);
         $this->use_meta();
-        // foreach($this->getList() as $item){
-        //     $item['ordernum'] = 30;
-        //     $this->save($item);
-        // }
+        foreach($this->getList() as $item){
+            $item['ordernum'] = 30;
+            $this->save($item);
+        }
     }
     public function brand_meta_register()
     {

@@ -85,6 +85,11 @@ $db['members'] = array(
             'in_list' => true,
             'default_in_list' => false,
         ) ,
+        'member_setting' => array(
+            'type' => 'serialize',
+            'default' => '',
+            'comment' => '会员帐号设置'
+        ),
         'tel' => array(
             'type' => 'varchar(50)',
             'label' => ('固定电话') ,
@@ -148,14 +153,14 @@ $db['members'] = array(
             'label' => ('生月') ,
             'type' => 'tinyint unsigned',
 
-            
+
             'in_list' => false,
         ) ,
         'b_day' => array(
             'label' => ('生日') ,
             'type' => 'tinyint unsigned',
 
-            
+
             'in_list' => false,
         ) ,
         'sex' => array(
@@ -206,7 +211,7 @@ $db['members'] = array(
 
             'type' => 'time',
             'filtertype' => 'time',
-            
+
             'in_list' => true,
             'default_in_list' => true,
             'comment' => ('注册时间') ,
@@ -238,6 +243,18 @@ $db['members'] = array(
             'label' => ('经验值') ,
             'type' => 'int(10)',
             'in_list' => true,
+        ) ,
+        'checkin' => array(
+            'label' => ('审核状态') ,
+            'type' => array(
+                '-1' => ('拒绝'),
+                '0' => ('审核中'),
+                '1' => ('通过'),
+            ),
+            'default' => '0',
+            'required' => true,
+            'in_list' => false,
+            'default_in_list' => false,
         ) ,
         'source' => array(
             'type' => array(

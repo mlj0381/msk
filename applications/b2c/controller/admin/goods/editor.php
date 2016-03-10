@@ -14,8 +14,8 @@ class b2c_ctl_admin_goods_editor extends desktop_controller
 {
     public function add()
     {
-        $this->pagedata['cat']['type_id'] = $this->pagedata['goods']['type']['type_id'] = 1;
-        $this->_editor(1);
+        $this->pagedata['cat']['type_id'] = $this->pagedata['goods']['type']['type_id'] = 0;
+        $this->_editor(0);
         //$this->pagedata['spec_history'] = app::get('b2c')->model('goods')->get_spec_history();
         $this->pagedata['IMAGE_MAX_SIZE'] = IMAGE_MAX_SIZE;
         $this->page('admin/goods/detail/frame.html');
@@ -36,7 +36,7 @@ class b2c_ctl_admin_goods_editor extends desktop_controller
     }
 
     public function save()
-    {
+    {print_r($_POST);die;
         $this->begin($_POST['redirect']);
         $mdl_goods = $this->app->model('goods');
         $mdl_products = $this->app->model('products');
@@ -81,7 +81,14 @@ class b2c_ctl_admin_goods_editor extends desktop_controller
                 $this->end(false, ('重复的条码：'.$p['barcode']));
             }
         }
+
+        foreach ($goods['extended_cat'] as $k=>$v) {
+            if(!$v || $v<0){
+                unset($goods['extended_cat'][$k]);
+            }
+        }
         $mdl_goods->has_many['product'] = 'products:contrast';
+        
         if (!$mdl_goods->save($goods)) {
             $this->end(false, ('保存失败!'));
         }
@@ -277,8 +284,8 @@ class b2c_ctl_admin_goods_editor extends desktop_controller
 
     private function _editor($type_id)
     {
-        $mdl_cat = $this->app->model('goods_cat');
-        $this->pagedata['cats'] = $mdl_cat->getMapTree(0, '');
+
+
         $this->prototype($type_id);
         $this->pagedata['sections'] = array();
         $sections = array(

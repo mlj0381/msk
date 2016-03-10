@@ -1,5 +1,5 @@
 <h3 class="page-title">
-        购物流程设置
+        商城设置
 </h3>
 <form action="index.php?app=b2c&ctl=admin_setting&act=index" method="post" class="form" >
     <div class="form-horizontal">
@@ -19,6 +19,26 @@
                     </div>
                 </div>
             <{/foreach}>
+            <div class="form-group">
+                    <label class="col-md-3 control-label">收货时间</label>
+                    <div class="col-md-4">
+                        <div class="receiving">
+                            <{foreach from=$setting.receiving_time item=item}>
+                            <div>
+                                <input name="receiving_time[]" value="<{$item}>" class="time"/>
+                                <a href="javascript:;" class="fa fa-trash-o text-danger delete-image"></a>
+                            </div>
+                            <{/foreach}>
+                        </div>
+                        
+                        <span class="help-block">
+                            <span class="help-block">收货时间设置格式：08:00 - 09:00</span>
+                            <button type="button" class="btn green add-time">
+                                添加收货时间<i class="fa fa-plus"></i>
+                            </button>
+                        </span>
+                    </div>
+            </div>
             <div class="form-actions">
                 <div class="row">
                     <div class="col-md-offset-3 col-md-9">
@@ -30,3 +50,50 @@
         </div>
     </div>
 </form>
+<textarea class="hide gimage-box-process-tpl">
+    <div class="tile bg-grey-gallery">
+        <div class="tile-body">
+            <i class="fa fa-cloud-upload">
+            </i>
+        </div>
+        <div class="tile-object">
+            <div class="name">
+                <img src="<{$env.STATICS_HOST_URL}>/desktop/admin/layout/img/ajax-modal-loading.gif"/>
+            </div>
+            <div class="number">
+            </div>
+        </div>
+    </div>
+</textarea>
+
+<textarea class="time-add hide">
+    <div>
+        <input name="receiving_time[]" value="" class="time" style=""/>
+        <a href="javascript:;" class="fa fa-trash-o text-danger delete-image"></a>                        </div>
+</textarea>
+<style>
+    .time{
+        background-color: #fff;
+        border: 1px solid #e5e5e5;
+        box-shadow: none;
+        color: #333;
+        font-size: 14px;
+        font-weight: 400;
+        border-radius: 4px;
+        height: 34px;
+        padding: 6px 12px;
+        width: 90%;
+        margin: 5px 0;
+    }
+</style>
+<script>
+    $(function(e){
+        $('.add-time').click(function(){
+            //alert($(this).closest('span').prev().html());
+            $(this).closest('span').prev().append($('.time-add').val());
+        });
+        $('.receiving ').on('click', '.text-danger', function () {
+            $(this).closest('div').remove();
+        });
+    });
+</script>

@@ -1,25 +1,53 @@
+
 <div  class="my-main">
   <div class="row">
-      <div class="col-xs-2">
+      <div class="col-xs-2 member_left">
           <dl class="my-menu">
+
               <{foreach from=$menu item=i key=k}>
-                    <dt <{if $i.link}>class="mm-root"<{/if}>>
-                        <{if $i.link}>
-                        <a href="<{link app=$i.link.app ctl=$i.link.ctl act=$i.link.act}>">
-                        <{$i.label}>
-                        </a>
-                        <{else}>
-                        <{$i.label}>
-                        <{/if}>
-                    </dt>
+              <dt class="mm-root <{if $i.name eq 'index'}>all-menu<{/if}>"><span><{$i.label}> <i class="icon-caret-right"></i></span>
+                  <div class="menu-wrap clearfix">
+                    <ul>
+                      <li class="first-li">购物</li>
+                      <li><a href="">我的购物车</a></li>
+                      <li><a href="">购买过的店铺</a></li>
+                      <li><a href="">我的收藏</a></li>
+                      <li><a href="">我的评价</a></li>
+                      <li><a href="">我的足迹</a></li>
+                    </ul>
+                    <ul>
+                      <li class="first-li">订单</li>
+                      <li><a href="">已买到的商品</a></li>
+                    </ul>
+                    <ul>
+                      <li class="first-li">优惠</li>
+                      <li><a href="">我的优惠信息</a></li>
+                    </ul>
+                    <ul>
+                      <li class="first-li">退货维权</li>
+                      <li><a href="">退款退货管理</a></li>
+                      <li><a href="">售后管理</a></li>
+                      <li><a href="">投诉管理</a></li>
+                      <li><a href="">举报管理</a></li>
+                      <li><a href="">咨询回复</a></li>
+                    </ul>
+                    <ul>
+                      <li class="first-li">其他</li>
+                      <li><a href="">最近访问</a></li>
+                    </ul>
+                  </div>
+              </dt>
                     <dd>
                         <ul class="mm-list list-unstyled">
                             <{foreach from=$i.items item=m key=j}>
-                               <li data-myaction="<{$m.link.act}>" class="mm-<{$m.link.ctl}>-<{$m.link.act}> <{if $current_action!='index' && $m.link.act == $current_action}> active<{/if}>">
-                                   <a <{if $m.link.ctl!='site_member'}>target="_blank"<{/if}> href="<{link app=$m.link.app ctl=$m.link.ctl act=$m.link.act}>">
+								              <{if $m.display == 'true'}>
+                               <li data-myaction="<{$m.action}>"
+                                   class="mm-<{$m.controller}>-<{$m.items.action}> <{if $current_controller==$m.controller && $m.action == $current_action}>  active<{/if}>">
+                                   <a target="<{if $m.app != 'b2c'}>_blank<{else}>_self<{/if}>" data-target="main" href="<{link app=$m.app ctl=$m.controller act=$m.action}>">
                                        <span><{$m.label}></span>
                                    </a>
                                </li>
+							                 <{/if}>
                             <{/foreach}>
                         </ul>
                     </dd>

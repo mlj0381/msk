@@ -21,8 +21,6 @@ class base_application_manage
             'list' => array(
                 'base_application_dbtable',
                 'base_application_service',
-                'base_application_lang',
-                'base_application_cache_expires',
                 'base_application_crontab',
             ),
         );
@@ -251,7 +249,8 @@ class base_application_manage
         ), array(
             'app_id' => $app_id,
         ));
-
+        $this->update_local_app_info($app_id);
+        
         $app->runtask('post_install', $options);
         if ($auto_enable) {
             $this->enable($app_id);
@@ -380,11 +379,11 @@ class base_application_manage
         echo $app_id;
         exit;
     }
-    public function update_app_content($app_id, $autofix = true)
+    public function update_app_content($app_id, $autofix = true, $force = false)
     {
         foreach ($this->content_detector($app_id) as $k => $detector) {
             $last_modified = $detector->last_modified($app_id);
-            if (base_kvstore::instance('system')->fetch('service_last_modified.'.get_class($detector).'.'.$app_id, $current_define_modified) == false || $last_modified != $current_define_modified) {
+            if ($force || base_kvstore::instance('system')->fetch('service_last_modified.'.get_class($detector).'.'.$app_id, $current_define_modified) == false || $last_modified != $current_define_modified) {
                 logger::info('Updating '.$k.'@'.$app_id.'.');
                 if ($autofix) {
                     $detector->update($app_id);
@@ -393,31 +392,39 @@ class base_application_manage
             }
         }
     }
+
+    public function update_app_content_force($app_id){
+        foreach ($this->content_detector($app_id) as $k => $detector) {
+                logger::info('Force Updating '.$k.'@'.$app_id.'.');
+                $detector->update($app_id);
+        }
+    }
+
     public function sync()
     {
         logger::info('Updating Application library..');
-        $xmlfile = tempnam(TMP_DIR, 'appdb_');
-        $appdb = vmc::singleton('base_xml')->xml2array(file_get_contents($xmlfile), 'base_app');
-
-        foreach ((array) $appdb['app'] as $app) {
-            $data = array(
-                'app_id' => $app['id'],
-                'app_name' => $app['name'],
-                'remote_ver' => $app['version'],
-                'description' => $app['description'],
-                'author_name' => $app['author']['name'],
-                'author_url' => $app['author']['url'],
-                'author_email' => $app['author']['email'],
-                'remote_config' => $app,
-            );
-            app::get('base')->model('apps')->replace($data, array(
-                'app_id' => $app['id'],
-            ));
-        }
+        // $xmlfile = tempnam(TMP_DIR, 'appdb_');
+        // $appdb = vmc::singleton('base_xml')->xml2array(file_get_contents($xmlfile), 'base_app');
+        //
+        // foreach ((array) $appdb['app'] as $app) {
+        //     $data = array(
+        //         'app_id' => $app['id'],
+        //         'app_name' => $app['name'],
+        //         'remote_ver' => $app['version'],
+        //         'description' => $app['description'],
+        //         'author_name' => $app['author']['name'],
+        //         'author_url' => $app['author']['url'],
+        //         'author_email' => $app['author']['email'],
+        //         'remote_config' => $app,
+        //     );
+        //     app::get('base')->model('apps')->replace($data, array(
+        //         'app_id' => $app['id'],
+        //     ));
+        // }
         $this->update_local();
         logger::info('Application libaray is updated, ok.');
     }
-    private function update_local_app_info($app_id)
+    public function update_local_app_info($app_id)
     {
         $app = app::get($app_id)->define();
         $data = array(
@@ -445,7 +452,5 @@ class base_application_manage
             closedir($handle);
         }
         logger::info('Scanning local Applications ok.');
-
-        return $this->_list;
     }
 }

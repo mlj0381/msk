@@ -46,7 +46,8 @@ class desktop_ctl_cachestage extends desktop_controller
             $methods = $value->get_cache_methods();
             foreach ((array) $methods as $method) {
                 if (isset($method['app']) && isset($method['ctl']) && isset($method['act'])) {
-                    if ($expires = app::get('site')->getConf($method['app'].'_'.$method['ctl'].'_'.$method['act'].'.cache_expires')) {
+                    $expires = app::get('site')->getConf($method['app'].'_'.$method['ctl'].'_'.$method['act'].'.cache_expires');
+                    if ($expires!==null) {
                         $method['expires'] = $expires;
                     }
                     $this->pagedata['static_cache'][] = $method;
@@ -61,7 +62,8 @@ class desktop_ctl_cachestage extends desktop_controller
             $methods = $value->get_cache_methods();
             foreach ((array) $methods as $method) {
                 if (isset($method['app']) && isset($method['ctl']) && isset($method['act'])) {
-                    if ($expires = app::get('mobile')->getConf($method['app'].'_'.$method['ctl'].'_'.$method['act'].'.cache_expires')) {
+                    $expires = app::get('mobile')->getConf($method['app'].'_'.$method['ctl'].'_'.$method['act'].'.cache_expires');
+                    if ($expires!==null) {
                         $method['expires'] = $expires;
                     }
                     $this->pagedata['mstatic_cache'][] = $method;
@@ -102,7 +104,6 @@ class desktop_ctl_cachestage extends desktop_controller
     public function mrouter_cache_save()
     {
         $this->begin('');
-        $expirse = $_POST;
         $expirse = $_POST;
         foreach ($expirse as $key => $value) {
             app::get('mobile')->setConf($key.'.cache_expires', (int) $value);

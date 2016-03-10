@@ -22,6 +22,7 @@ class b2c_ctl_mobile_list extends b2c_mfrontpage
     }
     public function index($fix_brand = false)
     {
+
         $params = utils::_filter_input($_GET);
         $query_str = $this->_query_str($params);
         $this->pagedata['query'] = $this->_query_str($params, 0);
@@ -51,23 +52,34 @@ class b2c_ctl_mobile_list extends b2c_mfrontpage
             'full' => 1,
         )).'?page='.$this->pagedata['pager']['token'].($query_str ? '&'.$query_str : '');
         if (!$fix_brand) {
-            $this->pagedata['data_screen'] = $this->_screen_data_by_cat($filter['cat_id']);
+            $this->pagedata['data_screen'] = vmc::singleton('b2c_goods_stage')->screening_data_by_cat($filter['cat_id']);
         } else {
             $brand = app::get('b2c')->model('brand')->dump($fix_brand);
             $this->pagedata['brand'] = $brand;
-            $this->pagedata['data_screen'] = $this->_screen_data_by_brand($fix_brand);
+            $this->pagedata['data_screen'] = vmc::singleton('b2c_goods_stage')->screening_data_by_brand($fix_brand);
             $this->set_tmpl('brandlist'); //锁定品牌型列表模板
             $brand_setting = $brand['brand_setting'];
             if ($brand_setting['mobile_template']) {
                 $this->set_tmpl_file($brand_setting['mobile_template']);
             }
         }
-        $this->page('mobile/list/index.html');
+        if($this->_request->is_ajax()){
+            //ajax 请求不经过模板机制
+            $this->display('mobile/list/index.html');
+        }else{
+            $this->page('mobile/list/index.html');
+        }
+
     }
     //获取商品列表，包装商品列表
     private function _list($filter, $page, $orderby)
     {
 
+        $cache_key =  utils::array_md5(func_get_args());
+        if(cachemgr::get($cache_key, $return)){
+            return $return;
+        }
+        cachemgr::co_start();
         $goods_cols = '*';
         $mdl_goods = $this->app->model('goods');
         $goods_list = $mdl_goods->getList($goods_cols, $filter, $page['size'] * ($page['index'] - 1), $page['size'], $orderby);
@@ -79,7 +91,7 @@ class b2c_ctl_mobile_list extends b2c_mfrontpage
         $obj_goods_stage->gallery($goods_list); //引用传递
         $total = $mdl_goods->count($filter);
 
-        return array(
+        $return =  array(
             'data' => $goods_list,
             'count' => count($goods_list) ,
             'all_count'=>$total,
@@ -88,6 +100,8 @@ class b2c_ctl_mobile_list extends b2c_mfrontpage
                 'current' => intval($page['index']),
             ),
         );
+        cachemgr::set($cache_key, $return, cachemgr::co_end());
+        return $return;
     }
     private function _query_str($params, $nopage = true)
     {
@@ -105,7 +119,7 @@ class b2c_ctl_mobile_list extends b2c_mfrontpage
         unset($params['orderby']);
         //分页,页码
         $page['index'] = $params['page'] ? $params['page'] : 1;
-        $page['size'] = $params['page_size'] ? $params['page_size'] : 20;
+        $page['size'] = $params['page_size'] ? $params['page_size'] : 10;
         unset($params['page']);
         unset($params['page_size']);
         //价格区间
@@ -125,91 +139,5 @@ class b2c_ctl_mobile_list extends b2c_mfrontpage
         $params['page'] = $page;
 
         return $params;
-    }
-
-    /*
-     * 根据分类ID提供筛选条件，并且返回已选择的条件数据
-     *
-     * @params int $cat_id 分类ID
-     * @params array $filter 已选择的条件
-     * */
-    private function _screen_data_by_cat($cat_id)
-    {
-        //分类
-        if ($cat_list = $this->app->model('goods_cat')->getList('cat_id,cat_name', array(
-            'parent_id' => ($cat_id ? $cat_id : 0),
-        ))) {
-            $_return['cat_id']['title'] = '分类';
-            foreach ($cat_list as $value) {
-                $_return['cat_id']['options'][$value['cat_id']] = $value['cat_name'];
-            }
-        }
-        $filter = array();
-        if ($cat_id) {
-            $filter['cat_id'] = $cat_id;
-        }
-        $gprops_arr = $this->app->model('goods')->lw_getList('brand_id,type_id,cat_id', $filter);
-        foreach ($gprops_arr as $arr) {
-            if ($cat_id == $arr['cat_id']) {
-                //仅取得当前分类下相关类型//TODO 可配置
-                $type_id_arr[] = $arr['type_id'];
-            }
-            $brand_id_arr[] = $arr['brand_id'];
-        }
-        //品牌
-        if ($brands = $this->app->model('brand')->getList('brand_id,brand_name', array(
-            'brand_id' => $brand_id_arr,
-            'disabled' => 'false',
-        ))) {
-            $_return['brand_id']['title'] = '品牌';
-            foreach ($brands as $key => $value) {
-                $_return['brand_id']['options'][$value['brand_id']] = $value['brand_name'];
-            }
-        }
-        //扩展属性
-        if ($type_id_arr) {
-            foreach ($type_id_arr as $type_id) {
-                $type_info = $this->app->model('goods_type')->dump2(array(
-                    'type_id' => $type_id,
-                ));
-                $props = $type_info['props'];
-                foreach ($props as $key => $prop) {
-                    $_return['p_'.$key]['title'] = $prop['name'];
-                    $_return['p_'.$key]['options'] = $prop['options'];
-                }
-            }
-        }
-
-        return $_return;
-    }
-    /*
-     * 根据品牌ID提供筛选条件，并且返回已选择的条件数据
-     *
-     * @params int $brand 品牌ID
-     * @params array $filter 已选择的条件
-     * */
-    private function _screen_data_by_brand($brand_id)
-    {
-        $filter = array();
-        if ($brand_id) {
-            $filter['brand_id'] = $brand_id;
-        }
-        $gprops_arr = $this->app->model('goods')->lw_getList('brand_id,type_id', $filter);
-        $type_id_arr = array_keys(utils::array_change_key($gprops_arr, 'type_id'));
-        //扩展属性
-        if ($type_id_arr) {
-            foreach ($type_id_arr as $type_id) {
-                $type_info = $this->app->model('goods_type')->dump2(array(
-                    'type_id' => $type_id,
-                ));
-                $props = $type_info['props'];
-                foreach ($props as $key => $prop) {
-                    $_return['p_'.$key]['title'] = $prop['name'];
-                    $_return['p_'.$key]['options'] = $prop['options'];
-                }
-            }
-        }
-
-        return $_return;
     }
 }

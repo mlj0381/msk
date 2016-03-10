@@ -20,7 +20,15 @@ class b2c_mdl_products extends dbeav_model{
         $this->use_meta();
     }
 
-    
+    public function goods_detail()
+    {
+        $seller_api = vmc::singleton('seller_source_product');
+        if(method_exists($seller_api, 'request')){
+            //return $seller_api->request($params);
+        }else{
+            //没定义接口调用本地数据
+        }
+    }
 
 
 

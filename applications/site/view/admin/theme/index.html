@@ -28,9 +28,10 @@
                     <a href="index.php?app=site&ctl=admin_theme_manage&act=set_default&p[0]=<{$theme.theme_dir}>" target="_command" class="btn  btn-default">
                         立即使用
                     </a>
+                    <a target="_blank" href="<{link router='site' ctl='theme' act='preview' args0=$theme.theme_dir}>" class="btn btn-default btn-preview">
+                        预览
+                    </a>
                     <{/if}>
-
-
     		</div>
 
     	</div>

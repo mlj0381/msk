@@ -25,7 +25,7 @@ class b2c_ctl_site_checkout extends b2c_frontpage
     }
     //checkout 主页
     public function index($fastbuy = false)
-    {
+    {var_dump($_SESSION['addrs']);
         $blank_url = $this->gen_url(array(
             'app' => 'b2c',
             'ctl' => 'site_cart',
@@ -48,6 +48,19 @@ class b2c_ctl_site_checkout extends b2c_frontpage
                 $this->splash('error', '', '购物车为空!');
             }
         }
+        foreach ($cart_result['objects']['goods'] as $key => $value) {
+            if($value['quantity'] > $value['item']['product']['price_interval']){
+                $count_price[$key] = $value['quantity'] * $value['item']['product']['price_up'];
+            }else{
+                $count_price[$key] = $value['quantity'] * $value['item']['product']['price_dn'];
+            }
+        }
+        
+        if(count($count_price) > 0){
+            $cart_amount = array_sum($count_price);
+            $cart_result['cart_amount'] = $cart_amount;
+            $cart_result['gain_score'] = $cart_amount;
+        }
         $this->pagedata = vmc::singleton('b2c_checkout_stage')->check(array(
             'member_id' => $member_id,
             'cart_result' => $cart_result,
@@ -56,9 +69,11 @@ class b2c_ctl_site_checkout extends b2c_frontpage
         if ($fastbuy !== false) {
             $this->pagedata['is_fastbuy'] = 'is_fastbuy';
         }
-
+        $store_obj = vmc::singleton('store_store_object');
+        foreach ($this->pagedata['cart_result']['objects']['goods'] as $key => $value) {
+            $this->pagedata['cart_result']['objects']['goods'][$key]['store_info'] = $store_obj->store_info($value['store_id']);
+        }
         $available_coupons = vmc::singleton('b2c_coupon_stage')->get_member_couponlist($member_id, $my_coupons);
-
         foreach ($cart_result['promotions']['order'] as $p) {
             if ($p['rule_type'] == 'coupon' && $available_coupons[$p['coupon_code']]) {
                 $available_coupons[$p['coupon_code']]['in_cart'] = 'true';
@@ -66,7 +81,7 @@ class b2c_ctl_site_checkout extends b2c_frontpage
         }
         $this->pagedata['my_coupons'] = $my_coupons;
         $this->pagedata['my_av_coupons'] = $available_coupons;
-
+        $this->pagedata['receiving'] = $this->app->getConf('receiving_time');
         $this->page('site/checkout/index.html');
     }
     /**
@@ -101,7 +116,7 @@ class b2c_ctl_site_checkout extends b2c_frontpage
         }
         $this->splash('success', $redirect, $check_result);
     }
-    public function payment($order_id, $flow_success = 0)
+    public function payment($order_id, $flow_success = 0 , $new_payappid = false)
     {
         $redirect = $this->gen_url(array(
             'app' => 'b2c',
@@ -117,6 +132,15 @@ class b2c_ctl_site_checkout extends b2c_frontpage
         }
         if ($order['pay_status'] == '1' || $order['pay_status'] == '2' || $order['payed'] == $order['order_total']) {
             $this->splash('success', $redirect, '订单已付款！');
+        }
+        //变更支付方式
+        if($new_payappid){
+            if(!vmc::singleton('b2c_checkout_stage')->changepayment($order_id,$new_payappid,$error_msg)){
+                $this->pagedata['changepayment_errormsg'] = $error_msg;
+            }else{
+                //order pay_app is  updated
+                $order['pay_app'] = $new_payappid;
+            }
         }
         $mdl_payapps = app::get('ectools')->model('payment_applications');
         $filter = array(
@@ -137,6 +161,7 @@ class b2c_ctl_site_checkout extends b2c_frontpage
         //$this->set_tmpl('checkout');
         $this->page('site/checkout/payment.html');
     }
+
     public function dopayment($order_id)
     {
         $redirect = $this->gen_url(array(
@@ -144,6 +169,11 @@ class b2c_ctl_site_checkout extends b2c_frontpage
             'ctl' => 'site_member',
             'act' => 'orders',
         ));
+        if($this->app->model('orders')->update(array('pay_status' => '1'), array('order_id' => $order_id))){
+            $this->splash('success', $redirect, '支付成功');
+        }
+        $this->splash('error', $redirect, '支付失败');
+
         $obj_bill = vmc::singleton('ectools_bill');
         $mdl_bills = app::get('ectools')->model('bills');
         $order = $this->app->model('orders')->dump($order_id);
@@ -160,11 +190,7 @@ class b2c_ctl_site_checkout extends b2c_frontpage
             $this->splash('error', $redirect, '非法操作');
         }
         //未交互过的账单复用
-        $exist_bill = $mdl_bills->getRow('*', array(
-            'member_id' => $order['member_id'],
-            'order_id' => $order['order_id'],
-            'status' => 'ready',
-        ));
+
         $bill_sdf = array(
             'order_id' => $order['order_id'],
             'bill_type' => 'payment',
@@ -177,7 +203,9 @@ class b2c_ctl_site_checkout extends b2c_frontpage
             'pay_fee' => $order['cost_payment'],
             'memo' => $order['memo'],
         );
-        if ($exist_bill && !empty($exist_bill['bill_id'])) {
+        $exist_bill = $mdl_bills->getRow('*',$bill_sdf);
+        //一天内重复利用原支付单据
+        if ($exist_bill && !empty($exist_bill['bill_id']) && $exist_bill['createtime']+86400>time()) {
             $bill_sdf = array_merge($exist_bill, $bill_sdf);
         } else {
             $bill_sdf['bill_id'] = $mdl_bills->apply_id($bill_sdf);

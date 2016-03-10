@@ -4,6 +4,9 @@
 </div>
 <form method="post" action="index.php?app=b2c&ctl=admin_order&act=dorefund" id='order_refund_form' class="form">
     <input type="hidden" name="order_id" value="<{$order.order_id}>">
+    <{if $env.get.in_as}>
+    <input type="hidden" name="in_as" value="true">
+    <{/if}>
 <div class="modal-body">
     <div class="row">
         <div class="col-md-6">

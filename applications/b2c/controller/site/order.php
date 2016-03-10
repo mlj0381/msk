@@ -22,6 +22,7 @@ class b2c_ctl_site_order extends b2c_frontpage
         $this->cart_stage = vmc::singleton('b2c_cart_stage');
         $this->cart_stage->set_member_id($this->app->member_id);
         $this->logger = vmc::singleton('b2c_order_log');
+        $this->mOrders = $this->app->model('orders');
     }
     //PC端前台会员创建订单
     public function create($fastbuy = false)
@@ -42,9 +43,12 @@ class b2c_ctl_site_order extends b2c_frontpage
             'pay_app' => $params['payapp_id'],
             'dlytype_id' => $params['dlytype_id'],
             'createtime' => time() ,
-            'need_invoice'=>$params['need_invoice'],
-            'invoice_title'=>$params['invoice_title'],
+            'need_shipping' => $params['need_shipping'],
+            'need_invoice' => $params['need_invoice'],
+            'invoice_title' => $params['invoice_title'],
             'platform' => 'pc',
+            'store_id' => $params['store_id'],
+            'addon' => $params['addon']
         );
         $redirect_cart = $this->gen_url(array(
             'app' => 'b2c',
@@ -57,37 +61,40 @@ class b2c_ctl_site_order extends b2c_frontpage
                 $fastbuy,
             ),
         ), true);
-        if (!$order_sdf['pay_app']) {
-            $this->logger->fail('create', '未知支付方式', $params);
-            $this->splash('error', $redirect_checkout, '未知支付方式');
-        }
-        if (!$order_sdf['dlytype_id']) {
-            $this->logger->fail('create', '未知配送方式', $params);
-            $this->splash('error', $redirect_checkout, '未知配送方式');
-        }
-        //COD FIX
-        if ($order_sdf['pay_app'] == '-1' || $order_sdf['pay_app'] == 'cod') {
-            $order_sdf['is_cod'] = 'Y';
-        } else {
-            $dlytype = app::get('b2c')->model('dlytype')->dump($params['dlytype_id']);
-            if ($dlytype['has_cod'] == 'true') {
-                $order_sdf['pay_app'] = 'cod';
-                $order_sdf['is_cod'] = 'Y';
-            }
-        }
-
         if ($fastbuy) {
             $filter['is_fastbuy'] = 'true';
         }
-        if (!$params['addr_id']) {
-            $this->logger->fail('create', '无收货人信息', $params);
-            $this->splash('error', $redirect_checkout, '无收货人信息');
-        } else {
-            $consignee = app::get('b2c')->model('member_addrs')->getRow('name,area,addr,zip,tel,mobile,email', array(
-                'member_id' => $member_id,
-                'addr_id' => $params['addr_id'],
-            ));
-            $order_sdf['consignee'] = $consignee;
+        if ($order_sdf['need_shipping'] != 'N') {
+            if ($order_sdf['need_shipping'] != 'N' && !$order_sdf['dlytype_id']) {
+                $this->logger->fail('create', '未知配送方式', $params);
+                $this->splash('error', $redirect_checkout, '未知配送方式');
+            }
+
+            //COD FIX
+            if ($order_sdf['pay_app'] == '-1' || $order_sdf['pay_app'] == 'cod') {
+                $order_sdf['is_cod'] = 'Y';
+            }
+//          else {
+//                $dlytype = app::get('b2c')->model('dlytype')->dump($params['dlytype_id']);
+//                if ($dlytype['has_cod'] == 'true') {
+//                    $order_sdf['pay_app'] = 'cod';
+//                    $order_sdf['is_cod'] = 'Y';
+//                }
+//            }
+            if (!$params['addr_id']) {
+                $this->logger->fail('create', '无收货人信息', $params);
+                $this->splash('error', $redirect_checkout, '无收货人信息');
+            } else {
+                $consignee = app::get('b2c')->model('member_addrs')->getRow('name,area,addr,zip,tel,mobile,email', array(
+                    'member_id' => $member_id,
+                    'addr_id' => $params['addr_id'],
+                ));
+                $order_sdf['consignee'] = $consignee;
+            }
+        }
+        if (!$order_sdf['pay_app']) {
+            $this->logger->fail('create', '未知支付方式', $params);
+            $this->splash('error', $redirect_checkout, '未知支付方式');
         }
         //购物车数据
         $cart_result = $this->cart_stage->result($filter);
@@ -95,10 +102,12 @@ class b2c_ctl_site_order extends b2c_frontpage
             $this->logger->fail('create', '没有可结算商品', $params);
             $this->splash('error', $redirect_cart, '没有可结算商品');
         }
-        if ($params['cart_md5'] != utils::array_md5($cart_result)) {
-            $this->logger->fail('create', '购物车发生变化', $params);
-            $this->splash('error', $redirect_cart, '购物车发生变化');
-        }
+
+//        2015、12、2演示过后修改
+//         if ($params['cart_md5'] != utils::array_md5($cart_result)) {
+//             $this->logger->fail('create', '购物车发生变化', $params);
+//             $this->splash('error', $redirect_cart, '购物车发生变化');
+//         }
         $db = vmc::database();
         //开启事务
         $this->transaction_status = $db->beginTransaction();
@@ -120,32 +129,33 @@ class b2c_ctl_site_order extends b2c_frontpage
         $this->logger->set_order_id($order_sdf['order_id']);
         $this->logger->success('create', '订单创建成功', $params);
 
-        /**
+        /*
          * 优惠券冻结,优惠券使用记录
          * 未使用成功in_use!="true"的优惠券不做冻结处理，不做记录
          * @see /Applications/b2c/lib/postfilter/promotion.php line 200
          */
         foreach ($cart_result['objects']['coupon'] as $coupon) {
-            if($coupon['params']['in_use']!='true')continue;
+            if ($coupon['params']['in_use'] != 'true') {
+                continue;
+            }
             $couponlog_data = array(
-                'member_id'=>$member_id,
-                'order_id'=>$order_sdf['order_id'],
-                'cpns_id'=>$coupon['params']['cpns_id'],//优惠券ID
-                'memc_code'=>$coupon['params']['code'],//优惠券号码
-                'cpns_name'=>$coupon['params']['name'],//优惠券名称
-                'coupon_save'=>$coupon['params']['save'],//优惠券在本次订购中抵扣的金额
-                'order_total'=>$order_sdf['order_total']//订单应付金额
+                'member_id' => $member_id,
+                'order_id' => $order_sdf['order_id'],
+                'cpns_id' => $coupon['params']['cpns_id'],//优惠券ID
+                'memc_code' => $coupon['params']['code'],//优惠券号码
+                'cpns_name' => $coupon['params']['name'],//优惠券名称
+                'coupon_save' => $coupon['params']['save'],//优惠券在本次订购中抵扣的金额
+                'order_total' => $order_sdf['order_total'],//订单应付金额
             );
-            vmc::singleton('b2c_coupon_stage')->couponlog($couponlog_data,$msg);
-            if($coupon['params']['cpns_type'] == '1'){
+            vmc::singleton('b2c_coupon_stage')->couponlog($couponlog_data, $msg);
+            if ($coupon['params']['cpns_type'] == '1') {
                 //需冻结会员账户内的相关B类券
-                vmc::singleton('b2c_coupon_stage')->freeze_member_coupon($member_id,$coupon['params']['code'],$msg);
+                vmc::singleton('b2c_coupon_stage')->freeze_member_coupon($member_id, $coupon['params']['code'], $msg);
             }
         }
 
-
         //清理购物车
-        $this->cart_stage->clean($cart_result,$fastbuy);//只删除勾选结算项,对于优惠券，只删除触发促销的项
+        $this->cart_stage->clean($cart_result, $fastbuy);//只删除勾选结算项,对于优惠券，只删除触发促销的项
 
         $redirect_payment = $this->gen_url(array(
             'app' => 'b2c',
@@ -161,6 +171,7 @@ class b2c_ctl_site_order extends b2c_frontpage
     }
     public function detail($order_id, $showlogistics = false)
     {
+        $this->set_tmpl('order');
         $mdl_order = $this->app->model('orders');
         $bills = app::get('ectools')->model('bills');
         $mdl_order_log = $this->app->model('order_log');
@@ -175,16 +186,21 @@ class b2c_ctl_site_order extends b2c_frontpage
             ':dlytype' => array(
                 '*',
             ),
+            // 'store_info' => array(
+            //     'store_name, store_id',
+            // ),
         ));
+        $store_obj = vmc::singleton('store_store_object');
+        $order['store_info'] = $store_obj->store_info($order['store_id'], 'store_id, store_name');
         if ($order['member_id'] != $this->app->member_id) {
             $this->splash('error', '非法操作!');
         }
-        foreach ($mdl_order_log->getList('behavior,log_time', array(
+        $logs = $mdl_order_log->getList('behavior,log_time', array(
             'order_id' => $order['order_id'],
             'result' => 'success',
             //会员端只显示成功日志
-
-        )) as $log) {
+        ));
+        foreach ($logs as $log) {
             $order['process'][$log['behavior']] = $log['log_time'];
         }
         $this->pagedata['order'] = $order;
@@ -211,8 +227,12 @@ class b2c_ctl_site_order extends b2c_frontpage
                 break;
             }
         }
-        $this->set_tmpl('order');
-        $this->page('site/order/detail.html');
+
+        //$this->pagedata['menu'] = $this->get_menu();
+        $this->pagedata['_PAGE_'] = 'site/order/detail.html';
+        $this->output();
+       
+       // $this->page('site/order/detail.html');
     }
 
     public function logistics_tracker($delivery_id)
@@ -225,5 +245,55 @@ class b2c_ctl_site_order extends b2c_frontpage
         } else {
             $this->splash('success', null, $tracker_log);
         }
+    }
+
+    //取消订单
+    public function abolish(){
+        
+        if($_POST){
+            $redirect = $this->gen_url(array('app' => 'b2c', 'ctl' => 'site_member', 'act' => 'orders', 'args0' => 's1'));
+            $data = $_POST;
+            if(!$this->mOrders->save($data)){
+                $this->splash('error', $redirect, '取消失败');
+            }
+            $this->splash('success', $redirect, '取消成功');
+        }
+        $this->splash('error', $redirect, '非法请求');
+    }
+    
+    //订单确认收货
+    public function confirm($order_id){
+        if(!is_numeric($order_id)){
+            $this->splash('error', $redirect, '非法请求');
+        }
+        $data = array('order_id' => $order_id, 'confirm' => 'Y');
+        $this->save($data);
+    }
+    
+    //订单更新
+    private function save($data, $redirect = ''){
+        if($this->mOrders->save($data)){
+            $this->splash('success', $redirect, '操作成功');
+        }
+        $this->splash('error', $redirect, '操作失败');
+    }
+    
+    //订单删除
+    public function del($order_id){
+        $redirect = $this->gen_url(array('app' => 'b2c', 'ctl' => 'site_order', 'act' => ''));
+        if(!is_numeric($order_id)){
+            $this->splash('error', $redirect, '非法请求');
+        }
+        $data = array('order_id' => $order_id, 'status' => 'del');
+        $this->save($data);
+    }
+    
+    //订单还原
+    public function restore($order_id){
+        if(!is_numeric($order_id)){
+            $this->splash('error', $redirect, '非法请求');
+        }
+        $data = array('order_id' => $order_id, 'status' => 'active');
+        $this->save($data);
     }
 }

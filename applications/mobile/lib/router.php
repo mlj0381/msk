@@ -69,7 +69,7 @@ class mobile_router implements base_interface_router
     {
         $this->app = $app;
         $this->_sitemap = app::get('mobile')->getConf('sitemaps');
-        if (!is_array($this->_sitemap)) {
+        if (!is_array($this->_sitemap)||empty($this->_sitemap)) {
             $sitemap_config = vmc::singleton('mobile_module_base')->assemble_config();
             if (is_array($sitemap_config)) {
                 $this->_sitemap = $sitemap_config; //todo：兼容kvstroe出错的情况下
@@ -260,7 +260,7 @@ class mobile_router implements base_interface_router
 
         $app = $params['app'];
         if (empty($app)) {
-            return '/';
+            return app::get('mobile')->base_url();
         }
         if (!is_null($this->get_urlmap($params['app'].':'.$params['ctl']))) {
             if (is_array($params['args'])) {
@@ -271,7 +271,7 @@ class mobile_router implements base_interface_router
             if (!isset($this->__gen_url_array[$gen_key])) {
                 foreach ($params as $k => $v) {
                     if ($k != 'args' && substr($k, 0, 3) == 'arg') {
-                        if (empty($v)) {
+                        if (!isset($v)||$v === '') {
                             unset($params['args'][substr($k, 3) ]);
                         } else {
                             $params['args'][substr($k, 3) ] = $v;
@@ -297,7 +297,7 @@ class mobile_router implements base_interface_router
 
             return $this->__gen_url_array[$gen_key];
         } else {
-            return '/';
+            return app::get('mobile')->base_url();
         }
     } //End Function
     /*
@@ -478,12 +478,19 @@ class mobile_router implements base_interface_router
     */
     public function is_preview()
     {
-
-        return false;
+        if(isset($_GET['_theme_preview_exit']) && $_COOKIE['CURRENT_THEME_M']){
+            setcookie('CURRENT_THEME_M', '', time()-1000, '/');
+            echo "<script>location.reload();</script>";
+            exit;
+        }
+        return $_COOKIE['CURRENT_THEME_M'];
     }
     private function is_need_cache()
     {
-        if (defined('WITHOUT_PAGE_CACHE') && constant('WITHOUT_PAGE_CACHE')) {
+        if($this->is_preview()){
+            return false;
+        }
+        if (defined('WITHOUT_CACHE') && constant('WITHOUT_CACHE')) {
             return false;
         }
         if (count($this->_request->get_post()) == 0 && vmc::singleton('mobile_theme_base')->get_default()) {
@@ -555,7 +562,7 @@ class mobile_router implements base_interface_router
         }
         if ($page_cache === true) {
             $etag = ($page['etag']) ? $page['etag'] : md5($page['html']); //todo: 兼容
-            $this->_response->set_header('Etag', $etag);
+            $this->_response->set_header('ETag', $etag);
             $matchs = explode(',', $_ENV['HTTP_IF_NONE_MATCH']);
             foreach ($matchs as $match) {
                 if (trim($match) == $etag) {
@@ -580,10 +587,10 @@ class mobile_router implements base_interface_router
     */
     private function set_vary_cookie()
     {
-        $cookie_vary = $_COOKIE['vary'];
-        $vary = cachemgr::get_cache_check_version().md5(serialize(cachemgr::get_cache_global_varys()));
+        $cookie_vary = $_COOKIE['CACHE_VARY'];
+        $vary = cachemgr::get_cache_check_version().'-'.md5(serialize(cachemgr::get_cache_global_varys()));
         if ($cookie_vary !== $vary) {
-            setCookie('vary', $vary, time() + 86400 * 30 * 12 * 10, '/');
+            setCookie('CACHE_VARY', $vary, time() + 86400 * 30 * 12 * 10, '/');
         }
     } //End Function
     private function init_request_info()
@@ -755,7 +762,11 @@ class mobile_router implements base_interface_router
     */
     public function parse_route_static_dispatch($query)
     {
-
+        foreach (vmc::servicelist('mobile.parse_route_static_dispatch') as $obj) {
+            if (method_exists($obj, 'parse_query')) {
+                $obj->parse_query($query);
+            } //引用传递
+        }
         return $query;
     } //End Function
     /*
@@ -766,7 +777,11 @@ class mobile_router implements base_interface_router
     */
     public function parse_route_static_genurl($url)
     {
-
+        foreach (vmc::servicelist('mobile.parse_route_static_genurl') as $obj) {
+            if (method_exists($obj, 'parse_url')) {
+                $obj->parse_url($url);
+            } //引用传递
+        }
         return $url;
     } //End Function
 } //End Class

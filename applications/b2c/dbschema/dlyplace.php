@@ -34,9 +34,10 @@ $db['dlyplace'] = array(
         ) ,
         'dp_title' => array(
             'type' => 'varchar(50)',
-            'label' => ('发货地点名称') ,
-            'comment' => ('发货地点名称') ,
-            
+//            'label' => ('发货地点名称') ,
+//            'comment' => ('发货地点名称') ,
+            'label' => ('仓库名称') ,
+            'comment' => ('仓库名称'),
             'searchtype' => 'tequal',
             'filtertype' => 'normal',
             

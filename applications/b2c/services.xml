@@ -17,11 +17,17 @@
     <service id="member_logout">
         <class>b2c_service_logout</class>
     </service>
+    <service id="view_datasetting">
+        <class>b2c_view_datasetting</class>
+    </service>
     <service id="cachemgr_global_vary">
         <class>b2c_service_cachemgr_globalvary</class>
     </service>
     <service id="site_view_helper">
         <class>b2c_site_view_helper</class>
+    </service>
+    <service id="mobile_view_helper">
+        <class>b2c_mobile_view_helper</class>
     </service>
     <service id="html_input">
         <class>b2c_view_input</class>
@@ -135,6 +141,13 @@
     <service id="b2c_goods.b2c_goods_filter" optname="商品筛选器引擎" opttype="select">
         <class>b2c_goods_filter</class>
     </service>
+
+	<service id="desktop_finder.b2c_mdl_pages_position">
+        <class>b2c_finder_pages_position</class>
+    </service>
+	<service id="desktop_finder.b2c_mdl_pages_content">
+        <class>b2c_finder_pages_content</class>
+    </service>
     <!-- FINDER相关SERVICES END -->
 
 
@@ -143,11 +156,11 @@
     </service>
     <service id="b2c_promotion_tpl_goods_apps">
         <class>b2c_promotion_conditions_goods_allgoods</class>
-<!-- <class>b2c_promotion_conditions_goods_brand</class>
-        <class>b2c_promotion_conditions_goods_cat</class>
+        <class>b2c_promotion_conditions_goods_brand</class>
+        <!-- <class>b2c_promotion_conditions_goods_cat</class>
         <class>b2c_promotion_conditions_goods_selectgoods</class>
-        <class>b2c_promotion_conditions_goods_type</class>
-        <class>b2c_promotion_conditions_goods_typeandbrand</class> -->
+        <class>b2c_promotion_conditions_goods_type</class>-->
+        <class>b2c_promotion_conditions_goods_typeandbrand</class> 
     </service>
     <service id="b2c_promotion_solution_tpl_apps">
         <class>b2c_promotion_solutions_byfixed</class>
@@ -210,13 +223,13 @@
     <service id="extend_filter_b2c_mdl_orders" optname="订单筛选扩展"></service>
     <service id="extend_filter_b2c_mdl_members" optname="会员筛选扩展"></service>
 <!-- openapi define begin-->
-    <service id="openapi.stock">
+    <service id="openapi.stock" optname="openapi@货品库存">
         <class>b2c_openapi_stock</class>
     </service>
-    <service id="openapi.goods">
+    <service id="openapi.goods" optname="openapi@商品相关">
         <class>b2c_openapi_goods</class>
     </service>
-    <service id="openapi.cart">
+    <service id="openapi.cart" optname="openapi@购物车相关">
         <class>b2c_openapi_cart</class>
     </service>
 <!-- openapi define end-->
@@ -237,6 +250,15 @@
         <class>b2c_service_image</class>
     </service>
 <!--END-->
+<!--首页基础数据获取 2015/12/17 12:00-->
+    <service id="index_basic_api">
+        <class>b2c_source_addrs</class><!-- 地址定位、切换-->
+        <class>b2c_source_member</class><!-- 收藏，-->
+        <class>b2c_source_search</class><!-- 热门搜索-->
+        <class>b2c_source_cart</class><!-- 购物车数量-->
+        <class>b2c_source_advertising</class><!-- 广告-->
+    </service>
+<!--end 首页基础数据获取-->
 <!-- PC全页缓存 -->
     <service id="site.router.cache">
         <class>b2c_cache</class>
@@ -244,9 +266,6 @@
 <!-- H5全页缓存 -->
     <service id="mobile.router.cache">
         <class>b2c_mcache</class>
-    </service>
-    <service id="openapi.widgets.goods">
-        <class>b2c_widgets_goods</class>
     </service>
 
     <!--渲染拦截-->

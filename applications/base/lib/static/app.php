@@ -165,13 +165,7 @@ class app
     public function set_modified($key)
     {
         $vary_name = strtoupper(md5($this->app_id.$key));
-        $now = time();
-        $db = vmc::database();
-        $exec_count = $db->exec('REPLACE INTO vmc_base_cache_expires (`type`, `name`, `app`, `expire`) VALUES ("CONF", "'.$vary_name.'", "'.$this->app_id.'", '.$now.')', true);
-        if ($exec_count) {
-            cachemgr::set_modified('CONF', $vary_name, $now);
-            syscache::instance('setting')->set_last_modify();
-        }
+        cachemgr::set_modified('CONF', $vary_name, syscache::instance('setting')->set_last_modify());
     }//End Function
 
     public function check_expires($key, $force = false)

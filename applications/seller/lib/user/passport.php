@@ -8,6 +8,7 @@ class seller_user_passport
     public function __construct(&$app)
     {
         $this->app = $app;
+        $this->entryType = 'entry'; //entry 商家入驻 brand 品牌添加资质
         $this->user_obj = vmc::singleton('seller_user_object');
         vmc::singleton('base_session')->start();
     }
@@ -656,8 +657,17 @@ class seller_user_passport
     public function &edit_info($columns, $seller_id, $storeType)
     {
         $info = array();
-        $extra_id = app::get('seller')->model('sellers')->getRow('company_extra', array('seller_id' => $seller_id));
-        $filter = array('extra_id' => $extra_id['company_extra'][$storeType], 'identity' => $storeType);
+        $companys = app::get('base')->model('company_seller')->getList('company_id', array(
+            'uid' => $seller_id, 'from' => '1', 'identity' => $storeType));
+        //$extra_id = app::get('seller')->model('sellers')->getRow('company_extra', array('seller_id' => $seller_id));
+        foreach($companys as $value){
+            $company['company_id'][] = $value['company_id'];
+        }
+
+        $filter = array('extra_id' => $company['company_id'], 'identity' => $storeType);
+        if($this->entryType == 'brand'){
+            $filter['extra_id'] = $company['company_id'][count($company['company_id']) - 1];
+        }
         $mdl_base_extra = app::get('base')->model('company_extra');
         $company_extra = $mdl_base_extra->getList('*', array_merge($filter, array('key|in' => array_values($columns['page']))));
         $conf = $this->app->getConf('seller_entry');
@@ -670,7 +680,7 @@ class seller_user_passport
         unset($company_extra);
         $info['company_extra']['store'] = app::get('store')->model('store')->getRow('*', array('seller_id' => $seller_id));
         $info['company_extra']['company'] = app::get('base')->model('company')->getRow('*',
-            array('company_id' => $extra_id['company_extra'][$storeType], 'info_type' => $storeType));
+            array('company_id' => $company['company_id'], 'info_type' => $storeType));
         $info['company_extra']['contact'] = app::get('base')->model('contact')->getRow('*', array('uid' => $seller_id, 'from' => '1'));
         $info['company_extra']['brand'] = $this->app->model('brand')->getRow('*', array('seller_id' => $seller_id));
         return $info;
@@ -685,7 +695,9 @@ class seller_user_passport
         $sqlType = false;
         $seller = vmc::singleton('seller_user_object')->get_current_seller();
         $mdl_seller = $this->app->model('sellers');
-        $company_extra = $mdl_seller->getRow('company_extra', array('seller_id' => $seller['seller_id']));
+        $mdl_company_seller = app::get('base')->model('company_seller');
+        $company_extra = $mdl_company_seller->getList('company_id', array(
+            'seller_id' => $seller['seller_id'], 'identity' => $params['typeId'], 'from' => '1'), '0', '1', 'cs_id desc');
         $company_info = array(
             array('key' => 'company', 'label' => '公司信息', 'app' => 'base'),
             array('key' => 'contact', 'label' => '联系人信息', 'app' => 'base'),
@@ -721,7 +733,7 @@ class seller_user_passport
                     $msg = $value['label'];
                     return false;
                 }
-                if($value['key'] == 'company') $company_id = $mdlObj->db->lastinsertid();
+                if($value['key'] == 'company') $company_id = $mdl_company_seller->db->lastinsertid();
 
                 if (!$store_brand) {
                     continue;
@@ -739,7 +751,7 @@ class seller_user_passport
             if (isset($params[$col]) && !empty($params[$col])) {
                 $params[$col]['content_id'] && $sqlType = true;
                 $params[$col]['identity'] = $params['typeId'];
-                $params[$col]['extra_id'] = $company_extra['company_extra'][$params['typeId']] ?: $company_id;
+                $params[$col]['extra_id'] = $company_id ?: $company_extra[0]['company_id'];
                 $params[$col]['uid'] = $seller['seller_id'];
                 $params[$col]['createtime'] = time();
                 $params[$col]['from'] = 1;
@@ -761,16 +773,16 @@ class seller_user_passport
         }
         if (!$sqlType) {
             $mdl_company_seller = app::get('base')->model('company_seller');
-            $company_extra['company_extra'][$params['typeId']] = $company_id ?: $company_extra['company_extra'][$params['typeId']];
+            $company_extra['company_id'] = $company_id ?: $company_extra[0]['company_id'];
             $extra_data = array(
                 'seller_id' => $seller['seller_id'],
                 'schedule' => $params['pageIndex'],
-                'company_extra' => $company_extra['company_extra']);
+                'company_extra' => $company_extra['company_id']);
             $company_seller = array(
                 'uid' => $seller['seller_id'],
                 'from' => '1',
                 'identity' => $params['typeId'],
-                'company_id' => $company_extra['company_extra'][$params['typeId']],
+                'company_id' => $company_extra['company_id'],
                 'createtime' => time(),
             );
             if (!$mdl_seller->save($extra_data)) {

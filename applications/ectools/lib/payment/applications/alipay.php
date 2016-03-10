@@ -13,8 +13,8 @@
 
 final class ectools_payment_applications_alipay extends ectools_payment_parent implements ectools_payment_interface
 {
-    public $name = '支付宝即时到账';
-    public $version = 'v4.8';
+    public $name = '会员卡';
+    public $version = '';
     public $intro = '支付宝www.alipay.com即时到账交易接口(create_direct_pay_by_user)';
     public $platform_allow = array(
         'pc',

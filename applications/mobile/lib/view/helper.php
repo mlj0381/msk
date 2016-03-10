@@ -18,8 +18,8 @@ class mobile_view_helper
         $html = $smarty->fetch('header.html', app::get('mobile')->app_id);
         $services = vmc::servicelist('mobile_view_helper');
         foreach ($services as $service) {
-            if (method_exists($service, 'function_SYSTEM_HEADER')) {
-                $html .= $service->function_SYSTEM_HEADER($params, $smarty);
+            if (method_exists($service, 'function_SYSTEM_HEADER_M')) {
+                $html .= $service->function_SYSTEM_HEADER_M($params, $smarty);
             }
         }
 
@@ -31,8 +31,8 @@ class mobile_view_helper
         $html = $smarty->fetch('footer.html', app::get('mobile')->app_id);
         $services = vmc::servicelist('mobile_view_helper');
         foreach ($services as $service) {
-            if (method_exists($service, 'function_SYSTEM_FOOTER')) {
-                $html .= $service->function_SYSTEM_FOOTER($params, $smarty);
+            if (method_exists($service, 'function_SYSTEM_FOOTER_M')) {
+                $html .= $service->function_SYSTEM_FOOTER_M($params, $smarty);
             }
         }
         return $html;
@@ -58,10 +58,34 @@ class mobile_view_helper
                 }
             }
             $render->pagedata['ext'] = $ext;
-            
+
             return $render->fetch('admin/theme/tmpl/template_filter.html', app::get('mobile')->app_id);
         } else {
             return '';
         }
     }//End Function
+
+    public function function_morepage($params, &$smarty)
+    {
+
+        $c = intval($params['data']['current']);
+        $t = intval($params['data']['total']);
+        if (!$c) {
+            $c = 1;
+        }
+        if (!$t) {
+            $t = 1;
+        }
+        if ($t < 2) {
+            return '';
+        }
+        $l = $params['data']['link'];
+        if (is_array($l)) {
+            $l = app::get('mobile')->router()->gen_url($l);
+        }
+        $p = $params['data']['token'];
+        $data_morepage = "{\"total\":$t,\"token\":\"$p\",\"link\":\"$l\"}";
+        return '<button type="button" class="btn btn-morepage btn-block btn-outlined" data-morepage='.$data_morepage.'><span class="fa fa-circle-o-notch fa-spin hidden"></span> 加载更多 <span class="fa fa-ellipsis-h"></span></button>';
+
+    }
 }//End Class

@@ -1,8 +1,9 @@
 <div id="finder_title_<{$name}>" <{if !$title||$title=='列表'}>class="hide"<{/if}>>
     <h3 class="page-title">
-        <{$title}><small></small>
+        <{$title}><small class="hidden-xs"></small>
         <div class="btn-group">
-                    <a href="javascript:;" class="btn dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="1000" data-close-others="true">
+                    <button type="button" class="btn btn-link" onclick="update_finder_<{$name}>();"><i class="fa fa-refresh"></i></button>
+                    <a href="javascript:;" class="btn btn-link dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="1000" data-close-others="true">
                     <i class="fa fa-cog"></i>
                     </a>
                     <ul class="dropdown-menu pull-right" role="menu">
@@ -12,8 +13,8 @@
                         <li class="divider">&nbsp;</li>
                         <{$plimit_sel}>
                     </ul>
-        </div>
 
+        </div>
     </h3>
 </div>
 <div class="modal modal-cached bs-modal-sm modal-scroll" id="finder_column_setting_modal_<{$name}>" role="basic" aria-hidden="true">

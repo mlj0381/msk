@@ -98,8 +98,7 @@ class importexport_controller extends desktop_controller
      */
     public function gen_key($type = 'export')
     {
-        $key = $type.'-'.time();
-
+        $key = $type.'_'.md5(cachemgr::ask_cache_check_version().time());
         return $key;
     }
 

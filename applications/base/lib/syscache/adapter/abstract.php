@@ -20,7 +20,7 @@ abstract class base_syscache_adapter_abstract
         $modify = $this->_handler->get_last_modify();
         $handler_class = explode('_',get_class($this->_handler));
         $handler_name = array_pop($handler_class);
-        $key = 'vmc-syscache-'.$handler_name.'-'.date('YmdHis', $modify);
+        $key = 'vmc-'.$handler_name.'-'.date('YmdHis', $modify);
         return $key;
     }
 
@@ -35,7 +35,7 @@ abstract class base_syscache_adapter_abstract
         $modify = $this->_handler->get_prev_modify();
         $handler_class = explode('_',get_class($this->_handler));
         $handler_name = array_pop($handler_class);
-        $key = 'vmc-syscache-'.$handler_name.'-'.date('YmdHis', $modify);
+        $key = 'vmc-'.$handler_name.'-'.date('YmdHis', $modify);
         return $key;
     }
 }

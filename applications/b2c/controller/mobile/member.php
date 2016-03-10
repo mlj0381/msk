@@ -42,15 +42,6 @@ class b2c_ctl_mobile_member extends b2c_mfrontpage
     {
         $menu = array(
             array(
-                'label' => '会员中心',
-                'ordernum' => -1,
-                'link' => array(
-                    'app' => 'b2c',
-                    'ctl' => 'mobile_member',
-                    'act' => 'index',
-                ),
-            ) ,
-            array(
                 'label' => ('交易') ,
                 'ordernum' => 0,
                 'items' => array(
@@ -162,7 +153,7 @@ class b2c_ctl_mobile_member extends b2c_mfrontpage
                 ),
             ) ,
         ); //END BASEMENU ARRAY
-        foreach (vmc::servicelist('b2c.member_menu_extends') as $obj) {
+        foreach (vmc::servicelist('b2c.member_menu_m_extends') as $obj) {
             if (method_exists($obj, 'get_extends_menu')) {
                 $obj->get_extends_menu($menu);
             } //引用传递
@@ -185,15 +176,24 @@ class b2c_ctl_mobile_member extends b2c_mfrontpage
      */
     protected function output($app_id)
     {
-        $app_id = $app_id?$app_id:$this->app->app_id;
+        $app_id = $app_id ? $app_id : $this->app->app_id;
         $this->pagedata['member'] = $this->member;
         $this->pagedata['menu'] = $this->get_menu();
+        foreach ($this->pagedata['menu'] as $value) {
+            foreach ($value['items'] as $item) {
+                if ($item['link']['ctl'] == 'mobile_member' && $item['link']['act'] == $this->action) {
+                    $this->title = $item['label'];
+                    break;
+                }
+            }
+        }
+
         $this->pagedata['current_action'] = $this->action;
         $this->action_view = 'action/'.$this->action.'.html';
         if ($this->pagedata['_PAGE_']) {
-            $this->pagedata['_PAGE_'] = 'site/member/'.$this->pagedata['_PAGE_'];
+            $this->pagedata['_PAGE_'] = 'mobile/member/'.$this->pagedata['_PAGE_'];
         } else {
-            $this->pagedata['_PAGE_'] = 'site/member/'.$this->action_view;
+            $this->pagedata['_PAGE_'] = 'mobile/member/'.$this->action_view;
         }
         $this->pagedata['app_id'] = $app_id;
         $this->pagedata['_MAIN_'] = 'site/member/main.html';
@@ -236,7 +236,7 @@ class b2c_ctl_mobile_member extends b2c_mfrontpage
             's4' => array(
                 'member_id' => $this->member['member_id'],
                 'status' => 'active',
-                'ship_status|notin'=>array(
+                'ship_status|notin' => array(
                     '0',
                 ),
             ),
@@ -255,66 +255,70 @@ class b2c_ctl_mobile_member extends b2c_mfrontpage
     }
 
     /**
-     * 会员头像
+     * 会员头像.
      */
-    public function avatar($action = false){
-        if($action == 'upload'){
+    public function avatar($action = false)
+    {
+        $this->title = '设置头像';
+        if ($action == 'upload') {
             $redirect_here = array('app' => 'b2c','ctl' => 'mobile_member','act' => 'avatar');
             $mdl_image = app::get('image')->model('image');
-    		$image_name = $_FILES['avatar_file']['name'];
-            $ready_tmp_file = $_FILES['avatar_file']['tmp_name'];
+            $image_base64 = $_POST['avatar_file_base64'];
+            if (preg_match('/^(data:\s*image\/(\w+);base64,)/', $image_base64, $result)) {
+                $type = $result[2];
+                $ready_tmp_file = tempnam(TMP_DIR, $image_name = 'avatar.'.$type);
+                file_put_contents($ready_tmp_file, base64_decode(str_replace($result[1], '', $image_base64)));
+            }
             $bt_size = filesize($ready_tmp_file);
             $max_conf = $this->app->getConf('member_avatar_max_size').'M';
             $max_size = utils::parse_str_size($max_conf); //byte
-            if($_FILES['avatar_file']['error']){
-                $this->splash('error',$redirect_here,'头像上传失败!'.$_FILES['avatar_file']['error']);
-            }
-            if($bt_size>$max_size){
-                $this->splash('error',$redirect_here,'头像文件大小不能超过'.$max_conf);
+            if ($bt_size > $max_size) {
+                $this->splash('error', $redirect_here, '头像文件大小不能超过'.$max_conf);
             }
             list($w, $h, $t) = getimagesize($ready_tmp_file);
-            if(!in_array($t,array(1,2,3,6))){
+            if (!in_array($t, array(1, 2, 3, 6))) {
                 //1 = GIF,2 = JPG，3 = PNG,6 = BMP
-                $this->splash('error',$redirect_here,'文件类型错误');
+                $this->splash('error', $redirect_here, '文件类型错误');
             }
-            $image_id = $mdl_image->store($_FILES['avatar_file']['tmp_name'],$this->member['avatar'],null,$image_name);
+            $image_id = $mdl_image->store($ready_tmp_file, $this->member['avatar'], null, $image_name);
+            if ($ready_tmp_file) {
+                @unlink($ready_tmp_file);
+            }
             logger::info('前台会员头像上传操作'.'TMP_NAME:'.$_FILES['avatar_file']['tmp_name'].',FILE_NAME:'.$image_name);
-            if(!$image_id){
-                $this->splash('error',$redirect_here,'头像上传失败!');
+            if (!$image_id) {
+                $this->splash('error', $redirect_here, '头像上传失败!');
             }
-            $mdl_image->rebuild($image_id,array('S','XS'));
-            if($this->app->model('members')->update(array('avatar'=>$image_id),array('member_id'=>$this->member['member_id']))){
-                $this->splash('success',$redirect_here,'上传并保存成功!');
-            }else{
-                $this->splash('error',$redirect_here,'保存失败!');
+            if ($this->app->model('members')->update(array('avatar' => $image_id), array('member_id' => $this->member['member_id']))) {
+                $this->splash('success', $redirect_here, '上传并保存成功!');
+            } else {
+                $this->splash('error', $redirect_here, '保存失败!');
             }
-
         }
-        $system_max = get_cfg_var("upload_max_filesize");
+        $system_max = get_cfg_var('upload_max_filesize');
         $conf_max = $this->app->getConf('member_avatar_max_size').'M';
-        if(utils::parse_str_size($conf_max)>utils::parse_str_size($system_max)){
+        if (utils::parse_str_size($conf_max) > utils::parse_str_size($system_max)) {
             $this->pagedata['upload_max'] = $system_max;
-        }else{
+        } else {
             $this->pagedata['upload_max'] = $conf_max;
         }
         $this->output();
     }
-    public function set_pam_uname($action=false){
-
+    public function set_pam_uname($action = false)
+    {
         $user_obj = vmc::singleton('b2c_user_object');
         $redirect_member_index = array('app' => 'b2c','ctl' => 'mobile_member');
         $redirect_here = array('app' => 'b2c','ctl' => 'mobile_member','act' => 'set_pam_uname');
         $pam_data = $user_obj->get_pam_data('*', $this->member['member_id']);
-        if($pam_data['local']){
-            $this->splash('success',$redirect_member_index,'已设置用户名');
+        if ($pam_data['local']) {
+            $this->splash('success', $redirect_member_index, '已设置用户名');
         }
 
-        if($action == 'save'){
+        if ($action == 'save') {
             $local_uname = $_POST['local_uname'];
-            if(!vmc::singleton('b2c_user_passport')->set_local_uname($local_uname,$msg)){
-                $this->splash('error',$redirect_here,$msg);
-            }else{
-                $this->splash('success',$redirect_member_index,$msg);
+            if (!vmc::singleton('b2c_user_passport')->set_local_uname($local_uname, $msg)) {
+                $this->splash('error', $redirect_here, $msg);
+            } else {
+                $this->splash('success', $redirect_member_index, $msg);
             }
         }
         $this->pagedata['member'] = $this->member;
@@ -324,26 +328,26 @@ class b2c_ctl_mobile_member extends b2c_mfrontpage
         $this->page('mobile/member/set_pam_local.html');
     }
 
-    public function set_pam_mobile($action=false){
-
+    public function set_pam_mobile($action = false)
+    {
         $user_obj = vmc::singleton('b2c_user_object');
         $redirect_member_index = array('app' => 'b2c','ctl' => 'mobile_member');
         $redirect_here = array('app' => 'b2c','ctl' => 'mobile_member','act' => 'set_pam_mobile');
         $pam_data = $user_obj->get_pam_data('*', $this->member['member_id']);
-        if($pam_data['mobile']){
-            $this->splash('success',$redirect_member_index,'已绑定手机');
+        if ($pam_data['mobile']) {
+            $this->splash('success', $redirect_member_index, '已绑定手机');
         }
 
-        if($action == 'save'){
+        if ($action == 'save') {
             $mobile = $_POST['mobile'];
             $vcode = $_POST['vcode'];
-            if(!vmc::singleton('b2c_user_vcode')->verify($vcode, $mobile, 'signup')){
-                $this->splash('error',$redirect_here,'验证码错误！');
+            if (!vmc::singleton('b2c_user_vcode')->verify($vcode, $mobile, 'signup')) {
+                $this->splash('error', $redirect_here, '验证码错误！');
             }
-            if(!vmc::singleton('b2c_user_passport')->set_mobile($mobile,$msg)){
-                $this->splash('error',$redirect_here,$msg);
-            }else{
-                $this->splash('success',$redirect_member_index,$msg);
+            if (!vmc::singleton('b2c_user_passport')->set_mobile($mobile, $msg)) {
+                $this->splash('error', $redirect_here, $msg);
+            } else {
+                $this->splash('success', $redirect_member_index, $msg);
             }
         }
         $this->pagedata['member'] = $this->member;
@@ -353,26 +357,26 @@ class b2c_ctl_mobile_member extends b2c_mfrontpage
         $this->page('mobile/member/set_mobile.html');
     }
 
-    public function set_pam_email($action=false){
-
+    public function set_pam_email($action = false)
+    {
         $user_obj = vmc::singleton('b2c_user_object');
         $redirect_member_index = array('app' => 'b2c','ctl' => 'mobile_member');
         $redirect_here = array('app' => 'b2c','ctl' => 'mobile_member','act' => 'set_pam_email');
         $pam_data = $user_obj->get_pam_data('*', $this->member['member_id']);
-        if($pam_data['email']){
-            $this->splash('success',$redirect_member_index,'已绑定邮箱');
+        if ($pam_data['email']) {
+            $this->splash('success', $redirect_member_index, '已绑定邮箱');
         }
 
-        if($action == 'save'){
+        if ($action == 'save') {
             $email = $_POST['email'];
             $vcode = $_POST['vcode'];
-            if(!vmc::singleton('b2c_user_vcode')->verify($vcode, $email, 'signup')){
-                $this->splash('error',$redirect_here,'验证码错误！');
+            if (!vmc::singleton('b2c_user_vcode')->verify($vcode, $email, 'signup')) {
+                $this->splash('error', $redirect_here, '验证码错误！');
             }
-            if(!vmc::singleton('b2c_user_passport')->set_email($email,$msg)){
-                $this->splash('error',$redirect_here,$msg);
-            }else{
-                $this->splash('success',$redirect_member_index,$msg);
+            if (!vmc::singleton('b2c_user_passport')->set_email($email, $msg)) {
+                $this->splash('error', $redirect_here, $msg);
+            } else {
+                $this->splash('success', $redirect_member_index, $msg);
             }
         }
         $this->pagedata['member'] = $this->member;
@@ -473,7 +477,7 @@ class b2c_ctl_mobile_member extends b2c_mfrontpage
             's4' => array(
                 'member_id' => $this->member['member_id'],
                 'status|notin' => array('dead'),
-                'ship_status|notin'=>array(
+                'ship_status|notin' => array(
                     '0',
                 ),
             ),
@@ -530,7 +534,7 @@ class b2c_ctl_mobile_member extends b2c_mfrontpage
                 if (!$gid) {
                     $this->splash('error', $redirect_here, '删除收藏失败!');
                 } else {
-                    if ($mdl_member_goods->delete(array('member_id' => $member_id, 'goods_id' => $gid,'type'=>'fav'))) {
+                    if ($mdl_member_goods->delete(array('member_id' => $member_id, 'goods_id' => $gid, 'type' => 'fav'))) {
                         $this->splash('success', $redirect_here, '删除成功!');
                     } else {
                         $this->splash('error', $redirect_here, '删除收藏失败!');
@@ -544,7 +548,7 @@ class b2c_ctl_mobile_member extends b2c_mfrontpage
                     $this->splash('success', '', '加入收藏成功!');
                 }
             default:
-            $list = $mdl_member_goods->getList('*', array('member_id' => $member_id,'type'=>'fav'));
+            $list = $mdl_member_goods->getList('*', array('member_id' => $member_id, 'type' => 'fav'));
             $this->pagedata['member_lv_name'] = $this->member['levelname'];
             $this->pagedata['member_lv_discount'] = $this->member['lv_discount'];
             $this->pagedata['data'] = $list;
@@ -556,22 +560,23 @@ class b2c_ctl_mobile_member extends b2c_mfrontpage
     /**
      * 消息中心.
      */
-    public function message($msg_id = 0,$page = 1)
+    public function message($msg_id = 0, $page = 1)
     {
         $limit = 10;
         $filter = array(
-            'member_id'=>$this->member['member_id'],
-            'msg_type'=>'normal',
+            'member_id' => $this->member['member_id'],
+            'msg_type' => 'normal',
         );
-        if($msg_id>0){
+        if ($msg_id > 0) {
             $filter['msg_id'] = $msg_id;
         }
         $mdl_member_msg = $this->app->model('member_msg');
-        if(isset($filter['msg_id'])){
-            $msg = $mdl_member_msg->getRow('*',$filter);
-            $mdl_member_msg->update(array('status'=>'received'),$filter);
+        if (isset($filter['msg_id'])) {
+            $msg = $mdl_member_msg->getRow('*', $filter);
+            $mdl_member_msg->update(array('status' => 'received'), $filter);
             $this->pagedata['msg'] = $msg;
-            return $this->display('site/member/action/message-detail.html');
+
+            return $this->page('mobile/member/action/message-detail.html');
         }
         $msg_list = $mdl_member_msg->getList('*', $filter, ($page - 1) * $limit, $limit);
         $msg_count = $mdl_member_msg->count($filter);
@@ -675,6 +680,64 @@ class b2c_ctl_mobile_member extends b2c_mfrontpage
         }
     }
 
+     /**
+      * 收货地址选择.
+      */
+     public function sel_maddr($action = 'list', $addr_id = false, $callbackurl = false)
+     {
+         $this->title = '收货地址';
+         if ($callbackurl) {
+             $this->pagedata['callback'] = $callbackurl;
+             $_SESSION['sel_maddr_callback'] = $callbackurl;
+         } else {
+             $this->pagedata['callback'] = $_SESSION['sel_maddr_callback'];
+         }
+         if (!$this->pagedata['callback']) {
+             $this->splash('error', '', '异常操作!');
+         }
+         $mdl_maddr = $this->app->model('member_addrs');
+         $member_id = $this->member['member_id'];
+         $this->pagedata['action'] = $action;
+         $this->pagedata['addr_id'] = $addr_id;
+         $this->set_tmpl('maddr');
+         switch ($action) {
+             case 'set_default':
+                 if (!$mdl_maddr->set_default($addr_id, $member_id)) {
+                     $this->splash('error', '', '设置失败');
+                 }
+                 $this->sel_maddr('list', $addr_id);
+                 break;
+             case 'delete':
+                 if (!$mdl_maddr->delete(array('member_id' => $member_id, 'addr_id' => $addr_id))) {
+                     $this->splash('error', '', '删除失败');
+                 }
+                 $this->sel_maddr('list', $addr_id);
+                 break;
+             case 'edit':
+                 $this->pagedata['maddr'] = $mdl_maddr->getRow('*', array('member_id' => $member_id, 'addr_id' => $addr_id));
+                 $this->page('mobile/member/sel_maddr.html');
+                 break;
+             case 'save':
+                 $addr = $_POST['maddr'];
+                 $addr['member_id'] = $member_id;
+                 if (!$mdl_maddr->save($addr)) {
+                     $this->splash('error', '', '保存失败');
+                 }
+                 $this->sel_maddr('list', $addr['addr_id']);
+                 break;
+             default:
+                 $maddr_list = $mdl_maddr->getList('*', array('member_id' => $member_id));
+                 foreach ($maddr_list as $key => $value) {
+                     if ($value['addr_id'] == $addr_id) {
+                         $maddr_list[$key]['selected'] = true;
+                     }
+                 }
+                 $this->pagedata['list'] = $maddr_list;
+                 $this->page('mobile/member/sel_maddr.html');
+                 break;
+         }
+     }
+
     /**
      * 我的优惠券.
      */
@@ -704,15 +767,15 @@ class b2c_ctl_mobile_member extends b2c_mfrontpage
         $this->output();
     }
 
-    /**
-     * 我的积分概览
-     */
-
-     public function integral($page=1){
+     /**
+      * 我的积分概览.
+      */
+     public function integral($page = 1)
+     {
          $limit = 20;
          $mdl_mintegral = app::get('b2c')->model('member_integral');
          $filter = array(
-             'member_id'=>$this->member['member_id']
+             'member_id' => $this->member['member_id'],
          );
          $count = $mdl_mintegral->count($filter);
          $this->pagedata['integral_list'] = $mdl_mintegral->getList('*', $filter, ($page - 1) * $limit, $limit);
@@ -730,8 +793,5 @@ class b2c_ctl_mobile_member extends b2c_mfrontpage
              'token' => $token,
          );
          $this->output();
-
-
      }
-
 }

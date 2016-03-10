@@ -11,7 +11,7 @@
 // +----------------------------------------------------------------------
 
 
-class b2c_openapi_stock
+class b2c_openapi_stock extends base_openapi
 {
     public function __construct()
     {
@@ -23,7 +23,7 @@ class b2c_openapi_stock
         $args = array_merge((array)$args,$this->req_params);
         $sku = $args['sku'];
         if(!$sku){
-            $this->_failure('缺少参数');
+            $this->failure('缺少参数');
         }
         $_echo = array();
         $sku_bn = explode(',', $sku);
@@ -33,24 +33,7 @@ class b2c_openapi_stock
             ));
             $_echo = utils::array_change_key($result, 'sku_bn');
         }
-        $this->_success($_echo);
-    }
-
-    private function _success($data){
-        header('Content-Type:application/json; charset=utf-8');
-        echo json_encode(array(
-            'result'=>'success',
-            'data'=>$data
-        ));exit;
-    }
-
-    private function _failure($msg){
-        header('Content-Type:application/json; charset=utf-8');
-        echo json_encode(array(
-            'result'=>'failure',
-            'data'=>[],
-            'msg'=>$msg
-        ));exit;
+        $this->success($_echo);
     }
 
 }

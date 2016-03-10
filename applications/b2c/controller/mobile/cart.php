@@ -77,40 +77,13 @@ class b2c_ctl_mobile_cart extends b2c_mfrontpage
         if (!$ident) {
             $this->splash('error', '', $msg);
         }
-        $forward = $this->gen_url(array(
-            'app' => 'b2c',
-            'ctl' => 'mobile_cart',
-            'act' => 'addtocart',
-            'args' => array(
-                $ident,
-            ),
-        ));
         if ($this->_request->is_ajax()) {
             //异步加入购物车反馈
             $this->splash('success', $forward, $this->cart_stage->currency_result());
         }
-        $this->splash('success', $forward);
+        $this->splash('success', null,'加入购车成功');
     }
-    //成功加入购物车后
-    public function addtocart($ident)
-    {
-        $exist_cart = $this->cart_stage->result();
-        if ($this->cart_stage->is_empty($exist_cart)) {
-            $this->splash('error', $this->blank_url, '购物车为空！');
-        }
-        foreach ($exist_cart['objects']['goods'] as $k => $object) {
-            if ($object['obj_ident'] == $ident) {
-                if (!$object['warning'] && $object['disabled'] == 'true') {
-                    $exist_cart['objects']['goods'][$k]['disabled'] = 'false';
-                    break;
-                }
-            }
-        }
-        $this->pagedata['cart_result'] = $exist_cart;
-        $this->pagedata['last_add'] = $ident;
-        $this->set_tmpl('addtocart');
-        $this->page('mobile/cart/addtocart.html');
-    }
+    
     public function fastbuy($product_id, $num)
     {
         $this->verify_member();

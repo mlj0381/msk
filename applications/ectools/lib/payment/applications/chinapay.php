@@ -13,11 +13,11 @@
 include_once("chinapayclient.php");
 final class ectools_payment_applications_chinapay extends ectools_payment_parent implements ectools_payment_interface
 {
-    public $name = '中国银联支付';
-    public $version = 'v2.5.23';
+    public $name = '在线支付';
+    public $version = '';
     public $intro = 'CHINAPAY 致力于发展中国金融电子支付服务';
     public $platform_allow = array(
-        'pc',
+        'pc','mobile'
     ); //pc,mobile,app
 
     /**
@@ -31,14 +31,20 @@ final class ectools_payment_applications_chinapay extends ectools_payment_parent
     {
         parent::__construct($app);
 
-        $this->callback_url = vmc::openapi_url('openapi.ectools_payment', 'getway_callback', array(
-            'ectools_payment_applications_chinapay' => 'callback',
+        // $this->callback_url = vmc::openapi_url('openapi.ectools_payment', 'getway_callback', array(
+        //     'ectools_payment_applications_chinapay' => 'callback',
+        // ));
+        $this->callback_url = vmc::openapi_url('openapi.ecpay', 'gc', array(
+            'chinapay' => 'callback',
         ));
-        $this->notify_url = vmc::openapi_url('openapi.ectools_payment', 'getway_callback', array(
-            'ectools_payment_applications_chinapay' => 'notify',
+        // $this->notify_url = vmc::openapi_url('openapi.ectools_payment', 'getway_callback', array(
+        //     'ectools_payment_applications_chinapay' => 'notify',
+        // ));
+        $this->notify_url = vmc::openapi_url('openapi.ecpay', 'gc', array(
+            'chinapay' => 'notify',
         ));
         $this->submit_url = 'https://payment.ChinaPay.com/pay/TransGet';
-        if(constant('CHINAPAY_TEST')){
+        if(defined('CHINAPAY_TEST') && constant('CHINAPAY_TEST')){
             $this->submit_url = 'http://payment-test.ChinaPay.com/pay/TransGet';
         }
         $this->submit_method = 'POST';
@@ -128,33 +134,26 @@ final class ectools_payment_applications_chinapay extends ectools_payment_parent
             /**
              * 交易日期,长度为 8 个字节的数字串,表示格式为:YYYYMMDD。
              */
-            'TransDate'=>date('YMD',$params['createtime']),
+            'TransDate'=>date('Ymd',$params['createtime']),
             /**
              * 交易类型,长度为 4 个字节的数字串,取值范围为:"0001"和"0002",其中"0001"表示消费,'0002'表示退款
              */
-            'TransType'=>'0001',
-
+            'TransType'=>'0001',//支付操作
+            'Version'=>'20141120',//必填
+            'BgRetUrl'=>$this->notify_url,//异步通知
+            'PageRetUrl'=>$this->callback_url,//同步回调
+            //'GateId'=>'',//支付网关（银行）编号，为空时出现网关选择，指定时，直接跳转到网关
+            'Priv1'=>$params['bill_id'],//成功后原样返回
         );
-        $bill_id = $params['bill_id']; //完整支付单号
-
-        $chkvalue = $this->_get_mac($sign_params);
-        if(!$chkvalue){
+        $ChkValue = $this->_get_mac($sign_params);
+        if(!$ChkValue){
             $msg = '验签失败！';
             return false;
         }
-
-        $post_data = array(
-            'Version'=>'20141120',
-            'BgRetUrl'=>$this->notify_url,
-            'PageRetUrl'=>$this->callback_url,
-            'Priv1'=>$bill_id,
-            'ChkValue'=>$chkvalue
-        );
-
-        foreach (array_merge($sign_params,$post_data) as $key => $value) {
+        $sign_params['ChkValue'] = $ChkValue;
+        foreach ($sign_params as $key => $value) {
             $this->add_field($key,$value); //支付单据ID
         }
-
         if ($this->is_fields_valiad()) {
             echo $this->get_html();
             exit;
@@ -173,11 +172,9 @@ final class ectools_payment_applications_chinapay extends ectools_payment_parent
         $ret['payee_account'] = 'MERID:'.$params['merid']; //收款者（卖家）账户
         $ret['payee_bank'] = $this->name; //收款者（卖家）银行
         //$ret['payer_account'] = '未知'; //付款者（买家）账户
-        $ret['payer_bank'] = $this->name; //付款者（买家）银行
-        $ret['money'] = $params['total_fee'];
-        $ret['out_trade_no'] = $params['trade_no']; //支付平台交易号
+        $ret['payer_bank'] = 'ChinaPay-'.$params['GateId']; //付款者（买家）银行
+        $ret['out_trade_no'] = $params['orderno']; //支付平台交易号
         if ($this->is_return_vaild($params)) {
-
             switch ($params['status']) { //交易状态
                 case '1001':
                     $ret['status'] = 'succ';
@@ -231,7 +228,8 @@ final class ectools_payment_applications_chinapay extends ectools_payment_parent
         if(!$mer_id || $mer_id != $params['MerId']){
             return false;
         }
-        $res = call_user_func_array('sign',array_values($params));
+        $sign_plain = implode('',array_values($params));
+        $res = sign($sign_plain);
         if(!$res){
             return false;
         }
@@ -258,6 +256,7 @@ final class ectools_payment_applications_chinapay extends ectools_payment_parent
         if(!verifyTransResponse($params['merid'],
         $params['orderno'],
         $params['amount'],
+        $params['currencycode'],
         $params['transdate'],
         $params['transtype'],
         $params['status'],

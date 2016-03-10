@@ -11,7 +11,7 @@
                 </p>
             </div>
             <div class="col-xs-8">
-                <{if $pam_data.mobile}>
+                <{if $pam_data.memberData.mobile}>
                     <h3><{$pam_data.mobile.login_account}></h3>
                     <{else}>
                     <h3>未绑定手机</h3>
@@ -19,7 +19,7 @@
                 <{/if}>
             </div>
             <div class="col-xs-2">
-                <{if $pam_data.mobile}>
+                <{if $pam_data.memberData.mobile}>
                     <h2 class="glyphicon glyphicon-ok-sign"></h2>
                     <{else}>
                     <h2 class="glyphicon glyphicon-warning-sign"></h2>

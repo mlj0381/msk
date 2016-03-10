@@ -68,12 +68,6 @@ class cachemgr
     private static $_cache_key_global_varys = null;
 
     /*
-     * @var string $_vary_list_froce_mysql
-     * @access static private
-     */
-    private static $_vary_list_froce_mysql = false;
-
-    /*
      * @var array $_cache_expirations
      * @access static private
      */
@@ -142,8 +136,6 @@ class cachemgr
      */
     public static function set_modified($type, $vary_key, $time = 0)
     {
-        self::store_vary_list(self::fetch_vary_list(true));
-
         return self::instance()->set_modified($type, $vary_key, $time);
     }//End Function
 
@@ -370,13 +362,12 @@ class cachemgr
     public static function ask_cache_check_version($force = false)
     {
         $key = self::get_cache_check_version_key();
-        if ($force || self::enable()) {
-            if (self::instance()->fetch($key, $val) === false) {
+        if (self::enable()) {
+            if ($force || self::instance()->fetch($key, $val) === false) {
                 $val = md5($key.time());
                 self::instance()->store($key, $val);
                 self::$_cache_check_version = $val; //todo：强制更新
             }
-
             return $val;
         } else {
             return 'static';
@@ -469,42 +460,6 @@ class cachemgr
     public static function check_current_co_objects_exists($type, $cache_name)
     {
         return isset(self::$_cache_objects_exists[self::$_co_depth][strtoupper($type)][strtoupper(md5(serialize($cache_name)))]);
-    }//End Function
-
-    /*
-     * 保存vary_list
-     * @var array $vary_list
-     * @access static public
-     * @return boolean
-     */
-    public static function store_vary_list($vary_list)
-    {
-        return base_kvstore::instance('cache/expires')->store('vary_list', $vary_list);
-    }//End Function
-
-    /*
-     * 读取vary_list
-     * @access static public
-     * @return mixed
-     */
-    public static function fetch_vary_list($force = false)
-    {
-        $vary_list = array();
-        if (self::$_vary_list_froce_mysql === true || $force === true) {
-            $rows = vmc::database()->select('SELECT UPPER(`type`) AS `type`, UPPER(`name`) AS `name`, `expire` FROM vmc_base_cache_expires', true);
-            foreach ($rows as $row) {
-                $vary_list[$row['type']][$row['name']] = $row['expire'];
-            }
-        } else {
-            base_kvstore::instance('cache/expires')->fetch('vary_list', $vary_list);
-            if (empty($vary_list)) {
-                //如果发生意外，取出数据为空，则再取次数据库数据并写回kvstore
-                $vary_list = self::fetch_vary_list(true);
-                //self::store_vary_list($vary_list);
-            }
-        }
-
-        return $vary_list;
     }//End Function
 
     /*

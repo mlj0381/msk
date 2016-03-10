@@ -15,11 +15,10 @@
 class base_cache_memcached extends base_cache_abstract implements base_interface_cache
 {
     static private $_cacheObj = null;
-    public $name = 'Memcached高速内存级缓存';
+    public $name = 'Memcached高速缓存';
     function __construct()
     {
         $this->connect();
-        $this->check_vary_list();
     }//End Function
 
     public function connect()
@@ -27,7 +26,7 @@ class base_cache_memcached extends base_cache_abstract implements base_interface
         if(!isset(self::$_cacheObj)){
             if(defined('CACHE_MEMCACHED_CONFIG') && constant('CACHE_MEMCACHED_CONFIG')){
                 self::$_cacheObj = new Memcached;
-                $config = explode(',', CACHE_MEMCACHE_CONFIG);
+                $config = explode(',', CACHE_MEMCACHED_CONFIG);
                 foreach($config AS $row){
                     $row = trim($row);
                     if(strpos($row, 'unix://') === 0){

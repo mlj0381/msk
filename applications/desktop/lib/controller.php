@@ -17,10 +17,29 @@ class desktop_controller extends base_controller
     public $certcheck = true;
     public function __construct($app)
     {
-
         header('Cache-Control:no-store, no-cache, must-revalidate'); // HTTP/1.1
         header('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // 强制查询etag
         header('Progma: no-cache');
+        /**
+         * 过滤前台专属COOKIE
+         */
+        if($_COOKIE['CURRENT_THEME']){
+            setcookie('CURRENT_THEME','',time()-1000,'/');
+            unset($_COOKIE['CURRENT_THEME']);
+        }
+        if($_COOKIE['CURRENT_THEME_M']){
+            setcookie('CURRENT_THEME_M','',time()-1000,'/');
+            unset($_COOKIE['CURRENT_THEME_M']);
+        }
+        if($_COOKIE['THEME_DIR']){
+            setcookie('THEME_DIR','',time()-1000,'/');
+            unset($_COOKIE['THEME_DIR']);
+        }
+        if($_COOKIE['THEME_M_DIR']){
+            setcookie('THEME_M_DIR','',time()-1000,'/');
+            unset($_COOKIE['THEME_M_DIR']);
+        }
+
         if (app::get('base')->getConf('shell_base_url') != vmc::base_url(1)) {
             app::get('base')->setConf('shell_base_url', vmc::base_url(1));
         }
@@ -67,7 +86,7 @@ class desktop_controller extends base_controller
                 exit;
             }
         }
-        
+
         $this->_finish_modifier = array();
         foreach (vmc::servicelist(sprintf('desktop_controller_content.%s.%s.%s', $_GET['app'], $_GET['ctl'], $_GET['act'])) as $class_name => $service) {
             if ($service instanceof desktop_interface_controller_content) {

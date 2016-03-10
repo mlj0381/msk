@@ -63,8 +63,6 @@ class aftersales_mdl_request extends dbeav_model
     {
         $tb = $this->table_name(1);
         do {
-            $microtime = utils::microtime();
-            mt_srand($microtime);
             $i = substr(mt_rand() , -3);
             $request_id = '7'.date('ymdHis').$i;
             $row = $this->db->selectrow('SELECT request_id from '.$tb.' where request_id ='.$request_id);
@@ -88,5 +86,20 @@ class aftersales_mdl_request extends dbeav_model
     public function modifier_order_id($order_id)
     {
         return "<a href='index.php?app=b2c&ctl=admin_order&act=detail&p[0]=$order_id' target='_blank'>$order_id</a>";
+    }
+
+    public function modifier_status($col,$row){
+        switch ($col) {
+            case '1':
+            return "等待审核";
+            case '2':
+            return "<span class='text-danger'><i class='fa fa-warning'></i> 已拒绝</span>";
+            case '3':
+            return "退货处理中";
+            case '4':
+            return "退款处理中";
+            case '5':
+            return "<span class='text-success'><i class='fa fa-heart'></i> 完成</span>";
+        }
     }
 }

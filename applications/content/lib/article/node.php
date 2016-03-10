@@ -38,7 +38,6 @@ class content_article_node
     function __construct()
     {
         $this->model = app::get('content')->model('article_nodes');
-        $this->layout_res_dir = app::get('content')->res_dir.'/layout';
     }//End Function
 
 	/**
@@ -189,12 +188,14 @@ class content_article_node
 	*/
     public function get_maps($node_id=0, $step=null)
     {
-        $step_key = (is_null($step)) ? 'all' : $step;
+        $step_key = (is_null($step)) ? 'all' : 's-'.$step;
         if(!isset($this->_node_maps[$node_id][$step_key])){
             $rows = $this->get_nodes($node_id);
-            $step = ($step==null) ? $step : $step-1;
+            if($step!==null){
+                    $step = $step-1;
+            }
             foreach($rows AS $k=>$v){
-                if($v['has_children']=='true' && ($step==null || $step>=0)){
+                if($v['has_children']=='true' && ($step===null || $step>0)){
                     $rows[$k]['childrens'] = $this->get_maps($v['node_id'], $step);
                 }
             }
@@ -276,62 +277,6 @@ class content_article_node
         return $data;
     }//End Function
 
-	/**
-	* 编辑节点
-	* @param int
-	* @param string $layout 布局
-	*/
-    public function editor($id, $layout)
-    {
-        $bodys = vmc::singleton('content_article_node')->get_node($id);
-        if(empty($bodys['content'])){
-            $data['content'] = file_get_contents($this->layout_res_dir . '/1-column/layout.html');
-            app::get('content')->model('article_nodes')->update($data, array('node_id'=>$id));
-        }else{
-            if($layout){
-                $data['content'] = file_get_contents($this->layout_res_dir . '/' . $layout . '/layout.html');
-                if(app::get('content')->model('article_nodes')->update($data, array('node_id'=>$id))){
-                    //app::get('content')->model('article_indexs')->update(array('uptime'=>time()), array('article_id'=>$article_id));
-                    $setting = $this->get_layout($layout);
-                    $setting['slotsNum'] = intval($setting['slotsNum']);
-                    if($setting['slotsNum']>0){
-                        $setting['slotsNum']--;
-                        $db = vmc::database();
-                        $db->exec("update vmc_site_widgets_instance set core_slot=".$db->quote($setting['slotsNum'])." where core_slot>".intval($setting['slotsNum'])." and core_file='content_node:".$id."'");
-                    }
-                }
-            }
-        }
-        return true;
-    }//End Function
-
-	/**
-	* 所有布局
-	* @return array
-	*/
-    public function get_layout_list(){
-        $handle = opendir($this->layout_res_dir);
-        $t = array();
-
-        while(false!==($file=readdir($handle))){
-            if(in_array($file, array('.', '..', '.svn')))   continue;
-
-            $layouts[$file] = require($this->layout_res_dir . '/' . $file . '/layout_' . $file . '.php');
-        }
-        closedir($handle);
-        return $layouts;
-    }//End Function
-
-	/**
-	* 单个布局
-	* @param string $layout 布局
-	* @return string
-	*/
-    public function get_layout($layout)
-    {
-        $layouts = $this->get_layout_list();
-        return $layouts[$layout];
-    }//End Function
 
 
 

@@ -4,6 +4,10 @@
 </div>
 <form method="post" action="index.php?app=b2c&ctl=admin_order&act=doreship" id='order_reship_form' class="form">
     <input type="hidden" name="order_id" value="<{$order.order_id}>">
+    <{if $env.get.in_as}>
+    <!-- 在售后流程发起 -->
+    <input type="hidden" name="in_as" value="true">
+    <{/if}>
 <div class="modal-body">
     <div class="row">
         <div class="col-md-6">
@@ -57,6 +61,7 @@
                             <{input class='input-sm'  type="select" name='dp_id' rows=$dlyplace_list valueColumn="dp_id" labelColumn="dp_title"  required=true}>
                         </div>
                     </div>
+                    <{if !$env.get.in_as}>
                     <div class="form-group">
                         <label class="col-md-4 control-label">物流\快递单号
                             <span class="required" aria-required="true">*</span>
@@ -121,6 +126,7 @@
                             </select>
                         </div>
                     </div>
+                    <{/if}>
                     <div class="form-group">
                         <label class="col-md-4 control-label">备注
                        </label>
@@ -148,8 +154,9 @@
                   </thead>
                   <tbody>
                       <{foreach from=$order.items item=item}>
-                      <{if $env.get.product.product_id}>
-                        <{if $item.product_id!=$env.get.product.product_id}>
+                      <{if $env.get.product}>
+                      <{assign var=fix_product_id value=$env.get.product|key}>
+                        <{if $item.product_id!=$fix_product_id}>
                             <{continue;}>
                         <{/if}>
                       <{/if}>
@@ -162,8 +169,8 @@
                     <td><{$item.sendnum}></td>
                     <td>
                       <{if $item.sendnum>0}>
-                          <{if $env.get.product.quantity}>
-                              <{input type="number" readonly=true required=true name="reship[{$item.item_id}]" value=$env.get.product.quantity|number_format:0  class="input-xsmall"}>
+                          <{if $env.get.product}>
+                              <{input type="number" readonly=true required=true name="reship[{$item.item_id}]" value=$env.get.product|current|number_format:0  class="input-xsmall"}>
                           <{else}>
                              <{input type="number" required=true name="reship[{$item.item_id}]" value=$item.sendnum|number_format:0  class="input-xsmall"}>
                           <{/if}>

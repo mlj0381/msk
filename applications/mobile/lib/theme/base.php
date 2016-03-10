@@ -54,6 +54,12 @@ class mobile_theme_base
     } //End Function
     public function get_default()
     {
+        if($_COOKIE['CURRENT_THEME_M']){
+            $current_theme = utils::decrypt($_COOKIE['CURRENT_THEME_M']);
+            if($current_theme){
+                return $current_theme;
+            }
+        }
         return app::get('mobile')->getConf('current_theme');
     } //End Function
     public function update_theme($aData)

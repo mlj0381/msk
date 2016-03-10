@@ -17,18 +17,6 @@ class site_ctl_admin_theme_manage extends desktop_controller
     public function index()
     {
         vmc::singleton('site_theme_install')->check();
-        // $this->finder('site_mdl_themes', array(
-        //     'title' => ('PC端模板包'),
-        //     'use_buildin_selectrow'=>false,
-        //     // 'actions' => array(
-        //     //     array(
-        //     //         'label' => ('上传模板'),
-        //     //         'icon' => 'fa-plus',
-        //     //         'href' => 'javascript:void(0)',
-        //     //     ),
-        //     // ),
-        // ));
-
         $mdl_themes = $this->app->model('themes');
         $this->pagedata['themes'] = $mdl_themes->getList('*');
         foreach ($this->pagedata['themes'] as &$theme) {
@@ -59,19 +47,6 @@ class site_ctl_admin_theme_manage extends desktop_controller
             $this->end(false);
         }
     }//End Function
-
-
-    public function delete()
-    {
-        $this->begin();
-        $get = $this->_request->get_get();
-        if (app::get('site')->model('themes')->delete_file(array('theme' => $get['theme']))) {
-            $this->end(true, '删除成功', 'index.php?app=site&ctl=admin_theme_manage&act=index');
-        } else {
-            $this->end(false, '删除失败');
-        }
-    }//End Function
-
 
 
     public function cache_version($theme)

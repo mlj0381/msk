@@ -11,7 +11,7 @@
 // +----------------------------------------------------------------------
 
 
-class ectools_payment_api
+class ectools_payment_api extends base_openapi
 {
     /**
      * 构造方法.
@@ -51,11 +51,15 @@ class ectools_payment_api
         $obj_bill = vmc::singleton('ectools_bill');
         $params = vmc::singleton('base_component_request')->get_params(true);
         $pay_app_class = key($pay);
+        if(!stripos($pay_app_class,'_')){
+            //兼容处理
+            $pay_app_class = 'ectools_payment_applications_'.$pay_app_class;
+        }
         $pay_app_method = current($pay);
         $pay_app_instance = new $pay_app_class();
         if($pay_app_class == 'wechat_payment_applications_wxpay'){
             /**
-             * for 微信支付
+             * 微信支付特殊处理
              */
             $params['_http_raw_post_data_'] = $GLOBALS["HTTP_RAW_POST_DATA"];
         }
@@ -82,5 +86,11 @@ class ectools_payment_api
                 header('Location: '.strtolower(vmc::request()->get_schema().'://'.vmc::request()->get_host()).$pay_result['return_url']);
             }
         }
+    }
+    /**
+     * 为了缩短openapi URL
+     */
+    public function gc($pay){
+        $this->getway_callback($pay);
     }
 }

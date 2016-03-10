@@ -1,53 +1,56 @@
-<div class="page-header">
-  <h1>头像设置 <small>My avatar</small></h1>
-</div>
-<div class="row">
-        <div class="col-md-3">
-            <div class="panel panel-default">
-                <div class="panel-heading">头像可能展现的样式</div>
-                <div class="panel-body">
-                    <img class="img-thumbnail"  src="<{$member.avatar|storager:'avatar'}>" alt="<{$member.uname}>头像">
-                    <hr>
-                    <img class="img-responsive img-rounded"  src="<{$member.avatar|storager:'avatar'}>" alt="<{$member.uname}>头像">
-                    <hr>
-                    <img class="img-thumbnail img-circle" src="<{$member.avatar|storager:'avatar'}>" alt="<{$member.uname}>头像">
-                </div>
-            </div>
+<{script src="lrz/lrz.bundle.js"}>
+<div class="content-padded">
+    <!-- <input type="file" required="true" name="avatar_file" class="form-control" value=""> -->
+    <div class="mobile-img-upload">
+        <div class="img-preview">
+            <img src="<{$member.avatar|storager:'avatar'}>" />
         </div>
-        <div class="col-md-9">
-            <form id="member_setting_form"  class="form-horizontal" action="<{link app=b2c ctl=mobile_member act=avatar args0=upload}>" method="post" enctype="multipart/form-data">
-                <div class="form-group">
-                    <label  class="col-md-4 control-label">
-                        从本地选择头像文件
-                    </label>
-                    <div class="col-md-8">
-                        <input type="file" required="true" name="avatar_file" class="form-control" value="">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-8 col-md-offset-4">
-                        <div class="well">
-                            <h5><i class="glyphicon glyphicon-info-sign"></i> 文件上传须知</h5>
-                            <div>
-                                仅支持<span class="label label-info"><{$upload_max}>以内</span>.jpg\.jpeg\.gif\.png 等图片格式文件。
-                                <hr>
-                                    建议图片长宽尺寸比例为1:1比例
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <div class="col-md-offset-4 col-md-5">
-                      <button type="submit" data-loading-text="正在上传..." class="btn btn-primary">保存</button>
-                    </div>
-                </div>
-            </form>
-        </div>
+        <button type="button" class="btn btn-block btn-positive btn-fileupload">
+            <i class="fa fa-plus"></i><span>选择图片</span>
+            <input type="file"  name="avatar_file" accept="image/*">
+        </button>
+        <p>
+            <!-- 图片上传限制：<span class="badge"><{$upload_max}></span>以内<br> -->
+            文件类型：.jpg\.jpeg\.gif\.png 格式文件<br>
+            建议图片长宽尺寸比例为1:1比例
+        </p>
+    </div>
+    <form id="member_setting_form"  action="<{link app=b2c ctl=mobile_member act=avatar args0=upload}>" method="post">
+        <input type=hidden name="avatar_file_base64" >
+        <button type="submit" class="btn btn-block btn-primary">保存</button>
+    </form>
 </div>
 <script type="text/javascript">
-    $('#member_setting_form').on('submit',function(){
-        $(this).find('button[data-loading-text]').button('loading');
+    $('.btn-fileupload input[name=avatar_file]').on('change',function(){
+        $('.btn-fileupload .fa').removeClass('fa-plus').addClass('fa-spinner fa-spin');
+        lrz(this.files[0],{
+            width:600,
+            quality:1
+        }).then(function(rst){
+            //console.info(rst);
+            $('.mobile-img-upload .img-preview').empty().append($('<img src="'+rst.base64+'">'));
+            $('#member_setting_form input[name=avatar_file_base64]').val(rst.base64);
+            return rst;
+        }).catch(function(err){
+            Messagebox('error',err);
+        }).always(function(){
+            $('.btn-fileupload .fa').removeClass('fa-spinner fa-spin').addClass('fa-plus');
+        });
+
+    });
+    $('#member_setting_form').on('submit',function(e){
+        e.stopPropagation();
+        var form = $(this);
+        form.find('button').text('正在上传...').prop('disabled',true);
+        $.post(form.prop('action'),$(this).serialize(),function(re){
+            if(re.success){
+                Messagebox('success',re.success);
+            }
+            if(re.error){
+                Messagebox('error',re.error);
+            }
+            form.find('button').text('保存').removeProp('disabled');
+        },'json');
+        return false;
     });
 </script>

@@ -37,14 +37,15 @@ class b2c_ctl_mobile_product extends b2c_mfrontpage
         $this->pagedata['data_detail'] = $data_detail;
 
         //设置模板
-        if ($data_detail['goods_setting']['site_template']) {
+        if ($data_detail['goods_setting']['mobile_template']) {
             //设置模板页
-            $this->set_tmpl_file($data_detail['goods_setting']['site_template']);
+            $this->set_tmpl_file($data_detail['goods_setting']['mobile_template']);
         }
         $this->pagedata['goods_path'] = $this->app->model('goods')->getPath($data_detail['goods_id']);
         $this->page('mobile/product/index.html');
     }
 
+    
 
 
 }

@@ -172,6 +172,10 @@ class base_http{
                     self::log(' OK.');
                     return $this->process($fp);
 
+                case 201:
+                    self::log(' OK.');
+                    return $this->process($fp);
+
                 case 404:
                     self::log(' file not found');
                     return false;

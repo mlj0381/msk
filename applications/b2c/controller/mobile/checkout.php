@@ -32,6 +32,13 @@ class b2c_ctl_mobile_checkout extends b2c_mfrontpage
             'act' => 'blank',
         ));
 
+        $sel_maddr_callback = $this->gen_url(array(
+            'app' => 'b2c',
+            'ctl' => 'mobile_checkout',
+            'act' => 'index',
+            'args'=>array($fastbuy)
+        ));
+
         $filter = array();
         $member_id = $this->app->member_id;
 
@@ -48,10 +55,14 @@ class b2c_ctl_mobile_checkout extends b2c_mfrontpage
                 $this->splash('error', '', '购物车为空!');
             }
         }
-        $this->pagedata = vmc::singleton('b2c_checkout_stage')->check(array(
+        $check_params = array(
             'member_id' => $member_id,
             'cart_result' => $cart_result,
-        ));
+        );
+        if($_GET['addr_id']){
+            $check_params['addr_id'] = $_GET['addr_id'];
+        }
+        $this->pagedata = vmc::singleton('b2c_checkout_stage')->check($check_params);
 
         if ($fastbuy !== false) {
             $this->pagedata['is_fastbuy'] = 'is_fastbuy';
@@ -66,7 +77,7 @@ class b2c_ctl_mobile_checkout extends b2c_mfrontpage
         }
         $this->pagedata['my_coupons'] = $my_coupons;
         $this->pagedata['my_av_coupons'] = $available_coupons;
-
+        $this->pagedata['sel_maddr_callback'] = $sel_maddr_callback;
         $this->page('mobile/checkout/index.html');
     }
     /**
@@ -101,7 +112,7 @@ class b2c_ctl_mobile_checkout extends b2c_mfrontpage
         }
         $this->splash('success', $redirect, $check_result);
     }
-    public function payment($order_id, $flow_success = 0)
+    public function payment($order_id, $flow_success = 0 , $new_payappid)
     {
         $redirect = $this->gen_url(array(
             'app' => 'b2c',
@@ -118,6 +129,16 @@ class b2c_ctl_mobile_checkout extends b2c_mfrontpage
         if ($order['pay_status'] == '1' || $order['pay_status'] == '2' || $order['payed'] == $order['order_total']) {
             $this->splash('success', $redirect, '订单已付款！');
         }
+        //变更支付方式
+        if($new_payappid){
+            if(!vmc::singleton('b2c_checkout_stage')->changepayment($order_id,$new_payappid,$error_msg)){
+                $this->pagedata['changepayment_errormsg'] = $error_msg;
+            }else{
+                //order pay_app is  updated
+                $order['pay_app'] = $new_payappid;
+            }
+        }
+
         $mdl_payapps = app::get('ectools')->model('payment_applications');
         $filter = array(
             'status' => 'true',
@@ -180,8 +201,8 @@ class b2c_ctl_mobile_checkout extends b2c_mfrontpage
             'memo' => $order['memo'],
         );
         $exist_bill = $mdl_bills->getRow('*',$bill_sdf);
-        
-        if ($exist_bill && !empty($exist_bill['bill_id'])) {
+        //一天内重复利用原支付单据
+        if ($exist_bill && !empty($exist_bill['bill_id']) && $exist_bill['createtime']+86400>time()) {
             $bill_sdf = array_merge($exist_bill, $bill_sdf);
         } else {
             $bill_sdf['bill_id'] = $mdl_bills->apply_id($bill_sdf);

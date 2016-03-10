@@ -26,10 +26,20 @@ class b2c_ctl_admin_goods extends desktop_controller
                 'data-submit' => 'index.php?app=b2c&ctl=admin_goods&act=batch_edit&p[0]=cat',
                 'data-target' => '_ACTION_MODAL_',
             );
-            // $group[] = array(
-            //     'label' => '_SPLIT_'
-            // );
+            $group[] = array(
+                'label' => '_SPLIT_'
+            );
         }
+        $group[] = array(
+            'label' => ('PC端展示模板') ,
+            'data-submit' => 'index.php?app=b2c&ctl=admin_goods&act=batch_edit&p[0]=template',
+            'data-target' => '_ACTION_MODAL_',
+        );
+        $group[] = array(
+            'label' => ('HTML5触屏端展示模板') ,
+            'data-submit' => 'index.php?app=b2c&ctl=admin_goods&act=batch_edit&p[0]=template_m',
+            'data-target' => '_ACTION_MODAL_',
+        );
         foreach (vmc::servicelist('b2c.goods_finder_edit_group') as $object) {
             if (is_object($object) && method_exists($object, 'get_extends_group')) {
                 $object->get_extends_group($group);
@@ -59,6 +69,7 @@ class b2c_ctl_admin_goods extends desktop_controller
         if ($this->has_permission('deletegoods')) {
             $actions_base['use_buildin_recycle'] = true;
         }
+        $actions_base['finder_extra_view'] = array(array('app'=>'b2c','view'=>'/admin/goods/finder/catalog.html'));
         $this->finder('b2c_mdl_goods', $actions_base);
     }
 
@@ -79,45 +90,36 @@ class b2c_ctl_admin_goods extends desktop_controller
     {
         $mdl_goods = $this->app->model('goods');
         $params = $_POST;
-
         if (count($_POST['goods_id']) < 1) {
             echo '请选择商品';
             exit;
         }
         $mdl_products = $this->app->model('products');
-        $mdl_mlv = $this->app->model('member_lv');
-
         switch ($type) {
-
-            case 'name':
-                break;
             case 'cat':
                 if (!$this->has_permission('catgoods')) {
                     echo('您无权批量操作商品分类');
                     exit;
                 }
-                $this->pagedata['cats'] = $this->app->model('goods_cat')->getMapTree(0, '');
-                break;
-            case 'brief':
                 break;
             case 'dorder':
                 break;
-            case 'brand':
-                if (!$this->has_permission('brandgoods')) {
-                    echo('您无权批量操作商品品牌');
-                    exit;
-                }
-                $mdl_brand = $this->app->model('brand');
-                $brandMap = $mdl_brand->getAll();
-                $brandList = array();
-                foreach ($brandMap as $v) {
-                    $brandList[$v['brand_id']] = $v['brand_name'];
-                }
-                $this->pagedata['brand'] = $brandList;
+            case 'template':
+            case 'template_m':
                 break;
             }
         $this->pagedata['filter'] = htmlspecialchars(serialize($params));
         $this->display('admin/goods/batchedit/'.$type.'.html');
+    }
+
+    public function checkin(){
+        $this->begin('index.php?app=b2c&ctl=admin_goods&act=index');
+        if(!$_POST) $this->end(flase, '非法请求');
+        $mdl_goods = $this->app->model('goods');
+        if(!$mdl_goods->save($_POST)){
+            $this->end(flase, '审核失败');
+        }
+        $this->end(flase, '审核成功');
     }
     public function batch_save(){
         $this->begin();
@@ -129,6 +131,8 @@ class b2c_ctl_admin_goods extends desktop_controller
         switch ($type) {
             case 'cat':
             case 'dorder':
+            case 'template':
+            case 'template_m':
                 if(!$mdl_goods->update($params['set'],$filter)){
                     $this->end(false,'保存失败');
                 }

@@ -21,6 +21,10 @@ class base_httpclient{
         return $this->netcore->action(__FUNCTION__,$url,$headers,$callback,null,$ping_only);
     }
 
+    function delete($url,$headers=null,$callback=null,$ping_only=false){
+        return $this->netcore->action(__FUNCTION__,$url,$headers,$callback,null,$ping_only);
+    }
+
     function post($url,$data,$headers=null,$callback=null,$ping_only=false){
         return $this->netcore->action(__FUNCTION__,$url,$headers,$callback,$data,$ping_only);
     }

@@ -38,8 +38,6 @@ class b2c_task{
             'seo_info' => array(
                   'type' => 'serialize',
                   'label' => app::get('b2c')->_('seo设置'),
-                  'width' => 110,
-                  'editable' => false,
              ),
         );
         $obj_goods->meta_register($col);

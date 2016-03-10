@@ -17,12 +17,12 @@
 <div class="col-md-3">
 
     	<div class="well">
-            <h4><{$cache_name}><br><small>用于前台访问、SESSION处理等</small></h4>
+            <h4><{$cache_name}></h4>
             <{if $enable == 'true'}>
     		<dl>
     		<{foreach from=$status key=key item=value}>
     			<dt><{$key}></dt>
-    			<dd><big><{$value|number_format}></big></dd>
+    			<dd><big><{$value}></big></dd>
     		<{/foreach}>
     		</dl>
     		<a href="index.php?app=desktop&ctl=cachestage&act=cachemgr_clean" target="_command" class="btn btn-success"><i class="fa fa-refresh"></i> 刷新</a>

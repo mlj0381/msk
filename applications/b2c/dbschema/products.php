@@ -35,7 +35,7 @@ $db['products'] = array(
             'type' => 'varchar(30)',
             'label' => ('货号') ,
             'filtertype' => 'normal',
-            
+
             'in_list' => true,
         ) ,
         'price' => array(
@@ -44,7 +44,7 @@ $db['products'] = array(
             'required' => true,
             'label' => ('销售价格') ,
             'filtertype' => 'number',
-            
+
             'in_list' => true,
         ) ,
         'mktprice' => array(
@@ -60,16 +60,48 @@ $db['products'] = array(
             'label' => ('货品名称') ,
             'searchtype' => 'has',
             'filtertype' => 'custom',
-            
+
             'in_list' => true,
             'default_in_list' => true,
             'is_title' => true,
+        ) ,
+        'interval' => array(
+            'type' => 'serialize',
+            'label' => ('货品价盘') ,
+            'default' => '',
+            'in_list' => true,
+        ) ,
+        'price_interval' => array(
+
+            'type' => 'number',
+            'label' => ('价格区间') ,
+            'default' => 0,
+            'in_list' => true,
+        ) ,
+        'price_up' => array(
+
+
+            'type' => 'decimal(20,3)',
+            'label' => ('上行价格') ,
+            'filtertype' => 'number',
+
+            'default' => 0,
+            'in_list' => true,
+        ) ,
+        'price_dn' => array(
+
+            'type' => 'decimal(20,3)',
+            'label' => ('下行价格') ,
+            'filtertype' => 'number',
+
+            'default' => 0,
+            'in_list' => true,
         ) ,
         'weight' => array(
             'type' => 'decimal(20,3)',
             'label' => ('单位重量') ,
             'filtertype' => 'number',
-            
+
             'default' => 0,
             'in_list' => true,
         ) ,
@@ -103,7 +135,7 @@ $db['products'] = array(
         'image_id' => array(
             'type' => 'varchar(32)',
             'label' => ('相册图ID') ,
-            
+
         ) ,
         'uptime' => array(
             'type' => 'time',

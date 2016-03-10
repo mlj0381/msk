@@ -101,7 +101,7 @@ class b2c_sales_goods_process extends b2c_sales_basic_prefilter
             $msg = '促销应用失败!';
             return false;
         }
-
+        $this->clear($rule_id);
         return $this->_apply($aResult, $msg);
     }
     /**

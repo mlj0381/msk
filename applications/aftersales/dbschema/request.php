@@ -41,6 +41,14 @@ $db['request'] = array(
       'default_in_list' => true,
       'label' => '申请人',
     ),
+    'store_id' => array(
+      'type' => 'table:store@store',
+      'default' => '0',
+      'required' => true,
+      'in_list' => true,
+      'default_in_list' => true,
+      'label' => '受理店铺',
+    ),
     'delivery_id'=>array(
       'type'=>'table:delivery@b2c',
       'default'=>'0',
@@ -50,10 +58,6 @@ $db['request'] = array(
       'type'=>'table:bills@ectools',
       'default'=>'0',
       'label'=>'退款单'
-    ),
-    'member_addr_id'=>array(
-        'type' =>'table:member_addrs@b2c',
-        'comment' => '会员收货地址'
     ),
     'subject' => array(
       'type' => 'varchar(200)',
@@ -85,6 +89,7 @@ $db['request'] = array(
             '2' => '更换',
             '3' => '维修',
             '4' => '投诉建议',
+            '5' => '退款'
         ),
         'default' => '1',
         'required' => true,
@@ -107,18 +112,18 @@ $db['request'] = array(
     'status' => array(
       'type' => array(
         '1' => '申请中',
-        '2' => '接受申请',
-        '3' => '申请被拒绝',
-        '4' => '处理中',
-        '5' => '处理完成',
+        '2' => '申请被拒绝',
+        '3' => '退货处理中',
+        '4' => '退款处理中',
+        '5' => '完成',
       ),
       'default' => '1',
       'required' => true,
-      'comment' => '售后申请状态',
+      'comment' => '售后状态',
       'in_list' => true,
       'default_in_list' => true,
       'orderby' => true,
-      'label' => '售后申请状态',
+      'label' => '售后状态',
     ),
     'createtime' => array(
         'type' => 'time',

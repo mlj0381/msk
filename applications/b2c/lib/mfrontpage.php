@@ -67,16 +67,16 @@ class b2c_mfrontpage extends mobile_controller
     public function bind_member($member_id)
     {
         $columns = array(
-            'account' => 'member_id,login_account,login_password',
             'members' => 'member_id,member_lv_id,cur,lang',
         );
         $user_obj = vmc::singleton('b2c_user_object');
         $cookie_expires = $user_obj->cookie_expires ? time() + $user_obj->cookie_expires * 60 : 0;
         $member_data = $user_obj->get_members_data($columns,$member_id);
-        $login_name = $user_obj->get_member_name($data['account']['login_name'],$member_id);
+        $login_name = $user_obj->get_member_name(null,$member_id);
         $this->cookie_path = vmc::base_url().'/';
         $this->set_cookie('UNAME', $login_name, $cookie_expires);
         $this->set_cookie('MEMBER_IDENT', $member_id, $cookie_expires);
+        $this->set_cookie('MEMBER_LEVEL_ID', $member_data['members']['member_lv_id'], $cookie_expires);
     }
     public function get_current_member()
     {

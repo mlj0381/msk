@@ -1,4 +1,5 @@
 <?php
+
 // +----------------------------------------------------------------------
 // | VMCSHOP [V M-Commerce Shop]
 // +----------------------------------------------------------------------
@@ -18,9 +19,7 @@ $db['bills'] = array(
             'default' => 0,
             'pkey' => true,
             'label' => '账单流水号' ,
-            'searchtype' => 'has',
-            'filtertype' => 'yes',
-            
+            'searchtype' => 'yes',
             'in_list' => true,
             'default_in_list' => true,
             'is_title' => true,
@@ -33,21 +32,17 @@ $db['bills'] = array(
             'default' => 'payment',
             'required' => true,
             'label' => '单据类型' ,
-            'filtertype' => 'yes',
-            
             'in_list' => true,
             'comment' => '单据类型' ,
         ) ,
         'pay_object' => array(
             'type' => array(
                 'order' => '订单' ,
-                'recharge' => '充值'
+                'recharge' => '充值',
             ) ,
             'default' => 'order',
             'required' => true,
             'label' => '业务对象' ,
-            'filtertype' => 'yes',
-            
             'in_list' => true,
         ) ,
         'money' => array(
@@ -55,8 +50,9 @@ $db['bills'] = array(
             'label' => '支付货币金额' ,
             'default' => '0',
             'required' => true,
-            'searchtype' => 'nequal',
+            'filtertype' => 'yes',
             'in_list' => true,
+            'orderby' => true,
             'default_in_list' => true,
         ) ,
         'currency' => array(
@@ -73,23 +69,19 @@ $db['bills'] = array(
         'op_id' => array(
             'type' => 'number', //'table:users@desktop',
             'label' => '相关操作员' ,
-            'filtertype' => 'normal',
             'in_list' => true,
             'default_in_list' => true,
         ) ,
         'member_id' => array(
             'type' => 'varchar(100)',
             'label' => '相关会员' ,
-            'filtertype' => 'yes',
-            
             'in_list' => true,
         ) ,
-        'order_id'=>array(
+        'order_id' => array(
             'type' => 'bigint unsigned',
-            'default'=>0,
+            'default' => 0,
             'label' => '相关订单' ,
-            'filtertype' => 'yes',
-            
+            'searchtype' => 'yes',
             'in_list' => true,
         ),
         'status' => array(
@@ -102,13 +94,13 @@ $db['bills'] = array(
                 'progress' => '已付款至担保方' ,
                 'timeout' => '超时' ,
                 'ready' => '准备中' ,
-                'dead'=>'作废'
+                'dead' => '作废',
             ) ,
             'default' => 'ready',
+            'orderby' => true,
             'required' => true,
             'label' => '支付状态' ,
             'filtertype' => 'yes',
-            
             'in_list' => true,
             'default_in_list' => true,
         ) ,
@@ -116,42 +108,36 @@ $db['bills'] = array(
             'type' => array(
                 'online' => '在线支付' ,
                 'offline' => '线下支付' ,
-                'deposit' => '预存款支付'
+                'deposit' => '预存款支付',
             ) ,
             'default' => 'online',
             'required' => true,
             'label' => '付款方式' ,
-            'filtertype' => 'yes',
-            
             'in_list' => true,
             'default_in_list' => true,
         ) ,
         'payee_account' => array(
             'type' => 'varchar(50)',
             'label' => '收款者账户' ,
-            'searchtype' => 'tequal',
-            'filtertype' => 'normal',
-            
+            'filtertype' => 'yes',
             'in_list' => true,
         ) ,
         'payee_bank' => array(
             'type' => 'varchar(50)',
             'label' => '收款者银行' ,
-            'filtertype' => 'normal',
-            
+            'filtertype' => 'yes',
             'in_list' => true,
         ) ,
         'payer_account' => array(
             'type' => 'varchar(50)',
             'label' => '付款者账户' ,
-            'filtertype' => 'normal',
+            'filtertype' => 'yes',
             'in_list' => true,
         ) ,
         'payer_bank' => array(
             'type' => 'varchar(50)',
             'label' => '付款者银行' ,
-            'filtertype' => 'normal',
-            
+            'filtertype' => 'yes',
             'in_list' => true,
         ) ,
         'pay_app_id' => array(
@@ -184,22 +170,26 @@ $db['bills'] = array(
         'out_trade_no' => array(
             'type' => 'varchar(50)',
             'label' => '支付平台流水号' ,
+            'searchtype' => 'yes',
             'in_list' => true,
         ) ,
         'memo' => array(
             'type' => 'longtext',
             'label' => '备注' ,
+            'searchtype' => 'yes',
         ) ,
         'createtime' => array(
             'type' => 'time',
             'label' => '支付单创建时间' ,
-            'filtertype' => 'time',
-            
+            'filtertype' => 'yes',
             'in_list' => true,
+            'orderby' => true,
         ) ,
         'last_modify' => array(
             'type' => 'last_modify',
             'label' => '最后更新时间' ,
+            'filtertype' => 'yes',
+            'orderby' => true,
             'in_list' => true,
         ) ,
         'disabled' => array(

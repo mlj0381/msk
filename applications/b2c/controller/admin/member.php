@@ -35,6 +35,7 @@ class b2c_ctl_admin_member extends desktop_controller
         $actions_base['use_buildin_filter'] = true;
         $this->finder('b2c_mdl_members', $actions_base);
     }
+
     public function edit($member_id)
     {
         $app = app::get('b2c');
@@ -66,6 +67,12 @@ class b2c_ctl_admin_member extends desktop_controller
                         $obj_operatorlogs->detail_edit_log($newdata['contact'], $olddata['contact']);
                     }
                 }
+                //会员编辑成功后执行
+                foreach (vmc::servicelist('b2c.member.edit') as $object) {
+                    if (method_exists($object, 'exec')) {
+                        $object->exec($member_id);
+                    }
+                }
                 $this->end(true, '编辑成功');
             } else {
                 $this->end(false, '编辑失败');
@@ -88,6 +95,20 @@ class b2c_ctl_admin_member extends desktop_controller
         $this->pagedata['member_id'] = $member_id;
         $this->display('admin/member/edit.html');
     }
+    //2015 11 09 bibin 会员审核
+    public function checkin()
+    {
+        $this->begin('index.php?app=b2c&ctl=admin_member&act=index');
+        if(!$_POST) $this->end(false, '非法请求');
+        extract($_POST);
+        $post = compact('member_id', 'checkin');
+        if(!$this->member_model->save($post)){
+             $this->end(false, '审核失败');
+        }
+        $this->end(true, '审核成功');
+
+    }
+    //>>
     public function detail($member_id)
     {
 
@@ -110,6 +131,7 @@ class b2c_ctl_admin_member extends desktop_controller
         $a_mem['integral'] = vmc::singleton('b2c_member_integral')->amount($member_id);
         $userPassport = vmc::singleton('b2c_user_passport');
         $this->pagedata['attr'] = $userPassport->get_signup_attr($member_id);
+        $a_mem['addon'] = unserialize($a_mem['addon']);
         $this->pagedata['mem'] = $a_mem;
 
         $this->pagedata['account'] = $accountData;
@@ -170,7 +192,7 @@ class b2c_ctl_admin_member extends desktop_controller
          $this->display('admin/member/msg.html');
      }
 
-    
+
 
     public function add_page()
     {

@@ -17,7 +17,9 @@ class ectools_mdl_payment_applications {
     public function getList($cols = '*', $filter = false) {
         foreach (vmc::servicelist('ectools_payment.applications') as $class_name => $app_ins) {
             $setting = $app_ins->setting();
+            $class_arr = explode('_', $class_name);
             $conf = unserialize(app::get('ectools')->getConf($class_name));
+
             foreach ($setting as $key => $item) {
                 if (!$conf || empty($conf[$key])) {
                     $conf[$key] = $item['default'];
@@ -27,7 +29,7 @@ class ectools_mdl_payment_applications {
                 'name' => $app_ins->name,
                 'version' => $app_ins->version,
                 'platform_allow' => $app_ins->platform_allow,
-                'app_id' => array_pop(explode('_', $class_name)) , //app_id 即class 文件名
+                'app_id' => array_pop($class_arr) , //app_id 即class 文件名
                 'display_name' => $conf['display_name'],
                 'order_num' => $conf['order_num'] ? $conf['order_num'] : 0,
                 'app_class' => $class_name,
@@ -35,6 +37,7 @@ class ectools_mdl_payment_applications {
                 'pay_fee' => $conf['pay_fee'],
                 'status' => $conf['status']
             );
+
             $flag = true;
             if ($filter && is_array($filter)) {
                 foreach ($filter as $key => $value) {
@@ -48,10 +51,10 @@ class ectools_mdl_payment_applications {
         $tmp_list = array();
         $index = 0;
         foreach ($list as $key => $value) {
-            if ($filter && $filter['app_id'] != 'cod' && $value['app_id'] == 'cod') {
-                unset($list[$key]);
-                continue;
-            }
+//            if ($filter && $filter['app_id'] != 'cod' && $value['app_id'] == 'cod') {
+//                unset($list[$key]);
+//                continue;
+//            }
             $index = $value['order_num'];
             while (true) {
                 if (!isset($tmp_list[$index])) break;
@@ -59,6 +62,7 @@ class ectools_mdl_payment_applications {
             }
             $tmp_list[$index] = $value;
         }
+
         ksort($tmp_list);
         return array_values($tmp_list);
     }

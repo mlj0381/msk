@@ -34,16 +34,19 @@ class importexport_type_csv implements importexport_interface_type{
             $exportData[0] = $data;
         }
         $rs = implode("\n",(array)$exportData)."\n";
+
+        $rs = iconv('utf-8', 'gb2312', $rs);
+
         return $rs;
     }
 
 
     /**
      * 获取文件中每行数据
-     * 
+     *
      * @param $handle 打开的文件句柄
      * @param $contents 获取到的数据
-     * @param $line 行数 
+     * @param $line 行数
      */
     public function fgethandle(&$handle,&$contents,$line){
         $row = fgetcsv($handle);

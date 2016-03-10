@@ -17,16 +17,8 @@
         <class>ectools_view_helper</class>
     </service>
 
-    <service id="desktop_finder.ectools_mdl_payments">
-        <class>ectools_finder_payments</class>
-    </service>
-
-    <service id="desktop_finder.ectools_mdl_refunds">
-        <class>ectools_finder_refunds</class>
-    </service>
-
-    <service id="desktop_finder.ectools_mdl_currency">
-        <class>ectools_finder_currency</class>
+    <service id="desktop_finder.ectools_mdl_bills">
+        <class>ectools_finder_bills</class>
     </service>
 
     <service id="ectools_regions.ectools_mdl_regions" optname="地区包" opttype="select">
@@ -37,7 +29,11 @@
         <class>ectools_view_input</class>
     </service>
 
-    <service id="openapi.ectools_payment">
+    <service id="openapi.ectools_payment" optname="openapi@支付相关">
+        <class>ectools_payment_api</class>
+    </service>
+    <!--为了缩短openapi URL-->
+    <service id="openapi.ecpay" optname="openapi@支付相关(短URL)">
         <class>ectools_payment_api</class>
     </service>
 

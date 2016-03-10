@@ -162,11 +162,11 @@ class base_storager
         $size = strtolower($size);
         if (isset($image_id{31}) && !isset($image_id{32})) {
             return '%IMG_'.$image_id.'_S_'.$size.'_IMG%';
-        } elseif(strstr($image_id,'//')!==false) {
+        } elseif (strstr($image_id, '//') !== false) {
             return $image_id;
-        } else{
+        } else {
             //1x1 transparent gif
-            return "data:image/gif;base64,R0lGODlhAQABAIAAAO/v7////yH5BAAHAP8ALAAAAAABAAEAAAICRAEAOw==";
+            return 'data:image/gif;base64,R0lGODlhAQABAIAAAO/v7////yH5BAAHAP8ALAAAAAABAAEAAAICRAEAOw==';
         }
     }
     public static function image_path($image_id, $size = false)
@@ -216,8 +216,8 @@ class base_storager
             if (!isset($imglib[$image_id]['storage']) || empty($imglib[$image_id]['storage'])) {
                 continue;//未知引擎,无法处理
             }
-            if (file_exists(APP_DIR.'/base/lib/storager/'.$imglib[$image_id]['storage'].'.php') ||
-            file_exists(EXTENDS_DIR.'/base/lib/storager/'.$imglib[$image_id]['storage'].'.php')) {
+            if (file_exists(APP_DIR.'/base/lib/storage/'.$imglib[$image_id]['storage'].'.php') ||
+            file_exists(EXTENDS_DIR.'/base/lib/storage/'.$imglib[$image_id]['storage'].'.php')) {
                 $storager_class = 'base_storage_'.$imglib[$image_id]['storage'];
             } else {
                 $storager_class = false;
@@ -225,9 +225,11 @@ class base_storager
 
             foreach ($sizes as $i => $item) {
                 if ($item[0] && $storager_class) {
-                    $storager = new $storager_class();
-                    if (method_exists($storager, 'modifier_process')) {
-                        $url = $storager->modifier_process($imglib[$image_id]['url'], $item[0]);
+                    /**
+                     * modifier_process is a static Method
+                     */
+                    if (method_exists($storager_class, 'modifier_process')) {
+                        $url = $storager_class::modifier_process($imglib[$image_id]['url'], $item[0]);
                         $the_url_plus = implode('_', array(substr($imglib[$image_id]['last_modified'], -5), 'OW'.$imglib[$image_id]['width'], 'OH'.$imglib[$image_id]['height']));
                         $the_url = ($url && $url != '') ? ($url.'?'.$the_url_plus) : '';
                         $img[$image_id][$i][0] = $the_url;
@@ -255,7 +257,7 @@ class base_storager
                     $resource_host_url = vmc::get_resource_host_url();
                     $url = $resource_host_url.'/'.$url;
                 }
-                $the_url_plus = substr($imglib[$image_id]['last_modified'], -5).'_H'.$imglib[$image_id]['height'];
+                $the_url_plus = substr($imglib[$image_id]['last_modified'], -5).'_H'.$imglib[$image_id]['height'].'_W'.$imglib[$image_id]['width'];
                 $the_url = ($url && $url != '') ? ($url.'?'.$the_url_plus) : '';
                 $img[$image_id][$i][0] = $the_url;
             }

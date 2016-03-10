@@ -1,9 +1,10 @@
-<div class="modal-header">
-    <h3 class="modal-title"><{$msg.subject}></h3>
-</div>
-<div class="modal-body">
-    <{$msg.content}>
-</div>
-<div class="modal-footer">
-        <button type="button" class="btn default" data-dismiss="modal">关闭</button>
+<header class="bar bar-nav">
+  <a class="icon icon-left-nav pull-left history-go-1" href="<{link app=mobile ctl=index}>"></a>
+  <h1 class="title">消息</h1>
+</header>
+<div class="content">
+    <div class="content-padded">
+        <h4><{$msg.subject}></h4>
+        <{$msg.content}>
+    </div>
 </div>

@@ -39,8 +39,8 @@ class base_application_crontab extends base_application_prototype_xml{
     function install(){
         $class = new $this->key();
         if ($class instanceof base_interface_task) {
-            logger::info("Installing ".$this->content_typename().' '.$this->key());            
-            return app::get('base')->model('crontab')->insert($this->row());
+            logger::info("Installing ".$this->content_typename().' '.$this->key());
+            return app::get('base')->model('crontab')->save($this->row());
         } else {
             trigger_error(sprintf('application:%s %s fail', $this->content_typename(), $this->key()), E_USER_ERROR);
         }
@@ -52,9 +52,9 @@ class base_application_crontab extends base_application_prototype_xml{
         }
 
         if ($app_id!=='base') {
-            app::get('base')->model('crontab')->delete(array( 
-                'app_id'=>$app_id)); 
-            
+            app::get('base')->model('crontab')->delete(array(
+                'app_id'=>$app_id));
+
         }
     }
 }

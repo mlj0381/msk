@@ -30,7 +30,7 @@ class importexport_policy_ftp implements importexport_interface_policy
     {
         $this->ftp_extension = extension_loaded('ftp') ? true : false;
         if (!$this->ftp_extension) {
-            $this->ftpclient = vmc::singleton('importexport_policy_ftpclient_client');
+            $this->ftpclient = vmc::singleton('importexport_policy_FTPClient_client');
             $this->mode = 'MODE_BINARY';
         }
 

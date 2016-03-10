@@ -11,20 +11,20 @@
 // +----------------------------------------------------------------------
 
 
-class b2c_cart_object_goods implements b2c_interface_cart_object
-{
+class b2c_cart_object_goods implements b2c_interface_cart_object {
+
     private $app;
     private $member_ident; // 用户标识
     private $mdl_cartobjects;
     private $no_database;
     private $no_database_cart_object;
+
     /**
      * 构造函数.
      *
      * @param $object $app  // service 调用必须的
      */
-    public function __construct()
-    {
+    public function __construct() {
         $this->app = app::get('b2c');
         $this->session = vmc::singleton('base_session');
         $this->session->start();
@@ -40,38 +40,39 @@ class b2c_cart_object_goods implements b2c_interface_cart_object
         $this->db = vmc::database();
         $this->obj_math = vmc::singleton('ectools_math');
     }
-    public function get_type()
-    {
+
+    public function get_type() {
         return 'goods';
     }
-    public function get_part_type()
-    {
+
+    public function get_part_type() {
         return array();
     }
+
     /**
      * 购物车项参数组织.
      */
-    private function _params($object)
-    {
+    private function _params($object) {
         return array(
             'item' => $object,
             'warning' => false,
         );
     }
+
     /**
      * 添加购物车项($object = array('goods'=>array('product_id'=>xxx,'num'=>22))).
      *
      * @return bool
      */
-    public function add_object($object, &$msg = '', $append = true, $is_fastbuy = false)
-    {
+    public function add_object($object, &$msg = '', $append = true, $is_fastbuy = false) {
         $object = $object['goods'];
         $arr_save = array(
-            'obj_ident' => 'goods_'.$object['product_id'],
+            'obj_ident' => 'goods_' . $object['product_id'],
             'obj_type' => 'goods',
+            'store_id' => $object['store_id'],
             'params' => $this->_params(array(
                 'product_id' => $object['product_id'],
-            )) ,
+            )),
             'quantity' => ($object['num'] ? $object['num'] : 1),
         );
         if ($is_fastbuy) {
@@ -108,9 +109,9 @@ class b2c_cart_object_goods implements b2c_interface_cart_object
 
         return $arr_save['obj_ident'];
     }
+
     //更新购物车项数量
-    public function update($ident, $quantity, &$msg)
-    {
+    public function update($ident, $quantity, &$msg) {
         $arr_save = array(
             'obj_ident' => $ident,
             'obj_type' => 'goods',
@@ -139,6 +140,7 @@ class b2c_cart_object_goods implements b2c_interface_cart_object
 
         return $cart_object['obj_ident'];
     }
+
     /**
      * 指定的购物车商品项.
      *
@@ -147,8 +149,7 @@ class b2c_cart_object_goods implements b2c_interface_cart_object
      *
      * @return array
      */
-    public function get($ident = null, $rich = false, $is_fastbuy = false)
-    {
+    public function get($ident = null, $rich = false, $is_fastbuy = false) {
         if (empty($ident)) {
             return $this->getAll($rich, $is_fastbuy);
         }
@@ -174,9 +175,9 @@ class b2c_cart_object_goods implements b2c_interface_cart_object
 
         return $cart_objects;
     }
+
     // 购物车里的所有商品项
-    public function getAll($rich = false, $is_fastbuy = false)
-    {
+    public function getAll($rich = false, $is_fastbuy = false) {
         $filter = array(
             'obj_type' => 'goods',
         );
@@ -189,15 +190,20 @@ class b2c_cart_object_goods implements b2c_interface_cart_object
             $filter['member_id'] = $this->member_id;
         }
         $cart_objects = $this->mdl_cartobjects->getList('*', $filter);
+
+        $store_obj = vmc::singleton('store_store_object');
+        foreach ($cart_objects as &$value) {
+            $value['store_info'] = $store_obj->store_info($value['store_id']);
+        }
         if (!$rich) {
             return $cart_objects;
         }
 
         return $this->_get_rich($cart_objects);
     }
+
     // 删除购物车中指定商品项
-    public function delete($sIdent = null, $is_fastbuy = false)
-    {
+    public function delete($sIdent = null, $is_fastbuy = false) {
         if (!$sIdent || empty($sIdent)) {
             return $this->deleteAll();
         }
@@ -216,9 +222,9 @@ class b2c_cart_object_goods implements b2c_interface_cart_object
 
         return $this->mdl_cartobjects->delete($filter);
     }
+
     // 清空购物车中商品项数据
-    public function deleteAll($is_fastbuy = false)
-    {
+    public function deleteAll($is_fastbuy = false) {
         $filter = array(
             'obj_type' => 'goods',
         );
@@ -233,9 +239,9 @@ class b2c_cart_object_goods implements b2c_interface_cart_object
 
         return $this->mdl_cartobjects->delete($filter);
     }
+
     // 小计购物车
-    public function count(&$cart_result)
-    {
+    public function count(&$cart_result) {
         if (empty($cart_result['objects']['goods'])) {
             return false;
         }
@@ -254,6 +260,7 @@ class b2c_cart_object_goods implements b2c_interface_cart_object
             ));
             $cart_result['weight'] = $this->obj_math->number_plus(array($cart_result['weight'], $count_weight));
             //购物车合计
+            
             $count_cart_amount = $this->obj_math->number_multiple(array(
                 $item_product['price'],
                 $cart_object['quantity'],
@@ -269,7 +276,7 @@ class b2c_cart_object_goods implements b2c_interface_cart_object
              * cart_amount 购物车商品总金额
              */
             $cart_result['gain_score'] = $this->obj_math->number_multiple(array(
-                app::get('b2c')->getConf('score_convert',1),
+                app::get('b2c')->getConf('score_convert', 1),
                 $cart_result['cart_amount'],
             ));
             //会员身份优惠合计
@@ -289,6 +296,7 @@ class b2c_cart_object_goods implements b2c_interface_cart_object
             $cart_result['goods_count'] += $cart_object['quantity'];
         }
     }
+
     /**
      * 获得购物车丰富的详细的数据.
      *
@@ -296,13 +304,14 @@ class b2c_cart_object_goods implements b2c_interface_cart_object
      *
      * @return array 包含货品详细数据,购物车项状态数据
      */
-    private function _get_rich($cart_objects)
-    {
+    private function _get_rich($cart_objects) {
 
         //$cart_objects = utils::array_change_key($cart_objects, 'obj_ident');
 
         foreach ($cart_objects as $key => $object) {
             $product_id_arr[] = $object['params']['item']['product_id'];
+            //所购买的货品 => 购买数量
+            $parice[$object['params']['item']['product_id']] = $object['quantity'];
         }
 
         $mdl_product = app::get('b2c')->model('products');
@@ -326,6 +335,10 @@ class b2c_cart_object_goods implements b2c_interface_cart_object
             $products[$key]['brand_id'] = $goods['brand_id'];
             $products[$key]['type_id'] = $goods['type_id'];
             //价格扩展
+
+            //计算价盘价格
+            $product['price'] = $parice[$product['product_id']] > $product['price_interval'] ?
+                    $product['price_up'] : $product['price_dn'];
             $products[$key]['buy_price'] = $products[$key]['member_lv_price'] = $this->obj_math->number_multiple(array(
                 $product['price'],
                 $this->member_discout,
@@ -340,11 +353,10 @@ class b2c_cart_object_goods implements b2c_interface_cart_object
 
         return $cart_objects;
     }
-    //加入\更新购物车时验证
-    private function _check($object, &$msg)
-    {
-        //TODO  购物车项加入时候验证告警
 
+    //加入\更新购物车时验证
+    private function _check($object, &$msg) {
+        //TODO  购物车项加入时候验证告警
         // if (empty($object['item'])) {
         //     $object = $this->_get_rich(array($object));
         //     $object = $object[0];
@@ -359,12 +371,12 @@ class b2c_cart_object_goods implements b2c_interface_cart_object
 
         return true;
     }
+
     /**
      * 购物车商品可售卖验证
      * @param &$cart_objects rich 购物车商品项
      */
-    private function _warning(&$cart_objects)
-    {
+    private function _warning(&$cart_objects) {
         foreach ($cart_objects as &$object) {
             if ($object['item']['product']['marketable'] != 'true') {
                 $object['warning'] = '已下架';
@@ -372,12 +384,12 @@ class b2c_cart_object_goods implements b2c_interface_cart_object
                 continue;
             }
             if ($object['item']['product']['nostore_sell'] != '1' && !vmc::singleton('b2c_goods_stock')->is_available_stock(
-             $object['item']['product']['bn'],
-             $object['quantity'],$abs_stock)) {
-                $object['warning'] = '库存不足,当前最多可售数量:'.$abs_stock;
+                            $object['item']['product']['bn'], $object['quantity'], $abs_stock)) {
+                $object['warning'] = '库存不足,当前最多可售数量:' . $abs_stock;
                 $object['disabled'] = 'true'; //不能参与结算
                 continue;
             }
         }
     }
+
 }

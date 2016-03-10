@@ -26,10 +26,12 @@ class base_render
     {
         $this->app = $app;
         $this->params = vmc::request()->request_params;
+        $base_url = vmc::base_url(1);
+        $this->pagedata['base_url'] = $base_url;
         //$this->pagedata = $this->$_vars;
     }
 
-    public function display($tmpl_file, $app_id = null, $fetch = false, $is_theme = false)
+    public function display($tmpl_file, $app_id = null, $fetch = false)
     {
         array_unshift($this->_files, $tmpl_file);
         $this->_vars = $this->pagedata;
@@ -44,11 +46,7 @@ class base_render
             if (defined('EXTENDS_DIR') && file_exists(EXTENDS_DIR.'/'.($app_id ? $app_id : $this->app->app_id).'/view/'.$tmpl_file)) {
                 $tmpl_file = EXTENDS_DIR.'/'.($app_id ? $app_id : $this->app->app_id).'/view/'.$tmpl_file;
             } else {
-                if (!$is_theme) {
-                    $tmpl_file = realpath(APP_DIR.'/'.($app_id ? $app_id : $this->app->app_id).'/view/'.$tmpl_file);
-                } else {
-                    $tmpl_file = realpath(THEME_DIR.'/'.$tmpl_file);
-                }
+                $tmpl_file = realpath(APP_DIR.'/'.($app_id ? $app_id : $this->app->app_id).'/view/'.$tmpl_file);
             }
             $last_modified = filemtime($tmpl_file);
         }
@@ -111,9 +109,9 @@ class base_render
         return $this->_object[$classname];
     }
 
-    public function fetch($tmpl_file, $app_id = null, $is_theme = false)
+    public function fetch($tmpl_file, $app_id = null)
     {
-        return $this->display($tmpl_file, $app_id, true, $is_theme);
+        return $this->display($tmpl_file, $app_id, true);
     }
 
     public function tmpl_cachekey($key, $value)
@@ -126,7 +124,7 @@ class base_render
         return $this->single('base_component_ui');
     }
 
-    public function _fetch_compile_include($app_id, $tmpl_file, $vars = null, $is_theme = false)
+    public function _fetch_compile_include($app_id, $tmpl_file, $vars = null)
     {
         $_tmp_pagedata = $this->pagedata;
         $_tmp_vars = $this->_vars;
@@ -136,7 +134,7 @@ class base_render
             $this->pagedata = (array) $vars;
         }
         $this->_ignore_pre_display = true;
-        $include = $this->fetch($tmpl_file, $app_id, $is_theme);
+        $include = $this->fetch($tmpl_file, $app_id);
         $this->_ignore_pre_display = false;     //todo: fetch include的模板时不需要执行pre_display过滤，主模板会最终执行一次
         $this->pagedata = $_tmp_pagedata;
         $this->_vars = $_tmp_vars;

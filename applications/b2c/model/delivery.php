@@ -22,8 +22,6 @@ class b2c_mdl_delivery extends dbeav_model {
         $sign = (($delivery_sdf['delivery_type'] == 'send') ? '1' : '2');
         $tb = $this->table_name(1);
         do{
-            $microtime = utils::microtime();
-            mt_srand($microtime);
             $i = substr(mt_rand() , -3);
             $delivery_id =  $sign . date('ymdHi') . $i;
             $row = $this->db->selectrow('SELECT delivery_id from '.$tb.' where delivery_id ='.$delivery_id);

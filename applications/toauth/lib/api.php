@@ -11,7 +11,7 @@
 // +----------------------------------------------------------------------
 
 
-class toauth_api
+class toauth_api extends base_openapi
 {
     /**
      * 构造方法.
@@ -33,5 +33,5 @@ class toauth_api
         $pam_instance->$pam_method($params);
     }
 
-    
+
 }

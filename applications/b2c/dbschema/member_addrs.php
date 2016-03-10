@@ -31,38 +31,75 @@ $db['member_addrs'] = array(
             'is_title' => true,
             'type' => 'varchar(50)',
             'required' => true,
+            'default' => '',
             'comment' => ('收货人姓名') ,
         ) ,
         'area' => array(
             'type' => 'region',
             'required' => true,
+            'default' => '',
             'comment' => ('收货人地区') ,
         ) ,
         'addr' => array(
             'type' => 'varchar(255)',
             'required' => true,
+            'default' => '',
             'comment' => ('收货地址') ,
         ) ,
         'zip' => array(
             'type' => 'varchar(20)',
-
+            'default' => '',
             'comment' => ('邮编') ,
         ) ,
         'tel' => array(
             'type' => 'varchar(50)',
-
+            'default' => '',
             'comment' => ('电话') ,
         ) ,
         'mobile' => array(
             'type' => 'varchar(50)',
             'required' => true,
+            'default' => '',
             'comment' => ('手机') ,
         ) ,
         'email' => array(
             'type' => 'varchar(100)',
-
+            'default' => '',
             'comment' => ('邮箱') ,
         ) ,
+        
+        'habit_normal_time' => array(
+            'type' => 'serialize',
+            'default' => '',
+            'label' => '正常收货时间段',
+            'comment' =>  '正常收货时间段',
+        ),
+        'habit_normal_first' => array(
+            'type' => 'varchar(20)',
+            'default' => '',
+            'label' => '习惯最早收货时间',
+            'comment' => '习惯最早收货时间'
+        ),
+        
+        'habit_normal_last' => array(
+            'type' => 'varchar(20)',
+            'default' => '',
+            'label' => '习惯最晚收货时间',
+            'comment' => '习惯最晚收货时间'
+        ),
+        
+        'cart_stop_distance' => array(
+            'type' => 'varchar(20)',
+            'default' => '',
+            'label' => '最近停车距离',
+            'comment' => '最近停车距离'
+        ),
+        'delivery_scale' => array(
+            'type' => 'varchar(20)',
+            'default' => '',
+            'label' => '单次配送规模',
+            'comment' => '单次配送规模'
+        ),
         'day' => array(
             'type' => 'varchar(255)',
             'default' => ('任意日期') ,

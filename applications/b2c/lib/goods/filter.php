@@ -114,27 +114,17 @@ class b2c_goods_filter extends dbeav_filter
         if ($filter['cat_id']) {
             $extended_goods_id = array();
             $serialize_part = 's:'.strlen((string) $filter['cat_id']).':"'.$filter['cat_id'].'"';
-            foreach ($object->lw_getList('goods_id', array('extended_cat|has' => $serialize_part)) as $row) {
-                array_push($extended_goods_id, $row['goods_id']);
+            if($glist = $object->lw_getList('goods_id', array('extended_cat|has' => $serialize_part))){
+                foreach ($glist as $row) {
+                    array_push($extended_goods_id, $row['goods_id']);
+                }
             }
         }
 
         //子类
-        if ($filter['cat_id'] || $filter['cat_id'] === 0) {
-            $mdl_cat = $object->app->model('goods_cat');
-            $cats = $mdl_cat->getList('cat_path,cat_id', array(
-                    'cat_id' => $filter['cat_id'],
-                ));
-            $path = '';
-            if (count($cats)) {
-                foreach ($cats as $v) {
-                    $path .= ' cat_path LIKE \''.($v['cat_path']).$v['cat_id'].',%\' OR';
-                }
-            }
-            if ($cat_ids = $object->db->select('SELECT cat_id FROM vmc_b2c_goods_cat WHERE '.$path.' cat_id in ('.implode((array) $filter['cat_id'], ' , ').')')) {
-                $filter['cat_id'] = array_keys(utils::array_change_key($cat_ids, 'cat_id'));
-            }
-        }
+        $mdl_cat = $object->app->model('goods_cat');
+        $filter['cat_id'] = $mdl_cat->get_all_children_id($filter['cat_id']);
+
         //当找到扩展分类时
         if (count($extended_goods_id)) {
             foreach ($object->lw_getList('goods_id', array('cat_id' => $filter['cat_id'])) as $row) {

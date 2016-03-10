@@ -202,11 +202,13 @@ class base_kvstore{
      * @access public
      * @return boolean
      */
-    public function store($key, $value, $ttl=0)
+    public function store($key, $value, $ttl=0 , $persistent = true)
     {
         self::$__store_count++;
-        if((defined('KV_PERSISTENT') && constant('KV_PERSISTENT')) && self::$__persistent && get_class($this->get_controller())!='base_kvstore_mysql' && vmc::is_online()){
-            $this->persistent($key, $value, $ttl);
+        if($persistent && (defined('KV_PERSISTENT') && constant('KV_PERSISTENT')) && self::$__persistent && get_class($this->get_controller())!='base_kvstore_mysql' && vmc::is_online()){
+
+                    $this->persistent($key, $value, $ttl);
+
         }
         logger::debug('kvstore:'.self::$__fetch_count.'.'.' instance:'.$this->get_prefix().' store key:'.$key);
         return $this->get_controller()->store($key, $value, $ttl);
@@ -237,7 +239,16 @@ class base_kvstore{
      */
     public function persistent($key, $value, $ttl=0)
     {
-        vmc::singleton('base_kvstore_mysql', $this->get_prefix())->store($key, $value, $ttl);  //todo: 持久化
+        $prefix = $this->get_prefix();
+        if(defined('KV_IGNORE_PERSISTENT') && constant('KV_IGNORE_PERSISTENT')){
+                //忽略持久化处理
+                $ignore_prefix = constant('KV_IGNORE_PERSISTENT');
+                $ignore_prefix_array = explode(',',$ignore_prefix);
+                if(in_array($prefix,$ignore_prefix_array)){
+                    return;
+                }
+        }
+        vmc::singleton('base_kvstore_mysql', $prefix)->store($key, $value, $ttl);  //todo: 持久化
     }//End Function
 
     /*

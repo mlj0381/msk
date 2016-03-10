@@ -1,3 +1,8 @@
+<{if $ftp_server.defined == 'true'}>
+<div class="alert alert-info">
+    暂无配置项
+</div>
+<{else}>
 <h3 class="page-title">导入导出FTP存储配置</h3>
 <div class="page-bar">
     <ul class="page-breadcrumb">
@@ -94,3 +99,6 @@
         </div>
     <div>
 </form>
+
+
+<{/if}>

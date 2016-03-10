@@ -116,7 +116,7 @@ final class wechat_payment_applications_wxpay extends ectools_payment_parent imp
             'nonce_str'=>$this->getNonceStr(),//随机字符串，不长于32位
             'body'=>$params['subject']?$params['subject']:'支付订单#'.$params['order_id'],
             'out_trade_no'=>$params['bill_id'],
-            'total_fee'=>ceil($params['money'] * 100),//单位(分)
+            'total_fee'=>($params['money'] * 100),//单位(分)
             'spbill_create_ip'=>$params['ip'],
             'notify_url'=>$this->notify_url,
             'trade_type'=>'JSAPI',
@@ -359,4 +359,6 @@ XML;
         logger::error(__CLASS__.'支付返回签名失败,返回数据：'.var_export($form,1));
         return false;
     }
+
+
 }

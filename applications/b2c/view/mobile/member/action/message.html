@@ -1,33 +1,50 @@
-<div class="page-header">
-  <h1>消息通知 <small>Messages</small></h1>
-</div>
 <{if $msg_list}>
-<div class="list-group member-msg-list">
+<ul class="table-view member-msg-list">
     <{foreach from=$msg_list item=msg}>
-        <a data-toggle="modal" data-msgid=<{$msg.msg_id}> data-target="#member_msg_detail"  href="<{link app=b2c ctl=mobile_member act=message agrs0=$msg.msg_id args1=$msg.msg_id}>" class="list-group-item">
-            <h4 class="subject <{if $msg.status!='sent'}>text-muted<{/if}>"><{$msg.subject}><small class="pull-right">&nbsp;<{$msg.createtime|cdate}></small></h4>
-            <span class="clearfix">
-                <{$msg.content|replace:"\n":''|replace:"\t":''|cut:150:'...'}>
-            </span>
+    <li class="table-view-cell media">
+        <a href="<{link app=b2c ctl=mobile_member act=message agrs0=$msg.msg_id args1=$msg.msg_id}>" class="navigate-right">
+            <span class="pull-left fa <{if $msg.status!='sent'}> fa-envelope-o<{else}>fa-envelope<{/if}>"></span>
+            <div class="media-body">
+                <{$msg.subject}>
+                <p>
+                    <{$msg.createtime|cdate}>
+                </p>
+                <p>
+                    <{$msg.content|replace:"\n":''|replace:"\t":''|cut:90:'...'}>
+                </p>
+            </div>
         </a>
+    </li>
     <{/foreach}>
-</div>
-<{pagers data=$pager}>
-<div class="modal fade" id="member_msg_detail" role="basic" aria-hidden="true" style="display: none;">
-      <div class="modal-dialog">
-              <div class="modal-content">
-                  正在加载...
-              </div>
-      </div>
+</ul>
+<div class="content-morepage content-padded">
+    <{morepage data=$pager}>
 </div>
 <script type="text/javascript">
-    $('.member-msg-list .list-group-item').on('click',function(){
-        $(this).find('.subject').addClass('text-muted');
+//翻页
+var current_page = 1;
+$('.btn-morepage').on('touchend',function(e){
+    e.stopPropagation();
+    var btn = $(this);
+    btn.find('.fa-circle-o-notch').removeClass('hidden');
+    var data_morepage = btn.attr('data-morepage');
+    data_morepage = $.parseJSON(data_morepage);
+    var new_page = $('<div></div>');
+    new_page.load(data_morepage.link.replace(data_morepage.token,++current_page)+" .member-msg-list",function(){
+        new_page.find('.member-msg-list .table-view-cell').appendTo($('.member-msg-list'));
+        btn.find('.fa-circle-o-notch').addClass('hidden');
     });
+    if(current_page == data_morepage.total){
+        btn.remove();
+    }
+    return false;
+});
 </script>
 <{else}>
-<br>
-<div class="alert alert-info">
-    <h2>暂无</h2>
+<div class="content-splash">
+    <i class="fa fa-inbox fa-5x"></i>
+    <p>
+        暂无
+    </p>
 </div>
 <{/if}>

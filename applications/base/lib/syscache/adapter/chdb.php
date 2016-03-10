@@ -45,9 +45,14 @@ class base_syscache_adapter_chdb extends base_syscache_adapter_abstract implemen
         foreach( (array)$data as $k => $v ){
             $data[$k] = serialize($v);
         }
-        chdb_create($this->_get_pathname(), $data);
-        $this->_controller = new chdb($this->_get_pathname());
-        if(is_file($this->_get_prev_pathname()) && $this->_get_prev_pathname()!=$this->_get_pathname()){
+        $chdb_file = $this->_get_pathname();
+        try{
+            chdb_create($chdb_file, $data);
+        }catch(Exception $e){
+            logger::error($e->getMessage());
+        }
+        $this->_controller = new chdb($chdb_file);
+        if(is_file($this->_get_prev_pathname()) && $this->_get_prev_pathname()!=$chdb_file){
             try{
                 unlink($this->_get_prev_pathname());
             }catch(Exception $e){

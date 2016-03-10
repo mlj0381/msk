@@ -11,15 +11,12 @@
 // +----------------------------------------------------------------------
 
 
-class b2c_openapi_cart
+class b2c_openapi_cart extends base_openapi
 {
     private $req_params = array();
-    public function __construct($http = true)
+    public function __construct()
     {
-        if ($http) {
-            header('Content-Type:application/json; charset=utf-8');
             $this->req_params = vmc::singleton('base_component_request')->get_params(true);
-        }
     }
     /**
      * 购物车数量
@@ -35,8 +32,16 @@ class b2c_openapi_cart
             $filter['member_ident'] = md5($member_id);
             $filter['member_id'] = $member_id;
         }
-        $count = $mdl_cartobjects->count($filter);
-        $this->_success(array('count'=>$count));
+        $list = $mdl_cartobjects->getList('*',$filter);
+
+        if(!$list){
+            $list = array();
+        }else{
+            foreach ($list as $key => $value) {
+                $quantity+=$value['quantity'];
+            }
+        }
+        $this->success(array('count'=>count($list),'quantity'=>$quantity));
     }
     /**
      * 购物车结果
@@ -46,7 +51,7 @@ class b2c_openapi_cart
         $cart_result = $cart_stage->currency_result();
         $is_empty = $cart_stage->is_empty($cart_result);
         if($is_empty){
-            $this->_failure('购物车为空');
+            $this->failure('购物车为空');
         }
         $result_arr = array();
         foreach ($cart_result['objects']['goods'] as $key => $item) {
@@ -57,27 +62,8 @@ class b2c_openapi_cart
              $product['price'] = vmc::singleton('ectools_math')->formatNumber($product['price'], app::get('ectools')->getConf('site_decimal_digit_count'), app::get('ectools')->getConf('site_decimal_digit_count'));
              $result_arr[] = $product;
         }
-        $this->_success($result_arr);
+        $this->success($result_arr);
     }
 
 
-
-    private function _success($data)
-    {
-        echo json_encode(array(
-            'result' => 'success',
-            'data' => $data,
-        ));
-        exit;
-    }
-
-    private function _failure($msg)
-    {
-        echo json_encode(array(
-            'result' => 'failure',
-            'data' => [],
-            'msg' => $msg,
-        ));
-        exit;
-    }
 }

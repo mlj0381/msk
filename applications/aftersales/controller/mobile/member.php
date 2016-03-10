@@ -13,6 +13,7 @@
 
 class aftersales_ctl_mobile_member extends b2c_ctl_mobile_member
 {
+    public $title = '售后服务';
     /**
      * 构造方法
      * @param object application
@@ -22,6 +23,7 @@ class aftersales_ctl_mobile_member extends b2c_ctl_mobile_member
         $this->app_current = $app;
         $this->app_b2c = app::get('b2c');
         parent::__construct($this->app_b2c);
+
     }
     /**
      * 新请求
@@ -142,8 +144,6 @@ class aftersales_ctl_mobile_member extends b2c_ctl_mobile_member
                 $type_info = app::get('b2c')->model('goods_type')->dump($goods['type_id']);
             }
             $this->pagedata['gtype_assrule'] = $type_info['setting']['assrule'];
-            $this->pagedata['member_addr_list'] = app::get('b2c')->model('member_addrs')->getList('*', array('member_id' => $this->member['member_id']));
-            $this->pagedata['member_addr_list'][0]['selected'] = 'true';
             $this->output('aftersales');
         }
 
@@ -184,6 +184,50 @@ class aftersales_ctl_mobile_member extends b2c_ctl_mobile_member
 
 
         $this->output('aftersales');
+    }
+
+    public function req_detail($request_id)
+    {
+        $mdl_as_request = $this->app_current->model('request');
+        $req_detail = $mdl_as_request->dump($request_id);
+        if ($req_detail['delivery_id']) {
+            $mdl_delivery = app::get('b2c')->model('delivery');
+            $delivery = $mdl_delivery->dump($req_detail['delivery_id'], '*', 'default');
+            $this->pagedata['delivery'] = $delivery;
+            $mdl_dlycorp = app::get('b2c')->model('dlycorp');
+            $this->pagedata['dlycorp_list'] = $mdl_dlycorp->getList('*', array('disabled' => 'false'));
+        }
+        if ($req_detail['bill_id']) {
+            $mdl_bills = app::get('ectools')->model('bills');
+            $bill = $mdl_bills->dump($req_detail['bill_id']);
+            $this->pagedata['bill'] = $bill;
+        }
+        $this->pagedata['req_detail'] = $req_detail;
+        $this->output('aftersales');
+    }
+
+    public function update_delivery()
+    {
+        $mdl_as_request = app::get('aftersales')->model('request');
+        $mdl_delivery = app::get('b2c')->model('delivery');
+        $request = $mdl_as_request->dump($_POST['request_id'], '*', 'default_sub');
+        $redirect = $this->gen_url(array(
+            'app' => 'aftersales',
+            'ctl' => 'mobile_member',
+            'act' => 'request'            
+        ));
+        if (!$request) {
+            $this->splash('error', $redirect, '提交失败!');
+        }
+        $reship_delivery = $request['reship'];
+        $reship_delivery['consignor'] = $request['order']['consignee'];
+        $reship_delivery['dlycorp_id'] = $_POST['delivery']['dlycorp_id'];
+        $reship_delivery['logistics_no'] = $_POST['delivery']['logistics_no'];
+        if ($mdl_delivery->save($reship_delivery)) {
+            $this->splash('success', $redirect, '提交成功,请等待确认!');
+        } else {
+            $this->splash('error', $redirect, '提交失败!');
+        }
     }
 
     private function _send($result,$msg){

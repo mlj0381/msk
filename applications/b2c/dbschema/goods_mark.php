@@ -11,36 +11,50 @@
 // +----------------------------------------------------------------------
 
 $db['goods_mark'] = array(
-  'columns' => array(
-    'mark_id' => array(
-        'type' => 'number',
-        'pkey' => true,
-        'extra' => 'auto_increment',
-        'label' => 'markID',
-    ),
-    'goods_id' => array(
-        'type' => 'table:goods',
-        'label' => ('相关商品'),
-        
-    ),
-    'mark_type' => array(
-        'pkey' => true,
-        'type' => array(
-            'normal' => '综合',
+    'columns' => array(
+        'mark_id' => array(
+            'type' => 'number',
+            'pkey' => true,
+            'extra' => 'auto_increment',
+            'label' => 'markID',
         ),
-        'default' => 'normal',
-        'comment' => '评分类型',
+        'goods_id' => array(
+            'type' => 'table:goods',
+            'label' => ('相关商品'),
+        ),
+        'mark_type' => array(
+            'pkey' => true,
+            'type' => array(
+                'normal' => '综合',
+            ),
+            'default' => 'normal',
+            'comment' => '评分类型',
+        ),
+        'mark_star' => array(
+            'type' => array(
+                '1' => '好评',
+                '2' => '中评',
+                '3' => '差评',
+            ),
+            'label' => ('评分'),
+        ),
+        'goods_grade' => array(
+            'type' => 'decimal(2,1)',
+            'label' => ('商品分数'),
+        ),
+        'serve_grade' => array(
+            'type' => 'decimal(2,1)',
+            'label' => ('服务分数'),
+        ),
+        'logistics_grade' => array(
+            'type' => 'decimal(2,1)',
+            'label' => ('物流分数'),
+        ),
+        'comment_id' => array(
+            'type' => 'table:member_comment',
+            'label' => ('相关评价'),
+        )
     ),
-    'mark_star' => array(
-        'type' => 'decimal(2,1)',
-        'label' => ('分数'),
-    ),
-    'comment_id' => array(
-        'type' => 'table:member_comment',
-        'label' => ('相关评价'),
-    )
-  ),
-
-   'engine' => 'innodb',
-   'comment' => ('商品评分表'),
+    'engine' => 'innodb',
+    'comment' => ('商品评分表'),
 );

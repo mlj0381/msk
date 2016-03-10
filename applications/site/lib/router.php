@@ -20,7 +20,7 @@ class site_router implements base_interface_router
      * @var array $_sitemap
      * @accessvar private
     */
-    private $_sitemap = array();
+    protected $_sitemap = array();
     /*
      * sitemap对应表
      *
@@ -29,36 +29,36 @@ class site_router implements base_interface_router
      * @var array $_urlmap
      * @access private
     */
-    private $_urlmap = array();
+    protected $_urlmap = array();
     /*
      * @var array $_query_info
      * @access private
     */
-    private $_query_info = null;
+    protected $_query_info = null;
     /*
      * @var object $_request
      * @access private
     */
-    private $_request = null;
+    public $_request = null;
     /*
      * @var object $_response
      * @access private
     */
-    private $_response = null;
+    protected $_response = null;
     /*
      * 保存当前进程的gen_url, 避免重复生成
      *
      * @var object $_response
      * @access private
     */
-    private $__gen_url_array = array();
+    protected $__gen_url_array = array();
     /*
      * uri扩展名
      *
      * @var object $_response
      * @access private
     */
-    private $__uri_expended_name = null;
+    protected $__uri_expended_name = null;
     /*
      * 构造
      * @var object $app
@@ -69,7 +69,7 @@ class site_router implements base_interface_router
     {
         $this->app = $app;
         $this->_sitemap = app::get('site')->getConf('sitemaps');
-        if (!is_array($this->_sitemap)) {
+        if (!is_array($this->_sitemap)||empty($this->_sitemap)) {
             $sitemap_config = vmc::singleton('site_module_base')->assemble_config();
             if (is_array($sitemap_config)) {
                 $this->_sitemap = $sitemap_config; //todo：兼容kvstroe出错的情况下
@@ -108,7 +108,7 @@ class site_router implements base_interface_router
 
         return $this->_sitemap[$key];
     } //End Function
-    private function get_current_sitemap($key = null)
+    protected function get_current_sitemap($key = null)
     {
         if ($key === null) {
             return $this->_sitemap[$this->get_query_info('module') ];
@@ -259,7 +259,7 @@ class site_router implements base_interface_router
     {
         $app = $params['app'];
         if (empty($app)) {
-            return '/';
+            return app::get('site')->base_url();
         }
         if (!is_null($this->get_urlmap($params['app'].':'.$params['ctl']))) {
             if (is_array($params['args'])) {
@@ -270,7 +270,7 @@ class site_router implements base_interface_router
             if (!isset($this->__gen_url_array[$gen_key])) {
                 foreach ($params as $k => $v) {
                     if ($k != 'args' && substr($k, 0, 3) == 'arg') {
-                        if (empty($v)) {
+                        if (!isset($v)||$v === '') {
                             unset($params['args'][substr($k, 3) ]);
                         } else {
                             $params['args'][substr($k, 3) ] = $v;
@@ -296,7 +296,7 @@ class site_router implements base_interface_router
 
             return $this->__gen_url_array[$gen_key];
         } else {
-            return '/';
+            return app::get('site')->base_url();
         }
     } //End Function
     /*
@@ -313,7 +313,7 @@ class site_router implements base_interface_router
         $args_keys = array_keys($params['args']);
         $first_arg = $params['args'][$args_keys[0]];
         if ($params['act'] == 'index' && (count($params['args']) == 0 || is_numeric($first_arg))) {
-            //此情况可省略act 这个太恶心了 EDwin
+
         } else {
             array_unshift($params['args'], $params['act']);
         }
@@ -443,7 +443,7 @@ class site_router implements base_interface_router
 
         return;
     }
-    private function check_expanded_name()
+    protected function check_expanded_name()
     {
         if (!array_key_exists($this->get_query_info('module'), $this->get_sitemap())) {
             $this->http_status(404); //404页面
@@ -503,12 +503,19 @@ class site_router implements base_interface_router
     */
     public function is_preview()
     {
-
-        return false;
+        if(isset($_GET['_theme_preview_exit']) && $_COOKIE['CURRENT_THEME']){
+            setcookie('CURRENT_THEME', '', time()-1000, '/');
+            echo "<script>location.reload();</script>";
+            exit;
+        }
+        return $_COOKIE['CURRENT_THEME'];
     }
     private function is_need_cache()
     {
-        if (defined('WITHOUT_PAGE_CACHE') && constant('WITHOUT_PAGE_CACHE')) {
+        if($this->is_preview()){
+            return false;
+        }
+        if (defined('WITHOUT_CACHE') && constant('WITHOUT_CACHE')) {
             return false;
         }
         if (count($this->_request->get_post()) == 0 && vmc::singleton('site_theme_base')->get_default()) {
@@ -533,6 +540,7 @@ class site_router implements base_interface_router
         $this->check_expanded_name();
         $router_cache_options = $this->check_router_cache();
         $page_key = 'SITE_PAGE_CACHE:'.$this->_request->get_request_uri();
+
         if (!$this->is_need_cache() || ($this->is_need_cache() && !cachemgr::get($page_key, $page, $router_cache_options['skipvary']))) {
             $cache_log = 'cache missed on '.date('Y-m-d H:i:s');
             logger::info($cache_log.',URL:'.$this->_request->get_request_uri());
@@ -580,7 +588,7 @@ class site_router implements base_interface_router
         }
         if ($page_cache === true) {
             $etag = ($page['etag']) ? $page['etag'] : md5($page['html']); //todo: 兼容
-            $this->_response->set_header('Etag', $etag);
+            $this->_response->set_header('ETag', $etag);
             $matchs = explode(',', $_ENV['HTTP_IF_NONE_MATCH']);
             foreach ($matchs as $match) {
                 if (trim($match) == $etag) {
@@ -603,15 +611,15 @@ class site_router implements base_interface_router
      * @access private
      * @return void
     */
-    private function set_vary_cookie()
+    protected function set_vary_cookie()
     {
-        $cookie_vary = $_COOKIE['vary'];
-        $vary = cachemgr::get_cache_check_version().md5(serialize(cachemgr::get_cache_global_varys()));
+        $cookie_vary = $_COOKIE['CACHE_VARY'];
+        $vary = cachemgr::get_cache_check_version().'-'.md5(serialize(cachemgr::get_cache_global_varys()));
         if ($cookie_vary !== $vary) {
-            setCookie('vary', $vary, time() + 86400 * 30 * 12 * 10, '/');
+            setCookie('CACHE_VARY', $vary, time() + 86400 * 30 * 12 * 10, '/');
         }
     } //End Function
-    private function init_request_info()
+    protected function init_request_info()
     {
         $query_args = explode($this->get_query_info('separator'), $this->get_query_info('query'));
         $part = array_shift($query_args);
@@ -780,11 +788,11 @@ class site_router implements base_interface_router
     */
     public function parse_route_static_dispatch($query)
     {
-        //     if($val = vmc::singleton('site_route_static')->get_dispatch($query)){
-        //         if($val['enable'] == 'true'){
-        //             return $val['url'];
-        //         }
-        //     }
+        foreach (vmc::servicelist('site.parse_route_static_dispatch') as $obj) {
+            if (method_exists($obj, 'parse_query')) {
+                $obj->parse_query($query);
+            } //引用传递
+        }
         return $query;
     } //End Function
     /*
@@ -795,9 +803,11 @@ class site_router implements base_interface_router
     */
     public function parse_route_static_genurl($url)
     {
-        // if($val = vmc::singleton('site_route_static')->get_genurl($url)){
-        //     return $val;
-        // }
+        foreach (vmc::servicelist('site.parse_route_static_genurl') as $obj) {
+            if (method_exists($obj, 'parse_url')) {
+                $obj->parse_url($url);
+            } //引用传递
+        }
         return $url;
     } //End Function
 } //End Class

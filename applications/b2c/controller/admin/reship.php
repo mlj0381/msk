@@ -29,7 +29,7 @@ class b2c_ctl_admin_reship extends desktop_controller{
         $this->finder('b2c_mdl_delivery',array(
             'title'=>('退货单'),
             'use_buildin_recycle'=>false,
-            'use_view_tab'=>true,
+            'use_buildin_filter' => true,
             'base_filter'=>array('delivery_type'=>'reship')
             ));
     }

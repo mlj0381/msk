@@ -14,9 +14,15 @@
     <service id="html_input">
         <class>mobile_view_input</class>
     </service>
-    
+
     <service id="site_view_helper">
         <class orderby="1">site_service_view_helper</class>
     </service>
+
+    <!--渲染拦截-->
+    <service id="base_render_pre_display">
+        <class orderby="0">mobile_view_pre_render</class>
+    </service>
+
 
 </services>

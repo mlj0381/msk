@@ -10,28 +10,56 @@
 // +----------------------------------------------------------------------
 
 class seller_ctl_admin_seller extends desktop_controller {
-    
-    public function index($type) {
+
+    public function __construct($app)
+    {
+        parent::__construct($app);
+        $this->passport_obj = vmc::singleton('seller_user_passport');
+    }
+
+    public function index() {
         $title = '商家管理';
-        $checkin = array('checkin' => array('1'));
-        if($type == 'checkin'){
-            $checkin = array('checkin' => array('0', '-1'));
-            $title = '商家审核';
-        }
         $this->finder('seller_mdl_sellers', array(
             'title' => $title ,
-            'base_filter' => $checkin,
-            'use_buildin_recycle'=>true,
-            'actions' => array(
-                array(
-                    'label' => ('添加商家') ,
-                    'icon' => 'fa-plus',
-                    'href' => 'index.php?app=seller&ctl=admin_brand&act=create',
-                ) ,
-            )
         ));
-
     }
+
+    /**
+     * 获取商家详情信息
+     * */
+    public function detail()
+    {
+        $params = vmc::singleton('base_component_request')->get_get();
+        $seller_id = $params[0];
+        $step = $params[1];
+        $type = $params[2];
+        $countPage = $this->passport_obj->countPage();
+        $step = $params['pageIndex'] ? $params['pageIndex'] : $step;
+        $step = $type == 'up' ? $step - 1 : $step + 1;
+        $step <= 1 && $step = 1;
+        $step > $countPage['sum'] && $step = $countPage['sum'] + 1;
+
+        if ($params['typeId']) $storeType = $params['typeId'];
+        if (!$storeType && $this->seller['ident'] & 1) $storeType = 1;
+        if (!$storeType && $this->seller['ident'] & 2) $storeType = 2;
+        if (!$storeType && $this->seller['ident'] & 4) $storeType = 4;
+
+        if (!$licence_type) {
+            $licence_type = $this->passport_obj->new_or_old($this->seller['seller_id']);
+        }
+
+        $columns = $this->passport_obj->page_setting($step, $licence_type, $storeType);
+
+        $this->passport_obj->_entry($step, $storeType, $index);
+        $this->pagedata['info'] = $this->passport_obj->edit_info($columns, $seller_id, $storeType);
+        $this->pagedata['info']['company_extra']['page_setting'] = $this->passport_obj->columns();
+        $this->pagedata['info']['company_extra']['pageIndex'] = $step;
+
+        $this->pagedata['pageSet'] = $columns;
+        $this->pagedata['pageIndex'] = $step;
+        $this->page('admin/seller/detail.html');
+    }
+
     public function checkin()
     {
         $this->begin('index.php?app=seller&ctl=admin_seller&act=index&p[0]=checkin');
@@ -66,79 +94,7 @@ class seller_ctl_admin_seller extends desktop_controller {
             $this->end(ture, '分配成功');
         }
     }
-    // public function checked($id, $type)
-    // {
-    //     if($_POST) $this->_checked($_POST);
-    //     if($type == 'store'){
-    //        $model = app::get('store')->model('store');
-    //     }else{
-    //        $model = $this->app->model($type);
-    //     }
-    //     $this->pagedata['seller_info'] = $model->getRow('*', array('seller_id' => $id));
-    //     $this->_editor();
-    //     $this->display("admin/seller/finder/{$type}.html");
-    // }
-    // private function _checked($post)
-    // {
-    //     $this->begin('index.php?app=seller&ctl=admin_seller&act=index');
-    //     if($post['seller_type'] == 'store'){
-    //         $model = app::get('store')->model('store');
-    //     }else{
-    //         $model = $this->app->model($post['seller_type']);
-    //     }
-    //     $db = vmc::database();
-    //     $db->beginTransaction();
-    //     if(!$model->update(array('status' => $post['status']), array('seller_id' => $post['seller_id']))){
-    //         $this->end(false, '审核失败');
-    //     }
-    //     $mdl_seller = $this->app->model('sellers');
-    //     $seller_check = $mdl_seller->dump($post['seller_id'], '*', 'checkin');
-    //     $suatus[] = array_shift($seller_check['company']);
-    //     array_unshift($suatus, array_shift($seller_check['aptitudes']));
-    //     array_unshift($suatus, array_shift($seller_check['store']));
-    //     array_unshift($suatus, array_shift($seller_check['brand']));
-    //     $status = ture;
-    //     foreach ($suatus as $key => $value) {
-    //         if($value['status'] == '-1' || $value['status'] == '0'){
-    //             $status = false;
-    //             break;
-    //         }
-    //     }
-    //     if($status){
-    //         if(!$mdl_seller->update(array('checkin' => '1'), array('seller_id' => $post['seller_id']))){
-    //             $db->rollback();
-    //         }
-    //     }
-    //     //写入日志
-    //
-    //     $db->commit();
-    //     $this->end(true, '审核成功');
-    // }
-    private function _editor()
-    {
-        $this->pagedata['sections'] = array();
-        $sections = array(
-            'basic' => array(
-                'label' => ('营业执照') ,
-                'file' => 'admin/seller/finder/company/business.html',
-            ) ,
-            'content' => array(
-                'label' => ('公司信息') ,
-                'file' => 'admin/seller/finder/company/company.html',
-            ) ,
-            'params' => array(
-                'label' => ('法人信息') ,
-                'file' => 'admin/seller/finder/company/legal.html',
-            ) ,
-            'template' => array(
-                'label' => ('组织机构') ,
-                'file' => 'admin/seller/finder/company/organization.html',
-            ) ,
-        );
-        foreach ($sections as $key => $section) {
-            $this->pagedata['sections'][$key] = $section;
-        }
-    }
+
 
     function create() {
         $this->page('admin/seller/index.html');

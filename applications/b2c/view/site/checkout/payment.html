@@ -1,19 +1,25 @@
-<div class="container">
-    <ol class="breadcrumb">
-      <li><a href="<{link app=site ctl=index}>">首页</a></li>
-      <li><a href="<{link app=b2c ctl=site_member}>">会员中心</a></li>
-      <li class="active">收银台</li>
-    </ol>
-</div>
+<!-- <ol class="breadcrumb">
+  <li><a href="<{link app=site ctl=index}>">首页</a></li>
+  <li><a href="<{link app=b2c ctl=site_member}>">会员中心</a></li>
+  <li class="active">收银台</li>
+</ol> -->
+
 <{if $flow_success=='1'}>
-<div class="container">
+
     <div class="alert alert-success order-create-success">
-            <h1 class="text-success">订单已成功提交！</h1>
+            订单已成功提交！
     </div>
-</div>
+
+<{/if}>
+<{if $changepayment_errormsg}>
+
+    <div class="alert alert-warning order-changepayment-error">
+            <{$changepayment_errormsg}>
+    </div>
+
 <{/if}>
 
-<div class="container checkout-container">
+<div class="checkout-container">
     <div class="row">
         <div class="col-xs-7">
             <div  class="panel panel-default">
@@ -59,16 +65,20 @@
             <div class="panel panel-default">
                 <div class="panel-heading clearfix">
                     <h3 class="panel-title pull-left"><{if $order.is_cod!='Y'}>在线<{/if}>支付方式</h3>
+                    <!--
                     <{if $order.is_cod!='Y'}>
                     <button data-toggle="modal" data-target="#pappchange_modal" type="button"  class="btn btn-default btn-xs pull-right btn-new-maddr">更换支付方式</button>
                     <{/if}>
+                    -->
                 </div>
                 <div class="list-group">
                     <div class="list-group-item">
-                        <h4><{$selected_payapp.display_name}></h4>
-                        <p class="list-group-item-text">
-                            <{$selected_payapp.description}>
-                        </p>
+
+                            <h4><{$selected_payapp.display_name}></h4>
+                            <p class="list-group-item-text">
+                                <{$selected_payapp.description}>
+                            </p>
+
                     </div>
                 </div>
             </div>
@@ -111,7 +121,7 @@
       <div class="modal-body">
           <{foreach from=$payapps key=k item=papp}>
              <{if $selected_payapp.app_id == $papp.app_id}><{continue;}><{/if}>
-              <a href="javascript:;"  class="list-group-item">
+              <a href="<{link app=b2c ctl=site_checkout act=payment args0=$order.order_id args1=0 args2=$papp.app_id}>"  class="list-group-item">
                   <h3><{$papp.display_name|default:$papp.name}></h3>
                   <p>
                       <{$papp.description}>

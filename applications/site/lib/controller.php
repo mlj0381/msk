@@ -88,6 +88,12 @@ class site_controller extends base_controller
         $this->app = $app;
         $this->_request = vmc::singleton('base_component_request');
         $this->_response = vmc::singleton('base_component_response');
+
+        foreach (vmc::servicelist('site.controller.construct') as $object) {
+            if (method_exists($object, 'exec')) {
+                $object->exec($this->_request);
+            }
+        }
     } //End Function
     /*
      * 构成链接
@@ -95,7 +101,7 @@ class site_controller extends base_controller
      * @access public
      * @return string
     */
-    final public function gen_url($params = array())
+    public function gen_url($params = array())
     {
         return app::get('site')->router()->gen_url($params);
     } //End Function
@@ -215,29 +221,45 @@ class site_controller extends base_controller
         array_unshift($this->_files, $this->get_theme().'/'.$tmpl);
         $this->_vars = $this->pagedata;
         $this->_vars['base_url'] = vmc::base_url(true);
-        $this->_vars['site_theme_url'] = $this->_vars['base_url'].'/'.$this->get_theme();
+        $this->_vars['site_theme_url'] = vmc::get_themes_host_url().'/'.$this->get_theme();
         //title description
         $title = $this->title ?
         $this->title :
-        app::get('site')->getConf('site_name', app::get('site')->getConf('page_default_title'));
+        app::get('b2c')->getConf('site_name', app::get('b2c')->getConf('page_default_title'));
         $keywords = $this->keywords ?
         $this->keywords :
-        app::get('site')->getConf('page_default_keywords', $title);
+        app::get('b2c')->getConf('page_default_keywords', $title);
         $description = $this->description ?
         $this->description :
-        app::get('site')->getConf('page_default_description', $title);
+        app::get('b2c')->getConf('page_default_description', $title);
+        $this->pagedata = array_merge($this->pagedata, array(
+            'title' => htmlspecialchars($title),
+            'keywords' => htmlspecialchars($keywords),
+            'description' => htmlspecialchars($description),
+        ));
         $this->_vars = array_merge($this->_vars, array(
-            'title' => htmlspecialchars($this->title),
+            'title' => htmlspecialchars($title),
             'keywords' => htmlspecialchars($keywords),
             'description' => htmlspecialchars($description),
         ));
 
-        $tmpl_file = realpath(THEME_DIR.'/'.$this->get_theme().'/'.$tmpl);
-
+        $tmpl_file = realpath(vmc::get_themes_root_dir().'/'.$this->get_theme().'/'.$tmpl);
         if (!$tmpl_file) {
-            $tmpl = 'default.html';
+            $tmpl_file = realpath(vmc::get_themes_root_dir().'/'.$this->get_theme().'/default.html');
+            if(!$tmpl_file){
+                $unexists_path = vmc::get_themes_root_dir().'/'.$this->get_theme().'/'.$tmpl;
+                setcookie('CURRENT_THEME','',time()-1000,'/');
+                unset($_COOKIE['CURRENT_THEME']);
+                setcookie('CURRENT_THEME_M','',time()-1000,'/');
+                unset($_COOKIE['CURRENT_THEME_M']);
+                setcookie('THEME_DIR','',time()-1000,'/');
+                unset($_COOKIE['THEME_DIR']);
+                setcookie('THEME_M_DIR','',time()-1000,'/');
+                unset($_COOKIE['THEME_M_DIR']);
+                trigger_error('File not exists ['.$unexists_path.']', E_USER_ERROR);
+            }
         }
-        $tmpl_content = vmc::singleton('site_theme_file')->get_tmpl_content($this->get_theme(), $tmpl);
+        $tmpl_content = file_get_contents($tmpl_file);
         $compile_code = $this->_compiler()->compile($tmpl_content);
         if ($compile_code !== false) {
             $compile_code = $this->fix_statics_dir($compile_code);

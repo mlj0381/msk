@@ -1,5 +1,5 @@
 <services>
-    <service id="openapi.toauth">
+    <service id="openapi.toauth" optname="openapi@信任登录相关">
         <class>toauth_api</class>
     </service>
     <service id="toauth.pam" optname="第三方信任登录列表">
