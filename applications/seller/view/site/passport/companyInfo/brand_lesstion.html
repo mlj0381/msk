@@ -1,0 +1,25 @@
+<input type="hidden" name="brand_lesstion[content_id]"  value="<{$extra.brand_lesstion.content_id}>" class="form-control">
+<input type="hidden" name="brand[brand_id]"  value="<{$extra.brand.brand_id}>" class="form-control">
+<input
+        type="hidden" name="brand[id]"  value="<{$extra.brand.id}>" class="form-control">
+<div id="brand_lesstion">
+	<h4>品牌证书</h4>
+	<div class="form-group">
+		<label class="col-xs-2 control-label">
+			<span class="text-danger">*</span>品牌名称：
+		</label>
+		<div class="col-xs-4">
+			<input type="text" name="brand[brand_name]" value="<{$extra.brand.brand_name}>" class="form-control" required="true">
+			<span class="msgTip" data-message="error"></span>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-xs-2 control-label">
+			<span class="text-danger">*</span>商标注册证：
+		</label>
+		<div class="col-xs-4">
+	        <{input type="imageupload" tag="图片上传" name="brand_lesstion[attach]" value=$extra.brand_lesstion.attach required='true' accept="jpg|png|gif"}>   
+            <span class="msgTip" data-message="error">不能为空</span>
+		</div>
+	</div>
+</div>

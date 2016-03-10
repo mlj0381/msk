@@ -1,0 +1,104 @@
+<ul class="table-view my-baseinfo">
+    <li class="table-view-cell media">
+        <a href="<{link app=b2c ctl=mobile_member act=avatar}>" class="media-object pull-left go-avatar">
+            <img class="my-head-img" src="<{$member.avatar|storager:'avatar'}>" width=50  alt="<{$member.uname}>头像" />
+        </a>
+        <div class="media-body">
+            <{$member.uname}>
+            <{if !$pam_data.local}>
+            <a class="btn btn-outlined" href="<{link app=b2c ctl=mobile_member act=set_pam_uname}>">设置昵称</a>
+            <{/if}>
+            <{if $pam_data.email && $pam_data.email.disabled=='true'}>
+            <a class="btn btn-outlined" href="<{link app=b2c ctl=mobile_member act=active_pam_email}>">验证邮箱  <{$pam_data.email.login_account}>
+            </a>
+            <{/if}>
+            <p>
+                <span class="badge"><{$member.levelname}> <{if $member.lv_discount<1}>(<{$member.lv_discount*10}>折)<{/if}></span>
+                <{if $member.next_levelname}><br>
+                    差<{$member.next_experience - $member.experience}>经验升级为<span class='text-danger'><{$member.next_levelname}></span>
+                    <{if $member.next_lv_discount<1}>享<{$member.next_lv_discount*10}>折优惠<{/if}>
+                <{/if}>
+            </p>
+        </div>
+        <a href="<{link app=b2c ctl=mobile_passport act=logout}>" class="btn pull-right btn-logout"><span class="fa fa-power-off"></span>退出</a>
+    </li>
+</ul>
+<div class="segmented-control my-total">
+    <a class="control-item">经验值：<{$member.experience|default:0}></a>
+    <a class="control-item" href="<{link app=b2c ctl=mobile_member act=integral}>">积分：<{$member.integral|number_format}></a>
+</div>
+<ul class="table-view tv-allorder">
+    <li class="table-view-divider"></li>
+    <li class="table-view-cell media">
+        <a href="<{link app=b2c ctl=mobile_member act=orders}>" class="navigate-right">
+            <span class="fa fa-file-text-o media-object pull-left"></span>
+            <div class="media-body">
+                    全部订单
+            </div>
+        </a>
+    </li>
+</ul>
+<li class="segmented-control my-total my-order-status-menu">
+    <a class="control-item" href="<{link app=b2c ctl=mobile_member act=orders args0=s1}>">
+        <span class="fa fa-credit-card fa-2x"></span>
+        待付款
+        <{if $order_count_arr.s1}>
+        <span class="badge badge-negative"><{$order_count_arr.s1}></span>
+        <{/if}>
+    </a>
+    <a class="control-item" href="<{link app=b2c ctl=mobile_member act=orders args0=s2}>">
+        <span class="fa fa-dropbox fa-2x"></span>
+        待发货
+        <{if $order_count_arr.s2}>
+        <span class="badge badge-negative"><{$order_count_arr.s2}></span>
+        <{/if}>
+    </a>
+    <a class="control-item" href="<{link app=b2c ctl=mobile_member act=orders args0=s3}>">
+        <span class="fa fa-truck fa-2x"></span>
+        待收货
+        <{if $order_count_arr.s3}>
+        <span class="badge badge-negative"><{$order_count_arr.s3}></span>
+        <{/if}>
+    </a>
+    <a class="control-item" href="<{link app=b2c ctl=mobile_member act=orders args0=s4}>">
+        <span class="fa fa-star fa-2x"></span>
+        待评价
+        <{if $order_count_arr.s4}>
+        <span class="badge badge-negative"><{$order_count_arr.s4}></span>
+        <{/if}>
+    </a>
+</li>
+<ul class="table-view tv-mmenu">
+    <{foreach from=$menu item=i key=k}>
+          <{if !$i.link}>
+          <li class="table-view-divider"><{$i.label}></li>
+          <{/if}>
+          <{foreach from=$i.items item=m key=j}>
+             <li data-myaction="<{$m.link.act}>" class="table-view-cell mm-<{$m.link.ctl}>-<{$m.link.act}> <{if $current_action!='index' && $m.link.act == $current_action}> active<{/if}>">
+                 <a class="navigate-right" href="<{link app=$m.link.app ctl=$m.link.ctl act=$m.link.act}>">
+                     <{$m.label}>
+                 </a>
+             </li>
+          <{/foreach}>
+    <{/foreach}>
+</ul>
+
+<script type="text/javascript">
+    //fill icon
+    $(function(){
+        var icon_map = {
+            'mm-mobile_cart-index':'fa-shopping-cart',
+            'mm-mobile_member-receiver':'fa-location-arrow',
+            'mm-mobile_member-favorite':'fa-heart',
+            'mm-mobile_member-coupon':'fa-money',
+            'mm-mobile_member-newrequest':'fa-reply',
+            'mm-mobile_member-request':'fa-list',
+            'mm-mobile_member-setting':'fa-cog',
+            'mm-mobile_member-securitycenter':'fa-shield',
+            'mm-mobile_member-message':'fa-envelope',
+        };
+        $.each(icon_map,function(item,fa_class){
+            $('.table-view-cell.'+item+' a').append($('<span class="fa media-object pull-left '+fa_class+'"></span>'));
+        });
+    });
+</script>

@@ -1,0 +1,46 @@
+<style>
+    .filebox {
+        display: inline-block;
+        position: relative;
+        height: 120px;
+        width: 120px;
+    }
+    .filebox .file_input {
+        position: absolute;
+        z-index: 10;
+        width: 120px;
+        height: 120px;
+        opacity: 0;
+        filter: alpha(opacity=0);
+        cursor: pointer;
+    }
+    .filebox .showImg {
+        width: 118px;
+        height: 118px;
+        overflow: hidden;
+        border: 1px solid #ccc;
+        vertical-align: middle;
+        display: table-cell;
+        text-align: center;
+        cursor: pointer;
+    }
+    .filebox .showImg img {
+        display: block;
+        margin: auto;
+        max-height: 118px;
+        max-width: 118px;
+    }
+    .filebox .showImg .loading {
+        font-size: 30px;
+    }
+</style>
+<!--action="<{link app=b2c ctl=site_member act=save_company}>"-->
+<form id="member_setting_form" class="form-horizontal m-companyInfo_form"  method="post">
+    <{include file="admin/member/finder/company_info/company_extra.html"}>
+    <{include file="admin/member/finder/company_info/manageInfo.html"}>
+    <!--<div class="form-group">-->
+        <!--<div class="col-xs-offset-2 col-xs-5">-->
+            <!--<button type="submit" data-loading-text="正在提交..." class="btn btn-danger">保存修改</button>-->
+        <!--</div>-->
+    <!--</div>-->
+</form>

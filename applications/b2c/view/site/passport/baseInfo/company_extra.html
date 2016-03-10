@@ -1,0 +1,218 @@
+<style>
+    /* .fileinput-new input[type='file']{
+        height:0px;
+    } */
+</style>
+<div id="buyerInfo">
+    <h2>企业信息</h2>
+    <input type="hidden" name="company[company_id]" value="<{$extra.company.company_id}>" />
+    <div class="form-group">
+        <label for="" class="col-md-2 control-label"><span class="text-danger">*</span> 买家全名：</label>
+        <div class="col-md-5">
+            <input type="text" name="company[name]" value="<{$extra.company.name}>" class="form-control" id="customer_name" placeholder="请输入公司或店铺全称" required="true">
+            <span class="msgTip" data-message="error"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="" class="col-md-2 control-label"><span class="text-danger">*</span>营业地区：</label>
+        <div class="col-md-5 customer_region form-item">
+            <{input type="region" name="company[area]" required="true" value=$extra.company.area callback="region_union_require"}>
+            <!-- <span class="msgTip" data-message="error"></span> -->
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="" class="col-md-2 control-label"><span class="text-danger">*</span>详细地址：</label>
+        <div class="col-md-5 ">
+            <input type="text" class="form-control" value="<{$extra.company.address}>"  name="company[address]" placeholder="不用再填写省市县" required="true">
+            <span class="msgTip" data-message="error"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="" class="col-md-2 control-label"><span class="text-danger">*</span>店铺号：</label>
+        <div class="col-md-5 ">
+            <input type="hidden" name="shop[content_id]" value="<{$extra.company_extra.shop.content_id}>"/>
+            <input type="text" class="form-control" value="<{$extra.company_extra.shop.value.store_num}>"  name="shop[value][store_num]" placeholder="如：“大润发张江店”" required="true">
+            <span class="msgTip" data-message="error"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="" class="col-md-2 control-label">买家网站名：</label>
+        <div class="col-md-5 ">
+            <input type="text" class="form-control" value="<{$extra.company.web_site}>" name="company[web_site]" placeholder="请输入您的买家网站名称">
+            <span class="msgTip" data-message="error"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="" class="col-md-2 control-label">微信公众号：</label>
+        <div class="col-md-5 ">
+            <input type="hidden" name="company_extra[content_id]" value="<{$extra.company_extra.company_extra.content_id}>"/>
+            <input type="text" class="form-control" value="<{$extra.company_extra.company_extra.value.wechat}>"  name="company_extra[value][wechat]" placeholder="">
+            <span class="msgTip" data-message="error"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="" class="col-md-2 control-label">营业电话：</label>
+        <div class="col-md-5">
+            <input type="text" value="<{$extra.company.tel}>" name="company[tel]" class="form-control" >
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="" class="col-md-2 control-label">店铺/微博链接：</label>
+        <div class="col-md-5">
+            <input type="text" name="company_extra[value][adv_info]" value="<{$extra.company_extra.company_extra.value.adv_info}>" class="form-control">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="" class="col-md-2 control-label"><span class="text-danger">*</span>营业执照副本：</label>
+        <div class="col-md-5">
+            <{input type="imageupload" tag="图片上传" name="business_licence[attach]" value=$extra.company_extra.business_licence.attach accept="jpg|png|gif" size="2m" required="true"}>
+            <span class="msgTip" data-message="error">不能为空</span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="" class="col-md-2 control-label">组织结构代码证副本：</label>
+        <div class="col-md-5">
+            <{input type="imageupload" tag="图片上传" name="organization_licence[attach]" value=$extra.company_extra.organization_licence.attach required='false' accept="jpg|png|gif" size="2m" required="true"}>
+            <span class="msgTip" data-message="required">不能为空</span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="" class="col-md-2 control-label">税务登记证副本：</label>
+        <div class="col-md-5">
+            <{input type="imageupload" tag="图片上传" name="tax_licence[attach]" value=$extra.company_extra.tax_licence.attach  accept="jpg|png|gif" size="2m" required="true"}>
+            <span class="msgTip" data-message="required">不能为空</span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="" class="col-md-2 control-label"><span class="text-danger">*</span>食品流通许可证副本：</label>
+        <div class="col-md-5">
+            <{input type="imageupload" tag="图片上传" name="food_flow_licence[attach]" value=$extra.company_extra.food_flow_licence.attach accept="jpg|png|gif" size="2m" required="true"}>
+            <span class="msgTip" data-message="required">不能为空</span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="" class="col-md-2 control-label">门头照：</label>
+        <div class="col-md-5">
+            <{input type="imageupload" tag="图片上传" name="door_head_photo[attach]" value=$extra.company_extra.door_head_photo.attach accept="jpg|png|gif" size="2m" required="true"}>
+            <span class="msgTip" data-message="required">不能为空</span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="" class="col-md-2 control-label">老板照片：</label>
+        <div class="col-md-5">
+            <{input type="imageupload" tag="图片上传" name="boss_photo[attach]" value=$extra.company_extra.boss_photo.attach accept="jpg|png|gif" size="2m" required="true"}>
+            <span class="msgTip" data-message="required">不能为空</span>
+        </div>
+    </div>
+    <h2>联系人信息</h2>
+    <h3>老板</h3>
+    <div class="form-group">
+        <label for="" class="col-md-2 control-label"><span class="text-danger">*</span>姓名：</label>
+        <div class="col-md-5">
+            <input type="hidden" name="contact[company_id]" value="<{$extra.contact.company_id}>">
+            <input type="text" name="contact[boss_name]" value="<{$extra.contact.boss_name}>" class="form-control"  required="true">            
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="" class="col-md-2 control-label"><span class="text-danger">*</span>手机：</label>
+        <div class="col-md-5">
+            <input type="text" name="contact[boss_mobile]" value="<{$extra.contact.boss_mobile}>" class="form-control" required="true" format="mobile">
+            <span class="msgTip" data-message="format">请输入正确手机号码</span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="" class="col-md-2 control-label">QQ：</label>
+        <div class="col-md-5">
+            <input type="text" name="contact[boss_qq]" value="<{$extra.contact.boss_qq}>"  class="form-control" placeholder="此项重点填写">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="" class="col-md-2 control-label">微信：</label>
+        <div class="col-md-5">
+            <input type="text" name="contact[boss_wechat]" value="<{$extra.contact.boss_wechat}>"  class="form-control" placeholder="此项重点填写">
+        </div>
+    </div>
+    <h3>店长</h3>
+    <div class="form-group">
+        <label for="" class="col-md-2 control-label">姓名：</label>
+        <div class="col-md-5">
+            <input type="hidden" name="contact_extra[content_id]" value="<{$extra.company_extra.contact_extra.content_id}>">
+            <input type="text" name="contact_extra[value][buinour_name]" value="<{$extra.company_extra.contact_extra.value.buinour_name}>" class="form-control" placeholder="">
+            
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="" class="col-md-2 control-label">手机：</label>
+        <div class="col-md-5">
+            <input type="text" name="contact_extra[value][buinour_mobile]" value="<{$extra.company_extra.contact_extra.value.buinour_mobile}>" class="form-control" format="mobile" >
+            <span class="msgTip" data-message="format">请输入正确手机号码</span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="" class="col-md-2 control-label">QQ：</label>
+        <div class="col-md-5">
+            <input type="text" name="contact_extra[value][buinour_qq]" value="<{$extra.company_extra.contact_extra.value.buinour_qq}>" class="form-control" placeholder="此项重点填写">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="" class="col-md-2 control-label">微信：</label>
+        <div class="col-md-5">
+            <input type="text" name="contact_extra[value][buinour_wechat]" value="<{$extra.company_extra.contact_extra.value.buinour_wechat}>" class="form-control" placeholder="此项重点填写">
+        </div>
+    </div>
+    <h3>采购员</h3>
+    <div class="form-group">
+        <label for="" class="col-md-2 control-label">姓名：</label>
+        <div class="col-md-5">
+            <input type="text" name="contact_extra[value][buyer_name]" value="<{$extra.company_extra.contact_extra.value.buyer_name}>" class="form-control"  placeholder="">
+            
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="" class="col-md-2 control-label">手机：</label>
+        <div class="col-md-5">
+            <input type="text" name="contact_extra[value][buyer_mobile]" value="<{$extra.company_extra.contact_extra.value.buyer_mobile}>" class="form-control" format="mobile">
+            <span class="msgTip" data-message="format">请输入正确手机号码</span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="" class="col-md-2 control-label">QQ：</label>
+        <div class="col-md-5">
+            <input type="text" name="contact_extra[value][buyer_qq]" value="<{$extra.company_extra.contact_extra.value.buyer_qq}>" class="form-control" placeholder="此项重点填写">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="" class="col-md-2 control-label">微信：</label>
+        <div class="col-md-5">
+            <input type="text" name="contact_extra[value][buyer_wechat]" value="<{$extra.company_extra.contact_extra.value.buyer_wechat}>" class="form-control" placeholder="此项重点填写">
+        </div>
+    </div>
+    <h3>有权联系人</h3>
+    <div class="form-group">
+        <label for="" class="col-md-2 control-label"><span class="text-danger">*</span>姓名：</label>
+        <div class="col-md-5">
+            <input type="text" name="contact[name]" value="<{$extra.contact.name}>" class="form-control" required="true">
+            
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="" class="col-md-2 control-label"><span class="text-danger">*</span>手机：</label>
+        <div class="col-md-5">
+            <input type="text" name="contact[tel]" value="<{$extra.contact.tel}>" class="form-control" required="true" format="mobile">
+            <span class="msgTip" data-message="format">请输入正确手机号码</span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="" class="col-md-2 control-label">QQ：</label>
+        <div class="col-md-5">
+            <input type="text" name="contact[contact_qq]" value="<{$extra.contact.contact_qq}>" class="form-control" placeholder="此项重点填写"> 
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="" class="col-md-2 control-label">微信：</label>
+        <div class="col-md-5">
+            <input type="text" name="contact[contact_wechat]" value="<{$extra.contact.contact_wechat}>" class="form-control" placeholder="此项重点填写">
+        </div>
+    </div>
+    <hr>
+</div>

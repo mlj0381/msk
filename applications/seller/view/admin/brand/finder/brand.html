@@ -1,0 +1,97 @@
+<form method="post" action="index.php?app=seller&ctl=admin_brand&act=check" id='brand_form' calss="form">
+    <div class="modal-body  form-horizontal">
+        <div class="form-body">
+            <{if $brand.id }>
+                <input type="hidden" value="<{$brand.id}>" name="id" />
+            <{/if}>
+                <div class="form-group">
+                    <label class="col-md-3 control-label">品牌名称
+                        <span class="required" aria-required="true">*</span>
+                    </label>
+                    <div class="col-md-5">
+                        <input type="text" required=true  value="<{$brand.extra.brand_name}>" name="brand[brand_name]" vtype='required' class='form-control' />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label">品牌英文名称
+                        <span class="required" aria-required="true">*</span>
+                    </label>
+                    <div class="col-md-5">
+                        <input type="text" required=true  value="<{$brand.extra.brand_initial}>" name="brand[brand_initial]" vtype='required' class='form-control' />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label">品牌网址
+                        <span class="required" aria-required="true">*</span>
+                    </label>
+                    <div class="col-md-5">
+                        <input type="text" required=true  value="<{$brand.extra.brand_url}>" name="brand[brand_url]" vtype='required' class='form-control' />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label">所属分类
+                        <span class="required" aria-required="true">*</span>
+                    </label>
+                    <div class="col-md-5">
+                        <{input type="select" rows=$cat valueColumn="cat_id" labelColumn="cat_name" name="brand[brand_setting][bradn_cat]" vtype='required' class='form-control' }>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-md-3 control-label">品牌logo
+                        <span class="required" aria-required="true">*</span>
+                    </label>
+                    <div class="col-md-5">
+                        <{input type="image" required=true value=$brand.extra.brand_logo name="brand[brand_logo]" vtype='required' class='form-control' }>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label">上传资质文件
+                        <span class="required" aria-required="true">*</span>
+                    </label>
+                    <div class="col-md-5">
+                        <{input type="image" required=true value=$brand.extra.aptitudes_image col name="brand[brand_setting][aptitudes_image]" vtype='required' class='form-control' }>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-md-3 control-label">简介
+                        <span class="required" aria-required="true">*</span>
+                    </label>
+                    <div class="col-md-5">
+                        <textarea class="form-control"  name="brand[brand_desc]" placeholder="简单描述" rows="1">
+                            <{$brand.extra.brand_desc}>
+                        </textarea>
+                    </div>
+                </div>
+        </div>
+        <div class="form-group hide" id="nopass">
+            <label class="col-md-3 control-label">未通过原因
+                <span class="required" aria-required="true">*</span>
+            </label>
+            <div class="col-md-5">
+                <textarea class="form-control" name="why" placeholder="未通过原因" rows="1">
+                </textarea>
+
+            </div>
+        </div>
+        <div class="modal-footer">
+            <div>
+                <input type="radio" required=ture name="status" value="1"/>通过
+                <input type="radio" required=ture name="status" value="-1"/>不通过
+            </div><br />
+            <button type="submit" class="btn blue">提交</button>
+        </div>
+    </div>
+    </from>
+<script type="text/javascript">
+    $(function(){
+        $('[type=radio]').on('click', function(){
+            if($(this).val() == '-1'){
+                $('#nopass').removeClass('hide');
+            }else{
+                $('#nopass').addClass('hide');
+            }
+        })
+    });
+</script>

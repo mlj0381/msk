@@ -1,0 +1,20 @@
+<div class="page-header">
+    <h1>公司信息</h1>
+</div>
+<div class="perInfo_nav">
+    <ul>
+        <li><a href="<{link app=b2c ctl=site_member act=setting}>">基本信息</a></li>
+        <li><a href="<{link app=b2c ctl=site_member act=avatar}>">头像照片</a></li>
+        <li class="active"><a href="<{link app=b2c ctl=site_member act=company}>">公司信息</a></li>
+    </ul>
+</div>
+<form id="member_setting_form" class="form-horizontal m-companyInfo_form" action="<{link app=b2c ctl=site_member act=save_company}>" method="post" data-module="validator">
+    <{include file="site/passport/baseInfo/company_extra.html"}>
+    <{include file="site/passport/baseInfo/manageInfo.html"}>
+
+    <div class="form-group">
+        <div class="col-xs-offset-2 col-xs-5">
+            <button type="submit" data-loading-text="正在提交..." class="btn btn-danger">保存修改</button>
+        </div>
+    </div>
+</form>

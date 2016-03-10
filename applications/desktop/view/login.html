@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<!--[if IE 8]> <html lang="en" class="ie8 no-js"> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9 no-js"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="en">
+<!--<![endif]-->
+<!-- BEGIN HEAD -->
+<head>
+<meta charset="utf-8"/>
+<title>登录</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+<!-- BEGIN GLOBAL MANDATORY STYLES -->
+<{css app=desktop src="../com/global/plugins/bootstrap/css/bootstrap.min.css"}>
+<{css app=desktop src="../com/admin/layout/css/login.css"}>
+<{css app=desktop src="../com/global/css/components.css"}>
+<!-- END THEME STYLES -->
+<link rel="shortcut icon" href="/favicon.ico"/>
+</head>
+<!-- END HEAD -->
+<!-- BEGIN BODY -->
+<body class="login">
+<!-- END SIDEBAR TOGGLER BUTTON -->
+<!-- BEGIN LOGO -->
+<div class="logo">
+	<p href="javascript:;" style="color:#FFF;font-size:40px;line-height:40px">
+		美侍客管理系统
+	</p>
+
+</div>
+<!-- END LOGO -->
+<!-- BEGIN LOGIN -->
+<div class="content" style="margin-top:20px;">
+	<{foreach from=$passports item=item}>
+		<{$item.html}>
+	<{/foreach}>
+</div>
+<!-- <div class="copyright">
+	 2015 © 辰商软件科技.
+</div> -->
+<!-- END LOGIN -->
+<!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
+<!-- BEGIN CORE PLUGINS -->
+<!--[if lt IE 9]>
+<{script app=desktop  src="../com/global/plugins/respond.min.js"}>
+<{script app=desktop  src="../com/global/plugins/excanvas.min.js"}>
+<![endif]-->
+
+</body>
+<!-- END BODY -->
+</html>

@@ -1,0 +1,11 @@
+<{foreach from=$web_nav item=item}>
+<dl>
+    <dt><{$item.title}></dt>
+    <{foreach from=$item.son item=son}>
+    <dd><a href="<{$son.url}>"><{$son.title}></a></dd>
+    <{/foreach}>
+</dl>
+<{/foreach}>
+
+
+

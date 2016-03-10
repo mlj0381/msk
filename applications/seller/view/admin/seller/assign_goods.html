@@ -1,0 +1,73 @@
+
+  <h3>分配商品 </h3>
+<form action="index.php?app=seller&ctl=admin_seller&act=assign_post" method="post">
+    <input type="hidden" name="store_id" value="<{$store_id}>"/>
+<div class="table-toolbar">
+    <div class="btn-group">
+        <a href="index.php?app=seller&ctl=admin_seller&act=assign_goods&p[0]=<{$store_id}>" class="btn green">
+                已分配的商品&nbsp;<i class="fa fa-plus"></i>
+        </a>
+    </div>
+    <div class="btn-group">
+        <a href="index.php?app=seller&ctl=admin_seller&act=assign_goods&p[0]=<{$store_id}>&p[1]=N" class="btn green">
+                未分配的商品&nbsp;<i class="fa fa-plus"></i>
+        </a>
+    </div>
+</div>
+<div class="table-scrollable">
+    <table class="table  table-striped table-hover">
+        <thead>
+            <tr>
+                <!-- <th style="width:40px;">
+		            <label class="control-label">
+			            <input type="checkbox" class="group-checkable">
+	                </label>
+	            </th> -->
+                <!-- <th class="text-center">查看</th> -->
+                <th>商品名称</th>
+
+                <th>商品编号</th>
+                <th>LOGO</th>
+                <th>分类</th>
+                <th>分配状态</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+    <{if $goods}>
+    <tbody id="cat_list">
+        <{foreach from=$goods item=item name="item"}>
+            <tr>
+                <!-- <td>
+                    <input type="checkbox" name="goods_id[]" value="<{$item.goods_id}>">
+                </td> -->
+                    <!-- <td class="text-center" style="cursor:pointer;"><i class="fa text-default font-grey-gallery fa-plus-square" data-detail="index.php?app=b2c&amp;ctl=admin_goods&amp;act=index&amp;action=detail&amp;id=8&amp;finderview=detail_products"></i></td> -->
+                <td width="300px;"><{$item.name}></td>
+                <td><{$item.gid}></td>
+                <td><img class="img-thumbnail img-circle" width="30" src="<{$item.image_default_id|storager:'xs'}>"  /></td>
+
+                <td><{$item.cat_id}></td>
+                <td><{if $item.store_id}>已分配<{else}>未分配<{/if}></td>
+
+                <td>
+                    <{if $item.store_id}>已分配<{else}><a href="javascript:;" data-sid="<{$store_id}>" data-gid="<{$item.goods_id}>" class="btn btn-xs btn-default"><i class="fa fa-edit"></i> 分配</a><{/if}>
+                </td>
+                <td>
+            </tr>
+        <{/foreach}>
+    </tbody>
+    <{/if}>
+    </table>
+</div>
+</form>
+<script charset="utf-8">
+    $(function(){
+        $('#cat_list a').click(function(){
+            $.post('index.php?app=seller&ctl=admin_seller&act=assign_post', {goods_id : $(this).attr('data-gid'), store_id : $(this).attr('data-sid'), assign : 'Y'}, function(re){
+                if(re.success){
+                    window.location.href = 'index.php?app=seller&ctl=admin_seller&act=assign_goods&p[0]=5';
+                }
+            });
+        });
+    });
+
+</script>

@@ -1,0 +1,96 @@
+<div class="passport-signup-container">
+    <div class="panel panel-default signup-panel">
+        <div class="panel-heading clearfix">
+            <div>帐户信息</div>
+            <!-- <a class="btn btn-danger btn-xs pull-right" href="<{link app=b2c ctl=site_passport act=login args0=$forward}>">立即登录&raquo;</a> -->
+        </div>
+        <div class="panel-body">
+            <form id="" class="form-horizontal" action="index.php?app=seller&ctl=admin_seller&act=checkin" method="post">
+                <!-- 登陆后跳转地址 -->
+                <input type="hidden" name="seller[seller_id]" value="<{$seller_id}>">
+                <div class="form-group">
+                    <label for="" class="col-xs-2 control-label">公司名称<span class="text-danger">*</span></label>
+                    <div class="col-xs-5">
+                        <input type="text" required="true" disabled autocomplete='off' name="seller[company_name]" value="<{$company.company_name}>" class="form-control" id="input_login_name" placeholder="公司名称" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-2 control-label">所在地区<span class="text-danger">*</span></label>
+                    <div class="col-xs-5">
+                        <{input type=region required="true" value=$company.company_area }>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="input_addr" class="col-xs-2 control-label">详细地址<span class="text-danger">*</span></label>
+                    <div class="col-xs-5">
+                        <input type="text" required="true" disabled name="seller[company_addr]" value="<{$company.company_addr}>" class="form-control" id="input_company_addr" placeholder="详细地址" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-2 control-label">公司电话<span class="text-danger">*</span></label>
+                    <div class="col-xs-5">
+                        <input type="text" required="true" disabled name="seller[company_tel]" value="<{$company.company_tel}>" class="form-control" id="input_company_addr" placeholder="公司电话" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="input_vcode" class="col-xs-2 control-label">紧急联系人<span class="text-danger">*</span></label>
+                    <div class="col-xs-5">
+                        <input type="text" required="true" disabled name="seller[company_contacts]" value="<{$company.company_contacts}>" class="form-control" id="input_company_addr" placeholder="紧急联系人" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="input_vcode" class="col-xs-2 control-label">联系人手机<span class="text-danger">*</span></label>
+                    <div class="col-xs-5">
+                        <input type="text" required="true" disabled name="seller[contacts_phone]" value="<{$company.contacts_phone}>" class="form-control" id="input_company_addr" placeholder="联系人电话" />
+                    </div>
+                </div>
+                <hr />
+                <div class="form-group">
+                    <label for="" class="col-xs-2 control-label">联系人姓名<span class="text-danger">*</span></label>
+                    <div class="col-xs-5">
+                        <input type="text" required="true" disabled autocomplete='off' value="<{$contact.name}>" name="contact[name]"class="form-control" id="" placeholder="请输入联系人姓名" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="" class="col-xs-2 control-label">联系人手机
+                        <span class="text-danger">*</span>
+                    </label>
+                    <div class="col-xs-3">
+                        <input type="text" required="true" disabled value="<{$contact.tel}>" autocomplete='off' name="contact[tel]" class="form-control" id="input_mobile" placeholder="请输入联系人手机" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-2 control-label">所在地址<span class="text-danger">*</span></label>
+                    <div class="col-xs-5">
+                        <{input type=region required="true" disabled value=$contact.contact_addr autocomplete='off'  class="form-control" id="" placeholder="公司名称" }>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-2 control-label">所在地区<span class="text-danger">*</span></label>
+                    <div class="col-xs-5">
+                        <input type="text" required="true" disabled value="<{$contact.contact_area}>" autocomplete='off' name="contact[contact_area]" class="form-control" id="" placeholder="公司名称" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="" class="col-xs-2 control-label">联系人电子邮箱<span class="text-danger">*</span></label>
+                    <div class="col-xs-5">
+                        <input type="text" required="true" value="<{$contact.email}>" disabled autocomplete='off' name="contact[email]" class="form-control" id="" placeholder="请输入联系人电子邮箱" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="" class="col-xs-2 control-label">审核状态<span class="text-danger">*</span></label>
+                    <div class="col-xs-5" style="margin-top:5px;">
+                        <span style="margin-right:25px;"><input type="radio" required="true" value="1" name="seller[checkin]"/>通过</span>
+                        <span><input type="radio" required="true" name="seller[checkin]" value="-1"/>拒绝</span>
+
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-4">
+                        <button type="submit" data-loading-text="正在提交..." class="btn btn-warning">提交</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,18 @@
+<div>
+    <div class="form-group">
+        <label class="col-xs-2 control-label"><span>是否上架销售</span></label>
+        <div class="col-xs-5">
+            <span style="margin-right:20px;"><input type="radio" name="goods[marketable]" <{if $goods.marketable eq 'true'}>checked<{/if}> value="true">是</span>
+            <span style="margin-right:20px;"><input type="radio" name="goods[marketable]" <{if $goods.marketable eq 'false'}>checked<{/if}> value="false">否</span>
+            <span class="text-danger">商品下架操作同时影响货品</span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-xs-2 control-label">展示位置</label>
+        <div class="col-xs-3">
+            <{input type=select name="goods[showcase]" rows=$params.setting.showcase labelColumn="name" valueColumn="id" value=$goods.showcase}>
+            
+        </div>
+    </div>
+    <hr>
+</div>

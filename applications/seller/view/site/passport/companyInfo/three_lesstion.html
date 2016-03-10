@@ -1,0 +1,132 @@
+<input type='hidden' name='company[company_id]' value='<{$extra.company.company_id}>'/>
+<div id="three_lesstion">
+    <h4>三证合一营业执照（副本）
+        <{if $extra.type eq 'center'}>
+        <a href="<{link app=seller ctl=site_seller act=businessInfo}>?card=old"></a>
+        <{else}>
+        <a href="<{link app=seller ctl=site_passport act=entry args0=$extra.pageIndex-1}>?card=old">
+         <{/if}>
+            <small class="text-danger">还没换证，填写旧版</small>
+        </a>
+    </h4>
+    <div class="form-group">
+        <label class="col-xs-2 control-label">
+            <span class="text-danger">*</span>注册号：
+        </label>
+        <div class="col-xs-4">
+            <input type="hidden" name="three_lesstion[content_id]" value='<{$extra.three_lesstion.content_id}>' class="form-control">
+            <!--<input type="text" name="three_lesstion[value][code]" value='<{$extra.three_lesstion.value.code}>' class="form-control" required="true">-->
+            <input type="text" name="company[business]" value='<{$extra.company.business}>' class="form-control business" required="true" format="digits">
+            <span class="msgTip" data-message="format">只能输入数字</span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-xs-2 control-label">
+            <span class="text-danger">*</span>组织机构代码号:
+        </label>
+        <div class="col-xs-4">
+            <input type="hidden" name="organization_licence[content_id]" value='<{$extra.organization_licence.content_id}>' class="form-control">
+            <input type="text" name="organization_licence[value][code]" value='<{$extra.organization_licence.value.code}>' class="form-control" required="true" format="digits">
+            <span class="msgTip" data-message="format">只能输入数字</span>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-xs-2 control-label">
+            <span class="text-danger">*</span>税务登记证号：
+        </label>
+        <div class="col-xs-4">
+            <input type="hidden" name="tax_licence[content_id]" value='<{$extra.tax_licence.content_id}>' class="form-control">
+            <input type="text" name="tax_licence[value][code]" value='<{$extra.tax_licence.value.code}>' class="form-control" required="true" format="digits">
+            <span class="msgTip" data-message="format">只能输入数字</span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-xs-2 control-label">
+            <span class="text-danger">*</span>名称：
+        </label>
+        <div class="col-xs-4">
+            <input type="text" name="company[name]" value='<{$extra.company.name}>' class="form-control" required="true">
+            <span class="msgTip" data-message="error"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-xs-2 control-label">
+            <span class="text-danger">*</span>公司类型：
+        </label>
+        <div class="col-xs-4">
+            <{input type=select required="true" name="company[enterprise_type]" rows=$extra.page_setting.company valueColumn="id"
+            labelColumn="label" value=$extra.company.enterprise_type}>
+            <span class="msgTip" data-message="error"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-xs-2 control-label">
+            <span class="text-danger">*</span>住所：
+        </label>
+        <div class="col-xs-4">
+            <input type="text" name="company[address]" value='<{$extra.company.address}>' class="form-control" required="true">
+            <span class="msgTip" data-message="error"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-xs-2 control-label">
+            <span class="text-danger">*</span>法定代表人：
+        </label>
+        <div class="col-xs-4">
+            <input type="text" name="company[leagl_person]" value='<{$extra.company.leagl_person}>' class="form-control" required="true">
+            <span class="msgTip" data-message="error"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-xs-2 control-label">
+            <span class="text-danger">*</span>注册资本：
+        </label>
+        <div class="col-xs-4">
+            <div class="input-group form-item">
+                <input type="text" name="company[registered_capital]" value='<{$extra.company.registered_capital}>' class="form-control" required="true" format="positive" placeholder="请输入正数">
+                <span class="input-group-addon">万</span>
+            </div>
+            <span class="msgTip" data-message="format">请输入正数</span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-xs-2 control-label">
+            <span class="text-danger">*</span>成立日期：
+        </label>
+        <div class="col-xs-4">
+            <input type="text" name="company[establishment_date]" value='<{$extra.company.establishment_date}>' class="form-control" placeholder="2010-10-20" required="true" format="date">
+            <span class="msgTip" data-message="format"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-xs-2 control-label">
+            <span class="text-danger">*</span>营业期限：
+        </label>
+        <div class="col-xs-4">
+            <div class="form-item">
+                <input type="text" name="company[business_scope][begin]" value='<{$extra.company.business_scope.begin}>' class="form-control" placeholder="2010-10-20" style="width:46%; display: inline-block;"> 至 
+                <input type="text" placeholder="2010-10-20" name="company[business_scope][end]" value='<{$extra.company.business_scope.end}>' class="form-control"  style="width:46%; display: inline-block;" required="true">
+            </div>
+            <span class="msgTip" data-message="error"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-xs-2 control-label">
+            <span class="text-danger">*</span>经营范围：
+        </label>
+        <div class="col-xs-4">
+            <input type="text" name="company[operating_period]" value='<{$extra.company.operating_period}>' class="form-control" required="true">
+            <span class="msgTip" data-message="error"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-xs-2 control-label">
+            <span class="text-danger">*</span>营业执照电子版：
+        </label>
+        <div class="col-xs-4">
+            <{input type="imageupload" tag="图片上传" name="three_lesstion[attach]" value=$extra.three_lesstion.attach required='true' accept="jpg|png|gif"}>   
+            <span class="msgTip" data-message="error">不能为空</span>
+        </div>
+    </div>
+</div>

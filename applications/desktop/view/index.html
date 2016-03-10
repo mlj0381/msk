@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<!--[if IE 8]> <html lang="en" class="ie8 no-js"> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9 no-js"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="en" class="no-js">
+<!--<![endif]-->
+<!-- BEGIN HEAD -->
+<head>
+<meta charset="utf-8"/>
+<title>美侍客电商后台管理</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<{css app=desktop src="desktop-theme.min.css"}>
+<link rel="shortcut icon" href="/favicon.ico"/>
+<style media="screen">
+	/*CSS FOR VMCSHOP*/
+	.table thead tr th,.table tbody tr td{
+		vertical-align:middle;
+	}
+</style>
+</head>
+<!-- END HEAD -->
+<!-- BEGIN BODY -->
+<body class="page-header-fixed page-sidebar-fixed  page-quick-sidebar-over-content page-sidebar-closed-hide-logo">
+<!-- BEGIN HEADER -->
+<div class="page-header navbar navbar-fixed-top">
+	<!-- BEGIN HEADER INNER -->
+	<div class="page-header-inner">
+		<!-- BEGIN LOGO -->
+		<div class="page-logo">
+			<span style="padding:20px;font-size:40px;color:#FFF">
+				MSK
+			</span>
+			<div class="menu-toggler sidebar-toggler">
+				<!-- DOC: Remove the above "hide" to enable the sidebar toggler button on header -->
+			</div>
+		</div>
+		<div class="hor-menu hor-menu-light hidden-sm hidden-xs">
+			<ul class="nav navbar-nav">
+				<!-- <li class="classic-menu-dropdown active">
+					<a href="javascript:;">
+					控制台 <span class="selected">
+					</span>
+					</a>
+				</li> -->
+				<!-- <li class="classic-menu-dropdown">
+					<a href="javascript:;" onclick="bootbox.alert('Comming soon!')">
+					模板风格 <i class="icon-magic-wand"></i>
+					</a>
+				</li> -->
+				<!-- <li class="classic-menu-dropdown">
+					<a href="javascript:;" onclick="bootbox.alert('Comming soon!')">
+					模板&应用市场 <i class="icon-social-dropbox"></i>
+					</a>
+				</li> -->
+
+			</ul>
+		</div>
+		<!-- END LOGO -->
+		<!-- BEGIN RESPONSIVE MENU TOGGLER -->
+		<a href="javascript:;" class="menu-toggler responsive-toggler" data-toggle="collapse" data-target=".navbar-collapse">
+		</a>
+		<!-- END RESPONSIVE MENU TOGGLER -->
+		<!-- BEGIN TOP NAVIGATION MENU -->
+		<div class="top-menu">
+			<ul class="nav navbar-nav pull-right">
+				<!-- BEGIN USER LOGIN DROPDOWN -->
+				<!-- DOC: Apply "dropdown-dark" class after below "dropdown-extended" to change the dropdown styte -->
+				<li class="dropdown dropdown-user">
+					<a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+					<{if $avatar}>
+					<img  class="img-thumbnail img-circle" width="32" src="<{$avatar|storager}>"/>
+					<{/if}>
+					<span class="username">
+					您好,<{$uname}> </span>
+					<i class="fa fa-angle-down"></i>
+					</a>
+					<ul class="dropdown-menu dropdown-menu-default">
+						<li>
+							<a href="index.php?ctl=profile&act=index">
+							<i class="icon-user"></i> 个人信息 </a>
+						</li>
+						<li class="divider">
+						</li>
+						<li>
+							<a href="index.php?ctl=passport&act=logout" target="_command">
+							<i class="icon-logout"></i> 退出 </a>
+						</li>
+					</ul>
+				</li>
+				<li class="dropdown dropdown-user visible-md visible-lg">
+					<a class="dropdown-toggle" href="<{link router='site' app=site ctl=index}>" target="_blank">
+						<span class="username">浏览前台</span>
+						<i class="fa fa-desktop"></i>
+						<i class="fa"></i>
+					</a>
+				</li>
+				<li class="dropdown dropdown-user visible-md visible-lg">
+					<a class="dropdown-toggle full-screen-handle" href="javascript:;">
+						<span class="username">全屏</span>
+						<i class="fa fa-expand"></i>
+						<i class="fa"></i>
+					</a>
+				</li>
+			</ul>
+		</div>
+		<!-- END TOP NAVIGATION MENU -->
+	</div>
+	<!-- END HEADER INNER -->
+</div>
+<!-- END HEADER -->
+<div class="clearfix">
+</div>
+<!-- BEGIN CONTAINER -->
+<div class="page-container">
+	<!-- BEGIN SIDEBAR -->
+	<div class="page-sidebar-wrapper">
+		<div class="page-sidebar navbar-collapse collapse">
+			<!-- BEGIN SIDEBAR MENU -->
+			<ul class="page-sidebar-menu" data-keep-expanded="false" data-auto-scroll="false" data-slide-speed="200">
+<!--                <li class="start tooltips" data-container="body" data-placement="right" data-html="true" data-original-title="业务概览" data-wmenu="-1">
+                    <a href="index.php?app=desktop&ctl=dashboard" >
+                    <i class="icon-speedometer"></i>
+                    <span class="title">仪表盘</span>
+                    <span class="selected"></span>
+                    </a>
+                </li>-->
+                  <{foreach from=$fav_menus item=item name=groups0  key=key}>
+                  <{if $menus.menu.$item}>
+                  <{assign var=menu_group value=$menus.menu.$item}>
+                  <li <{if $env.foreach.groups0.last}>class="last"<{/if}> data-wmenu="<{$menus.workground.$item.menu_id}>">
+                      <a href="javascript:;">
+                          <i class="<{$menus.workground.$item.icon|default:'fa-square-o'}>"> </i>
+                          <span class="title"><{$menus.workground.$item.menu_title}></span>
+                          <span class="arrow "></span>
+						  <span class="selected"></span>
+                      </a>
+                     <ul class="sub-menu">
+                      <{foreach from=$menu_group item=groups name=groups1 key=key1}>
+                        <{foreach from=$groups item=group name=groups2}>
+                        <li  data-menu="<{$group.menu_id}>">
+                          <a href="index.php?<{$group.menu_path}>" <{if $group.target}> target="<{$group.target}>"<{/if}> ><i class="<{$group.icon_class}>"></i><{$group.menu_title}></a>
+                        </li>
+                        <{/foreach}>
+                      <{/foreach}>
+                    </ul>
+                  </li>
+                  <{/if}>
+                  <{/foreach}>
+
+<!--				  <li class="start tooltips" data-container="body" data-placement="right" data-html="true" data-original-title="控制和配置系统" data-wmenu="0">
+					<a href="index.php?app=desktop&ctl=adminpanel" >
+					<i class="icon-settings"></i>
+					<span class="title">系统设置</span>
+					<span class="selected"></span>
+					</a>
+				  </li>-->
+			  		
+				  <!--
+				  <li>
+					<a href="javascript:;" onclick="bootbox.alert('Comming soon...')" >
+					<i class="icon-social-dropbox"></i>
+					<span class="title">应用中心</span>
+					<span class="badge badge-danger">2</span>
+					<span class="selected"></span>
+					</a>
+				  </li>
+			  		-->
+
+			</ul>
+			<!-- END SIDEBAR MENU -->
+		</div>
+	</div>
+	<!-- END SIDEBAR -->
+	<!-- BEGIN CONTENT -->
+	<div class="page-content-wrapper">
+		<div class="page-content" data-updatecontainer='default'>
+			<!-- vmcshop-desktop-main-content -->
+		</div>
+	</div>
+	<!-- END CONTENT -->
+
+</div>
+<!-- END CONTAINER -->
+<!-- BEGIN FOOTER -->
+<!-- <div class="page-footer">
+	<div class="page-footer-inner">
+		 2015 &copy; 辰商软件科技.
+	</div>
+	<div class="scroll-to-top">
+		<i class="icon-arrow-up"></i>
+	</div>
+</div> -->
+<!-- END FOOTER -->
+<!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
+<!--[if lt IE 9]>
+<{script app=desktop  src="../com/global/plugins/respond.min.js"}>
+<{script app=desktop  src="../com/global/plugins/excanvas.min.js"}>
+<![endif]-->
+<{script app=desktop  src="desktop-script.min.js"}>
+<!-- END JAVASCRIPTS -->
+</body>
+<!-- END BODY -->
+</html>

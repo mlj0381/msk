@@ -1,0 +1,34 @@
+<input type="hidden" name="animal_certificate[content_id]" value="<{$extra.animal_certificate.content_id}>"/>
+<div id="animal_certificate">
+	<h4>动物防疫条件合格证</h4>
+	<div class="form-group">
+		<label class="col-xs-2 control-label">
+			<span class="text-danger">*</span>动物防疫条件合格证代码编号：
+		</label>
+		<div class="col-xs-4">
+			<input type="text" value="<{$extra.animal_certificate.value.code}>" name="animal_certificate[value][code]" class="form-control" required="true">
+			<span class="msgTip" data-message="error"></span>
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label class="col-xs-2 control-label">
+			年检日期：
+		</label>
+		<div class="col-xs-4">
+			<input type="text" value="<{$extra.animal_certificate.value.as}>" name="animal_certificate[value][as]" class="form-control" placeholder="2010-12-20">	
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label class="col-xs-2 control-label">
+			<span class="text-danger">*</span>动物防疫条件合格证电子版：
+		</label>
+		<div class="col-xs-4">
+	        <{input type="imageupload" tag="图片上传" name="animal_certificate[attach]" value=$extra.animal_certificate.attach required='true' accept="jpg|png|gif"}>   
+            <span class="msgTip" data-message="error">不能为空</span>
+		</div>
+	</div>
+</div>
+
+

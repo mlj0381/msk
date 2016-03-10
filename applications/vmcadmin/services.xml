@@ -1,0 +1,8 @@
+<services>
+    	<service id='api.applications' optname="api@应用中心">
+    		<class>vmcadmin_api_applications</class>
+    	</service>
+        <service id='api.init' optname="api@店铺初始化辅助">
+    		<class>vmcadmin_api_init</class>
+    	</service>
+</services>

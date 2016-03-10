@@ -1,0 +1,52 @@
+
+<div id="company_touted">
+	<h4>企业荣誉</h4>
+	<div class="creat-wrap" data-module="creater">
+        <div id="items" data-items="itemList">
+            <{assign var=items value=$extra.company_touted}>
+            <{if !$extra.company_touted}>
+            <{assign var=items value=array(1)}>
+            <{/if}>
+        <{foreach from=$items item=item}>
+			<div data-item="creat-item">
+                <input type="hidden" name="company_touted[content_id][]" class="content_id"  value="<{$item.content_id}>">
+				<div class="form-group">
+					<label class="col-xs-2 control-label">
+						发证日期：
+					</label>
+					<div class="col-xs-4">
+						<input type="text" placeholder="2010-10-20" value="<{$item.value.date}>"
+							   name="company_touted[value][date][]" class="form-control">
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-2 control-label">
+						上传企业荣誉照片：
+					</label>
+					<div class="col-xs-4">
+				        <{input type="imageupload" tag="图片上传" name="company_touted[attach][]" value=$item.attach  accept="jpg|png|gif"}>
+			            <span class="msgTip" data-message="error">不能为空</span>
+					</div>
+				</div>
+				<div class="form-group">
+                    <label class="col-xs-2 control-label">
+                    </label>
+                    <div class="col-xs-4">
+                        <button class="del-team btn btn-danger delBtn" type="button">删除</button>
+                    </div>
+                </div>
+			</div>
+        <{/foreach}>
+        </div>
+		<hr>
+        <div class="form-group">
+            <label class="col-xs-2 control-label">
+            </label>
+            <div class="col-xs-4">
+                <button class="team btn btn-danger addBtn" type="button">
+                    保存并继续添加荣誉
+                </button>
+            </div>
+        </div> 
+	</div>
+</div>

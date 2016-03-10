@@ -1,0 +1,82 @@
+<div class="page-header">
+    <h1>增票资质 </h1>
+</div>
+<form class="form-horizontal ticket-form" action="" method="" data-module="validator">
+    <div class="form-group">
+        <label class="col-xs-2 control-label"><span class="text-danger">*</span>单位名称</label>
+        <div class="col-xs-5">
+            <input type="text" required="true" autocomplete='off' name="unit[name]" class="form-control" value="" placeholder="请准确无误的填写公司全称">
+            <span class="msgTip" data-message="error"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-xs-2 control-label"><span class="text-danger">*</span>纳税人识别码</label>
+        <div class="col-xs-5">
+            <input type="text" required="true" autocomplete='off' name="taxpayer[code]" class="form-control" value="" placeholder="">
+            <span class="msgTip" data-message="error"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-xs-2 control-label"><span class="text-danger">*</span>税务登记证</label>
+        <div class="col-xs-5">
+            <input type="text" required="true" autocomplete='off' name="tax_licence[code]" class="form-control" value="" placeholder="">
+            <span class="msgTip" data-message="error"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-xs-2 control-label"><span class="text-danger">*</span>注册地址</label>
+        <div class="col-xs-5">
+            <input type="text" required="true" autocomplete='off' name="register[addr]" class="form-control" value="" placeholder="">
+            <span class="msgTip" data-message="error"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-xs-2 control-label"><span class="text-danger">*</span>注册电话</label>
+        <div class="col-xs-5">
+            <input type="text" required="true" autocomplete='off' name="register[tel]" class="form-control" value="" placeholder="">
+            <span class="msgTip" data-message="error"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-xs-2 control-label"><span class="text-danger">*</span>开户银行</label>
+        <div class="col-xs-5">
+            <input type="text" required="true" autocomplete='off' name="bank[name]" class="form-control" value="" placeholder="">
+            <span class="msgTip" data-message="error"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-xs-2 control-label"><span class="text-danger">*</span>基本开户账号</label>
+        <div class="col-xs-5">
+            <input type="text" required="true" autocomplete='off' name="base_account[code]" class="form-control" value="" placeholder="">
+            <span class="msgTip" data-message="error"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="" class="col-xs-2 control-label"><span class="text-danger">*</span>营业执照复印件</label>
+        <div class="col-xs-5">
+            <{input type="imageupload" tag="图片上传" name="business_licence[attach]" value=$extra.company_extra.business_licence.attach accept="jpg|png|gif" size="2m" required="true"}>
+            <p>如果为三证合一版营业执照，则下边不用上传</p>
+            <span class="msgTip" data-message="required">不能为空</span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="" class="col-xs-2 control-label"><span class="text-danger">*</span>税务登记证副本</label>
+        <div class="col-xs-5">
+            <{input type="imageupload" tag="图片上传" name="tax_licence[attach]" value=$extra.company_extra.tax_licence.attach  accept="jpg|png|gif" size="2m" required="true"}>
+            <span class="msgTip" data-message="required">不能为空</span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="" class="col-xs-2 control-label"><span class="text-danger">*</span>一般纳税人资格复印件</label>
+        <div class="col-xs-5">
+            <{input type="imageupload" tag="图片上传" name="tax_licence[attach]" value=$extra.company_extra.tax_licence.attach  accept="jpg|png|gif" size="2m" required="true"}>
+            <p>非一般纳税人不用上传</p>
+            <span class="msgTip" data-message="required">不能为空</span>
+        </div>
+    </div>
+    <div class="col-xs-offset-2">
+        <input class="btn btn-danger btn-md" style="width:100px;" type="submit" value="确  定">
+    </div>
+    
+</form>
+  

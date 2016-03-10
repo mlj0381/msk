@@ -1,0 +1,138 @@
+<div class="reg_progress clearfix">
+
+</div>
+<div class="passport-signup-container seller_regbox">
+    <div class="panel panel-default signup-panel clearfix">
+
+        <div class="panel-body panel-rt pull-right">
+            <div class="settled_warning">
+                <dl class="clearfix">
+                    <dt><i class="icon-warning-sign"></i></dt>
+                    <dd>
+                        <p>1.信息提交前，请务必先了解<a href="">《美侍客招商标准》</a>;</p>
+                        <p>2.公司类需填项较多，建议先查看<a href="">《公司信息注意事项》</a>再填写;</p>
+                        <p>3.以下所需要上传的电子版资质仅支持JPG、GIF、PNG格式图片，大小不超过1M,且必须加盖企业公章;</p>
+                    </dd>
+                </dl>
+            </div>
+            <form id="companyInfo_form" action="<{link app=seller ctl=site_passport act=brand_aptitude}>?identity=<{$identity}>" class="form-horizontal companyInfo_form" method="post" data-module="validator">
+                <h3><{$pageSet.companyType}>  <small> <{$pageSet.label}></small></h3>
+                <input type="hidden" name="typeId" value="<{$identity}>"/>
+                <input type='hidden' name='pageIndex' value='<{$pageIndex}>'/>
+                <!-- 三证合一 -->
+                <{foreach from=$pageSet.page key=key item=item}>
+                    <{include file="site/passport/companyInfo/{$item}.html" extra=$info.company_extra}>
+                <{/foreach}>
+                <hr>
+                <div class="form-group">
+                    <label class="col-xs-2"></label>
+                    <div class="col-xs-4">
+                        <{if $pageIndex neq '1'}> <a type="submit"
+                                                     href="<{link app=seller ctl=site_passport act=brand_aptitude args0=$pageIndex args1=up}>?type=<{$identity}>" data-loading-text="正在提交..." class="btn btn-default">返回上一步</a><{/if}>
+                        <button type="submit" data-loading-text="正在提交..." class="btn btn-danger" style="margin-left: 20px;">保存并进行下一步</button>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+/**
+ *动态添加多项,例如：检测设备，电商团队成员，企业荣誉，车间概况
+ */
+    var itemLength = function(obj){
+        var items = obj.find('div[data-items="itemList"]');
+        var item = items.find('div[data-item="creat-item"]:first');
+        item.find($('.delBtn')).hide();
+    }
+    $('div[data-module="creater"]').each(function(index, el) {
+
+        var addBtn = $(this).find('.addBtn');
+        var delBtn = $(this).find('delBtn');
+        var items = $(this).find('div[data-items="itemList"]');
+        var item = items.find('div[data-item="creat-item"]');
+        var itemLen = item.size();
+        var html = items.find('div[data-item="creat-item"]:first').prop("outerHTML");
+        var _this = $(this);
+        var imgUrl = '<{$base_url}>/public/javascripts/images/add.jpg';
+
+        //增加
+        addBtn.bind('click',function(){
+            _this.find('div[data-items="itemList"]').append(html);
+            _this.find('div[data-item="creat-item"]:last').find('input').val('');
+            _this.find('div[data-item="creat-item"]:last').find('img').attr('src', imgUrl);
+            itemLen++;
+            $.VMC.init();
+        })
+        
+        //删除
+
+        if(itemLen <= 1){
+           item.find($('.delBtn')).hide();
+        }
+        itemLength(_this);
+        _this.on('click','.delBtn',function(){
+            if(!confirm('确定删除')) return false;
+            var parent = $(this).parents('div[data-item="creat-item"]');
+            var content_id = parent.find('.content_id').val();
+            if(!content_id){
+                parent.remove();
+                return false;
+            }
+            var url = '<{link app=seller ctl=site_passport act=del_extra}>';
+            $.post(url, {content_id: content_id}, function (re) {
+                if (re.success) {
+                    parent.remove();
+                    itemLen--;
+                    itemLength(_this);
+                } else {
+                    alert('操作失败');
+                }
+            });
+        });    
+    });
+
+
+
+/**
+ * 表单验证
+ */
+ 
+    void function (signup_form) {
+        var _alert_error = function (msg) {
+            signup_form.find('.alert-error').remove();
+            signup_form.append($('<div class="alert alert-danger">' + msg + '</div>'));
+            alert_timer = setTimeout(function () {
+                clearTimeout(alert_timer);
+                signup_form.find('.alert-danger').fadeOut('fast', function () {
+                    $(this).remove();
+                });
+            }, 3000);
+        }
+        signup_form.on('submit', function (e) {
+            e.stopPropagation();
+            $.post(signup_form.attr('action'), signup_form.serialize(), function (re) {
+                if (re.error) {
+                    _alert_error(re.error);
+                } else if (re.success) {
+                    location = re.redirect;
+                }
+            }, 'json');
+            return false;
+        });
+    }($('#seller_signup_form'));
+
+
+
+$('#companyInfo_form .business').change(function(){
+    var typeId = $('#companyInfo_form input[name="typeId"]').val().trim();
+    var url = '<{link app=seller ctl=site_passport act=check_company}>';
+    $.post(url, {business : $(this).val().trim(), business_type : 0, type_id : typeId}, function(re){
+        console.log(re);
+    })
+});
+
+
+</script>

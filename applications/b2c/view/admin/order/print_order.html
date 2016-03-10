@@ -1,0 +1,95 @@
+<!-- 订单明细 -->
+<{$order.order_id|barcode}>
+<hr>
+<table width='100%'>
+    <tr>
+        <th class="text-right">
+            订单日期：
+        </th>
+        <td class="text-left">
+            <{$order.createtime|cdate}>
+        </td>
+        <th class="text-right">
+            订单号：
+        </th>
+        <td class="text-left">
+            <{$order.order_id}>
+        </td>
+    </tr>
+    <tr>
+        <th class="text-right">
+            付款方式：
+        </th>
+        <td class="text-left">
+            <{$payapp.display_name}>
+        </td>
+        <th class="text-right">
+            收货人：
+        </th>
+        <td class="text-left">
+            <{$order.consignee.name}>
+        </td>
+    </tr>
+    <tr>
+        <th class="text-right">
+            收货地区：
+        </th>
+        <td class="text-left">
+            <{$order.consignee.area|region}>
+        </td>
+        <th class="text-right">
+            收货地址：
+        </th>
+        <td class="text-left">
+            <{$order.consignee.address}>
+        </td>
+    </tr>
+</table>
+<hr>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>货号</th>
+            <th>名称</th>
+            <th>价格</th>
+            <th>数量</th>
+            <th>小计</th>
+            <th>已发货数量</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        <{foreach from=$order.items item=item name="item"}>
+            <tr>
+                <td><{$item.bn}></td>
+                <td>
+                    <{$item.name}>&nbsp;
+                    <small><{$item.spec_info}></small>
+                </td>
+                <td><{$item.buy_price|cur}></td>
+                <td><{$item.nums}></td>
+                <td><{$item.amount|cur}></td>
+                <td><{$item.sendnum}></td>
+            </tr>
+        <{/foreach}>
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="4">
+                <{if $order.memo}>
+                <br>
+                <h5>订单备注</h5>
+                <p>
+                    <{$order.memo}>
+                </p>
+                <{/if}>
+            </td>
+            <td>
+                <{$order.order_total|cur}>
+            </td>
+            <td>
+
+            </td>
+        </tr>
+    </tfoot>
+</table>

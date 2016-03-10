@@ -1,0 +1,104 @@
+<div class="content passport-signup-container">
+    <div class="content-padded signup-panel">
+          <form id="member_signup_form" class="form-horizontal" action="<{link app=b2c ctl=mobile_passport act=create}>" method="post">
+              <!-- 登陆后跳转地址 -->
+              <input type="hidden" name="forward" value="<{$forward}>">
+              <input type="text" required="true" autocomplete='off' name="pam_account[login_name]" class="form-control" id="input_login_name" placeholder="手机号">
+              <button type="button" class="btn btn-block btn-outlined btn-mobile-vcode">短信获取验证码</button>
+              <input type="text" required="true" name="vcode" class="form-control" id="input_vcode" placeholder="请输入收到的验证码">
+              <input type="password" required="true" name="pam_account[login_password]" class="form-control" id="input_login_password" placeholder="设置登录密码">
+              <input type="password" required="true" name="pam_account[psw_confirm]" class="form-control" id="input_psw_confirm" placeholder="确认登录密码">
+              <{foreach from=$attr item=item name="item" key='row'}>
+              <{if $item.attr_type == 'select'}>
+              <h6><{$item.attr_name}></h6>
+              <{input type=$item.attr_type name=$item.attr_column value=$item.attr_value options=$item.attr_option}>
+              <{elseif $item.attr_type == 'checkbox' }>
+              <h6><{$item.attr_name}></h6>
+              <{input type=$item.attr_type name=$item.attr_column value=$item.attr_value options=$item.attr_option}>
+              <{elseif $item.attr_type=='date'}>
+              <h6><{$item.attr_name}></h6>
+              <input type="date" class="form-control" name="<{$item.attr_column}>" value="<{$item.attr_value|default:'YYYY-MM-DD'}>">
+              <{else}>
+              <{input placeholder=$item.attr_name type=$item.attr_type name=$item.attr_column value=$item.attr_value}>
+              <{/if}>
+              <{/foreach}>
+              <button type="submit" class="btn btn-block btn-positive">提交注册</button>
+          </form>
+    </div>
+</div>
+<div class="bar bar-tab">
+  <a class="tab-item" href="javascript;">
+    阅读注册条款
+  </a>
+  <a class="tab-item active" href="<{link app=b2c ctl=mobile_passport act=login args0=$forward}>">
+    有账号？立即登录
+  </a>
+</div>
+
+<script>
+    /*
+    * 会员注册脚本
+    */
+
+    void function(signup_form){
+
+
+        $('#input_login_name').on('blur',function(e){
+            var ipt = $(this);
+            $.post('<{link app=b2c ctl=mobile_passport act=check_login_name}>',{'pam_account[login_name]':ipt.val()},function(re){
+                if(re.error){
+                    Messagebox('error',re.error);
+                }
+            },'json');
+        });
+
+
+        signup_form.on('submit',function(e){
+            e.stopPropagation();
+            signup_form.find('button[type=submit]').prop('disabled',true).text('提交中...');
+            $.post(signup_form.prop('action'),signup_form.serialize(),function(re){
+                if(re.error){
+                    Messagebox('error',re.error);
+                }
+                if(re.success){
+                    location = re.redirect;
+                }
+                signup_form.find('button[type=submit]').removeProp('disabled').text('提交注册');
+            },'json');
+            return false;
+        });
+
+        //获得短信验证码
+        var _cutdown_sms = function(btn){
+            btn.addClass('disabled');
+            var cutdown = 120,btn_o_text = btn.text(),timer =
+            setInterval((function(){
+                btn.text('短信已发送,'+(cutdown--)+'秒后可重试');
+                if(cutdown<1){
+                    clearInterval(timer);
+                    btn.text(btn_o_text).removeClass('disabled');
+                }
+                return arguments.callee;
+            })(),1000);
+        };
+        signup_form.find('.btn-mobile-vcode').on('click',function(e){
+            var btn = $(this);
+            if(btn.hasClass('disabled'))return;
+            btn.addClass('disabled');
+            $.post('<{link app=b2c ctl=mobile_passport act=send_vcode_sms}>',{mobile:$('#input_login_name').val()},function(re){
+                if(re && re.error){
+                    btn.removeClass('disabled');
+                    Messagebox('error',re.error);
+                }
+                if(re && re.success){
+                    _cutdown_sms(btn);
+                }
+            },'json');
+
+
+        });
+
+
+
+    }($('#member_signup_form'));
+</script>

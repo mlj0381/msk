@@ -1,0 +1,12 @@
+<div id="goods_cat_filter_<{$name}>" class="pull-right">
+    <{assign var=callback_fn value='goods_cat_filter_fix_fn_'.$name}>
+    <{input type="category" divider='全部分类' callback=$callback_fn value=$env.get.filter.cat_id}>
+</div>
+<script type="text/javascript">
+    var <{$callback_fn}> = function(cat_id){
+        $('#finder_form_<{$name}>').prop('action',$('#finder_form_<{$name}>').prop('action').replace(/&filter\[cat_id\]([^&]+)/,'')+(!!cat_id?'&filter[cat_id]='+cat_id:''));
+        update_finder_<{$name}>();
+    };
+    $('#goods_cat_filter_<{$name}>').appendTo($('#finder_title_<{$name}>').addClass('clearfix'));
+    $('#finder_title_<{$name}> .page-title').addClass('pull-left');
+</script>

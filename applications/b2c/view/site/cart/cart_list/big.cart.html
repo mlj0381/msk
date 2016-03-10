@@ -1,0 +1,77 @@
+<div class="cart-body">
+       
+        <{foreach from=$cart_all.big.objects.goods item=object}>
+        <!-- cart-item begin  -->
+        <div class="itembox">
+            <div class="shop_name">
+                <a href="<{link app=store ctl=site_store act=index args0=$object.store_info.store_id}>"><{$object.store_info.store_name}></a><a href="#" class="icon-comments"></a>
+            </div>
+            <div class="row <{$object.obj_ident}> cart-item <{if $object.disabled!='true'}>enabled<{/if}>">
+                <div class="col-xs-1 c-ci-check">
+                    <label class="control-label">
+                        <input type="checkbox" data-ident="<{$object.obj_ident}>" name="ident[]" value="<{$object.obj_ident}>" <{if $object.disabled!='true'}>checked=true<{/if}> <{if $object.warning}>disabled<{/if}>>&nbsp;&nbsp;&nbsp;&nbsp;
+                    </label>
+                </div>
+                <div class="col-xs-4 c-ci-title">
+                    <div class="row">
+                          <div class="col-xs-3">
+                            <a href="<{link app=b2c ctl=site_product args0=$object.item.product.product_id}>">
+                                <img class="img-thumbnail" src="<{$object.item.product.image_id|storager:'s'}>" title="<{$object.item.product.name}>-<{$object.item.product.spec_info}>" />
+                            </a>
+                          </div>
+                          <div class="col-xs-9">
+                            <h5><a href="<{link app=b2c ctl=site_product args0=$object.item.product.product_id}>"><{$object.item.product.name}></a></h5>
+                            <p class="spec-info">
+                                <{$object.item.product.spec_info}>
+                            </p>
+                            <p class="warning text-warning <{if !$object.warning}>hide<{/if}>">
+                                <i class="glyphicon glyphicon-warning-sign"></i>&nbsp;
+                                <span data-bind="warning"><{$object.warning}></span>
+                            </p>
+                            <ul class="list-unstyled promotion-list plist-goods">
+                                <{foreach from=$cart_all.big.promotions.goods key=key item=pitem}>
+                                     <{if $object.obj_ident!=$key}><{continue;}><{/if}>
+                                     <{foreach from=$pitem item=item}>
+                                    <li data-ruleid="<{$item.rule_id}>">
+                                        <span class="label label-danger"><{$item.tag}></span>
+                                        <{$item.desc}>
+                                    </li>
+                                    <{/foreach}>
+                                <{/foreach}>
+                            </ul>
+                          </div>
+                    </div>
+                </div>
+                <div class="col-xs-1 c-ci-price" data-interval="<{$object.item.product.price_interval}>" data-up="<{$object.item.product.price_up}>" data-dn="<{$object.item.product.price_dn}>" data-bind="item/product/buy_price"><{$object.item.product.buy_price|cur}></div>
+                <div class="col-xs-2 c-ci-quantity">
+                    <div class="product-quantity input-group input-group-sm"  data-minibuy="<{$data_detail.minibuy}>">
+                        <div class="spinner-buttons input-group-btn">
+                            <button type="button" class="btn btn-default">
+                            -
+                            </button>
+                        </div>
+                        <input type="text" data-ident="<{$object.obj_ident}>" class="spinner-input form-control"  value="<{$object.quantity}>" data-now="<{$object.quantity}>">
+                        <div class="spinner-buttons input-group-btn">
+                            <button type="button" class="btn btn-default">
+                            +
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-2 c-ci-amount">
+                    <strong data-bind="amount"></strong>
+                </div>
+                <!-- <{$object.item.product.buy_price*$object.quantity|cur}> -->
+                <div class="col-xs-2 c-ci-opt">
+                    <ul class="list-unstyled">
+                        <li><a href="javascript:;" data-remove=".cart-body input:text[data-ident='<{$object.obj_ident}>']" class="btn btn-link btn-xs">删除</a></li>
+                        <{if $member_id}>
+                        <li><a href="javascript:;" data-mvtofav=".cart-body input:text[data-ident='<{$object.obj_ident}>']" class="btn btn-link btn-xs">移到收藏夹</a></li>
+                        <{/if}>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- cart-item end  -->
+        <{/foreach}>
+    </div>

@@ -1,0 +1,143 @@
+<div class="tiles goods-images-pane" id="image_upload_array_<{$id}>">
+    <{foreach from=$imageList item=gimage}>
+        <div class="tile image bg-grey <{if $goods.image_default_id==$gimage.image_id}>selected<{/if}>">
+            <input type="hidden" name="<{$name}>[]" value="<{$gimage}>">
+            <div class="tile-body">
+                <img src="<{$gimage|storager:'s'}>" />
+            </div>
+            <div class="tile-object">
+                <div class="number">
+                    <i class="fa fa-trash-o text-danger delete-image" data-image-id="<{$gimage.image_id}>"></i>
+                </div>
+            </div>
+            <{if $default_id==$gimage}>
+            <span class="badge badge-roundless badge-danger" style="position:absolute;top:0px;left:0px;">默认图</span>
+            <{/if}>
+        </div>
+
+    <{/foreach}>
+
+    <div class="tile bg-grey goods-images-upload-pane fileinput-button">
+        <div class="tile-body">
+            <i class="glyphicon glyphicon-plus"></i>
+        </div>
+        <input id="goods_images_fileupload" type="file"  multiple data-url="index.php?app=image&ctl=admin_manage&act=gimages_upload" accept="image/*">
+    </div>
+
+<textarea class="hide gimage-box-process-tpl">
+    <div class="tile bg-grey-gallery">
+        <div class="tile-body">
+            <i class="fa fa-cloud-upload">
+            </i>
+        </div>
+        <div class="tile-object">
+            <div class="name">
+                <img src="<{$env.STATICS_HOST_URL}>/desktop/admin/layout/img/ajax-modal-loading.gif"/>
+            </div>
+            <div class="number">
+            </div>
+        </div>
+    </div>
+</textarea>
+<textarea class="hide gimage-box-done-tpl">
+    <div class="tile image bg-grey">
+        <input type="hidden" name="<{$name}>[]" value="{image_id}">
+        <div class="tile-body">
+            <img src="{url}" />
+        </div>
+        <div class="tile-object">
+            <div class="number">
+                <i class="fa fa-trash-o delete-image" data-image-id="{image_id}"></i>
+            </div>
+        </div>
+    </div>
+</textarea>
+</div>
+
+<script>
+!function(){
+    /*商品相册上传选择逻辑*/
+    var substitute = function(str,obj){
+           return str.replace(/\\?\{([^{}]+)\}/g, function(match, name){
+               if (match.charAt(0) == '\\') return match.slice(1);
+               return (obj[name] != undefined) ? obj[name] : '';
+           });
+   }
+   /*相册拖动排序*/
+   $('#image_upload_array_<{$id}> .goods-images-pane').sortable({
+       cursor: "move",
+       items:'> .image'
+   });
+
+    var set_default = function(el_box){
+        $('#image_upload_array_<{$id}> .goods-images-pane .selected').removeClass('selected');
+        $(el_box).addClass('selected');
+        if($('#image_upload_array_<{$id}> .goods-images-pane .badge-danger').length){
+            $(el_box).append($('#image_upload_array_<{$id}> .goods-images-pane .badge-danger'));
+        }else{
+            $(el_box).append('<span class="badge badge-roundless badge-danger" style="position:absolute;top:0px;left:0px;">默认图</span>');
+        }
+        $('#image_upload_array_<{$id}> input[name="image_default"]').val($(el_box).find('#image_upload_array_<{$id}> input[name="goods[images][]"]').val());
+    }
+    //var tmp_doc_title = document.title,timer = 0;
+    $('#image_upload_array_<{$id}> #goods_images_fileupload').fileupload({
+        add:function(e,data){
+            var file_obj = data.files[0];
+            if(!file_obj['type'].match(/^image/)){
+                return toastr.warning(data.files[0]['name']+'不是允许的图片类型','类型错误');
+            }
+            data.context = $($('#image_upload_array_<{$id}> .gimage-box-process-tpl').val());
+            data.context.find('#image_upload_array_<{$id}> .number')
+            .html("<small>"+Math.round(parseFloat(file_obj.size/1024/1024)*100)/100+'MB</small>');
+            data.context.insertBefore($('#image_upload_array_<{$id}> .goods-images-upload-pane'));
+            data.submit();
+        },
+        progress:function(e){
+            // (function(){
+            //     document.title = (document.title=='正在上传......')?'正在上传...':'正在上传......';
+            //     timer = setTimeout(arguments.callee,500);
+            // })();
+        },
+        progressall:function(e){
+
+        },
+        done:function(e,data){
+            // clearTimeout(timer);
+            // document.title = tmp_doc_title;
+            try{
+                var re = $.parseJSON(data.result);
+                data.context.replaceWith(substitute($('#image_upload_array_<{$id}> .gimage-box-done-tpl').val(),re));
+                if(!$('#image_upload_array_<{$id}> .goods-images-pane .selected').length){
+                    set_default($('#image_upload_array_<{$id}> .goods-images-pane .image:first'));
+                }
+            }catch(e){
+                $(data.context).fadeOut(function(){
+                    $(this).remove();
+                });
+            }
+
+        }
+    });
+
+    $('#image_upload_array_<{$id}> .goods-images-pane').on('click','#image_upload_array_<{$id}> .image',function(e){
+            set_default(this);
+            return;
+    });
+    $('#image_upload_array_<{$id}> .goods-images-pane').on('click','#image_upload_array_<{$id}> .delete-image',function(e){
+        e.stopPropagation();
+        if(!confirm('确认移除？'))return;
+        $(this).closest('#image_upload_array_<{$id}> .image').remove();
+        if(!$('#image_upload_array_<{$id}> .goods-images-pane .selected').length){
+            if($('#image_upload_array_<{$id}> .goods-images-pane .image:first')){
+                    set_default($('#image_upload_array_<{$id}> .goods-images-pane .image:first'));
+            }else{
+                    $('input[name="image_default"]').val('');
+            }
+        }
+
+    });
+
+
+}();
+
+</script>

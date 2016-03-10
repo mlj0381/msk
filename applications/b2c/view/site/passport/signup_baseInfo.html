@@ -1,0 +1,73 @@
+<div class="reg_progress clearfix">
+    <ol>
+        <li>
+            <span><i>1</i>账户设置</span>
+        </li>
+        <li class="active">
+            <span><i>2</i>基本资料</span>
+        </li>
+        <li>
+            <span><i>3</i>完成注册</span>
+        </li>
+    </ol>
+</div>
+<div class="passport-signup-container baseInfo_container clearfix">
+    <div class="baseInfo_lt fl">
+        <dl>
+
+            <dd <{if $pageIndex eq '1'}>class="active"<{/if}>>
+                <a href="#">买家信息</a>
+            </dd>
+            <dd <{if $pageIndex eq '2'}>class="active"<{/if}>>
+                <a href="#">经营信息</a>
+            </dd>
+            <!-- <dd <{if $pageIndex eq '3'}>class="active"<{/if}>>
+                <a href="#">配送信息</a>
+            </dd> -->
+        </dl>
+    </div>
+    <div class="baseInfo_rt fr">
+        <form id="signup_baseInfo_form" class="form-horizontal" action="<{link app=b2c ctl=site_passport act=business_info args0=$pageIndex}>" method="post" data-module="validator">
+            <{foreach from=$conf.page_setting item=item}>
+                <{include file="site/passport/baseInfo/{$item}.html" extra=$conf.info}>
+            <{/foreach}>
+            <div class="form-group">
+                <label for="" class="col-md-2 control-label"></label>
+                <div class="col-md-4">
+                    <label class="checkbox-inline">
+                        <input onclick="return false;" type="checkbox" checked name="" value="1"> 我已阅读并同意
+                        <a data-toggle="modal" data-target="#regTerms">《美侍客用户注册协议》</a>
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-4">
+                    <a href="<{link app=b2c ctl=site_passport act=business_info args0=$pageIndex args1=up}>" data-loading-text="正在提交..." class="btn btn-default">返回上一步</a>
+                    <button type="submit" data-loading-text="正在提交..." class="btn btn-danger">信息提交</button>
+                </div>
+            </div>
+            <!-- 会员注册条款modal -->
+            <div class="modal fade" id="regTerms" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="myModalLabel">美侍客用户注册协议</h4>
+                        </div>
+                        <div class="modal-body">
+                            ...
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">我知道了</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--END 会员注册条款modal -->
+        </form>
+        
+    </div>
+</div>
+
+
+

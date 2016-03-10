@@ -1,0 +1,159 @@
+<{css app=desktop href="../com/global/plugins/jquery-tags-input/jquery.tagsinput.css" }>
+<script type="text/javascript" src="<{$base_url}>/public/javascripts/summernote/summernote.min.js"></script>
+<script type="text/javascript" src="<{$base_url}>/public/javascripts/summernote/lang/summernote-zh-CN.js"></script>
+<{script app=desktop src="../com/global/plugins/jquery-tags-input/jquery.tagsinput.min.js" }>
+<{script app=desktop src="../com/global/scripts/metronic.js" }>
+<script type="text/javascript" src="<{$base_url}>/public/javascripts/summernote/summernot_set.js"></script>
+
+<{script app=desktop src="../com/global/scripts/metronic.js" }>
+
+<link rel="stylesheet" type="text/css" href="<{$base_url}>/public/stylesheets/font-awesome.min.css">
+<link rel="stylesheet" type="text/css" href="<{$base_url}>/public/stylesheets/summernote.css">
+
+
+<div class="page-seller">
+    <div class="page-header">
+        <h1><{if $goods}>编辑商品<{else}>添加商品<{/if}></h1>
+    </div>
+    <form class="form-horizontal addgoods_form" action="<{link app=seller ctl=site_goods act=save}>" method="post" id="goods_edit_form" data-module="validator">
+        <div class="goods_tabbox">
+
+            <!-- 商品基本信息 -->
+                <{include file="site/goods/detail/basic.html"}>
+                <!-- 属性参数 -->
+                <{include file="site/goods/detail/params.html"}>
+                <!-- 商品规格 -->
+                <{include file="site/goods/detail/spec.html"}>
+                <!-- 图文介绍 -->
+                <h4>图文介绍</h4>
+                <div role="tabpanel" class="tab-pane" id="tuwen">
+                    <div class="editerbox">
+                        <textarea id="summernote" name="goods[description]" value=""><{$goods.description}></textarea>
+                        <{*input type=html name="goods[description]" remote=site*}>
+
+                    </div>
+                </div>
+                <{include file="site/goods/detail/content.html"}>
+
+        </div>
+        <div class="form_action">
+            <a class="save_goods btn-default" href="<{link app=seller ctl=site_goods act=index}>">返回商品列表</a>
+            <button class="save_goods btn-danger" data-redirect="<{link app=seller ctl=site_goods act=save}>&p[0]={goods_id}">保存</button>
+        </div>
+    </form>
+</div>
+
+
+
+
+
+<script>
+$(function() {
+
+    /**
+     * 关键词
+     */
+    $('#goods_keywords_input').tagsInput({
+        width: 'auto',
+        'defaultText': '输入新词',
+    });
+})
+</script>
+
+<script>
+String.prototype.trim = function() {
+    return this.replace(/(^\s*)|(\s*$)/g, '');
+};
+
+
+//出厂货号和货号同步
+$("#goods_gid").blur(function() {
+    var gid = $(this).val();
+    $("input[name='goods[product][new_0][bn]']").val(gid);
+    //商品名称生成
+    generate_goods_name();
+});
+
+
+//提交表单添加商品
+$(".save_goods").click(function() {
+    var formdata = $("#goods_edit_form").serialize();
+
+    /*$.ajax({
+        url: '<{link app=seller ctl=site_goods act=save}>',
+        type: 'POST',
+        data: formdata,
+        dataType: 'json',
+        success: function(data) {
+            if (data.success) {
+                location.href = data.redirect;
+            } else {
+                alert(data.error);
+            }
+        }
+    });*/
+});
+
+</script>
+
+
+<script>
+/**
+ *产品图片添加
+ */
+$(function() {
+    var substitute = function(str, obj) {
+        return str.replace(/\\?\{([^{}]+)\}/g, function(match, name) {
+            if (match.charAt(0) == '\\') return match.slice(1);
+            return (obj[name] != undefined) ? obj[name] : '';
+        });
+    }
+    $('input[type="file"]').fileupload({
+
+        add: function(e, data) {
+            if (!data.files[0]['type'].match(/^image/)) {
+                alert('非法上传，不是图片类型');
+                return false;
+            }
+            data.submit();
+        },
+        progress:function(e){
+            
+        },
+        done: function(e, data) {
+
+            var re = $.parseJSON(data.result);
+            var input = e.target || e.srcElement;
+            var content = $('.pro_img_showbox').val();
+            $('.filebox').before(substitute(content, re));
+
+            if($('.pro_imgs .pro_img_item').size()==1){
+                $('.pro_imgs .pro_img_item').find('.default').addClass('selected');
+                var default_val=$('.pro_imgs .pro_img_item:first-child').find('input[type="hidden"]').val();
+                $('#images_add').attr('value',default_val);
+            }
+
+        }
+    });
+
+    //设置默认图片
+
+    $('.pro_imgs').on('click','.item_panel',function(){
+        $(this).children('.default').addClass('selected');
+        $(this).parents('.pro_img_item').siblings().find('.default').removeClass('selected');
+
+        var default_val=$(this).siblings('.item_con').find('input[type="hidden"]').val();
+        $('#images_add').attr('value',default_val);
+    })
+});
+</script>
+
+<script type="text/javascript">
+var htmlEditor = {
+    'id' : 'summernote',
+    'url' : '<{link app=image ctl=site_upload act=wysiswyg_upload}>',
+    'name' : ''
+}
+jQuery.extend(optionHtml, htmlEditor);
+$('#summernote').summernote(optionHtml);
+</script>

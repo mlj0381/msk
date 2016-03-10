@@ -1,0 +1,32 @@
+<input type="hidden" name="goods_info[content_id]"  value="<{$extra.goods_info.content_id}>" class="form-control">
+<h4>经营产品信息</h4>
+                <div class="form-group">
+                    <label class="col-xs-2 control-label">
+                        <span class="text-danger">*</span>上传产品质量标准电子版：
+                    </label>
+                    <div class="col-xs-4">
+                        <{input type="imageupload" tag="图片上传" name="goods_info[value]" value=$extra.goods_info.value.quality_excel required='true' accept="jpg|png|gif"}>   
+                        <span class="msgTip" data-message="error">不能为空</span>
+                        <p><span style="margin-right:15px; color:#999">请单击下载模板，填写完成后，上传.csv格式的excel表格</span><a href="#" class="text-danger">下载模板</a></p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-2 control-label">
+                        <span class="text-danger">*</span>上传产品卫生标准电子版：
+                    </label>
+                    <div class="col-xs-4">
+                        <{input type="imageupload" tag="图片上传" name="goods_info[value][sanitation_excel]" value=$extra.goods_info.value.sanitation_excel required='true' accept="jpg|png|gif"}>   
+                        <span class="msgTip" data-message="error">不能为空</span>
+                        <p><span style="margin-right:15px; color:#999">请单击下载模板，填写完成后，上传.csv格式的excel表格</span><a href="#" class="text-danger">下载模板</a></p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-2 control-label">
+                        <span class="text-danger">*</span>上传产品包装规范电子版：
+                    </label>
+                    <div class="col-xs-4">
+                        <{input type="imageupload" tag="图片上传" name="goods_info[value][pack_excel]" value=$extra.goods_info.value.pack_excel required='true' accept="jpg|png|gif"}>   
+                        <span class="msgTip" data-message="error">不能为空</span>
+                        <p><span style="margin-right:15px; color:#999">请单击下载模板，填写完成后，上传.csv格式的excel表格</span><a href="#" class="text-danger">下载模板</a></p>
+                    </div>
+                </div>

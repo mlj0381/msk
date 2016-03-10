@@ -1,0 +1,55 @@
+<h3 class="page-title">
+    站点设置
+</h3>
+<hr>
+<form action="index.php?app=site&ctl=admin_setting&act=index" method="post" class="form" >
+    <div class="form-horizontal">
+        <div class="form-body">
+            <{foreach from=$setting item=item key=key}>
+            <div class="form-group">
+                <{if $key neq 'site_map'}>
+                <label class="col-xs-2 control-label"><{$item.desc}></label>
+                <{/if}>
+                <div class="col-xs-4">
+                    <{if $item.required}>
+                    <{input required=true type=$item.type name=$key value=$item.value|default:$item.default options=$item.options }>
+                    <{elseif $key neq 'site_map'}>
+                    <{input type=$item.type name=$key value=$item.value|default:$item.default options=$item.options }>
+                    <{/if}>
+                </div>
+                <{if $item.helpinfo}>
+                <span class="help-block"><{$item.helpinfo}></span>
+                <{/if}>
+            </div>
+
+            <{/foreach}>
+            
+            <div class="form-actions">
+                <div class="row">
+                    <div class="col-md-offset-3 col-md-9">
+                        <button type="submit" class="btn blue">保存</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<div class="modal fade" id="map_edit" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+        </div>
+    </div>
+</div>
+
+<script>
+//    $(function(e){
+//        $('.form .del').click(function(){
+//           var map_id = $(this).attr('data-map'), type = $(this).attr('data-type'); 
+//           $.post('index.php?app=siet&ctl=admin_setting&act=del_map', 
+//           {map_id : map_id, type : type}, function(re){
+//               
+//           })
+//        });
+//    });
+    
+</script>

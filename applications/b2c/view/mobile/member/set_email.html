@@ -1,0 +1,52 @@
+<header class="bar bar-nav">
+        <a class="icon icon-left-nav pull-left history-go-1" href="<{link app=mobile ctl=index}>"></a>
+        <h1 class="title">绑定邮箱</h1>
+</header>
+<div class="content">
+<form class="form-horizontal content-padded content-form" action="<{link app=b2c ctl=mobile_member act=set_pam_email args0=save}>" method="post" id="set_email_form">
+    <{foreach from=$pam_data key=key item=item}>
+    <h5><{$pam_type.{$key}}></h5>
+    <input type="text" class="form-control" readonly=true value="<{$item.login_account}>">
+    <p>
+        设置完后，依然可以用<{$pam_type.{$key}}>登录
+    </p>
+    <{/foreach}>
+    <input type="email" id="email_input" placeholder="请输入要绑定的Email" required="true" class="form-control" name="email"  value="">
+    <button type="button" class="btn btn-block btn-email-vcode">向邮箱发送验证码</button>
+    <input type="text" required="true" name="vcode" class="form-control" id="input_vcode" placeholder="请输入邮件验证码">
+    <button type="submit" class="btn btn-block btn-primary">立即绑定</button>
+</form>
+</div>
+
+<script type="text/javascript">
+
+//获得短信验证码
+var _cutdown_sms = function(btn){
+
+    var cutdown = 120,btn_o_text = btn.text(),timer =
+    setInterval((function(){
+        btn.text('验证码已发送,'+(cutdown--)+'秒后可重试');
+        if(cutdown<1){
+            clearInterval(timer);
+            btn.text(btn_o_text).removeClass('disabled');
+        }
+        return arguments.callee;
+    })(),1000);
+};
+$('#set_email_form .btn-email-vcode').on('click',function(e){
+    var btn = $(this);
+    if(btn.hasClass('disabled'))return;
+    btn.addClass('disabled');
+    $.post('<{link app=b2c ctl=mobile_passport act=send_vcode_email}>',{email:$('#email_input').val()},function(re){
+        if(re && re.error){
+            btn.removeClass('disabled');
+            Messagebox('error',re.error);
+        }
+        if(re && re.success){
+            _cutdown_sms(btn);
+        }
+    },'json');
+
+
+});
+</script>

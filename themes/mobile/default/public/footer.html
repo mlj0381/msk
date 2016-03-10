@@ -1,0 +1,43 @@
+<script type="text/template" id="main_nav_template">
+    <nav class="bar bar-tab bar-header-secondary main-nav">
+      <a class="tab-item" href="<{link app=mobile ctl=index}>">
+        <span class="icon fa fa-home"></span>
+        <span class="tab-label">首页</span>
+      </a>
+      <a class="tab-item" href="<{link app=b2c ctl=mobile_list}>">
+        <span class="icon fa fa-compass"></span>
+        <span class="tab-label">发现</span>
+      </a>
+      <a class="tab-item" href="<{link app=b2c ctl=mobile_member}>">
+        <span class="icon fa fa-user"></span>
+        <span class="tab-label">会员中心</span>
+      </a>
+      <a class="tab-item" href="<{link app=b2c ctl=mobile_cart}>">
+        <span class="icon fa fa-shopping-cart"></span>
+        <span class="tab-label">购物车</span>
+      </a>
+    </nav>
+</script>
+<script type="text/javascript">
+    $('.history-go-1').on('click',function(e){
+        if(history.length){
+            history.go(-1);
+            return false;
+        }
+    });
+    if($('header.bar').length && !$('header.bar').eq(0).find('.pull-right').length){
+        $('header.bar').eq(0).append('<a href="<{link app=mobile ctl=index}>" class="icon icon-bars pull-right nav-handle hidden"></a>');
+    }
+    $('.nav-handle').fadeIn().on('click',function(e){
+        e.stopPropagation();
+        if($('.main-nav').length){
+            $('.main-nav').remove();
+            $(this).removeClass('active');
+        }else{
+            $(this).addClass('active');
+            $($('#main_nav_template').html()).insertAfter($('header.bar'));
+        }
+        return false;
+    });
+
+</script>

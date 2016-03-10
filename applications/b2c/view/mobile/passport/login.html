@@ -1,0 +1,73 @@
+<div class="content passport-login-container">
+    <div class="content-padded login-panel">
+      <div class="panel-body">
+          <form id="member_login_form" class="form-horizontal" action="<{link app=b2c ctl=mobile_passport act=post_login}>" method="post">
+              <!-- 登陆后跳转地址 -->
+              <input type="hidden" name="forward" value="<{$forward}>">
+              <input name="uname" style="display:none" disabled="disabled">
+              <input type="text" required="true" autocomplete='off' name="uname" class="form-control" id="input_uname" placeholder="手机号/邮箱/用户名">
+              <input type="password" required="true" name="password" class="form-control" id="input_password" placeholder="登录密码">
+              <input type="text" autocomplete='off' required="true" name="vcode" class="form-control" id="input_password" placeholder="验证码" style="background:#fff url(<{link app=mobile ctl=vcode  args0='passport'}>) no-repeat 95% 50%;">
+              <p>
+                  <input type="checkbox" id="autologin_checkbox" class="autologin-checkbox i-check">
+                  <label for="autologin_checkbox" class="fa"> <span>下次自动登录</span></label>
+              </p>
+
+              <button type="submit" class="btn btn-block btn-primary">登录</button>
+          </form>
+      </div>
+    </div>
+    <{if $toauth}>
+    <ul class="table-view">
+            <{foreach from=$toauth item=item}>
+            <li class="table-view-cell">
+                <a class="navigate-right" href="<{$item.authorize_url|toauth_forward:$forward}>">
+                    <{$item.display_name}>
+                </a>
+            </li>
+            <{/foreach}>
+    </ul>
+    <{/if}>
+</div>
+<div class="bar bar-tab">
+  <a class="tab-item active" href="<{link app=b2c ctl=mobile_passport act=signup args0=$forward}>">
+    立即注册,成为会员
+  </a>
+  <a class="tab-item" href="<{link app=b2c ctl=mobile_passport act=reset_password}>">
+    找回登录密码
+  </a>
+</div>
+
+
+
+<script>
+    /*
+    * 会员登录脚本
+    */
+
+    void function(login_form){
+        //本地账户自动登录
+        login_form.find('input.autologin-checkbox').on('change',function(e){
+            if($(this).is(':checked')){
+                $.cookie('AUTO_LOGIN', 'REMEMBER30DAY', { expires: 30, path: '/' });
+            }else{
+                $.removeCookie('AUTO_LOGIN');
+            }
+        });
+
+        login_form.on('submit',function(e){
+            e.stopPropagation();
+            login_form.find('button[type=submit]').prop('disabled',true).text('登录中...');
+            $.post(login_form.prop('action'),login_form.serialize(),function(re){
+                if(re.error){
+                    Messagebox('error',re.error);
+                }
+                if(re.success){
+                    location = re.redirect;
+                }
+                login_form.find('button[type=submit]').removeProp('disabled').text('登录');
+            },'json');
+            return false;
+        });
+    }($('#member_login_form'));
+</script>
