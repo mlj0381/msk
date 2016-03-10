@@ -3003,9 +3003,15 @@ ol {
 .receiver_addrpage .list-group ul.list-inline {
   margin: 10px 0;
 }
-.receiver_addrpage .form-group .time_period input {
-  width: 200px;
+.receiver_addrpage .form-group .time_period .list_item {
+  width: 130px;
   display: inline-block;
+  font-size: 14px;
+  color: #727171;
+  margin: 3px 0;
+}
+.receiver_addrpage .form-group .time_period input {
+  margin-right: 3px;
 }
 .newrequest_page .order-process-bar .well {
   box-shadow: none;

@@ -975,4 +975,5 @@ label.right {
 .region select,
 .category_select select {
   width: 33.333333333% !important;
+  margin-right: -4px !important;
 }
