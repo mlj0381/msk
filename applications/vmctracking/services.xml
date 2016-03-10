@@ -1,5 +1,0 @@
-<services>
-    <service id="base_render_pre_display">
-        <class orderby="9999">vmctracking_prender</class>
-    </service>
-</services>

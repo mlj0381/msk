@@ -1,5 +1,0 @@
-<services>
-    <service id="base_render_pre_display">
-        <class orderby="99">vmcfee_view_pre_render</class>
-    </service>
-</services>

@@ -1,7 +1,0 @@
-<site>
-	<module controller='site_store' id="store">
-		<name>store</name>
-		<title>店铺首页</title>
-		<disable>true</disable>
-	</module>
-</site>
