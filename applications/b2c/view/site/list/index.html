@@ -197,7 +197,7 @@
                       </h3>
                       <div class="g-ctl clearfix">
                         <a class="add_cart fl" data-url="<{link app=b2c ctl=site_cart act=add args0=$item.product.product_id
-                        args1=$item.store_id args2=1 }>" href="javascript:;"><i class="icon-shopping-cart"></i>加入购物车</a>
+                        args1=$item.store_id args2=1 }>" href="javascript:;"><i class="icon-shopping-cart"></i>加入购物车<em class="hide">+1</em></a>
                         <a class="add_fav fr favorite-button"data-url="<{link app=b2c ctl=site_member act=favorite args0=add
                         args1=$item.product.goods_id args2=goods}>" herf="javascript:;"><i class="icon-heart"></i>收藏</a>
                       </div>
@@ -312,21 +312,29 @@
     });
 
 
-
+    //加入购物车
     $('.add_cart').click(function (e) {
+        e.stopPropagation();
         var _self = $(this);
         if($.cookie('MEMBER_IDENT')) {
-                var url = $(_self).attr('data-url');
-                $.getJSON(url, function(re){
-                    if(re.success){
-                        alert('加入成功');
-                    }else{
-                        alert('加入失败');
-                    }
-                });
-            } else {
-                $('#quickLogin').modal('show');
-            }
+            var url = $(_self).attr('data-url');
+            $.getJSON(url, function(re){
+                if(re.success){
+                    _self.find('em').removeClass('hide');
+                    _self.find('em').animate({
+                        top:'-50px',
+                        opacity:0,
+                    },'slow',function(){
+                        _self.find('em').addClass('hide');
+                        _self.find('em').css({'top':'0px','opacity':'1'})
+                    });
+                }else{
+                    alert('加入失败');
+                }
+            });
+        } else {
+            $('#quickLogin').modal('show');
+        }
 
     });
     $('.quickLogin').on('click', 'button', function (e) {

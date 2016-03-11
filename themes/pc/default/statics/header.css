@@ -469,8 +469,9 @@ nav.mainNav ul.nav_ul li .category-container .category ul li.open:after {
   border-top: 8px solid transparent;
   border-bottom: 8px solid transparent;
   position: absolute;
-  right: 0px;
+  right: -2px;
   top: 11px;
+  z-index: 10000000;
 }
 nav.mainNav ul.nav_ul li .category-container .category ul .dropdown-subcat {
   left: 200px;
@@ -490,9 +491,10 @@ nav.mainNav ul.nav_ul li .category-container .category .tab-content {
   background: #FFF;
   overflow: hidden;
   z-index: 9999;
-  height: 554px;
+  min-height: 500px;
   padding: 10px;
   display: none;
+  border: 1px solid #a40001;
 }
 nav.mainNav ul.nav_ul li .category-container .category .tab-pane .tab-pane-cat {
   width: 740px;
@@ -503,11 +505,15 @@ nav.mainNav ul.nav_ul li .category-container .category .tab-pane .tab-pane-cat {
 nav.mainNav ul.nav_ul li .category-container .category .tab-pane .tab-pane-cat dl {
   position: relative;
   padding-left: 80px;
+  margin-bottom: 5px;
 }
 nav.mainNav ul.nav_ul li .category-container .category .tab-pane .tab-pane-cat dl dt {
   width: 80px;
+  height: 24px;
+  line-height: 24px;
   position: absolute;
   left: 0;
+  overflow: hidden;
 }
 nav.mainNav ul.nav_ul li .category-container .category .tab-pane .tab-pane-cat dl dt:hover a,
 nav.mainNav ul.nav_ul li .category-container .category .tab-pane .tab-pane-cat dl dt:hover i {
@@ -531,6 +537,7 @@ nav.mainNav ul.nav_ul li .category-container .category .tab-pane .tab-pane-cat d
   word-wrap: break-word;
   border-bottom: 1px solid #f1f1f1;
   padding-bottom: 2px;
+  min-height: 24px;
 }
 nav.mainNav ul.nav_ul li .category-container .category .tab-pane .tab-pane-cat dl dd a {
   color: #666;

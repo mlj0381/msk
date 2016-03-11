@@ -11,3 +11,4 @@ config/install.lock.php
 tmp/
 logs/
 mobile_test_case
+public/images
