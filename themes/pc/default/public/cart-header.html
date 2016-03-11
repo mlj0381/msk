@@ -7,28 +7,22 @@
                         <a id="cityPlan">
                             <span>所在城市：<small>上海</small></span> <i class="icon-angle-down"></i>
                         </a>
+                        
                         <div class="location-menu clearfix">
+                            <{foreach from=$basic.addrs item=addrs}>
                             <dl class="clearfix">
-                                <dt>上海：</dt>
-                                <dd class="active">
-                                    <a data-url="<{link app=site ctl=index act=index args0=1}>">上海</a>
+                                <dt title="<{$addrs.local_name}>"><{$addrs.dp_title}>：</dt>
+                                <dd>
+                                    <{foreach from=$addrs.warehouse item=item}>
+                                    <{if $item.disabled eq 'false'}>
+                                    <{break}>
+                                    <{/if}>
+                                    <a title="<{$item.title}>" <{if $activeAddrs eq $item.addr_id}>class="active"<{/if}>" data-url="<{link app=site ctl=index act=changeAddr args0=$item.addr_id}>"><{$item.title}></a>
+                                    <{/foreach}>
                                 </dd>
+                                
                             </dl>
-                            <dl class="clearfix">
-                                <dt>无锡：</dt>
-                                <dd>
-                                    <a data-url="">无锡</a>
-                                </dd>
-                                <dd>
-                                    <a data-url="">苏州</a>
-                                </dd>
-                                <dd>
-                                    <a data-url="">常州</a>
-                                </dd>
-                                <dd>
-                                    <a data-url="">南通</a>
-                                </dd>
-                            </dl>
+                            <{/foreach}>
                         </div>
                         
                     </div>

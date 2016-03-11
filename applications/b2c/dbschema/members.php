@@ -27,11 +27,11 @@ $db['members'] = array(
 
             'order' => 40,
             'type' => 'table:member_lv',
-            'editable' => true,
-            'filtertype' => 'bool',
-            'filterdefault' => 'true',
-            'in_list' => true,
-            'default_in_list' => true,
+//            'editable' => true,
+//            'filtertype' => 'bool',
+//            'filterdefault' => 'true',
+//            'in_list' => true,
+//            'default_in_list' => true,
         ) ,
         'avatar' => array(
             'type' => 'char(32)',

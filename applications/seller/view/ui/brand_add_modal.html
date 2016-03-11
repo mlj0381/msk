@@ -5,18 +5,14 @@
         <h4 class="modal-title" id="myModalLabel">品牌添加</h4>
     </div>
     <div class="modal-body">
-        <input type="hidden" value="<{$brand.brand_id }>" name="brand[brand_id]"/>
-        <input type="hidden" value="entry" name="type"/> <!-- 判断跳转位置-->
-        <input type="hidden" value="<{$brand.brand_initial }>" class="initial" name="brand[brand_initial]"/>
-        <!-- 拼音首字母-->
         <div class="form-group">
             <label class="control-label col-xs-2">
                 <span class="text-danger">*</span>品牌名称
             </label>
 
             <div class="col-xs-5">
-                <input type="text" required="required" id="check_brand_name" name="brand[brand_name]"
-                       value="<{$brand.brand_name}>" class="form-control brand_name" placeholder="品牌全系统唯一，不能有重复">
+                <input type="text" <{if $brand.brand_id}>disabled<{/if}> required=true value="<{$brand.brand_name}>"
+                id="check_brand_name" name="brand[brand_name]" vtype='required' class='form-control' />
             </div>
         </div>
         <div class="form-group">
@@ -36,7 +32,7 @@
             </label>
 
             <div class="col-xs-5">
-                <select class="form-control" name="brand[type]" required="true">
+                <select class="form-control" name="brand_type" required="true">
                     <option value="1">自有品牌</option>
                     <option value="2">代理品牌</option>
                     <option value="3">OEM委托品牌</option>
@@ -44,10 +40,12 @@
                 <span class="msgTip" data-message="error">不能为空</span>
             </div>
         </div>
+
         <div class="form-group" data-module="brand_add">
             <label class="control-label col-xs-2">
                 <span class="text-danger">*</span>品牌持有者
             </label>
+
             <div class="col-xs-5">
                 <{input type=select required="true" value=$brand.company_id name="brand[company_id]" rows=$company
                 valueColumn="company_id" labelColumn="company_name"}>

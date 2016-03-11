@@ -22,7 +22,7 @@ $.validator.regex = {
 	'password'	: /^[a-zA-Z0-9_]{6,20}$/,
 	'brankcard'	: /^(\d{16}|\d{19})$/,
 	'positive'	: /^[0-9]+(\.\d+)?$/, //正数
-	'age'		: /^([1-9]|[1-9][0-9]|1[01][0-9])$/,
+	'age'		: /^([1-9]|[1-9][0-9]|1[01][0-9])$/,  //1-119
 	'ip'        : /^(([1-9]|([1-9]\d)|(1\d\d)|(2([0-4]\d|5[0-5])))\.)(([1-9]|([1-9]\d)|(1\d\d)|(2([0-4]\d|5[0-5])))\.){2}([1-9]|([1-9]\d)|(1\d\d)|(2([0-4]\d|5[0-5])))$/
 };
 $.validator.messages = {
@@ -427,7 +427,6 @@ $.VMC.validator = function(form){
 			}
 		});
 		var thisSeting = $.extend(true, defaults, {rules : rules, messages : messages});
-		//console.log(thisSeting);
 		$(obj).validate(thisSeting);
 	});
 };

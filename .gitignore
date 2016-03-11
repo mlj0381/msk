@@ -11,9 +11,8 @@ config/install.lock.php
 tmp/
 logs/
 mobile_test_case
+public/images
 nbproject/
 .settings/
 .idea/
-demodata/
-config/
-public/images
+

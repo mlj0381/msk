@@ -97,6 +97,7 @@ class seller_ctl_site_passport extends seller_frontpage
     }
 
 
+
     //添加品牌资质
     public function brand_aptitude($step = 0, $type)
     {
@@ -144,7 +145,7 @@ class seller_ctl_site_passport extends seller_frontpage
         $this->page('site/passport/' . $tpl . '.html');
     }
 
-//end function
+    //end function
     //注册页面
     public function signup($step, $type)
     {

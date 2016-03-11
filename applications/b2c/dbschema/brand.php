@@ -63,6 +63,24 @@ $db['brand'] = array(
             'comment' => ('品牌介绍'),
             'label' => ('品牌介绍'),
         ),
+        'type' =>
+            array(
+                'type' => 'number',
+                'label' => ('品牌类型'),
+                'default' => 0,
+                'comment' => ('品牌类型'),
+                'in_list' => true,
+                'default_in_list' => true,
+            ),
+        'company_id' =>
+            array(
+                'type' => 'table:base@company',
+                'label' => ('所属公司'),
+                'default' => 0,
+                'comment' => ('所属公司'),
+                'in_list' => true,
+                'default_in_list' => true,
+            ),
         'accredit' =>
         array(
             'type' => 'char(32)',
