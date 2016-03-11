@@ -52,9 +52,14 @@ $db['company_seller'] = array(
             'comment' => '所属公司',
             'label' => '所属公司',
         ),
+        'company_name' => array(
+            'type' => 'varchar(50)',
+            'default' => '',
+            'comment' => '公司名称',
+            'label' => '公司名称',
+        ),
         'createtime' => array(
             'type' => 'time',
-            'defalut' => '',
             'label' => '创建时间',
             'comment' => '创建时间',
         ),
@@ -74,4 +79,5 @@ $db['company_seller'] = array(
             ),
         ),
     ),
+    'comment' => '商家公司表'
 );

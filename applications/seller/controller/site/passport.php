@@ -98,6 +98,9 @@ class seller_ctl_site_passport extends seller_frontpage
 
     //品牌添加
     public function brand_add(){
+        //查询商家所有的公司
+        $this->pagedata['company'] = app::get('base')->model('company_seller')->getList('company_id, company_name',
+            array('uid' => $this->seller['seller_id'], 'from' => 1));
         $this->display('ui/brand_add_modal.html');
     }
 
@@ -136,14 +139,13 @@ class seller_ctl_site_passport extends seller_frontpage
                 $this->pagedata['info'] = $this->passport_obj->edit_info($selfPage, $this->seller['seller_id'], $identity);
             $this->pagedata['pageIndex'] = $step;
             $this->pagedata['info']['company_extra']['page_setting'] = $this->passport_obj->columns();
-
         }
         $this->pagedata['ident'] = $this->seller['ident'];
         $this->pagedata['type'] = $params['type'];
         $this->page('site/passport/' . $tpl . '.html');
     }
 
-//end function
+    //end function
     //注册页面
     public function signup($step, $type)
     {
