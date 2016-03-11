@@ -1,0 +1,1 @@
+<?php exit(); ?>a:3:{s:5:"value";a:5:{s:7:"account";s:11:"13122608216";s:5:"vcode";s:6:"654101";s:5:"count";i:1;s:10:"createtime";s:8:"20160310";s:10:"lastmodify";i:1457591735;}s:3:"ttl";i:86400;s:8:"dateline";i:1457591735;}

@@ -96,10 +96,6 @@ class seller_ctl_site_passport extends seller_frontpage
         $this->splash('success', $forward, '登录成功');
     }
 
-    //品牌添加
-    public function brand_add(){
-        $this->display('ui/brand_add_modal.html');
-    }
 
     //添加品牌资质
     public function brand_aptitude($step = 0, $type)
@@ -116,13 +112,13 @@ class seller_ctl_site_passport extends seller_frontpage
             unset($_POST);
             $result = $this->passport_obj->entry($params, $msg);
             if(!$result) $this->splash('error', '', $msg . '信息注册失败');
-            $step ++;
+            //$step ++;
         }
         if (is_numeric($identity))
         {
             $tpl = 'brand_companyInfo';
             $columns = $this->app->getConf('seller_entry');
-            $countPage = count($columns[$identity]);
+            $countPage = count($columns[$identity]['pageSet']);
             $step = $params['pageIndex'] ?: $step;
             $step = $type == 'up' ? $step - 1 : $step + 1;
             $step <= 1 && $step = 1;
@@ -136,7 +132,12 @@ class seller_ctl_site_passport extends seller_frontpage
                 $this->pagedata['info'] = $this->passport_obj->edit_info($selfPage, $this->seller['seller_id'], $identity);
             $this->pagedata['pageIndex'] = $step;
             $this->pagedata['info']['company_extra']['page_setting'] = $this->passport_obj->columns();
-
+            var_dump($step);
+            if($step > $countPage){
+                $sumPage = $this->passport_obj->countPage();
+                $redirect = $this->gen_url(array('app' => 'seller', 'ctl' => 'site_passport', 'act' => 'entry', 'args0' => ($sumPage['sum'] - 1)));
+                $this->splash('success', $redirect, '资质添加成功');
+            }
         }
         $this->pagedata['ident'] = $this->seller['ident'];
         $this->pagedata['type'] = $params['type'];

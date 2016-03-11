@@ -70,6 +70,20 @@ $db['brand'] = array(
             'comment' => ('品牌授权书'),
             'label' => ('品牌授权书'),
         ),
+        'type' =>
+            array(
+                'type' => 'number',
+                'default' => 0,
+                'comment' => ('品牌类型'),
+                'label' => ('品牌类型'), // 1 自有  2 代理  4 OEM
+            ),
+        'company_id' =>
+            array(
+                'type' => 'number',
+                'default' => 0,
+                'comment' => ('所属公司'),
+                'label' => ('所属公司'),
+            ),
         'brand_logo' =>
         array(
             'type' => 'varchar(255)',
@@ -133,6 +147,27 @@ $db['brand'] = array(
                 0 => 'disabled',
             ),
         ),
+        'ind_seller_id' =>
+            array(
+                'columns' =>
+                    array(
+                        0 => 'seller_id',
+                    ),
+            ),
+        'ind_brand_initial' =>
+            array(
+                'columns' =>
+                    array(
+                        0 => 'seller_id',
+                    ),
+            ),
+        'ind_company_id' =>
+            array(
+                'columns' =>
+                    array(
+                        0 => 'seller_id',
+                    ),
+            ),
         'ind_ordernum' =>
         array(
             'columns' =>

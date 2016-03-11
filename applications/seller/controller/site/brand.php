@@ -31,19 +31,47 @@ class seller_ctl_site_brand extends seller_frontpage {
     //添加品牌
     public function add($brand_id) {
         if ($_POST) {
-            $this->_post($_POST);
+            $params = utils::_filter_input($_POST);
+            unset($_POST);
+            $this->_post($params);
         }
+        $this->pagedata['company'] = $this->_getCompanyList();
         if (is_numeric($brand_id)) {
             $this->pagedata['brand'] = app::get('b2c')->model('brand')->getRow('*', array('brand_id' => $brand_id, 'seller_id' => $this->seller['seller_id']));
+            //查询商家所有的公司
         }
         $this->output();
+    }
+
+    private function _getCompanyList()
+    {
+        return app::get('base')->model('company_seller')->getList('company_id, company_name',
+            array('uid' => $this->seller['seller_id'], 'from' => 1));
+    }
+
+    //品牌添加
+    public function brand_add(){
+        if ($_POST) {
+            $params = utils::_filter_input($_POST);
+            unset($_POST);
+            $this->_post($params);
+        }
+        //查询商家所有的公司
+        $this->pagedata['company'] = $this->_getCompanyList();
+        $this->display('ui/brand_add_modal.html');
     }
 
     private function _post($post) {
         extract($post);
         $db = vmc::database();
         $db->beginTransaction();
-        $redirect = $this->gen_url(array('app' => 'seller', 'ctl' => 'site_brand', 'act' => 'index'));
+        $redirect = array('app' => 'seller', 'ctl' => 'site_brand', 'act' => 'index');
+        if($type == 'entry'){
+            $count = vmc::singleton('seller_user_passport')->countPage();
+            $redirect = Array('app' => 'seller', 'ctl' => 'site_passport', 'act' => 'entry', 'args0' => ($count['sum'] - 1));
+        }
+        $redirect = $this->gen_url($redirect);
+
         $brand['seller_id'] = $this->seller['seller_id'];
         $mdl_b2c_brand = app::get('b2c')->model('brand');
         if ($brand['brand_id']) {
@@ -56,7 +84,6 @@ class seller_ctl_site_brand extends seller_frontpage {
             $b2c_fun_name = 'insert';
             $seller_fun_name = 'save';
         }
-
         if (!$brand_id = $mdl_b2c_brand->$b2c_fun_name($brand)) {
             $db->rollback();
             $this->splash('error', $redirect, '添加失败');
@@ -78,7 +105,9 @@ class seller_ctl_site_brand extends seller_frontpage {
 
     //删除
     public function remove($brand_id) {
+        $brand_id = $_POST['brand_id'] ?: $brand_id;
         $redirect = $this->gen_url(array('app' => 'seller', 'ctl' => 'site_brand', 'act' => 'index'));
+        if(!is_numeric($brand_id)) $this->splash('error', $redirect, '非法操作');
         $filter = app::get('store')->model('store')->getList('store_id', array('seller_id' => $this->seller['seller_id']));
         $mdl_b2c_goods = app::get('b2c')->model('goods');
         foreach ($filter as $value) {

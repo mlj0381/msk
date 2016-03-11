@@ -180,6 +180,8 @@ $setting = array(
                 'shop',
                 'food_flow_licence',
                 'contact_extra',
+                'door_head_photo',
+                'boss_photo'
             ),
             2 => array('manageInfo'),
             //3 => array('deliveryInfo'),

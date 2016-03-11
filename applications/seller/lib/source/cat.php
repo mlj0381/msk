@@ -80,4 +80,12 @@ class seller_source_cat extends base_source {
     public function del($params){
         
     }
+
+    /**
+     * 获取商品分类
+     * */
+    public function get_cat()
+    {
+
+    }
 }
