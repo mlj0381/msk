@@ -6,23 +6,11 @@
         <li>
             <span><i>2</i>企业类型选择</span>
         </li>
-        <{if $pageIndex neq '9'}>
         <li class="active">
             <span><i>3</i>公司信息提交</span>
         </li>
         <li>
-            <span><i>4</i>店铺信息提交</span>
-        </li>
-        <{else}>
-        <li >
-            <span><i>3</i>公司信息提交</span>
-        </li>
-        <li class="active">
-            <span ><i>4</i>店铺信息提交</span>
-        </li>
-        <{/if}>
-        <li>
-            <span><i>5</i>完成入驻</span>
+            <span><i>4</i>完成入驻</span>
         </li>
     </ol>
 </div>
@@ -32,18 +20,7 @@
 
             <h4 class="menu-root">买手店信息提交</h4>
             <ul class="menu-list">
-                <{foreach from=$leftMenu item=items}>
-                <li>
-                    <p><{$items.title}></p>
-                    <ul>
-                        <{foreach from=$items.setting.label key=key item=item}>  <!-- active 被选中-->
-                        <li class="<{if $menu.storeType eq $items.setting.type[$key] && in_array($menu.activeMenu, $items.setting.page)}> active <{/if}>">
-                            <i class="icon-caret-right "></i><{$item}>
-                        </li>
-                        <{/foreach}>
-                    </ul>
-                </li>
-                <{/foreach}>
+                <li></li>
             </ul>
         </div>
         <div class="panel-body panel-rt pull-right">
@@ -57,7 +34,7 @@
                     </dd>
                 </dl>
             </div>
-            <form id="buyer_companyInfo_form" action="" method="post" data-module="validator">
+            <form id="buyer_companyInfo_form" class="buyer_comInfo_form form-horizontal" action="" method="post" data-module="validator">
                 <div class="form-group">
                 	<label class="col-xs-2 control-label"><span class="text-danger">*</span>姓名</label>
                     <div class="col-xs-4">
@@ -70,20 +47,20 @@
                     <div class="col-xs-4">
 						<div class="form-item">
 							<span>
-								<input type="radio" name="" value="男"> 男
+								<input type="radio" name="buyer_sex" checked="checked" required="true" value="男"> 男
 							</span>
 							<span>
-								<input type="radio" name="" value="女"> 女
+								<input type="radio" name="buyer_sex" required="true" value="女"> 女
 							</span>
 						</div>
 						<span class="msgTip" data-msg="error"></span>
                     </div>
                 </div>
-                <div>
+                <div class="form-group">
                 	<label class="col-xs-2 control-label"><span class="text-danger">*</span>身份证号</label>
                 	<div class="col-xs-4">
-						<input type="text" class="form-control" name="" value="" required="true">
-						<span class="msgTip" data-msg="error"></span>
+						<input type="text" class="form-control" name="buyer_idcard" value="" required="true" formate="idcard">
+						<span class="msgTip" data-msg="format">身份证填写错误</span>
                     </div>
                 </div>
                 <div class="form-group">
@@ -106,31 +83,31 @@
 						<span class="msgTip" data-msg="error"></span>
                     </div>
                 </div>
-                <div>
+                <div class="form-group">
                 	<label class="col-xs-2 control-label"><span class="text-danger">*</span>详细地址</label>
                 	<div class="col-xs-4">
 						<input type="text" class="form-control" name="" value="" required="true">
 						<span class="msgTip" data-msg="error"></span>
                     </div>
                 </div>
-                <div>
+                <div class="form-group">
                 	<label class="col-xs-2 control-label"><span class="text-danger">*</span>照片(一寸免冠)</label>
                 	<div class="col-xs-4">
 						<{input type="imageupload" tag="图片上传" name="buyer[photo]" value=$extra.store.photo required='true' accept="jpg|png|gif" }>
 						<span class="msgTip" data-msg="error"></span>
                     </div>
                 </div>
-                <div>
+                <div class="form-group">
                 	<label class="col-xs-2 control-label"><span class="text-danger">*</span>微信号</label>
                 	<div class="col-xs-4">
-						<input type="text" class="form-control" name="" value="" required="true">
+						<input type="text" class="form-control" name="buyer_wechat" value="" required="true">
 						<span class="msgTip" data-msg="error"></span>
                     </div>
                 </div>
-                <div>
+                <div class="form-group">
                 	<label class="col-xs-2 control-label"><span class="text-danger">*</span>QQ号</label>
                 	<div class="col-xs-4">
-						<input type="text" class="form-control" name="" value="" required="true">
+						<input type="text" class="form-control" name="buyer_qq" value="" required="true">
 						<span class="msgTip" data-msg="error"></span>
                     </div>
                 </div>

@@ -3088,6 +3088,12 @@ ol {
   height: 30px;
   line-height: 30px;
 }
+.buyer_comInfo_form {
+  margin-top: 50px;
+}
+.buyer_comInfo_form .form-item span {
+  margin-right: 15px;
+}
 .services_page .order-process-bar .well {
   box-shadow: none;
 }
