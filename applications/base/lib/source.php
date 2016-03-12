@@ -70,17 +70,46 @@ class base_source {
     }
 
     public function set_config($path) {
-        $this->config = '';
+        $this->config = $path;
     }
 
+    /**
+     * 参数列表调整
+     **/
     public function init_request_args($params) {
         $params = utils::_filter_input($params);
         $data = array_merge($this->set_config($this->path), $params);
         return array_intersect_key($data, $params);
     }
 
-    public function response($data) {
+    /**
+     * 字段匹配转换
+     **/
+    public function convertColumns(&$data, $type)
+    {
+
+    }
+
+    public function response(&$data) {
         return $data;
     }
 
+    /**
+     * 调用api接品获取数据
+     * @params $params 要提交的数据
+     **/
+    public function request($params) {
+       // var_dump($this->app);die;
+        $this->set_config($this->path);
+        $this->convertColumns($params);
+        $params = $this->init_request_args($params);
+        $this->params['params'] = $params;
+        $this->init($this->params);
+        if ($this->get($params)) {
+            return $this->get($params);
+        }
+        $data = $this->remote();
+        // $this->set($params, $data);
+        return $data;
+    }
 }

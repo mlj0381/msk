@@ -227,4 +227,14 @@ $setting = array(
             6 => array('id' => '6', 'label' => '其他'),
         ),
     ),
+    'cat_columns' => array(
+        'default' => array(
+            'quality' => array(
+                'label' => '质量管理档案卡',
+                'columns' => array(
+                    '后台系统字段名' => '前台字段名',
+                ),
+            ),
+        ),
+    ),
 );

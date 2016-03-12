@@ -556,7 +556,7 @@ class seller_user_passport
         $countPage = $this->countPage();
         $columns = Array();
         $index = $step;
-        if($step > count($conf[$storeType]['pageSet'])){
+        if ($step > count($conf[$storeType]['pageSet'])) {
             $this->_entry($step, $storeType, $index);
         }
         if ($step <= $countPage['sum'] - count($conf['comm']['pageSet'])) {
@@ -571,7 +571,7 @@ class seller_user_passport
             $this->unsetColumns($licence_type, $columns);
             if ($step != '1') unset($columns['page']['bank_lesstion']);
             //$columns['page'] = array_flip($columns['page']);
-        }else{
+        } else {
             //最后两步品牌添加店铺申请
             //$index = $step - ($countPage['sum'] - count($conf['comm']['pageSet']));
             $columns['page'] = $conf['comm']['pageSet'][$index]['page'];
@@ -598,23 +598,24 @@ class seller_user_passport
     }
 
     //判断组合身份当前填写到哪一种身份
-    public function _entry($step, &$storeType, &$index){
+    public function _entry($step, &$storeType, &$index)
+    {
         $seller_info = vmc::singleton('seller_user_object')->get_current_seller();
         $conf = $this->app->getConf('seller_entry');
         $storeGroup = Array();
-        if($seller_info['ident'] & 1){
+        if ($seller_info['ident'] & 1) {
             $storeGroup[] = 1;
         }
-        if($seller_info['ident'] & 2){
+        if ($seller_info['ident'] & 2) {
             $storeGroup[] = 2;
         }
-        if($seller_info['ident'] & 4){
+        if ($seller_info['ident'] & 4) {
             $storeGroup[] = 4;
         }
         $countPage = 0;
-        foreach($storeGroup as $key => $value){
+        foreach ($storeGroup as $key => $value) {
             $countPage += count($conf[$storeGroup[$key - 1]]['pageSet']);
-            if($storeType != $value && $step > $countPage){
+            if ($storeType != $value && $step > $countPage) {
                 $storeType = $value;
                 $index = $step - $countPage;
             }
@@ -661,7 +662,7 @@ class seller_user_passport
     {
         $info = array();
         $company = app::get('base')->model('company_seller')->getList('company_id', array(
-            'uid' => $seller_id, 'from' => '1', 'identity' => $storeType), ($company_index -1 ), '1', 'cs_id DESC');
+            'uid' => $seller_id, 'from' => '1', 'identity' => $storeType), ($company_index - 1), '1', 'cs_id DESC');
         //$extra_id = app::get('seller')->model('sellers')->getRow('company_extra', array('seller_id' => $seller_id));
 //        foreach($companys as $value){
 //            $company['company_id'][] = $value['company_id'];
@@ -682,12 +683,26 @@ class seller_user_passport
         $info['company_extra'] = $company_extra;
         $info['company_extra']['company'] = $mdl_company->getRow('*', array('company_id' => $company[0]['company_id'], 'info_type' => $storeType));
         unset($company_extra);
-        $info['company_extra']['store'] = app::get('store')->model('store')->getRow('*', array('seller_id' => $seller_id));
+        if($storeType == 'comm'){
+            $this->_getStoreConf($info, $seller_id);
+        }
         $info['company_extra']['contact'] = app::get('base')->model('contact')->getRow('*', array('uid' => $seller_id, 'from' => '1'));
+
+
+        return $info;
+    }
+    /**
+     * 获取店铺页面所需配置与信息
+     **/
+    private function _getStoreConf(&$info, $seller_id)
+    {
+        $info['company_extra']['store'] = app::get('store')->model('store')->getRow('*', array('seller_id' => $seller_id));
         $info['company_extra']['brand'] = app::get('b2c')->model('brand')->getList('*', array('seller_id' => $seller_id));
         $store_type = $this->countPage();
         $info['company_extra']['store']['store_type'] = $store_type['label'];
-        return $info;
+        //获取商品类目信息
+        $api_cat_obj = vmc::singleton('seller_source_cat');
+        $info['company_extra']['store']['cat'] = $api_cat_obj->get_cat();
     }
 
     //保存注册信息
@@ -717,7 +732,7 @@ class seller_user_passport
                         $params[$value['key']]['business_type'] = '1';
                         $params[$value['key']]['info_type'] = $params['typeId'];
                         $params[$value['key']][$value['key'] . '_id'] && $sqlType = true;
-                        if($params['organization_licence'] && $params['tax_licence']){
+                        if ($params['organization_licence'] && $params['tax_licence']) {
                             $params[$value['key']]['business_type'] = '0';
                         }
                     case 'contact':
@@ -739,7 +754,7 @@ class seller_user_passport
                     $msg = $value['label'];
                     return false;
                 }
-                if($value['key'] == 'company'){
+                if ($value['key'] == 'company') {
                     $company_id = $mdl_company_seller->db->lastinsertid();
                     $mdl_company_seller = app::get('base')->model('company_seller');
                     $fun_name = $value['key']['company_id'] > 0 ? 'update' : 'insert';
@@ -751,7 +766,7 @@ class seller_user_passport
                         'company_name' => $value['key']['name'],
                         'createtime' => time(),
                     );
-                    if(!$mdl_company_seller->$fun_name($company_seller)){
+                    if (!$mdl_company_seller->$fun_name($company_seller)) {
                         $db->rollback();
                         return false;
                     }
@@ -779,7 +794,6 @@ class seller_user_passport
                 $params[$col]['from'] = 1;
                 //电商成员信息
                 if (is_array(reset($params[$col]['value']))) {
-
                     if (!$this->_save_array($col, $params[$col], $seller['seller_id'])) {
                         $db->rollback();
                         $msg = $value['label'];
@@ -804,7 +818,6 @@ class seller_user_passport
                 $db->rollback();
                 return false;
             }
-
         }
         $db->commit();
         return true;
@@ -841,19 +854,19 @@ class seller_user_passport
         }
     }
 
-    /*
+    /**
      * 营业执照类型 老版or新版
      * @params $seller_id 商家id
      * @params $type 公司类型
      * @params $index 公司下标
      * return  string new 新版 old 老版
-     * */
+     **/
 
     public function new_or_old($seller_id, $type, $index)
     {
         //查询入住营业执照信息判断是否是新版还是老版
         $company = app::get('base')->model('company_seller')->getList('company_id', array('from' => '1',
-            'identity' => $type, 'uid' => $seller_id), $index - 1 , '1', 'cs_id desc');
+            'identity' => $type, 'uid' => $seller_id), $index - 1, '1', 'cs_id desc');
         $checked = app::get('base')->model('company')->getRow('business_type', array('company_id' => $company[0]['company_id']));
         $licence_type = $checked['business_type'] == '1' ? 'new' : 'old';
         return $licence_type;

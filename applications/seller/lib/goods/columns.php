@@ -99,8 +99,9 @@ class seller_goods_columns
     public function &init()
     {
         $fun_name = $this->_fun_name();
-        if(!method_exists($this, $fun_name))
+        if(!method_exists($this, $fun_name)){
             return Array();
+        }
         $columns = $this->$fun_name();
         return $columns;
     }
