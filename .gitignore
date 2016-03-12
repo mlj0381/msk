@@ -15,5 +15,5 @@ public/images
 nbproject/
 .settings/
 .idea/
-data/kvstore
-
+data/kvstore/
+data/cache/

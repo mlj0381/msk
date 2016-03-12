@@ -1661,7 +1661,7 @@ ul,ol{
 				margin:30px 15px;
 				display: inline-block;
 				cursor: pointer;
-				p{
+				/* p{
 					position: absolute;
 					left: 0;
 					top:0;
@@ -1672,8 +1672,8 @@ ul,ol{
 					width: 200px;
 					line-height: 25px;
 					color:@basecolor;
-
-				}
+				
+				} */
 
 				&.selected{
 					background: #ddd;
@@ -1681,12 +1681,14 @@ ul,ol{
 			}
 			li.buyer_type{
 				position: relative;
-				&:hover{
-					p{
-						display: block;
-						padding:15px;
-
-					}
+				&:after{
+					position: absolute;
+					right:0px;
+					top:0px;
+					content: "";
+					width:100px;
+					height:92px;
+					background: url("/themes/pc/default/statics/images/danxuan.png") no-repeat left center; 
 				}
 
 			}
