@@ -21,6 +21,8 @@ class seller_ctl_admin_seller extends desktop_controller {
         $title = '商家管理';
         $this->finder('seller_mdl_sellers', array(
             'title' => $title ,
+            'icon' => 'fa-plus',
+            'href' => 'index.php?app=b2c&ctl=admin_seller&act=index',
         ));
     }
 
