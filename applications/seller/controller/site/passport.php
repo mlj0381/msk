@@ -158,10 +158,10 @@ class seller_ctl_site_passport extends seller_frontpage
             $this->_signup($_POST, $step);
         switch ($step) {
             case '1':
+                $this->verify();
                 $tpl = 'signup_companyType';
                 $this->pagedata['type'] = $type;
                 $this->pagedata['seller'] = $this->seller;
-                var_dump($this->seller);
                 break;
             case '2':
                 $tpl = 'signup_companyInfo';

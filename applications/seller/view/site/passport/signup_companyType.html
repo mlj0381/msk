@@ -65,9 +65,8 @@
 
     var requestPost = function (url, data){
         $.post(url, data, function (re) {
-            console.log(re);
             if (re.success) {
-                //location = re.redirect;
+                location = re.redirect;
             } else {
                 alert('操作失败');
             }
