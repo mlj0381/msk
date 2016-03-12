@@ -1646,9 +1646,10 @@ ul,ol{
 
 		/*企业类型选择*/
 		.typebox{
-			width:696px;
+			width:100%;
 			margin:0 auto;
 			overflow: hidden;
+			text-align: center;
 
 			li{
 				width:200px;
@@ -1658,13 +1659,36 @@ ul,ol{
 				font-size: 24px;
 				border:1px solid #333;
 				margin:30px 15px;
-				.fl;
+				display: inline-block;
 				cursor: pointer;
+				p{
+					position: absolute;
+					left: 0;
+					top:0;
+					display: none;
+					line-height: 20px;
+					font-size: 16px;
+					height:200px;
+					width: 200px;
+					line-height: 25px;
+					color:@basecolor;
+
+				}
 
 				&.selected{
 					background: #ddd;
-					//border:1px solid @basecolor;
 				}
+			}
+			li.buyer_type{
+				position: relative;
+				&:hover{
+					p{
+						display: block;
+						padding:15px;
+
+					}
+				}
+
 			}
 		}
 		.company_btns{

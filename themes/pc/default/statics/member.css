@@ -1483,9 +1483,10 @@ ol {
   font-size: 24px;
 }
 .buyer_container .seller_regbox .typebox {
-  width: 696px;
+  width: 100%;
   margin: 0 auto;
   overflow: hidden;
+  text-align: center;
 }
 .buyer_container .seller_regbox .typebox li {
   width: 200px;
@@ -1495,11 +1496,30 @@ ol {
   font-size: 24px;
   border: 1px solid #333;
   margin: 30px 15px;
-  float: left;
+  display: inline-block;
   cursor: pointer;
+}
+.buyer_container .seller_regbox .typebox li p {
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: none;
+  line-height: 20px;
+  font-size: 16px;
+  height: 200px;
+  width: 200px;
+  line-height: 25px;
+  color: #a40001;
 }
 .buyer_container .seller_regbox .typebox li.selected {
   background: #ddd;
+}
+.buyer_container .seller_regbox .typebox li.buyer_type {
+  position: relative;
+}
+.buyer_container .seller_regbox .typebox li.buyer_type:hover p {
+  display: block;
+  padding: 15px;
 }
 .buyer_container .seller_regbox .company_btns {
   width: 100%;

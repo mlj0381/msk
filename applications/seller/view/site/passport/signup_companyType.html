@@ -26,6 +26,10 @@
 	        		<li data-type="1">自产型</li>
 	        		<li data-type="2">代理型</li>
 	        		<li data-type="4">OEM型</li>
+                    <li data-type="5" class="buyer_type">
+                        买手店
+                        <p>买手店只能单选，不能与其他组合选择</p>
+                    </li>
 	        	</ul>
 	        	<div class="company_btns">
 	        		<a href="<{link app=seller ctl=site_passport act=signup}>" class="btn btn-default">返回上一步</a>
@@ -59,6 +63,9 @@
         });
         $('.typebox li').click(function(){
             $(this).toggleClass('selected');
+            if($('.buyer_type').hasClass('selected')){
+                $(this).siblings().removeClass('selected');
+            }
         });
     });
     
