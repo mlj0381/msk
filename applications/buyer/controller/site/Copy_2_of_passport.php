@@ -114,36 +114,71 @@ class buyer_ctl_site_passport extends buyer_frontpage{
 	
 	
 	/**
+	 * 检测登陆状态
+	 */
+// 	public function check_login(){
+// 		//vmc::singleton('buyer_user_passport')->check();
+// 		//vmc::service('cc')->check();
+// 		$mdl_buyers = $this->app->model('buyers');
+// 		var_dump($mdl_buyers);exit;
+// 		var_dump($mdl_buyers->get_buyer_account('sunjunfeng@163.com'));
+// 		exit;
+// 		if ($_POST){
+			
+// 			//这边定义的买手店登陆$_post['username'];
+			
+			
+// 		}else {
+			
+// 		}
+// 		return true;
+// 		return false;
+		
+// 	}
+	
+	
+	
+	
+	/**
 	 * 买手店注册
 	 * @param unknown $forward
 	 */
-	public function signup($args0){
-		//存在post过来的用户名
-		//检测用户名合法性
+	public function signup(){
 		vmc::singleton('base_session')->start();
-		$user_id = '';
-		if (vmc::singleton('seller_user_object')->get_seller_id()){
-			$this->set_tmpl('passport');
-			$this->page('site/passport/signup_baseInfo.html');
-		}else {
-			$redirect = $this->gen_url(array(
-					'app' => 'b2c',
-					'ctl' => 'site_index',
-					'act' => 'index',
-			));
-			$this->splash('error', $redirect, '无效操作!');
+		$forward = $this->app->model('buyers')->get_schedule($_SESSION['buyer_auth']['buyer_id']);
+		
+		switch ($forward){
+			case '1':
+				$tpl = 'signup_baseInfo';
+				break;
+			case '2':
+				$tpl = 'signup_complete';
+				break;
+			default:
+				$tpl = 'signup_buyerInfo';
+				break;	
 		}
-		        
-	}
-	
-	
-	public function signup_complete(){
 		$this->set_tmpl('passport');
-		$this->page('site/passport/signup_complete.html');
+        $this->page('site/passport/' . $tpl . '.html');
+        
 	}
 	
-	
-	
+	/**
+	 * 注册步骤
+	 * @param unknown $post
+	 * @param unknown $forward
+	 */
+	public function _signup(){
+		$params = utils::_filter_input($_POST);
+		unset($_POST);
+		$this->check_login_name($params['login_name']);
+		if ($params['login_password'] != $params['psw_confirm']){
+			$this->splash('error', '', '两次填写密码不一致');
+		}
+		$this->is_exists_mobile($params['mobile']);
+		$this->signup();
+		
+	}
 	
 	
 	/**

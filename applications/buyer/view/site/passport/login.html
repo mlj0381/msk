@@ -1,0 +1,117 @@
+
+ <div class="passport-login-container clearfix">
+    <div class="login_panel_lt">
+        <img src="<{$base_url}>/themes/pc/default/statics/images/login_adv.png">
+    </div>
+    <div class="login_panel_rt">
+        <div class="panel panel-default login-panel">
+            <div class="panel-heading clearfix">
+                <a href="<{link app=b2c ctl=site_passport act=login}>"><span class="login_normal">买家登录</span></a>
+                <a href="<{link app=seller ctl=site_passport act=login}>"><span class="login_fast active">卖家登录</span></a>
+                <a href="<{link app=buyer ctl=site_passport act=login}>"><span class="login_fast active">买手登录</span></a>
+
+            </div>
+            <div class="panel-body">
+                <form id="member_login_form" class="form-horizontal" action="<{link app=buyer ctl=site_passport act=login}>" method="post">
+                    <!-- 登陆后跳转地址 -->
+                    <input type="hidden" name="forward" value="<{$forward}>">
+                    <div class="reg_link">
+                           <a href="<{link app=buyer ctl=site_passport act=signup}>">立即注册 <i class="icon-circle-arrow-right"></i></a>                      
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    <i class="icon-user"></i>
+                                </div>
+                                <input type="text" required="true" autocomplete='off' name="uname" class="form-control" id="input_uname" placeholder="手机号/邮箱/用户名">
+                            </div> 
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    <i class="icon-lock"></i>
+                                </div>
+                                <input type="password" required="true" name="password" class="form-control" id="input_password" placeholder="登录密码">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-5">
+                            <input type="text" required="true" name="vcode" class="form-control" id="input_password" placeholder="验证码">
+                        </div>
+                        <div class="col-md-7" style="text-align:right;">
+                            <img src="<{link app=site ctl=vcode act=index args0='passport'}>" alt="验证码" />
+                            <button type="button" class="btn btn-link btn-sm" onclick="$(this).prev().prop('src',$(this).attr('data-src')+'?'+new Date().getTime())" data-src="<{link app=site ctl=vcode act=index args0='passport'}>">更换验证码</button>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-6">
+                            <div class="checkbox">
+                                <label>
+                                    <!-- <input type="checkbox" class="autologin-checkbox"> 自动登录 -->
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-6 text-right">
+                            <a href="<{link app=buyer ctl=site_passport act=reset_password}>">忘记密码?</a>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <button type="submit" data-loading-text="正在登录..." class="btn btn-danger submit_btn">登录</button>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+           
+        </div>
+    </div>
+</div>
+<script>
+/*
+ * 会员登录脚本
+ */
+
+void
+function(login_form) {
+    var alert_timer = 0;
+    //本地账户自动登录
+    login_form.find('input.autologin-checkbox').on('change', function(e) {
+        if ($(this).is(':checked')) {
+            $.cookie('AUTO_LOGIN', 'REMEMBER30DAY', {
+                expires: 30,
+                path: '/'
+            });
+        } else {
+            $.removeCookie('AUTO_LOGIN');
+        }
+    });
+
+    login_form.on('submit', function(e) {
+        e.stopPropagation();
+        login_form.find('button[type=submit]').button('loading');
+        $.post(login_form.prop('action'), login_form.serialize(), function(re) {
+            if (re.error) {
+                login_form.find('.alert-error').remove();
+                login_form.append($('<div class="alert alert-danger">' + re.error + '</div>'));
+                alert_timer = setTimeout(function() {
+                    clearTimeout(alert_timer);
+                    login_form.find('.alert-danger').fadeOut('fast', function() {
+                        $(this).remove();
+                    });
+                }, 3000);
+            }
+            if (re.success) {
+                location = re.redirect;
+            }
+            login_form.find('button[type=submit]').button('reset');
+        }, 'json');
+        return false;
+    });
+}($('#member_login_form'));
+</script>
+

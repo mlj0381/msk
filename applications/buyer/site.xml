@@ -1,0 +1,9 @@
+<site>
+	<module controller='site_passport' id="buyer">
+		<name>buyer</name>
+		<title>买手店中心</title>
+		<disable>false</disable>
+	</module>
+
+
+</site>
