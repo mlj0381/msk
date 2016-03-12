@@ -1498,18 +1498,19 @@ ol {
   margin: 30px 15px;
   display: inline-block;
   cursor: pointer;
-}
-.buyer_container .seller_regbox .typebox li p {
-  position: absolute;
-  left: 0;
-  top: 0;
-  display: none;
-  line-height: 20px;
-  font-size: 16px;
-  height: 200px;
-  width: 200px;
-  line-height: 25px;
-  color: #a40001;
+  /* p{
+					position: absolute;
+					left: 0;
+					top:0;
+					display: none;
+					line-height: 20px;
+					font-size: 16px;
+					height:200px;
+					width: 200px;
+					line-height: 25px;
+					color:@basecolor;
+				
+				} */
 }
 .buyer_container .seller_regbox .typebox li.selected {
   background: #ddd;
@@ -1517,9 +1518,14 @@ ol {
 .buyer_container .seller_regbox .typebox li.buyer_type {
   position: relative;
 }
-.buyer_container .seller_regbox .typebox li.buyer_type:hover p {
-  display: block;
-  padding: 15px;
+.buyer_container .seller_regbox .typebox li.buyer_type:after {
+  position: absolute;
+  right: 0px;
+  top: 0px;
+  content: "";
+  width: 100px;
+  height: 92px;
+  background: url("/themes/pc/default/statics/images/danxuan.png") no-repeat left center;
 }
 .buyer_container .seller_regbox .company_btns {
   width: 100%;
