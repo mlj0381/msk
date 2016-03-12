@@ -578,7 +578,7 @@ class seller_ctl_site_passport extends seller_frontpage
         $redirect = array('app' => 'seller', 'ctl' => 'site_passport', 'act' => 'entry');
         if($_POST['type'] == '1')
         {
-            $redirect = array('app' => 'buyer', 'ctl' => 'site_passport', 'act' => 'adsfd');
+            $redirect = array('app' => 'buyer', 'ctl' => 'site_passport', 'act' => 'signup');
         }
         $redirect = $this->gen_url($redirect);
         if ($_POST) {
