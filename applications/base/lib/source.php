@@ -99,7 +99,7 @@ class base_source {
      * @params $params 要提交的数据
      **/
     public function request($params) {
-       // var_dump($this->app);die;
+        //var_dump($this->params);die;
         $this->set_config($this->path);
         $this->convertColumns($params);
         $params = $this->init_request_args($params);
