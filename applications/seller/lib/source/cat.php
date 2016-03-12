@@ -24,12 +24,12 @@ class seller_source_cat extends base_source {
 
     public function __construct($app) {
         $this->app = $app;
-        $this->params = array(
-            'app' => $this->app,
-            'method' => $this->method,
-            'schema' => $this->schema,
-            'host' => $this->host,
-        );
+//        $this->params = array(
+//            'app' => $this->app,
+//            'method' => $this->method,
+//            'schema' => $this->schema,
+//            'host' => $this->host,
+//        );
     }
 
 //    public function request($params) {
@@ -86,6 +86,7 @@ class seller_source_cat extends base_source {
      * */
     public function get_cat()
     {
+        $this->params = array(1, 2, 3, 4);
         $catList = Array();
         $this->request();
         //

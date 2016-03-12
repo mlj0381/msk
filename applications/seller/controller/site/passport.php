@@ -160,6 +160,8 @@ class seller_ctl_site_passport extends seller_frontpage
             case '1':
                 $tpl = 'signup_companyType';
                 $this->pagedata['type'] = $type;
+                $this->pagedata['seller'] = $this->seller;
+                var_dump($this->seller);
                 break;
             case '2':
                 $tpl = 'signup_companyInfo';
@@ -572,13 +574,28 @@ class seller_ctl_site_passport extends seller_frontpage
     //商家入驻类型选择
     public function identity()
     {
-        (!$_POST['ident'] || !is_numeric($_POST['ident'])) && $this->splash('error', '', '非法请求');
+        (!is_numeric($_POST['ident'])) && $this->splash('error', '', '非法请求');
+        $redirect = array('app' => 'seller', 'ctl' => 'site_passport', 'act' => 'entry');
+        if($_POST['type'] == '1')
+        {
+            $redirect = array('app' => 'buyer', 'ctl' => 'site_passport', 'act' => 'adsfd');
+        }
+        $redirect = $this->gen_url($redirect);
         if ($_POST) {
-            $data = array('seller_id' => $this->seller['seller_id'], 'ident' => $_POST['ident']);
-            if (!$this->app->model('sellers')->save($data)) {
+            $db = vmc::database();
+            $db->beginTransaction();
+            $dataValue = array( 'ident' => $_POST['ident'], 'type' => $_POST['type']);
+            $filter = array('seller_id' => $this->seller['seller_id']);
+            if (!$this->app->model('sellers')->update($dataValue, $filter)) {
+                $db->rollback();
                 $this->splash('error', '', '操作失败');
             }
-            $this->splash('success', '', '操作成功');
+            if (!app::get('pam')->model('sellers')->update($dataValue, $filter)) {
+                $db->rollback();
+                $this->splash('error', '', '操作失败');
+            }
+            $db->commit();
+            $this->splash('success', $redirect, '操作成功');
         }
         $this->splash('error', '', '非法请求');
     }

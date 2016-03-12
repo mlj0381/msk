@@ -146,6 +146,11 @@ $db['sellers'] = array(
             'default_in_list' => false,
             'comment' => ('注册时间'),
         ),
+        'type' => array(
+            'type' => 'tinyint(1)',
+            'default' => 0,
+            'comment' => '商家类型' // 0 卖家 1 买手 ...
+        ),
         'checkin' => array(
             'label' => ('审核'),
             'type' => array(
