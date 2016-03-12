@@ -702,7 +702,7 @@ class seller_user_passport
         $info['company_extra']['store']['store_type'] = $store_type['label'];
         //获取商品类目信息
         $api_cat_obj = vmc::singleton('seller_source_cat');
-        $info['company_extra']['store']['cat'] = $api_cat_obj->get_cat();
+        $info['company_extra']['store']['cat'] = $api_cat_obj->get_cat(); //调用接品获取分类
     }
 
     //保存注册信息

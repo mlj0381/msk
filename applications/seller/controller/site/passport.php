@@ -158,10 +158,10 @@ class seller_ctl_site_passport extends seller_frontpage
             $this->_signup($_POST, $step);
         switch ($step) {
             case '1':
+                $this->verify();
                 $tpl = 'signup_companyType';
                 $this->pagedata['type'] = $type;
                 $this->pagedata['seller'] = $this->seller;
-                var_dump($this->seller);
                 break;
             case '2':
                 $tpl = 'signup_companyInfo';
@@ -578,7 +578,7 @@ class seller_ctl_site_passport extends seller_frontpage
         $redirect = array('app' => 'seller', 'ctl' => 'site_passport', 'act' => 'entry');
         if($_POST['type'] == '1')
         {
-            $redirect = array('app' => 'buyer', 'ctl' => 'site_passport', 'act' => 'adsfd');
+            $redirect = array('app' => 'buyer', 'ctl' => 'site_passport', 'act' => 'signup');
         }
         $redirect = $this->gen_url($redirect);
         if ($_POST) {

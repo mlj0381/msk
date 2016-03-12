@@ -86,10 +86,8 @@ class seller_source_cat extends base_source {
      * */
     public function get_cat()
     {
-        $this->params = array(1, 2, 3, 4);
         $catList = Array();
         $this->request();
-        //
         $this->convertColumns($catList, 'cat');
         return array();
     }

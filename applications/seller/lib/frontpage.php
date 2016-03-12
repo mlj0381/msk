@@ -46,6 +46,11 @@ class seller_frontpage extends site_controller {
 		//return true;
         $this->verify();
         $seller = $this->get_current_seller();
+        if($seller['ident'] == '0')
+        {
+            $redirect = $this->gen_url(array('app' => 'seller', 'ctl' => 'site_passport', 'act' => 'signup', 'args0' => '1'));
+            $this->splash('success', $redirect, '登录成功,请先选择商家类型');
+        }
         $store = app::get('store')->model('store')->getRow('store_id', array('seller_id' => $seller['seller_id']));
         if (empty($store)) {
             $redirect = $this->gen_url(array('app' => 'seller', 'ctl' => 'site_passport', 'act' => 'entry', 'args0' => $seller['schedule']));
