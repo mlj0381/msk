@@ -15,6 +15,7 @@
  */
 $db['buyers'] = array(
     'columns' => array(
+<<<<<<< HEAD
     	'buyer_id' => array(
     		'type' => 'number',
     		'required' => true,
@@ -23,6 +24,16 @@ $db['buyers'] = array(
     			
     	),
         'local' => array(
+=======
+        'buyer_id' => array(
+            'type' => 'number',
+            'required' => true,
+            'pkey' => true,
+            'extra' => 'auto_increment',
+        	'comment' => '买手店ID',
+        ),
+        'account' => array(
+>>>>>>> 49e9674622a1f858fdcd8a9666cf211faf863fc0
             'type' => 'varchar(50)',
             'required' => true,
             'default' => '',
@@ -85,7 +96,11 @@ $db['buyers'] = array(
         	'default' => '',
         	'comment' => '详细地址',
         ),
+<<<<<<< HEAD
         'photo' => array(
+=======
+        'image' => array(
+>>>>>>> 49e9674622a1f858fdcd8a9666cf211faf863fc0
         	'type' => 'char(32)',
         	'required' => true,
         	'default' => '',
@@ -212,9 +227,15 @@ $db['buyers'] = array(
     		),
     		'prefix' => 'UNIQUE',
     	),
+<<<<<<< HEAD
     	'ind_local' => array(
     		'columns' => array(
     			0 => 'local',
+=======
+    	'ind_account' => array(
+    		'columns' => array(
+    			0 => 'account',
+>>>>>>> 49e9674622a1f858fdcd8a9666cf211faf863fc0
     		),
     	),
         'ind_email' => array(
