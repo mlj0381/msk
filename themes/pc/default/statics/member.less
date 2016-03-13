@@ -32,6 +32,10 @@ ul,ol{
 	line-height: @h;
 }
 
+.text_indt(@pl){
+	padding-left:12*@pl;
+}
+
 /* .hidden{ display: none;} */
 
 @basecolor:#a40001;
@@ -1800,6 +1804,65 @@ ul,ol{
 							font-weight: normal;
 							input[type="checkbox"]{
 								margin-right:3px;
+							}
+						}
+					}
+				}
+
+				.cat_wrapbox{
+					margin-top:15px;
+					height:300px;
+					overflow: scroll;
+					overflow-x: hidden;
+					.cat_header{
+						height:30px;
+						line-height: 30px;
+						background: #ddd;
+						padding:0 10px;
+						color:#333;
+						border:1px solid #ccc;
+						border-bottom:none;
+						margin-bottom:0px;
+						font-size: 14px;
+					}
+					.cat_tree{
+						border-collapse: collapse;
+						width:100%;
+						height:auto;
+						border:1px solid #ccc;
+						th,td{
+							padding:0 10px;
+							height:28px;
+							border-bottom:1px solid #ccc;
+							border-left:1px solid #ccc;
+						}
+						td{
+							//width:33.333333%;
+							font-size: 14px;
+							padding:0 10px;
+							
+							input[type="checkbox"]{
+								margin-right:3px;
+								vertical-align:top;
+							}
+							.arrow{
+								display: inline-block;
+								font-size: 18px;
+								cursor: pointer;
+								padding:0 5px;
+							}
+							.apt_tag{
+								.radius(3px);
+								border:1px solid #ccc;
+								background: #fff;
+								color:#ccc;
+								padding:0px 3px;
+								cursor: pointer;
+								font-size: 12px;
+								&.active{
+									border:1px solid #008000;
+									color:#008000;
+								}
 							}
 						}
 					}

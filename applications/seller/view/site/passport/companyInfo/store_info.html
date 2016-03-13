@@ -45,8 +45,53 @@
         <label class="col-xs-2 control-label">
             <span class="text-danger">*</span>经营商品类别：
         </label>
-        <div class="col-xs-4">
-            <button type="button" class="btn btn-md btn-default cat_add_btn" data-toggle="modal" data-target=".category_add_modal" href="<{link app=seller ctl=site_cat act=add_cat}>"><i class="icon-plus"></i> 添加分类</button>
+        <div class="col-xs-10">
+            <button type="button" class="btn btn-md btn-default cat_add_btn" href="<{link app=seller ctl=site_cat act=add_cat}>"><i class="icon-plus"></i> 添加分类</button>
+            <div class="cat_wrapbox">
+                <p class="cat_header"><span class="icon-list"></span> 产品分类目录</p>
+                <table class="cat_tree table-hover">
+                    <tr>
+                        <tr>
+                            <th width="20%">编码</th>
+                            <th width="50%">名称</th>
+                            <th width="30%">必填资质</th>
+                        </tr>
+                    </tr>
+                    <tr data-treeId="01" data-catName="鸡产品">
+                    <td><span class="arrow icon-caret-right"></span>01</td>
+                        <td>鸡产品</td>
+                        <td></td>
+                    </tr>
+                    <tr data-treeId="01-1" data-catName="白条鸡">
+                        <td><span class="arrow icon-caret-right"></span>1</td>
+                        <td><input type="checkbox">白条鸡</td>
+                        <td>
+                            <span class="apt_tag active" data-toggle="modal" data-target=".category_add_modal"  href="<{link app=seller ctl=site_cat act=add_cat}>" data-tagId="1">原</span>
+                            <span class="apt_tag active" data-tagId="2">种</span>
+                            <span class="apt_tag active" data-tagId="3">饲</span>
+                            <span class="apt_tag active" data-tagId="4">技</span>
+                            <span class="apt_tag active" data-tagId="5">质</span>
+                            <span class="apt_tag active" data-tagId="6">通</span>
+                            <span class="apt_tag active" data-tagId="7">安</span>
+                            <span class="apt_tag active" data-tagId="8">运</span>
+                        </td>
+                    </tr>
+                    <tr data-treeId="01-2" data-catName="白条鸡">
+                        <td><span class="arrow icon-caret-right"></span>01</td>
+                        <td><input type="checkbox">白条肉鸡</td>
+                        <td>
+                            <span class="apt_tag active" data-toggle="modal" data-target=".category_add_modal"  href="<{link app=seller ctl=site_cat act=add_cat}>" data-tagId="1">原</span>
+                            <span class="apt_tag active" data-tagId="2">种</span>
+                            <span class="apt_tag active" data-tagId="3">饲</span>
+                            <span class="apt_tag active" data-tagId="4">技</span>
+                            <span class="apt_tag active" data-tagId="5">质</span>
+                            <span class="apt_tag active" data-tagId="6">通</span>
+                            <span class="apt_tag active" data-tagId="7">安</span>
+                            <span class="apt_tag active" data-tagId="8">运</span>
+                        </td>
+                    </tr>
+                </table>
+            </div>
         </div>
     </div>
     <!-- 品牌添加模态框 -->

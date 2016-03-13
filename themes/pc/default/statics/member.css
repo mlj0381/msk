@@ -1616,6 +1616,67 @@ ol {
 .buyer_container .seller_regbox .companyInfo_form #store_info .category_add_modal div[data-cks="ck_list"] label input[type="checkbox"] {
   margin-right: 3px;
 }
+.buyer_container .seller_regbox .companyInfo_form #store_info .cat_wrapbox {
+  margin-top: 15px;
+  height: 300px;
+  overflow: scroll;
+  overflow-x: hidden;
+}
+.buyer_container .seller_regbox .companyInfo_form #store_info .cat_wrapbox .cat_header {
+  height: 30px;
+  line-height: 30px;
+  background: #ddd;
+  padding: 0 10px;
+  color: #333;
+  border: 1px solid #ccc;
+  border-bottom: none;
+  margin-bottom: 0px;
+  font-size: 14px;
+}
+.buyer_container .seller_regbox .companyInfo_form #store_info .cat_wrapbox .cat_tree {
+  border-collapse: collapse;
+  width: 100%;
+  height: auto;
+  border: 1px solid #ccc;
+}
+.buyer_container .seller_regbox .companyInfo_form #store_info .cat_wrapbox .cat_tree th,
+.buyer_container .seller_regbox .companyInfo_form #store_info .cat_wrapbox .cat_tree td {
+  padding: 0 10px;
+  height: 28px;
+  border-bottom: 1px solid #ccc;
+  border-left: 1px solid #ccc;
+}
+.buyer_container .seller_regbox .companyInfo_form #store_info .cat_wrapbox .cat_tree td {
+  font-size: 14px;
+  padding: 0 10px;
+}
+.buyer_container .seller_regbox .companyInfo_form #store_info .cat_wrapbox .cat_tree td input[type="checkbox"] {
+  margin-right: 3px;
+  vertical-align: top;
+}
+.buyer_container .seller_regbox .companyInfo_form #store_info .cat_wrapbox .cat_tree td .arrow {
+  display: inline-block;
+  font-size: 18px;
+  cursor: pointer;
+  padding: 0 5px;
+}
+.buyer_container .seller_regbox .companyInfo_form #store_info .cat_wrapbox .cat_tree td .apt_tag {
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  -ms-border-radius: 3px;
+  -o-border-radius: 3px;
+  border-radius: 3px;
+  border: 1px solid #ccc;
+  background: #fff;
+  color: #ccc;
+  padding: 0px 3px;
+  cursor: pointer;
+  font-size: 12px;
+}
+.buyer_container .seller_regbox .companyInfo_form #store_info .cat_wrapbox .cat_tree td .apt_tag.active {
+  border: 1px solid #008000;
+  color: #008000;
+}
 .buyer_container .seller_regbox .panel-rt {
   width: 960px;
   padding: 0px;
