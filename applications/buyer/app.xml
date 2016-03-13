@@ -1,15 +1,16 @@
 <app>
     <name>buyer</name>
-    <description>买手店系统</description>
+    <description>在线购物流程</description>
     <author>
         <name>辰商软件</name>
         <email>dev@vmcshop.com</email>
         <url>http://www.vmcshop.com</url>
     </author>
-
-    <version>1.0</version>
+    <version>7.0</version>
     <license>http://www.vmcshop.com/license</license>
+    <parent_model_class>dbeav_model</parent_model_class>
     <depends>
-        <app>site</app>
+        <app>desktop</app>
+        <app>ectools</app>
     </depends>
 </app>
