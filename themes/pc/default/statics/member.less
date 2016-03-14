@@ -32,11 +32,9 @@ ul,ol{
 	line-height: @h;
 }
 
-.text_indt(@pl){
+/* .text_indt(@pl){
 	padding-left:12*@pl;
-}
-
-/* .hidden{ display: none;} */
+} */
 
 @basecolor:#a40001;
 
@@ -1665,19 +1663,6 @@ ul,ol{
 				margin:30px 15px;
 				display: inline-block;
 				cursor: pointer;
-				/* p{
-					position: absolute;
-					left: 0;
-					top:0;
-					display: none;
-					line-height: 20px;
-					font-size: 16px;
-					height:200px;
-					width: 200px;
-					line-height: 25px;
-					color:@basecolor;
-				
-				} */
 
 				&.selected{
 					background: #ddd;
@@ -2472,10 +2457,10 @@ ul,ol{
 			.set_panel{
 				position: relative;
 				.panel_title{
-					padding-left:100px;
 					height:30px;
 					line-height: 30px;
-					z-index: -1;
+					position: relative;
+					z-index: 2;
 				}
 				.set_trigger{
 					font-weight: bold;
@@ -2486,9 +2471,6 @@ ul,ol{
 					line-height: 30px;
 					color:#67809f;
 					cursor: pointer;
-					position: absolute;
-					left:0;
-					z-index: 10;
 					box-sizing: border-box;
 					i{
 						padding-right:5px;
@@ -2500,18 +2482,18 @@ ul,ol{
 						border-bottom:none;
 					}
 				}
-				.table-wrap{
+				.table_wrap{
 					width:550px;
 					position: absolute;
 					left:0px;
 					top:30px;
-					//display: none;
+					display: none;
 					background: #fff;
 					border:1px solid #67809f;
 					margin-bottom:0px;
 					margin-top:-1px;
 					padding:10px;
-					z-index: 11;
+					z-index: 10;
 					table{
 						width:100%;
 						background: #fff;
@@ -2531,10 +2513,10 @@ ul,ol{
 								width:auto;
 								text-align: center;
 								.input-group{
-									margin-left:2em;
-									width:80px;
+									width:100px;
+									margin:0 auto;
 									input[type=text]{
-										width:50px;
+										width:80px;
 									}
 								}
 								input[type=text]{
