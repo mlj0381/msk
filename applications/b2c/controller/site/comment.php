@@ -101,6 +101,7 @@ class b2c_ctl_site_comment extends b2c_frontpage
             }
             $mark['comment_id'] = $comment['comment_id'];
             $mark['goods_id'] = $goods_id;
+            $mark['store_id'] = $comment['store_id'];
             if (!$this->app->model('goods_mark')->save($mark)) {
                 $db->rollback();
                 $this->_send('error', '提交失败!');

@@ -51,7 +51,6 @@ class b2c_ctl_admin_dlyplace extends desktop_controller {
             $db->rollback();
             $this->end(false, '保存失败!');
         }
-
         $warehouse['dlyplace_id'] = $_POST['dp_id'] ?: $db->lastinsertid();
         foreach($warehouse['addr_id'] as $key => $value)
         {
@@ -62,6 +61,7 @@ class b2c_ctl_admin_dlyplace extends desktop_controller {
                 'dlyplace_id' => $warehouse['dlyplace_id'],
                 'id' => $warehouse['id'][$key],
                 'disabled' => $disabled,
+                'title' => $warehouse['title'][$key]
             );
             if(!$result = $this->mWarehouse->save($data))
             {
@@ -71,5 +71,10 @@ class b2c_ctl_admin_dlyplace extends desktop_controller {
         }
         $db->commit();
         $this->end(true, '保存成功!');
+    }
+
+    public function delWarehouse()
+    {
+
     }
 }

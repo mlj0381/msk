@@ -30,6 +30,37 @@ class b2c_view_widget {
     }
 
     /**
+     * 店铺基本信息展示 店铺相关评分 详情页调用
+     **/
+
+    public function function_WIDGET_STORE_DETAILS($params, &$smarty)
+    {
+        $render = new base_render(app::get($params['app']));
+        //获取店铺评分详情
+        $store_mark = app::get('b2c')->model('goods_mark')->getList('*', array('store_id' => $params['store_id']));
+        $goods_grade = 0;
+        $serve_grade = 0;
+        $logistics_grade = 0;
+        $sum_mark = count($store_mark) * 5;
+        foreach($store_mark as $value)
+        {
+            $goods_grade += $value['goods_grade'];
+            $serve_grade += $value['serve_grade'];
+            $logistics_grade += $value['logistics_grade'];
+        }
+        $render->pagedata['mark'] = array(
+            'goods_grade' => number_format(((int)$goods_grade / $sum_mark) * 5, 1),
+            'serve_grade' => number_format(((int)$serve_grade / $sum_mark) * 5, 1),
+            'logistics_grade' => number_format(((int)$logistics_grade / $sum_mark) * 5, 1),
+        );
+        //获取店铺基本信息
+        $render->pagedata['store'] = app::get('store')->model('store')->getRow('store_name, store_area, seller_id', array('store_id' => $params['store_id']));
+        //获取品牌信息
+        $render->pagedata['brand'] = app::get('b2c')->model('brand')->getList('brand_id, brand_name', array('seller_id' => $render->pagedata['store']['seller_id']));
+        return $render->fetch('widget/store-details.html');
+    }
+
+    /**
      * 商品商品推荐 ，热卖单品等
      **/
     public function function_WIDGET_PRODUCT($params, &$smarty)

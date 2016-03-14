@@ -20,7 +20,14 @@ $db['goods_mark'] = array(
         ),
         'goods_id' => array(
             'type' => 'table:goods',
+            'default' => 0,
             'label' => ('相关商品'),
+        ),
+        'store_id' => array(
+            'type' => 'table:store@store',
+            'label' => ('相关店铺'),
+            'default' => 0,
+            'comment' => ('相关店铺'),
         ),
         'mark_type' => array(
             'pkey' => true,

@@ -182,53 +182,7 @@
         </div>
         <!-- 商城推荐 -->
         <div class="mall_reco clearfix">
-            <div class="hd clearfix">
-                <h3>商城推荐</h3>
-                <span class="btns">
-                    <a class="prev icon-angle-left"></a>
-                    <a class="next icon-angle-right"></a>
-                </span>
-            </div>
-            <div class="bd">
-                <ul>
-                    <li>
-                        <a href="#">
-                            <p><span>￥:128.00</span><span>神农客精选五花肉01</span></p>
-                            <img src="<{$base_url}>/themes/pc/default/statics/images/bestsellers.jpg">
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <p><span>￥:128.00</span><span>神农客精选五花肉01</span></p>
-                            <img src="<{$base_url}>/themes/pc/default/statics/images/bestsellers_02.jpg">
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <p><span>￥:128.00</span><span>神农客精选五花肉01</span></p>
-                            <img src="<{$base_url}>/themes/pc/default/statics/images/bestsellers_03.jpg">
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <p><span>￥:128.00</span><span>神农客精选五花肉01</span></p>
-                            <img src="<{$base_url}>/themes/pc/default/statics/images/bestsellers_04.jpg">
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <p><span>￥:128.00</span><span>神农客精选五花肉01</span></p>
-                            <img src="<{$base_url}>/themes/pc/default/statics/images/bestsellers_01.jpg">
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <p><span>￥:128.00</span><span>神农客精选五花肉01</span></p>
-                            <img src="<{$base_url}>/themes/pc/default/statics/images/bestsellers_01.jpg">
-                        </a>
-                    </li>
-                </ul>
-            </div>
+            <{WIDGET_PRODUCT label=商城推荐 position_id=35}>
         </div>
         <script type="text/javascript">
             jQuery(".mall_reco").slide({titCell: ".hd ul", mainCell: ".bd ul", autoPage: true, effect: "left", autoPlay: false, vis: 5, trigger: "click"});
@@ -244,25 +198,7 @@
         <div class="row goods-detailRow">
             <div class="goods_side_left">
                 <!-- 店铺信息 -->
-                <div class="shop_info">
-                    <dl>
-                        <dt><{$store_info.store_name}></dt>
-                        <dd>
-                            <p>联系卖家:<span><a href=""><i class="icon-comment"></i></a></span></p>
-                            <p>经营品牌:<span>双汇</span></p>
-                            <p>所在地区:<span><{$store_info.store_area}> <{$store_info.store_address}></span></p>
-                        </dd>
-                    </dl>
-                    <div class="server_info">
-                        <span>描述<small>4.9<i class="icon-arrow-up"></i></small></span>
-                        <span>服务<small>4.9<i class="icon-arrow-up"></i></small></span>
-                        <span>物流<small>4.9<i class="icon-arrow-up"></i></small></span>
-                    </div>
-                    <div class="shop_ctr">
-                        <a href="<{link app=store ctl=site_store act=index args0=$store_info.store_id}>" class="btn btn-danger" target="_blank">进入店铺</a>
-                        <a data-url="<{link app=b2c ctl=site_member act=favorite args0=add args1=$store_info.store_id args2=store}>" href="javascript:;" class="btn favorite-button btn-default">收藏店铺<small><em></em></small></a>
-                    </div>
-                </div>
+                <{WIDGET_STORE_DETAILS app=b2c store_id=$store_info.store_id}>
 
                 <!-- 客服中心 -->
                 <div class="kefu_list">
