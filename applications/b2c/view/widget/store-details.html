@@ -1,0 +1,23 @@
+<div class="shop_info">
+    <dl>
+        <dt><{$store_info.store_name}></dt>
+        <dd>
+            <p>联系卖家:<span><a href="#"><i class="icon-comment"></i></a></span></p>
+            <p>经营品牌:
+                <{foreach from=$brand item=item}>
+                <a href="<{link app=b2c ctl=site_list act=index}>?brand=<{$item.brand_id}>" title="<{$item.brand_name}>"><span><{$item.brand_name}></span></a>
+                <{/foreach}>
+            </p>
+            <p>所在地区:<span><{$store.store_area}> <{$store_info.store_address}></span></p>
+        </dd>
+    </dl>
+    <div class="server_info">
+        <span>描述<small><{$mark.goods_grade}><i class="icon-arrow-up"></i></small></span>
+        <span>服务<small><{$mark.serve_grade}><i class="icon-arrow-up"></i></small></span>
+        <span>物流<small><{$mark.logistics_grade}><i class="icon-arrow-up"></i></small></span>
+    </div>
+    <div class="shop_ctr">
+        <a href="<{link app=store ctl=site_store act=index args0=$store.store_id}>" class="btn btn-danger" target="_blank">进入店铺</a>
+        <a data-url="<{link app=b2c ctl=site_member act=favorite args0=add args1=$store.store_id args2=store}>" href="javascript:;" class="btn favorite-button btn-default">收藏店铺<small><em></em></small></a>
+    </div>
+</div>

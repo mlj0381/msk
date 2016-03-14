@@ -34,7 +34,7 @@ class seller_frontpage extends site_controller {
             $this->_schedule();
         }
         $this->menuSetting = 'index';
-        $this->seller = $this->get_current_seller();
+        $this->seller = $this->seller ?: $this->get_current_seller();
         $this->store = $this->get_current_store();
         $this->set_tmpl('seller');
         $this->user_obj = vmc::singleton('seller_user_object');
@@ -45,15 +45,15 @@ class seller_frontpage extends site_controller {
     private function _schedule() {
 		//return true;
         $this->verify();
-        $seller = $this->get_current_seller();
-        if($seller['ident'] == '0')
+        $this->seller = $this->get_current_seller();
+        if($this->seller['ident'] == '0' && $this->seller['type'] == '0')
         {
             $redirect = $this->gen_url(array('app' => 'seller', 'ctl' => 'site_passport', 'act' => 'signup', 'args0' => '1'));
             $this->splash('success', $redirect, '登录成功,请先选择商家类型');
         }
-        $store = app::get('store')->model('store')->getRow('store_id', array('seller_id' => $seller['seller_id']));
+        $store = app::get('store')->model('store')->getRow('store_id', array('seller_id' => $this->seller['seller_id']));
         if (empty($store)) {
-            $redirect = $this->gen_url(array('app' => 'seller', 'ctl' => 'site_passport', 'act' => 'entry', 'args0' => $seller['schedule']));
+            $redirect = $this->gen_url(array('app' => 'seller', 'ctl' => 'site_passport', 'act' => 'entry', 'args0' => $this->seller['schedule']));
             $this->splash('success', $redirect, '登录成功,请先完善入驻信息');
         }
     }

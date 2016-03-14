@@ -10,8 +10,9 @@
 
                         <div class="location-menu clearfix">
                             <{foreach from=$basic.addrs item=addrs}>
+
                             <dl class="clearfix">
-                                <dt title="<{$addrs.local_name}>"><{$addrs.dp_title}>：</dt>
+                                <dt title="<{$addrs.local_name}>"><{$addrs.dp_label}>：</dt>
                                 <dd>
                                     <{foreach from=$addrs.warehouse item=item}>
 									<{if $item.disabled eq 'false'}>
