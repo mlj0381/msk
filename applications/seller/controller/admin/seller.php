@@ -21,6 +21,8 @@ class seller_ctl_admin_seller extends desktop_controller {
         $title = '商家管理';
         $this->finder('seller_mdl_sellers', array(
             'title' => $title ,
+            'icon' => 'fa-plus',
+            'href' => 'index.php?app=b2c&ctl=admin_seller&act=index',
         ));
     }
 
@@ -30,33 +32,40 @@ class seller_ctl_admin_seller extends desktop_controller {
     public function detail()
     {
         $params = vmc::singleton('base_component_request')->get_get();
-        $seller_id = $params[0];
-        $step = $params[1];
-        $type = $params[2];
+        $seller_id = $params['p'][0];
+        $step = $params['p'][1];
+        $storeType = $params['p'][2];
+        $type = $params['p'][3];
+        $seller_data = vmc::singleton('seller_user_object')->get_sellers_data(array('sellers' => '*', $seller_id));
         $countPage = $this->passport_obj->countPage();
         $step = $params['pageIndex'] ? $params['pageIndex'] : $step;
         $step = $type == 'up' ? $step - 1 : $step + 1;
         $step <= 1 && $step = 1;
-        $step > $countPage['sum'] && $step = $countPage['sum'] + 1;
+        if($step >= $countPage['sum'])
+        {
+            $this->pagedata['disabled'] = 'disabled';
+        }
 
         if ($params['typeId']) $storeType = $params['typeId'];
-        if (!$storeType && $this->seller['ident'] & 1) $storeType = 1;
-        if (!$storeType && $this->seller['ident'] & 2) $storeType = 2;
-        if (!$storeType && $this->seller['ident'] & 4) $storeType = 4;
+        if (!$storeType && $seller_data['sellers']['ident'] & 1) $storeType = 1;
+        if (!$storeType && $seller_data['sellers']['ident'] & 2) $storeType = 2;
+        if (!$storeType && $seller_data['sellers']['ident'] & 4) $storeType = 4;
 
         if (!$licence_type) {
-            $licence_type = $this->passport_obj->new_or_old($this->seller['seller_id']);
+            $licence_type = $this->passport_obj->new_or_old($seller_id);
         }
 
         $columns = $this->passport_obj->page_setting($step, $licence_type, $storeType);
-
+        $index = $step;
         $this->passport_obj->_entry($step, $storeType, $index);
         $this->pagedata['info'] = $this->passport_obj->edit_info($columns, $seller_id, $storeType);
         $this->pagedata['info']['company_extra']['page_setting'] = $this->passport_obj->columns();
         $this->pagedata['info']['company_extra']['pageIndex'] = $step;
-
+        $this->pagedata['checked'] = 'checked';
+        $this->pagedata['storeType'] = $storeType;
         $this->pagedata['pageSet'] = $columns;
         $this->pagedata['pageIndex'] = $step;
+        $this->pagedata['seller_id'] = $seller_id;
         $this->page('admin/seller/detail.html');
     }
 

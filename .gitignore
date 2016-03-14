@@ -7,7 +7,8 @@
 $.swn
 config/certi.php
 config/config.php
-config/install.lock.php
+config/install.lock.
+config/urlmap.php
 tmp/
 logs/
 mobile_test_case

@@ -26,6 +26,7 @@
 	        		<li data-type="1">自产型</li>
 	        		<li data-type="2">代理型</li>
 	        		<li data-type="4">OEM型</li>
+                    <li data-type="5" class="buyer_type">买手店</li>
 	        	</ul>
 	        	<div class="company_btns">
 	        		<a href="<{link app=seller ctl=site_passport act=signup}>" class="btn btn-default">返回上一步</a>
@@ -47,19 +48,28 @@
                 alert('请至少选择一种企业类型');
                 return false;
             }
+            var data = {ident : dataValue, type : 0}; //type 类型 0 商家 1买手
             var url = '<{link app=seller ctl=site_passport act=identity}>';
-            var redirect = '<{link app=seller ctl=site_passport act=entry}>';
-            $.post(url, {ident : dataValue}, function(re){
-                if(re.success){
-                    location = redirect;
-                }else{
-                    alert('操作失败');
-                }
-            });
+            if($('.buyer_type').hasClass('selected')){
+                data = {ident : 0, type : 1};
+            }
+            requestPost(url, data);
         });
         $('.typebox li').click(function(){
             $(this).toggleClass('selected');
+            if($('.buyer_type').hasClass('selected')){
+                $(this).siblings().removeClass('selected');
+            }
         });
     });
-    
+
+    var requestPost = function (url, data){
+        $.post(url, data, function (re) {
+            if (re.success) {
+                location = re.redirect;
+            } else {
+                alert('操作失败');
+            }
+        });
+    }
 </script>

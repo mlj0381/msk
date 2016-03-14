@@ -1483,9 +1483,10 @@ ol {
   font-size: 24px;
 }
 .buyer_container .seller_regbox .typebox {
-  width: 696px;
+  width: 100%;
   margin: 0 auto;
   overflow: hidden;
+  text-align: center;
 }
 .buyer_container .seller_regbox .typebox li {
   width: 200px;
@@ -1495,11 +1496,36 @@ ol {
   font-size: 24px;
   border: 1px solid #333;
   margin: 30px 15px;
-  float: left;
+  display: inline-block;
   cursor: pointer;
+  /* p{
+					position: absolute;
+					left: 0;
+					top:0;
+					display: none;
+					line-height: 20px;
+					font-size: 16px;
+					height:200px;
+					width: 200px;
+					line-height: 25px;
+					color:@basecolor;
+				
+				} */
 }
 .buyer_container .seller_regbox .typebox li.selected {
   background: #ddd;
+}
+.buyer_container .seller_regbox .typebox li.buyer_type {
+  position: relative;
+}
+.buyer_container .seller_regbox .typebox li.buyer_type:after {
+  position: absolute;
+  right: 0px;
+  top: 0px;
+  content: "";
+  width: 100px;
+  height: 92px;
+  background: url("/themes/pc/default/statics/images/danxuan.png") no-repeat left center;
 }
 .buyer_container .seller_regbox .company_btns {
   width: 100%;
@@ -1589,6 +1615,67 @@ ol {
 }
 .buyer_container .seller_regbox .companyInfo_form #store_info .category_add_modal div[data-cks="ck_list"] label input[type="checkbox"] {
   margin-right: 3px;
+}
+.buyer_container .seller_regbox .companyInfo_form #store_info .cat_wrapbox {
+  margin-top: 15px;
+  height: 300px;
+  overflow: scroll;
+  overflow-x: hidden;
+}
+.buyer_container .seller_regbox .companyInfo_form #store_info .cat_wrapbox .cat_header {
+  height: 30px;
+  line-height: 30px;
+  background: #ddd;
+  padding: 0 10px;
+  color: #333;
+  border: 1px solid #ccc;
+  border-bottom: none;
+  margin-bottom: 0px;
+  font-size: 14px;
+}
+.buyer_container .seller_regbox .companyInfo_form #store_info .cat_wrapbox .cat_tree {
+  border-collapse: collapse;
+  width: 100%;
+  height: auto;
+  border: 1px solid #ccc;
+}
+.buyer_container .seller_regbox .companyInfo_form #store_info .cat_wrapbox .cat_tree th,
+.buyer_container .seller_regbox .companyInfo_form #store_info .cat_wrapbox .cat_tree td {
+  padding: 0 10px;
+  height: 28px;
+  border-bottom: 1px solid #ccc;
+  border-left: 1px solid #ccc;
+}
+.buyer_container .seller_regbox .companyInfo_form #store_info .cat_wrapbox .cat_tree td {
+  font-size: 14px;
+  padding: 0 10px;
+}
+.buyer_container .seller_regbox .companyInfo_form #store_info .cat_wrapbox .cat_tree td input[type="checkbox"] {
+  margin-right: 3px;
+  vertical-align: top;
+}
+.buyer_container .seller_regbox .companyInfo_form #store_info .cat_wrapbox .cat_tree td .arrow {
+  display: inline-block;
+  font-size: 18px;
+  cursor: pointer;
+  padding: 0 5px;
+}
+.buyer_container .seller_regbox .companyInfo_form #store_info .cat_wrapbox .cat_tree td .apt_tag {
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  -ms-border-radius: 3px;
+  -o-border-radius: 3px;
+  border-radius: 3px;
+  border: 1px solid #ccc;
+  background: #fff;
+  color: #ccc;
+  padding: 0px 3px;
+  cursor: pointer;
+  font-size: 12px;
+}
+.buyer_container .seller_regbox .companyInfo_form #store_info .cat_wrapbox .cat_tree td .apt_tag.active {
+  border: 1px solid #008000;
+  color: #008000;
 }
 .buyer_container .seller_regbox .panel-rt {
   width: 960px;
@@ -3003,9 +3090,15 @@ ol {
 .receiver_addrpage .list-group ul.list-inline {
   margin: 10px 0;
 }
-.receiver_addrpage .form-group .time_period input {
-  width: 200px;
+.receiver_addrpage .form-group .time_period .list_item {
+  width: 130px;
   display: inline-block;
+  font-size: 14px;
+  color: #727171;
+  margin: 3px 0;
+}
+.receiver_addrpage .form-group .time_period input {
+  margin-right: 3px;
 }
 .newrequest_page .order-process-bar .well {
   box-shadow: none;
@@ -3055,6 +3148,12 @@ ol {
 .newrequest_page .newrequest_main .order_info dl dd {
   height: 30px;
   line-height: 30px;
+}
+.buyer_comInfo_form {
+  margin-top: 50px;
+}
+.buyer_comInfo_form .form-item span {
+  margin-right: 15px;
 }
 .services_page .order-process-bar .well {
   box-shadow: none;
@@ -3141,6 +3240,9 @@ ol {
   width: 64px;
   height: 64px;
   margin-bottom: 0px;
+}
+.directory_page .store_panel .thumbnail img {
+  max-height: 100%;
 }
 .directory_page .store_panel .storeInfo {
   text-align: left;

@@ -63,6 +63,24 @@ $db['brand'] = array(
             'comment' => ('品牌介绍'),
             'label' => ('品牌介绍'),
         ),
+        'type' =>
+            array(
+                'type' => 'number',
+                'label' => ('品牌类型'),
+                'default' => 0,
+                'comment' => ('品牌类型'),
+                'in_list' => true,
+                'default_in_list' => true,
+            ),
+        'company_id' =>
+            array(
+                'type' => 'table:base@company',
+                'label' => ('所属公司'),
+                'default' => 0,
+                'comment' => ('所属公司'),
+                'in_list' => true,
+                'default_in_list' => true,
+            ),
         'accredit' =>
         array(
             'type' => 'char(32)',
@@ -70,6 +88,20 @@ $db['brand'] = array(
             'comment' => ('品牌授权书'),
             'label' => ('品牌授权书'),
         ),
+        'type' =>
+            array(
+                'type' => 'number',
+                'default' => 0,
+                'comment' => ('品牌类型'),
+                'label' => ('品牌类型'), // 1 自有  2 代理  4 OEM
+            ),
+        'company_id' =>
+            array(
+                'type' => 'number',
+                'default' => 0,
+                'comment' => ('所属公司'),
+                'label' => ('所属公司'),
+            ),
         'brand_logo' =>
         array(
             'type' => 'varchar(255)',
@@ -133,6 +165,27 @@ $db['brand'] = array(
                 0 => 'disabled',
             ),
         ),
+        'ind_seller_id' =>
+            array(
+                'columns' =>
+                    array(
+                        0 => 'seller_id',
+                    ),
+            ),
+        'ind_brand_initial' =>
+            array(
+                'columns' =>
+                    array(
+                        0 => 'seller_id',
+                    ),
+            ),
+        'ind_company_id' =>
+            array(
+                'columns' =>
+                    array(
+                        0 => 'seller_id',
+                    ),
+            ),
         'ind_ordernum' =>
         array(
             'columns' =>

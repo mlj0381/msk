@@ -1,0 +1,6 @@
+<services>
+	<service id="cc">
+		<class>buyer_user_passport</class>
+	</service>
+
+</services>

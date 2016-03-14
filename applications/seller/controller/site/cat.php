@@ -61,4 +61,13 @@ class seller_ctl_site_cat extends seller_frontpage
     public function update(){
 
     }
+
+    /*
+     * 商家入驻添加经营类别
+     * */
+    public function add_cat()
+    {
+        //获取分类
+        $this->display('ui/add-cat.html');
+    }
 }

@@ -6,8 +6,8 @@
 			<span class="text-danger">*</span>动物防疫条件合格证代码编号：
 		</label>
 		<div class="col-xs-4">
-			<input type="text" value="<{$extra.animal_certificate.value.code}>" name="animal_certificate[value][code]" class="form-control" required="true">
-			<span class="msgTip" data-message="error"></span>
+			<input type="text" value="<{$extra.animal_certificate.value.code}>" name="animal_certificate[value][code]" class="form-control" required="true" format="digits">
+			<span class="msgTip" data-message="format">格式不正确</span>
 		</div>
 	</div>
 

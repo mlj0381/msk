@@ -19,9 +19,9 @@
                     </tr>
                 </thead>
                 <tbody id="cat_list">
-                    <{foreach from=$brands item=item name="item" }>
+                    <{foreach from=$brands key=key item=item name="item" }>
                         <tr data-catid="<{$item.brand_id}>" data-step="<{$item.step}>">
-                            <td>01</td>
+                            <td><{$key + 1}></td>
                             <td>
                                 <{$item.brand_name}>
                             </td>

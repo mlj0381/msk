@@ -63,12 +63,12 @@ $db['sellers'] = array(
             'type' => 'varchar(50)',
             'label' => ('固定电话'),
             'sdfpath' => 'contact/phone/telephone',
-            'searchtype' => 'head',
-            'editable' => true,
-            'filtertype' => 'normal',
-            'filterdefault' => 'true',
-            'in_list' => true,
-            'default_in_list' => false,
+//            'searchtype' => 'head',
+//            'editable' => true,
+//            'filtertype' => 'normal',
+//            'filterdefault' => 'true',
+//            'in_list' => true,
+//            'default_in_list' => false,
         ),
         'addr' => array(
             'type' => 'varchar(255)',
@@ -146,6 +146,11 @@ $db['sellers'] = array(
             'default_in_list' => false,
             'comment' => ('注册时间'),
         ),
+        'type' => array(
+            'type' => 'tinyint(1)',
+            'default' => 0,
+            'comment' => '商家类型' // 0 卖家 1 买手 ...
+        ),
         'checkin' => array(
             'label' => ('审核'),
             'type' => array(
@@ -154,8 +159,8 @@ $db['sellers'] = array(
                 -1 => ('未通过'),
             ),
             'default' => '0',
-            'in_list' => true,
-            'default_in_list' => true,
+            'in_list' => false,
+            'default_in_list' => false,
         ),
     ),
     'index' => array(

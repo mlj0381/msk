@@ -40,14 +40,14 @@
                 <button type="button" class="btn btn-default" onclick="$('#reset_password').val('np'+Math.floor(Math.random()*123456789));">随机</button>
             </div>
         </div>
-        <div class="form-group  ">
-            <label class="col-md-3 control-label">会员等级
+        <!--<div class="form-group  ">-->
+            <!--<label class="col-md-3 control-label">会员等级-->
 
-            </label>
-            <div class="col-md-7">
-                <{input type='select' name='member_lv[member_group_id]' required="true" options=$mem.lv.options value=$mem.lv.value }>
-            </div>
-        </div>
+            <!--</label>-->
+            <!--<div class="col-md-7">-->
+                <!--<{input type='select' name='member_lv[member_group_id]' required="true" options=$mem.lv.options value=$mem.lv.value }>-->
+            <!--</div>-->
+        <!--</div>-->
         <hr>
         <{foreach from=$attr item=item name="item" key='row'}>
         <div class="form-group  ">

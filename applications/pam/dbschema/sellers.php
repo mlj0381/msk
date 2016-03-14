@@ -52,6 +52,11 @@ $db['sellers'] = array(
             'type' => 'bool',
             'default' => 'false',
         ),
+        'type' => array(
+            'type' => 'tinyint(1)',
+            'default' => 0,
+            'comment' => '商家类型' // 0 卖家 1 买手 ...
+        ),
         'createtime' => array(
             'type' => 'time',
             'comment' => '创建时间',

@@ -83,7 +83,7 @@ class base_application_dbtable extends base_application_prototype_filepath{
         }else{
             $define_flag = false;
         }
-        if($define_flag === false){
+        if($define_flag === false){			
             if(defined('EXTENDS_DIR') && file_exists(EXTENDS_DIR.'/'.$this->target_app->app_id.'/dbschema/'.$this->key.'.php')){
                  require(EXTENDS_DIR.'/'.$this->target_app->app_id.'/dbschema/'.$this->key.'.php');
             }else{

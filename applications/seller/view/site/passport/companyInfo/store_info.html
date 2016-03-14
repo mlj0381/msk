@@ -7,7 +7,7 @@
         </label>
         <div class="col-xs-4">
             <!-- <{input type=select required="true" name="store[store_type]" rows=$extra.page_setting.store valueColumn="id" labelColumn="label" value=$extra.store.store_type}> -->
-            <input type="text" class="form-control" readonly="readonly" name="store[store_type]" value="<{$extra.store.store_type}>">
+            <input type="text" class="form-control" disabled name="store[store_type]" value="<{$extra.store.store_type}>">
         </div>
     </div>
     <div class="form-group">
@@ -33,9 +33,11 @@
             <span class="text-danger">*</span>经营品牌：
         </label>
         <div class="col-xs-4">
-            <button type="button" class="btn btn-md btn-default brand_add_btn" data-toggle="modal" data-target=".brand_add_modal" href="<{link app=seller ctl=site_passport act=brand_add}>"><i class="icon-plus"></i> 添加品牌</button>
+            <button type="button" class="btn btn-md btn-default brand_add_btn" data-toggle="modal" data-target=".brand_add_modal" href="<{link app=seller ctl=site_brand act=brand_add}>"><i class="icon-plus"></i> 添加品牌</button>
             <div class="brand_list" data-list="brand_list">
-
+                <{foreach from=$extra.brand item=item}>
+                    <span class="brand_item"><{$item.brand_name}> <i class="icon-remove" data-id="<{$item.brand_id}>"></i></span>
+                <{/foreach}>
             </div>
         </div>
     </div>
@@ -43,8 +45,53 @@
         <label class="col-xs-2 control-label">
             <span class="text-danger">*</span>经营商品类别：
         </label>
-        <div class="col-xs-4">
-            <button type="button" class="btn btn-md btn-default" data-toggle="modal" data-target=".category_add_modal"><i class="icon-plus"></i> 添加分类</button>
+        <div class="col-xs-10">
+            <button type="button" class="btn btn-md btn-default cat_add_btn" href="<{link app=seller ctl=site_cat act=add_cat}>"><i class="icon-plus"></i> 添加分类</button>
+            <div class="cat_wrapbox">
+                <p class="cat_header"><span class="icon-list"></span> 产品分类目录</p>
+                <table class="cat_tree table-hover">
+                    <tr>
+                        <tr>
+                            <th width="20%">编码</th>
+                            <th width="50%">名称</th>
+                            <th width="30%">必填资质</th>
+                        </tr>
+                    </tr>
+                    <tr data-treeId="01" data-catName="鸡产品">
+                    <td><span class="arrow icon-caret-right"></span>01</td>
+                        <td>鸡产品</td>
+                        <td></td>
+                    </tr>
+                    <tr data-treeId="01-1" data-catName="白条鸡">
+                        <td><span class="arrow icon-caret-right"></span>1</td>
+                        <td><input type="checkbox">白条鸡</td>
+                        <td>
+                            <span class="apt_tag active" data-toggle="modal" data-target=".category_add_modal"  href="<{link app=seller ctl=site_cat act=add_cat}>" data-tagId="1">原</span>
+                            <span class="apt_tag active" data-tagId="2">种</span>
+                            <span class="apt_tag active" data-tagId="3">饲</span>
+                            <span class="apt_tag active" data-tagId="4">技</span>
+                            <span class="apt_tag active" data-tagId="5">质</span>
+                            <span class="apt_tag active" data-tagId="6">通</span>
+                            <span class="apt_tag active" data-tagId="7">安</span>
+                            <span class="apt_tag active" data-tagId="8">运</span>
+                        </td>
+                    </tr>
+                    <tr data-treeId="01-2" data-catName="白条鸡">
+                        <td><span class="arrow icon-caret-right"></span>01</td>
+                        <td><input type="checkbox">白条肉鸡</td>
+                        <td>
+                            <span class="apt_tag active" data-toggle="modal" data-target=".category_add_modal"  href="<{link app=seller ctl=site_cat act=add_cat}>" data-tagId="1">原</span>
+                            <span class="apt_tag active" data-tagId="2">种</span>
+                            <span class="apt_tag active" data-tagId="3">饲</span>
+                            <span class="apt_tag active" data-tagId="4">技</span>
+                            <span class="apt_tag active" data-tagId="5">质</span>
+                            <span class="apt_tag active" data-tagId="6">通</span>
+                            <span class="apt_tag active" data-tagId="7">安</span>
+                            <span class="apt_tag active" data-tagId="8">运</span>
+                        </td>
+                    </tr>
+                </table>
+            </div>
         </div>
     </div>
     <!-- 品牌添加模态框 -->
@@ -57,47 +104,10 @@
     </div>
     
     <!-- 商品类目添加模态框 -->
-    <div class="modal fade category_add_modal" tabindex="-1" role="dialog">
+    <div class="modal fade category_add_modal" id="category_add_modal" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" required="true"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">商品类目添加</h4>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label class="control-label col-xs-2">
-                            <span class="text-danger"></span>一级分类
-                        </label>
-                        <div class="col-xs-5">
-                            <select required="true" class="form-control">
-                                <option>鸡肉类</option>
-                                <option>鸭肉类</option>
-                                <option>猪肉类</option>
-                                <option>牛羊肉类</option>
-                                <option>海产品</option>
-                            </select>
-                            <span class="msgTip" data-message="error">不能为空</span>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label col-xs-2">
-                            <span class="text-danger"></span>二级分类
-                        </label>
-                        <div class="col-xs-8">
-                            <div class="form-item" data-cks="ck_list">
-                                <label><input type="checkbox">白条鸡</label>
-                                <label><input type="checkbox">白条鸡</label>
-                                <label><input type="checkbox">白条鸡</label>
-                            </div>
-                            <span class="msgTip" data-message="error">不能为空</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                    <button type="button" class="btn btn-primary" data-save="category_save">保存类目</button>
-                </div>
+
             </div>
         </div>
     </div>
@@ -121,9 +131,22 @@
 
         //移除品牌
         $('.brand_list').on('click','.icon-remove',function(){
-            var cfm = confirm("您真的要删除吗？");
-            if(cfm==true){
-                $(this).parent('.brand_item').remove();
+            if(confirm("您真的要删除吗？")){
+                var brandId = $(this).attr('data-id');
+                if(brandId <= 0) {
+                    alert('删除失败');
+                    return false;
+                }
+                var _self = $(this);
+                var url = '<{link app=seller ctl=site_brand act=remove}>';
+                $.post(url, {'brand_id' : brandId}, function(re){
+                    if(re.success){
+                        _self.parent('.brand_item').remove();
+                    }else{
+                        alert('删除失败');
+                    }
+                });
+
             }  
         });
     

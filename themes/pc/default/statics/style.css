@@ -187,6 +187,13 @@ ol {
   display: inline-block;
   margin-right: 5px;
 }
+.glist-container .goods-listbox .goods-item .caption .g-ctl a.add_cart {
+  position: relative;
+}
+.glist-container .goods-listbox .goods-item .caption .g-ctl a.add_cart em {
+  position: absolute;
+  font-size: 24px;
+}
 .glist-container .goods-listbox .goods-item .caption .store-name {
   height: 24px;
   line-height: 24px;

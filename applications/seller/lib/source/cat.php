@@ -24,26 +24,26 @@ class seller_source_cat extends base_source {
 
     public function __construct($app) {
         $this->app = $app;
-        $this->params = array(
-            'app' => $this->app,
-            'method' => $this->method,
-            'schema' => $this->schema,
-            'host' => $this->host,
-        );
+//        $this->params = array(
+//            'app' => $this->app,
+//            'method' => $this->method,
+//            'schema' => $this->schema,
+//            'host' => $this->host,
+//        );
     }
 
-    public function request($params) {
-        $this->set_config($this->path);
-        $params = $this->init_request_args($params);
-        $this->params['params'] = $params;
-        $this->init($this->params);
-        if ($this->get($params)) {
-            return $this->get($params);
-        }
-        $data = $this->remote();
-       // $this->set($params, $data);
-        $this->response($data);
-    }
+//    public function request($params) {
+//        $this->set_config($this->path);
+//        $params = $this->init_request_args($params);
+//        $this->params['params'] = $params;
+//        $this->init($this->params);
+//        if ($this->get($params)) {
+//            return $this->get($params);
+//        }
+//        $data = $this->remote();
+//       // $this->set($params, $data);
+//        $this->response($data);
+//    }
     
     /**
      * 添加商品分类
@@ -79,5 +79,16 @@ class seller_source_cat extends base_source {
      */
     public function del($params){
         
+    }
+
+    /**
+     * 获取商品分类
+     * */
+    public function get_cat()
+    {
+        $catList = Array();
+        $this->request();
+        $this->convertColumns($catList, 'cat');
+        return array();
     }
 }
