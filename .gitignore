@@ -6,14 +6,16 @@
 *.swo
 $.swn
 config/certi.php
+
 config/
 config/install.lock.php
 tmp/
 logs/
 mobile_test_case
-public/images
+public/images/
 nbproject/
 .settings/
 .idea/
 data/kvstore/
 data/cache/
+

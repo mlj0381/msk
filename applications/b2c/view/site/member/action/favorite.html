@@ -65,6 +65,7 @@
                                 </a>
                             </div>
                             <div class="caption">
+
                                 <h3 class="g-name"><a
                                         href="<{link app=b2c ctl=site_product args0=$item.product_id args1=$item.store.store_id}>"><{$item.goods_name}></a>
                                 </h3>
@@ -162,7 +163,6 @@
                                         <p><i class="icon-tag"></i><span class="add_tag_btn">
 
                                         </span></p>
-
                                         <div class="creat_tagbox hide">
                                             <h4><i class="icon-folder-open"></i>分类到</h4>
                                             <ul data-url="<{link app=b2c ctl=site_member act=del_tag}>">
@@ -180,7 +180,6 @@
                                                 <{/foreach}>
                                             </ul>
                                             <p class="creat_class"><i class="icon-plus"></i>新建分类</p>
-
                                             <form class="hide">
                                                 <div class="input-group">
                                                     <input type="text" class="form-control" placeholder="请输入分类名称">
@@ -214,6 +213,7 @@
     </div>
     <!-- 热卖单品 -->
     <div class="best_sellers">
+
         <{WIDGET_PRODUCT label=热卖单品 position_id=35}>
     </div>
     <!-- 热卖单品结束 -->
