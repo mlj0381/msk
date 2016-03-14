@@ -15,13 +15,13 @@
  */
 $db['buyers'] = array(
     'columns' => array(
-        'buyer_id' => array(
-            'type' => 'number',
-            'required' => true,
-            'pkey' => true,
-            'comment' => '买手店ID',
-
-        ),
+    	'buyer_id' => array(
+    		'type' => 'number',
+    		'required' => true,
+    		'pkey' => true,
+    		'comment' => '买手店ID',
+    			
+    	),
         'local' => array(
             'type' => 'varchar(50)',
             'required' => true,
@@ -42,131 +42,114 @@ $db['buyers'] = array(
             'comment' => 'Email',
         ),
         'name' => array(
-            'type' => 'varchar(50)',
-            'required'	=> true,
-            'default'	=> '',
-            'comment'	=> '姓名',
+        	'type' => 'varchar(50)',
+        	'required'	=> true,
+        	'default'	=> '',
+        	'comment'	=> '姓名',
         ),
         'sex' => array(
-            'type' => array(
-                0 => ('女') ,
-                1 => ('男') ,
-            ) ,
-            'required'	=> true,
-            'default'	=> 1,
-            'comment'	=> '性别',
+        	'type' => array(
+        			0 => ('女') ,
+        			1 => ('男') ,
+        		) ,
+        	'required'	=> true,
+        	'default'	=> 1,
+        	'comment'	=> '性别',
         ),
         'card_id' => array(
-            'type' => 'char(18)',
-            'required' => true,
-            'default' => '',
-            'comment' => '身份证ID',
+        	'type' => 'char(18)',
+        	'required' => true,
+        	'default' => '',
+        	'comment' => '身份证ID',
         ),
         'buyer_type' => array(
-            'type' => array(
-                1 => ('自主创业型'),
-                2 => ('批发型'),
-                3 => ('有固定销售渠道型'),
-                4 => ('配送型'),
-            ) ,
-            'required' => true,
-            'default' => 1,
-            'comment' => '买手类型',
+        	'type' => array(
+        			1 => ('自主创业型'),
+        			2 => ('批发型'),
+        			3 => ('有固定销售渠道型'),
+        			4 => ('配送型'),
+        		) ,
+        	'required' => true,
+        	'default' => 1,
+        	'comment' => '买手类型',
         ),
         'area' => array(
-            'type' => 'region',
-            'required' => true,
-            'default' => '',
-            'comment' => '地区',
+        	'type' => 'region',
+        	'required' => true,
+        	'default' => '',
+        	'comment' => '地区',
         ) ,
         'addr' => array(
-            'type' => 'varchar(255)',
-            'required' => true,
-            'default' => '',
-            'comment' => '详细地址',
+        	'type' => 'varchar(255)',
+        	'required' => true,
+        	'default' => '',
+        	'comment' => '详细地址',
         ),
         'photo' => array(
-            'type' => 'char(32)',
-            'required' => true,
-            'default' => '',
-            'comment' => '个人一寸照片',
+        	'type' => 'char(32)',
+        	'required' => true,
+        	'default' => '',
+        	'comment' => '个人一寸照片',
         ),
         'wechat' => array(
-            'type' => 'varchar(50)',
-            'required' => true,
-            'default' => '',
-            'comment' => '微信',
+        	'type' => 'varchar(50)',
+        	'required' => true,
+        	'default' => '',
+        	'comment' => '微信',
         ),
         'qq' => array(
-            'type' => 'bigint unsigned',
-            'required' => true,
-            'default' => 0,
-            'comment' => 'qq',
+        	'type' => 'bigint unsigned',
+        	'required' => true,
+        	'default' => 0,
+        	'comment' => 'qq',
         ),
         'buyer_code' => array(
-            'type' => 'char(16)',
-            'required' => true,
-            'default' => '',
-            'comment' => '买手店编码',
+        	'type' => 'char(16)',
+        	'required' => true,
+        	'default' => '',
+        	'comment' => '买手店编码',
         ),
         'store_name' => array(
-            'type' => 'varchar(50)',
-            'required' => true,
-            'default' => '',
-            'comment' => '店铺名称',
+        	'type' => 'varchar(50)',
+        	'required' => true,
+        	'default' => '',
+        	'comment' => '店铺名称',
         ),
         'store_logo' => array(
-            'type' => 'char(32)',
-            'required' => true,
-            'default' => '',
-            'comment' => '店铺logo',
+        	'type' => 'char(32)',
+        	'required' => true,
+        	'default' => '',
+        	'comment' => '店铺logo',
         ),
         'operate_area' => array(
-            'type' => 'region',
-            'required' => true,
-            'default' => '',
-            'comment' => '经营区域',
+        	'type' => 'region',
+        	'required' => true,
+        	'default' => '',
+        	'comment' => '经营区域',
         ),
         'operate_feature' => array(
-            'type' => 'varchar(100)',
-            'required' => true,
-            'default' => '',
-            'comment' => '经营特色',
+        	'type' => 'varchar(100)',
+        	'required' => true,
+        	'default' => '',
+        	'comment' => '经营特色',
+        ),        
+        'addr' => array(
+            'type' => 'varchar(255)',
+            'label' => '地址',
+            'in_list' => true,
+            'default_in_list' => false,
+            'comment' => '地址',
         ),
 
-        //姓名
-        //性别
-        //身份证号
-        //买手类型
-        //area_id
-        //多少路多少号多少弄等等
-        //照片image
-        //微信账号
-        //qq号
-        //买手编码生成
-//         店铺名称
-//         店铺Logo
-//         经营区域operate
-//         经营特色feature
-//         买手店编码(系统自动生成)
-
-//         'addr' => array(
-//             'type' => 'varchar(255)',
-//             'label' => '地址',
-//             'in_list' => true,
-//             'default_in_list' => false,
-//             'comment' => '地址',
-//         ),
-
-        'schedule' => array(
-            'type' => array(
-                1 => ('第一步注册完成'),
-                2 => ('注册成功'),
-            ) ,
-            'required' => true,
+		'schedule' => array(
+			'type' => array(
+					1 => ('第一步注册完成'),
+					2 => ('注册成功'),
+			) ,
+			'required' => true,
             'default' => 1,
             'comment' => '注册进度',
-
+            
         ),
         'reg_ip' => array(
             'type' => 'varchar(16)',
@@ -201,31 +184,31 @@ $db['buyers'] = array(
             'default' => 1,
         ),
         'disabled' => array(
-            'type' => 'bool',
-            'default' => 'false',
+        		'type' => 'bool',
+        		'default' => 'false',
         ),
     ),
     'index' => array(
-        'uni_mobile' => array(
-            'columns' => array(
-                0 => 'mobile',
-            ),
-            'prefix' => 'UNIQUE',
-        ),
-        'ind_local' => array(
-            'columns' => array(
-                0 => 'local',
-            ),
-        ),
+    	'uni_mobile' => array(
+    		'columns' => array(
+    			0 => 'mobile',
+    		),
+    		'prefix' => 'UNIQUE',
+    	),
+    	'ind_local' => array(
+    		'columns' => array(
+    			0 => 'local',
+    		),
+    	),
         'ind_email' => array(
             'columns' => array(
                 0 => 'email',
             ),
         ),
         'ind_card_id' => array(
-            'columns' => array(
-                0 => 'card_id',
-            ),
+        		'columns' => array(
+        				0 => 'card_id',
+        		),
         ),
     ),
     'comment' => '买手店表',
