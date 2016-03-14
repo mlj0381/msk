@@ -1,16 +1,11 @@
 
- <div class="passport-login-container clearfix">
+<div class="passport-login-container clearfix">
     <div class="login_panel_lt">
         <img src="<{$base_url}>/themes/pc/default/statics/images/login_adv.png">
     </div>
     <div class="login_panel_rt">
         <div class="panel panel-default login-panel">
             <div class="panel-heading clearfix">
-<<<<<<< HEAD
-=======
-                <a href="<{link app=b2c ctl=site_passport act=login}>"><span class="login_normal">买家登录</span></a>
-                <a href="<{link app=seller ctl=site_passport act=login}>"><span class="login_fast active">卖家登录</span></a>
->>>>>>> 49e9674622a1f858fdcd8a9666cf211faf863fc0
                 <a href="<{link app=buyer ctl=site_passport act=login}>"><span class="login_fast active">买手登录</span></a>
 
             </div>
@@ -19,7 +14,7 @@
                     <!-- 登陆后跳转地址 -->
                     <input type="hidden" name="forward" value="<{$forward}>">
                     <div class="reg_link">
-                           <a href="<{link app=buyer ctl=site_passport act=signup}>">立即注册 <i class="icon-circle-arrow-right"></i></a>                      
+                        <a href="<{link app=buyer ctl=site_passport act=signup}>">立即注册 <i class="icon-circle-arrow-right"></i></a>
                     </div>
                     <div class="form-group">
                         <div class="col-md-12">
@@ -28,7 +23,7 @@
                                     <i class="icon-user"></i>
                                 </div>
                                 <input type="text" required="true" autocomplete='off' name="uname" class="form-control" id="input_uname" placeholder="手机号/邮箱/用户名">
-                            </div> 
+                            </div>
                         </div>
                     </div>
                     <div class="form-group">
@@ -70,51 +65,51 @@
 
                 </form>
             </div>
-           
+
         </div>
     </div>
 </div>
 <script>
-/*
- * 会员登录脚本
- */
+    /*
+     * 会员登录脚本
+     */
 
-void
-function(login_form) {
-    var alert_timer = 0;
-    //本地账户自动登录
-    login_form.find('input.autologin-checkbox').on('change', function(e) {
-        if ($(this).is(':checked')) {
-            $.cookie('AUTO_LOGIN', 'REMEMBER30DAY', {
-                expires: 30,
-                path: '/'
-            });
-        } else {
-            $.removeCookie('AUTO_LOGIN');
-        }
-    });
+    void
+            function(login_form) {
+                var alert_timer = 0;
+                //本地账户自动登录
+                login_form.find('input.autologin-checkbox').on('change', function(e) {
+                    if ($(this).is(':checked')) {
+                        $.cookie('AUTO_LOGIN', 'REMEMBER30DAY', {
+                            expires: 30,
+                            path: '/'
+                        });
+                    } else {
+                        $.removeCookie('AUTO_LOGIN');
+                    }
+                });
 
-    login_form.on('submit', function(e) {
-        e.stopPropagation();
-        login_form.find('button[type=submit]').button('loading');
-        $.post(login_form.prop('action'), login_form.serialize(), function(re) {
-            if (re.error) {
-                login_form.find('.alert-error').remove();
-                login_form.append($('<div class="alert alert-danger">' + re.error + '</div>'));
-                alert_timer = setTimeout(function() {
-                    clearTimeout(alert_timer);
-                    login_form.find('.alert-danger').fadeOut('fast', function() {
-                        $(this).remove();
-                    });
-                }, 3000);
-            }
-            if (re.success) {
-                location = re.redirect;
-            }
-            login_form.find('button[type=submit]').button('reset');
-        }, 'json');
-        return false;
-    });
-}($('#member_login_form'));
+                login_form.on('submit', function(e) {
+                    e.stopPropagation();
+                    login_form.find('button[type=submit]').button('loading');
+                    $.post(login_form.prop('action'), login_form.serialize(), function(re) {
+                        if (re.error) {
+                            login_form.find('.alert-error').remove();
+                            login_form.append($('<div class="alert alert-danger">' + re.error + '</div>'));
+                            alert_timer = setTimeout(function() {
+                                clearTimeout(alert_timer);
+                                login_form.find('.alert-danger').fadeOut('fast', function() {
+                                    $(this).remove();
+                                });
+                            }, 3000);
+                        }
+                        if (re.success) {
+                            location = re.redirect;
+                        }
+                        login_form.find('button[type=submit]').button('reset');
+                    }, 'json');
+                    return false;
+                });
+            }($('#member_login_form'));
 </script>
 
