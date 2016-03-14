@@ -29,6 +29,17 @@ class b2c_view_widget {
         return $render->fetch('widget/category.html');
     }
 
+    /**
+     * 商品商品推荐 ，热卖单品等
+     **/
+    public function function_WIDGET_PRODUCT($params, &$smarty)
+    {
+        $render = new base_render(app::get('b2c'));
+        $render->pagedata['label'] = $params['label'];
+        $render->pagedata['content'] = app::get('b2c')->model('pages_content')->getList('*', array('type' => '2', 'status' => '1','position_id'=>$params['position_id'],));
+        return $render->fetch('widget/hot_product.html');
+    }
+
     public function function_WIDGET_RECOME($params, &$smarty) {
         extract($params);
         $tpl = empty($tpl) ? 'image' : $tpl; // 0普通 1、幻灯 2 商品
