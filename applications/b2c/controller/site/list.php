@@ -41,7 +41,6 @@ class b2c_ctl_site_list extends b2c_frontpage
     public function index($fix_brand = false)
     {
         $params = utils::_filter_input($_GET);
-
         //属性查找面包屑组合
         $search_info = $this->objSearch->init_crumbs($params);
         //参数组合
@@ -54,7 +53,6 @@ class b2c_ctl_site_list extends b2c_frontpage
         $this->pagedata['serach_keywords'] = $params['keywords'];
         $this->pagedata['serach_type'] = $params['type'];
         $this->pagedata['search_having'] = $params['having'];
-
         if (!$fix_brand && $params['filter']['cat_id']) {
             $mdl_cat = $this->app->model('goods_cat');
             $cat_info = $mdl_cat->dump($params['filter']['cat_id']);

@@ -464,10 +464,13 @@ class b2c_ctl_site_passport extends b2c_frontpage
     {
 
         $mobile = trim($_POST['mobile']);
-
+        /*
+         * 不用判断手机唯一性
         if (!$this->passport_obj->check_signup_account($mobile, $msg)) {
             $this->splash('error', null, $msg);
         }
+        */
+        $msg = $this->passport_obj->get_login_account_type($mobile);
         if ($msg != 'mobile') {
             $this->splash('error', null, '错误的手机格式');
         }

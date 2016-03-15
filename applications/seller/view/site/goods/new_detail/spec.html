@@ -3,17 +3,17 @@
     <!-- spec -->
     <table class="table spec_table">
         <thead>
-            <tr>
-                <td>规格名称</td>
-                <td>商品货号</td>
-                <td>价盘设置</td>
-                <td>商品库存</td>
-                <td>是否分销</td>
-                <td>是否上架</td>
-            </tr>
+        <tr>
+            <td>规格名称</td>
+            <td>商品货号</td>
+            <td>价盘设置</td>
+            <td>商品库存</td>
+            <td>是否分销</td>
+            <td>是否上架</td>
+        </tr>
         </thead>
         <tbody>
-            
+
         </tbody>
     </table>
     <!-- sepc end -->
@@ -21,11 +21,13 @@
     <textarea class="product-item-tpl hide">
         <tr>
             <td>
-                <input type="text" name="goods[product][{key}][spec_info]" class="form-control input-sm spec-info" value="" readonly=true>
-                <input type="hidden" name="goods[product][{key}][spec_desc]" class="spec-desc" value="{spec_desc}">
+                <input type="text" name="goods[product][new_0][spec_info]" class="form-control input-sm spec-info"
+                       value="A1/袋" readonly=true>
+                <input type="hidden" name="goods[product][new_0][spec_desc]" class="spec-desc" value="">
             </td>
             <td>
-                <input type="text" required="true" data-map="bn" class="form-control input-sm" name="goods[product][{key}][bn]" value="">
+                <input type="text" required="true" data-map="bn" class="form-control input-sm"
+                       name="goods[product][new_0][bn]" value="15616-0">
             </td>
             <td class="price_set">
                 <div class="set_panel">
@@ -36,87 +38,90 @@
                     <div class="table_wrap">
                         <table>
                             <thead>
-                                <tr>
-                                    <th>数量下限</th>
-                                    <th>数量上限</th>
-                                    <th>商品价格</th>
-                                    <th>折扣率</th>
-                                    <th>操作</th>
-                                </tr>
+                            <tr>
+                                <th>数量下限</th>
+                                <th>数量上限</th>
+                                <th>商品价格</th>
+                                <th>折扣率</th>
+                                <th>操作</th>
+                            </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>
-                                        <input type="text" class="form-control">
-                                    </td>
-                                    <td>
-                                        <input type="text" class="form-control">
-                                    </td>
-                                    <td>
-                                        <input type="text" class="form-control">
-                                    </td>
-                                    <td>
-                                        <div class="input-group">
-                                            <input type="text" class="form-control">
-                                            <span class="input-group-addon">%</span>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <span class="icon-trash delbtn"></span>
-                                        <span class="icon-plus addbtn"></span>
-                                    </td>
-                                </tr>
+                            <tr>
+                                <td>
+                                    <input type="text" name="goods[product][new_0][interval][num_dn][]" value="1"
+                                           class="form-control">
+                                </td>
+                                <td>
+                                    <input type="text" name="goods[product][new_0][interval][num_up][]" value="50"
+                                           class="form-control">
+                                </td>
+                                <td>
+                                    <input type="text" name="goods[product][new_0][interval][price][]" value="100"
+                                           class="form-control">
+                                </td>
+                                <td>
+                                    <div class="input-group">
+                                        <input type="text" name="goods[product][new_0][interval][discount][]" value="90"
+                                               class="form-control">
+                                        <span class="input-group-addon">%</span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <span class="icon-trash delbtn"></span>
+                                    <span class="icon-plus addbtn"></span>
+                                </td>
+                            </tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
             </td>
             <td>
-                <input type="text" data-map="storage" class="form-control input-sm" name="goods[product][{key}][storage]" value="">
+                <input type="text" data-map="storage" class="form-control input-sm"
+                       name="goods[product][new_0][storage]" value="100">
             </td>
             <td align="center">
-                <input type="checkbox" name="goods[product][{key}][marketable]" value="true" checked>
+                <input type="checkbox" name="goods[agent]" value="true" checked>
             </td>
             <td align="center">
-                <input type="checkbox" name="goods[product][{key}][marketable]" value="true" checked>
+                <input type="checkbox" name="goods[product][new_0][marketable]" value="true" checked>
             </td>
         </tr>
     </textarea>
 </div>
 <script type="text/javascript">
-$(function() {
-    !(function load_spec(){
-        var $html = $('.product-item-tpl').val();
-        var $spec_row = $('.spec_table tbody');
-        $spec_row.append($html);    
-    })();
-    //load_spec();
+    $(function () {
+        !(function load_spec() {
+            var $html = $('.product-item-tpl').val();
+            var $spec_row = $('.spec_table tbody');
+            $spec_row.append($html);
+        })();
+        //load_spec();
 
-    //价盘panel 显隐
-    $('.spec_table').on('mouseenter mouseleave','.set_trigger',function(e){
-        var e = e || window.event;      
-        if(e.type=='mouseenter') $(this).parents('.set_panel').find('.table_wrap').show();
-        else $(this).parents('.set_panel').find('.table_wrap').hide();
-    });
-    $('.spec_table').on('mouseenter mouseleave','.table_wrap',function(e){
-        var e = e || window.event;      
-        if(e.type=='mouseenter') $(this).show();
-        else $(this).hide();
-    });
-    //价盘添加删除
-    var $price_row = $('.spec_table .table_wrap tbody tr').prop("outerHTML");
-    $('.spec_table').on('click','.addbtn',function(){
-        var $rowLen = $('.spec_table .table_wrap tbody tr').size();
-        if($rowLen>=9) return;
-        $(this).parent().parent().after($price_row);
-    });
+        //价盘panel 显隐
+        $('.spec_table').on('mouseenter mouseleave', '.set_trigger', function (e) {
+            var e = e || window.event;
+            if (e.type == 'mouseenter') $(this).parents('.set_panel').find('.table_wrap').show();
+            else $(this).parents('.set_panel').find('.table_wrap').hide();
+        });
+        $('.spec_table').on('mouseenter mouseleave', '.table_wrap', function (e) {
+            var e = e || window.event;
+            if (e.type == 'mouseenter') $(this).show();
+            else $(this).hide();
+        });
+        //价盘添加删除
+        var $price_row = $('.spec_table .table_wrap tbody tr').prop("outerHTML");
+        $('.spec_table').on('click', '.addbtn', function () {
+            var $rowLen = $('.spec_table .table_wrap tbody tr').size();
+            if ($rowLen >= 9) return;
+            $(this).parent().parent().after($price_row);
+        });
 
-    $('.spec_table').on('click','.delbtn',function(){
-        var $rowLen = $('.spec_table .table_wrap tbody tr').size();
-        if($rowLen<=1) return;
-        $(this).parent().parent().remove();
-    });
-
-
-})
+        $('.spec_table').on('click', '.delbtn', function () {
+            var $rowLen = $('.spec_table .table_wrap tbody tr').size();
+            if ($rowLen <= 1) return;
+            $(this).parent().parent().remove();
+        });
+    })
 </script>

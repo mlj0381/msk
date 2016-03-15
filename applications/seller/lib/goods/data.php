@@ -21,6 +21,7 @@ class seller_goods_data
         $last_goods = $this->mdl_goods->getRow('goods_id', null, 0, 1, 'goods_id desc');
         $last_goods_id = $last_goods['goods_id'];
         $goods = $data['goods'];
+        $goods['agent'] = $data['agent'];
         //相册默认图
         if (is_array($goods['images'])) {
             $goods['image_default_id'] = $data['image_default'];
@@ -171,6 +172,7 @@ class seller_goods_data
         }
         return $goods;
     }
+
     public function checkin(&$goods){
         if (!empty($goods['gid']) && $this->mdl_goods->count(array(
             'gid' => $goods['gid'],

@@ -262,6 +262,16 @@ $db['goods'] = array(
             'comment' => '所属仓库',
         ),
 
+        'agent' => array(
+            'type' => array(
+                '0' => '否',
+                '1' => '是'),
+            'required' => true,
+            'default' => '0',
+            'label' => ('参与分销'),
+            'comment' => '参与分销',
+        ),
+
         'params' =>
             array (
               'type' => 'serialize',
