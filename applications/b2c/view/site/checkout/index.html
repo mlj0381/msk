@@ -6,10 +6,10 @@
 
 <div class="page-header">
     <div class="container">
-        <h1 class="clearfix">订单确认 <small>Checkout <{if $is_fastbuy=='true'}>Fast<{/if}></small></h1>
+        <h1 class="clearfix" style="margin:0;">订单确认 <small>Checkout <{if $is_fastbuy=='true'}>Fast<{/if}></small></h1>
     </div>
 </div>
-<form action="<{link app=b2c ctl=site_order act=create args0=$is_fastbuy}>" class="checkout-container">
+<form action="<{link app=b2c ctl=site_order act=create args0=$is_fastbuy}>" class="checkout-container" data-module="validator">
     <input type="hidden" name="cart_md5" value="<{$cart_md5}>">
     <input type="hidden" name="store_id" value="<{$cart_result.objects.goods[0].store_info.store_id}>">
     <!-- checkout-container begin -->
@@ -103,8 +103,10 @@
                     <li class="list-group-item clearfix">
                         <span>习惯正常收货时间段(多选)：</span>
                         <{foreach from=$receiving key=key item=item}>
-                            <input type="hidden" value="<{$item}>" disabled name="addon[consignee_time][interval][]"/>
-                            <span class="timespan" data-id="<{$key}>"><{$item}></span>
+                            <label>
+                                <input type="checkbox" value="<{$item}>" name="addon[consignee_time][interval][]"/>
+                                <span class="timespan" data-id="<{$key}>"><{$item}></span>
+                            </label>
                         <{/foreach}>
                     </li>
                     <li class="list-group-item clearfix">
@@ -749,16 +751,4 @@
 
     });
 </script>
-<script type="text/javascript">
-    $(function () {
-        $('.timespan').click(function(){
-            var timespan = $(this);
-            timespan.toggleClass('active');
-            if($(timespan).hasClass('active')){
-                timespan.prev().removeAttr('disabled');
-            }else{
-                timespan.prev().prop('disabled', true);
-            }
-        });
-    });
-</script>
+

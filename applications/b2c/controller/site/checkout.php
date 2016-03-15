@@ -25,7 +25,7 @@ class b2c_ctl_site_checkout extends b2c_frontpage
     }
     //checkout 主页
     public function index($fastbuy = false)
-    {var_dump($_SESSION['addrs']);
+    {
         $blank_url = $this->gen_url(array(
             'app' => 'b2c',
             'ctl' => 'site_cart',

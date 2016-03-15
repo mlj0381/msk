@@ -749,6 +749,7 @@ class seller_user_passport
                         $params[$value['key']]['store_type'] = $seller['ident'];
                         continue;
                 }
+                print_r($params[$value['key']]);die;
                 $mdlObj = app::get($value['app'])->model($value['key']);
                 if (!$mdlObj->save($params[$value['key']])) {
                     $db->rollback();
@@ -772,7 +773,6 @@ class seller_user_passport
                         return false;
                     }
                 }
-
                 if (!$store_brand) {
                     continue;
                 }
@@ -788,9 +788,8 @@ class seller_user_passport
         $mdl_company_extra = app::get('base')->model('company_extra');
         foreach ($extra_columns['page'] as $key => $col) {
             if (isset($params[$col]) && !empty($params[$col])) {
-
                 $params[$col]['content_id'] && $sqlType = true;
-                $params[$col]['identity'] = $params['typeId'];
+                $params[$col]['identity'] = $params['typeId'] == 'comm'?null:$params['typeId'];
                 $params[$col]['extra_id'] = $company_id ?: $company_extra[0]['company_id'];
                 $params[$col]['uid'] = $seller['seller_id'];
                 $params[$col]['createtime'] = time();
