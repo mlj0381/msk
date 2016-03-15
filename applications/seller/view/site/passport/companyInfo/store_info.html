@@ -33,7 +33,7 @@
             <span class="text-danger">*</span>经营品牌：
         </label>
         <div class="col-xs-4">
-            <button type="button" class="btn btn-md btn-default brand_add_btn" data-toggle="modal" data-target=".brand_add_modal" href="<{link app=seller ctl=site_brand act=brand_add}>"><i class="icon-plus"></i> 添加品牌</button>
+            <button type="button" class="btn btn-md btn-default brand_add_btn" data-toggle="modal" data-target=".brand_add_modal" href="<{link app=seller ctl=site_passport act=add_brand}>"><i class="icon-plus"></i> 添加品牌</button>
             <div class="brand_list" data-list="brand_list">
                 <{foreach from=$extra.brand item=item}>
                     <span class="brand_item"><{$item.brand_name}> <i class="icon-remove" data-id="<{$item.brand_id}>"></i></span>
@@ -46,7 +46,7 @@
             <span class="text-danger">*</span>经营商品类别：
         </label>
         <div class="col-xs-10">
-            <button type="button" class="btn btn-md btn-default cat_add_btn" href="<{link app=seller ctl=site_cat act=add_cat}>"><i class="icon-plus"></i> 添加分类</button>
+            <button type="button" class="btn btn-md btn-default cat_add_btn" href="<{link app=seller ctl=site_passport act=add_cat}>"><i class="icon-plus"></i> 添加分类</button>
             <div class="cat_wrapbox">
                 <p class="cat_header"><span class="icon-list"></span> 产品分类目录</p>
                 <table class="cat_tree table-hover">
@@ -66,7 +66,7 @@
                         <td><span class="arrow icon-caret-right"></span>1</td>
                         <td><input type="checkbox">白条鸡</td>
                         <td>
-                            <span class="apt_tag active" data-toggle="modal" data-target=".category_add_modal"  href="<{link app=seller ctl=site_cat act=add_cat}>" data-tagId="1">原</span>
+                            <span class="apt_tag active" data-toggle="modal" data-target=".category_add_modal"  href="<{link app=seller ctl=site_passport act=add_cat}>" data-tagId="1">原</span>
                             <span class="apt_tag active" data-tagId="2">种</span>
                             <span class="apt_tag active" data-tagId="3">饲</span>
                             <span class="apt_tag active" data-tagId="4">技</span>

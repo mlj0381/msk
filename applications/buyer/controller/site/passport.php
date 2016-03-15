@@ -114,7 +114,7 @@ class buyer_ctl_site_passport extends buyer_frontpage{
 		//存在post过来的用户名
 		//检测用户名合法性
 		vmc::singleton('base_session')->start();
-		if (vmc::singleton('seller_user_object')->get_seller_id()){
+		if (vmc::singleton('seller_user_object')->get_id()){
 			if ($_POST){
 				$params = utils::_filter_input($_POST);
 				unset($_POST);
@@ -139,7 +139,7 @@ class buyer_ctl_site_passport extends buyer_frontpage{
 				if (!$params['qq']){
 					$this->splash('error', '', 'QQ号不能为空');
 				}
-				$params['buyer_id'] = vmc::singleton('seller_user_object')->get_seller_id();
+				$params['buyer_id'] = vmc::singleton('seller_user_object')->get_id();
 				if ($this->app->model('buyers')->save_buyer_data($params)){
 					$this->set_tmpl('passport');
 					$this->page('site/passport/signup_complete.html');

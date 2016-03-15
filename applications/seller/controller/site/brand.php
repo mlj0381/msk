@@ -19,12 +19,13 @@ class seller_ctl_site_brand extends seller_frontpage {
         $this->app = $app;
         $this->verify();
         $this->mBrand = $this->app->model('brand');
+        $this->mB2cbrand = app::get('b2c')->model('brand');
     }
 
     public function index() {
         $this->title = '商品品牌';
         //查询详细信息
-        $this->pagedata['brands'] = app::get('b2c')->model('brand')->getList('*', array('seller_id' => $this->seller['seller_id']));
+        $this->pagedata['brands'] = $this->mB2cbrand->getList('*', array('seller_id' => $this->seller['seller_id']));
         $this->output();
     }
 
@@ -35,18 +36,13 @@ class seller_ctl_site_brand extends seller_frontpage {
             unset($_POST);
             $this->_post($params);
         }
-        $this->pagedata['company'] = $this->_getCompanyList();
+        $this->pagedata['company'] = app::get('base')->model('company_seller')->getList('company_id, company_name',
+            array('uid' => $this->seller['seller_id'], 'from' => 1));
         if (is_numeric($brand_id)) {
             $this->pagedata['brand'] = app::get('b2c')->model('brand')->getRow('*', array('brand_id' => $brand_id, 'seller_id' => $this->seller['seller_id']));
             //查询商家所有的公司
         }
         $this->output();
-    }
-
-    private function _getCompanyList()
-    {
-        return app::get('base')->model('company_seller')->getList('company_id, company_name',
-            array('uid' => $this->seller['seller_id'], 'from' => 1));
     }
 
     //品牌添加
@@ -57,44 +53,23 @@ class seller_ctl_site_brand extends seller_frontpage {
             $this->_post($params);
         }
         //查询商家所有的公司
-        $this->pagedata['company'] = $this->_getCompanyList();
+        $this->pagedata['company'] = app::get('base')->model('company_seller')->getList('company_id, company_name',
+            array('uid' => $this->seller['seller_id'], 'from' => 1));
         $this->display('ui/brand_add_modal.html');
     }
 
     private function _post($post) {
-        extract($post);
-        $db = vmc::database();
-        $db->beginTransaction();
         $redirect = array('app' => 'seller', 'ctl' => 'site_brand', 'act' => 'index');
-        if($type == 'entry'){
-            $count = vmc::singleton('seller_user_passport')->countPage();
-            $redirect = Array('app' => 'seller', 'ctl' => 'site_passport', 'act' => 'entry', 'args0' => ($count['sum'] - 1));
-        }
+//        if($post['type'] == 'entry'){
+//            $count = vmc::singleton('seller_user_passport')->countPage();
+//            $redirect = Array('app' => 'seller', 'ctl' => 'site_passport', 'act' => 'entry', 'args0' => ($count['sum'] - 1));
+//        }
         $redirect = $this->gen_url($redirect);
-
-        $brand['seller_id'] = $this->seller['seller_id'];
-        $mdl_b2c_brand = app::get('b2c')->model('brand');
-        if ($brand['brand_id']) {
-            $brand_name = $this->mBrand->getRow('brand_name', array('brand_id' => $brand['brand_id'], 'seller_id' => $this->seller['seller_id']));
-            $b2c_fun_name = 'save';
-            $seller_fun_name = 'update';
-            $brand['brand_name'] = $brand_name['brand_name'];
-        } else {
-            $brand['create_time'] = time();
-            $b2c_fun_name = 'insert';
-            $seller_fun_name = 'save';
+        $post['brand']['seller_id'] = $this->seller['seller_id'];
+        if(!$this->mB2cbrand->save_brand($post))
+        {
+            $this->splash('error', $redirect, '操作失败');
         }
-        if (!$brand_id = $mdl_b2c_brand->$b2c_fun_name($brand)) {
-            $db->rollback();
-            $this->splash('error', $redirect, '添加失败');
-        }
-        $brand['brand_id'] = $brand['brand_id'] ? $brand['brand_id'] : $brand_id;
-        $filter = array('seller_id' => $this->seller['seller_id'], 'brand_id' => $brand['brand_id']);
-        if (!$this->mBrand->$seller_fun_name($brand, $filter)) {
-            $db->rollback();
-            $this->splash('error', $redirect, '添加失败');
-        }
-        $db->commit();
         $this->splash('success', $redirect, '添加成功');
     }
 

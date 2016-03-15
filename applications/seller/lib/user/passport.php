@@ -119,7 +119,7 @@ class seller_user_passport
         //$data['currency'] = $arrDefCurrency['cur_code'];
         $seller['reg_ip'] = base_request::get_remote_addr();
         $seller['regtime'] = time();
-        $seller['mobile'] = $data['pam_account']['mobile'];
+        //$seller['mobile'] = $data['pam_account']['mobile'];
         //--防止恶意修改
         foreach ($data as $key => $val) {
             if (strpos($key, 'box:') !== false) {
@@ -286,7 +286,7 @@ class seller_user_passport
     public function set_local_uname($local_uname, &$msg)
     {
         $local_uname = strtolower($local_uname);
-        $seller_id = $this->user_obj->get_seller_id();
+        $seller_id = $this->user_obj->get_id();
         if (!$seller_id) {
             $msg = ('页面已过期，请重新登录，到会员中心设置');
 
@@ -332,7 +332,7 @@ class seller_user_passport
     //设置绑定手机号
     public function set_mobile($mobile, &$msg)
     {
-        $seller_id = $this->user_obj->get_seller_id();
+        $seller_id = $this->user_obj->get_id();
         if (!$seller_id) {
             $msg = ('页面已过期，请重新登录，到会员中心设置');
 
@@ -377,7 +377,7 @@ class seller_user_passport
     //设置绑定邮箱
     public function set_email($email, &$msg)
     {
-        $seller_id = $this->user_obj->get_seller_id();
+        $seller_id = $this->user_obj->get_id();
         if (!$seller_id) {
             $msg = ('页面已过期，请重新登录，到会员中心设置');
 
@@ -668,6 +668,9 @@ class seller_user_passport
 //            $company['company_id'][] = $value['company_id'];
 //        }
         $filter = array('extra_id' => $company[0]['company_id'], 'identity' => $storeType);
+        if($storeType == 'comm'){
+            $filter = array('uid' => $seller_id, 'from' => 1);
+        }
 //        if($this->entryType == 'brand'){
 //            $filter['extra_id'] = $company['company_id'][count($company['company_id']) - 1];
 //        }
@@ -687,8 +690,6 @@ class seller_user_passport
             $this->_getStoreConf($info, $seller_id);
         }
         $info['company_extra']['contact'] = app::get('base')->model('contact')->getRow('*', array('uid' => $seller_id, 'from' => '1'));
-
-
         return $info;
     }
     /**
@@ -783,9 +784,11 @@ class seller_user_passport
                 }
             }
         }
+
         $mdl_company_extra = app::get('base')->model('company_extra');
         foreach ($extra_columns['page'] as $key => $col) {
             if (isset($params[$col]) && !empty($params[$col])) {
+
                 $params[$col]['content_id'] && $sqlType = true;
                 $params[$col]['identity'] = $params['typeId'];
                 $params[$col]['extra_id'] = $company_id ?: $company_extra[0]['company_id'];
@@ -794,6 +797,7 @@ class seller_user_passport
                 $params[$col]['from'] = 1;
                 //电商成员信息
                 if (is_array(reset($params[$col]['value']))) {
+
                     if (!$this->_save_array($col, $params[$col], $seller['seller_id'])) {
                         $db->rollback();
                         $msg = $value['label'];

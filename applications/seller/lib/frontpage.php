@@ -90,7 +90,7 @@ class seller_frontpage extends site_controller {
 
     function verify() {
         $user_obj = vmc::singleton('seller_user_object');
-        if ($this->app->seller_id = $user_obj->get_seller_id()) {
+        if ($this->app->seller_id = $user_obj->get_id()) {
             $data = $user_obj->get_sellers_data(array(
                 'sellers' => 'seller_id'
             ));
