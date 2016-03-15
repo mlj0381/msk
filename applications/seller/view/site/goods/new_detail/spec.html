@@ -103,14 +103,14 @@ $(function() {
         if(e.type=='mouseenter') $(this).show();
         else $(this).hide();
     });
-    //价盘添加删除
+    //价盘添加
     var $price_row = $('.spec_table .table_wrap tbody tr').prop("outerHTML");
     $('.spec_table').on('click','.addbtn',function(){
         var $rowLen = $('.spec_table .table_wrap tbody tr').size();
         if($rowLen>=9) return;
         $(this).parent().parent().after($price_row);
     });
-
+    //价盘删除
     $('.spec_table').on('click','.delbtn',function(){
         var $rowLen = $('.spec_table .table_wrap tbody tr').size();
         if($rowLen<=1) return;

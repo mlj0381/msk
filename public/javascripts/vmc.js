@@ -37,7 +37,7 @@ $.validator.messages = {
 	digits: "只可输正整数",
 	positive: "只可输入正数",
 	creditcard: "请输入有效的信用卡号码",
-	equalTo: "你的输入不相同",
+	equalTo: "两次密码输入不一致",
 	extension: "请输入有效的后缀",
 	maxlength: $.validator.format("最多 {0} 个字"),
 	minlength: $.validator.format("最少 {0} 个字"),

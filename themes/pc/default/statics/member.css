@@ -1397,15 +1397,12 @@ ol {
   background-color: #f5f5f5;
   border-bottom: 1px solid #e1e1e1;
 }
-.checkout-con .checkout-container .checkout-dlytime .timespan {
-  display: inline-block;
-  padding: 3px 5px;
-  border: 1px solid #ddd;
-  background: #fff;
+.checkout-con .checkout-container .checkout-dlytime label {
+  margin-right: 15px;
+  font-weight: normal;
 }
-.checkout-con .checkout-container .checkout-dlytime .timespan.active {
-  border: 1px solid #dbaf00;
-  background: #faf2d2;
+.checkout-con .checkout-container .checkout-dlytime label input[type="checkbox"] {
+  margin-right: 0px;
 }
 .checkout-con .checkout-container .checkout-dlytime .time_text {
   width: 160px;
