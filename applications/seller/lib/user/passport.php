@@ -790,7 +790,7 @@ class seller_user_passport
             if (isset($params[$col]) && !empty($params[$col])) {
 
                 $params[$col]['content_id'] && $sqlType = true;
-                $params[$col]['identity'] = $params['typeId'];
+                $params[$col]['identity'] = $params['typeId'] == 'comm'?null:$params['typeId'];
                 $params[$col]['extra_id'] = $company_id ?: $company_extra[0]['company_id'];
                 $params[$col]['uid'] = $seller['seller_id'];
                 $params[$col]['createtime'] = time();
