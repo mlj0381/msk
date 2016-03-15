@@ -848,6 +848,22 @@ nav.mainNav ul.nav_ul li .category-container .category .tab-pane .tab-pane-brand
   width: 100px;
   line-height: 20px;
 }
+.jumbotron .cart_blank {
+  width: 100%;
+  margin: 0 auto;
+  text-align: center;
+}
+.jumbotron .cart_blank dt {
+  width: 100%;
+  text-align: center;
+}
+.jumbotron .cart_blank dt i {
+  color: #e9e9e9;
+}
+.jumbotron .cart_blank dd {
+  margin-top: 25px;
+  font-size: 20px;
+}
 #quickLogin {
   top: 50%;
   margin-top: -220px;
