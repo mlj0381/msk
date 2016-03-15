@@ -20,12 +20,7 @@
 
             <h4 class="menu-root">买手店信息提交</h4>
             <ul class="menu-list">
-                <li>
-                    <ul>
-                        <li>买手店基本信息</li>
-                        <li>添加冻品管家</li>
-                    </ul>
-                </li>
+                <li></li>
             </ul>
         </div>
         <div class="panel-body panel-rt pull-right">
@@ -42,14 +37,14 @@
             <form id="buyer_companyInfo_form" class="buyer_comInfo_form form-horizontal" action="<{link app=buyer ctl=site_passport act=signup}>" method="post" data-module="validator">
                 <div class="form-group">
                 	<label class="col-xs-2 control-label"><span class="text-danger">*</span>姓名</label>
-                    <div class="col-xs-5">
+                    <div class="col-xs-4">
 						<input type="text" class="form-control" name="name" value="" required="true">
 						<span class="msgTip" data-msg="error"></span>
                     </div>
                 </div>
                	<div class="form-group">
                 	<label class="col-xs-2 control-label"><span class="text-danger">*</span>性别</label>
-                    <div class="col-xs-5">
+                    <div class="col-xs-4">
 						<div class="form-item">
 							<span>
 								<input type="radio" name="sex" checked="checked" required="true" value="1"> 男
@@ -63,17 +58,17 @@
                 </div>
                 <div class="form-group">
                 	<label class="col-xs-2 control-label"><span class="text-danger">*</span>身份证号</label>
-                	<div class="col-xs-5">
-						<input type="text" class="form-control" name="card_id" value="" required="true" format="idcard">
-						<span class="msgTip" data-message="format">身份证填写错误</span>
+                	<div class="col-xs-4">
+						<input type="text" class="form-control" name="card_id" value="" required="true" formate="idcard">
+						<span class="msgTip" data-msg="format">身份证填写错误</span>
                     </div>
                 </div>
                 <div class="form-group">
                 	<label class="col-xs-2 control-label"><span class="text-danger">*</span>买手类型</label>
-                    <div class="col-xs-5">
+                    <div class="col-xs-4">
 						<div class="form-item">
 							<span>
-								<input type="checkbox" name="buyer_type" value="1" checked="checked" required="true"> 自主创业型
+								<input type="checkbox" name="buyer_type" value="1"> 自主创业型
 							</span>
 							<span>
 								<input type="checkbox" name="buyer_type" value="2"> 批发型
@@ -89,35 +84,35 @@
                     </div>
                 </div>
              <div class="form-group">
-                 <label class="col-md-2 control-label"><span class="text-danger">*</span>所在地区</label>
+                 <label class="col-md-2 control-label"><span class="required" aria-required="true">*</span>所在地区</label>
                  <div class="col-md-5">
-                     <{input type=region name='consignor[area]' value=$dlyplace.consignor.area required="true"}>
+                     <{input type=region name='consignor[area]' value=$dlyplace.consignor.area}>
                  </div>
              </div>
                 <div class="form-group">
                 	<label class="col-xs-2 control-label"><span class="text-danger">*</span>详细地址</label>
-                	<div class="col-xs-5">
+                	<div class="col-xs-4">
 						<input type="text" class="form-control" name="addr" value="" required="true">
 						<span class="msgTip" data-msg="error"></span>
                     </div>
                 </div>
                 <div class="form-group">
                 	<label class="col-xs-2 control-label"><span class="text-danger">*</span>照片(一寸免冠)</label>
-                	<div class="col-xs-5">
+                	<div class="col-xs-4">
 						<{input type="imageupload" tag="图片上传" name="photo" value=$extra.store.photo required='true' accept="jpg|png|gif" }>
 						<span class="msgTip" data-msg="error"></span>
                     </div>
                 </div>
                 <div class="form-group">
                 	<label class="col-xs-2 control-label"><span class="text-danger">*</span>微信号</label>
-                	<div class="col-xs-5">
+                	<div class="col-xs-4">
 						<input type="text" class="form-control" name="wechat" value="" required="true">
 						<span class="msgTip" data-msg="error"></span>
                     </div>
                 </div>
                 <div class="form-group">
                 	<label class="col-xs-2 control-label"><span class="text-danger">*</span>QQ号</label>
-                	<div class="col-xs-5">
+                	<div class="col-xs-4">
 						<input type="text" class="form-control" name="qq" value="" required="true">
 						<span class="msgTip" data-msg="error"></span>
                     </div>
@@ -125,7 +120,7 @@
                 <hr>
                 <div class="form-group">
                     <label class="col-xs-2"></label>
-                    <div class="col-xs-5">
+                    <div class="col-xs-4">
                         <{if $pageIndex neq '1'}>
                         	<a type="submit" href="<{link app=seller ctl=site_passport act=entry args0=$pageIndex args1=up}>" data-loading-text="正在提交..." class="btn btn-default">返回上一步</a>
                         <{/if}>

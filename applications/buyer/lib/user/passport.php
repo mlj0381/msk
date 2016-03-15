@@ -74,16 +74,10 @@ class buyer_user_passport{
 		
 	}
 	
+	/*
+	 * 判断前台用户名是否存在
+	* */
 	
-	/**
-	 * 检查用户提交信息合法性
-	 * @param unknown $data
-	 * @param unknown $msg
-	 */
-	public function check_signup($data, &$msg){
-		
-	}
-	
-	
+	public function is_exists_mobile($mobile) {}
 	
 }

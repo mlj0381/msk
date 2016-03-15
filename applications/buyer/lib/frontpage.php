@@ -17,10 +17,17 @@ class buyer_frontpage extends site_controller{
 	protected $store = array();
 	
 	public function __construct(&$app){
-		parent::__construct($app);
-		$this->_request = vmc::singleton('base_component_request');
-		
-	}
+        parent::__construct($app);
+        $this->_response->set_header('Cache-Control', 'no-store');
+        $this->_response->set_header('Cache-Control', 'no-cache');
+        $this->_response->set_header('Cache-Control', 'must-revalidate');
+        header('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // 强制查询etag
+        vmc::singleton('base_session')->start();
+        $this->action = $this->_request->get_act_name();
+        $this->controller = $this->_request->get_ctl_name();
+        $this->menuSetting = 'index';
+        $this->set_tmpl('buyer');
+    }
 	
 	
 	public function gen_url($params = array()){
@@ -98,6 +105,40 @@ class buyer_frontpage extends site_controller{
     	$this->pagedata['app_id'] = $app_id;
     	$this->pagedata['_MAIN_'] = 'site/main.html';
     	$this->page('site/main.html');
+    }
+    
+    public function get_menu() {
+    	$xmlfile = $this->app->app_dir . "/menu.xml";
+    	//$xsd = vmc::singleton('base_xml')->xml2array(file_get_contents($xmlfile), $tags);
+    	$parser = xml_parser_create();
+    	xml_parser_set_option($parser, XML_OPTION_CASE_FOLDING, 0);
+    	xml_parser_set_option($parser, XML_OPTION_SKIP_WHITE, 1);
+    	xml_parse_into_struct($parser, file_get_contents($xmlfile), $tags);
+    	xml_parser_free($parser);
+    	$group = Array();
+    	$menus = Array();
+    	$count = count($tags);
+    	$menuSetting = array(
+    			'index' => array('buyer', 'goods', 'manager'),
+    			'account' => array('account'),
+    			'message' => array('message'),
+    	);
+    	$menu = $menuSetting[$this->menuSetting];
+    	foreach ($tags as $key => $item) {
+    		if ($item['tag'] == 'menugroup' && in_array($item['attributes']['name'], $menu)) {
+    			$menuItem = $item['attributes'];
+    			for ($i = $key + 1; $i < $count; $i++) {
+    				if ($tags[$i]['tag'] == 'menu') {
+    					$tags[$i]['attributes']['label'] = $tags[$i]['value'];
+    					$menuItem['items'][] = $tags[$i]['attributes'];
+    					continue;
+    				}
+    				break;
+    			}
+    			$menus[] = $menuItem;
+    		}
+    	}
+    	return $menus;
     }
     
     

@@ -288,6 +288,9 @@ class base_db_pdo_mysql extends base_db_abstract implements base_interface_db
     }
     public function quote($string)
     {
+    	if (!$this->_rw_lnk){
+    		$this->_rw_lnk = $this->_ro_conn();
+    	}
         return $this->_rw_lnk->quote($string);
     }
     public function lastinsertid()
