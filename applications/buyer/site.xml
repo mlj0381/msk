@@ -1,9 +1,33 @@
 <site>
 	<module controller='site_passport' id="buyer">
+		<name>buyerpassport</name>
+		<title>买手店</title>
+		<disable>false</disable>
+	</module>
+	
+	<module controller='site_buyer' id="buyer">
 		<name>buyer</name>
 		<title>买手店中心</title>
 		<disable>false</disable>
 	</module>
 
+
+	<module controller='site_manager' id="buyer">
+		<name>manager</name>
+		<title>冻品管家管理</title>
+		<disable>false</disable>
+	</module>
+	
+	<module controller='site_goods' id="buyer">
+		<name>buyergoods</name>
+		<title>商品管理</title>
+		<disable>false</disable>
+	</module>
+	
+	<module controller='site_accounts' id="buyer">
+		<name>buyeraccounts</name>
+		<title>结算管理</title>
+		<disable>false</disable>
+	</module>
 
 </site>

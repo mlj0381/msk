@@ -12,11 +12,11 @@
 
 
 /**
- * 买手店商品管理类
+ * 冻品管家类
  * @author Administrator
  *
  */
-class buyer_ctl_site_goods extends buyer_frontpage{
+class buyer_ctl_site_manager extends buyer_frontpage{
 	
 	public function __construct(&$app){
 		parent::__construct($app);
@@ -26,34 +26,34 @@ class buyer_ctl_site_goods extends buyer_frontpage{
 	
 	
 	/**
-	 * 出货管理
+	 * 冻品管家管理（list）
 	 */
 	public function index(){
-		
-		$this->output();
+		echo '冻品管家管理';
 	}
 	
 	
 	/**
-	 * 订单详情（单个订单的详情）
+	 * 管家注册（有下一步）
 	 */
-	public function order_details(){
-		echo '订单详情';
+	public function manager_signup(){
+		echo '管家注册';
 	}
 	
 	
 	/**
-	 * 已购买商品
+	 * 管家资质信息（包括：基本信息+工作履历）
 	 */
-	public function stock(){
-		echo '进货管理->已购买商品';
+	public function certification(){
+		echo '管家资质信息';
 	}
 	
+	
 	/**
-	 * 库存管理
+	 * 所有业绩列表（里面加的有查询和js）
 	 */
-	public function repertory(){
-		echo '库存管理';
+	public function feat(){
+		echo '业绩查询';
 	}
 	
 	
