@@ -1,10 +1,10 @@
-<div class="seller_page">
+<div class="buyer_page">
     <div class="page-header">
         <h1>订单列表
         </h1>
     </div>
     <div class="order-screening clearfix">
-        <form class="form-inline" action="<{link app=seller ctl=site_order act=index args0=$current_status}>" method="post">
+        <form class="form-inline" action="<{link app=buyer ctl=site_goods act=index args0=$current_status}>" method="post">
           <!--<div class="form-group">-->
             <!--<label>商品名称</label>-->
             <!--<input type="text" name="order[name]" value="" class="form-control" placeholder="商品名称">-->
@@ -46,20 +46,20 @@
     </div>
     <ul class="nav nav-tabs my-orders-nav">
         <li <{if !$current_status||$current_status=='all' }>class="active"
-            <{/if}>><a href="<{link app=seller ctl=site_order act=index}>">全部订单</a></li>
+            <{/if}>><a href="<{link app=buyer ctl=site_goods act=index}>">全部订单</a></li>
         <li <{if $current_status=='s1' }>class="active"
-            <{/if}>><a href="<{link app=seller ctl=site_order act=index args0=s1}>">待付款</a></li>
+            <{/if}>><a href="<{link app=buyer ctl=site_goods act=index args0=s1}>">待付款</a></li>
         <li <{if $current_status=='s2' }>class="active"
-            <{/if}>><a href="<{link app=seller ctl=site_order act=index args0=s2}>">待发货</a></li>
+            <{/if}>><a href="<{link app=buyer ctl=site_goods act=index args0=s2}>">待发货</a></li>
         <li <{if $current_status=='s3' }>class="active"
-            <{/if}>><a href="<{link app=seller ctl=site_order act=index args0=s3}>">待收货</a></li>
+            <{/if}>><a href="<{link app=buyer ctl=site_goods act=index args0=s3}>">待收货</a></li>
         <li <{if $current_status=='s4' }>class="active"
-            <{/if}>><a href="<{link app=seller ctl=site_order act=index args0=s4}>">待评价</a></li>
+            <{/if}>><a href="<{link app=buyer ctl=site_goods act=index args0=s4}>">待评价</a></li>
         <li <{if $current_status=='s5' }> class="active" <{/if}>>
-            <a href="<{link app=seller ctl=site_order act=index args0=s5}>">交易成功</a>
+            <a href="<{link app=buyer ctl=site_goods act=index args0=s5}>">交易成功</a>
         </li>
         <li <{if $current_status=='s6' }> class="active" <{/if}>>
-            <a href="<{link app=seller ctl=site_order act=index args0=s6}>">已关闭</a>
+            <a href="<{link app=buyer ctl=site_goods act=index args0=s6}>">已关闭</a>
         </li>
     </ul>
      <{if $order_list}>
@@ -108,7 +108,7 @@
                         <li>
                             <{$order.createtime|cdate}>
                         </li>
-                        <li>#<a class="text-muted" href="<{link app=seller ctl=site_order act=detail args0=$order.order_id}>"><strong><{$order.order_id}></strong></a></li>
+                        <li>#<a class="text-muted" href="<{link app=buyer ctl=site_goods act=detail args0=$order.order_id}>"><strong><{$order.order_id}></strong></a></li>
                         <!--<li>-->
                             <!--<{$order.pay_status|order_pay_status}>-->
                         <!--</li>-->
@@ -206,7 +206,7 @@
 
                         
                               <{/if}>
-                              <a href="<{link app=seller ctl=site_order act=detail args0=$order.order_id}>" class="btn_link btn-block">订单详情</a>
+                              <a href="<{link app=buyer ctl=site_order act=detail args0=$order.order_id}>" class="btn_link btn-block">订单详情</a>
                               <{else}>
                               
                               <{/if}>

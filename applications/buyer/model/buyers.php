@@ -118,8 +118,10 @@ class buyer_mdl_buyers extends dbeav_model{
 		if (pam_encrypt::get_encrypted_password($old_password, 'seller',$use_pass_data) == $check_data['login_password']){
 			$reset['login_password'] = pam_encrypt::get_encrypted_password($new_password, 'seller',$use_pass_data);
 			if ($mdl_pm_sellers->update($reset,array('seller_id'=>$user_id))){
+				vmc::singleton('base_session')->start();
+				vmc::singleton('buyer_user_object')->set_session();
 				//修改成功
-				return 'yes';
+				return 'success';
 			}else {
 				//修改失败
 				return 'no';

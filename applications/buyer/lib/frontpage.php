@@ -39,7 +39,12 @@ class buyer_frontpage extends site_controller{
 	 */
 	 function verify_buyer(){
 		if (defined('BUYERID'))	return ;
-		define('BUYERID', vmc::singleton('buyer_user_passport')->is_login());
+		/**
+		 * define('BUYERID', vmc::singleton('buyer_user_passport')->is_login());
+		 * 这个走seller的session规则
+		 * @var unknown
+		 */
+		define('BUYERID', vmc::singleton('buyer_user_object')->is_login());
 		if (!BUYERID){
 			$login_url = $this->gen_url(array(
 					'app' => 'buyer',
