@@ -122,17 +122,6 @@ class seller_ctl_site_goods extends seller_frontpage
         $this->output();
     }
 
-//    public function selfParams()
-//    {
-//        //商品参数配置
-//
-//        $cat_id = $_POST['cat_id'];
-//        $mdl_goods_type = app::get('b2c')->model('goods_type');
-//        $return = $mdl_goods_type->getRow('*', array('cat' => $cat_id));
-//        $return['son'] = $mdl_goods_type->get_props($return['type_id']);
-//        $this->splash('success', '', $return);
-//    }
-
     //获取商品添加所需基本参数
     private function basic()
     {
@@ -259,8 +248,6 @@ class seller_ctl_site_goods extends seller_frontpage
 
     public function save($type = null)
     {
-        header('Content-Type:text/html;charset=utf-8');
-
         $redirect_url = $this->gen_url(array('app' => 'seller', 'ctl' => 'site_goods', 'act' => $type ? 'add' : 'index'));
         if (!$_POST) {
             $this->splash(false, $redirect_url, '非法请求');
