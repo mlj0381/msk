@@ -98,10 +98,6 @@ class buyer_mdl_buyers extends dbeav_model{
 		
 	}
 	
-	public function update_buyer_data($data){
-		
-	}
-	
 	
 	
 	public function get_schedule($buyer_id){
@@ -111,6 +107,29 @@ class buyer_mdl_buyers extends dbeav_model{
 	
 	public function is_exists_mobile($mobile){
 		return $this->getRow('buyer_id',array('mobile'=>trim($mobile)));
+	}
+	
+	public function reset_password($user_id,$old_password,$new_password){
+		$mdl_pm_sellers = app::get('pam')->model('sellers');
+		$check_data = $mdl_pm_sellers->getRow('login_account,createtime,password_account,login_password',array('seller_id'=>$user_id));
+		
+		$use_pass_data['login_name'] = $check_data['password_account'];
+		$use_pass_data['createtime'] = $check_data['createtime'];
+		if (pam_encrypt::get_encrypted_password($old_password, 'seller',$use_pass_data) == $check_data['login_password']){
+			$reset['login_password'] = pam_encrypt::get_encrypted_password($new_password, 'seller',$use_pass_data);
+			if ($mdl_pm_sellers->update($reset,array('seller_id'=>$user_id))){
+				//修改成功
+				return 'yes';
+			}else {
+				//修改失败
+				return 'no';
+			}
+		}else {
+			//旧密码错误
+			return 'error';
+		}
+		
+		
 	}
 	
 	

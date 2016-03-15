@@ -35,7 +35,7 @@ class buyer_ctl_site_passport extends buyer_frontpage{
 	 * @return boolean
 	 */
 	public function check_login(){
-		$is_login = vmc::singleton('buyer_user_passport')->is_login();
+		$is_login = $this->passport_obj->is_login();
 		if (0 < $is_login){
             $redirect = $this->gen_url(array(
                 'app' => 'buyer',
@@ -52,7 +52,7 @@ class buyer_ctl_site_passport extends buyer_frontpage{
 	 */
 	public function login(){	
 		$this->check_login();
-		
+
 		if ($_POST){
 			//uname,password,vcode
 			$params = utils::_filter_input($_POST);
@@ -210,7 +210,7 @@ class buyer_ctl_site_passport extends buyer_frontpage{
 			$this->splash('error', '', '手机号不能为空');
 		}
 		
-		$mobile_type = vmc::singleton('buyer_user_passport')->get_login_account_type($mobile);
+		$mobile_type = $this->passport_obj->get_login_account_type($mobile);
 		if($mobile_type != 'mobile'){
 			$this->splash('error', '', '请填写正确的手机号');
 		}
@@ -254,22 +254,6 @@ class buyer_ctl_site_passport extends buyer_frontpage{
 	}
 	
 	
-	/**
-	 * 验证码
-	 */
-	public function vcode_verify(){
-	
-	}
-	
-	
-	/**
-	 * 重置密码
-	 * 可能用户已经注册，但是忘记了密码
-	 * 忘记密码必须重新验证信息方可重置
-	 */
-	public function reset_password(){
-		
-	}
 	
 	
 	/**
@@ -289,6 +273,37 @@ class buyer_ctl_site_passport extends buyer_frontpage{
 		}
 		$this->splash('success', $forward, '退出登录成功');
 	}
+	
+	
+	//发送身份识别验证码
+	public function member_vcode(){
+		$account = $_POST['account'];
+		$login_type = $this->passport_obj->get_login_account_type($account);
+		if ($login_type != 'mobile' && $login_type != 'email') {
+			$this->splash('error', null, '请输入正确的手机或邮箱!');
+		}
+		if (!$this->passport_obj->is_exists_mobile($account)) {
+			$this->splash('error', null, '验证手机不正确!');
+		}
+		if (!$vcode = vmc::singleton('buyer_user_vcode')->set_vcode($account, 'reset', $msg)) {
+			$this->splash('error', null, $msg);
+		}
+		$this->splash('success', $vcode, '短信已发送');
+		$data['vcode'] = $vcode;
+		switch ($login_type) {
+			case 'email':
+				$send_flag = vmc::singleton('buyer_user_vcode')->send_email('reset', (string)$account, $data);
+				break;
+			case 'mobile':
+				$send_flag = vmc::singleton('buyer_user_vcode')->send_sms('reset', (string)$account, $data);
+				break;
+		}
+		if (!$send_flag) {
+			$this->splash('error', null, '发送失败');
+		}
+		$this->splash('success', null, '发送成功');
+	}
+	
 	
 	/**
 	 * 不用了

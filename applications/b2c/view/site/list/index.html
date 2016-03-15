@@ -175,22 +175,21 @@
                       </div>
                     <div class="caption">
                       <ul class="list-inline">
-
-
                           <{assign var=max value=$item.product.interval.price[0]}>
                           <{assign var=min value=$item.product.interval.price[0]}>
-                          <{foreach from=$item.product.interval.price item=item}>
-                                <span class="hide"><{if $max < $item }><{$max=$item}><{/if}>
-                                <{if $min > $item}><{$min=$item}><{/if}></span>
+                          <{foreach from=$item.product.interval.price item=price}>
+                                <span class="hide"><{if $max < $price }><{$max=$price}><{/if}>
+                                <{if $min > $price}><{$min=$price}><{/if}></span>
                           <{/foreach}>
+                          <li class="price-1"><{$min}><{if $min neq $max}> -- <{$max}><{/if}></li>
                           <!-- 显示价格区间-->
 
-                          ￥<{if $item.product.promotion.sale_price && $item.product.promotion.sale_price!='null'}>
-                          <li class="text-muted"><del><{$item.product.buy_price|cur}></del></li>
-                          <li class="price-1"><{$item.product.promotion.sale_price|cur}></li>
-                          <{else}>
-                          <li class="price-1"><{$item.product.price_dn|cur}></li>
-                          <{/if}>
+                          <!--￥<{if $item.product.promotion.sale_price && $item.product.promotion.sale_price!='null'}>-->
+                          <!--&lt;!&ndash;<li class="text-muted"><del><{$item.product.buy_price|cur}></del></li>&ndash;&gt;-->
+                          <!--<li class="price-1"><{$item.product.promotion.sale_price|cur}></li>-->
+                          <!--<{else}>-->
+                          <!--<li class="price-1"><{$item.product.price_dn|cur}></li>-->
+                          <!--<{/if}>-->
                       </ul>
                       <h3 class="g-name">
                           <a href="<{link app=b2c ctl=site_product args0=$item.product.product_id args1=$item.store_id}>" title='<{$item.name}>'><{$item.name}></a>
@@ -211,32 +210,32 @@
                     </div>
                   </div>
                 </div>
-                <{if $item.product.list_extension}>
-                <!--单品多样-->
-                  <{foreach from=$item.product.list_extension item=item2}>
-                      <div class="col-xs-3 col-extension">
-                        <div class="thumbnail goods-item">
-                            <div class="gi-image-wrapper">
-                                <a href="<{link app=b2c ctl=site_product args0=$item2.product_id}>">
-                                    <img src="<{$base_url}>/themes/pc/default/statics/images/loading.gif" data-original="<{$item2.image_id|storager:'s'}>" alt="<{$item.name}><{$item2.spec_info}>">
-                                </a>
-                            </div>
-                          <div class="caption">
-                            <h3 class="g-name">
-                                <a href="<{link app=b2c ctl=site_product args0=$item2.product_id}>"><{$item.name}></a>
-                            </h3>
-                            <p class="avg-mark">
-                                <span class="text-warning"><{$item.mark_star|star}></span> <small><{$item.mark_star|number_format:'1'}></small>
-                            </p>
-                            <ul class="list-inline">
-                                <li class="price-1 text-danger"><{$item2.buy_price|cur}></li>
-                            </ul>
-                          </div>
-                        </div>
-                      </div>
-                  <{/foreach}>
-                  <!--单品多样-->
-                <{/if}>
+                <!--<{if $item.product.list_extension}>-->
+                <!--&lt;!&ndash;单品多样&ndash;&gt;-->
+                  <!--<{*foreach from=$item.product.list_extension item=item2*}>-->
+                      <!--<div class="col-xs-3 col-extension">-->
+                        <!--<div class="thumbnail goods-item">-->
+                            <!--<div class="gi-image-wrapper">-->
+                                <!--<a href="<{link app=b2c ctl=site_product args0=$item2.product_id}>">-->
+                                    <!--<img src="<{$base_url}>/themes/pc/default/statics/images/loading.gif" data-original="<{$item2.image_id|storager:'s'}>" alt="<{$item.name}><{$item2.spec_info}>">-->
+                                <!--</a>-->
+                            <!--</div>-->
+                          <!--<div class="caption">-->
+                            <!--<h3 class="g-name">-->
+                                <!--<a href="<{link app=b2c ctl=site_product args0=$item2.product_id}>"><{$item.name}></a>-->
+                            <!--</h3>-->
+                            <!--<p class="avg-mark">-->
+                                <!--<span class="text-warning"><{$item.mark_star|star}></span> <small><{$item.mark_star|number_format:'1'}></small>-->
+                            <!--</p>-->
+                            <!--<ul class="list-inline">-->
+                                <!--<li class="price-1 text-danger"><{$item2.buy_price|cur}></li>-->
+                            <!--</ul>-->
+                          <!--</div>-->
+                        <!--</div>-->
+                      <!--</div>-->
+                  <!--<{*/foreach*}>-->
+                  <!--&lt;!&ndash;单品多样&ndash;&gt;-->
+                <!--<{/if}>-->
               <{/foreach}>
           </div>
             <{elseif $show_type eq 's'}>

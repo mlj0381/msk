@@ -17,15 +17,15 @@ class seller_user_object{
      * 判断当前用户是否登录
      */
     public function is_login(){
-        $seller_id = $this->get_seller_session();
+        $seller_id = $this->get_session();
         return $seller_id ? true : false;
     }
 
     /**
      * 获取当前用户ID
      */
-    public function get_seller_id(){
-        return $seller_id = $this->get_seller_session();
+    public function get_id(){
+        return $seller_id = $this->get_session();
     }
 
     //根据用户名得到会员ID
@@ -38,18 +38,18 @@ class seller_user_object{
     /**
      * 设置会员登录session seller_id
      */
-    public function set_seller_session($seller_id){
+    public function set_session($seller_id){
         unset($_SESSION['error_count']['b2c']);
-        $_SESSION['account']['seller'] = $seller_id;
+        $_SESSION['account'][$this->app->app_id] = $seller_id;
     }
 
     /**
      * 获取会员登录session seller_id
      */
-    public function get_seller_session(){
+    public function get_session(){
         if($this->seller_id)return $this->seller_id;
-        if(isset($_SESSION['account']['seller']) &&  $_SESSION['account']['seller']){
-            return $_SESSION['account']['seller'];
+        if(isset($_SESSION['account'][$this->app->app_id]) &&  $_SESSION['account'][$this->app->app_id]){
+            return $_SESSION['account'][$this->app->app_id];
         }else{
             return false;
         }
@@ -73,7 +73,7 @@ class seller_user_object{
      */
     public function get_seller_info( $seller_id ) {
         if(!$seller_id){
-            $seller_id = $this->seller_id = $this->get_seller_id();
+            $seller_id = $this->seller_id = $this->get_id();
         }
         $sellerFilter = array(
             'account' => 'seller_id,login_account,login_type',
@@ -105,7 +105,7 @@ class seller_user_object{
      */
     public function get_sellers_data($columns,$seller_id=null){
         if(!$seller_id){
-            $this->seller_id = $this->get_seller_id();
+            $this->seller_id = $this->get_id();
         }
 
         if( $columns['account'] ){
@@ -181,7 +181,7 @@ class seller_user_object{
      */
     public function get_seller_name($login_name=null,$seller_id=null){
         if(!$login_name){
-            $seller_id = $seller_id ? $seller_id : $this->get_seller_id();
+            $seller_id = $seller_id ? $seller_id : $this->get_id();
             $pam_sellers_model = app::get('pam')->model('sellers');
             $data = $pam_sellers_model->getList('*',array('seller_id'=>$seller_id));
             foreach((array)$data as $row){

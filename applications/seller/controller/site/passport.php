@@ -82,7 +82,7 @@ class seller_ctl_site_passport extends seller_frontpage
         }
 
         //设置session
-        $this->user_obj->set_seller_session($seller_id);
+        $this->user_obj->set_session($seller_id);
         //设置客户端cookie
         $this->bind_seller($seller_id);
         $forward = $params['forward'];
@@ -97,7 +97,6 @@ class seller_ctl_site_passport extends seller_frontpage
     }
 
 
-
     //添加品牌资质
     public function brand_aptitude($step = 0, $type)
     {
@@ -107,16 +106,14 @@ class seller_ctl_site_passport extends seller_frontpage
         $business_type = $params['card'] ?: 'new';
         $tpl = 'brand_companyType';
         $this->passport_obj->entryType = 'brand';
-        if($_POST)
-        {
+        if ($_POST) {
             $params = utils::_filter_input($_POST);
             unset($_POST);
             $result = $this->passport_obj->entry($params, $msg);
-            if(!$result) $this->splash('error', '', $msg . '信息注册失败');
+            if (!$result) $this->splash('error', '', $msg . '信息注册失败');
             //$step ++;
         }
-        if (is_numeric($identity))
-        {
+        if (is_numeric($identity)) {
             $tpl = 'brand_companyInfo';
             $columns = $this->app->getConf('seller_entry');
             $countPage = count($columns[$identity]['pageSet']);
@@ -129,12 +126,12 @@ class seller_ctl_site_passport extends seller_frontpage
             $selfPage['page'] = array_flip($selfPage['page']);
             $this->pagedata['pageSet'] = $selfPage;
             $this->pagedata['identity'] = $identity;
-            if($params['type'] != 'add')
+            if ($params['type'] != 'add')
                 $this->pagedata['info'] = $this->passport_obj->edit_info($selfPage, $this->seller['seller_id'], $identity);
             $this->pagedata['pageIndex'] = $step;
             $this->pagedata['info']['company_extra']['page_setting'] = $this->passport_obj->columns();
             var_dump($step);
-            if($step > $countPage){
+            if ($step > $countPage) {
                 $sumPage = $this->passport_obj->countPage();
                 $redirect = $this->gen_url(array('app' => 'seller', 'ctl' => 'site_passport', 'act' => 'entry', 'args0' => ($sumPage['sum'] - 1)));
                 $this->splash('success', $redirect, '资质添加成功');
@@ -336,7 +333,7 @@ class seller_ctl_site_passport extends seller_frontpage
               $object->create_after($seller_id);
               }
              */
-            $this->user_obj->set_seller_session($seller_id);
+            $this->user_obj->set_session($seller_id);
             $this->bind_seller($seller_id);
             return true;
         } else {
@@ -407,10 +404,13 @@ class seller_ctl_site_passport extends seller_frontpage
     {
         $mobile = trim($_POST['mobile']);
         if ($_POST['type'] != 'securitycenter') {
+            /*
+             * 不用检查手机号是否存在
             if (!$this->passport_obj->check_signup_account($mobile, $msg)) {
                 $this->splash('error', null, $msg);
             }
-
+            */
+            $msg = $this->passport_obj->get_login_account_type($mobile);
             if ($msg != 'mobile') {
                 $this->splash('error', null, '错误的手机格式');
             }
@@ -576,15 +576,14 @@ class seller_ctl_site_passport extends seller_frontpage
     {
         (!is_numeric($_POST['ident'])) && $this->splash('error', '', '非法请求');
         $redirect = array('app' => 'seller', 'ctl' => 'site_passport', 'act' => 'entry');
-        if($_POST['type'] == '1')
-        {
+        if ($_POST['type'] == '1') {
             $redirect = array('app' => 'buyer', 'ctl' => 'site_passport', 'act' => 'signup');
         }
         $redirect = $this->gen_url($redirect);
         if ($_POST) {
             $db = vmc::database();
             $db->beginTransaction();
-            $dataValue = array( 'ident' => $_POST['ident'], 'type' => $_POST['type']);
+            $dataValue = array('ident' => $_POST['ident'], 'type' => $_POST['type']);
             $filter = array('seller_id' => $this->seller['seller_id']);
             if (!$this->app->model('sellers')->update($dataValue, $filter)) {
                 $db->rollback();
@@ -608,7 +607,43 @@ class seller_ctl_site_passport extends seller_frontpage
         $mdl_company_extra = app::get('base')->model('company_extra');
         $company = $mdl_company->getRow('*', array('business' => $_POST['business'], 'business_type' => $_POST['business_type']));
         if (!empty($company)) {
-            $company['extra'] = $mdl_company_extra->getList('*', array('extra_id' => $company['company_id'], 'identity' =>''));
+            $company['extra'] = $mdl_company_extra->getList('*', array('extra_id' => $company['company_id'], 'identity' => ''));
         }
+    }
+
+    //添加品牌资质
+    public function add_brand()
+    {
+
+        if ($_POST) {
+            $params = utils::_filter_input($_POST);
+            unset($_POST);
+            $this->_post_brand($params);
+        }
+        //查询商家所有的公司
+        $this->pagedata['company'] = app::get('base')->model('company_seller')->getList('company_id, company_name',
+            array('uid' => $this->seller['seller_id'], 'from' => 1));
+        $this->display('ui/brand_add_modal.html');
+    }
+
+    private function _post_brand($post)
+    {
+        $count = vmc::singleton('seller_user_passport')->countPage();
+        $redirect = Array('app' => 'seller', 'ctl' => 'site_passport', 'act' => 'entry', 'args0' => ($count['sum'] - 1));
+        $redirect = $this->gen_url($redirect);
+        $post['brand']['seller_id'] = $this->seller['seller_id'];
+        if (!$this->mB2cbrand->save_brand($post)) {
+            $this->splash('error', $redirect, '操作失败');
+        }
+        $this->splash('success', $redirect, '添加成功');
+    }
+
+    /*
+     * 商家入驻添加经营类别
+     * */
+    public function add_cat()
+    {
+        //获取分类
+        $this->display('ui/add-cat.html');
     }
 }

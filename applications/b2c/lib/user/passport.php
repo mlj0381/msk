@@ -186,7 +186,7 @@ class b2c_user_passport {
         $data['currency'] = $arrDefCurrency['cur_code'];
         $data['reg_ip'] = base_request::get_remote_addr();
         $data['regtime'] = time();
-        $data['contact']['phone']['mobile'] = $data['pam_account']['mobile'];
+        //$data['contact']['phone']['mobile'] = $data['pam_account']['mobile'];
 
         //--防止恶意修改
         foreach ($data as $key => $val) {

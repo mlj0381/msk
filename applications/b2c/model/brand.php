@@ -72,4 +72,34 @@ class b2c_mdl_brand extends dbeav_model
 
         return '~';
     }
+
+    public function save_brand($data)
+    {
+        extract($data);
+        $db = vmc::database();
+        $db->beginTransaction();
+        $mdl_b2c_brand = app::get('b2c')->model('brand');
+        if ($brand['brand_id']) {
+            $brand_name = $this->mBrand->getRow('brand_name', array('brand_id' => $brand['brand_id'], 'seller_id' => $brand['seller_id']));
+            $b2c_fun_name = 'save';
+            $seller_fun_name = 'update';
+            $brand['brand_name'] = $brand_name['brand_name'];
+        } else {
+            $brand['create_time'] = time();
+            $b2c_fun_name = 'insert';
+            $seller_fun_name = 'save';
+        }
+        if (!$brand_id = $mdl_b2c_brand->$b2c_fun_name($brand)) {
+            $db->rollback();
+            return false;
+        }
+        $brand['brand_id'] = $brand['brand_id'] ? $brand['brand_id'] : $brand_id;
+        $filter = array('seller_id' => $this->seller['seller_id'], 'brand_id' => $brand['brand_id']);
+        if (!$this->$seller_fun_name($brand, $filter)) {
+            $db->rollback();
+            return false;
+        }
+        $db->commit();
+        return true;
+    }
 }

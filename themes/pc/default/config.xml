@@ -26,5 +26,6 @@
         <file type="seller_settled" use="商家入驻页">seller-settled.html</file>
         <file type="store_home" use="店铺首页">store-default.html</file>
         <file type="seller" use="商家中心页">default-seller.html</file>
+        <file type="buyer" use="买手中心页">default-buyer.html</file>
     </views>
 </theme>

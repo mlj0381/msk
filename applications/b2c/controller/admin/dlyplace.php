@@ -75,6 +75,12 @@ class b2c_ctl_admin_dlyplace extends desktop_controller {
 
     public function delWarehouse()
     {
-
+        $this->begin('index.php?app=b2c&ctl=admin_dlyplace&act=index');
+        if(empty($_POST)) $this->end('false', '非法请求');
+        if($this->app->model('warehouse')->delete(array('id' => $_POST['id'])))
+        {
+            $this->end('true', '操作成功');
+        }
+        $this->end('true', '操作失败');
     }
 }
