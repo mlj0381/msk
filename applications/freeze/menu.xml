@@ -1,0 +1,9 @@
+<menus>
+    <menugroup name="index" label="管家中心">
+        <menu app='freeze' controller='site_center' action='info' display='true' order="60">个人信息</menu>
+        <menu app='freeze' controller='site_center' action='buyer_manage' display='true' order="70">买家管理</menu>
+        <menu app='freeze' controller='site_center' action='orders_manage' display='true' order="80">订单管理</menu>
+        <menu app='freeze' controller='site_center' action='goods_manage' display='true' order="90">商品管理</menu>
+        <menu app='freeze' controller='site_center' action='buyer_info' display='true' order="100">买手店基本信息</menu>
+    </menugroup>
+</menus>

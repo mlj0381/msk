@@ -1,0 +1,13 @@
+<site>
+    <module controller='site_center' id="freeze">
+        <name>freezecenter</name>
+        <title>冻品管家中心</title>
+        <disable>true</disable>
+    </module>
+    <module controller='site_passport' id="freeze">
+        <name>freezepassport</name>
+        <title>冻品信息注册</title>
+        <disable>true</disable>
+    </module>
+
+</site>

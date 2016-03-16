@@ -27,9 +27,11 @@ class buyer_ctl_site_buyer extends buyer_frontpage{
 	}
 	
 	
-	public function index(){
+	public function index($status){
+		//'args'=>$status;
         $this->output();
 	}
+	
 	
 	/**
 	 * 个人信息
@@ -52,20 +54,31 @@ class buyer_ctl_site_buyer extends buyer_frontpage{
 			$params = utils::_filter_input($_POST);
 			unset($_POST);
 			vmc::singleton('base_session')->start();
-			$status = $this->app->model('buyers')->reset_password($user_id,$old_password,$new_password);
+			$user_id = vmc::singleton('buyer_user_object')->get_session();
+			if ($params['new_password'] != $params['confirm_password']){
+				$this->splash('error', '', '两次输入的新密码不一致！');
+			}
+			$status = $this->app->model('buyers')->reset_password($user_id,$params['old_password'],$params['new_password']);
 			
 			switch ($status){
-				case 'yes':
+				case 'success':
 					$msg = '新密码设置成功！';
+					$url = $this->gen_url(array(
+							'app' => 'buyer',
+							'ctl' => 'site_passport',
+							'act' => 'login',
+					));
 					break;
 				case 'no':
 					$msg = '新密码设置失败！';
+					$url = '';
 					break;
 				case 'error':
 					$msg = '旧密码输入错误！';
+					$url = '';
 					break;
 			}
-			//.......................
+			$this->splash(($status == 'no') ? 'error' :$status, $url, $msg);
 			
 		}
 		$this->output();

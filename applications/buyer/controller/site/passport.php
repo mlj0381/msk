@@ -21,6 +21,7 @@ class buyer_ctl_site_passport extends buyer_frontpage{
 	public function __construct(&$app){
 		parent::__construct($app);
 		$this->passport_obj = vmc::singleton('buyer_user_passport');
+		$this->object_obj = vmc::singleton('buyer_user_object');
 		//后面还需要什么............
 	}
 	
@@ -35,14 +36,19 @@ class buyer_ctl_site_passport extends buyer_frontpage{
 	 * @return boolean
 	 */
 	public function check_login(){
-		$is_login = $this->passport_obj->is_login();
+		
+		/*
+		 * 这个也走seller的session验证规则
+		 * $is_login = $this->passport_obj->is_login();
+		 */
+		$is_login = $this->object_obj->is_login();
 		if (0 < $is_login){
             $redirect = $this->gen_url(array(
                 'app' => 'buyer',
                 'ctl' => 'site_buyer',
                 'act' => 'index',
             ));
-            $this->splash('success', $redirect, '已经是登陆状态！');exit;
+            $this->splash('success', $redirect, '已经是登陆状态！');
         }
 		return false;
 	}
@@ -76,7 +82,11 @@ class buyer_ctl_site_passport extends buyer_frontpage{
 			$check_password = $this->app->model('buyers')->check_password($userdata['buyer_id'], $password);
 			
 			if ($check_password){
-				$this->app->model('buyers')->autologin($userdata);
+				/**
+				 * 重新用seller的session验证规则
+				 * $this->app->model('buyers')->autologin($userdata);
+				 */
+				$this->object_obj->set_session($userdata['buyer_id']);
 				$this->set_cookie('UNAME', $userdata['login_account']);
 				$this->set_cookie('SELLER_IDENT', $userdata['buyer_id']);	
 				$redirect = $this->gen_url(array(
@@ -114,7 +124,7 @@ class buyer_ctl_site_passport extends buyer_frontpage{
 		//存在post过来的用户名
 		//检测用户名合法性
 		vmc::singleton('base_session')->start();
-		if (vmc::singleton('seller_user_object')->get_seller_id()){
+		if ($this->object_obj->get_session()){
 			if ($_POST){
 				$params = utils::_filter_input($_POST);
 				unset($_POST);
@@ -139,7 +149,7 @@ class buyer_ctl_site_passport extends buyer_frontpage{
 				if (!$params['qq']){
 					$this->splash('error', '', 'QQ号不能为空');
 				}
-				$params['buyer_id'] = vmc::singleton('seller_user_object')->get_seller_id();
+				$params['buyer_id'] = $this->object_obj->get_session();
 				if ($this->app->model('buyers')->save_buyer_data($params)){
 					$this->set_tmpl('passport');
 					$this->page('site/passport/signup_complete.html');
@@ -156,12 +166,8 @@ class buyer_ctl_site_passport extends buyer_frontpage{
 				$this->page('site/passport/signup_baseInfo.html');
 			}			
 		}else {
-			$redirect = $this->gen_url(array(
-					'app' => 'seller',
-					'ctl' => 'site_passport',
-					'act' => 'settled_index',
-			));
-			$this->splash('error', $redirect, '无效操作!');
+			$this->pagedata['show'] = 'yes';
+			$this->page('site/passport/signup.html');
 		}
 		        
 	}
