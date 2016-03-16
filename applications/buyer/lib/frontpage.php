@@ -53,6 +53,16 @@ class buyer_frontpage extends site_controller{
 			));
 			
 			$this->splash('error', $login_url, '请重新登陆');exit;
+		}else {
+			$is_user = app::get('buyer')->model('buyers')->check_buyer(BUYERID);
+			if (!$is_user){
+				$redirect = $this->gen_url(array(
+						'app' => 'buyer',
+						'ctl' => 'site_passport',
+						'act' => 'signup',
+				));
+				$this->splash('error', $redirect, '未注册完成！');
+			}
 		}
 	}
 	
