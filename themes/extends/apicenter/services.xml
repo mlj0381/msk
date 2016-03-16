@@ -1,0 +1,22 @@
+<services>
+    <service id="api.buyer" optname="api@与买家相关接口">
+        <class>apicenter_api_buyer</class>
+    </service>
+
+    <service id="api.commont" optname="api@公用接口">
+        <class>apicenter_api_commont</class>
+    </service>
+
+    <service id="api.order" optname="api@与订单相关接口">
+        <class>apicenter_api_order</class>
+    </service>
+
+    <service id="api.product" optname="api@与产品相关接口">
+        <class>apicenter_api_product</class>
+    </service>
+
+    <service id="api.seller" optname="api@与卖家相关接口">
+        <class>apicenter_api_seller</class>
+    </service>
+
+</services>
