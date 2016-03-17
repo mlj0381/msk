@@ -46,6 +46,6 @@
     </menugroup>
 	-->
     <menugroup label="消息中心" name="message">
-        <menu app='seller' controller='site_seller' action='clearing' display='true' order="60">站内信</menu>
+        <menu app='seller' controller='site_seller' action='clearing' display='false  ' order="60">站内信</menu>
     </menugroup>
 </menus>

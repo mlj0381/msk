@@ -42,7 +42,7 @@ class buyer_ctl_site_passport extends buyer_frontpage{
 		 * $is_login = $this->passport_obj->is_login();
 		 */
 		$is_login = $this->object_obj->is_login();
-		if (0 < $is_login){
+		if (0 < $is_login['account']['seller']){
             $redirect = $this->gen_url(array(
                 'app' => 'buyer',
                 'ctl' => 'site_buyer',
