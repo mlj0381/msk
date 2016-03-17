@@ -34,7 +34,6 @@ class b2c_goods_stage
     {
         $goods_list = utils::array_change_key($goods_list, 'goods_id');
         $gids = array_keys($goods_list);
-        $mdl_products = app::get('b2c')->model('products');
         $products = $this->mdl_products->getList('*', array(
             'goods_id' => $gids,
             'marketable' => 'true',
@@ -49,6 +48,7 @@ class b2c_goods_stage
                 $lv_discount = 1;
             }
         }
+        $mdl_interval = app::get('b2c')->model('interval');
         foreach ($products as $k => $v) {
             if (is_array($v)) {
                 $goods_list[$k]['product'] = $v[0];
@@ -63,7 +63,7 @@ class b2c_goods_stage
             // }else{
             //     $goods_list[$k]['product']['image_id'] = $goods_list[$k]['image_default_id'];
             // }
-
+            $goods_list[$k]['product']['interval'] = $mdl_interval->getList('*', array('product_id' => $goods_list[$k]['product']['product_id']));
             if ($lv_discount) {
                 //会员价
                 $goods_list[$k]['product']['buy_price'] = $goods_list[$k]['product']['member_lv_price'] = $lv_discount * $goods_list[$k]['product']['price'];
@@ -211,12 +211,13 @@ class b2c_goods_stage
             $data_detail = $this->mdl_goods->dump($product['goods_id'], '*', 'default');
             $current_product = $data_detail['product'][$pkey];
         }
-
         if (!$data_detail || !$current_product) {
             $msg = 'NOT FOUND';
-
             return false;
         }
+        //获取价盘
+        $mdl_interval = app::get('b2c')->model('interval');
+        $current_product['interval'] = $mdl_interval->getList('*', array('product_id' => $current_product['product_id']));
 
         //获得扩展属性
         $mdl_gtype = $this->app->model('goods_type');
@@ -250,7 +251,7 @@ class b2c_goods_stage
             }
         }
 
-        foreach ($data_detail['product'] as $key => $product) {
+        foreach ($data_detail['product'] as $key => &$product) {
             /*规格选项计算 BEGIN*/
             $spec_desc_arr = explode(':::', $product['spec_desc']);
             $diff_spec = array_diff_assoc($spec_desc_arr, $current_product_sprc_desc);
@@ -276,12 +277,10 @@ class b2c_goods_stage
                     }
                 }
             }
-            
             /*规格选项计算 END*/
         }
         //只给当前货品数据
         $data_detail['product'] = $current_product;
-
         //默认图
         $product_image_id = $data_detail['product']['image_id'];
         if ($data_detail['product'] && $product_image_id) {

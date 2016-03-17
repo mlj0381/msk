@@ -97,6 +97,7 @@ class b2c_ctl_site_list extends b2c_frontpage
             }
             $page = 'index';
         }
+
         $this->pagedata['pager']['link'] = $this->gen_url(array(
                 'app' => 'b2c',
                 'ctl' => 'site_list',

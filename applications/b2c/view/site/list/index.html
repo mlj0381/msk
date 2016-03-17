@@ -175,13 +175,14 @@
                       </div>
                     <div class="caption">
                       <ul class="list-inline">
-                          <{assign var=max value=$item.product.interval.price[0]}>
-                          <{assign var=min value=$item.product.interval.price[0]}>
-                          <{foreach from=$item.product.interval.price item=price}>
-                                <span class="hide"><{if $max < $price }><{$max=$price}><{/if}>
-                                <{if $min > $price}><{$min=$price}><{/if}></span>
+
+                          <{assign var=max value=$item.product.interval[0].price}>
+                          <{assign var=min value=$item.product.interval[0].price}>
+                          <{foreach from=$item.product.interval item=item}>
+                                <span class="hide"><{if $max < $item.price }><{$max=$item.price}><{/if}>
+                                <{if $min > $item.price}><{$min=$item.price}><{/if}></span>
                           <{/foreach}>
-                          <li class="price-1"><{$min}><{if $min neq $max}> -- <{$max}><{/if}></li>
+                          <li class="price-1"><{$min|cur}><{if $min neq $max}> -- <{$max|cur}><{/if}></li>
                           <!-- 显示价格区间-->
 
                           <!--￥<{if $item.product.promotion.sale_price && $item.product.promotion.sale_price!='null'}>-->
