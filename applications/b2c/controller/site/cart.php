@@ -36,6 +36,7 @@ class b2c_ctl_site_cart extends b2c_frontpage {
 
     //购物车主页
     public function index() {
+        /*
         $cart_api = vmc::singleton('b2c_source_cart');
         $goods_api = vmc::singleton('b2c_source_goods');
         $params = array(
@@ -43,27 +44,9 @@ class b2c_ctl_site_cart extends b2c_frontpage {
             'label' => '', //购物车大促会，全部商品
             );
         $cart_list = $cart_api->read_cart($params); //购物车中的商品
-        /*
-         * 掌柜热卖
-         * 商家推荐
-         */
-        $params = array(
-            'label' => '',
-            'num' => '',
-            'store_id' => '',
-            );
-        //$hot_goods = $goods_api->request($params);
-          /*
-         * 最近浏览
-         * 猜你喜欢
-         */
-        $params = array(
-            'label' => '',
-            'num' => '',
-            'store_id' => '',
-            );
+        */
         $result = $this->cart_stage->result();
-
+        $this->_priceCount($result);
         if ($this->cart_stage->is_empty($result)) {
             $this->splash('error', $this->blank_url);
         }
@@ -151,24 +134,38 @@ class b2c_ctl_site_cart extends b2c_frontpage {
                 }
             }
         }
-        //日后修改
-        foreach ($exist_cart['objects']['goods'] as $key => &$value) {
-            if ($value['item']['product']['price_interval'] && $value['quantity'] > $value['item']['product']['price_interval']) {
-                $price[$key] = $value['quantity'] * $value['item']['product']['price_up'];
-                $value['item']['product']['buy_price'] = $value['item']['product']['price_up'];
-            }
-        }
-        if ($price) {
-            $count_price = array_sum($price);
-            $exist_cart['gain_score'] = $count_price;
-            $exist_cart['cart_amount'] = $count_price;
-            $exist_cart['finally_cart_amount'] = $count_price;
-        }
-        //>>
+        $this->_priceCount($exist_cart);
         $this->pagedata['cart_result'] = $exist_cart;
         $this->pagedata['last_add'] = $ident;
         $this->set_tmpl('addtocart');
         $this->page('site/cart/addtocart.html');
+    }
+
+    /**
+     * 价盘 购物车 价格计算
+     * @params $cartList 购物车信息列表
+     **/
+    private function _priceCount(&$cartList)
+    {
+        foreach ($cartList['objects']['goods'] as $key => &$goods)
+        {
+            foreach($goods['item']['product']['interval']['num_dn'] as $k => $v)
+            {
+                if($v > $goods['quantity'])
+                {
+                    $goods['item']['product']['buy_price'] = $goods['item']['product']['interval']['price'][$k - 1];
+                    break;
+                }
+                $goods['item']['product']['buy_price'] = $goods['item']['product']['interval']['price'][$k];
+            }
+            $price[$key] = $goods['item']['product']['buy_price'] * $goods['quantity'];
+        }
+        if ($price) {
+            $count_price = array_sum($price);
+            $cartList['gain_score'] = $count_price;
+            $cartList['cart_amount'] = $count_price;
+            $exist_cart['finally_cart_amount'] = $count_price;
+        }
     }
 
     public function fastbuy($product_id, $store_id, $num) {

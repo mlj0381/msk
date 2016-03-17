@@ -117,8 +117,10 @@ class seller_goods_data
             if (!$pro['marketable']) {
                 $goods['product'][$prok]['marketable'] = 'false';
             }
-            $goods['product'][$prok]['price'] = trim($goods['product'][$prok]['price']);
             $goods['product'][$prok]['image_id'] = $goods['image_default_id'];
+            if($pro['is_default'] == 'true') {
+                $goods['product'][$prok]['price'] = trim($pro['interval']['price'][0]);
+            }
             $goods['product'][$prok]['mktprice'] = trim($goods['product'][$prok]['mktprice']);
         }
         if (is_array($data['linkid'])) {
@@ -217,5 +219,32 @@ class seller_goods_data
         }
         $this->mdl_goods->has_many['product'] = 'products:contrast';
         
+    }
+
+    /**
+     * 商品价盘
+     **/
+    public function interval($goods)
+    {
+        $mdl_interval = app::get('b2c')->model('interval');
+        foreach($goods['product'] as $produce)
+        {
+            foreach($produce['interval']['price'] as $key => $value)
+            {
+                $data = array(
+                    'product_id' => $produce['product_id'],
+                    'num_dn' => trim($produce['interval']['num_dn'][$key]),
+                    'num_up' => trim($produce['interval']['num_up'][$key]),
+                    'price' => trim($produce['interval']['price'][$key]),
+                    'discount' => trim($produce['interval']['discount'][$key]),
+                    'createtime' => time(),
+                );
+                if(!$mdl_interval->save($data))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
     }
 }

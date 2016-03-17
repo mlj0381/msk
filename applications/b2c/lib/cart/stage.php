@@ -202,11 +202,6 @@ class b2c_cart_stage
                                 break;
                             }
                         }
-
-                        $price_interval = $mdl_product->getRow('price_interval, price_up', array('product_id' => $cart_result['objects']['goods'][$j]['params']['item']['product_id']));
-                        if($price_interval['price_interval'] > 0 && $cart_result['objects']['goods'][$j]['quantity'] > $price_interval['price_interval']){
-                            $cart_result['objects']['goods'][$j]['item']['product']['buy_price'] = number_format($price_interval['price_up'], 2);
-                        }
                         $cart_result['objects']['goods'][$j]['amount'] = $ecmath->formatNumber($cart_result['objects']['goods'][$j]['item']['product']['buy_price'] * $cart_result['objects']['goods'][$j]['quantity'], $f1, $f2);
                         if(empty($v2['disabled']) || $v2['disabled'] == 'false') {
                             $price[$j] = $cart_result['objects']['goods'][$j]['amount'];

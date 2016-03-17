@@ -1,26 +1,25 @@
-
 <div class="cart-container">
     <{if !$member_id}>
     <div class="alert alert-warning">
-    <i class="glyphicon glyphicon-warning-sign"></i>    您当前未登录
+        <i class="glyphicon glyphicon-warning-sign"></i> 您当前未登录
         <a href="<{link app=b2c ctl=site_passport act=login}>" class="btn btn-xs btn-danger">立即登录</a>
     </div>
     <{/if}>
     <div class="row itemnav">
         <div class="nav_item">
-            <span class="active">全部商品<small>(<{$cart_all.cart_count}>)</small></span>
-            <span>大促会商品<small>(<{$cart_all.big.goods_count}>)</small></span>
-            <span>神农客商品<small>(<{$cart_all.god.goods_count}>)</small></span>
+            <span class="active">全部商品<small>(<{$cart_all.cart_count|default:0}>)</small></span>
+            <span>大促会商品<small>(<{$cart_all.big.goods_count|default:0}>)</small></span>
+            <span>神农客商品<small>(<{$cart_all.god.goods_count|default:0}>)</small></span>
         </div>
         <!--<div class="nav_right c-cf-amount">-->
-            <!--<p>已选 <em data-bind="goods_count"><{$cart_result.goods_count}></em> 商品<small><{$cart_result.finally_cart_amount|cur}></small> <a href="<{link app=b2c ctl=site_checkout}>" class="checkout-btn btn btn-danger <{if $cart_result.goods_count<1}>disabled<{/if}>" >去结算</a></p>-->
+        <!--<p>已选 <em data-bind="goods_count"><{$cart_result.goods_count}></em> 商品<small><{$cart_result.finally_cart_amount|cur}></small> <a href="<{link app=b2c ctl=site_checkout}>" class="checkout-btn btn btn-danger <{if $cart_result.goods_count<1}>disabled<{/if}>" >去结算</a></p>-->
         <!--</div> -->
     </div>
 
     <div class="row cart-header">
         <div class="col-xs-1 c-ch-check">
             <label class="control-label">
-                <input type="checkbox"  data-checkall='.cart-body input:checkbox[data-ident]'> 全选
+                <input type="checkbox" data-checkall='.cart-body input:checkbox[data-ident]'> 全选
             </label>
         </div>
         <div class="col-xs-4 c-ch-title">商品</div>
@@ -30,9 +29,9 @@
         <div class="col-xs-2 c-ch-opt">操作</div>
     </div>
     <div class="cart_maincon">
-    <{include file="site/cart/cart_list/beauty.cart.html"}>
-    <{include file="site/cart/cart_list/big.cart.html"}>
-    <{include file="site/cart/cart_list/god.cart.html"}>
+        <{include file="site/cart/cart_list/beauty.cart.html"}>
+        <{*include file="site/cart/cart_list/big.cart.html"*}>
+        <{*include file="site/cart/cart_list/god.cart.html"*}>
     </div>
     <div class="row cart-footer">
         <div class="col-xs-1 c-cf-check">
@@ -43,7 +42,8 @@
         <div class="col-xs-4 c-cf-opt">
             <a href="javascript:;" data-remove=".cart-body input:checkbox:checked" class="btn btn-link btn-xs">删除选中</a>&nbsp;&nbsp;&nbsp;&nbsp;
             <{if $member_id}>
-            <a href="javascript:;" data-mvtofav=".cart-body input:checkbox:checked" class="btn btn-link btn-xs">移到收藏夹</a>
+            <a href="javascript:;" data-mvtofav=".cart-body input:checkbox:checked"
+               class="btn btn-link btn-xs">移到收藏夹</a>
             <{/if}>
         </div>
 
@@ -51,37 +51,41 @@
             <ul class="list-unstyled">
                 <li>
                     已选择<em data-bind="goods_count"><{$cart_all.cart_count}></em>件商品
-<!--  ,优惠后金额  (<span class="shipping-tip"><{if $cart_result.free_shipping}>包邮<{else}>不含运费<{/if}></span>)：-->
-                    <small class="text-danger">￥</small><strong class="text-danger" data-bind="finally_cart_amount"><{$cart_all.finally_cart_amount|cur}></strong>
+                    <!--  ,优惠后金额  (<span class="shipping-tip"><{if $cart_result.free_shipping}>包邮<{else}>不含运费<{/if}></span>)：-->
+                    <small class="text-danger">￥</small>
+                    <strong class="text-danger"
+                            data-bind="finally_cart_amount"><{$cart_all.finally_cart_amount|cur}></strong>
                 </li>
-<!--                <{if $member_id}>
-                <li>
-                    会员身份节省了：<small>￥</small><span data-bind="member_discount_amount"><{$cart_result.member_discount_amount|cur}></span>
-                </li>
-                <li>
-                    促销优惠节省了：<small>￥</small><span data-bind="promotion_discount_amount"><{$cart_result.promotion_discount_amount|cur}></span>
-                </li>
-                <{/if}>-->
+                <!--                <{if $member_id}>
+                                <li>
+                                    会员身份节省了：<small>￥</small><span data-bind="member_discount_amount"><{$cart_result.member_discount_amount|cur}></span>
+                                </li>
+                                <li>
+                                    促销优惠节省了：<small>￥</small><span data-bind="promotion_discount_amount"><{$cart_result.promotion_discount_amount|cur}></span>
+                                </li>
+                                <{/if}>-->
             </ul>
 
             <ul class="list-unstyled promotion-list plist-order">
                 <!--<{foreach from=$cart_result.promotions.order key=key item=item}>-->
-                    <!--<li data-ruleid="<{$item.rule_id}>">-->
-                        <!--<{if $item.rule_type == 'coupon'}>-->
-                        <!--<span class="btn-group bg-label">-->
-                            <!--<span class="btn btn-xs btn-danger"><{$item.tag}></span>-->
-                            <!--<span class="btn btn-xs btn-danger">券</span>-->
-                            <!--<a class="btn btn-xs btn-default" href="<{link app=b2c ctl=site_cart act=remove_coupon}>?obj_ident=<{$item.coupon_obj_ident}>">取消</a>-->
-                        <!--</span>-->
-                        <!--<{else}>-->
-                        <!--<span class="label label-danger"><{$item.tag}></span>-->
-                        <!--<{/if}>-->
-                        <!--<{$item.desc}>-->
-                    <!--</li>-->
+                <!--<li data-ruleid="<{$item.rule_id}>">-->
+                <!--<{if $item.rule_type == 'coupon'}>-->
+                <!--<span class="btn-group bg-label">-->
+                <!--<span class="btn btn-xs btn-danger"><{$item.tag}></span>-->
+                <!--<span class="btn btn-xs btn-danger">券</span>-->
+                <!--<a class="btn btn-xs btn-default" href="<{link app=b2c ctl=site_cart act=remove_coupon}>?obj_ident=<{$item.coupon_obj_ident}>">取消</a>-->
+                <!--</span>-->
+                <!--<{else}>-->
+                <!--<span class="label label-danger"><{$item.tag}></span>-->
+                <!--<{/if}>-->
+                <!--<{$item.desc}>-->
+                <!--</li>-->
                 <!--<{/foreach}>-->
             </ul>
         </div>
-        <div class="col-xs-2 c-cf-opt"><a href="<{link app=b2c ctl=site_checkout}>" class="checkout-btn btn btn-lg btn-danger <{if $cart_all.cart_count<1}>disabled<{/if}>" >去结算</a></div>
+        <div class="col-xs-2 c-cf-opt"><a href="<{link app=b2c ctl=site_checkout}>"
+                                          class="checkout-btn btn btn-lg btn-danger <{if $cart_all.cart_count<1}>disabled<{/if}>">去结算</a>
+        </div>
     </div>
 
     <div class="cart_like" data-module="tab-slider">
@@ -92,162 +96,189 @@
                 <a>最近浏览</a>
                 <a>猜你喜欢</a>
             </span>
+
             <div class="slider_btn fr">
                 <a class="prev icon-angle-left"></a>
                 <a class="next icon-angle-right"></a>
             </div>
         </div>
         <div class="like_con tab-content bd">
-                <ul>
-                    <li>
-                        <a href="#">
-                            <p><span>￥:128.00</span><span>神农客精选五花肉</span></p>
-                            <img src="<{$base_url}>/themes/pc/default/statics/images/bestsellers.jpg">
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <p><span>￥:128.00</span><span>神农客精选五花肉</span></p>
-                            <img src="<{$base_url}>/themes/pc/default/statics/images/bestsellers_01.jpg">
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <p><span>￥:128.00</span><span>神农客精选五花肉</span></p>
-                            <img src="<{$base_url}>/themes/pc/default/statics/images/bestsellers_02.jpg">
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <p><span>￥:128.00</span><span>神农客精选五花肉</span></p>
-                            <img src="<{$base_url}>/themes/pc/default/statics/images/bestsellers_03.jpg">
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <p><span>￥:128.00</span><span>神农客精选五花肉</span></p>
-                            <img src="<{$base_url}>/themes/pc/default/statics/images/bestsellers_04.jpg">
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <p><span>￥:128.00</span><span>神农客精选五花肉</span></p>
-                            <img src="<{$base_url}>/themes/pc/default/statics/images/bestsellers_04.jpg">
-                        </a>
-                    </li>
-                </ul>
+            <ul>
+                <li>
+                    <a href="#">
+                        <p><span>￥:128.00</span><span>神农客精选五花肉</span></p>
+                        <img src="<{$base_url}>/themes/pc/default/statics/images/bestsellers.jpg">
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <p><span>￥:128.00</span><span>神农客精选五花肉</span></p>
+                        <img src="<{$base_url}>/themes/pc/default/statics/images/bestsellers_01.jpg">
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <p><span>￥:128.00</span><span>神农客精选五花肉</span></p>
+                        <img src="<{$base_url}>/themes/pc/default/statics/images/bestsellers_02.jpg">
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <p><span>￥:128.00</span><span>神农客精选五花肉</span></p>
+                        <img src="<{$base_url}>/themes/pc/default/statics/images/bestsellers_03.jpg">
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <p><span>￥:128.00</span><span>神农客精选五花肉</span></p>
+                        <img src="<{$base_url}>/themes/pc/default/statics/images/bestsellers_04.jpg">
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <p><span>￥:128.00</span><span>神农客精选五花肉</span></p>
+                        <img src="<{$base_url}>/themes/pc/default/statics/images/bestsellers_04.jpg">
+                    </a>
+                </li>
+            </ul>
             <!-- 最近收藏 -->
         </div>
     </div>
 </div>
 
 
-
-
-
 <script charset="utf-8">
-//掌柜热卖、商家推荐、最近浏览、猜你喜欢
+    //掌柜热卖、商家推荐、最近浏览、猜你喜欢
 
-jQuery(".cart_like").slide({titCell: ".hd ul", mainCell: ".bd ul", autoPage: true, effect: "left", autoPlay: false, vis: 5, trigger: "click"});
+    jQuery(".cart_like").slide({
+        titCell: ".hd ul",
+        mainCell: ".bd ul",
+        autoPage: true,
+        effect: "left",
+        autoPlay: false,
+        vis: 5,
+        trigger: "click"
+    });
 
-$('div[data-module="tab-slider"] [data-menu="tab-menu"]').on('click','a,span',function(){
-    $(this).addClass('active').siblings().removeClass('active');
-})
-/**
- * 购物车处理JS闭包
- * @author vmcshop.com
- * @version 1.150528
- */
-void function(){
-    //异步加载最近浏览
-
-    /*$('.like_menu a[data-toggle="tab"]').on('shown.bs.tab', function(e){
-        var pane_sel = $(this).attr('href');
-        $(this).off('shown.bs.tab');
- * 主要处理购物车编辑时的数据及时更新
-        switch (pane_sel){
-            case '#hot':
-                break;
-            case '#choose':
-                break;
-            case '#lately':
-                $(pane_sel).load('<{link app=b2c ctl=site_member act=lately args0=1 args1=load}>');
-                break;
-            case '#guess':
-                break;
-        }
-        $(pane_sel).on('click', 'a', function (e) {
-            e.stopPropagation();
-            $(pane_sel).load(this.href);
-        });
-    });*/
-    
-    $('.c-ci-price').each(function(index){
-        var interval = parseInt($(this).attr('data-interval')), price_up = parseFloat($(this).attr('data-up')), price_dn = parseFloat($(this).attr('data-dn'));
-        var input_obj = $('.c-ci-quantity input[type=text]').eq(index);
-        var buy_price = $('.c-ci-amount strong').eq(index);
-        var num = parseInt(input_obj.val());
-        if(interval > 0 && num > interval){
-            $(this).text(price_up.toFixed(2));
-            buy_price.text(num * price_up);
-            $('.c-cf-amount strong').text(num * price_up);
-        }else{
-            buy_price.text(num * parseFloat($(this).text()));
-        }
+    $('div[data-module="tab-slider"] [data-menu="tab-menu"]').on('click', 'a,span', function () {
+        $(this).addClass('active').siblings().removeClass('active');
     })
-    var _alert = function(msg,target_el){
-        $(target_el).popover({
-            content:msg,
-            placement:'top',
-            trigger:'focus'
-        }).popover('show');
-        setTimeout(function(){
-            $(target_el).popover('destroy');
-        },2000);
-    };
     /**
-     * 修改数量遇到错误时的处理函数
+     * 购物车处理JS闭包
+     * @author vmcshop.com
+     * @version 1.150528
      */
+    void function () {
+        //异步加载最近浏览
+
+        /*$('.like_menu a[data-toggle="tab"]').on('shown.bs.tab', function(e){
+         var pane_sel = $(this).attr('href');
+         $(this).off('shown.bs.tab');
+         * 主要处理购物车编辑时的数据及时更新
+         switch (pane_sel){
+         case '#hot':
+         break;
+         case '#choose':
+         break;
+         case '#lately':
+         $(pane_sel).load('<{link app=b2c ctl=site_member act=lately args0=1 args1=load}>');
+         break;
+         case '#guess':
+         break;
+         }
+         $(pane_sel).on('click', 'a', function (e) {
+         e.stopPropagation();
+         $(pane_sel).load(this.href);
+         });
+         });*/
+
+//    $('.c-ci-price').each(function(index){
+//        var interval = parseInt($(this).attr('data-interval')), price_up = parseFloat($(this).attr('data-up')), price_dn = parseFloat($(this).attr('data-dn'));
+//        var input_obj = $('.c-ci-quantity input[type=text]').eq(index);
+//        var buy_price = $('.c-ci-amount strong').eq(index);
+//        var num = parseInt(input_obj.val());
+//        if(interval > 0 && num > interval){
+//            $(this).text(price_up.toFixed(2));
+//            buy_price.text(num * price_up);
+//            $('.c-cf-amount strong').text(num * price_up);
+//        }else{
+//            buy_price.text(num * parseFloat($(this).text()));
+//        }
+//    });
+        var sumPrice = 0;
+        $('.c-ci-price').each(function (index) {
+            var input_obj = $('.c-ci-quantity input[type=text]').eq(index);
+            var buy_price = $('.c-ci-amount strong').eq(index);
+            var num = parseInt(input_obj.val());
+            var price = 0;
+
+            $('.interval div').each(function (idx, item) {
+                var minNum = parseInt($(item).find('.num-dn').text().trim());
+                if (minNum > num) {
+                    price = parseFloat($(item).prev().find('.price').text().trim());
+                    index = idx;
+                    return false;
+                }
+                price = parseFloat($(item).find('.price').text().trim());
+            });
+            buy_price.text((num * price).toFixed(2));
+            sumPrice += num * price;
+            $('.c-cf-amount strong').text(sumPrice.toFixed(2));
+        });
+
+        var _alert = function (msg, target_el) {
+            $(target_el).popover({
+                content: msg,
+                placement: 'top',
+                trigger: 'focus'
+            }).popover('show');
+            setTimeout(function () {
+                $(target_el).popover('destroy');
+            }, 2000);
+        };
+        /**
+         * 修改数量遇到错误时的处理函数
+         */
 
 
-    var _data_bind_handler = function(path,obj_v,cart_object){
-        switch (path) {
-            case 'warning':
+        var _data_bind_handler = function (path, obj_v, cart_object) {
+            switch (path) {
+                case 'warning':
                     var wpanel = $(this).closest('.warning'),
-                    cb = wpanel.closest('.cart-item').find('input:checkbox[data-ident]');
-                    if(typeof obj_v =='undefined' || obj_v == ''){
+                            cb = wpanel.closest('.cart-item').find('input:checkbox[data-ident]');
+                    if (typeof obj_v == 'undefined' || obj_v == '') {
                         wpanel.addClass('hide');
                         cb.removeProp('disabled');
 
-                        if(!('disabled' in cart_object)||cart_object['disabled'] == 'false'){
-                            cb.prop('checked',true);
-                            cb.trigger('change',['ignore_request']);
+                        if (!('disabled' in cart_object) || cart_object['disabled'] == 'false') {
+                            cb.prop('checked', true);
+                            cb.trigger('change', ['ignore_request']);
                         }
-                    }else{
+                    } else {
                         wpanel.removeClass('hide');
-                        cb.prop('checked',false);
-                        cb.trigger('change',['ignore_request']);
-                        cb.prop('disabled',true);
+                        cb.prop('checked', false);
+                        cb.trigger('change', ['ignore_request']);
+                        cb.prop('disabled', true);
                     }
-                break;
-            default:
-        }
+                    break;
+                default:
+            }
 
-    };
+        };
 
 
-    //json2html
-    var _data_bind = function(scope,obj){
-            $.each($(scope).find('[data-bind]'),function(i,el){
+        //json2html
+        var _data_bind = function (scope, obj) {
+            $.each($(scope).find('[data-bind]'), function (i, el) {
                 var path = $(el).attr('data-bind'),
-                handler=$(el).attr('data-bind-handler'),
-                v=eval('obj["'+path.replace(/\//g,'"]["')+'"]');
-                if(path == 'finally_cart_amount') v=v+ '.00';
+                        handler = $(el).attr('data-bind-handler'),
+                        v = eval('obj["' + path.replace(/\//g, '"]["') + '"]');
+                if (path == 'finally_cart_amount') v = v + '.00';
                 $(el).text(v);
-                _data_bind_handler.apply(el,[path,v,obj]);
+                _data_bind_handler.apply(el, [path, v, obj]);
             });
-    }
-    //促销即时展示隐藏
+        }
+        //促销即时展示隐藏
 //    var _fill_plist= function(scop,plist){
 //        var plist_ul = $($(scop).find('.promotion-list')),lis='';
 //        if(!plist_ul.length)return;
@@ -264,150 +295,147 @@ void function(){
 //        plist_ul.append(lis);
 //    }
 
-    var _update = function(cart_result){
-        var plist_goods = cart_result['promotions']&&cart_result['promotions']['goods']?cart_result['promotions']['goods']:false,
-        plist_order = cart_result['promotions']&&cart_result['promotions']['order']?cart_result['promotions']['order']:false;
-        $.each($('.cart-body .cart-item:not(".removeing")'),function(idx,item){
-            var object_item = cart_result['objects']['goods'][idx];
-            
-            _data_bind(item,object_item);
-            _fill_plist(item,plist_goods?plist_goods[object_item['obj_ident']]:false);
-            
-        });
+        var _update = function (cart_result) {
+            var plist_goods = cart_result['promotions'] && cart_result['promotions']['goods'] ? cart_result['promotions']['goods'] : false,
+                    plist_order = cart_result['promotions'] && cart_result['promotions']['order'] ? cart_result['promotions']['order'] : false;
+            $.each($('.cart-body .cart-item:not(".removeing")'), function (idx, item) {
+                var object_item = cart_result['objects']['goods'][idx];
 
-        _data_bind($('.cart-footer'),cart_result);
-        _fill_plist($('.cart-footer'),plist_order);
-        //什么都没选，无法结算
-        $('.checkout-btn')[cart_result['goods_count']<1?'addClass':'removeClass']('disabled');
-        //包邮提前提示
-       // $('.shipping-tip').text(cart_result['free_shipping']?'包邮':'不含运费');
-    }
+                _data_bind(item, object_item);
+                //_fill_plist(item,plist_goods?plist_goods[object_item['obj_ident']]:false);
 
-
-    //var ipt_change_timer = 0;
-    var cart_update_action = "<{link app=b2c ctl=site_cart act=update}>";
-    var cart_disabled_action = "<{link app=b2c ctl=site_cart act=disabled}>";
-    var cart_enabled_action = "<{link app=b2c ctl=site_cart act=enabled}>";
-    var cart_remove_action = "<{link app=b2c ctl=site_cart act=remove}>";
-    var cart_mv2fav_action = "<{link app=b2c ctl=site_cart act=mv2fav}>";
-    //数量修改
-    $('.cart-body .spinner-input').on('_change',function(e){
-        var ipt = $(this);
-        var obj_ident = $(this).attr('data-ident'),cur_val = ipt.val();
-        // ipt_change_timer = setTimeout(function(){
-        //     clearTimeout(ipt_change_timer);
-            if(!obj_ident)return;
-            $.getJSON(cart_update_action,{ident:obj_ident,num:cur_val},function(re){
-                if(re.error){
+            });
+            _data_bind($('.cart-footer'), cart_result);
+            //_fill_plist($('.cart-footer'),plist_order);
+            //什么都没选，无法结算
+            $('.checkout-btn')[cart_result['goods_count'] < 1 ? 'addClass' : 'removeClass']('disabled');
+            //包邮提前提示
+            // $('.shipping-tip').text(cart_result['free_shipping']?'包邮':'不含运费');
+        }
+        //var ipt_change_timer = 0;
+        var cart_update_action = "<{link app=b2c ctl=site_cart act=update}>";
+        var cart_disabled_action = "<{link app=b2c ctl=site_cart act=disabled}>";
+        var cart_enabled_action = "<{link app=b2c ctl=site_cart act=enabled}>";
+        var cart_remove_action = "<{link app=b2c ctl=site_cart act=remove}>";
+        var cart_mv2fav_action = "<{link app=b2c ctl=site_cart act=mv2fav}>";
+        //数量修改
+        $('.cart-body .spinner-input').on('_change', function (e) {
+            var ipt = $(this);
+            var obj_ident = $(this).attr('data-ident'), cur_val = ipt.val();
+            // ipt_change_timer = setTimeout(function(){
+            //     clearTimeout(ipt_change_timer);
+            if (!obj_ident)return;
+            $.getJSON(cart_update_action, {ident: obj_ident, num: cur_val}, function (re) {
+                if (re.error) {
                     ipt.val(ipt.attr('data-now'));
-                    _alert(re.error,ipt);
+                    _alert(re.error, ipt);
                 }
-                if(re.success && re.data){
+                if (re.success && re.data) {
                     //location = re.redirect;
                     _update(re.data);
-                    ipt.attr('data-now',cur_val);
+                    ipt.attr('data-now', cur_val);
                 }
             });
-        //},300);
-    });
-
-    //全选状态
-    var checkbox_all_status = (function(){
-        var unchecked = $('.cart-body input:checkbox:not(:checked)');
-        $('.cart-container input:checkbox[data-checkall]').prop('checked',!unchecked.length);
-        return arguments.callee;
-    })();
-    //全选
-    $('.cart-container input:checkbox[data-checkall]').on('change',function(e){
-        var target_el = this;
-        var status = $(this).prop('checked'),params = [];
-        $($(this).attr('data-checkall')).prop('checked',status);
-        checkbox_all_status();
-        $.each($('.cart-body input:checkbox'),function(i,c){
-            params.push(c.value);
-            $(c).closest('.cart-item')[status?'addClass':'removeClass']('enabled');
+            //},300);
         });
-        $.getJSON(status?cart_enabled_action:cart_disabled_action,{ident:params},function(re){
-            if(re.error){
-                _alert(re.error,target_el);
-            }
-            if(re.success && re.data){
-                //location = re.redirect;
 
+        //全选状态
+        var checkbox_all_status = (function () {
+            var unchecked = $('.cart-body input:checkbox:not(:checked)');
+            $('.cart-container input:checkbox[data-checkall]').prop('checked', !unchecked.length);
+            return arguments.callee;
+        })();
+        //全选
+        $('.cart-container input:checkbox[data-checkall]').on('change', function (e) {
+            var target_el = this;
+            var status = $(this).prop('checked'), params = [];
+            $($(this).attr('data-checkall')).prop('checked', status);
+            checkbox_all_status();
+            $.each($('.cart-body input:checkbox'), function (i, c) {
+                params.push(c.value);
+                $(c).closest('.cart-item')[status ? 'addClass' : 'removeClass']('enabled');
+            });
+            $.getJSON(status ? cart_enabled_action : cart_disabled_action, {ident: params}, function (re) {
+                if (re.error) {
+                    _alert(re.error, target_el);
+                }
+                if (re.success && re.data) {
+                    //location = re.redirect;
+
+                    _update(re.data);
+                }
+            });
+
+        });
+        //单选
+        $('.cart-body input:checkbox[data-ident]').on('change', function (e, ignore_request) {
+            var target_el = this;
+            var status = $(this).prop('checked');
+            $(this).closest('.cart-item')[status ? 'addClass' : 'removeClass']('enabled');
+            checkbox_all_status();
+            if (ignore_request)return;
+            $.getJSON(status ? cart_enabled_action : cart_disabled_action, {ident: [$(this).val()]}, function (re) {
+                if (re.error) {
+                    _alert(re.error, target_el);
+                }
+                if (re.success && re.data) {
+                    //location = re.redirect;
+                    _update(re.data);
+                }
+            });
+
+        });
+        /**
+         * 删除、移到收藏 处理函数
+         */
+        var _remove_handler = function (target_el, re, ident_arr) {
+            if (re.error) {
+                if (re.error == '购物车为空') {
+                    return location = re.redirect;
+                }
+                _alert(re.error, target_el);
+            }
+
+            if (re.success && re.data) {
+                checkbox_all_status();//更新全选状态
+                //location = re.redirect;
+                $('.row.' + ident_arr.join(',.row.')).addClass('removeing').fadeOut('fast', function (e) {
+                    $(this).remove();
+                });
+                $(target_el).parents('.itembox').find('.shop_name').html("");     //删除店铺名称
                 _update(re.data);
             }
-        });
-
-    });
-    //单选
-    $('.cart-body input:checkbox[data-ident]').on('change',function(e,ignore_request){
-        var target_el = this;
-        var status = $(this).prop('checked');
-        $(this).closest('.cart-item')[status?'addClass':'removeClass']('enabled');
-        checkbox_all_status();
-        if(ignore_request)return;
-        $.getJSON(status?cart_enabled_action:cart_disabled_action,{ident:[$(this).val()]},function(re){
-            if(re.error){
-                _alert(re.error,target_el);
-            }
-            if(re.success && re.data){
-                //location = re.redirect;
-                _update(re.data);
+        };
+        /**
+         * 删除点击
+         */
+        $('.cart-container a[data-remove]').on('click', function (e) {
+            var target_el = this;
+            var ident_arr = [];
+            $.each($($(this).attr('data-remove')), function (i, el) {
+                ident_arr.push($(el).attr('data-ident') || el.value);
+            });
+            if (ident_arr.length && confirm('确认删除？')) {
+                $.post(cart_remove_action, {ident: ident_arr}, function (re) {
+                    _remove_handler(target_el, re, ident_arr)
+                }, 'json');
             }
         });
-
-    });
-    /**
-     * 删除、移到收藏 处理函数
-     */
-     var _remove_handler = function(target_el,re,ident_arr){
-         if(re.error){
-             if(re.error == '购物车为空'){
-                 return location = re.redirect;
-             }
-             _alert(re.error,target_el);
-         }
-
-         if(re.success && re.data){
-             checkbox_all_status();//更新全选状态
-             //location = re.redirect;
-             $('.row.'+ident_arr.join(',.row.')).addClass('removeing').fadeOut('fast',function(e){
-                 $(this).remove();
-             });
-             $(target_el).parents('.itembox').find('.shop_name').html("");     //删除店铺名称
-             _update(re.data);
-         }
-     };
-    /**
-     * 删除点击
-     */
-    $('.cart-container a[data-remove]').on('click',function(e){
-        var target_el = this;
-        var ident_arr =[];
-        $.each($($(this).attr('data-remove')),function(i,el){
-            ident_arr.push($(el).attr('data-ident')||el.value);
+        /**
+         * 移动到收藏夹
+         */
+        $('.cart-container a[data-mvtofav]').on('click', function (e) {
+            var target_el = this;
+            var ident_arr = [];
+            $.each($($(this).attr('data-mvtofav')), function (i, el) {
+                ident_arr.push($(el).attr('data-ident') || el.value);
+            });
+            if (ident_arr.length && confirm('确认移动到收藏夹？')) {
+                $.post(cart_mv2fav_action, {ident: ident_arr}, function (re) {
+                    _remove_handler(target_el, re, ident_arr)
+                }, 'json');
+            }
         });
-        if(ident_arr.length && confirm('确认删除？')){
-             $.post(cart_remove_action,{ident:ident_arr},function(re){
-                 _remove_handler(target_el,re,ident_arr)
-             },'json');
-        }
-    });
-    /**
-     * 移动到收藏夹
-     */
-    $('.cart-container a[data-mvtofav]').on('click',function(e){
-        var target_el = this;
-        var ident_arr =[];
-        $.each($($(this).attr('data-mvtofav')),function(i,el){
-            ident_arr.push($(el).attr('data-ident')||el.value);
-        });
-        if(ident_arr.length && confirm('确认移动到收藏夹？')){
-            $.post(cart_mv2fav_action,{ident:ident_arr},function(re){
-                _remove_handler(target_el,re,ident_arr)
-            },'json');
-        }
-    });
-    
-}();
+
+    }();
 </script>

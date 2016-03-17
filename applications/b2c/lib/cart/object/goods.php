@@ -279,11 +279,12 @@ class b2c_cart_object_goods implements b2c_interface_cart_object {
                 app::get('b2c')->getConf('score_convert', 1),
                 $cart_result['cart_amount'],
             ));
-            //会员身份优惠合计
-            $minus_member_discount = $this->obj_math->number_minus(array(
-                $item_product['price'],
-                $item_product['member_lv_price'],
-            ));
+            //会员身份优惠合计  2016 3 16
+            $minus_member_discount = 0;
+//            $minus_member_discount = $this->obj_math->number_minus(array(
+//                $item_product['price'],
+//                $item_product['member_lv_price'],
+//            ));
             $count_member_discount_amount = $this->obj_math->number_multiple(array(
                 $minus_member_discount,
                 $cart_object['quantity'],
@@ -295,6 +296,7 @@ class b2c_cart_object_goods implements b2c_interface_cart_object {
 
             $cart_result['goods_count'] += $cart_object['quantity'];
         }
+
     }
 
     /**
@@ -312,8 +314,9 @@ class b2c_cart_object_goods implements b2c_interface_cart_object {
             $product_id_arr[] = $object['params']['item']['product_id'];
             //所购买的货品 => 购买数量
             $parice[$object['params']['item']['product_id']] = $object['quantity'];
+            //取得对应货品已加入购物车的数量 product_id => quantity
+            $quantity[$object['params']['item']['product_id']] = $object['quantity'];
         }
-
         $mdl_product = app::get('b2c')->model('products');
         $mdl_goods = app::get('b2c')->model('goods');
         $products = $mdl_product->getList('*', array(
@@ -325,7 +328,7 @@ class b2c_cart_object_goods implements b2c_interface_cart_object {
             'goods_id' => $goods_id_arr,
         ));
         $goods_info = utils::array_change_key($goods_info, 'goods_id');
-        foreach ($products as $key => $product) {
+        foreach ($products as $key => &$product) {
             $goods = $goods_info[$product['goods_id']];
             $products[$key]['image_id'] = ($product['image_id'] ? $product['image_id'] : $goods['image_default_id']);
             $products[$key]['marketable'] = ($product['marketable'] == 'true' && $goods['marketable'] == 'true') ? 'true' : 'false';
@@ -334,15 +337,12 @@ class b2c_cart_object_goods implements b2c_interface_cart_object {
             $products[$key]['cat_id'] = $goods['cat_id'];
             $products[$key]['brand_id'] = $goods['brand_id'];
             $products[$key]['type_id'] = $goods['type_id'];
-            //价格扩展
-
-            //计算价盘价格
-            $product['price'] = $parice[$product['product_id']] > $product['price_interval'] ?
-                    $product['price_up'] : $product['price_dn'];
-            $products[$key]['buy_price'] = $products[$key]['member_lv_price'] = $this->obj_math->number_multiple(array(
-                $product['price'],
-                $this->member_discout,
-            ));
+            //价格扩展价格计算
+            $this->_interval($product, $quantity[$product['product_id']]);
+//            $products[$key]['buy_price'] = $products[$key]['member_lv_price'] = $this->obj_math->number_multiple(array(
+//                $product['price'],
+//                $this->member_discout,
+//
         }
         foreach ($cart_objects as $key => $object) {
             $product_id = $object['params']['item']['product_id'];
@@ -350,8 +350,32 @@ class b2c_cart_object_goods implements b2c_interface_cart_object {
             $cart_objects[$key]['item']['product'] = $products[$product_id];
         }
         $this->_warning($cart_objects);
-
         return $cart_objects;
+    }
+
+    /**
+     * 货品价盘计算
+     * @params $product 货品信息
+     * @params $quantity 购买数量
+     * return $price 价格
+     **/
+    private function _interval(&$product, $quantity)
+    {
+
+        $product['interval'] = app::get('b2c')->model('interval')->getList('*', array('product_id' => $product['product_id']));
+        if(empty($quantity)){
+            return null;
+        }
+        foreach($product['interval'] as $key => $value)
+        {
+            if($value['num_dn'] > $quantity)
+            {
+                $product['price'] = $product['interval'][$key]['price'];
+                break;
+            }
+            $product['price'] = $value['price'];
+        }
+        $product['buy_price'] = $product['price'];
     }
 
     //加入\更新购物车时验证

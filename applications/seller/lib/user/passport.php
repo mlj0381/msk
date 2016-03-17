@@ -749,7 +749,6 @@ class seller_user_passport
                         $params[$value['key']]['store_type'] = $seller['ident'];
                         continue;
                 }
-                print_r($params[$value['key']]);die;
                 $mdlObj = app::get($value['app'])->model($value['key']);
                 if (!$mdlObj->save($params[$value['key']])) {
                     $db->rollback();
