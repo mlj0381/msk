@@ -10,12 +10,14 @@
 // | Author: Shanghai ChenShang Software Technology Co., Ltd.
 // +----------------------------------------------------------------------
 
-class seller_frontpage extends site_controller {
+class seller_frontpage extends site_controller
+{
 
     protected $seller = array();
     protected $store = array();
 
-    function __construct(&$app) {
+    function __construct(&$app)
+    {
         parent::__construct($app);
         $this->_response->set_header('Cache-Control', 'no-store');
         $this->_response->set_header('Cache-Control', 'no-cache');
@@ -30,7 +32,7 @@ class seller_frontpage extends site_controller {
         //$this->verify();
         $this->action = $this->_request->get_act_name();
         $this->controller = $this->_request->get_ctl_name();
-        if($this->controller != 'site_passport'){
+        if ($this->controller != 'site_passport') {
             $this->_schedule();
         }
         $this->menuSetting = 'index';
@@ -42,12 +44,12 @@ class seller_frontpage extends site_controller {
     }
 
     //查询入驻进度
-    private function _schedule() {
-		//return true;
+    private function _schedule()
+    {
+        //return true;
         $this->verify();
         $this->seller = $this->get_current_seller();
-        if($this->seller['ident'] == '0' && $this->seller['type'] == '0')
-        {
+        if ($this->seller['ident'] == '0' && $this->seller['type'] == '0') {
             $redirect = $this->gen_url(array('app' => 'seller', 'ctl' => 'site_passport', 'act' => 'signup', 'args0' => '1'));
             $this->splash('success', $redirect, '登录成功,请先选择商家类型');
         }
@@ -58,16 +60,18 @@ class seller_frontpage extends site_controller {
         }
     }
 
-    protected function redirect_url($params = array()) {
+    protected function redirect_url($params = array())
+    {
         extract($params);
         empty($app) && $app = $this->app->app_id;
         empty($ctl) && $ctl = $this->controller;
         empty($app) && $act = 'index';
-        $args = empty($args) ? array() : (array) $args;
+        $args = empty($args) ? array() : (array)$args;
         return $this->gen_url(compact('app', 'ctl', 'act', 'args'));
     }
 
-    final public function gen_url($params = array()) {
+    final public function gen_url($params = array())
+    {
         return app::get('seller')->router()->gen_url($params);
     }
 
@@ -77,7 +81,8 @@ class seller_frontpage extends site_controller {
      * 如果是登录状态则直接跳转到商家中心
      *
      */
-    public function set_forward(&$forward) {
+    public function set_forward(&$forward)
+    {
         $params = $this->_request->get_params(true);
         $forward = ($forward ? $forward : $params['forward']);
         if (!$forward) {
@@ -88,7 +93,8 @@ class seller_frontpage extends site_controller {
         }
     }
 
-    function verify() {
+    function verify()
+    {
         $user_obj = vmc::singleton('seller_user_object');
         if ($this->app->seller_id = $user_obj->get_id()) {
             $data = $user_obj->get_sellers_data(array(
@@ -105,14 +111,15 @@ class seller_frontpage extends site_controller {
             }
         }
         $this->splash('error', $this->gen_url(array(
-                    'app' => 'seller',
-                    'ctl' => 'site_passport',
-                    'act' => 'login' //
-                )), '请用分销商帐号登录');
+            'app' => 'seller',
+            'ctl' => 'site_passport',
+            'act' => 'login' //
+        )), '请用分销商帐号登录');
     }
 
     // 是否开店
-    protected function verify_store() {
+    protected function verify_store()
+    {
         return true;
         $this->store = app::get('store')->model('store')->getRow('*', array(
             'seller_id' => $this->seller['seller_id']
@@ -131,7 +138,8 @@ class seller_frontpage extends site_controller {
      * @param      none
      * @return     void
      */
-    function loginlimit($mid, &$redirect) {
+    function loginlimit($mid, &$redirect)
+    {
         $services = vmc::servicelist('loginlimit.check');
         if ($services) {
             foreach ($services as $service) {
@@ -143,7 +151,8 @@ class seller_frontpage extends site_controller {
 
 //End Function
 
-    public function bind_seller($seller_id) {
+    public function bind_seller($seller_id)
+    {
         $columns = array(
             'account' => 'seller_id,login_account,login_password,checkin',
             'sellers' => 'seller_id',
@@ -159,7 +168,8 @@ class seller_frontpage extends site_controller {
         $this->set_cookie('SELLER_IDENT', $seller_id, $cookie_expires);
     }
 
-    public function unset_seller() {
+    public function unset_seller()
+    {
         $auth = pam_auth::instance(pam_account::get_account_type($this->app->app_id));
         foreach (vmc::servicelist('passport') as $k => $passport) {
             $passport->loginout($auth);
@@ -174,15 +184,18 @@ class seller_frontpage extends site_controller {
         }
     }
 
-    public function get_current_seller() {
+    public function get_current_seller()
+    {
         return vmc::singleton('seller_user_object')->get_current_seller();
     }
 
-    public function get_current_store() {
+    public function get_current_store()
+    {
         return vmc::singleton('seller_user_object')->get_store($this->seller['seller_id'], 'store_id, store_name');
     }
 
-    function set_cookie($name, $value, $expire = false, $path = null) {
+    function set_cookie($name, $value, $expire = false, $path = null)
+    {
         if (!$this->cookie_path) {
             $this->cookie_path = vmc::base_url() . '/';
             #$this->cookie_path = substr(PHP_SELF, 0, strrpos(PHP_SELF, '/')).'/';
@@ -195,7 +208,8 @@ class seller_frontpage extends site_controller {
     }
 
     // 检查登录
-    protected function check_login() {
+    protected function check_login()
+    {
         vmc::singleton('base_session')->start();
         if ($_SESSION['account'][pam_account::get_account_type($this->app->app_id)]) {
             return true;
@@ -204,7 +218,8 @@ class seller_frontpage extends site_controller {
         }
     }
 
-    function setSeo($app, $act, $args = null) {
+    function setSeo($app, $act, $args = null)
+    {
         $seo = vmc::singleton('site_seo_base')->get_seo_conf($app, $act, $args);
         $this->title = $seo['seo_title'];
         $this->keywords = $seo['seo_keywords'];
@@ -215,7 +230,8 @@ class seller_frontpage extends site_controller {
 
 //End Function
 
-    public function get_menu() {
+    public function get_menu()
+    {
         $xmlfile = $this->app->app_dir . "/menu.xml";
         //$xsd = vmc::singleton('base_xml')->xml2array(file_get_contents($xmlfile), $tags);
         $parser = xml_parser_create();
@@ -250,7 +266,8 @@ class seller_frontpage extends site_controller {
     }
 
     //
-    protected function output($app_id) {
+    protected function output($app_id)
+    {
         $app_id || $app_id = $this->app->app_id;
         $this->pagedata['seller'] = $this->seller;
         $this->pagedata['store'] = $this->store;
@@ -265,13 +282,14 @@ class seller_frontpage extends site_controller {
             $this->pagedata['_PAGE_'] = 'site/' . $controller . "/" . $this->pagedata['_PAGE_'];
         } else {
             $this->pagedata['_PAGE_'] = 'site/' . $controller . '/' . $this->action_view;
-        }        
+        }
         $this->pagedata['app_id'] = $app_id;
         $this->pagedata['_MAIN_'] = 'site/main.html';
         $this->page('site/main.html');
     }
 
-    public function end($result = true, $message = null, $ajax = false, $data = null) {
+    public function end($result = true, $message = null, $ajax = false, $data = null)
+    {
         if (!$this->transaction_start) {
             trigger_error('The transaction has not started yet', E_USER_ERROR);
         }

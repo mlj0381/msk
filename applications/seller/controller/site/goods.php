@@ -82,11 +82,11 @@ class seller_ctl_site_goods extends seller_frontpage
         $this->pagedata['pager']['current'] = $page;
         $this->pagedata['pager']['token'] = time();
         $this->pagedata['pager']['link'] = $this->gen_url(array(
-                'app' => 'seller',
-                'ctl' => 'site_goods',
-                'act' => 'index',
-                'args0' => $this->pagedata['pager']['token']
-            ));
+            'app' => 'seller',
+            'ctl' => 'site_goods',
+            'act' => 'index',
+            'args0' => $this->pagedata['pager']['token']
+        ));
         foreach ($goodsList as $key => $value) {
             $goodsList[$key]['price_interval'] = $product['product'][$value['goods_id']]['price_interval'];
             $goodsList[$key]['price_up'] = $product['product'][$value['goods_id']]['price_up'];
@@ -152,18 +152,19 @@ class seller_ctl_site_goods extends seller_frontpage
         return $return;
     }
 
-    public function getProp(){
+    public function getProp()
+    {
         $filter = array('cat' => '0', 'belong_type' => '0');
         $mdl_goods_type = app::get('b2c')->model('goods_type');
 
-            //ajax调用
+        //ajax调用
         $filter['cat'] = $this->_request->get_get('cat_id') ?: 0;
 
         $return = $mdl_goods_type->getList('*', $filter);
         foreach ($return as &$value) {
             $value = $mdl_goods_type->dump($value['type_id'], '*');
         }
-        if($filter['cat']){
+        if ($filter['cat']) {
 //            $this->pagedata['params']['goods_type'] = $return;
 //            $this->display('site/goods/detail/params.html');die;
             $this->splash('success', '', $return);
@@ -264,12 +265,16 @@ class seller_ctl_site_goods extends seller_frontpage
 
         $db = vmc::database();
         $db->beginTransaction();
+        //保存货品价盘
 
         if (!$this->mB2cGoods->save($goods)) {
             $db->rollback();
             $this->splash('error', $redirect_url, '保存失败');
         }
-
+        if (!$objGoodsData->interval($goods)) {
+            $db->rollback();
+            $this->splash('error', $redirect_url, '保存失败');
+        }
         //更新店铺商品表
         $mdl_store_goods = app::get('store')->model('goods');
         $store_data['seller_id'] = $goods['seller_id'];
@@ -305,17 +310,20 @@ class seller_ctl_site_goods extends seller_frontpage
     }
 
     //ajax检查商品gid
-    public function check_gid(){
+    public function check_gid()
+    {
 
         $params = $this->_request->get_get();
         $goods_id = $params['goods']['gid'];
         if (!empty($goods_id) && $this->mB2cGoods->count(array('gid' => $goods_id)) > 0) {
-            $this->splash('error', '',  '重复的商品ID'.$goods_id);
+            $this->splash('error', '', '重复的商品ID' . $goods_id);
         }
-        $this->splash('success', '',  '可用');
+        $this->splash('success', '', '可用');
     }
+
     //ajax检查商品货品
-    public function check_bn(){
+    public function check_bn()
+    {
 
     }
 
@@ -457,15 +465,15 @@ class seller_ctl_site_goods extends seller_frontpage
                 'args0' => $product['goods_id']));
         if (empty($_POST)) $this->splash('error', $redirect, '非法请求');
         $mdl_product = app::get('b2c')->model('products');
-        if(!$mdl_product->save($product)){
+        if (!$mdl_product->save($product)) {
             $this->splash('error', $redirect, '操作失败');
         }
         $product['createTime'] = time();
         base_kvstore::instance('goods_price')->fetch("goods_price_{$this->store['store_id']}_{$product['product_id']}", $products);
-        if(empty($products)){
-            $products = array( 0 => $product);
-        }else{
-          array_unshift($products, $product);
+        if (empty($products)) {
+            $products = array(0 => $product);
+        } else {
+            array_unshift($products, $product);
         }
         $result = base_kvstore::instance('goods_price')->store("goods_price_{$this->store['store_id']}_{$product['product_id']}",
             $products);

@@ -66,9 +66,9 @@ $db['products'] = array(
             'is_title' => true,
         ) ,
         'interval' => array(
-            'type' => 'serialize',
-            'label' => ('货品价盘') ,
-            'default' => '',
+            'type' => 'number',
+            'label' => ('货品价盘Id') ,
+            'default' => 0,
             'in_list' => true,
         ) ,
         'price_interval' => array(

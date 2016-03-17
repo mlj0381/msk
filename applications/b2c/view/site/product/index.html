@@ -39,10 +39,10 @@
                 <!-- <p class="pro_No">
                     货号：<span class="text-warning"><{$data_detail.product.product_id}>&nbsp;&nbsp;<{$data_detail.mark_star|star}></span> <small><{$data_detail.mark_star|number_format:'1'}></small>
                 </p> -->
-                <div style="background-color:#D77F71; height:80px; color:#fff; font-size:14px; padding:10px;"><!-- class="pref_info"-->
-                    <p><span style="margin-right:55px;display:inline-block; width:100px;">采购数量</span><span style="margin-right:55px;display:inline-block; width:100px;">&gt;<{$data_detail.product.price_interval}>箱</span><span >&lt;<{$data_detail.product.price_interval}>箱</span></p>
-                    <p><span style="margin-right:55px;display:inline-block; width:100px;">价格</span><span style="margin-right:55px;display:inline-block; width:100px;">￥<{$data_detail.product.price_up|cur}>/箱</span><span>￥<{$data_detail.product.price_dn|cur}>/箱</span></p>
-                </div>
+                <!--<div style="background-color:#D77F71; height:80px; color:#fff; font-size:14px; padding:10px;">&lt;!&ndash; class="pref_info"&ndash;&gt;-->
+                    <!--<p><span style="margin-right:55px;display:inline-block; width:100px;">采购数量</span><span style="margin-right:55px;display:inline-block; width:100px;">&gt;<{$data_detail.product.price_interval}>箱</span><span >&lt;<{$data_detail.product.price_interval}>箱</span></p>-->
+                    <!--<p><span style="margin-right:55px;display:inline-block; width:100px;">价格</span><span style="margin-right:55px;display:inline-block; width:100px;">￥<{$data_detail.product.price_up|cur}>/箱</span><span>￥<{$data_detail.product.price_dn|cur}>/箱</span></p>-->
+                <!--</div>-->
 
                 <div class="distr_info">
                     配送：
@@ -105,30 +105,30 @@
                 <div class="pref_info clearfix">
                      <!--<p><span>采购数量</span><span>&gt;<{$data_detail.product.price_interval}>箱</span><span>&lt;<{$data_detail.product.price_interval}>箱</span></p>-->
                     <!--<p><span>价格</span><span>￥<{$data_detail.product.price_up|cur}>/箱</span><span>￥<{$data_detail.product.price_dn|cur}>/箱</span></p>-->
-                    <!--<label class="col-xs-2">-->
-                        <!--商品价盘-->
-                    <!--</label>-->
-                    <!--<div class="col-xs-8 pref_table">-->
-                        <!--<table>-->
-                            <!--<thead>-->
-                                <!--<tr>-->
-                                    <!--<th>数量下限</th>-->
-                                    <!--<th>数量上限</th>-->
-                                    <!--<th>销售价格</th>-->
-                                <!--</tr>-->
-                            <!--</thead>-->
-                            <!--<tbody>-->
-                            <!--<{foreach from=$data_detail.product.interval.price key=key item=interval}>-->
-                                <!--<tr>-->
-                                    <!--<td><{$data_detail.product.interval.num_dn[$key]|default:1}></td>-->
-                                    <!--<td><{$data_detail.product.interval.num_up[$key]|default:不限}></td>-->
-                                    <!--<td>￥ <{$data_detail.product.interval.price[$key]|cur}></td>-->
-                                <!--</tr>-->
-                            <!--<{/foreach}>-->
-                            <!--</tbody>-->
-                        <!--</table>-->
-                    <!--</div>-->
-                <!--</div>-->
+                    <label class="col-xs-2">
+                        商品价盘
+                    </label>
+                    <div class="col-xs-8 pref_table">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>数量下限</th>
+                                    <th>数量上限</th>
+                                    <th>销售价格</th>
+                                </tr>
+                            </thead>
+                            <tbody class="interval">
+                            <{foreach from=$data_detail.product.interval.price key=key item=interval}>
+                                <tr>
+                                    <td class="num-dn"><{$data_detail.product.interval.num_dn[$key]|default:1}></td>
+                                    <td class="num-up"><{$data_detail.product.interval.num_up[$key]|default:不限}></td>
+                                    <td class="num-price">￥ <span><{$data_detail.product.interval.price[$key]|cur}></span></td>
+                                </tr>
+                            <{/foreach}>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
 
                 <!--购买区-->
                 <div class="product-page-cart clearfix">
@@ -428,15 +428,30 @@
             })(), 1000);
         };
 
+        /**
+         * 商品价盘价格计算
+         **/
+        var priceCount = function(num){
+            var index = 0;
+            var price = 0;
+            $('.pref_info .interval tr').each(function(idx, item){
+                var minNum = parseInt($(item).find('.num-dn').text().trim());
+                if(minNum > num){
+                    price = parseFloat($(item).prev().find('.num-price span').text().trim());
+                    index = idx;
+                    return false;
+                }
+                price = parseFloat($(item).find('.num-price span').text().trim());
+            });
+            return (num * price).toFixed(2);
+        };
+
 
         //修改数量时，影响购买按钮数量参数
         $('.product-quantity .spinner-input').on('_change', function (e, cur_val) {
-            var price_interval = parseInt('<{$data_detail.product.price_interval}>');
-            if (price_interval > 0) {
-                var price_up = parseFloat('<{$data_detail.product.price_up}>'), price_dn = parseFloat('<{$data_detail.product.price_dn}>');
-                var price = parseInt(cur_val) > price_interval ? price_up.toFixed(2) : price_dn.toFixed(2);
-                $('.price-availability-block strong').text(parseFloat(price * parseInt(cur_val)).toFixed(2));
-            }
+
+                $('.price-availability-block strong').text(priceCount(parseInt(cur_val)));
+
             $.each($('.btn-buy'), function (i, a) {
                 var button = $(a);
                 var href = button.attr('data-url').replace(/([\s\S]*?)-([\d]+?)-([\d]+?)\.html/, function () {
@@ -448,6 +463,9 @@
                 button.attr('data-url', href);
             });
         }).trigger('_change', [$('.product-quantity .spinner-input').val(), 0]);
+
+
+
 
 
         //相册切换

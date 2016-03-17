@@ -6,7 +6,9 @@
             <h1><i class="glyphicon glyphicon-ok"></i> 商品已成功加入购物车
                 <small>
                     当前购物车共<span><{$cart_result.goods_count}></span>件,
-                    金额总计：<strong class="text-danger">￥<{$cart_result.cart_amount-$cart_result.member_discount_amount-$cart_result.promotion_discount_amount|cur}></strong>
+                    金额总计：<strong class="text-danger">￥
+
+                    <{$cart_result.cart_amount-$cart_result.member_discount_amount-$cart_result.promotion_discount_amount|cur}></strong>
                 </small>
             </h1>
         </div>
