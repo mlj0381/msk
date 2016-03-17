@@ -1,134 +1,141 @@
-<h1>管家资质信息</h1>
+<h2>管家资质信息</h2>
 <div class="reg_progress clearfix">
-
 </div>
 <div class="passport-signup-container seller_regbox">
     <div class="panel panel-default signup-panel clearfix">
 
         <div class="panel-body panel-rt pull-right">
-            <form id="companyInfo_form" action="<{link app=seller ctl=site_passport act=brand_aptitude}>?identity=<{$identity}>" class="form-horizontal companyInfo_form" method="post" data-module="validator">
-                
-                <!-- 三证合一 -->
-                <div id="business_licence">
-                    <h4>营业执照信息（副本）
-                        <{if $extra.type eq 'center'}>
-                        <a href="<{link app=seller ctl=site_seller act=businessInfo}>?card=new"></a>
-                        <{else}>
-                        <a href="<{link app=seller ctl=site_passport act=entry args0=$extra.pageIndex-1}>?card=new">
-                            <{/if}>
-                            <small class="text-danger">填写新版三证合一执照</small>
-                        </a>
-                    </h4>
+            <form id="companyInfo_form" action="<{link app=freeze ctl=site_passport act=freeze_aptitude}>?identity=<{$identity}>" class="form-horizontal companyInfo_form" method="post" data-module="validator">
 
+                <div id="basic">
+                    <h4> 基本信息</h4>
                     <div class="form-group">
                         <label class="col-xs-2 control-label">
-                            <span class="text-danger">*</span>注册号：
+                            <span class="text-danger">*</span>姓名：
                         </label>
                         <div class="col-xs-4">
-                            <input type="text" value="<{$extra.company.business}>" name="company[business]" class="form-control business" required="true" format="digits">
+                            <input type="text" class="form-control" name="name" value="" required="true">
                             <span class="msgTip" data-message="format">格式不正确</span>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-xs-2 control-label">
-                            <span class="text-danger">*</span>名称：
+                            <span class="text-danger">*</span>性别：
                         </label>
                         <div class="col-xs-4">
-                            <input type="text" value='<{$extra.company.name}>' name="company[name]" class="form-control" required="true">
-                            <span class="msgTip" data-message="error"></span>
+                            <select class="form-control"  name="sex" required="true">
+                                <option value="0">女</option>
+                                <option value="1">男</option>
+                            </select>
+                            <span class="msgTip" data-message="format">格式不正确</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-xs-2 control-label">
+                            <span class="text-danger">*</span>年龄：
+                        </label>
+                        <div class="col-xs-4">
+                            <input type="text" value="" name="age" class="form-control business" required="true" format="digits">
+                            <span class="msgTip" data-message="format">格式不正确</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-xs-2 control-label">
+                            <span class="text-danger">*</span>学历：
+                        </label>
+                        <div class="col-xs-4">
+                            <select class="form-control"  name="education" required="true">
+                                <option value="1">博士</option>
+                                <option value="2">硕士</option>
+                                <option value="3">本科</option>
+                                <option value="4">专科</option>
+                                <option value="5">高中</option>
+                                <option value="6">小学</option>
+                                <option value="7">其他</option>
+                            </select>
+                            <span class="msgTip" data-message="format">格式不正确</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-xs-2 control-label">
+                            <span class="text-danger">*</span>身份证号：
+                        </label>
+                        <div class="col-xs-4">
+                            <input type="text" class="form-control" name="ID" value="" required="true" formate="idcard">
+                            <span class="msgTip" data-message="format">身份证填写错误</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-xs-2 control-label">
+                            <span class="text-danger">*</span>身份证图片：
+                        </label>
+                        <div class="col-xs-4">
+                            <{input type="imageupload" tag="图片上传" name="ID_image" value=''  required='true' accept="jpg|png|gif"}>
+                            <span class="msgTip" data-message="error">不能为空</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-xs-2 control-label">
+                            <span class="text-danger">*</span>所在地区：
+                        </label>
+                        <div class="col-xs-4">
+                            <{input type=region required="true" name="area" }>
+                            <span class="msgTip" data-message="format">格式不正确</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-xs-2 control-label">
+                            <span class="text-danger">*</span>服务承诺：
+                        </label>
+                        <div class="col-xs-4">
+                            <input type="text" value="" name="service" class="form-control" required="true" >
+                            <span class="msgTip" data-message="format">格式不正确</span>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div id="work">
+                    <h4> 工作履历</h4>
+
+                    <div class="form-group">
+                        <label class="col-xs-2 control-label">
+                            <span class="text-danger">*</span>工作经验：
+                        </label>
+                        <div class="col-xs-4">
+                            <select class="form-control"  name="experience" required="true">
+                                <option value="1">1年以内</option>
+                                <option value="2">1~3年</option>
+                                <option value="3">5年以上</option>
+                            </select>
+                            <span class="msgTip" data-message="format">格式不正确</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-xs-2 control-label">
+                            <span class="text-danger">*</span>个人工作经历：
+                        </label>
+                        <div class="col-xs-4">
+                            <input type="text" value="" name="commitment" class="form-control business" required="true" >
+                            <span class="msgTip" data-message="format">格式不正确</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-xs-2 control-label">
+                            <span class="text-danger">*</span>工作能力及特长：
+                        </label>
+                        <div class="col-xs-4">
+                            <input type="text" value="" name="capacity" class="form-control business" required="true" >
+                            <span class="msgTip" data-message="format">格式不正确</span>
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label class="col-xs-2 control-label">
-                            <span class="text-danger">*</span>住所：
+                            <span class="text-danger">*</span>工作证明：
                         </label>
                         <div class="col-xs-4">
-                            <input type="text" value='<{$extra.company.address}>' name="company[address]" class="form-control" required="true">
-                            <span class="msgTip" data-message="error"></span>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-xs-2 control-label">
-                            <span class="text-danger">*</span>法人代表姓名:
-                        </label>
-                        <div class="col-xs-4">
-                            <input type="text" value='<{$extra.business_licence.value.name}>' name="business_licence[value][name]" class="form-control" required="true">
-                            <span class="msgTip" data-message="error"></span>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-xs-2 control-label">
-                            <span class="text-danger">*</span>注册资本：
-                        </label>
-                        <div class="col-xs-4">
-                            <div class="input-group form-item">
-                                <input type="text" value='<{$extra.company.registered_capital}>' name="company[registered_capital]" class="form-control" required="true" format="positive">
-                                <span class="input-group-addon">万</span>
-                            </div>
-                            <span class="msgTip" data-message="format">请输入正数</span>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-xs-2 control-label">
-                            <span class="text-danger">*</span>实收资本：
-                        </label>
-                        <div class="col-xs-4">
-                            <div class="input-group form-item">
-                                <input type="text" value='<{$extra.company.reality_capital}>' name="company[reality_capital]" class="form-control" required="true" format="positive">
-                                <span class="input-group-addon">万</span>
-                            </div>
-                            <span class="msgTip" data-message="format">请输入正数</span>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-xs-2 control-label">
-                            <span class="text-danger">*</span>公司类型：
-                        </label>
-                        <div class="col-xs-4">
-                            <{input type=select required="true" name="company[enterprise_type]" rows=$extra.page_setting.company valueColumn="id"
-                            labelColumn="label" value=$extra.company.enterprise_type}>
-                            <span class="msgTip" data-message="error"></span>
-                        </div>
-
-                    </div>
-                    <div class="form-group">
-                        <label class="col-xs-2 control-label">
-                            <span class="text-danger">*</span>经营范围：
-                        </label>
-                        <div class="col-xs-4">
-                            <input type="text" value='<{$extra.company.operating_period}>' name="company[operating_period]" class="form-control" required="true">
-                            <span class="msgTip" data-message="error"></span>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-xs-2 control-label">
-                            <span class="text-danger">*</span>成立日期：
-                        </label>
-                        <div class="col-xs-4">
-                            <input type="text" value='<{$extra.company.establishment_date}>' name="company[establishment_date]" class="form-control" placeholder="2010-10-20" required="true" format="date">
-                            <span class="msgTip" data-message="format">请填写正确的日期格式</span>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-xs-2 control-label">
-                            <span class="text-danger">*</span>营业期限：
-                        </label>
-                        <div class="col-xs-4">
-                            <div class="form-item">
-                                <input type="text" value='<{$extra.company.business_scope.begin}>' name="company[business_scope][begin]" class="form-control"  placeholder="2010-10-20"  style="width:46%; display: inline-block;"> 至
-                                <input type="text" value='<{$extra.company.business_scope.end}>' name="company[business_scope][end]" class="form-control"  placeholder="2010-10-20"   style="width:46%; display: inline-block;" required="true">
-                            </div>
-                            <span class="msgTip" data-message="error"></span>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="col-xs-2 control-label">
-                            <span class="text-danger">*</span>营业执照电子版：
-                        </label>
-                        <div class="col-xs-4">
-                            <{input type="imageupload" tag="图片上传" name="business_licence[attach]" value=$extra.business_licence.attach required='true' accept="jpg|png|gif"}>
+                            <{input type="imageupload" tag="图片上传" name="certificate" required='true' accept="jpg|png|gif"}>
                             <span class="msgTip" data-message="error">不能为空</span>
                         </div>
                     </div>

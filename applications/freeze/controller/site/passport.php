@@ -8,6 +8,9 @@ class freeze_ctl_site_passport extends freeze_frontpage{
         $this->user_obj = vmc::singleton('freeze_user_object');
     }
 
+    /**
+     * 注册冻品管家信息
+     */
     public function signup()
     {
         $params = $_POST;
@@ -40,7 +43,15 @@ class freeze_ctl_site_passport extends freeze_frontpage{
         }
     }
 
+    /**
+     * 冻品管家资质信息
+     */
+    public function freeze_aptitude()
+    {
 
+        vmc::dump($_POST);
+        die;
+    }
 
 
 

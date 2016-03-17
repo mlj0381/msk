@@ -54,8 +54,15 @@ $db['freeze'] = array(
             'default_in_list' => true,
         ) ,
         'education' => array(
-            'type' => 'varchar(10)',
-            
+            'type' => array(
+                1 => ('博士'),
+                2 => ('硕士'),
+                3 => ('本科'),
+                4 => ('专科'),
+                5 => ('高中'),
+                6 => ('小学'),
+                7 => ('其他'),
+            ),
             'label' => ('学历') ,
             'in_list' => true,
             'default_in_list' => true,
@@ -93,7 +100,11 @@ $db['freeze'] = array(
         'experience' => array(
             'label' => ('工作经验') ,
 
-            'type' => 'varchar(255)',
+            'type' => array(
+                '1' => '1年以下',
+                '2' => '1~3年',
+                '3' => '5年以上'
+            ),
             'filtertype' => 'yes',
             'filterdefault' => 'true',
             'in_list' => true,
