@@ -5,7 +5,7 @@ class buyer_user_object{
     public function __construct(&$app){
         $this->app = $app;
         if($_COOKIE['AUTO_LOGIN']){
-            $minutes = 30*24*60;//30天
+            $minutes = 7*24*3600;//7天
             vmc::singleton('base_session')->set_sess_expires($minutes);
             vmc::singleton('base_session')->set_cookie_expires($minutes);
             $this->cookie_expires = $minutes;
@@ -18,7 +18,7 @@ class buyer_user_object{
      */
     public function is_login(){
         $seller_id = $this->get_session();
-        return $seller_id ? true : false;
+        return $seller_id ? $seller_id : false;
     }
 
     /**

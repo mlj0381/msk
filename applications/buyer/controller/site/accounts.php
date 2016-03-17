@@ -29,7 +29,7 @@ class buyer_ctl_site_accounts extends buyer_frontpage{
 	 * 结算管理（list）
 	 */
 	public function index(){
-		
+		$this->output();
 	}
 	
 	

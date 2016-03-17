@@ -46,14 +46,14 @@ class buyer_ctl_site_goods extends buyer_frontpage{
 	 * 已购买商品
 	 */
 	public function stock(){
-		echo '进货管理->已购买商品';
+		$this->output();
 	}
 	
 	/**
 	 * 库存管理
 	 */
 	public function repertory(){
-		echo '库存管理';
+		$this->output();
 	}
 	
 	
