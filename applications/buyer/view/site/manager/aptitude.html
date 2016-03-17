@@ -1,0 +1,250 @@
+<h1>管家资质信息</h1>
+<div class="reg_progress clearfix">
+
+</div>
+<div class="passport-signup-container seller_regbox">
+    <div class="panel panel-default signup-panel clearfix">
+
+        <div class="panel-body panel-rt pull-right">
+            <form id="companyInfo_form" action="<{link app=seller ctl=site_passport act=brand_aptitude}>?identity=<{$identity}>" class="form-horizontal companyInfo_form" method="post" data-module="validator">
+                
+                <!-- 三证合一 -->
+                <div id="business_licence">
+                    <h4>营业执照信息（副本）
+                        <{if $extra.type eq 'center'}>
+                        <a href="<{link app=seller ctl=site_seller act=businessInfo}>?card=new"></a>
+                        <{else}>
+                        <a href="<{link app=seller ctl=site_passport act=entry args0=$extra.pageIndex-1}>?card=new">
+                            <{/if}>
+                            <small class="text-danger">填写新版三证合一执照</small>
+                        </a>
+                    </h4>
+
+                    <div class="form-group">
+                        <label class="col-xs-2 control-label">
+                            <span class="text-danger">*</span>注册号：
+                        </label>
+                        <div class="col-xs-4">
+                            <input type="text" value="<{$extra.company.business}>" name="company[business]" class="form-control business" required="true" format="digits">
+                            <span class="msgTip" data-message="format">格式不正确</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-xs-2 control-label">
+                            <span class="text-danger">*</span>名称：
+                        </label>
+                        <div class="col-xs-4">
+                            <input type="text" value='<{$extra.company.name}>' name="company[name]" class="form-control" required="true">
+                            <span class="msgTip" data-message="error"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-xs-2 control-label">
+                            <span class="text-danger">*</span>住所：
+                        </label>
+                        <div class="col-xs-4">
+                            <input type="text" value='<{$extra.company.address}>' name="company[address]" class="form-control" required="true">
+                            <span class="msgTip" data-message="error"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-xs-2 control-label">
+                            <span class="text-danger">*</span>法人代表姓名:
+                        </label>
+                        <div class="col-xs-4">
+                            <input type="text" value='<{$extra.business_licence.value.name}>' name="business_licence[value][name]" class="form-control" required="true">
+                            <span class="msgTip" data-message="error"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-xs-2 control-label">
+                            <span class="text-danger">*</span>注册资本：
+                        </label>
+                        <div class="col-xs-4">
+                            <div class="input-group form-item">
+                                <input type="text" value='<{$extra.company.registered_capital}>' name="company[registered_capital]" class="form-control" required="true" format="positive">
+                                <span class="input-group-addon">万</span>
+                            </div>
+                            <span class="msgTip" data-message="format">请输入正数</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-xs-2 control-label">
+                            <span class="text-danger">*</span>实收资本：
+                        </label>
+                        <div class="col-xs-4">
+                            <div class="input-group form-item">
+                                <input type="text" value='<{$extra.company.reality_capital}>' name="company[reality_capital]" class="form-control" required="true" format="positive">
+                                <span class="input-group-addon">万</span>
+                            </div>
+                            <span class="msgTip" data-message="format">请输入正数</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-xs-2 control-label">
+                            <span class="text-danger">*</span>公司类型：
+                        </label>
+                        <div class="col-xs-4">
+                            <{input type=select required="true" name="company[enterprise_type]" rows=$extra.page_setting.company valueColumn="id"
+                            labelColumn="label" value=$extra.company.enterprise_type}>
+                            <span class="msgTip" data-message="error"></span>
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <label class="col-xs-2 control-label">
+                            <span class="text-danger">*</span>经营范围：
+                        </label>
+                        <div class="col-xs-4">
+                            <input type="text" value='<{$extra.company.operating_period}>' name="company[operating_period]" class="form-control" required="true">
+                            <span class="msgTip" data-message="error"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-xs-2 control-label">
+                            <span class="text-danger">*</span>成立日期：
+                        </label>
+                        <div class="col-xs-4">
+                            <input type="text" value='<{$extra.company.establishment_date}>' name="company[establishment_date]" class="form-control" placeholder="2010-10-20" required="true" format="date">
+                            <span class="msgTip" data-message="format">请填写正确的日期格式</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-xs-2 control-label">
+                            <span class="text-danger">*</span>营业期限：
+                        </label>
+                        <div class="col-xs-4">
+                            <div class="form-item">
+                                <input type="text" value='<{$extra.company.business_scope.begin}>' name="company[business_scope][begin]" class="form-control"  placeholder="2010-10-20"  style="width:46%; display: inline-block;"> 至
+                                <input type="text" value='<{$extra.company.business_scope.end}>' name="company[business_scope][end]" class="form-control"  placeholder="2010-10-20"   style="width:46%; display: inline-block;" required="true">
+                            </div>
+                            <span class="msgTip" data-message="error"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-xs-2 control-label">
+                            <span class="text-danger">*</span>营业执照电子版：
+                        </label>
+                        <div class="col-xs-4">
+                            <{input type="imageupload" tag="图片上传" name="business_licence[attach]" value=$extra.business_licence.attach required='true' accept="jpg|png|gif"}>
+                            <span class="msgTip" data-message="error">不能为空</span>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <div class="form-group">
+                    <label class="col-xs-2"></label>
+                    <div class="col-xs-4">
+                        <button type="submit" data-loading-text="正在提交..." class="btn btn-danger" style="margin-left: 20px;">保存并进行下一步</button>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    /**
+     *动态添加多项,例如：检测设备，电商团队成员，企业荣誉，车间概况
+     */
+    var itemLength = function(obj){
+        var items = obj.find('div[data-items="itemList"]');
+        var item = items.find('div[data-item="creat-item"]:first');
+        item.find($('.delBtn')).hide();
+    }
+    $('div[data-module="creater"]').each(function(index, el) {
+
+        var addBtn = $(this).find('.addBtn');
+        var delBtn = $(this).find('delBtn');
+        var items = $(this).find('div[data-items="itemList"]');
+        var item = items.find('div[data-item="creat-item"]');
+        var itemLen = item.size();
+        var html = items.find('div[data-item="creat-item"]:first').prop("outerHTML");
+        var _this = $(this);
+        var imgUrl = '<{$base_url}>/public/javascripts/images/add.jpg';
+
+        //增加
+        addBtn.bind('click',function(){
+            _this.find('div[data-items="itemList"]').append(html);
+            _this.find('div[data-item="creat-item"]:last').find('input').val('');
+            _this.find('div[data-item="creat-item"]:last').find('img').attr('src', imgUrl);
+            itemLen++;
+            $.VMC.init();
+        })
+
+        //删除
+
+        if(itemLen <= 1){
+            item.find($('.delBtn')).hide();
+        }
+        itemLength(_this);
+        _this.on('click','.delBtn',function(){
+            if(!confirm('确定删除')) return false;
+            var parent = $(this).parents('div[data-item="creat-item"]');
+            var content_id = parent.find('.content_id').val();
+            if(!content_id){
+                parent.remove();
+                return false;
+            }
+            var url = '<{link app=seller ctl=site_passport act=del_extra}>';
+            $.post(url, {content_id: content_id}, function (re) {
+                if (re.success) {
+                    parent.remove();
+                    itemLen--;
+                    itemLength(_this);
+                } else {
+                    alert('操作失败');
+                }
+            });
+        });
+    });
+
+
+
+    /**
+     * 表单验证
+     */
+
+    void function (signup_form) {
+        var _alert_error = function (msg) {
+            signup_form.find('.alert-error').remove();
+            signup_form.append($('<div class="alert alert-danger">' + msg + '</div>'));
+            alert_timer = setTimeout(function () {
+                clearTimeout(alert_timer);
+                signup_form.find('.alert-danger').fadeOut('fast', function () {
+                    $(this).remove();
+                });
+            }, 3000);
+        }
+        signup_form.on('submit', function (e) {
+            e.stopPropagation();
+            $.post(signup_form.attr('action'), signup_form.serialize(), function (re) {
+                if (re.error) {
+                    _alert_error(re.error);
+                } else if (re.success) {
+                    location = re.redirect;
+                }
+            }, 'json');
+            return false;
+        });
+    }($('#seller_signup_form'));
+
+
+
+    $('#companyInfo_form .business').change(function(){
+        var typeId = $('#companyInfo_form input[name="typeId"]').val().trim();
+        var url = '<{link app=seller ctl=site_passport act=check_company}>';
+        $.post(url, {business : $(this).val().trim(), business_type : 0, type_id : typeId}, function(re){
+            console.log(re);
+        })
+    });
+
+
+</script>
+
+
+
+

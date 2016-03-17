@@ -758,7 +758,7 @@ vmc_b2c_orders WHERE `member_id`={$this->member['member_id']} AND `status` = 'ac
     /**
      * 站内信.
      */
-    public function sitemsg()
+    /*public function sitemsg()
     {
         $this->menuSetting = 'message';
         $user_obj = vmc::singleton('b2c_user_object');
@@ -772,7 +772,7 @@ vmc_b2c_orders WHERE `member_id`={$this->member['member_id']} AND `status` = 'ac
         $user_obj = vmc::singleton('b2c_user_object');
         $this->pagedata['pam_data'] = $user_obj->get_pam_data('*', $this->member['member_id']);
         $this->output();
-    }
+    }*/
 
     /**
      * 我的积分概览

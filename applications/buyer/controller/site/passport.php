@@ -42,7 +42,7 @@ class buyer_ctl_site_passport extends buyer_frontpage{
 		 * $is_login = $this->passport_obj->is_login();
 		 */
 		$is_login = $this->object_obj->is_login();
-		if (0 < $is_login){
+		if (0 < $is_login['account']['seller']){
             $redirect = $this->gen_url(array(
                 'app' => 'buyer',
                 'ctl' => 'site_buyer',
@@ -166,12 +166,8 @@ class buyer_ctl_site_passport extends buyer_frontpage{
 				$this->page('site/passport/signup_baseInfo.html');
 			}			
 		}else {
-			$redirect = $this->gen_url(array(
-					'app' => 'seller',
-					'ctl' => 'site_passport',
-					'act' => 'settled_index',
-			));
-			$this->splash('error', $redirect, '无效操作!');
+			$this->pagedata['show'] = 'yes';
+			$this->page('site/passport/signup.html');
 		}
 		        
 	}

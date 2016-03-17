@@ -134,5 +134,18 @@ class buyer_mdl_buyers extends dbeav_model{
 		
 	}
 	
+	public function check_buyer($user_id){
+		$is_user = $this->app->model('buyers')->getRow('buyer_id',array('buyer_id'=>$user_id));
+		if ($is_user){
+			return $user_id;
+		}else {
+			return null;
+		}
+		
+	}
+	
+	
+	
+	
 	
 }

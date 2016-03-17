@@ -338,7 +338,6 @@
             });
             //},300);
         });
-
         //全选状态
         var checkbox_all_status = (function () {
             var unchecked = $('.cart-body input:checkbox:not(:checked)');
@@ -361,11 +360,9 @@
                 }
                 if (re.success && re.data) {
                     //location = re.redirect;
-
                     _update(re.data);
                 }
             });
-
         });
         //单选
         $('.cart-body input:checkbox[data-ident]').on('change', function (e, ignore_request) {
@@ -380,6 +377,7 @@
                 }
                 if (re.success && re.data) {
                     //location = re.redirect;
+                    console.error(re.data);
                     _update(re.data);
                 }
             });

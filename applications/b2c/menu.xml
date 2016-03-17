@@ -31,6 +31,6 @@
     </menugroup>
 
     <menugroup name="message" label="消息中心">
-        <menu app='b2c' controller='site_member' action='sitemsg' display='true' order="60">站内信</menu>
+        <menu app='b2c' controller='site_member' action='message' display='true' order="60">站内信</menu>
     </menugroup>
 </menus>

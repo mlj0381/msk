@@ -14,8 +14,8 @@
 $db['members'] = array(
     'columns' => array(
         'member_id' => array(
-            'type' => 'number',
             'pkey' => true,
+            'type' => 'number',
             'comment' => '会员ID',
         ),
         'openid'=>array(

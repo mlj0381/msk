@@ -15,7 +15,9 @@
 <body>
 <{*require file="public/header.html"*}>
 <{WIDGET_B2C_INDEX_HEADER_BASIC page=index}>
+<{if $show eq ''}>
 <{require file="public/buyershop-nav.html"}>
+<{/if}>
 <div class="container main-container buyer_container">
     <{MAIN}>
 </div>
