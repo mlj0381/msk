@@ -21,5 +21,10 @@ class apicenter_api_buyer extends base_api
         $this->req_params = $this->_request->get_params(true);
     }
 
+    public function a(){
 
+
+
+        $this->success('11qqqqq11xxxxxxx1');
+    }
 }
