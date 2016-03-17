@@ -88,7 +88,7 @@ class buyer_ctl_site_buyer extends buyer_frontpage{
 	 * 账户安全
 	 */
 	public function buyer_security(){
-		echo '账户安全->手机绑定-邮箱绑定-身份验证';
+		$this->output();
 	}
 	
 	
@@ -97,7 +97,7 @@ class buyer_ctl_site_buyer extends buyer_frontpage{
 	 */
 	public function message(){
 		//全部消息-买家来信-订单
-		echo '站内消息';exit();
+		$this->output();
 	}
 	
 	
