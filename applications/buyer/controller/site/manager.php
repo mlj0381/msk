@@ -37,6 +37,12 @@ class buyer_ctl_site_manager extends buyer_frontpage{
 	 * 管家注册（有下一步）
 	 */
 	public function manager_signup(){
+		//处理冻品管家登录账号
+		$object_obj = vmc::singleton('buyer_user_object');
+		$buyer = $object_obj->get_current_seller();
+		$account_name = app::get('freeze')->model('freeze_buyer')->get_account($buyer);
+
+		$this->pagedata['account_name'] = $account_name;
 		$this->output('');
 	}
 	
