@@ -28,7 +28,30 @@ class buyer_ctl_site_manager extends buyer_frontpage{
 	/**
 	 * 冻品管家管理（list）
 	 */
-	public function index(){
+	public function index($page=1){
+		$limit = 5;
+
+		$freeze_buyer_model = app::get('freeze')->model('freeze_buyer');
+		$object_obj = vmc::singleton('buyer_user_object');
+		$buyer_id = $object_obj->get_id();
+
+		$freeze_list = $freeze_buyer_model->get_freezeList('*',array('buyer_id' => $buyer_id),($page - 1) * $limit, $limit);
+		$count = $freeze_buyer_model->get_freezeCount(array('buyer_id' => $buyer_id));
+
+		$this->pagedata['pager'] = array(
+			'total' => ceil($count / $limit),
+			'current' => $page,
+			'link' => array(
+				'app' => 'buyer',
+				'ctl' => 'site_manager',
+				'act' => 'index',
+				'args' => array(
+					($token = time()),
+				),
+			),
+			'token' => $token,
+		);
+		$this->pagedata['list'] = $freeze_list;
 		$this->output('');
 	}
 	
