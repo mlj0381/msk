@@ -24,15 +24,15 @@ class buyer_router extends site_router
 		return $result;
     }
 
-	public function gen_url($params = array())
-    {
-		$result = parent::gen_url($params);
-		strpos($result, 'buyer') > 0 &&
-		strpos($result, 'buyer-') === false &&
-		strpos($result, 'buyer.') === false &&
-		$result = str_replace('buyer', 'buyer/', $result);
-		return $result;
-	}
+// 	public function gen_url($params = array())
+//     {
+// 		$result = parent::gen_url($params);
+// 		strpos($result, 'buyer') > 0 &&
+// 		strpos($result, 'buyer-') === false &&
+// 		strpos($result, 'buyer.') === false &&
+// 		$result = str_replace('buyer', 'buyer/', $result);
+// 		return $result;
+// 	}
 	// 商家2015/9/6
 	protected function check_expanded_name()
     {
