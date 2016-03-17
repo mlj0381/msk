@@ -118,11 +118,11 @@
                                 </tr>
                             </thead>
                             <tbody class="interval">
-                            <{foreach from=$data_detail.product.interval.price key=key item=interval}>
+                            <{foreach from=$data_detail.product.interval key=key item=item}>
                                 <tr>
-                                    <td class="num-dn"><{$data_detail.product.interval.num_dn[$key]|default:1}></td>
-                                    <td class="num-up"><{$data_detail.product.interval.num_up[$key]|default:不限}></td>
-                                    <td class="num-price">￥ <span><{$data_detail.product.interval.price[$key]|cur}></span></td>
+                                    <td class="num-dn"><{$item.num_dn|default:1}></td>
+                                    <td class="num-up"><{$item.num_up|default:不限}></td>
+                                    <td class="num-price">￥ <span><{$item.price|cur}></span></td>
                                 </tr>
                             <{/foreach}>
                             </tbody>
