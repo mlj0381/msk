@@ -17,39 +17,39 @@ class buyer_user_object{
      * 判断当前用户是否登录
      */
     public function is_login(){
-        $member_id = $this->get_member_session();
-        return $member_id ? true : false;
+        $seller_id = $this->get_session();
+        return $seller_id ? true : false;
     }
 
     /**
      * 获取当前用户ID
      */
-    public function get_member_id(){
-        return $member_id = $this->get_member_session();
+    public function get_id(){
+        return $seller_id = $this->get_session();
     }
 
     //根据用户名得到会员ID
-    public function get_member_id_by_username($login_account){
-        $pam_members_model = app::get('pam')->model('members');
-        $data = $pam_members_model->getList('member_id',array('login_account'=>$login_account));
-        return $data[0]['member_id'];
+    public function get_seller_id_by_username($login_account){
+        $pam_sellers_model = app::get('pam')->model('sellers');
+        $data = $pam_sellers_model->getList('seller_id',array('login_account'=>$login_account));
+        return $data[0]['seller_id'];
     }
 
     /**
-     * 设置会员登录session member_id
+     * 设置会员登录session seller_id
      */
-    public function set_member_session($member_id){
-        unset($_SESSION['error_count']['b2c']);
-        $_SESSION['account']['member'] = $member_id;
+    public function set_session($seller_id){
+        unset($_SESSION['error_count']['seller']);
+        $_SESSION['account']['seller'] = $seller_id;
     }
 
     /**
-     * 获取会员登录session member_id
+     * 获取会员登录session seller_id
      */
-    public function get_member_session(){
-        if($this->member_id)return $this->member_id;
-        if(isset($_SESSION['account']['member']) &&  $_SESSION['account']['member']){
-            return $_SESSION['account']['member'];
+    public function get_session(){
+        if($this->seller_id)return $this->seller_id;
+        if(isset($_SESSION['account']['seller']) &&  $_SESSION['account']['seller']){
+            return $_SESSION['account']['seller'];
         }else{
             return false;
         }
@@ -61,115 +61,97 @@ class buyer_user_object{
      * @param null
 	 * @return array 用户信息
 	 */
-	public function get_current_member(){
-        if($this->member_info){
-          return $this->member_info;
+	public function get_current_seller(){
+        if($this->seller_info){
+          return $this->seller_info;
         }
-        return $this->get_member_info( );
+        return $this->get_seller_info( );
     }
 
     /**
-     *当前会员用户信息
+     *当前商家信息
      */
-    public function get_member_info( $member_id ) {
-        if(!$member_id){
-            $member_id = $this->member_id = $this->get_member_id();
+    public function get_seller_info( $seller_id ) {
+        if(!$seller_id){
+            $seller_id = $this->seller_id = $this->get_id();
         }
-        $memberFilter = array(
-            'account' => 'member_id,login_account,login_type',
-            'members'=>'member_id,member_lv_id,avatar,email,mobile,name,sex,experience,cur,advance',
+        $sellerFilter = array(
+            'account' => 'seller_id, login_account, login_type',
+            'sellers'=> 'seller_id, avatar, email, mobile,name, ident, schedule, type',
+            'company'=> 'company_id, name',
         );
-        $memberData = $this->get_members_data($memberFilter,$member_id);
-        $member_sdf = $memberData['members'];
+        $sellerData = $this->get_sellers_data($sellerFilter,$seller_id);
+        $seller_sdf = $sellerData['sellers'];
 
-        if( !empty($member_sdf) ) {
-            $login_name = $this->get_member_name();
-            $this->member_info['member_id'] = $member_sdf['member_id'];
-            $this->member_info['uname'] =  $login_name;
-            $this->member_info['local_uname'] =  $memberData['account']['local'];
-            $this->member_info['login_account'] =  $memberData['account']['login_account'];
-            $this->member_info['name'] = $member_sdf['name'];
-            $this->member_info['avatar'] = $member_sdf['avatar'];
-            $this->member_info['sex'] =  $member_sdf['sex'] == 1 ?'男':'女';
-            $this->member_info['email'] =  $member_sdf['email'];
-            $this->member_info['mobile'] =  $member_sdf['mobile'];
-            $this->member_info['integral'] = app::get('b2c')->model('member_integral')->amount($member_id);
-            $this->member_info['experience'] = $member_sdf['experience'];
-            $this->member_info['email'] = $memberData['account']['email'];
-            $this->member_info['member_lv'] = $member_sdf['member_lv_id'];
-            $this->member_info['member_cur'] = $member_sdf['cur'];
-            //$this->member_info['advance'] = $member_sdf['advance'];
-            #获取会员等级信息，及下级信息
-            $obj_mem_lv = $this->app->model('member_lv');
-            $levels = $obj_mem_lv->getList("name,member_lv_id,disabled,dis_count,experience",array('disabled'=>'false'),0,-1,null,'experience DESC');
-            foreach ($levels as $key => $level) {
-                if($this->member_info['member_lv'] == $level['member_lv_id']){
-                    $this->member_info['levelname'] = $level['name'];
-                    $this->member_info['lv_discount'] = $level['dis_count'];
-                    $this->member_info['next_levelname'] = $levels[$key+1]['name'];
-                    $this->member_info['next_lv_discount'] = $levels[$key+1]['dis_count'];
-                    $this->member_info['next_experience'] = $levels[$key+1]['experience'];
-                    break;
-                }
-            }
-
+        if( !empty($seller_sdf) ) {
+            $login_name = $this->get_seller_name();
+            $this->seller_info['seller_id'] = $seller_sdf['seller_id'];
+            $this->seller_info['local_uname'] =  $sellerData['account']['local'];
+            $this->seller_info['login_account'] =  $sellerData['account']['login_account'];
+            $this->seller_info['name'] = $seller_sdf['name'];
+            $this->seller_info['avatar'] = $seller_sdf['avatar'];
+            $this->seller_info['email'] =  $seller_sdf['email'];
+            $this->seller_info['mobile'] =  $seller_sdf['mobile'];
+            $this->seller_info['ident'] =  $seller_sdf['ident'];
+			$this->seller_info['schedule'] =  $seller_sdf['schedule'];
+            $this->seller_info['type'] =  $seller_sdf['type'];
         }
-        return $this->member_info;
+        return $this->seller_info;
     }
 
     /**
      * 获取当前会员信息(标准格式，按照表结构获取)
      * $columns = array(
-     *      'account' => 'member_id',
-     *      'members' => 'member_id',
+     *      'account' => 'seller_id',
+     *      'sellers' => 'seller_id',
      * );
      */
-    public function get_members_data($columns,$member_id=null){
-        if(!$member_id){
-            $this->member_id = $this->get_member_id();
+    public function get_sellers_data($columns,$seller_id=null){
+        if(!$seller_id){
+            $this->seller_id = $this->get_id();
         }
 
         if( $columns['account'] ){
-            $data['account'] = $this->_get_pam_members_data($columns['account'],$member_id);
+            $data['account'] = $this->_get_pam_sellers_data($columns['account'],$seller_id);
         }
 
-        if($columns['members']){
-            $data['members'] = $this->_get_b2c_members_data($columns['members'],$member_id);
+        if($columns['sellers']){
+            $data['sellers'] = $this->_get_seller_sellers_data($columns['sellers'],$seller_id);
         }
 
         return $data;
     }
 
     /**
-     * 获取当前会员用户基本信息(b2c_members)
+     * 获取当前会员用户基本信息(sellers)
      */
-    private function _get_b2c_members_data($columns='*',$member_id=null){
-        if(!$member_id){
-            $member_id = $this->member_id;
+     private function _get_seller_sellers_data($columns='*',$seller_id=null){
+        if(!$seller_id){
+            $seller_id = $this->seller_id;
         }
-        $b2c_members_model = app::get('b2c')->model('members');
+        $seller_sellers_model = app::get('seller')->model('sellers');
         if(is_array($columns) ){
             $columns = implode(',',$columns);
         }
-        $membersData = $b2c_members_model->getList($columns,array('member_id'=>$member_id));
-        return $membersData[0];
+        $sellersData = $seller_sellers_model->getList($columns,array('seller_id'=>$seller_id));
+        return $sellersData[0];
     }
 
     /**
-     * 获取当前登录账号(pam_members)表信息
+     * 获取当前登录账号(pam_sellers)表信息
      */
-    private function _get_pam_members_data($columns='*',$member_id){
-        if(!$member_id){
-            $member_id = $this->member_id;
+    private function _get_pam_sellers_data($columns='*',$seller_id){
+        if(!$seller_id){
+            $seller_id = $this->seller_id;
         }
-        $pam_members_model = app::get('pam')->model('members');
+        $pam_sellers_model = app::get('pam')->model('sellers');
         if(is_array($columns)){
             $columns = implode(',',$columns);
         }
         if( $columns != '*' && !strpos($columns,'login_type') ){
             $columns .= ',login_type';
         }
-        $accountData = $pam_members_model->getList($columns,array('member_id'=>$member_id));
+        $accountData = $pam_sellers_model->getList($columns,array('seller_id'=>$seller_id));
         foreach((array)$accountData as $row){
             foreach((array)$row as $key=>$val){
                 if($key == 'login_type'){
@@ -178,39 +160,33 @@ class buyer_user_object{
                     $arr_colunms[$key] = $val;
                 }
             }
-        }//end foreach
-
-        //$arr_colunms['login_account'] = $arr_colunms['local'];
+        }
         return $arr_colunms;
     }
 
-    public function get_pam_data($columns="*",$member_id){
+    public function get_pam_data($columns="*",$seller_id){
         if(is_array($columns)){
             $columns = implode(',',$columns);
         }
         if( $columns != '*' && !strpos($columns,'login_type') ){
             $columns .= ',login_type';
         }
-        $pam_members_model = app::get('pam')->model('members');
-        $b2c_members_model = app::get('b2c')->model('members');
-        $accountData = $pam_members_model->getList($columns,array('member_id'=>$member_id));
-        $memberData = $b2c_members_model->getRow($columns,array('member_id'=>$member_id));
+        $pam_sellers_model = app::get('pam')->model('sellers');
+        $accountData = $pam_sellers_model->getList($columns,array('seller_id'=>$seller_id));
         foreach((array)$accountData as $row){
           $arr_colunms[$row['login_type']] = $row;
         }
-        $arr_colunms['memberData'] = $memberData;
         return $arr_colunms;
     }
 
     /**
      * 获取当前会员用户名/或指定用户的用户名
      */
-    public function get_member_name($login_name=null,$member_id=null){
+    public function get_seller_name($login_name=null,$seller_id=null){
         if(!$login_name){
-            $member_id = $member_id ? $member_id : $this->get_member_id();
-            $pam_members_model = app::get('pam')->model('members');
-            $data = $pam_members_model->getList('*',array('member_id'=>$member_id));
-
+            $seller_id = $seller_id ? $seller_id : $this->get_id();
+            $pam_sellers_model = app::get('pam')->model('sellers');
+            $data = $pam_sellers_model->getList('*',array('seller_id'=>$seller_id));
             foreach((array)$data as $row){
                 $arr_name[$row['login_type']] = $row['login_account'];
             }
@@ -236,58 +212,14 @@ class buyer_user_object{
         return $login_name;
     }
 
-    /*
-     * 会员注册页面配置 企业联系人信息
-     * return pageSetting array()
-     * */
-    public function page_company($uid = null)
-    {
-        //读取会员注册配置
-        $conf = app::get('b2c')->getConf('main_products');
-        //读取收货时间
-        $conf['time'] = app::get('b2c')->getConf('receiving_time');
-        //读取分类
-        $conf['cat'] = app::get('b2c')->model('goods_cat')->get_tree();
-        //获取页面信息
-        $mdl_company = app::get('base')->model('company');
-        $mdl_contact = app::get('base')->model('contact');
-        $uid = $uid ? $uid : $this->get_member_id();
-        $filter = array('uid' => $uid, 'from' => '0');
-        $conf['info']['company'] = $mdl_company->getRow('*', $filter);
-        $conf['info']['contact'] = $mdl_contact->getRow('*', $filter);
-        $conf['info']['company_extra'] = app::get('base')->model('company_extra')->getList('*', $filter);
-        return $conf;
+    public function get_company($seller_id, $columns = '*'){
+        return $this->app->model('company')->getRow($columns, array('seller_id' => $seller_id));
     }
 
-    /*
-     * 会员注册页面配置  经营信息
-     * @param $pageIndex 配置页面索引
-     * return pageSetting array()
-     * */
-    public function page_manage($uid = null)
-    {
-        //使用方向  经营场所
-        $uid = $uid ? $uid : $this->get_member_id();
-        $conf['info'] = app::get('b2c')->getConf('main_products');
-        $filter = array('uid' => $uid, 'from' => '0', 'key');
-        $conf['info']['manageInfo'] = app::get('base')->model('company_extra')->getList('*', $filter);
-        return $conf;
+    public function get_store($seller_id, $columns = '*'){
+        return app::get('store')->model('store')->getRow($columns, array('seller_id' => $seller_id));
     }
-
-    /*
-     * 会员注册页面配置 配送信息
-     * @param $pageIndex 配置页面索引
-     * return pageSetting array()
-     * */
-    public function page_delivery()
-    {
-        //配送信息
-        $conf['info'] = app::get('b2c')->getConf('main_products');
-        //读取收货时间信息
-        $conf['info']['time'] = app::get('b2c')->getConf('receiving_time');
-        $filter = array('uid' => $this->get_member_id(), 'from' => '0');
-        $conf['info']['deliveryInfo'] = app::get('base')->model('company_extra')->getList('*', $filter);
-        return $conf;
+    public function get_contact($seller_id, $columns = '*'){
+        return $this->app->model('contact')->getRow($columns, array('seller_id' => $seller_id));
     }
-
 }
