@@ -15,12 +15,12 @@
 class apicenter_interaction_members
 {
     private $URL;
-    private $_request;
-    public function __construct(&$app)
+    private $request;
+    public function __construct()
     {
         header("Content-type:text/html;charset=utf-8");
         $this->URL = 'msk-web/api/v1/ms/';
-        $this->_request = vmc::singleton('apicenter_api');
+        $this->request = vmc::singleton('apicenter_api');
     }
 
     /**
@@ -36,23 +36,15 @@ class apicenter_interaction_members
      */
     public function card_provide($data=array()){
         $post_url = $this->URL.'card_provide';
-        
+
         $post_data = array(
             'siteCode'=>'102',
             'auth'=>'',
             'DateTime'=>'2016-03-15 18:00:00'
             );
-        $data = $this->_request->api_post($post_url,$post_data);
-
-        if(!$data){
-            if($data['status'] == 'S'){
-                return $data['result'];
-            }else{
-                return $data['message'];
-            }
-        }else{
-            return '接口异常';
-        }
+        $data = $this->request->api_post($post_url,$post_data);
+        //var_dump($post_data,$data);exit;
+        return $data;
     }
 
 }
