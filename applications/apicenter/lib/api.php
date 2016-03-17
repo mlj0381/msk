@@ -9,21 +9,24 @@
 // | Author: Shanghai ChenShang Software Technology Co., Ltd.
 // +----------------------------------------------------------------------
 
-class apicenter_entrance_buyer
+class apicenter_api
 {
-    public function __construct(&$app)
+    private $host = 'http://121.40.103.229:8080/';
+    private $request;
+
+    public function __construct()
     {
-        header("Content-type:text/html;charset=utf-8");
+        header("Content-type:application/json;charset=utf-8");
+        $this->request = vmc::singleton('base_httpclient');
     }
 
-    public function a(){
-        $url = 'msk-web/api/v1/pd/pdBidType';
-        $data = array('siteCode'=>'102',
-                    'auth'=>'',
-                    'DateTime'=>'2016-03-15 18:00:00'
-                    );
-        $request = vmc::singleton('apicenter_api')->api_post($url,$data);
-        var_dump($data,$request);exit;
-        $this->success($request);
+    public function api_post($url,$post_data=array()){
+        $post_url = $this->host.$url;
+        $res = $this->request->post($post_url,$post_data);
+        if($res){
+            return json_decode($res,1);
+        }else{
+            return false;
+        }
     }
 }
