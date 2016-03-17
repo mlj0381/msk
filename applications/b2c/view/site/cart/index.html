@@ -271,12 +271,12 @@ void function(){
             var object_item = cart_result['objects']['goods'][idx];
             
             _data_bind(item,object_item);
-            _fill_plist(item,plist_goods?plist_goods[object_item['obj_ident']]:false);
+            //_fill_plist(item,plist_goods?plist_goods[object_item['obj_ident']]:false);
             
         });
-
+        
         _data_bind($('.cart-footer'),cart_result);
-        _fill_plist($('.cart-footer'),plist_order);
+        //_fill_plist($('.cart-footer'),plist_order);
         //什么都没选，无法结算
         $('.checkout-btn')[cart_result['goods_count']<1?'addClass':'removeClass']('disabled');
         //包邮提前提示
@@ -304,6 +304,7 @@ void function(){
                 }
                 if(re.success && re.data){
                     //location = re.redirect;
+                    console.error(re.data);
                     _update(re.data);
                     ipt.attr('data-now',cur_val);
                 }
