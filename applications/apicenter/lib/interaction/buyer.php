@@ -9,21 +9,18 @@
 // | Author: Shanghai ChenShang Software Technology Co., Ltd.
 // +----------------------------------------------------------------------
 
+/**
+ * 买家相关
+ */
 class apicenter_interaction_buyer
 {
-    public function __construct(&$app)
+    private $URL;
+    private $request;
+    public function __construct()
     {
         header("Content-type:text/html;charset=utf-8");
+        $this->URL = 'msk-web/api/v1/ms/';
+        $this->request = vmc::singleton('apicenter_api');
     }
 
-    public function a(){
-        $url = 'msk-web/api/v1/pd/pdBidType';
-        $data = array('siteCode'=>'102',
-                    'auth'=>'',
-                    'DateTime'=>'2016-03-15 18:00:00'
-                    );
-        $request = vmc::singleton('apicenter_api')->api_post($url,$data);
-        var_dump($data,$request);exit;
-        $this->success($request);
-    }
 }

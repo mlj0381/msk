@@ -9,6 +9,9 @@
 // | Author: Shanghai ChenShang Software Technology Co., Ltd.
 // +----------------------------------------------------------------------
 
+/**
+ * 
+ */
 class apicenter_interaction_commont
 {
     public $req_params = array();

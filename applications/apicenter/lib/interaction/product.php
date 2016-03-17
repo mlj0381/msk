@@ -9,17 +9,18 @@
 // | Author: Shanghai ChenShang Software Technology Co., Ltd.
 // +----------------------------------------------------------------------
 
+/**
+ * 货品相关
+ */
 class apicenter_interaction_product
 {
-    public $req_params = array();
-
-    public function __construct(&$app)
+    private $URL;
+    private $request;
+    public function __construct()
     {
         header("Content-type:text/html;charset=utf-8");
-        $this->app = $app;
-        $this->_request = vmc::singleton('base_component_request');
-        $this->req_params = $this->_request->get_params(true);
+        $this->URL = 'msk-web/api/v1/ms/';
+        $this->request = vmc::singleton('apicenter_api');
     }
-
 
 }
