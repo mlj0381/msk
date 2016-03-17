@@ -105,9 +105,13 @@ class buyer_ctl_site_passport extends buyer_frontpage{
 				$this->splash('error', $redirect, '用户名或者密码错误！');
 			}
 		}else {
-		
-			$this->set_tmpl('passport');
-			$this->page('site/passport/login.html');
+			vmc::singleton('base_session')->start();
+			if ($this->object_obj->get_session()){
+				$this->splash('error', '', '已经是登录状态！');
+			}else {
+				$this->set_tmpl('passport');
+				$this->page('site/passport/login.html');
+			}
 		}
 
 		

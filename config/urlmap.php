@@ -16,5 +16,6 @@ $urlmap = array(
     '/console'=> array('app'=>'desktop'),
     '/'=> array('app'=>'site'),
 	'/seller'=> array('app'=>'seller'),
+	'/buyer'=> array('app'=>'buyer'),
     '/m'=> array('app'=>'mobile'),
 );
