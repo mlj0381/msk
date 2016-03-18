@@ -178,9 +178,9 @@
 
                           <{assign var=max value=$item.product.interval[0].price}>
                           <{assign var=min value=$item.product.interval[0].price}>
-                          <{foreach from=$item.product.interval item=item}>
-                                <span class="hide"><{if $max < $item.price }><{$max=$item.price}><{/if}>
-                                <{if $min > $item.price}><{$min=$item.price}><{/if}></span>
+                          <{foreach from=$item.product.interval item=interval}>
+                                <span class="hide"><{if $max < $interval.price }><{$max=$interval.price}><{/if}>
+                                <{if $min > $interval.price}><{$min=$interval.price}><{/if}></span>
                           <{/foreach}>
                           <li class="price-1"><{$min|cur}><{if $min neq $max}> -- <{$max|cur}><{/if}></li>
                           <!-- 显示价格区间-->
@@ -192,12 +192,12 @@
                           <!--<li class="price-1"><{$item.product.price_dn|cur}></li>-->
                           <!--<{/if}>-->
                       </ul>
+                        <{}>
                       <h3 class="g-name">
                           <a href="<{link app=b2c ctl=site_product args0=$item.product.product_id args1=$item.store_id}>" title='<{$item.name}>'><{$item.name}></a>
                       </h3>
                       <div class="g-ctl clearfix">
-                        <a class="add_cart fl" data-url="<{link app=b2c ctl=site_cart act=add args0=$item.product.product_id
-                        args1=$item.store_id args2=1 }>" href="javascript:;"><i class="icon-shopping-cart"></i>加入购物车<em class="hide">+1</em></a>
+                        <button class="add_cart fl" <{if $buyer_id && $item.agent eq '0'}> disabled="disabled" <{/if}> data-url="<{link app=b2c ctl=site_cart act=add args0=$item.product.product_id args1=$item.store_id args2=1 }>" href="javascript:;"><i class="icon-shopping-cart"></i>加入购物车<em class="hide">+1</em></button>
                         <a class="add_fav fr favorite-button"data-url="<{link app=b2c ctl=site_member act=favorite args0=add
                         args1=$item.product.goods_id args2=goods}>" herf="javascript:;"><i class="icon-heart"></i>收藏</a>
                       </div>
