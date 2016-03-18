@@ -24,7 +24,7 @@ class b2c_ctl_site_product extends b2c_frontpage {
         }
     }
 
-    public function index() {
+    public function index($type = '1') {
         //获取参数 货品ID
         $params = $this->_request->get_params();
         //调用接口 2015/12/9

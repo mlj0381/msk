@@ -38,6 +38,14 @@ class b2c_ctl_site_list extends b2c_frontpage
         return $cat;
     }
 
+    /**
+     * 检查购买者的身份
+     **/
+    private function _check_buyer_identity()
+    {
+        vmc::singleton();
+    }
+
     public function index($fix_brand = false)
     {
         $params = utils::_filter_input($_GET);

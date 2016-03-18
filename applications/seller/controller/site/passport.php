@@ -574,30 +574,22 @@ class seller_ctl_site_passport extends seller_frontpage
     //商家入驻类型选择
     public function identity()
     {
-        (!is_numeric($_POST['ident'])) && $this->splash('error', '', '非法请求');
-        $redirect = array('app' => 'seller', 'ctl' => 'site_passport', 'act' => 'entry');
+        (!is_numeric($_POST['ident']) && empty($_POST)) && $this->splash('error', '', '非法请求');
+        $redirect = array('app' => 'seller', 'ctl' => 'site_passport', 'act' => 'signup');
         if ($_POST['type'] == '1') {
-            $redirect = array('app' => 'buyer', 'ctl' => 'site_passport', 'act' => 'signup');
+            $redirect = array('app' => 'buyer', 'ctl' => 'site_passport', 'act' => 'entry');
         }
         $redirect = $this->gen_url($redirect);
-        if ($_POST) {
-            $db = vmc::database();
-            $db->beginTransaction();
-            $dataValue = array('ident' => $_POST['ident'], 'type' => $_POST['type']);
-            $filter = array('seller_id' => $this->seller['seller_id']);
-            if (!$this->app->model('sellers')->update($dataValue, $filter)) {
-                $db->rollback();
-                $this->splash('error', '', '操作失败');
-            }
-            if (!app::get('pam')->model('sellers')->update($dataValue, $filter)) {
-                $db->rollback();
-                $this->splash('error', '', '操作失败');
-            }
-            $db->commit();
-            $this->splash('success', $redirect, '操作成功');
+        $_POST['seller_id'] = $this->seller['seller_id'];
+        $result = $this->passport_obj->identity_update($_POST);
+        if($result && $_POST['type'] == '1'){
+            //返回成功 并且 选择成功买手身份
+            $this->unset_seller();
+            vmc::singleton('buyer_user_object')->set_session($result['buyer_id']);
         }
-        $this->splash('error', '', '非法请求');
+        $this->splash($result ? 'success' : 'error', $redirect, $result ? '操作成功' : '操作失败');
     }
+
 
     //ajax判断所填写的营业执照号是否已经填写过并返回信息
     public function check_company()
@@ -614,7 +606,6 @@ class seller_ctl_site_passport extends seller_frontpage
     //添加品牌资质
     public function add_brand()
     {
-
         if ($_POST) {
             $params = utils::_filter_input($_POST);
             unset($_POST);
