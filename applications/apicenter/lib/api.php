@@ -31,10 +31,12 @@ class apicenter_api
      * @return false | array 返回接口成功所有数据
      */
     public function api_post($url,&$post_data=array()){
+
         $post_url = $this->HOST.$url;
         $res = $this->_request->post($post_url,$post_data);
         $data = json_decode($res,1);
-        $post_data = $data['message'];
+        $post_data['msg'] = $data ? $data['message'] : '请求异常';
+
         if($data['status'] == 'S'){
             return $data['result'];
         }else{

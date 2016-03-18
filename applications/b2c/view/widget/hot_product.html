@@ -1,18 +1,22 @@
-
-    <div class="hd">
-        <span class="lm_title"><{$label}></span>
-            <span class="btns">
-                <a class="prev icon-angle-left"></a>
-                <a class="next icon-angle-right"></a>
-            </span>
-    </div>
-    <div class="bd">
-        <ul class="picList">
-            <{foreach from=$content item=item}>
+<div class="hd">
+    <span class="lm_title"><{$label}></span>
+    <span class="btns">
+         <a class="prev icon-angle-left"></a>
+        <a class="next icon-angle-right"></a>
+    </span>
+</div>
+<div class="bd">
+    <ul class="picList">
+        <{foreach from=$content item=item}>
             <li>
-                <div class="title"><a href="<{$item.url}>" target="_blank"><{$item.title}></a></div>
+                <div class="title">
+                    <a href="<{$item.url}>" target="_blank">
+                        <{$item.title}>
+                    </a>
+                </div>
                 <div class="pic"><a href="<{$item.url}>" target="_blank"><img src="<{$item.image_id|storager:'s'}>"/></a></div>
             </li>
-            <{/foreach}>
-        </ul>
-    </div>
+        <{/foreach}>
+    </ul>
+</div>
+

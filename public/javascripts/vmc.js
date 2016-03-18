@@ -208,7 +208,9 @@ $.validator.messages = {
 				$( element ).valid();
 			});
 		}
+		
 		return value === target.val();
+
 	},
 	fun : function(value, element, param)
 	{

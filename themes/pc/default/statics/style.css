@@ -353,22 +353,36 @@ ol {
   width: 100%;
   height: auto;
   border-bottom: 1px dashed #ddd;
-  padding: 15px 0;
-}
-.product-container .product-page .product_firstRow .pref_info label[class*='col-'] {
-  padding-left: 5px;
-  width: 80px;
+  background: #fffeec;
+  /* label[class*='col-']{
+					padding-left:5px;
+					width:80px;
+					height:100%;
+					display: table-cell;
+				
+				} */
 }
 .product-container .product-page .product_firstRow .pref_info .pref_table table {
   width: 100%;
 }
 .product-container .product-page .product_firstRow .pref_info .pref_table table th {
-  height: 20px;
-  line-height: 20px;
+  height: 30px;
+  line-height: 30px;
+  font-size: 14px;
+  border-bottom: 1px solid #e8e6c7;
+  padding-left: 5px;
 }
 .product-container .product-page .product_firstRow .pref_info .pref_table table td {
   height: 24px;
-  border-bottom: 1px solid #f1f1f1;
+  border-bottom: 1px solid #e8e6c7;
+  padding-left: 5px;
+  font-size: 14px;
+  font-weight: bold;
+}
+.product-container .product-page .product_firstRow .pref_info .pref_table table td.num-price {
+  color: #c13e2c;
+  font-size: 18px;
+  font-weight: bold;
 }
 .product-container .product-page .product_firstRow .pref_info p {
   height: 40px;
@@ -465,11 +479,16 @@ ol {
 .product-container .product-page .mall_reco .hd {
   border-bottom: 1px solid #ddd;
   margin-bottom: 10px;
+  height: 40px;
+  line-height: 40px;
 }
-.product-container .product-page .mall_reco .hd h3 {
+.product-container .product-page .mall_reco .hd .lm_title {
   margin: 0;
   margin-bottom: 10px;
   width: 500px;
+  font-size: 18px;
+  height: 30px;
+  line-height: 30px;
   float: left;
 }
 .product-container .product-page .mall_reco .hd span.btns {
@@ -489,10 +508,10 @@ ol {
 .product-container .product-page .mall_reco .hd span.btns a.next {
   margin-left: -1px;
 }
-.product-container .product-page .mall_reco .bd ul {
+.product-container .product-page .mall_reco .bd ul.picList {
   margin-left: 6px;
 }
-.product-container .product-page .mall_reco .bd ul li {
+.product-container .product-page .mall_reco .bd ul.picList li {
   width: 216px;
   height: 216px;
   margin: 0 16px 0 0px;
@@ -500,7 +519,7 @@ ol {
   overflow: hidden;
   float: left;
 }
-.product-container .product-page .mall_reco .bd ul li p {
+.product-container .product-page .mall_reco .bd ul.picList li div.title {
   position: absolute;
   width: 100%;
   z-index: 100;
@@ -510,12 +529,12 @@ ol {
   margin-bottom: 0px;
   padding: 3px 10px 0;
 }
-.product-container .product-page .mall_reco .bd ul li p span {
+.product-container .product-page .mall_reco .bd ul.picList li div.title a {
   display: block;
   color: #fff;
   cursor: pointer;
 }
-.product-container .product-page .mall_reco .bd ul li img {
+.product-container .product-page .mall_reco .bd ul.picList li img {
   width: 216px;
   height: 216px;
 }
