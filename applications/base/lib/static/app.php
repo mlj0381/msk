@@ -66,6 +66,11 @@ class app
         return vmc::singleton($this->app_id.'_mdl_'.$model, $this);
     }
 
+	public function rpc($rpc)
+	{		
+		return vmc::singleton('base_rpc', $this, $rpc);
+	}
+
     public function router()
     {
         if (!$this->__router) {
