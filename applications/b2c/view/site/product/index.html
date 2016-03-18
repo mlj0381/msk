@@ -106,7 +106,9 @@
                                 <tr>
                                     <th>起批量</th>
                                     <th>销售价格</th>
+                                    <{if $buyer_id && $data_detail.agent eq '1'}>
                                     <th>折扣率</th>
+                                    <{/if}>
                                 </tr>
                             </thead>
                             <tbody class="interval">
@@ -117,7 +119,9 @@
                                         <span class="num-up"><{$item.num_up|default:不限}></span>
                                     </td>
                                     <td class="num-price">￥ <span><{$item.price|cur}></span></td>
-                                    <td class="discount"><span class="text-danger">8%</span></td>
+                                    <{if $buyer_id && $data_detail.agent eq '1'}>
+                                    <td class="discount"><span class="text-danger"><{$item.discount}>%</span></td>
+                                    <{/if}>
                                 </tr>
                             <{/foreach}>
                             </tbody>
@@ -301,7 +305,7 @@
                                         <td><{$item.createtime|cdate}></td>
                                     </tr>
                                 <{/foreach}>
-                                </tbody> 
+                                </tbody>
                             </table>
                         </div>
                         <div class="tab-pane fade" id="comment">
@@ -343,10 +347,12 @@
     //快速登录
     $('.cart').click(function (e) {
         var _self = $(this);
+        var buyer = '<{$buyer_id}>';
+        var url = $(_self).attr('data-url');
+        if(buyer) location = url;
         $.post('<{link app=b2c ctl=site_passport act=check_login}>', '', function (re) {
             if (re.success) {
-                var url = $(_self).attr('data-url') ? $(_self).attr('data-url') : '<{link app=b2c ctl=site_cart act=index}>';
-                location = url;
+                location = url ? url : '<{link app=b2c ctl=site_cart act=index}>';
             } else {
                 $('#quickLogin').modal('show');
             }
@@ -427,18 +433,27 @@
          * 商品价盘价格计算
          **/
         var priceCount = function(num){
+            var buyerIdentity = '<{$buyer_id}>';
+            var agent = '<{$data_detail.agent}>';
             var index = 0;
             var price = 0;
+            var discount = 0;
             $('.pref_info .interval tr').each(function(idx, item){
                 var minNum = parseInt($(item).find('.num-dn').text().trim());
                 if(minNum > num){
-                    price = parseFloat($(item).prev().find('.num-price span').text().trim());
+                    if(buyerIdentity > 0 && agent == 1)
+                        discount = parseFloat($(item).prev('tr').find('.discount').text().trim());
+                    price = parseFloat($(item).prev('tr').find('.num-price span').text().trim());
                     index = idx;
                     return false;
                 }
+                discount = parseFloat($(item).find('.discount').text().trim());
                 price = parseFloat($(item).find('.num-price span').text().trim());
             });
-            return (num * price).toFixed(2);
+            var sumPrice = num * price;
+            if(buyerIdentity > 0 && agent == 1)
+                sumPrice = sumPrice * discount / 100;
+            return sumPrice.toFixed(2);
         };
 
 

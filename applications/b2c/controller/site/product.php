@@ -24,7 +24,7 @@ class b2c_ctl_site_product extends b2c_frontpage {
         }
     }
 
-    public function index($type = '1') {
+    public function index($typ) {
         //获取参数 货品ID
         $params = $this->_request->get_params();
         //调用接口 2015/12/9
@@ -35,6 +35,7 @@ class b2c_ctl_site_product extends b2c_frontpage {
             vmc::singleton('site_router')->http_status(404);
             $this->splash('error', null, $msg);
         }
+        $this->pagedata['buyer_id'] = vmc::singleton('buyer_user_object')->get_session();
         $this->pagedata['data_detail'] = $data_detail;
         $this->pagedata['store_id'] = $params[1];
         $store_obj = vmc::singleton('store_store_object');
