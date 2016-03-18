@@ -116,6 +116,14 @@ class b2c_view_widget {
         $render->pagedata['contents'] = app::get('b2c')->model('pages_content')->getList('*', array('type' => '2', 'status' => '1', 'position_id'=>$params['position_id'],));
         return $render->fetch('widget/index_left_good.html');
     }
+    // 店铺首页-幻灯
+    public function function_WIDGET_STORE_INDEX_SLIDER($params, &$smarty) {
+        $render = new base_render(app::get($params['app']));
+        $render->pagedata['position_id'] = $params['position_id'];
+        $render->pagedata['store_id'] = $params['store_id'];
+       $render->pagedata['contents']= app::get('b2c')->model('pages_content')->getList('*', array('type' => '1', 'status' => '1','position_id'=>$params['position_id'],'store_id'=>$params['store_id'],));
+        return $render->fetch('widget/slider.html');
+    }
     //店铺楼层左侧推荐
     public function function_WIDGET_STORE_INDEX_LEFT_GOOD($params, &$smaryt) {
         $render = new base_render(app::get($params['app']));

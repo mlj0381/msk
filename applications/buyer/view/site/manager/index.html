@@ -1,13 +1,12 @@
-<h1>冻品管家管理</h1>
+<h3>冻品管家管理</h3>
+<div class="reg_progress clearfix">
+</div>
 <div class="freeze-manager">
 	<table class="table mo-list-head">
         <thead>
             <tr class="text-nowrap">
                 <th width="20%" class="text-center">
                     管家名称
-                </th>
-                <th width="15%" class="text-center">
-                    手机号
                 </th>
                 <th width="10%" class="text-center">
                     性别
@@ -28,66 +27,53 @@
         </thead>
         <tbody>
         <!-- foreach 开始 -->
+        <{foreach from=$list item=freeze}>
         	<tr>
-        		<td width="20%" class="text-center mem-head">
-                    <div class="row">
-                    	<div class="col-xs-6"><img src=""></div>
-                    	<div class="col-xs-6 name">Luce</div>
-                    </div>
-                </td>
-                <td width="15%" class="text-center">
-                    13838383838
+        		<td width="10%" class="text-center mem-head">
+                    <{$freeze.name}>
+                    <!--<div class="row">-->
+                    	<!--&lt;!&ndash;<div class="col-xs-6"><img src=""></div>&ndash;&gt;-->
+                    	<!--<div class="col-xs-6 name"></div>-->
+                    <!--</div>-->
                 </td>
                 <td width="10%" class="text-center">
-                    女
+                    <{if $freeze.sex == 0}>
+                            女
+                        <{else $freeze.sex == 1}>
+                            男
+                        <{else $freeze.sex == 2}>
+                            其他
+                    <{/if}>
                 </td>
                 <td width="10%" class="text-center">
-                    32
+                    <{$freeze.age}>
                 </td>
                 <td width="15%" class="text-center">
-                    5年以上
+                    <{if $freeze.experience == 1}>
+                        1年以下
+                    <{else $freeze.experience == 2}>
+                        1~3年
+                    <{else $freeze.experience == 3}>
+                        5年以上
+                    <{/if}>
                 </td>
                 <td width="15%" class="text-center">
-					上海上海市浦东新区
+					<{$freeze.area|region}>
                 </td>
                 <td width="15%" class="text-center opt">
-                    <button class="btn btn-default">查看详情</button><br>
-                    <a class="btn">删除</a>
+                    <a href="<{link app=freeze ctl=site_center act=index arg0=$freeze.freeze_id}>"><button  class="btn btn-default">查看详情</button></a><br>
+                    <a href="<{link app=freeze ctl=site_passport act=delete_freeze}>" class="btn">删除</a>
                 </td>
         	</tr>
-        	<tr>
-        		<td width="20%" class="text-center mem-head">
-                    <div class="row">
-                    	<div class="col-xs-6"><img src=""></div>
-                    	<div class="col-xs-6 name">Luce</div>
-                    </div>
-                </td>
-                <td width="15%" class="text-center">
-                    13838383838
-                </td>
-                <td width="10%" class="text-center">
-                    女
-                </td>
-                <td width="10%" class="text-center">
-                    32
-                </td>
-                <td width="15%" class="text-center">
-                    5年以上
-                </td>
-                <td width="15%" class="text-center">
-					上海上海市浦东新区
-                </td>
-                <td width="15%" class="text-center opt">
-                    <button class="btn btn-default">查看详情</button><br>
-                    <a class="btn">删除</a>
-                </td>
-        	</tr>
+        <{/foreach}>
+
         <!-- foreach 结束 -->
 	        <tr class="add-mem">
 	        	<td colspan="12">
-	        		<button class="btn btn-default">+添加新管家</button>
+                    <a href="<{link app=buyer ctl=site_manager act=manager_signup}>"><button class="btn btn-default">+添加新管家</button></a>
 	        	</td>
 	        </tr>
         </tbody>
     </table>
 </div>
+<{pagers data=$pager}>
