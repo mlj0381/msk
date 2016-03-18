@@ -54,7 +54,7 @@ class b2c_view_widget {
             'logistics_grade' => number_format(((int)$logistics_grade / $sum_mark) * 5, 1),
         );
         //获取店铺基本信息
-        $render->pagedata['store'] = app::get('store')->model('store')->getRow('store_name, store_area, seller_id', array('store_id' => $params['store_id']));
+        $render->pagedata['store'] = app::get('store')->model('store')->getRow('store_name, store_area, seller_id,store_id',array('store_id' => $params['store_id']));
         //获取品牌信息
         $render->pagedata['brand'] = app::get('b2c')->model('brand')->getList('brand_id, brand_name', array('seller_id' => $render->pagedata['store']['seller_id']));
         return $render->fetch('widget/store-details.html');
@@ -115,14 +115,6 @@ class b2c_view_widget {
         //$render->pagedata['floor_left'] = vmc::service('view_datasetting')->floor_left($params);
         $render->pagedata['contents'] = app::get('b2c')->model('pages_content')->getList('*', array('type' => '2', 'status' => '1', 'position_id'=>$params['position_id'],));
         return $render->fetch('widget/index_left_good.html');
-    }
-    // 店铺首页-幻灯
-    public function function_WIDGET_STORE_INDEX_SLIDER($params, &$smarty) {
-        $render = new base_render(app::get($params['app']));
-        $render->pagedata['position_id'] = $params['position_id'];
-        $render->pagedata['store_id'] = $params['store_id'];
-       $render->pagedata['contents']= app::get('b2c')->model('pages_content')->getList('*', array('type' => '1', 'status' => '1','position_id'=>$params['position_id'],'store_id'=>$params['store_id'],));
-        return $render->fetch('widget/slider.html');
     }
     //店铺楼层左侧推荐
     public function function_WIDGET_STORE_INDEX_LEFT_GOOD($params, &$smaryt) {

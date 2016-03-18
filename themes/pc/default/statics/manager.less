@@ -281,3 +281,141 @@
 		}
 	}
 }
+
+//买手店信息,基本信息
+.buyer_basicinfo{
+	.nav-tabs{
+		margin-top: 15px;
+		border-color:#a40001;
+		li{
+			border:none;
+			margin-bottom: 0;
+			a{
+				border:none;
+			}
+		}
+		li.active,li.active:hover{
+			a{
+				background-color:#a40001;
+				cursor: pointer;
+				color:#ffffff;
+				border:none;
+			}
+		}
+	}
+	.content{
+		margin-top: 20px;
+		#basicinfo_form,#buyerinfo_form{
+			padding:20px 0;
+			.form-group{
+				margin-bottom: 20px;
+			}
+		}
+		.head-imgbox{
+			width:100px;
+			height:100px;
+			line-height: 100px;
+			text-align: center;
+			img{
+				vertical-align: middle;
+				max-width: 100%;
+				max-height: 100%;
+			}
+		}
+		.edit-notice{
+			padding-left: 0;
+			padding-top: 35px;
+		}
+		.text-danger{
+			color:#a40001;
+		}
+		.bind-opt{
+			a{
+				border:none;
+				color:#2f973f;
+				text-decoration: underline;
+				padding:8px 12px;
+				font-size: 12px;
+			}
+		}
+		.sex-radio,.type-checkbox{
+			input{
+				margin-top: 2px;
+			}
+		}
+		.select-region{
+			select+select{
+				margin-left: 5px;
+			}
+		}
+		.upload-img{
+			padding:0px 15px;
+			cursor:pointer;
+			input{
+				display:inline-block;
+				width:90px;
+			}
+			span{
+				margin-left: -90px;
+				z-index: 2;
+				width:90px;
+			}
+		}
+		.submit-opt{
+			button{
+				width:100px;
+			}
+			button+button{
+				margin-left: 30px;
+			}
+		}
+		.sale-character{
+			textarea{
+				width:100%;
+				height:120px;
+				border-color: #ddd;
+				outline: none;
+			}
+		}
+	}
+}
+
+//更改手机号绑定
+.update_mobile{
+	margin-top: 20px;
+	#update_mobile_form{
+		padding:10px 0;
+		.form-group{
+			margin-bottom: 20px;
+		}
+	}
+	.process-bar{
+		.col-xs-4{
+			.well{
+				text-align: center;
+				font-size: 14px;
+			}
+		}
+		.col-xs-4.active{
+			.well{
+				background-color: #a40001;
+				color:#ffffff;
+			}
+		}
+	}
+}
+//更改邮箱绑定
+.update_email{
+	margin-top: 20px;
+	#update_email_form{
+		padding:10px 0;
+		.form-group{
+			margin-bottom: 20px;
+		}
+		.submit-opt{
+			button{
+				width:100px;
+			}
+		}
+	}
+}
