@@ -32,5 +32,5 @@ $setting = array(
 		'message' => 'Fail Request',
 		'result' => array(
 		)
-	);
+	)
 );
