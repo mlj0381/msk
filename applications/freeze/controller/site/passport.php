@@ -17,7 +17,7 @@ class freeze_ctl_site_passport extends freeze_frontpage{
         $next = $this->gen_url(array(
             'app' => 'buyer',
             'ctl' => 'site_manager',
-            'act' => 'aptitude',
+            'act' => 'index',
         )); //PC首页
 
         $signup_url = $this->gen_url(array(
@@ -32,7 +32,7 @@ class freeze_ctl_site_passport extends freeze_frontpage{
         $this->transaction_status = $db->beginTransaction();
 
         if ($member_id = $this->passport_obj->save_members($member_sdf_data, $msg)) {
-            $this->user_obj->set_member_session($member_id);
+//            $this->user_obj->set_member_session($member_id);
             $this->bind_freeze($member_id);
 
             $db->commit($this->transaction_status); //事务提交
@@ -44,82 +44,96 @@ class freeze_ctl_site_passport extends freeze_frontpage{
     }
 
     /**
-     * 冻品管家资质信息
+     * 登录冻品管家
      */
-    public function freeze_aptitude()
+    public function login($forward)
     {
-        $error_url = $this->gen_url(array(
-            'app' => 'buyer',
-            'ctl' => 'site_manager',
-            'act' => 'aptitude',
-        ));
-        $url = $this->gen_url(array(
-            'app' => 'buyer',
-            'ctl' => 'site_manager',
-            'act' => 'index',
-        ));
-        $data = $_POST;
-        $freeze_model = app::get('freeze')->model('freeze');
-        if(!$this->generate($data,$msg))
-        {
-            $this->splash('error',$error_url,$msg);
-        };
+        //如果会员登录则直接跳转到会员中心
+        $this->check_login();
+        $this->set_forward($forward); //设置登录成功后跳转
 
-        if(!$freeze_model->save($data))
-        {
-            $this->splash('error',$error_url,'信息保存失败');
-        }
-        $this->splash('success',$url,'信息保存成功');
+        $this->page('site/passport/login.html');
     }
 
-
-    public function generate(&$data,&$msg)
+    /*
+     * 登录验证
+     * */
+    public function post_login()
     {
-        $freeze_model = app::get('freeze')->model('freeze');
-        $generate_data = array();
-        $generate_data['name'] = $data['name'];
-        $generate_data['sex'] = $data['sex'];
-        $generate_data['age'] = $data['age'];
-        $generate_data['education'] = $data['education'];
-        $generate_data['ID'] = $data['ID'];
-        $generate_data['ID_image'] = $data['ID_image'];
-        $generate_data['area'] = $data['area'];
-        $generate_data['service'] = $data['service'];
-        $generate_data['experience'] = $data['experience'];
-        $generate_data['commitment'] = $data['commitment'];
-        $generate_data['capacity'] = $data['capacity'];
-        $generate_data['certificate'] = $data['certificate'];
+        $login_url = $this->gen_url(array(
+            'app' => 'freeze',
+            'ctl' => 'site_passport',
+            'act' => 'login',
+        ));
+        //_POST过滤
+        $params = utils::_filter_input($_POST);
+        unset($_POST);
+        $account_data = array(
+            'login_account' => $params['uname'],
+            'login_password' => $params['password'],
+        );
+        if (empty($params['vcode'])) {
+            $this->splash('error', $login_url, '请输入验证码');
+        }
 
-        //处理3种情况：管家直接更改信息，管家自己修改信息，买手管家信息更改
-        if(!$data['freeze_id'])
-        {
-            if($freeze_id = $this->user_obj->get_member_id())
-            {
-                $generate_data['freeze_id'] = $freeze_id;
-            }else{
-                $freeze_buyer_model = app::get('freeze')->model('freeze_buyer');
-                $buyer_user_object= vmc::singleton('buyer_user_object');
-                $buyer_id = $buyer_user_object->get_id();
-                $freeze_id  = $freeze_buyer_model->getRow('freeze_id',array('buyer_id'=>$buyer_id));
-                $generate_data['freeze_id'] = $freeze_id['freeze_id'];
-            }
+        //尝试登陆
+        $member_id = vmc::singleton('pam_passport_site_basic')->login($account_data, $params['vcode'], $msg,'freeze');
+        if (!$member_id) {
+            $this->splash('error', $login_url, $msg);
         }
-        if(!$generate_data['freeze_id'])
-        {
-            $msg  = '无效管家资质信息';
-            return false;
+        //设置session
+        $this->user_obj->set_member_session($member_id);
+
+        $forward = $params['forward'];
+        if (!$forward) {
+            $forward = $this->gen_url(array(
+                'app' => 'freeze',
+                'ctl' => 'site_freeze',
+                'act' => 'index',
+            ));
         }
-        if($freeze_model->count(array('ID'=>$data['ID'],'freeze_id|notin'=>$generate_data['freeze_id'])) >0)
-        {
-            $msg  = '身份证已存在';
-            return false;
-        };
-        $data  = $generate_data;
-        return true;
+        $this->splash('success', $forward, '登录成功');
+    }
+
+    /**
+     * 删除冻品管家
+     */
+    public function delete_freeze()
+    {
+
     }
 
 
 
+
+    public function set_forward(&$forward)
+    {
+        $params = $this->_request->get_params(true);
+        $forward = ($forward ? $forward : $params['forward']);
+        if (!$forward) {
+            $forward = $_SERVER['HTTP_REFERER'];
+        }
+        if (!strpos($forward, 'passport')) {
+            $this->pagedata['forward'] = $forward;
+        }
+    }
+
+    /*
+     * 如果是登录状态则直接跳转到会员中心
+     * */
+    public function check_login()
+    {
+        if ($this->user_obj->is_login()) {
+            $redirect = $this->gen_url(array(
+                'app' => 'freeze',
+                'ctl' => 'site_freeze',
+                'act' => 'index',
+            ));
+            $this->splash('success', $redirect, '已经是登陆状态！');
+        }
+
+        return false;
+    }
 }
 
 ?>

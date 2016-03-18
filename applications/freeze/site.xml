@@ -4,6 +4,16 @@
         <title>冻品管家中心</title>
         <disable>true</disable>
     </module>
+    <module controller='site_account' id="freeze">
+        <name>freezeaccount</name>
+        <title>账号设置</title>
+        <disable>true</disable>
+    </module>
+    <module controller='site_message' id="freeze">
+        <name>freezemessage</name>
+        <title>消息中心</title>
+        <disable>true</disable>
+    </module>
     <module controller='site_passport' id="freeze">
         <name>freezepassport</name>
         <title>冻品信息注册</title>

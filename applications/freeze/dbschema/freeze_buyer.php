@@ -13,6 +13,7 @@
 
 $db['freeze_buyer'] = array(
     'columns' => array(
+
         'freeze_id' => array(
             'type' => 'number',
             'pkey' => true,
@@ -23,10 +24,9 @@ $db['freeze_buyer'] = array(
             'label' => ('买手账号id') ,
         ) ,
         'time' => array(
-            'type' => time(),
+            'type' => 'time',
             'label' => '时间',
         )
-
     ),
     'engine' => 'innodb',
     'comment' => '买手和冻结管家关联表',

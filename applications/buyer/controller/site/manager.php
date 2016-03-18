@@ -69,13 +69,7 @@ class buyer_ctl_site_manager extends buyer_frontpage{
 		$this->output('');
 	}
 	
-	
-	/**
-	 * 管家资质信息（包括：基本信息+工作履历）
-	 */
-	public function aptitude(){
-		$this->output('');
-	}
+
 
 
 	/**

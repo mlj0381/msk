@@ -34,9 +34,9 @@ class freeze_frontpage extends site_controller
      */
     function verify_member() {
         $user_obj = vmc::singleton('freeze_user_object');
-        if ($this->app->member_id = $user_obj->get_member_id()) {
+        if ($this->app->freeze_id = $user_obj->get_member_id()) {
             $data = $user_obj->get_members_data(array(
-                'freeze_id' => 'member_id'
+                'freeze' => 'freeze_id'
             ));
             if ($data) {
                     return true;
@@ -64,7 +64,7 @@ class freeze_frontpage extends site_controller
         $count = count($tags);
         $menuSetting = array(
             'index' => array('index'),
-            'setting' => array('setting'),
+            'account' => array('account'),
             'message' => array('message'),
         );
         $menu = $menuSetting[$this->menuSetting];

@@ -236,18 +236,18 @@ class freeze_user_passport {
 
     public function save_members($saveData, &$msg) {
         $freeze_model = $this->app->model('freeze');
-        $db = vmc::database();
-        $db->beginTransaction();
+//        $db = vmc::database();
+//        $db->beginTransaction();
         if ($freeze_model->save($saveData['freeze'])) {
             $freeze_id = $saveData['freeze']['freeze_id'];
             $saveData['pam_account']['freeze_id'] = $freeze_id;
             if (!app::get('pam')->model('freeze')->save($saveData['pam_account'])) {
-                $db->rollBack();
+//                $db->rollBack();
                 $msg = '账户数据保存异常!';
 
                 return false;
             }
-            $db->commit();
+//            $db->commit();
         } else {
             $msg = '保存失败!';
 

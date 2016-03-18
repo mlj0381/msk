@@ -1,0 +1,9 @@
+<nav class="navbar navbar-inverse">
+    <div class="container">
+        <ul class="nav navbar-nav">
+            <li><a href="<{link app=freeze ctl=site_center act=index}>" <{if $active eq 'index'}> class="active"<{/if}>>我是管家</a></li>
+            <li><a href="<{link app=freeze ctl=site_account act=index}>" <{if $active eq 'account'}> class="active"<{/if}>>账户管理</a></li>
+            <li><a href="<{link app=freeze ctl=site_message act=index}>" <{if $active eq 'message'}> class="active"<{/if}>>消息中心</a></li>
+        </ul>
+    </div>
+</nav>

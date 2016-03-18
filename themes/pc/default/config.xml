@@ -27,5 +27,6 @@
         <file type="store_home" use="店铺首页">store-default.html</file>
         <file type="seller" use="商家中心页">default-seller.html</file>
         <file type="buyer" use="买手中心页">default-buyer.html</file>
+        <file type="freeze" use="买手中心页">default-freeze.html</file>
     </views>
 </theme>

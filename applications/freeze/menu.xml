@@ -1,9 +1,28 @@
 <menus>
-    <menugroup name="index" label="管家中心">
-        <menu app='freeze' controller='site_center' action='info' display='true' order="60">个人信息</menu>
-        <menu app='freeze' controller='site_center' action='buyer_manage' display='true' order="70">买家管理</menu>
-        <menu app='freeze' controller='site_center' action='orders_manage' display='true' order="80">订单管理</menu>
-        <menu app='freeze' controller='site_center' action='goods_manage' display='true' order="90">商品管理</menu>
-        <menu app='freeze' controller='site_center' action='buyer_info' display='true' order="100">买手店基本信息</menu>
+    <menugroup name="index" label="交易管理">
+        <menu app='freeze' controller='site_center' action='orders' display='true' order="60">订单管理</menu>
+        <menu app='freeze' controller='site_center' action='settlement' display='true' order="70">结算管理</menu>
+    </menugroup>
+    <menugroup name="index" label="商品管理">
+        <menu app='freeze' controller='site_center' action='goods' display='true' order="60">我的分销商品</menu>
+    </menugroup>
+    <menugroup name="index" label="买家管理">
+        <menu app='freeze' controller='site_center' action='buyer_list' display='true' order="60">我的买家列表</menu>
+    </menugroup>
+    <menugroup name="index" label="客户服务">
+        <menu app='freeze' controller='site_center' action='reship' display='true' order="30">退货管理</menu>
+        <menu app='freeze' controller='site_center' action='refund' display='true' order="40">退款管理</menu>
+        <menu app='freeze' controller='site_center' action='after_sale' display='true' order="50">售后管理</menu>
+        <menu app='freeze' controller='site_center' action='break_rule' display='true' order="60">违规处理</menu>
+        <menu app='freeze' controller='site_center' action='report' display='true' order="70">举报管理</menu>
+        <menu app='freeze' controller='site_center' action='consultation' display='true' order="80">咨询管理</menu>
+    </menugroup>
+    <menugroup name="account" label="账号设置">
+        <menu app='freeze' controller='site_account' action='index' display='true' order="60">个人信息</menu>
+        <menu app='freeze' controller='site_account' action='buyer_info' display='true' order="70">买手店信息</menu>
+        <menu app='freeze' controller='site_account' action='security' display='true' order="80">安全设置</menu>
+    </menugroup>
+    <menugroup name="message" label="消息中心">
+        <menu app='freeze' controller='site_message' action='index' display='true' order="80">我的消息中心</menu>
     </menugroup>
 </menus>

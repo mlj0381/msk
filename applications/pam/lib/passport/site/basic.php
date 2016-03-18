@@ -40,6 +40,11 @@ class pam_passport_site_basic
             $model = 'sellers';
             $id = 'seller_id';
         }
+        if($type == 'freeze')
+        {
+            $model = 'freeze';
+            $id = 'freeze_id';
+        }
         $account = app::get('pam')->model($model)->getList($id . ',password_account,login_password,createtime', $filter);
         if (!$account) {
             $msg = '不存在的用户';
