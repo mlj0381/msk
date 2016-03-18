@@ -33,9 +33,9 @@ class b2c_ctl_site_cart extends b2c_frontpage {
             $this->verify_member();
             if ($this->app->member_id = vmc::singleton('b2c_user_object')->get_member_id()) {
                 $this->pagedata['member_id'] = $this->app->member_id;
-                $this->cart_stage->set_member_id($this->app->member_id);
             }
         }
+        $this->cart_stage->set_member_id($this->buyerId ?: $this->app->member_id);
     }
 
     //购物车主页
@@ -99,11 +99,11 @@ class b2c_ctl_site_cart extends b2c_frontpage {
                 'product_id' => $product_id,
                 'num' => $num,
                 'store_id' => $store_id,
+                'type' => $this->buyerId ? '1' : '0',
             ),
         );
         //加入购物车产生需求
         $result = vmc::singleton('b2c_source_cart')->add_cart($object);
-
         $ident = $this->cart_stage->add('goods', $object, $msg);
         if (!$ident) {
             $this->splash('error', '', $msg);

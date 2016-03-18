@@ -70,6 +70,7 @@ class b2c_cart_object_goods implements b2c_interface_cart_object {
             'obj_ident' => 'goods_' . $object['product_id'],
             'obj_type' => 'goods',
             'store_id' => $object['store_id'],
+            'type' => $object['type'],
             'params' => $this->_params(array(
                 'product_id' => $object['product_id'],
             )),
