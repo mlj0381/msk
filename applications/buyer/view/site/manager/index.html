@@ -61,8 +61,10 @@
 					<{$freeze.area|region}>
                 </td>
                 <td width="15%" class="text-center opt">
-                    <a href="<{link app=freeze ctl=site_center act=index arg0=$freeze.freeze_id}>"><button  class="btn btn-default">查看详情</button></a><br>
-                    <a href="<{link app=freeze ctl=site_passport act=delete_freeze}>" class="btn">删除</a>
+                    <!--<{link app=freeze ctl=site_center act=index arg0=$freeze.freeze_id}>-->
+                    <!--<{link app=freeze ctl=site_passport act=delete_freeze arg0=$freeze.freeze_id}>-->
+                    <a href=""><button  class="btn btn-default">查看详情</button></a><br>
+                    <a href="" class="btn">删除</a>
                 </td>
         	</tr>
         <{/foreach}>

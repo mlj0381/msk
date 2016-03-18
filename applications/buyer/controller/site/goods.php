@@ -38,15 +38,29 @@ class buyer_ctl_site_goods extends buyer_frontpage{
 	 * 订单详情（单个订单的详情）
 	 */
 	public function order_details(){
-		echo '订单详情';
+		$this->output();
 	}
 	
 	
 	/**
-	 * 已购买商品
+	 * 已购买商品(订单管理)
 	 */
-	public function stock(){
+	public function stock($status = 'all', $page = 1){
+		$this->pagedata['current_status'] = $status;
+		$this->pagedata['pager'] = array(
+				'current' => $page,
+				'link' => array(
+						'app' => 'seller',
+						'ctl' => 'site_order',
+						'act' => 'index',
+						'args' => array(
+								$status,
+								($token = time()),
+						),
+				),
+		);
 		$this->output();
+	
 	}
 	
 	/**

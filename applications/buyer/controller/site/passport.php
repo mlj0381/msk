@@ -57,11 +57,6 @@ class buyer_ctl_site_passport extends buyer_frontpage{
 	 * 登陆页面
 	 */
 	public function login(){
-
-		vmc::singleton('base_session')->start();
-		var_dump($_SESSION);exit;
-		
-		
 		$this->check_login();
 
 		if ($_POST){
@@ -180,8 +175,14 @@ class buyer_ctl_site_passport extends buyer_frontpage{
 				$this->page('site/passport/signup_baseInfo.html');
 			}			
 		}else {
-			$this->pagedata['show'] = 'yes';
-			$this->page('site/passport/signup.html');
+// 			$this->pagedata['show'] = 'yes';
+// 			$this->page('site/passport/signup.html');
+			$redirect = $this->gen_url(array(
+					'app' => 'b2c',
+					'ctl' => 'site_index',
+					'act' => 'index',
+			));
+			$this->splash('error', $redirect, '无效操作');
 		}
 		        
 	}

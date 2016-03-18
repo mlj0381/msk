@@ -4,52 +4,98 @@ class freeze_ctl_site_center extends freeze_frontpage{
     function __construct(&$app)
     {
         parent::__construct($app);
+        $this->verify_member();
     }
 
     public function index()
     {
-        $this->output();
-    }
 
-    /**
-     * 个人信息
-     */
-    public function info()
-    {
-        $this->output();
-    }
-
-    /**
-     * 买家管理
-     */
-    public function buyer_manage()
-    {
         $this->output();
     }
 
     /**
      * 订单管理
      */
-    public function orders_manage()
+    public function orders()
     {
         $this->output();
     }
 
     /**
-     * 商品管理
+     * 结算管理
      */
-    public function goods_manage()
+    public function settlement()
     {
         $this->output();
     }
 
     /**
-     * 买手店基本信息
+     * 我的分销产品
      */
-    public function buyer_info()
+    public function goods()
     {
         $this->output();
     }
+
+    /**
+     * 我的买家列表
+     */
+    public function buyer_list()
+    {
+        $this->output();
+    }
+
+    /**
+     * 退货管理
+     */
+    public function reship()
+    {
+        $this->output();
+    }
+
+    /**
+     * 退款管理
+     */
+    public function refund()
+    {
+        $this->output();
+    }
+
+    /**
+     * 售后管理
+     */
+    public function after_sale()
+    {
+        $this->output();
+    }
+
+    /**
+     * 违规处理
+     */
+    public function break_rule()
+    {
+        $this->output();
+    }
+
+    /**
+     * 举报管理
+     */
+    public function report()
+    {
+        $this->output();
+    }
+
+    /**
+     * 咨询管理
+     */
+    public function consultation()
+    {
+        $this->output();
+    }
+
+
+
+
 
 
 

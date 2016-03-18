@@ -39,7 +39,6 @@ class buyer_user_object{
      * 设置会员登录session seller_id
      */
     public function set_session($buyer_id){
-        $_SESSION['ccc'] = 'ccccc';
         unset($_SESSION['error_count']['buyer']);
         $_SESSION['account']['buyer'] = $buyer_id;
     }
