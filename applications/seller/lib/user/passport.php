@@ -668,7 +668,7 @@ class seller_user_passport
 //            $company['company_id'][] = $value['company_id'];
 //        }
         $filter = array('extra_id' => $company[0]['company_id'], 'identity' => $storeType);
-        if($storeType == 'comm'){
+        if ($storeType == 'comm') {
             $filter = array('uid' => $seller_id, 'from' => 1);
         }
 //        if($this->entryType == 'brand'){
@@ -686,12 +686,13 @@ class seller_user_passport
         $info['company_extra'] = $company_extra;
         $info['company_extra']['company'] = $mdl_company->getRow('*', array('company_id' => $company[0]['company_id'], 'info_type' => $storeType));
         unset($company_extra);
-        if($storeType == 'comm'){
+        if ($storeType == 'comm') {
             $this->_getStoreConf($info, $seller_id);
         }
         $info['company_extra']['contact'] = app::get('base')->model('contact')->getRow('*', array('uid' => $seller_id, 'from' => '1'));
         return $info;
     }
+
     /**
      * 获取店铺页面所需配置与信息
      **/
@@ -788,7 +789,7 @@ class seller_user_passport
         foreach ($extra_columns['page'] as $key => $col) {
             if (isset($params[$col]) && !empty($params[$col])) {
                 $params[$col]['content_id'] && $sqlType = true;
-                $params[$col]['identity'] = $params['typeId'] == 'comm'?null:$params['typeId'];
+                $params[$col]['identity'] = $params['typeId'] == 'comm' ? null : $params['typeId'];
                 $params[$col]['extra_id'] = $company_id ?: $company_extra[0]['company_id'];
                 $params[$col]['uid'] = $seller['seller_id'];
                 $params[$col]['createtime'] = time();
@@ -874,4 +875,65 @@ class seller_user_passport
         return $licence_type;
     }
 
+
+    /**
+     * 商家身份更新
+     **/
+    public function identity_update(&$post)
+    {
+        $db = vmc::database();
+        $db->beginTransaction();
+        $result = '';
+        switch ($post['type']) {
+            case '0':
+                $result = $this->_seller_update($post);
+                break;
+            case '1':
+                $result = $this->_insert_buyer($post);
+                break;
+        }
+        !$result && $db->rollback();
+        $result && $db->commit();
+        return $result;
+    }
+
+    private function _seller_update(&$post)
+    {
+        $dataValue = array('ident' => $post['ident'], 'type' => $post['type']);
+        $filter = array('seller_id' => $post['seller_id']);
+        if (!$this->app->model('sellers')->update($dataValue, $filter)) {
+            return false;
+        }
+        return true;
+    }
+
+    private function _insert_buyer(&$post)
+    {
+        $mdl_pam_seller = app::get('pam')->model('sellers');
+        $pam_data = $mdl_pam_seller->getRow('*', array('seller_id' => $post['seller_id']));
+        if (empty($pam_data)) return 'error';
+        unset($pam_data['seller_id']);
+        unset($pam_data['type']);
+        $mdl_seller = $this->app->model('sellers');
+        $seller_data = $mdl_seller->getRow('*', array('seller_id' => $post['seller_id']));
+        if (empty($seller_data)) return 'error';
+        unset($seller_data['seller_id']);
+        unset($seller_data['type']);
+
+        if (!$mdl_pam_seller->delete(array('seller_id' => $post['seller_id']))) {
+            return false;
+        }
+        if (!$mdl_seller->delete(array('seller_id' => $post['seller_id']))) {
+            return false;
+        }
+
+        if (!app::get('buyer')->model('buyers')->save($seller_data)) {
+            return false;
+        }
+        $pam_data['buyer_id'] = $seller_data['buyer_id'];
+        if (!app::get('pam')->model('buyers')->save($pam_data)) {
+            return false;
+        }
+        return $pam_data;
+    }
 }

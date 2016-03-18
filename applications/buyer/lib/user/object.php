@@ -38,9 +38,9 @@ class buyer_user_object{
     /**
      * 设置会员登录session seller_id
      */
-    public function set_session($seller_id){
-        unset($_SESSION['error_count']['seller']);
-        $_SESSION['account']['seller'] = $seller_id;
+    public function set_session($buyer_id){
+        unset($_SESSION['error_count']['buyer']);
+        $_SESSION['account']['buyer'] = $buyer_id;
     }
 
     /**
@@ -48,8 +48,8 @@ class buyer_user_object{
      */
     public function get_session(){
         if($this->seller_id)return $this->seller_id;
-        if(isset($_SESSION['account']['seller']) &&  $_SESSION['account']['seller']){
-            return $_SESSION['account']['seller'];
+        if(isset($_SESSION['account']['buyer']) &&  $_SESSION['account']['buyer']){
+            return $_SESSION['account']['buyer'];
         }else{
             return false;
         }
