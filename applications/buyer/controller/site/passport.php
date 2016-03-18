@@ -56,7 +56,12 @@ class buyer_ctl_site_passport extends buyer_frontpage{
 	/**
 	 * 登陆页面
 	 */
-	public function login(){	
+	public function login(){
+
+		vmc::singleton('base_session')->start();
+		var_dump($_SESSION);exit;
+		
+		
 		$this->check_login();
 
 		if ($_POST){

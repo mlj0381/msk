@@ -575,19 +575,18 @@ class seller_ctl_site_passport extends seller_frontpage
     public function identity()
     {
         (!is_numeric($_POST['ident']) && empty($_POST)) && $this->splash('error', '', '非法请求');
-        $redirect = array('app' => 'seller', 'ctl' => 'site_passport', 'act' => 'signup');
+        $redirect = array('app' => 'seller', 'ctl' => 'site_passport', 'act' => 'entry');
         if ($_POST['type'] == '1') {
-            $redirect = array('app' => 'buyer', 'ctl' => 'site_passport', 'act' => 'entry');
+            $redirect = array('app' => 'buyer', 'ctl' => 'site_passport', 'act' => 'signup');
         }
         $redirect = $this->gen_url($redirect);
         $_POST['seller_id'] = $this->seller['seller_id'];
         $result = $this->passport_obj->identity_update($_POST);
         if($result && $_POST['type'] == '1'){
             //返回成功 并且 选择成功买手身份
-           // $this->unset_seller();
+            $this->user_obj->set_session(null);
             vmc::singleton('buyer_user_object')->set_session($result['buyer_id']);
             //设置cookie
-            // ...
         }
         $this->splash($result ? 'success' : 'error', $redirect, $result ? '操作成功' : '操作失败');
     }
