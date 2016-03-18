@@ -892,11 +892,10 @@ nav.mainNav ul.nav_ul li .category-container .category .tab-pane .tab-pane-brand
 }
 #quickLogin .modal-body ul li {
   float: left;
-  width: 50%;
+  width: 100%;
   border-bottom: 1px solid #ddd;
   height: 40px;
   line-height: 40px;
-  text-align: center;
   cursor: pointer;
   font-size: 14px;
 }
@@ -920,6 +919,7 @@ nav.mainNav ul.nav_ul li .category-container .category .tab-pane .tab-pane-brand
   background: #B6000C;
   border-radius: 0px;
   height: 40px;
+  margin-top: 5px;
 }
 #quickLogin .modal-footer {
   height: 50px;

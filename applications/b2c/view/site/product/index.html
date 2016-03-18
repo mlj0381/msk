@@ -105,23 +105,20 @@
                 <div class="pref_info clearfix">
                      <!--<p><span>采购数量</span><span>&gt;<{$data_detail.product.price_interval}>箱</span><span>&lt;<{$data_detail.product.price_interval}>箱</span></p>-->
                     <!--<p><span>价格</span><span>￥<{$data_detail.product.price_up|cur}>/箱</span><span>￥<{$data_detail.product.price_dn|cur}>/箱</span></p>-->
-                    <label class="col-xs-2">
-                        商品价盘
-                    </label>
-                    <div class="col-xs-8 pref_table">
+                    <div class="pref_table">
                         <table>
                             <thead>
                                 <tr>
-                                    <th>数量下限</th>
-                                    <th>数量上限</th>
+                                    <th>起批量</th>
                                     <th>销售价格</th>
                                 </tr>
                             </thead>
                             <tbody class="interval">
                             <{foreach from=$data_detail.product.interval key=key item=item}>
                                 <tr>
-                                    <td class="num-dn"><{$item.num_dn|default:1}></td>
-                                    <td class="num-up"><{$item.num_up|default:不限}></td>
+                                <td>
+                                    <span class="num-dn"><{$item.num_dn|default:1}></span>-
+                                    <span class="num-up"><{$item.num_up|default:不限}></span></td>
                                     <td class="num-price">￥ <span><{$item.price|cur}></span></td>
                                 </tr>
                             <{/foreach}>
