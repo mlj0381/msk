@@ -1,1 +1,135 @@
-<h1>基本信息</h1>
+<!-- <h1>基本信息</h1> -->
+<div class="buyer_basicinfo">
+	<ul class="nav nav-tabs">
+	   <li class="active"><a href="">基本信息</a></li>
+	   <li><a href="">买手店信息</a></li>
+	</ul>
+	<div class="content">
+		<form class="form-horizontal" id="basicinfo_form">
+			<div class="form-group">
+			    <label class="col-sm-3 control-label"></label>
+			    <div class="col-sm-6 row">
+			    	<div class="col-md-4">
+			    		<div class="head-imgbox">
+			    			<!-- <img class="img-thumbnail img-circle"  src="<{$member.avatar|storager:'avatar'}>" alt="<{$member.uname}>头像" /> -->
+			    			<!-- if 未上传图片 -->
+			    			<img class="img-thumbnail img-circle"  src="../../themes/pc/default/statics/images/blank-img.png" />
+			    		</div>
+			    		<a class="btn btn-link" href="<{link app=b2c ctl=site_member act=avatar}>">
+							<i class="glyphicon glyphicon-pencil"></i>编辑头像
+						</a>
+			    	</div>
+			    	<div class="col-md-8 edit-notice">
+						<small class="help-block">支持2M以内.jpg\.jpeg\.gif\.png 等图片格式文件</small>
+			    	</div>
+				</div>
+		  	</div>
+			<div class="form-group">
+			    <label class="col-sm-2 control-label"><em class="text-danger">*</em> 用户名</label>
+			    <div class="col-sm-4">
+			      <input type="text" class="form-control">
+			    </div>
+		  	</div>
+		  	<div class="form-group">
+			    <label class="col-sm-2 control-label"><em class="text-danger">*</em> 手机号</label>
+			    <div class="col-sm-4">
+			      <input type="text" class="form-control">
+			    </div>
+			    <div class="col-sm-4 bind-opt">
+			      <a class="btn btn-default" href="">绑定手机</a>
+			    </div>
+		  	</div>
+		  	<div class="form-group">
+			    <label class="col-sm-2 control-label"><em class="text-danger">*</em> 电子邮箱</label>
+			    <div class="col-sm-4">
+			      <input type="email" class="form-control">
+			    </div>
+			    <div class="col-sm-4 bind-opt">
+			      <a class="btn btn-default" href="">绑定邮箱</a>
+			    </div>
+		  	</div>
+		  	<div class="form-group">
+			    <label class="col-sm-2 control-label"><em class="text-danger">*</em> 姓名</label>
+			    <div class="col-sm-4">
+			      <input type="text" class="form-control">
+			    </div>
+		  	</div>
+		  	<div class="form-group">
+			    <label class="col-sm-2 control-label"><em class="text-danger">*</em> 性别</label>
+			    <div class="col-sm-4 sex-radio">
+			      	<label class="radio-inline">
+					  	<input type="radio" name="radio1" id="mail" value="option1"> 男
+					</label>
+					<label class="radio-inline">
+					  	<input type="radio" name="radio1" id="femail" value="option2"> 女
+					</label>
+			    </div>
+		  	</div>
+		  	<div class="form-group">
+			    <label class="col-sm-2 control-label"><em class="text-danger">*</em> 身份证号</label>
+			    <div class="col-sm-4">
+			      <input type="text" class="form-control">
+			    </div>
+		  	</div>
+		  	<div class="form-group">
+			    <label class="col-sm-2 control-label"><em class="text-danger">*</em> 买手类型</label>
+			    <div class="col-sm-4 type-checkbox">
+			      	<label class="checkbox-inline">
+					  	<input type="checkbox" value="option1"> 行业型
+					</label>
+					<label class="checkbox-inline">
+					  	<input type="checkbox" value="option2"> 创业型
+					</label>
+					<label class="checkbox-inline">
+					  	<input type="checkbox" value="option3"> 关系型
+					</label>
+					<label class="checkbox-inline">
+					  	<input type="checkbox" value="option3"> 配送型
+					</label>
+			    </div>
+		  	</div>
+		  	<div class="form-group select-region">
+			    <label class="col-sm-2 control-label"><em class="text-danger">*</em> 收货地区</label>
+                <div class="col-sm-4">
+                    <{input type=region name="maddr[area]" id="maddr_region"}><br>
+                    <input type="text" class="form-control" placeholder="详细收货地址">
+                </div>
+		  	</div>
+		  	<div class="form-group select-region">
+			    <label class="col-sm-2 control-label">
+			    	<em class="text-danger">*</em> 照片<br>
+			    	<small>(一寸免冠)</small>
+			    </label>
+                <div class="col-sm-4">
+                    <div class="head-imgbox">
+			    		<!-- <img class="img-thumbnail" src=""/> -->
+			    		<!-- if 未上传图片 -->
+			    		<img class="img-thumbnail"  src="../../themes/pc/default/statics/images/blank-img.png" />
+			    	</div>
+			    	<a class="btn btn-link upload-img">
+			    		<input type="file" class="form-control" style="opacity: 0;">
+						<span>上传图片</span>
+					</a>
+                </div>
+		  	</div>
+		  	<div class="form-group">
+			    <label class="col-sm-2 control-label"><em class="text-danger">*</em> 微信号</label>
+			    <div class="col-sm-4">
+			      <input type="text" class="form-control">
+			    </div>
+		  	</div>
+		  	<div class="form-group">
+			    <label class="col-sm-2 control-label"><em class="text-danger">*</em> QQ号</label>
+			    <div class="col-sm-4">
+			      <input type="text" class="form-control">
+			    </div>
+		  	</div>
+		  	<div class="form-group submit-opt">
+			    <div class="col-sm-offset-2 col-sm-10">
+			      <button type="submit" class="btn btn-success">保存</button>
+			      <button type="reset" class="btn btn-default">取消</button>
+			    </div>
+		  	</div>
+		</form>
+	</div>
+</div>
