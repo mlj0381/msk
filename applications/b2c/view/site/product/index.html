@@ -55,11 +55,6 @@
                         <li>总成交量<span><{$data_detail.buy_count|default:0}><small>笔</small></span></li>
                         <li>累计评价<span><{$data_detail.comment_count|default:0}><small>条</small></span></li>
                         <li>
-                            <!-- <i class="icon-star"></i>
-                            <i class="icon-star"></i>
-                            <i class="icon-star"></i>
-                            <i class="icon-star"></i>
-                            <i class="icon-star-empty"></i> -->
                             <{*$data_detail.mark_star|star*}>
                         </li>
                     </ul>
@@ -111,15 +106,18 @@
                                 <tr>
                                     <th>起批量</th>
                                     <th>销售价格</th>
+                                    <th>折扣率</th>
                                 </tr>
                             </thead>
                             <tbody class="interval">
                             <{foreach from=$data_detail.product.interval key=key item=item}>
                                 <tr>
-                                <td>
-                                    <span class="num-dn"><{$item.num_dn|default:1}></span>-
-                                    <span class="num-up"><{$item.num_up|default:不限}></span></td>
+                                    <td>
+                                        <span class="num-dn"><{$item.num_dn|default:1}></span>-
+                                        <span class="num-up"><{$item.num_up|default:不限}></span>
+                                    </td>
                                     <td class="num-price">￥ <span><{$item.price|cur}></span></td>
+                                    <td class="discount"><span class="text-danger">8%</span></td>
                                 </tr>
                             <{/foreach}>
                             </tbody>
