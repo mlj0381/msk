@@ -38,13 +38,6 @@ class b2c_ctl_site_list extends b2c_frontpage
         return $cat;
     }
 
-    /**
-     * 检查购买者的身份
-     **/
-    private function _check_buyer_identity()
-    {
-        vmc::singleton();
-    }
 
     public function index($fix_brand = false)
     {
@@ -105,7 +98,7 @@ class b2c_ctl_site_list extends b2c_frontpage
             }
             $page = 'index';
         }
-
+        $this->pagedata['buyer_id'] = vmc::singleton('buyer_user_object')->get_session();
         $this->pagedata['pager']['link'] = $this->gen_url(array(
                 'app' => 'b2c',
                 'ctl' => 'site_list',

@@ -28,9 +28,13 @@ class b2c_ctl_site_cart extends b2c_frontpage {
             'act' => 'blank',
         ));
         $this->cart_stage = vmc::singleton('b2c_cart_stage');
-        if ($this->app->member_id = vmc::singleton('b2c_user_object')->get_member_id()) {
-            $this->pagedata['member_id'] = $this->app->member_id;
-            $this->cart_stage->set_member_id($this->app->member_id);
+        $this->buyerId = vmc::singleton('buyer_user_object')->get_session();
+        if(!$this->buyerId){
+            $this->verify_member();
+            if ($this->app->member_id = vmc::singleton('b2c_user_object')->get_member_id()) {
+                $this->pagedata['member_id'] = $this->app->member_id;
+                $this->cart_stage->set_member_id($this->app->member_id);
+            }
         }
     }
 
@@ -80,7 +84,6 @@ class b2c_ctl_site_cart extends b2c_frontpage {
 
     //向购物车添加商品
     public function add($product_id, $store_id, $num) {
-        $this->verify_member();
         $params = $this->_request->get_params(true);
         $product_id = ($product_id ? $product_id : $params['product_id']);
         $store_id = ($store_id ? $store_id : $params['store_id']);
