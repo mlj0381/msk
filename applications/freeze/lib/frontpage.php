@@ -21,6 +21,7 @@ class freeze_frontpage extends site_controller
         $this->action = $this->_request->get_act_name();
         $this->controller = $this->_request->get_ctl_name();
         $this->menuSetting = 'index';
+        $this->set_tmpl('freeze');
     }
 
     /**

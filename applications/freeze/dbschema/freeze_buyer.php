@@ -22,6 +22,10 @@ $db['freeze_buyer'] = array(
             'type' => 'number',
             'label' => ('买手账号id') ,
         ) ,
+        'time' => array(
+            'type' => time(),
+            'label' => '时间',
+        )
 
     ),
     'engine' => 'innodb',

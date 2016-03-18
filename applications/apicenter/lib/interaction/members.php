@@ -29,12 +29,14 @@ class apicenter_interaction_members
      * @param siteCode Integer Y 例如：平台区分：1神农客平台；2美侍客平台；3大促会平台
      * @param auth     String  Y 分配给各个平台的身份识别码   MSK00001
      * @param loginId  String    登陆的用户ID msk01
-     * @param param    Object    业务参数    
-     * @param userID   String  Y 买家用户登录ID    
-     * @param userName String  Y 买家用户名称 
+     * @param param    Object    业务参数
+     *        ->   
+     * @param   userID   String  Y 买家用户登录ID    
+     * @param   userName String  Y 买家用户名称 
+     *   
      * @return false | array
      */
-    public function card_provide($data=array()){
+    public function card_provide($post_data=array()){
         $post_url = $this->URL.'card_provide';
 
         $post_data = array(
@@ -50,14 +52,16 @@ class apicenter_interaction_members
     /**
      * 会员卡基本信息查询接口
      *
-     * @param siteCode  Integer     Y   例如：平台区分：1：神农客平台；2：美侍客平台；3：大促会平台 1
-     * @param auth  String      Y   分配给各个平台的身份识别码   MSK00001
+     * @param siteCode  Integer  Y   例如：平台区分：1：神农客平台；2：美侍客平台；3：大促会平台 1
+     * @param auth      String   Y   分配给各个平台的身份识别码   MSK00001
      * @param loginId   String          登陆的用户ID msk01
-     * @param param Object          业务参数    
-     * @param   userID  String      Y   查询用户的用户ID   
+     * @param param     Object          业务参数
+     *        ->
+     * @param   userID    String     Y   查询用户的用户ID
+     *   
      * @return false | array
      */
-    public function msbasic($data=array()){
+    public function msbasic($post_data=array()){
         $post_url = $this->URL.'card_provide';
 
         $post_data = array(
@@ -76,14 +80,16 @@ class apicenter_interaction_members
      * @param siteCode Integer     Y   例如：平台区分：1：神农客平台；2：美侍客平台；3：大促会平台 1
      * @param auth    String      Y   分配给各个平台的身份识别码   MSK00001
      * @param loginId String          登陆的用户ID msk01
-     * @param param   Object          业务参数    
+     * @param param   Object          业务参数
+     *        ->
      * @param   userID    String      Y   查询用户的用户ID   
      * @param   startDate     Datetime        Y   查询开始日期  
-     * @param   endDate   Datetime        Y   查询结束日期 
+     * @param   endDate   Datetime        Y   查询结束日期
+     *        
      * @return false | array
      */
 
-    public function msconsume($data=array()){
+    public function msconsume($post_data=array()){
         $post_url = $this->URL.'card_provide';
 
         $post_data = array(
