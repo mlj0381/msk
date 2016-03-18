@@ -107,7 +107,12 @@ class buyer_ctl_site_passport extends buyer_frontpage{
 		}else {
 			vmc::singleton('base_session')->start();
 			if ($this->object_obj->get_session()){
-				$this->splash('error', '', '已经是登录状态！');
+				$redirect = $this->gen_url(array(
+						'app' => 'buyer',
+						'ctl' => 'site_buyer',
+						'act' => 'index',
+				));
+				$this->splash('success', $redirect, '已经是登录状态！');
 			}else {
 				$this->set_tmpl('passport');
 				$this->page('site/passport/login.html');

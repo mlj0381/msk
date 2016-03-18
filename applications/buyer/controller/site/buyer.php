@@ -34,13 +34,14 @@ class buyer_ctl_site_buyer extends buyer_frontpage{
 	
 	
 	/**
-	 * 个人信息
+	 * 买手店信息
 	 * 包括信息修改、绑定和保存
 	 */
 	public function buyer_info(){
 		//用户名、手机号、邮箱、主销品类（选择的列表）
 		//负责人信息->姓名、手机号、邮箱、身份证、身份证照片、QQ、微信
 		//绑定手机号修改邮箱
+		$this->menuSetting = 'account';
 		$this->output();
 	}
 	
@@ -81,6 +82,7 @@ class buyer_ctl_site_buyer extends buyer_frontpage{
 			$this->splash(($status == 'no') ? 'error' :$status, $url, $msg);
 			
 		}
+		$this->menuSetting = 'account';
 		$this->output();
 	}
 	
@@ -88,19 +90,97 @@ class buyer_ctl_site_buyer extends buyer_frontpage{
 	 * 账户安全
 	 */
 	public function buyer_security(){
+		$this->menuSetting = 'account';
+		$this->output();
+	}
+	
+	/**
+	 * 基本资料
+	 */
+	public function basic_info(){
+		$this->menuSetting = 'account';
 		$this->output();
 	}
 	
 	
 	/**
-	 * 站内消息
+	 * 修改手机
 	 */
-	public function message(){
-		//全部消息-买家来信-订单
+	public function update_mobile(){
+		$this->menuSetting = 'account';
 		$this->output();
 	}
 	
 	
+	/**
+	 * 修改email
+	 */
+	public function update_email(){
+		$this->menuSetting = 'account';
+		$this->output();
+	}
+	
+	
+	/**
+	 * 修改email提示
+	 */
+	public function update_email_hint(){
+		$this->menuSetting = 'account';
+		$this->output();
+	}
+	
+	
+	/**
+	 * 重置提示
+	 */
+	public function reset_hint(){
+		$this->menuSetting = 'account';
+		$this->output();
+	}
+	
+	
+	/**
+	 * 绑定手机
+	 */
+	public function bind_mobile(){
+		$this->menuSetting = 'account';
+		$this->output();
+	}
+	
+	
+	/**
+	 * 绑定提示
+	 */
+	public function bind_hint(){
+		$this->menuSetting = 'account';
+		$this->output();
+	}
+	
+	
+	/**
+	 * 身份认证
+	 */
+	public function ident_auth(){
+		$this->menuSetting = 'account';
+		$this->output();
+	}
+	
+	/**
+	 * 认证提示
+	 */
+	public function ident_auth_hint(){
+		$this->menuSetting = 'account';
+		$this->output();
+	}
+	
+	
+	/**
+	 * 添加密保
+	 */
+	public function add_security(){
+		$this->menuSetting = 'account';
+		$this->output();
+	}
 	
 	
 }
