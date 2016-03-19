@@ -23,6 +23,7 @@ class b2c_order_create
         $this->app = $app;
         $this->obj_math = vmc::singleton('ectools_math');
     }
+
     /**
      * 订单标准数据生成.
      */
@@ -35,7 +36,7 @@ class b2c_order_create
             'order_id' => $new_order_id, //订单唯一ID
             'weight' => $cart_result['weight'], //货品总重量
             'quantity' => $cart_result['goods_count'], //货品总数量
-            'ip' => base_request::get_remote_addr() , //下单IP地址
+            'ip' => base_request::get_remote_addr(), //下单IP地址
             'memberlv_discount' => $cart_result['member_discount_amount'], //会员身份优惠总额
             'pmt_goods' => $cart_result['goods_promotion_discount_amount'], //商品级优惠促销总额
             'pmt_order' => $cart_result['order_promotion_discount_amount'], //订单级促销优惠总额
@@ -81,12 +82,12 @@ class b2c_order_create
                 'amount' => $this->obj_math->number_multiple(array(
                     $product['buy_price'],
                     $object['quantity'],
-                )) ,
+                )),
                 'nums' => $object['quantity'],
                 'weight' => $this->obj_math->number_multiple(array(
                     $product['weight'],
                     $object['quantity'],
-                )) ,
+                )),
                 'image_id' => $product['image_id'],
             );
             $cart_objects[$object['obj_ident']] = $object;
@@ -132,6 +133,7 @@ class b2c_order_create
 
         return true;
     }
+
     /**
      * 订单保存.
      *
@@ -145,22 +147,46 @@ class b2c_order_create
         $mdl_order = $this->app->model('orders');
         //must Insert
         $result = $mdl_order->save($sdf, null, true);
+        if (!$this->_order_concern($sdf)) {
+            $msg = ('订单未能保存成功');
+            return false;
+        }
         if (!$result) {
             $msg = ('订单未能保存成功');
-
             return false;
-        } else {
-            //订单创建时同步扩展服务
-            foreach (vmc::servicelist('b2c.order.create.finish') as $service) {
-                if (!$service->exec($sdf, $msg)) {
-                    //记录日志，不中断
-                    logger::error($sdf['order_id'].'创建出错！'.$msg);
-                }
-            }
-            //订单相关业务异步处理队列
-            system_queue::instance()->publish('b2c_tasks_order_related', 'b2c_tasks_order_aftercreate', $sdf);
-
-            return true;
         }
+        //订单创建时同步扩展服务
+        foreach (vmc::servicelist('b2c.order.create.finish') as $service) {
+            if (!$service->exec($sdf, $msg)) {
+                //记录日志，不中断
+                logger::error($sdf['order_id'] . '创建出错！' . $msg);
+            }
+        }
+        //订单相关业务异步处理队列
+        system_queue::instance()->publish('b2c_tasks_order_related', 'b2c_tasks_order_aftercreate', $sdf);
+        return true;
+    }
+
+
+    /**
+     * 插入订单关联表
+     **/
+    private function _order_concern($sdf)
+    {
+        $data = array(
+            'order_id' => $sdf['order_id'],
+            'identity_from' => (is_numeric($sdf['identity_from']) && !empty($sdf['identity_from'])) ? 1 : 0,
+            'identity_to' => $sdf['type'],
+            'buyer_id' => $sdf['member_id'],
+            'seller_id' => is_numeric($sdf['identity_from']) ?: $sdf['store_id'],
+            'buy_manager' => is_numeric($sdf['buy_manager']) ?: 0,
+            'createtime' => time(),
+        );
+        $mdl_order_concern = $this->app->model('order_concern');
+        if(!$mdl_order_concern->save($data))
+        {
+            return false;
+        }
+        return true;
     }
 }
