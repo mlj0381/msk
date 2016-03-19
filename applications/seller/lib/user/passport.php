@@ -911,12 +911,12 @@ class seller_user_passport
     {
         $mdl_pam_seller = app::get('pam')->model('sellers');
         $pam_data = $mdl_pam_seller->getRow('*', array('seller_id' => $post['seller_id']));
-        if (empty($pam_data)) return 'error';
+        if (empty($pam_data)) return false;
         unset($pam_data['seller_id']);
         unset($pam_data['type']);
         $mdl_seller = $this->app->model('sellers');
         $seller_data = $mdl_seller->getRow('*', array('seller_id' => $post['seller_id']));
-        if (empty($seller_data)) return 'error';
+        if (empty($seller_data)) return false;
         unset($seller_data['seller_id']);
         unset($seller_data['type']);
 

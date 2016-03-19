@@ -266,4 +266,13 @@ class b2c_ctl_site_checkout extends b2c_frontpage
         //$this->set_tmpl('checkout');
         $this->page('site/checkout/payresult.html');
     }
+
+
+
+
+    //新增订单提交页面
+    public function orderpay()
+    {
+        $this->page('site/checkout/new_orderpay.html');
+    }
 }
