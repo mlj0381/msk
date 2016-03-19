@@ -156,10 +156,13 @@ class b2c_ctl_site_cart extends b2c_frontpage {
             {
                 if($v > $goods['quantity'])
                 {
-                    $goods['item']['product']['buy_price'] = $goods['item']['product']['interval']['price'][$k - 1];
+                    $goods['item']['product']['buy_price'] = $goods['type'] == '1' ?
+                        ((float)$goods['item']['product']['interval']['price'][$k - 1] * (float)$goods['item']['product']['interval']['discount'][$k - 1]) / 100 : $goods['item']['product']['interval']['price'][$k - 1];
                     break;
                 }
                 $goods['item']['product']['buy_price'] = $goods['item']['product']['interval']['price'][$k];
+                $goods['item']['product']['buy_price'] = $goods['type'] == '1' ?
+                    ((float)$v['price'] * (float)$v['discount']) / 100 : $v['price'];
             }
             $price[$key] = $goods['item']['product']['buy_price'] * $goods['quantity'];
         }
@@ -172,7 +175,7 @@ class b2c_ctl_site_cart extends b2c_frontpage {
     }
 
     public function fastbuy($product_id, $store_id, $num) {
-        $this->verify_member();
+        $agent = $this->_request->get_get();
         $params = $this->_request->get_params(true);
         $product_id = ($product_id ? $product_id : $params['product_id']);
         $num = ($num ? $num : $params['num']);
@@ -187,6 +190,8 @@ class b2c_ctl_site_cart extends b2c_frontpage {
                 'product_id' => $product_id,
                 'num' => $num,
                 'store_id' => $store_id,
+                'type' => $this->buyerId ? '1' : '0',
+                'from_type' => empty($agent) ? 0 : 1,
             ),
         );
         $ident = $this->cart_stage->add('goods', $object, $msg, true); //fastbuy
@@ -197,7 +202,7 @@ class b2c_ctl_site_cart extends b2c_frontpage {
             'app' => 'b2c',
             'ctl' => 'site_checkout',
             'act' => 'fastbuy',
-        ));
+        )) . '?' . http_build_query($agent);
         $this->splash('success', $forward);
     }
 

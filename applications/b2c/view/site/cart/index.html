@@ -214,13 +214,20 @@
 
             $('.interval div').each(function (idx, item) {
                 var minNum = parseInt($(item).find('.num-dn').text().trim());
+                var type = $(item).attr('data-type');
+                var discount = 0;
                 if (minNum > num) {
-                    price = parseFloat($(item).prev().find('.price').text().trim());
+                    discount = parseFloat($(item).prev().find('.discount').text().trim());
+                    price = type == '1' ? parseFloat($(item).prev().find('.price').text().trim()) * discount / 100 :
+                            parseFloat($(item).prev().find('.price').text().trim());
                     index = idx;
                     return false;
                 }
-                price = parseFloat($(item).find('.price').text().trim());
+                discount = parseFloat($(item).find('.discount').text().trim());
+                price = type == '1' ? parseFloat($(item).find('.price').text().trim()) * discount / 100 :
+                        parseFloat($(item).find('.price').text().trim());
             });
+
             buy_price.text((num * price).toFixed(2));
             sumPrice += num * price;
             $('.c-cf-amount strong').text(sumPrice.toFixed(2));

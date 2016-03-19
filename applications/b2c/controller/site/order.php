@@ -17,10 +17,11 @@ class b2c_ctl_site_order extends b2c_frontpage
     {
         parent::__construct($app);
         $this->_response->set_header('Cache-Control', 'no-store');
-        $this->verify_member();
+        $this->buyer_id = vmc::singleton('buyer_user_object')->get_session();
+        $this->buyer_id || $this->verify_member();
         //$this->app->member_id  已赋值
         $this->cart_stage = vmc::singleton('b2c_cart_stage');
-        $this->cart_stage->set_member_id($this->app->member_id);
+        $this->cart_stage->set_member_id($this->buyer_id ?: $this->app->member_id);
         $this->logger = vmc::singleton('b2c_order_log');
         $this->mOrders = $this->app->model('orders');
     }
@@ -41,6 +42,9 @@ class b2c_ctl_site_order extends b2c_frontpage
             'member_id' => $member_id,
             'memo' => $params['memo'],
             'pay_app' => $params['payapp_id'],
+            'type' => '0',
+            'identity_from' => $params['identity_from'],
+            'buy_manager' => $params['buy_manager'],
             'dlytype_id' => $params['dlytype_id'],
             'createtime' => time() ,
             'need_shipping' => $params['need_shipping'],
@@ -50,6 +54,7 @@ class b2c_ctl_site_order extends b2c_frontpage
             'store_id' => $params['store_id'],
             'addon' => $params['addon']
         );
+        $this->buyer_id && $order_sdf['type'] = '1';
         $redirect_cart = $this->gen_url(array(
             'app' => 'b2c',
             'ctl' => 'site_cart',
@@ -103,7 +108,7 @@ class b2c_ctl_site_order extends b2c_frontpage
             $this->splash('error', $redirect_cart, '没有可结算商品');
         }
 
-//        2015、12、2演示过后修改
+//        2015、12、2
 //         if ($params['cart_md5'] != utils::array_md5($cart_result)) {
 //             $this->logger->fail('create', '购物车发生变化', $params);
 //             $this->splash('error', $redirect_cart, '购物车发生变化');
@@ -119,6 +124,7 @@ class b2c_ctl_site_order extends b2c_frontpage
             $this->logger->fail('create', $msg, $params);
             $this->splash('error', $redirect_cart, $msg);
         }
+
         if (!$order_create_service->save($order_sdf, $msg)) {
             $db->rollback(); //事务回滚
             $msg = $msg ? $msg : '数据保存失败';

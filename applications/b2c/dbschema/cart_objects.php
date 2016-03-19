@@ -76,7 +76,18 @@ $db['cart_objects'] = array(
             ),
             'required' => true,
             'default' => '0',
-            'label' => ('购买者类型'),
+            'label' => ('买家类型'),
+            'in_list' => true,
+            'default_in_list' => true,
+        ),
+        'from_type' => array(
+            'type' => array(
+                '0' => 'seller', //商家
+                '1' => 'buyer' //买手
+            ),
+            'required' => true,
+            'default' => '0',
+            'label' => ('卖家类型'),
             'in_list' => true,
             'default_in_list' => true,
         ),

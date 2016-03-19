@@ -151,8 +151,14 @@
                         </span>
                     </div>
                     <hr>
-                    <a class="btn cart btn-danger btn-lg btn-buy" data-url="<{link app=b2c ctl=site_cart act=add args0=$data_detail.product.product_id args1=$store_info.store_id args2=1 }>" href="javascript:;">加入购物车</a>
-                    <a class="btn cart btn-success btn-lg btn-buy" data-url="<{link app=b2c ctl=site_cart act=fastbuy args0=$data_detail.product.product_id args1=$store_info.store_id args2=1 }>" href="javascript:;">立即购买</a>
+
+                    <button <{if $from_type}> disabled <{/if}> class="btn cart btn-danger btn-lg btn-buy" data-url="<{link app=b2c ctl=site_cart act=add args0=$data_detail.product.product_id args1=$store_info.store_id args2=1 }>" href="javascript:;">加入购物车</button>
+
+
+                    <a class="btn cart btn-success btn-lg btn-buy" data-url="<{link app=b2c ctl=site_cart act=fastbuy args0=$data_detail.product.product_id args1=$store_info.store_id args2=1}>?<{if $from_type.buyer}>buyer=<{$from_type.buyer}><{/if}>
+                    <{if $from_type.manager}>&manager=<{$from_type.manager}><{/if}>" href="javascript:;">立即购买</a>
+
+
                     <a class="btn btn-link btn-lg favorite-button" data-url="<{link app=b2c ctl=site_member act=favorite args0=add args1=$data_detail.goods_id args2=goods}>" href='javascript:;'>
                         <i class="glyphicon glyphicon-heart-empty"></i>
                         <small>Favorite<em></em></small>
@@ -473,10 +479,6 @@
                 button.attr('data-url', href);
             });
         }).trigger('_change', [$('.product-quantity .spinner-input').val(), 0]);
-
-
-
-
 
         //相册切换
         var enter_timer = 0;

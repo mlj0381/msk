@@ -50,12 +50,11 @@
                     </div>
                 </div>
             </div>
-
             <div class="col-xs-1 c-ci-price" data-bind="item/product/buy_price"><{$object.item.product.buy_price|cur}>
             </div>
-            <div class="interval  hide">
+            <div class="interval  hide" >
                 <{foreach from=$object.item.product.interval key=key item=item}>
-                    <div>
+                    <div data-type="<{$object.type}>">
                         <span class="num-dn"><{$item.num_dn}></span>
                         <span class="num-up"><{$item.num_up}></span>
                         <span class="price"><{$item.price}></span>
