@@ -1,1 +1,106 @@
-<h1>我的买家列表</h1>
+<div class="buyer-list">
+    <div class="page-header">
+        <h1>我的买家列表</h1>
+    </div>
+    <ul class="nav nav-tabs mem-check-nav">
+        <li <{if !$current_status||$current_status =='all'}>class="active"<{/if}>><a href="">全部</a></li>
+        <li <{if $current_status =='s1'}>class="active"<{/if}>><a href="">已绑定买家</a></li>
+        <li <{if $current_status =='s2'}>class="active"<{/if}>><a href="">待确认买家</a></li>
+    </ul>
+	<table class="table mo-list-head">
+        <thead>
+            <tr class="text-nowrap">
+                <th width="30%" class="text-center">
+                    企业名称
+                </th>
+                <th width="15%" class="text-center">
+                    主营品类
+                </th>
+                <th width="15%" class="text-center">
+                    联系方式
+                </th>
+                <th width="15%" class="text-center">
+                    营业地址
+                </th>
+                <th width="10%" class="text-center">
+                    状态
+                </th>
+                <th width="15%" class="text-center">
+                    操作
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+        <!-- foreach 开始 -->
+        	<tr>
+        		<td width="30%" class="buyer-info">
+        			<div class="row">
+        				<div class="col-xs-5 buyer-head"><img src=""></div>
+        				<div class="col-xs-7 buyer-name">Luce 黄焖鸡米饭</div>
+        			</div>
+                </td>
+                <td width="15%" class="text-center">
+                    及产品
+                </td>
+                <td width="15%" class="text-center">
+                    132112231232
+                </td>
+                <td width="10%" class="text-center">
+                    上海上海市浦东新区碧波路
+                </td>
+                <td width="10%" class="text-center">
+                    已绑定
+                </td>
+                <td width="15%" class="text-center opt">
+                </td>
+        	</tr>
+        	<tr>
+        		<td width="30%" class="buyer-info">
+        			<div class="row">
+        				<div class="col-xs-5 buyer-head"><img src=""></div>
+        				<div class="col-xs-7 buyer-name">Luce 黄焖鸡米饭</div>
+        			</div>
+                </td>
+                <td width="15%" class="text-center">
+                    及产品
+                </td>
+                <td width="15%" class="text-center">
+                    132112231232
+                </td>
+                <td width="10%" class="text-center">
+                    上海上海市浦东新区碧波路
+                </td>
+                <td width="10%" class="text-center">
+                    未绑定
+                </td>
+                <td width="15%" class="text-center opt">
+                    <a class="btn btn-danger">申请绑定</a>
+                </td>
+        	</tr>
+        	<tr>
+        		<td width="30%" class="buyer-info">
+        			<div class="row">
+        				<div class="col-xs-5 buyer-head"><img src=""></div>
+        				<div class="col-xs-7 buyer-name">Luce 黄焖鸡米饭</div>
+        			</div>
+                </td>
+                <td width="15%" class="text-center">
+                    及产品
+                </td>
+                <td width="15%" class="text-center">
+                    132112231232
+                </td>
+                <td width="10%" class="text-center">
+                    上海上海市浦东新区碧波路
+                </td>
+                <td width="10%" class="text-center">
+                    未绑定
+                </td>
+                <td width="15%" class="text-center opt">
+                    <a class="btn btn-danger">申请绑定</a>
+                </td>
+        	</tr>
+        <!-- foreach 结束 -->
+        </tbody>
+    </table>
+</div>
