@@ -384,16 +384,14 @@
 //更改手机号绑定
 .update_mobile{
 	margin-top: 20px;
-	#update_mobile_form{
+	form{
 		padding:10px 0;
-		.form-group{
-			margin-bottom: 20px;
-		}
 	}
 	.process-bar{
 		.col-xs-4{
 			.well{
 				text-align: center;
+				cursor:pointer;
 				font-size: 14px;
 			}
 		}
@@ -403,6 +401,17 @@
 				color:#ffffff;
 			}
 		}
+	}
+	.form-group{
+		margin-bottom: 20px;
+	}
+	.submit-opt{
+		button{
+			width:100px;
+		}
+	}
+	.new-bind,.updatemobile-alert{
+		display:none;
 	}
 }
 //更改邮箱绑定
@@ -422,7 +431,7 @@
 }
 
 //修改电子邮箱,密码成功,绑定手机,身份认证提示
-.editemail-alert,.editpass-alert,.editmobile-alert,.identauth-alert{
+.editemail-alert,.editpass-alert,.editmobile-alert,.identauth-alert,.updatemobile-alert,.setsecquestion-alert{
 	.content{
 		margin-top: 20px;
 		padding:50px 0;
@@ -486,5 +495,38 @@
 				border:0;
 			}
 		}
+	}
+}
+//添加密保
+.add_security{
+	margin-top: 20px;
+	form{
+		padding:10px 0;
+	}
+	.process-bar{
+		.col-xs-4{
+			.well{
+				text-align: center;
+				cursor:pointer;
+				font-size: 14px;
+			}
+		}
+		.col-xs-4.active{
+			.well{
+				background-color: #a40001;
+				color:#ffffff;
+			}
+		}
+	}
+	.form-group{
+		margin-bottom: 20px;
+	}
+	.submit-opt{
+		button{
+			width:100px;
+		}
+	}
+	.set-secquestion,.setsecquestion-alert{
+		display:none;
 	}
 }
