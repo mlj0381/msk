@@ -355,14 +355,18 @@
         var _self = $(this);
         var buyer = '<{$buyer_id}>';
         var url = $(_self).attr('data-url');
-        if(buyer) location = url;
-        $.post('<{link app=b2c ctl=site_passport act=check_login}>', '', function (re) {
-            if (re.success) {
-                location = url ? url : '<{link app=b2c ctl=site_cart act=index}>';
-            } else {
-                $('#quickLogin').modal('show');
-            }
-        });
+        if(buyer) {
+            location = url;
+        }else{
+            $.post('<{link app=b2c ctl=site_passport act=check_login}>', '', function (re) {
+                if (re.success) {
+                    location = url ? url : '<{link app=b2c ctl=site_cart act=index}>';
+                } else {
+                    $('#quickLogin').modal('show');
+                }
+            });
+        }
+
     });
     $('.quickLogin').on('click', 'button', function (e) {
         var login_form = $('.quickLogin');

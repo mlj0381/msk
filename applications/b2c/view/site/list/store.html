@@ -1,6 +1,7 @@
 <div class="glist-container">
     <div class="goods-listbox">
         <div class="list_maincon">
+            <{if $storeList}>
        <div class="store_list clearfix">
             <{foreach from=$storeList item=item}>
                 <div class="store_item clearfix">
@@ -32,6 +33,9 @@
 
             </div>
         </div>
+        <{else}>
+        <!--此处添加未搜索到店铺页面 <include file=''> -->
+        <{/if}>
         <{pagers data=$pager}>
     </div>
 </div>

@@ -161,6 +161,7 @@
                   </div> 
             </div>
         </div>
+        <{if $data_list}>
         <div class="list_maincon">
             <{if $show_type eq 'g'}>
           <div class="row goods-list gl-default">
@@ -207,7 +208,7 @@
                       <!-- <p class="avg-mark">
                           <small><{$item.count_mark.count_mark|default:0}></small>  <span class="text-warning">个评价</span>
                       </p> -->
-                      
+
                     </div>
                   </div>
                 </div>
@@ -284,9 +285,11 @@
               <{/foreach}>
           </div>
             <{/if}>
-
-
         </div>
+        <{else}>
+            <!--此处添加未搜索到商品页面 <include file=''> -->
+
+        <{/if}>
         <{pagers data=$pager}>
     </div>
 </div>
