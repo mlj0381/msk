@@ -163,7 +163,7 @@ class b2c_goods_search
             if(!$filter['goods_id|in']) return array();
         }
         $filter['cat_id'] = $cat;
-        $filter['brand'] = $brand;
+        $filter['brand_id'] = $brand;
         $filter['store_id'] = $store_id;
         $filter['marketable'] = $marketable;
         //价格查询

@@ -45,7 +45,7 @@ class b2c_ctl_site_product extends b2c_frontpage {
             //设置模板页
             $this->set_tmpl_file($data_detail['goods_setting']['site_template']);
         }
-
+        $this->pagedata['from_type'] = $this->_request->get_get();//买手或是冻品管家分销
         $this->pagedata['buy_items'] = $this->_buy_items($data_detail['goods_id']);
         $this->pagedata['goods_path'] = $this->app->model('goods')->getPath($data_detail['goods_id']);
 

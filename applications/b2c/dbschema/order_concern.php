@@ -32,11 +32,17 @@ $db['order_concern'] = array(
             'identity_from' => array(
                 'type' => array(
                     '0' => 'seller',
-                    '1' => 'buyer'
+                    '1' => 'buyer',
                 ),
                 'required' => true,
                 'default' => '0',
                 'label' => '卖家类型' //0 商家 1 买手
+            ),
+            'buy_manager' => array(
+                'type' => 'number',
+                'default' => 0,
+                'label' => '冻品管家id',
+                'comment' => '冻品管家id',
             ),
             'seller_id' => array(
                 'type' => 'number',
