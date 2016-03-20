@@ -136,7 +136,7 @@ class buyer_frontpage extends site_controller{
     	$menus = Array();
     	$count = count($tags);
     	$menuSetting = array(
-    			'index' => array('goods', 'manager'),
+    			'index' => array('goods', 'manager', 'service'),
     			'account' => array('buyer'),
     			'message' => array('message'),
     	);

@@ -35,5 +35,11 @@
 		<title>消息中心</title>
 		<disable>false</disable>
 	</module>
+	
+	<module controller='site_service' id="buyer">
+		<name>buyerservice</name>
+		<title>客户服务</title>
+		<disable>false</disable>
+	</module>
 
 </site>

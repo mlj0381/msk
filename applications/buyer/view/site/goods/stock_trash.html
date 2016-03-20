@@ -1,30 +1,22 @@
-<!-- <h1>结算管理</h1> -->
-<ul class="nav nav-tabs mem-check-nav">
-    <li <{if !$current_status||$current_status =='all'}>class="active"<{/if}>><a href="<{link app=buyer ctl=site_accounts act=index}>">全部</a></li>
-    <li <{if $current_status =='s1'}>class="active"<{/if}>><a href="<{link app=buyer ctl=site_accounts act=index args0=s1}>">已结算</a></li>
-    <li <{if $current_status =='s2'}>class="active"<{/if}>><a href="<{link app=buyer ctl=site_accounts act=index args0=s2}>">待结算</a></li>
-</ul>
-
+<!-- <h1>订单回收站</h1> -->
 <div class="buyer-check">
-    <div class="page-header">
-        <h1>结算管理</h1>
-    </div>
-    <ul class="nav nav-tabs mem-check-nav">
-        <li <{if !$current_status||$current_status =='all'}>class="active"<{/if}>><a href="">全部</a></li>
-        <li <{if $current_status =='s1'}>class="active"<{/if}>><a href="">已结算</a></li>
-        <li <{if $current_status =='s2'}>class="active"<{/if}>><a href="">待结算</a></li>
-    </ul>
 	<table class="table mo-list-head">
         <thead>
             <tr class="text-nowrap">
                 <th width="15%" class="text-center">
-                    订单编号
+                    商品图片
                 </th>
                 <th width="15%" class="text-center">
-                    时间
+                    商品名称/规格
                 </th>
                 <th width="15%" class="text-center">
-                    总金额(元)
+                    数量
+                </th>
+                <th width="10%" class="text-center">
+                    商品金额(元)
+                </th>
+                <th width="10%" class="text-center">
+                    订单金额(元)
                 </th>
                 <th width="10%" class="text-center">
                     订单状态
@@ -46,6 +38,12 @@
                 <td width="10%" class="text-center">
                     10.00
                 </td>
+                <td width="15%" class="text-center">
+                    20.00
+                </td>
+                <td width="10%" class="text-center">
+                    10.00
+                </td>
         	</tr>
         	<tr>
         		<td width="15%" class="text-center">
@@ -60,13 +58,26 @@
                 <td width="10%" class="text-center">
                     10.00
                 </td>
+                <td width="15%" class="text-center">
+                    20.00
+                </td>
+                <td width="10%" class="text-center">
+                    10.00
+                </td>
         	</tr>
         	<tr>
         		<td width="15%" class="text-center">
         			11.20-11.30
                 </td>
                 <td width="15%" class="text-center">
-                    3000.00
+                    沙县小吃专用食材 冻鸡腿 单冻鸡琵琶腿 
+50只/包
+                </td>
+                <td width="15%" class="text-center">
+                    20.00
+                </td>
+                <td width="10%" class="text-center">
+                    10.00
                 </td>
                 <td width="15%" class="text-center">
                     20.00

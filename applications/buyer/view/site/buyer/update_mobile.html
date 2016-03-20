@@ -3,84 +3,82 @@
         <h1>修改手机</h1>
     </div>
 	<div class="list-unstyled row process-bar">
-	    <div class="col-xs-4 tab active" id="tab1"><div class="well well-sm">解绑原手机号</div></div>
-	    <div class="col-xs-4 tab" id="tab2"><div class="well well-sm">验证新手机号</div></div>
-	    <div class="col-xs-4 tab" id="tab3"><div class="well well-sm">修改成功</div></div>
+	    <div class="col-xs-4 active"><div class="well well-sm">解绑原手机号</div></div>
+	    <div class="col-xs-4"><div class="well well-sm">验证新手机号</div></div>
+	    <div class="col-xs-4"><div class="well well-sm">修改成功</div></div>
 	</div>
-	<div class="con remover-bind" id="con1">
-		<form class="form-horizontal" id="remove_mobile_form">
-			<div class="form-group">
-				<label class="col-sm-2 control-label"><em class="text-danger">*</em> 用户名</label>
-				<div class="col-sm-4">
-				    <input type="text" class="form-control" value="大白">
-				</div>
+	<form class="form-horizontal" id="member_signup_form"  action="<{link app=buyer ctl=site_buyer act=update_mobile}>" method="post" enctype="multipart/form-data">
+		<div class="form-group">
+			<label class="col-sm-2 control-label"><em class="text-danger">*</em> 用户名</label>
+			<div class="col-sm-4">
+			    <input type="text" class="form-control" readonly="readonly" name="local" value="<{$info.local}>" >
 			</div>
-			<div class="form-group">
-				<label class="col-sm-2 control-label"><em class="text-danger">*</em> 已绑定手机</label>
-				<div class="col-sm-4">
-				    <input type="text" class="form-control" value="15645435567">
-				</div>
-			</div>
-			<div class="form-group">
-				<label class="col-sm-2 control-label"><em class="text-danger">*</em> 验证码</label>
-				<div class="col-sm-2">
-				    <input type="text" class="form-control">
-				</div>
-				<div class="col-sm-2">
-				    <button class="btn btn-default" href="">获取验证码</button>
-				</div>
-			</div>
-			<div class="form-group submit-opt">
-				<div class="col-sm-offset-2 col-sm-10">
-				    <button type="submit" class="btn btn-success">解除绑定</button>
-				</div>
-			</div>
-		</form>
-	</div>
-	<div class="con new-bind" id="con2">
-		<form class="form-horizontal" id="new_mobile_form">
-			<div class="form-group">
-				<label class="col-sm-2 control-label"><em class="text-danger">*</em> 新手机号码</label>
-				<div class="col-sm-4">
-				    <input type="text" class="form-control">
-				</div>
-			</div>
-			<div class="form-group">
-				<label class="col-sm-2 control-label"><em class="text-danger">*</em> 验证码</label>
-				<div class="col-sm-2">
-				    <input type="text" class="form-control">
-				</div>
-				<div class="col-sm-2">
-				    <button class="btn btn-default" href="">获取验证码</button>
-				</div>
-			</div>
-			<div class="form-group submit-opt">
-				<div class="col-sm-offset-2 col-sm-10">
-				    <button type="submit" class="btn btn-success">确定</button>
-				</div>
-			</div>
-		</form>
-	</div>
-	<div class="con updatemobile-alert" id="con3">
-		<div class="content text-center">
-			<img src="../../themes/pc/default/statics/images/icon-success.png">
-			<span>您的手机号码已经修改	成功</span>
 		</div>
-	</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label"><em class="text-danger">*</em> 已绑定手机</label>
+			<div class="col-sm-4">
+			    <input type="text" name="mobile" readonly="readonly" value="<{$info.mobile}>" class="form-control" id="input_mobile" required="true" format="mobile" remote="<{link app=seller ctl=site_passport act=is_exists_mobile}>">
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label"><em class="text-danger">*</em> 验证码</label>
+			<div class="col-sm-2">
+			                            <input type="text" required="true" name="smscode" class="form-control" id="input_vcode" required="true" >
+
+                        <span class="msgTip" data-message="error"></span>
+			</div>
+                        <div class="mobile-vcode">
+                            <button type="button" data-loading-text="正在发送..." class="btn btn-default">获取短信验证码</button>
+                        </div>
+		</div>
+		<div class="form-group submit-opt">
+			<div class="col-sm-offset-2 col-sm-10">
+			    <button type="submit" class="btn btn-success">解除绑定</button>
+			</div>
+		</div>
+	</form>
 </div>
-<script type="text/javascript">
-    (function(){
-        $('.process-bar .tab').on("click",function(){
-            var target_this = $(this);
-            var index = this.id.replace('tab','');
-            var par_sec = target_this.parents('.update_mobile');
-            switch_tab(target_this,par_sec,index);
-        });
-        var switch_tab = function(target_this,par_sec,index){
-            par_sec.find('.tab').removeClass('active');
-            target_this.addClass('active');
-            par_sec.find('.con').css("display","none");
-            par_sec.find('#con'+index).css("display","block");
-        } 
-    })();
-</script> 
+
+<script>
+void function(signup_form) {
+    //获得短信验证码
+    var _cutdown_sms = function(btn) {
+        btn.addClass('disabled');
+        var cutdown = 120,
+            btn_o_text = btn.text(),
+            timer =
+            setInterval((function() {
+                btn.text('短信已发送,' + (cutdown--) + '秒后可重试');
+                if (cutdown < 1) {
+                    clearInterval(timer);
+                    btn.text(btn_o_text).removeClass('disabled');
+                }
+                return arguments.callee;
+            })(), 1000);
+    };
+
+    signup_form.find('.mobile-vcode button').on('click', function(e) {
+        var btn = $(this);
+        if (btn.hasClass('disabled')) return;
+        btn.addClass('disabled');
+        $.post('<{link app=seller ctl=site_passport act=send_vcode_sms}>', {
+            mobile: $('#input_mobile').val()
+        }, function(re) {
+            if (re && re.error) {//input_vcode
+                btn.removeClass('disabled');
+                
+                alert(re.error);   
+            }
+            if (re && re.success) {
+                $("#input_vcode").val(re.redirect);
+                _cutdown_sms(btn);
+            }
+        }, 'json');
+
+
+    });
+
+
+
+}($('#member_signup_form'));
+</script>
