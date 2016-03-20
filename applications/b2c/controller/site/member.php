@@ -801,4 +801,22 @@ vmc_b2c_orders WHERE `member_id`={$this->member['member_id']} AND `status` = 'ac
         );
         $this->output();
     }
+
+    /**
+     * 我的冻品管家
+     */
+    public function freeze()
+    {
+        $member_id = $this->member['member_id'];
+        $mdl_freeze_member = app::get('freeze')->model('freeze_member');
+        $freeze = $mdl_freeze_member->getRow('*',array('member_id'=>$member_id));
+
+
+        $this->pagedata['freeze'] = $freeze;
+        $this->output();
+    }
+
+
+
+
 }

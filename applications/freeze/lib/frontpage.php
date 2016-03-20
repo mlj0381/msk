@@ -50,7 +50,7 @@ class freeze_frontpage extends site_controller
      * @return     void
      */
     function verify_member() {
-        $user_obj = vmc::singleton('freeze_user_object');
+        $this->user_obj = $user_obj = vmc::singleton('freeze_user_object');
         if ($this->app->freeze_id = $user_obj->get_member_id()) {
             $data = $user_obj->get_members_data(array(
                 'freeze' => 'freeze_id'
