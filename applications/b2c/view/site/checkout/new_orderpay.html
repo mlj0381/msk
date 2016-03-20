@@ -1,0 +1,119 @@
+<div class="page-orderpay">
+	<div class="page-header">
+		<h1><strong>订单支付</strong></h1>
+	</div>
+	<!-- 订单提交 -->
+	<div class="order_status">
+		<div class="well">
+			<div class="row">
+				<div class="col-xs-8">
+					<h4><span class="text-success glyphicon glyphicon-ok-sign"></span> 订单提交成功，请您尽快付款</h4>
+				</div>
+				<div class="col-xs-4">
+					<p class="count">应付金额：<span class="text-danger">￥：200.00</span></p>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-8 tipbox">
+					请在订单提交后<span class="text-danger">24小时</span>内完成支付，否则订单会自动取消！
+				</div>
+			</div>
+			<div class="row order_detailbox">
+				<div class="col-xs-12">
+					订单编号：324253234535345234
+				</div>
+				<div class="col-xs-12">
+					配送地址:上海市松江区文翔路23号65弄501
+				</div>
+				<div class="col-xs-12">
+					配送方式：客户自提
+				</div>
+			</div>
+			<span class="order_detail_btn">订单详情 <i class="text-danger glyphicon glyphicon-chevron-down"></i></span>
+		</div>
+		<div class="payment">
+			<h4><b>选择一下方式进行支付</b></h4>
+			<div class="alert alert-warning">
+				<input type="radio" checked><b> 在线支付 为了保证及时处理您的订单，请您下单后及时付款；即时到账，使用联通支付绑定的银行卡进行在线支付</b>
+			</div>
+		</div>
+		<hr>
+		<button type="submit" class="btn btn-danger order_pay">订单支付</button>
+		<div class="payhelp">
+			<h4><b>付款帮助</b></h4>
+			<p>1.美侍客都支持哪些支付方式？</p>
+			<p>美侍客目前支持货到付款、在线支付，如果选择在线支付，请您务必在订单成功提交24小时内完成付款，以便我们安排配送，逾时订单将被取消，需要您重新购买。</p>
+		</div>
+	</div>
+	<!--END 订单提交 -->
+
+
+
+	<!-- 订单支付 -->
+	<div class="order_status">
+		<div class="well">
+			<div class="row">
+				<div class="col-xs-8">
+					<h4><span class="text-success glyphicon glyphicon-ok-sign"></span> 订单支付成功，我们将尽快付款</h4>
+					<h4><span class="text-danger glyphicon glyphicon-remove-sign"></span> 订单支付失败，请选择其他支付方式</h4>
+				</div>
+				<div class="col-xs-4">
+					<p class="count">应付金额：<span class="text-danger">￥：200.00</span></p>
+				</div>
+			</div>
+			<div class="row order_detailbox">
+				<div class="col-xs-12">
+					订单编号：324253234535345234
+				</div>
+				<div class="col-xs-12">
+					支付方式：在线支付
+				</div>
+				<div class="col-xs-12">
+					<p>所购商品：</p>
+					<dl>
+						<dt>
+							<a href="#">
+								<img title="商品名称" src="<{$base_url}>/themes/pc/default/statics/images/bestsellers.jpg">
+							</a>
+						</dt>
+						<dd>x 7</dd>
+					</dl>
+					<dl>
+						<dt>
+							<a href="#">
+								<img title="商品名称" src="<{$base_url}>/themes/pc/default/statics/images/bestsellers.jpg">
+							</a>
+						</dt>
+						<dd>x 7</dd>
+					</dl>
+				</div>
+				<div class="col-xs-12">
+					配送地址:上海市松江区文翔路23号65弄501
+				</div>
+				<div class="col-xs-12">
+					配送方式：客户自提
+				</div>
+				<div class="col-xs-12">
+					接下来您可以 <a href="<{link app=b2c ctl=site_list}>" class="text-danger">继续购物</a> | <a href="<{link app=b2c ctl=site_order act=detail args0=$order.order_id}>" class="text-danger">查看订单详情</a>
+				</div>
+			</div>
+			
+		</div>
+	</div>
+	<!--END 订单支付 -->
+
+
+
+
+
+</div>
+
+
+
+<script type="text/javascript">
+	$(function(){
+		$('.order_detail_btn').bind('click',function(){
+			$('.order_detailbox').slideToggle();
+		})
+	})
+</script>

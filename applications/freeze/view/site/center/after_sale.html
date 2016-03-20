@@ -1,1 +1,196 @@
-<h1>售后管理</h1>
+<div class="aftersale-manage">
+    <div class="page-header">
+        <h1>售后管理</h1>
+    </div>
+    <div class="search-form">
+    	<p class="text-center btn-slidedown">
+    		<a class="btn">展开 <i class="glyphicon glyphicon-triangle-bottom"></i></a>
+    	</p>
+    	<div class="search-block">
+    		<form class="form-horizontal" id="aftersale_search_form">
+			  	<div class="form-group">
+			    	<label class="col-sm-1 control-label">订单编号:</label>
+			    	<div class="col-sm-2">
+			      		<input type="text" class="form-control">
+			    	</div>
+			    	<label class="col-sm-1 control-label">申请时间:</label>
+			    	<div class="col-sm-2">
+			      		<select class="form-control">
+						  	<option>最近7天</option>
+						  	<option>最近一个月</option>
+						  	<option>最近三个月</option>
+						  	<option>全部</option>
+						</select>
+			    	</div>
+			    	<div class="col-sm-6 select-time">
+			      		<label class="control-label">从</label>
+				      	<input type="text" class="form-control">
+				      	<!-- <{input type="time" }> -->
+				    	<label class="control-label">至</label>
+				    	<input type="text" class="form-control">
+				      	<!-- <{input type="time" }> -->
+			    	</div>
+			    </div>
+			    <div class="form-group">
+			    	<label class="col-sm-1 control-label">售后编号:</label>
+			    	<div class="col-sm-2">
+			      		<input type="text" class="form-control">
+			    	</div>
+			    	<label class="col-sm-1 control-label">售后状态:</label>
+			    	<div class="col-sm-2">
+			      		<select class="form-control">
+						  	<option>全部</option>
+						  	<option>进行中</option>
+						  	<option>退款成功</option>
+						  	<option>退款关闭</option>
+						</select>
+			    	</div>
+			    	<label class="col-sm-1 control-label">售后要求:</label>
+			    	<div class="col-sm-2">
+			      		<select class="form-control">
+						  	<option>全部</option>
+						  	<option>正在处理</option>
+						  	<option>未处理</option>
+						</select>
+			    	</div>
+			    </div>
+			  	<div class="form-group">
+			    	<div class="col-sm-offset-1 col-sm-10">
+			      	<button type="submit" class="btn btn-success">搜索</button>
+			    	</div>
+			  	</div>
+			</form>
+			<p class="text-center btn-slideup">
+	    		<a class="btn">收起 <i class="glyphicon glyphicon-triangle-top"></i></a>
+	    	</p>
+    	</div>
+    </div>
+    <ul class="nav nav-tabs mem-check-nav">
+        <li <{if !$current_status||$current_status =='all'}>class="active"<{/if}>><a href="">全部</a></li>
+    </ul>
+	<table class="table mo-list-head">
+        <thead>
+            <tr class="text-nowrap">
+                <th width="15%" class="text-center">
+                    售后编号
+                </th>
+                <th width="15%" class="text-center">
+                    订单编号/商品信息
+                </th>
+                <th width="10%" class="text-center">
+                    买家
+                </th>
+                <th width="10%" class="text-center">
+                    成交金额
+                </th>
+                <th width="10%" class="text-center">
+                    退款金额
+                </th>
+                <th width="15%" class="text-center">
+                    申请时间 <i class="glyphicon glyphicon-triangle-bottom"></i>
+                </th>
+                <th width="10%" class="text-center">
+                    售后状态
+                </th>
+                <th width="15%" class="text-center">
+                    操作
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+        <!-- foreach 开始 -->
+        	<tr>
+        		<td width="15%" class="text-center">
+        			12345678
+                </td>
+                <td width="15%" class="text-center">
+                    456789009876
+                </td>
+                <td width="10%" class="text-center">
+                    大白
+                </td>
+                <td width="10%" class="text-center">
+                    ￥1000.00
+                </td>
+                <td width="10%" class="text-center">
+                    ￥1000.00
+                </td>
+                <td width="15%" class="text-center">
+                    2015年8月25日
+                </td>
+                <td width="10%" class="text-center">
+					处理中
+                </td>
+                <td width="15%" class="text-center opt">
+                    <a class="btn">查看</a>
+                </td>
+        	</tr>
+        	<tr>
+        		<td width="15%" class="text-center">
+        			12345678
+                </td>
+                <td width="15%" class="text-center">
+                    456789009876
+                </td>
+                <td width="10%" class="text-center">
+                    大白
+                </td>
+                <td width="10%" class="text-center">
+                    ￥1000.00
+                </td>
+                <td width="10%" class="text-center">
+                    ￥1000.00
+                </td>
+                <td width="15%" class="text-center">
+                    2015年8月25日
+                </td>
+                <td width="10%" class="text-center">
+					退款成功
+                </td>
+                <td width="15%" class="text-center opt">
+                    <a class="btn">查看</a>
+                </td>
+        	</tr>
+        	<tr>
+        		<td width="15%" class="text-center">
+        			12345678
+                </td>
+                <td width="15%" class="text-center">
+                    456789009876
+                </td>
+                <td width="10%" class="text-center">
+                    大白
+                </td>
+                <td width="10%" class="text-center">
+                    ￥1000.00
+                </td>
+                <td width="10%" class="text-center">
+                    ￥1000.00
+                </td>
+                <td width="15%" class="text-center">
+                    2015年8月25日
+                </td>
+                <td width="10%" class="text-center">
+					退款关闭
+                </td>
+                <td width="15%" class="text-center opt">
+                    <a class="btn">查看</a>
+                </td>
+        	</tr>
+        	
+        <!-- foreach 结束 -->
+        </tbody>
+    </table>
+</div>
+<script type="text/javascript">
+	(function(){
+		$('.btn-slidedown').on('click', function() {
+			$(this).slideUp('fast');
+			$('.search-block').slideDown('fast');
+		});
+		$('.btn-slideup').on('click', function() {
+			$('.search-block').slideUp('fast');
+			$('.btn-slidedown').slideDown('fast');
+		});
+	})();
+</script>

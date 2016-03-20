@@ -31,11 +31,14 @@ class b2c_goods_search
         $search_info = array();
         $search_label = app::get('b2c')->getConf('search_label');
         if (isset($params['brand']) && is_numeric($params['brand'])) {
+            $tmp = $params;
+            unset($tmp['brand']);
             $brand = $this->mBrand->getRow('brand_id, brand_name', array('brand_id' => $params['brand']));
             $search_info['brand'] = array(
                 'label' => $search_label['brand'],
                 'id' => $brand['brand_id'],
                 'name' => $brand['brand_name'],
+                'url' => http_build_query($tmp),
             );
         }
         foreach ($params as $k => $v) {
@@ -59,7 +62,6 @@ class b2c_goods_search
         if ($nopage) {
             unset($params['page']);
         }
-
         return http_build_query($params);
     }
 
@@ -163,7 +165,7 @@ class b2c_goods_search
             if(!$filter['goods_id|in']) return array();
         }
         $filter['cat_id'] = $cat;
-        $filter['brand'] = $brand;
+        $filter['brand_id'] = $brand;
         $filter['store_id'] = $store_id;
         $filter['marketable'] = $marketable;
         //价格查询

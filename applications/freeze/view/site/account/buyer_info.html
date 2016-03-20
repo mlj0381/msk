@@ -1,1 +1,50 @@
-<h1>买手店信息</h1>
+<div class="content buyer-info">
+	<ul class="nav nav-tabs">
+	   <li><a href="<{link app=freeze ctl=site_account}>">冻品管家基本信息</a></li>
+	   <li class="active"><a href="">买手店信息</a></li>
+	</ul>
+	<div class="content">
+		<form class="form-horizontal" id="buyerinfo_form">
+			<div class="form-group">
+			    <label class="col-sm-2 control-label"><em class="text-danger">*</em> 店铺名称</label>
+			    <div class="col-sm-4">
+			      <input type="text" class="form-control">
+			    </div>
+		  	</div>
+		  	<div class="form-group select-region">
+			    <label class="col-sm-2 control-label">
+			    	<em class="text-danger">*</em> 店铺LOGO<br>
+			    </label>
+                <div class="col-sm-4">
+                    <div class="head-imgbox">
+			    		<!-- <img class="img-thumbnail" src=""/> -->
+			    		<!-- if 未上传图片 -->
+			    		<img class="img-thumbnail"  src="../../themes/pc/default/statics/images/blank-img.png" />
+			    	</div>
+			    	<a class="btn btn-link upload-img">
+			    		<input type="file" class="form-control" style="opacity: 0;">
+						<span>上传图片</span>
+					</a>
+                </div>
+		  	</div>
+		  	<div class="form-group select-region">
+			    <label class="col-sm-2 control-label"><em class="text-danger">*</em> 主营区域</label>
+                <div class="col-sm-4">
+                    <{input type=region name="maddr[area]" id="maddr_region"}><br>
+                </div>
+		  	</div>
+		  	<div class="form-group sale-character">
+			    <label class="col-sm-2 control-label"><em class="text-danger">*</em> 经营特色</label>
+			    <div class="col-sm-6">
+			      <textarea></textarea>
+			    </div>
+		  	</div>
+		  	<div class="form-group submit-opt">
+			    <div class="col-sm-offset-2 col-sm-10">
+			      <button type="submit" class="btn btn-success">保存</button>
+			      <button type="reset" class="btn btn-default">取消</button>
+			    </div>
+		  	</div>
+		</form>
+	</div>
+</div>
