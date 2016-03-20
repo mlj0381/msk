@@ -4,6 +4,7 @@ class freeze_ctl_site_center extends freeze_frontpage{
     function __construct(&$app)
     {
         parent::__construct($app);
+        $this->is_complete_info();
         $this->verify_member();
     }
 

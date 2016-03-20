@@ -1,1 +1,110 @@
-<h1>结算管理</h1>
+<div class="content freeze-check">
+    <div class="page-header">
+        <h1>结算管理</h1>
+    </div>
+    <ul class="nav nav-tabs mem-check-nav">
+        <li <{if !$current_status||$current_status =='all'}>class="active"<{/if}>><a href="">全部</a></li>
+        <li <{if $current_status =='s1'}>class="active"<{/if}>><a href="">已结算</a></li>
+        <li <{if $current_status =='s2'}>class="active"<{/if}>><a href="">待结算</a></li>
+    </ul>
+	<table class="table mo-list-head">
+        <thead>
+            <tr class="text-nowrap">
+                <th width="15%" class="text-center">
+                    结算周期
+                </th>
+                <th width="15%" class="text-center">
+                    订单金额
+                </th>
+                <th width="15%" class="text-center">
+                    上期退款金额
+                </th>
+                <th width="10%" class="text-center">
+                    佣金
+                </th>
+                <th width="15%" class="text-center">
+                    应结金额
+                </th>
+                <th width="15%" class="text-center">
+                    结算状态
+                </th>
+                <th width="15%" class="text-center">
+                    操作
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+        <!-- foreach 开始 -->
+        	<tr>
+        		<td width="15%" class="text-center">
+        			11.20-11.30
+                </td>
+                <td width="15%" class="text-center">
+                    3000.00
+                </td>
+                <td width="15%" class="text-center">
+                    20.00
+                </td>
+                <td width="10%" class="text-center">
+                    10.00
+                </td>
+                <td width="15%" class="text-center">
+                    2960.00
+                </td>
+                <td width="15%" class="text-center">
+					已结算
+                </td>
+                <td width="15%" class="text-center opt">
+                    <a class="btn">查看明细</a>
+                </td>
+        	</tr>
+        	<tr>
+        		<td width="15%" class="text-center">
+        			11.20-11.30
+                </td>
+                <td width="15%" class="text-center">
+                    3000.00
+                </td>
+                <td width="15%" class="text-center">
+                    20.00
+                </td>
+                <td width="10%" class="text-center">
+                    10.00
+                </td>
+                <td width="15%" class="text-center">
+                    2960.00
+                </td>
+                <td width="15%" class="text-center">
+					已结算
+                </td>
+                <td width="15%" class="text-center opt">
+                    <a class="btn">查看明细</a>
+                </td>
+        	</tr>
+        	<tr>
+        		<td width="15%" class="text-center">
+        			11.20-11.30
+                </td>
+                <td width="15%" class="text-center">
+                    3000.00
+                </td>
+                <td width="15%" class="text-center">
+                    20.00
+                </td>
+                <td width="10%" class="text-center">
+                    10.00
+                </td>
+                <td width="15%" class="text-center">
+                    2960.00
+                </td>
+                <td width="15%" class="text-center">
+					已结算
+                </td>
+                <td width="15%" class="text-center opt">
+                    <a class="btn">查看明细</a>
+                </td>
+        	</tr>
+        <!-- foreach 结束 -->
+        </tbody>
+    </table>
+</div>

@@ -1,1 +1,100 @@
-<h1>安全中心</h1>
+<div class="content security-center">
+	<div class="page-header">
+		<h1>安全中心</h1>
+	</div>
+	<div class="main-content">
+		<div class="basic-info">
+			<div class="row">
+				<div class="col-xs-1">用户名:</div>
+				<div class="col-xs-3"><{$pam_data.freezeData.name}></div>
+				<div class="col-xs-2"><a href="<{link app=freeze ctl=site_account}>">修改用户名</a></div>
+			</div>
+			<div class="row">
+				<div class="col-xs-1">手机号码:</div>
+				<div class="col-xs-3"><{$pam_data.freezeData.mobile}></div>
+				<div class="col-xs-2"><a href="<{link app=freeze ctl=site_account}>">修改手机</a></div>
+			</div>
+			<div class="row">
+				<div class="col-xs-1">电子邮箱:</div>
+				<div class="col-xs-3"><{$pam_data.freezeData.email}></div>
+				<div class="col-xs-2"><a href="<{link app=freeze ctl=site_account}>">修改邮箱</a></div>
+			</div>
+		</div>
+        <div class="list-group-item ">
+            <div class="row">
+                <a href="<{link app=freeze ctl=site_passport act=logout}>" class="btn btn-xs btn-link"><i class="glyphicon glyphicon-chevron-right"></i> 注销</a>
+            </div>
+        </div>
+		<div class="list-group">
+		    <a class="list-group-item" href="<{link app=freeze ctl=site_account act=reset_password}>">
+		        <div class="row">
+		            <div class="col-xs-2 text-center">
+		                <h2 class="glyphicon glyphicon-lock"></h2>
+		                <p>重置密码</p>
+		            </div>
+		            <div class="col-xs-2 col-xs-offset-8 text-right">
+		                <h5>去重置密码</h5>
+		            </div>
+		        </div>
+		    </a>
+		</div>
+		<div class="list-group">
+		    <a class="list-group-item" href="<{link app=freeze ctl=site_account act=set_pam_mobile}>">
+		        <div class="row">
+		            <div class="col-xs-2 text-center">
+		                <h2 class="glyphicon glyphicon-phone"></h2>
+		                <p>绑定手机</p>
+		            </div>
+		            <div class="col-xs-8">
+
+                        <{if $pam_data.mobile.login_account}>
+                            <h3>已绑定手机 <{$pam_data.mobile.login_account}></h3>
+                            <{else}>
+                            <h3>还没有绑定手机</h3>
+                        <{/if}>
+		            	<!-- if 已经绑定 -->
+		            	<!-- <h3>已绑定手机 17867564556</h3> -->
+		            </div>
+		            <div class="col-xs-2 text-right">
+                        <{if !$pam_data.mobile.login_account}>
+                            <h5>去绑定手机</h5>
+                        <{/if}>
+		            </div>
+		        </div>
+		    </a>
+		</div>
+		<div class="list-group">
+		    <a class="list-group-item" href="">
+		        <div class="row">
+		            <div class="col-xs-2 text-center">
+		                <h2 class="glyphicon glyphicon-user"></h2>
+		                <p>身份认证</p>
+		            </div>
+		            <div class="col-xs-8">
+		            	<h3>还没有进行实名认证</h3>
+		            </div>
+		            <div class="col-xs-2 text-right">
+		                <h5>去认证</h5>
+		            </div>
+		        </div>
+		    </a>
+		</div>
+		<div class="list-group">
+		    <a class="list-group-item" href="">
+		        <div class="row">
+		            <div class="col-xs-2 text-center">
+		                <h2 class="glyphicon glyphicon-question-sign"></h2>
+		                <p>添加密保</p>
+		            </div>
+		            <div class="col-xs-8">
+		            	<h3>还没有设置密保问题</h3>
+		            </div>
+		            <div class="col-xs-2 text-right">
+		                <h5>添加密保问题</h5>
+		            </div>
+		        </div>
+		    </a>
+		</div>
+	</div>
+</div>
+

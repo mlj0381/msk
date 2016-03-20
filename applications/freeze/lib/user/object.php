@@ -13,6 +13,7 @@ class freeze_user_object{
         vmc::singleton('base_session')->start();
     }
 
+
     /**
      * 判断当前用户是否登录
      */
@@ -146,9 +147,25 @@ class freeze_user_object{
                 }
             }
         }//end foreach
-
         //$arr_colunms['login_account'] = $arr_colunms['local'];
         return $arr_colunms;
+    }
+
+    /**
+     * 获取当前登录账号(pam_members)表信息
+     */
+    public function _get_pam_type_data($columns='*',$type = 'local',$member_id){
+        if(!$member_id){
+            $member_id = $this->freeze_id;
+        }
+        $pam_members_model = app::get('pam')->model('freeze');
+        if(is_array($columns)){
+            $columns = implode(',',$columns);
+        }
+        $accountData = $pam_members_model->getRow($columns,array('freeze_id'=>$member_id,'login_type'=>$type));
+
+        //$arr_colunms['login_account'] = $arr_colunms['local'];
+        return $accountData;
     }
 
     public function get_pam_data($columns="*",$member_id){

@@ -36,17 +36,17 @@ class apicenter_interaction_members
      *   
      * @return false | array
      */
-    public function card_provide($post_data=array()){
+    public function card_provide(&$post_data=array()){
+        $action = array('ctl'=>'members','act'=>'card_provide');
         $post_url = $this->URL.'card_provide';
-
-        $post_data = array(
-            'siteCode'=>'102',
-            'auth'=>'',
-            'DateTime'=>'2016-03-15 18:00:00'
-            );
-        $data = $this->request->api_post($post_url,$post_data);
-        //var_dump($post_data,$data);exit;
-        return $data;
+        $post_data = array('siteCode'=>'1','auth'=>'1','loginId'=>1,'param'=>array('userID'=>'d','userName'=>'e'));
+        $param = $this->request->dbdata($action,$post_data);
+        if(is_array($param)){
+            $data = $this->request->api_post($post_url,$post_data);
+            var_dump($data,$post_data);exit;
+            return $data;
+        }
+        return false;
     }
 
     /**
@@ -62,15 +62,17 @@ class apicenter_interaction_members
      * @return false | array
      */
     public function msbasic($post_data=array()){
-        $post_url = $this->URL.'card_provide';
+        $post_url = 'msk-web/api/v1/by/account/register';//$this->URL.'msbasic';
 
         $post_data = array(
-            'siteCode'=>'102',
-            'auth'=>'',
-            'DateTime'=>'2016-03-15 18:00:00'
+            'siteCode' => 1,
+            'auth' => 'MSK00001',
+            'param' => array(
+                'telNo' => '1234567891'
+                )
             );
         $data = $this->request->api_post($post_url,$post_data);
-        //var_dump($post_data,$data);exit;
+        var_dump($post_data,$data);exit;
         return $data;
     }
 
@@ -90,7 +92,7 @@ class apicenter_interaction_members
      */
 
     public function msconsume($post_data=array()){
-        $post_url = $this->URL.'card_provide';
+        $post_url = $this->URL.'msconsume';
 
         $post_data = array(
             'siteCode'=>'102',

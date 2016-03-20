@@ -15,11 +15,16 @@
  */
 $db['buyers'] = array(
     'columns' => array(
+
     	'buyer_id' => array(
+
     		'type' => 'number',
     		'required' => true,
+
             'pkey' => true,
+
 			'extra' => 'auto_increment',
+            
     		'comment' => '买手店ID',
     	),
         'local' => array(

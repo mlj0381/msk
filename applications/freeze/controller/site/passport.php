@@ -103,9 +103,9 @@ class freeze_ctl_site_passport extends freeze_frontpage{
 
     }
 
-
-
-
+    /**
+     * 处理跳转页面
+     */
     public function set_forward(&$forward)
     {
         $params = $this->_request->get_params(true);
@@ -134,6 +134,40 @@ class freeze_ctl_site_passport extends freeze_frontpage{
 
         return false;
     }
+
+    /**
+     * 退出登录
+     */
+    public function logout($forward)
+    {
+        $this->unset_member();
+        if (!$forward) {
+            $forward = $this->gen_url(array(
+                'app' => 'site',
+                'ctl' => 'index',
+                'full' => 1,
+            ));
+        }
+        $this->splash('success', $forward, '退出登录成功');
+    }
+
+    private function unset_member()
+    {
+
+        $auth = pam_auth::instance(pam_account::get_account_type($this->app->app_id));
+        if(!$auth->type)
+        {
+            $auth->type = $this->app->app_id;
+        }
+        foreach (vmc::servicelist('passport') as $k => $passport) {
+            $passport->loginout($auth);
+        }
+
+    }
+
+
+
+
 }
 
 ?>

@@ -24,6 +24,23 @@ class freeze_frontpage extends site_controller
         $this->set_tmpl('freeze');
     }
 
+    public function is_complete_info()
+    {
+        $user_obj = vmc::singleton('freeze_user_object');
+        $data = $user_obj->get_members_data(array('freeze'=>'*'));
+        $data = $data['freeze'];
+        if(!$data['mobile'] && !$data['name'])
+        {
+            $redirect = $this->gen_url(array(
+                'app' => 'freeze',
+                'ctl' => 'site_account',
+                'act' => 'index',
+            ));
+
+            $this->splash('success', $redirect,'完善个人信息');
+        }
+    }
+
     /**
      * 检测用户是否登陆
      *

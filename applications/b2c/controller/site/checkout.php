@@ -17,21 +17,21 @@ class b2c_ctl_site_checkout extends b2c_frontpage
     {
         parent::__construct($app);
         $this->_response->set_header('Cache-Control', 'no-store');
-        $this->verify_member();
+        $this->buyer_id = vmc::singleton('buyer_user_object')->get_session();
+        $this->buyer_id || $this->verify_member();
         //$this->app->member_id  已赋值
         $this->cart_stage = vmc::singleton('b2c_cart_stage');
-        $this->cart_stage->set_member_id($this->app->member_id);
+        $this->cart_stage->set_member_id($this->buyer_id ?: $this->app->member_id);
         $this->set_tmpl('checkout');
     }
     //checkout 主页
-    public function index($fastbuy = false)
+    public function index($fastbuy = false, $params)
     {
         $blank_url = $this->gen_url(array(
             'app' => 'b2c',
             'ctl' => 'site_cart',
             'act' => 'blank',
         ));
-
         $filter = array();
         $member_id = $this->app->member_id;
 
@@ -48,14 +48,14 @@ class b2c_ctl_site_checkout extends b2c_frontpage
                 $this->splash('error', '', '购物车为空!');
             }
         }
-        foreach ($cart_result['objects']['goods'] as $key => $value) {
-            if($value['quantity'] > $value['item']['product']['price_interval']){
-                $count_price[$key] = $value['quantity'] * $value['item']['product']['price_up'];
-            }else{
-                $count_price[$key] = $value['quantity'] * $value['item']['product']['price_dn'];
-            }
-        }
-        
+//        foreach ($cart_result['objects']['goods'] as $key => $value) {
+//            if($value['quantity'] > $value['item']['product']['price_interval']){
+//                $count_price[$key] = $value['quantity'] * $value['item']['product']['price_up'];
+//            }else{
+//                $count_price[$key] = $value['quantity'] * $value['item']['product']['price_dn'];
+//            }
+//        }
+
         if(count($count_price) > 0){
             $cart_amount = array_sum($count_price);
             $cart_result['cart_amount'] = $cart_amount;
@@ -65,7 +65,6 @@ class b2c_ctl_site_checkout extends b2c_frontpage
             'member_id' => $member_id,
             'cart_result' => $cart_result,
         ));
-
         if ($fastbuy !== false) {
             $this->pagedata['is_fastbuy'] = 'is_fastbuy';
         }
@@ -79,6 +78,9 @@ class b2c_ctl_site_checkout extends b2c_frontpage
                 $available_coupons[$p['coupon_code']]['in_cart'] = 'true';
             }
         }
+        $this->pagedata['order_from'] = $params['buyer'];
+        $this->pagedata['manager'] = $params['manager'];
+        $this->pagedata['buyer_id'] = $this->buyer_id;
         $this->pagedata['my_coupons'] = $my_coupons;
         $this->pagedata['my_av_coupons'] = $available_coupons;
         $this->pagedata['receiving'] = $this->app->getConf('receiving_time');
@@ -89,7 +91,7 @@ class b2c_ctl_site_checkout extends b2c_frontpage
      */
     public function fastbuy()
     {
-        $this->index('is_fastbuy');
+        $this->index('is_fastbuy', $this->_request->get_get());
     }
 
     public function check($fastbuy = false)
@@ -265,5 +267,14 @@ class b2c_ctl_site_checkout extends b2c_frontpage
         $this->pagedata['order'] = $this->app->model('orders')->dump($bill['order_id']);
         //$this->set_tmpl('checkout');
         $this->page('site/checkout/payresult.html');
+    }
+
+
+
+
+    //新增订单提交页面
+    public function orderpay()
+    {
+        $this->page('site/checkout/new_orderpay.html');
     }
 }
