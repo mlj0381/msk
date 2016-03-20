@@ -36,6 +36,16 @@
         <menu app='buyer' controller='site_manager' action='feat' display='true' order="60">业绩查询</menu>
     </menugroup>
     
+    <menugroup label="客户服务" name="service">
+        <menu app='buyer' controller='site_service' action='cancel_goods' display='true' order="60">退货管理</menu>
+        <menu app='buyer' controller='site_service' action='refund' display='true' order="60">退款管理</menu>
+        <menu app='buyer' controller='site_service' action='customer' display='true' order="60">售后管理</menu>
+        <menu app='buyer' controller='site_service' action='out' display='true' order="60">违规处理</menu>
+        <menu app='buyer' controller='site_service' action='report' display='true' order="60">举报管理</menu>
+        <menu app='buyer' controller='site_service' action='consult' display='true' order="60">咨询回复</menu>
+ 
+    </menugroup>
+    
      <menugroup label="消息中心" name="message">
         <menu app='buyer' controller='site_message' action='index' display='true' order="60">站内信</menu>
         <menu app='buyer' controller='site_message' action='send_message' display='true' order="60">发送站内信</menu>

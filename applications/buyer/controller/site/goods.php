@@ -46,13 +46,20 @@ class buyer_ctl_site_goods extends buyer_frontpage{
 	 * 已购买商品(订单管理)
 	 */
 	public function stock($status = 'all', $page = 1){
+		$order_list = array(
+			0 => array(''),
+				
+				
+				
+		);
+		$this->pagedata['order_list'] = $order_list;
 		$this->pagedata['current_status'] = $status;
 		$this->pagedata['pager'] = array(
 				'current' => $page,
 				'link' => array(
-						'app' => 'seller',
-						'ctl' => 'site_order',
-						'act' => 'index',
+						'app' => 'buyer',
+						'ctl' => 'site_goods',
+						'act' => 'stock',
 						'args' => array(
 								$status,
 								($token = time()),
@@ -67,6 +74,41 @@ class buyer_ctl_site_goods extends buyer_frontpage{
 	 * 库存管理
 	 */
 	public function repertory(){
+		$this->output();
+	}
+	
+	
+	/**
+	 * 订单回收站
+	 */
+	public function stock_trash(){
+		$this->output();
+	}
+	
+	
+	/**
+	 * 删除订单
+	 * @param unknown $goods_id
+	 */
+	public function del($goods_id){
+		echo '订单号'.$goods_id;
+	}
+	
+	//////////////////走 b2c
+	/**
+	 * 去付款
+	 * @param unknown $goods_id
+	 */
+	public function payment($goods_id){
+		$this->output();
+	}
+	
+	//////////////////走 b2c
+	/**
+	 * 订单详情
+	 * @param unknown $goods_id
+	 */
+	public function detail($goods_id){
 		$this->output();
 	}
 	

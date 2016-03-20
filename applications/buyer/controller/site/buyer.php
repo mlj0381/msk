@@ -23,6 +23,7 @@ class buyer_ctl_site_buyer extends buyer_frontpage{
 	public function __construct(&$app){
 		parent::__construct($app);
 		$this->verify_buyer();
+		$this->buyer_id = vmc::singleton('buyer_user_object')->get_session();
 		//后面还需要什么............
 	}
 	
@@ -37,11 +38,28 @@ class buyer_ctl_site_buyer extends buyer_frontpage{
 	 * 买手店信息
 	 * 包括信息修改、绑定和保存
 	 */
-	public function buyer_info(){
+	public function buyer_info($action = false){
 		//用户名、手机号、邮箱、主销品类（选择的列表）
 		//负责人信息->姓名、手机号、邮箱、身份证、身份证照片、QQ、微信
 		//绑定手机号修改邮箱
+		
 		$this->menuSetting = 'account';
+		//$buyer_id = vmc::singleton('buyer_user_object')->get_session();
+		if ($action == 'update' and $_POST){
+			$redirect = $this->gen_url(array(
+					'app' => 'buyer',
+					'ctl' => 'site_buyer',
+					'act' => 'buyer_info',
+			));
+			$params = utils::_filter_input($_POST);
+			unset($_POST);
+			if ($this->app->model('buyers')->update($params, array('buyer_id' => $this->buyer_id))){
+				$this->splash('success', $redirect, '店铺信息更新成功！');
+			}else {
+				$this->splash('error', $redirect, '店铺信息更新失败！');
+			}	
+		}
+		$this->pagedata['buyer_info'] = $this->app->model('buyers')->getRow('*', array('buyer_id' => $this->buyer_id));	
 		$this->output();
 	}
 	
@@ -97,8 +115,30 @@ class buyer_ctl_site_buyer extends buyer_frontpage{
 	/**
 	 * 基本资料
 	 */
-	public function basic_info(){
+	public function basic_info($action = false){
 		$this->menuSetting = 'account';
+		//$buyer_id = vmc::singleton('buyer_user_object')->get_session();
+		if ($action == 'update' and $_POST){
+			$redirect = $this->gen_url(array(
+					'app' => 'buyer',
+					'ctl' => 'site_buyer',
+					'act' => 'basic_info',
+			));
+			$params = utils::_filter_input($_POST);
+			unset($_POST);
+			if(strlen($params['card_id']) != 18){
+				$this->splash('error', $redirect, '身份证填写错误！');
+			}
+			if (strlen((int)$params['qq']) < 5 and strlen((int)$params['qq'] >13)){
+				$this->splash('error', $redirect, 'QQ号格式或位数错误！');
+			}
+			if ($this->app->model('buyers')->update($params, array('buyer_id' => $this->buyer_id))){
+				$this->splash('success', $redirect, '基本信息更新成功！');
+			}else {
+				$this->splash('error', $redirect, '基本信息更新失败！');
+			}	
+		}
+		$this->pagedata['basic_info'] = $this->app->model('buyers')->getRow('*', array('buyer_id' => $this->buyer_id));
 		$this->output();
 	}
 	
@@ -108,6 +148,7 @@ class buyer_ctl_site_buyer extends buyer_frontpage{
 	 */
 	public function update_mobile(){
 		$this->menuSetting = 'account';
+		$this->pagedata['info'] = $this->app->model('buyers')->getRow('local,mobile', array('buyer_id' => $this->buyer_id));
 		$this->output();
 	}
 	
