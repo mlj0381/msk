@@ -23,10 +23,9 @@ class buyer_mdl_buyers extends dbeav_model{
 		if ($login_type){
 			$where['login_type']		=	$login_type;
 			$where['login_account']		=	$username;
-			$where['type']		=	1;
-			$date = app::get('pam')->model('sellers')->getRow('seller_id',$where);
+			$date = app::get('pam')->model('buyers')->getRow('buyer_id',$where);
 			if ($date){
-				$date['buyer_id'] = (int)$date['seller_id'];
+				$date['buyer_id'] = (int)$date['buyer_id'];
 				$date['login_account'] = $username;
 			}
 			return $date;
@@ -35,10 +34,11 @@ class buyer_mdl_buyers extends dbeav_model{
 	
 	//验证密码的
 	public function check_password($buyer_id, $password){
-		$mdl_pm_buyers = app::get('pam')->model('sellers');
-		$check_data = $mdl_pm_buyers->getRow('login_account,createtime,password_account,login_password',array('seller_id'=>$buyer_id));
+		$mdl_pm_buyers = app::get('pam')->model('buyers');
+		$check_data = $mdl_pm_buyers->getRow('login_account,createtime,password_account,login_password',array('buyer_id'=>$buyer_id));
 		$use_pass_data['login_name'] = $check_data['password_account'];
 		$use_pass_data['createtime'] = $check_data['createtime'];
+		
 		if ($check_data['login_password'] == pam_encrypt::get_encrypted_password($password, 'seller',$use_pass_data)){
 			return true;
 		}else {
@@ -73,10 +73,11 @@ class buyer_mdl_buyers extends dbeav_model{
 	 */
 	public function save_buyer_data($request){
 		//获取用户注册信息
-		$log_data = app::get('pam')->model('sellers')->getRow('login_account,login_type,createtime',array('seller_id'=>$request['buyer_id']));
+		$log_data = app::get('pam')->model('buyers')->getRow('login_account,login_type,createtime',array('buyer_id'=>$request['buyer_id']));
 		
 		//这个判断数据库表buyer_buyers是否存在buyer_id对应的记录
-		if ($this->app->model('buyers')->getRow('buyer_id',array('buyer_id'=>$request['buyer_id']))){
+		$schedule_type = $this->app->model('buyers')->getRow('schedule',array('buyer_id'=>$request['buyer_id']));
+		if ((int)$schedule_type['schedule'] == 2){
 			return false;
 		}
 		$request[$log_data['login_type']] = $log_data['login_account'];
@@ -84,9 +85,8 @@ class buyer_mdl_buyers extends dbeav_model{
 		$request['buyer_type'] = (int)$request['buyer_type'];
 		$request['area'] = $request['consignor']['area'];
 		$request['regtime'] = $request['createtime'] = $log_data['createtime'];
-		if ($this->app->model('buyers')->save($request)){
-			vmc::singleton('base_session')->start();
-			$_SESSION['account'] = NULL;
+		$request['schedule'] = '2';
+		if ($this->app->model('buyers')->update($request,array('buyer_id'=>$request['buyer_id']))){
 			$userdata = array(
 				'buyer_id' => $request['buyer_id'],
 				'login_account' => $log_data['login_account'],
@@ -135,8 +135,8 @@ class buyer_mdl_buyers extends dbeav_model{
 	}
 	
 	public function check_buyer($user_id){
-		$is_user = $this->app->model('buyers')->getRow('buyer_id',array('buyer_id'=>$user_id));
-		if ($is_user){
+		$is_user = $this->app->model('buyers')->getRow('schedule',array('buyer_id'=>$user_id));		
+		if ((int)$is_user['schedule'] == 2){
 			return $user_id;
 		}else {
 			return null;

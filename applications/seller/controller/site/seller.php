@@ -117,7 +117,14 @@ class seller_ctl_site_seller extends seller_frontpage {
         $this->pagedata['seller'] = $this->seller;
         $this->output();
     }
-
+    //手机绑定
+    public function set_pam_mobile() {
+        $this->page('site/seller/set_mobile.html');
+    }
+    //邮箱绑定
+    public function set_pam_email() {
+        $this->page('site/seller/set_email.html');
+    }
 
     //消息中心
     public function message() {

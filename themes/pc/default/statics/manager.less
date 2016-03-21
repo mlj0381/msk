@@ -63,22 +63,13 @@
 }
 
 //结算管理_明细
-.mem-check-nav{
-	margin-top: 15px;
-	li{
-		border:none;
-	}
-	li.active,li.active:hover{
-		a{
-			border:none;
-			border-bottom: 2px solid #a40001;
-			cursor: pointer;
-		}
-	}
-}
 .buyer-check{
 	margin-top: 20px;
+	.page-header{
+		margin-bottom: 5px;
+	}
 	table{
+		margin-top: 10px;
 		thead{
 			background-color: rgb(242, 242, 242);
 			tr{
@@ -152,26 +143,30 @@
 		}
 	}
 }
-
+.nav-tabs{
+	li{
+		border:none;
+		a{
+			font-size: 14px;
+			padding: 10px 20px;
+		}
+	}
+	li.active,li.active:hover{
+		a{
+			border:none;
+			border-bottom: 2px solid #a40001;
+			cursor: pointer;
+			color:#a40001;
+		}
+	}
+}
 //进货管理
 .pruchase-manage{
+	margin-top: 20px;
 	.page-header{
-		border:0;
-		margin-bottom: 10px;
-		padding:0;
+		margin-bottom: 5px;
 	}
 	.my-pruchase-nav{
-		margin-top: 15px;
-		li{
-			border:none;
-		}
-		li.active,li.active:hover{
-			a{
-				border:none;
-				border-bottom: 2px solid #a40001;
-				cursor: pointer;
-			}
-		}
 		.order-trash{
 			float: right !important;
 		}
@@ -185,7 +180,7 @@
 	}
 }
 .mem-pruchase-list{
-	margin-top: 10px;
+	margin-top: 20px;
 	.mo-list-head{
 		thead{
 			tr{
@@ -280,4 +275,339 @@
 			}
 		}
 	}
+}
+
+//买手店信息,基本信息
+.buyer_basicinfo{
+	margin-top: 20px;
+	.nav-tabs{
+		margin-top: 15px;
+		border-color:#a40001;
+		li{
+			border:none;
+			margin-bottom: 0;
+			a{
+				border:none;
+			}
+		}
+		li.active,li.active:hover{
+			a{
+				background-color:#a40001;
+				cursor: pointer;
+				color:#ffffff;
+				border:none;
+			}
+		}
+	}
+	.content{
+		margin-top: 20px;
+		#basicinfo_form,#buyerinfo_form{
+			padding:20px 0;
+			.form-group{
+				margin-bottom: 20px;
+			}
+		}
+		.head-imgbox{
+			width:100px;
+			height:100px;
+			line-height: 100px;
+			text-align: center;
+			img{
+				vertical-align: middle;
+				max-width: 100%;
+				max-height: 100%;
+			}
+		}
+		.edit-notice{
+			padding-left: 0;
+			padding-top: 35px;
+		}
+		.text-danger{
+			color:#a40001;
+		}
+		.bind-opt{
+			a{
+				border:none;
+				color:#2f973f;
+				text-decoration: underline;
+				padding:8px 12px;
+				font-size: 12px;
+			}
+		}
+		.sex-radio,.type-checkbox{
+			input{
+				margin-top: 2px;
+			}
+		}
+		.select-region{
+			select+select{
+				margin-left: 5px;
+			}
+		}
+		.upload-img{
+			padding:0px 15px;
+			cursor:pointer;
+			input{
+				display:inline-block;
+				width:90px;
+			}
+			span{
+				margin-left: -90px;
+				z-index: 2;
+				width:90px;
+			}
+		}
+		.submit-opt{
+			button{
+				width:100px;
+			}
+			button+button{
+				margin-left: 30px;
+			}
+		}
+		.sale-character{
+			textarea{
+				width:100%;
+				height:120px;
+				border-color: #ddd;
+				outline: none;
+			}
+		}
+	}
+}
+
+//更改手机号绑定
+.update_mobile{
+	margin-top: 20px;
+	form{
+		padding:10px 0;
+	}
+	.process-bar{
+		.col-xs-4{
+			.well{
+				text-align: center;
+				cursor:pointer;
+				font-size: 14px;
+			}
+		}
+		.col-xs-4.active{
+			.well{
+				background-color: #a40001;
+				color:#ffffff;
+			}
+		}
+	}
+	.form-group{
+		margin-bottom: 20px;
+	}
+	.submit-opt{
+		button{
+			width:100px;
+		}
+	}
+	.new-bind,.updatemobile-alert{
+		display:none;
+	}
+}
+//更改邮箱绑定
+.update_email{
+	margin-top: 20px;
+	#update_email_form{
+		padding:10px 0;
+		.form-group{
+			margin-bottom: 20px;
+		}
+		.submit-opt{
+			button{
+				width:100px;
+			}
+		}
+	}
+}
+
+//修改电子邮箱,密码成功,绑定手机,身份认证提示
+.editemail-alert,.editpass-alert,.editmobile-alert,.identauth-alert,.updatemobile-alert,.setsecquestion-alert{
+	.content{
+		margin-top: 20px;
+		padding:50px 0;
+		span{
+			font-size: 18px;
+			padding-left: 20px;
+		}
+		img{
+			border: 1px solid rgb(51, 204, 102);
+			border-radius: 50px;
+			padding:15px;
+		}
+	}
+}
+
+//绑定手机页面
+.bind_mobile{
+	margin-top: 20px;
+	#bind_mobile_form{
+		padding:10px 0;
+		.form-group{
+			margin-bottom: 20px;
+		}
+		.submit-opt{
+			button{
+				width:100px;
+			}
+		}
+	}
+}
+
+//修改密码
+.securitycenter_page{
+	margin-top: 20px;
+	#member_signup_form{
+		padding:10px 0;
+		.form-group{
+			margin-bottom: 20px;
+		}
+		.submit-opt{
+			button{
+				width:100px;
+			}
+		}
+	}
+}
+
+//身份认证
+.ident_auth{
+	margin-top: 20px;
+	#ident_auth_form{
+		padding:10px 0;
+		.form-group{
+			margin-bottom: 20px;
+		}
+		.submit-opt{
+			button{
+				width:100px;
+			}
+		}
+		.upload-idimg{
+			input{
+				line-height: 0;
+				border:0;
+			}
+		}
+	}
+}
+//添加密保
+.add_security{
+	margin-top: 20px;
+	form{
+		padding:10px 0;
+	}
+	.process-bar{
+		.col-xs-4{
+			.well{
+				text-align: center;
+				cursor:pointer;
+				font-size: 14px;
+			}
+		}
+		.col-xs-4.active{
+			.well{
+				background-color: #a40001;
+				color:#ffffff;
+			}
+		}
+	}
+	.form-group{
+		margin-bottom: 20px;
+	}
+	.submit-opt{
+		button{
+			width:100px;
+		}
+	}
+	.set-secquestion,.setsecquestion-alert{
+		display:none;
+	}
+}
+
+//站内信列表
+.inner-message{
+	margin-top: 20px;
+	.page-header{
+		position:relative;
+		.pull-right{
+			position: absolute;
+			right: 0;
+			top:0;
+			padding:2px 12px;
+		}
+	}
+	.list-group{
+		.list-group-item{
+			padding:15px !important;
+			background-color: rgb(242, 242, 242);
+			.row{
+				.col-xs-1{
+					h2{
+						margin-top: 15px;
+						color:#a40001;
+					}
+				}
+				.col-xs-3{
+					h4{
+						margin-top: 25px;
+						i{
+							display:none;
+							cursor:pointer;
+							padding: 5px 5px 5px 7px;
+						  	background-color:#ddd;
+						  	border-radius: 20px;
+						  	color:#ffffff;
+						}
+						i.active{
+							display:inline-block;
+						}
+					}
+				}
+			}
+			.logistics-state{
+				padding:10px;
+				display:none;
+			}
+		}
+	}
+}
+
+//发送站内信
+.send-innermsg{
+	margin-top: 20px;
+	form{
+		padding:20px 0;
+		.form-group{
+			margin-bottom: 20px;
+		}
+	}
+	.submit-opt{
+		button{
+			width:100px;
+		}
+		button+button{
+			margin-left: 30px;
+		}
+	}
+	.msg-content{
+		textarea{
+			width:100%;
+			height:120px;
+			border-color: #ddd;
+			outline: none;
+		}
+	}
+}
+
+//冻品管家注册
+.seller_regbox{
+	margin-top: 20px;
+}
+.feat-search{
+	margin-top: 20px;
 }

@@ -408,8 +408,11 @@ class b2c_ctl_site_passport extends b2c_frontpage
     {
         $account = $_POST['account'];
         $login_type = $this->passport_obj->get_login_account_type($account);
-        if ($login_type != 'mobile' && $login_type != 'email') {
-            $this->splash('error', null, '请输入正确的手机或邮箱!');
+        if ($login_type != 'email') {
+            $this->splash('error', null, '请输入正确的邮箱!');
+        }
+        if ($login_type != 'mobile') {
+            $this->splash('error', null, '请输入正确的手机!');
         }
         if (!$this->passport_obj->is_exists_mobile($account)) {
             $this->splash('error', null, '验证手机不正确!');
@@ -439,9 +442,10 @@ class b2c_ctl_site_passport extends b2c_frontpage
     {
         $email = $_POST['email'];
 
-        if (!$this->passport_obj->check_signup_account(trim($email), $msg)) {
-            $this->splash('error', null, $msg);
-        }
+//        if (!$this->passport_obj->check_signup_account(trim($email), $msg)) {
+//            $this->splash('error', null, $msg);
+//        }
+        $msg = $this->passport_obj->get_login_account_type($email);
         if ($msg != 'email') {
             $this->splash('error', null, '邮箱格式错误');
         }

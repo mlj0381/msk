@@ -46,6 +46,8 @@ class buyer_frontpage extends site_controller{
 		 */
 		define('BUYERID', vmc::singleton('buyer_user_object')->is_login());
 		if (!BUYERID){
+			$this->set_cookie('UNAME', '');
+			$this->set_cookie('SELLER_IDENT', '');
 			$login_url = $this->gen_url(array(
 					'app' => 'buyer',
 					'ctl' => 'site_passport',
@@ -134,8 +136,8 @@ class buyer_frontpage extends site_controller{
     	$menus = Array();
     	$count = count($tags);
     	$menuSetting = array(
-    			'index' => array('buyer', 'goods', 'manager'),
-    			'account' => array('account'),
+    			'index' => array('goods', 'manager', 'service'),
+    			'account' => array('buyer'),
     			'message' => array('message'),
     	);
     	$menu = $menuSetting[$this->menuSetting];

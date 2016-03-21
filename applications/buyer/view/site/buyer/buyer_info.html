@@ -1,1 +1,55 @@
-<h1>个人信息</h1>
+<!-- <h1>买手店信息</h1> -->
+<!-- <h1>基本信息</h1> -->
+<div class="buyer_basicinfo">
+	<ul class="nav nav-tabs">
+	   <li><a href="">基本信息</a></li>
+	   <li class="active"><a href="">买手店信息</a></li>
+	</ul>
+	<div class="content">
+		<form class="form-horizontal" id="buyerinfo_form"  action="<{link app=buyer ctl=site_buyer act=buyer_info arg0=update}>" method="post" enctype="multipart/form-data">
+			<div class="form-group">
+			    <label class="col-sm-2 control-label"><em class="text-danger">*</em> 店铺名称</label>
+			    <div class="col-sm-4">
+			      <input type="text" name="store_name" value="<{$buyer_info.store_name}>"  class="form-control">
+			    </div>
+		  	</div>
+		  	<div class="form-group select-region">
+			    <label class="col-sm-2 control-label">
+			    	<em class="text-danger">*</em> 店铺LOGO<br>
+			    </label>
+			    <div class="col-sm-6 row">
+			    	<div class="col-md-4">
+                    <div class="filebox">
+                        <input type="hidden" value='<{$buyer_info.store_logo}>' name="store_logo"/>
+                        <input type="file" data-url="<{link app=image ctl=site_upload act=index}>" accept="image/*" class="file_input" />
+                        <div class="showImg">
+                            <img src="<{if $buyer_info.store_logo eq ''}><{$base_url}>/themes/pc/default/statics/images/file_add.jpg<{else}><{$buyer_info.store_logo|storager:'xs'}><{/if}>">
+                        </div>
+                    </div>
+			    	</div>
+			    	<div class="col-md-8 edit-notice">
+						<small class="help-block">支持2M以内.jpg\.jpeg\.gif\.png 等图片格式文件</small>
+			    	</div>
+				</div>
+		  	</div>
+		  	<div class="form-group select-region">
+			    <label class="col-sm-2 control-label"><em class="text-danger">*</em> 主营区域</label>
+                <div class="col-sm-4">
+                    <{input type=region name="operate_area" id="maddr_region" value=$buyer_info.operate_area}><br>
+                </div>
+		  	</div>
+		  	<div class="form-group sale-character">
+			    <label class="col-sm-2 control-label"><em class="text-danger">*</em> 经营特色</label>
+			    <div class="col-sm-6">
+			      <textarea name="operate_feature"><{$buyer_info.operate_feature}></textarea>
+			    </div>
+		  	</div>
+		  	<div class="form-group submit-opt">
+			    <div class="col-sm-offset-2 col-sm-10">
+			      <button type="submit" class="btn btn-success">保存</button>
+			      <button type="reset" class="btn btn-default">取消</button>
+			    </div>
+		  	</div>
+		</form>
+	</div>
+</div>

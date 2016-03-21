@@ -4,15 +4,15 @@
     </div>
     <ul class="nav nav-tabs my-pruchase-nav">
         <li <{if !$current_status||$current_status=='all' }>class="active"
-            <{/if}>><a href="">全部订单</a></li>
+            <{/if}>><a href="<{link app=buyer ctl=site_goods act=stock}>">全部订单</a></li>
         <li <{if $current_status=='s1' }>class="active"
-            <{/if}>><a href="">待付款</a></li>
+            <{/if}>><a href="<{link app=buyer ctl=site_goods act=stock args0=s1}>">待付款</a></li>
         <li <{if $current_status=='s2' }>class="active"
-            <{/if}>><a href="">交易成功</a></li>
-        <li class="order-trash"><a href="">订单回收站</a></li>
+            <{/if}>><a href="<{link app=buyer ctl=site_goods act=stock args0=s2}>">交易成功</a></li>
+        <li class="order-trash"><a href="<{link app=buyer ctl=site_goods act=stock_trash}>">订单回收站</a></li>
     </ul>
     <div class="order-screening clearfix">
-        <form class="form-inline" action="<{link app=buyer ctl=site_goods act=index args0=$current_status}>" method="post">
+        <form class="form-inline" action="<{link app=buyer ctl=site_goods act=stock args0=$current_status}>" method="post">
           <div class="form-group">
             <input type="text" class="form-control" name="search" value="<{$search}>" placeholder="订单号/订单日期" >
           </div>
@@ -64,16 +64,13 @@
             <tr class="text-nowrap">
                 <th width="100%" colspan="4">
                     <ul class="list-inline">
-                    	<li>
-                    		<label><input type="checkbox"></label>
-                        </li>
                         <li>
                             <{$order.createtime|cdate}>
                         </li>
                         <li>订单编号:<a class="text-muted" href="<{link app=buyer ctl=site_goods act=detail args0=$order.order_id}>"><strong>2378237928736</strong></a></li>
                         <li><a class="text-muted" href="#">店铺AAA</a></li>
                         <li class="opt-contact"><a class="text-muted" href="#">联系客服</a></li>
-                        <li class="opt-delete"><a class="confirm" href="javascript:;" data-url="<{link app=b2c ctl=site_order act=del args0=$order.order_id}>">删除</a></li>
+                        <li class="opt-delete"><a class="confirm" href="javascript:;" data-url="<{link app=buyer ctl=site_goods act=del args0=$order.order_id}>">删除</a></li>
                     </ul>
                 </th>
             </tr>
@@ -180,8 +177,8 @@
                 <td width="10%" class="o-opt">
                     <div class="order_cz">
                             <!-- <a href="<{link app=b2c ctl=site_order act=detail args0=$order.order_id args1=logistics_tracker}>" class="btn_link btn-block">追踪物流</a> -->
-                            <a href="<{link app=buyer ctl=site_order act=detail args0=$order.order_id}>" class="btn btn-danger">去付款</a>
-                            <a href="<{link app=buyer ctl=site_order act=detail args0=$order.order_id}>" class="btn btn_link btn-default">订单详情</a>
+                            <a href="<{link app=b2c ctl=site_checkout act=payment args0=$order.order_id}>" class="btn btn-danger">去付款</a>
+                            <a href="<{link app=buyer ctl=site_goods act=detail args0=$order.order_id}>" class="btn btn_link btn-default">订单详情</a>
                     </div>
                 </td>
             </tr>
@@ -194,16 +191,13 @@
             <tr class="text-nowrap">
                 <th width="100%" colspan="4">
                     <ul class="list-inline">
-                    	<li>
-                    		<label><input type="checkbox"></label>
-                        </li>
                         <li>
                             <{$order.createtime|cdate}>
                         </li>
                         <li>订单编号:<a class="text-muted" href="<{link app=buyer ctl=site_goods act=detail args0=$order.order_id}>"><strong>2378237928736</strong></a></li>
                         <li><a class="text-muted" href="#">店铺AAA</a></li>
                         <li class="opt-contact"><a class="text-muted" href="#">联系客服</a></li>
-                        <li class="opt-delete"><a class="confirm" href="javascript:;" data-url="<{link app=b2c ctl=site_order act=del args0=$order.order_id}>">删除</a></li>
+                        <li class="opt-delete"><a class="confirm" href="javascript:;" data-url="<{link app=buyer ctl=site_goods act=del args0=$order.order_id}>">删除</a></li>
                     </ul>
                 </th>
             </tr>

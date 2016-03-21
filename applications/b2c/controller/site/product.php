@@ -24,7 +24,7 @@ class b2c_ctl_site_product extends b2c_frontpage {
         }
     }
 
-    public function index() {
+    public function index($typ) {
         //获取参数 货品ID
         $params = $this->_request->get_params();
         //调用接口 2015/12/9
@@ -35,6 +35,7 @@ class b2c_ctl_site_product extends b2c_frontpage {
             vmc::singleton('site_router')->http_status(404);
             $this->splash('error', null, $msg);
         }
+        $this->pagedata['buyer_id'] = vmc::singleton('buyer_user_object')->get_session();
         $this->pagedata['data_detail'] = $data_detail;
         $this->pagedata['store_id'] = $params[1];
         $store_obj = vmc::singleton('store_store_object');
@@ -44,7 +45,7 @@ class b2c_ctl_site_product extends b2c_frontpage {
             //设置模板页
             $this->set_tmpl_file($data_detail['goods_setting']['site_template']);
         }
-
+        $this->pagedata['from_type'] = $this->_request->get_get();//买手或是冻品管家分销
         $this->pagedata['buy_items'] = $this->_buy_items($data_detail['goods_id']);
         $this->pagedata['goods_path'] = $this->app->model('goods')->getPath($data_detail['goods_id']);
 

@@ -11,6 +11,8 @@
 </div>
 <form action="<{link app=b2c ctl=site_order act=create args0=$is_fastbuy}>" class="checkout-container" data-module="validator">
     <input type="hidden" name="cart_md5" value="<{$cart_md5}>">
+    <input type="hidden" name="identity_from" value="<{$order_from}>">
+    <input type="hidden" name="buy_manager" value="<{$manager}>">
     <input type="hidden" name="store_id" value="<{$cart_result.objects.goods[0].store_info.store_id}>">
     <!-- checkout-container begin -->
     <div data-flowindex=0 class="panel <{if !$member_addrs}>panel-warning<{else}>panel-default<{/if}> checkout-maddr ">
@@ -323,7 +325,7 @@
                     <span class="text-danger"><small>￥</small><strong data-bind="total/order_total"><{$total.order_total|cur}></strong></span>
                 </span>&nbsp;&nbsp;&nbsp;&nbsp;
                 <button type="submit" class="btn btn-danger btn-lg">提交订单</button>
-
+                <a href="<{link app=b2c ctl=site_checkout act=orderpay}>" class="btn btn-danger btn-lg">新增页面入口</a>
             </div>
         </div>
     </div>

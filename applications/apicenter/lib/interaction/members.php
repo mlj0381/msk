@@ -26,80 +26,62 @@ class apicenter_interaction_members
     /**
      * 会员发卡
      *
-     * @param siteCode Integer Y 例如：平台区分：1神农客平台；2美侍客平台；3大促会平台
-     * @param auth     String  Y 分配给各个平台的身份识别码   MSK00001
-     * @param loginId  String    登陆的用户ID msk01
-     * @param param    Object    业务参数
-     *        ->   
-     * @param   userID   String  Y 买家用户登录ID    
-     * @param   userName String  Y 买家用户名称 
-     *   
+     * @param post_data array
      * @return false | array
      */
-    public function card_provide($post_data=array()){
+    public function card_provide(&$post_data=array()){
+        $action = array('ctl'=>'members','act'=>'card_provide');
         $post_url = $this->URL.'card_provide';
-
-        $post_data = array(
-            'siteCode'=>'102',
-            'auth'=>'',
-            'DateTime'=>'2016-03-15 18:00:00'
-            );
-        $data = $this->request->api_post($post_url,$post_data);
-        //var_dump($post_data,$data);exit;
-        return $data;
+        // $post_data = array(
+        //     'siteCode'=>'1',
+        //     'auth'=>'1',
+        //     'loginId'=>1,
+        //     'param'=>array(
+        //         'userID'=>'d',
+        //         'userName'=>'e'
+        //         )
+        //     );
+        $param = $this->request->dbdata($action,$post_data);
+        if(is_array($param)){
+            $data = $this->request->api_post($post_url,$post_data);
+            return $data;
+        }
+        return false;
     }
 
     /**
      * 会员卡基本信息查询接口
      *
-     * @param siteCode  Integer  Y   例如：平台区分：1：神农客平台；2：美侍客平台；3：大促会平台 1
-     * @param auth      String   Y   分配给各个平台的身份识别码   MSK00001
-     * @param loginId   String          登陆的用户ID msk01
-     * @param param     Object          业务参数
-     *        ->
-     * @param   userID    String     Y   查询用户的用户ID
-     *   
+     * @param post_data array
      * @return false | array
      */
     public function msbasic($post_data=array()){
-        $post_url = $this->URL.'card_provide';
-
-        $post_data = array(
-            'siteCode'=>'102',
-            'auth'=>'',
-            'DateTime'=>'2016-03-15 18:00:00'
-            );
-        $data = $this->request->api_post($post_url,$post_data);
-        //var_dump($post_data,$data);exit;
-        return $data;
+        $action = array('ctl'=>'members','act'=>'msbasic');
+        $post_url = $this->URL.'msbasic';
+        $param = $this->request->dbdata($action,$post_data);
+        if(is_array($param)){
+            $data = $this->request->api_post($post_url,$post_data);
+            return $data;
+        }
+        return false;
     }
 
     /**
      * 会员卡基本信息查询接口
      *
-     * @param siteCode Integer     Y   例如：平台区分：1：神农客平台；2：美侍客平台；3：大促会平台 1
-     * @param auth    String      Y   分配给各个平台的身份识别码   MSK00001
-     * @param loginId String          登陆的用户ID msk01
-     * @param param   Object          业务参数
-     *        ->
-     * @param   userID    String      Y   查询用户的用户ID   
-     * @param   startDate     Datetime        Y   查询开始日期  
-     * @param   endDate   Datetime        Y   查询结束日期
-     *        
+     * @param msconsume array
      * @return false | array
      */
 
-    public function msconsume($post_data=array()){
-        $post_url = $this->URL.'card_provide';
-
-        $post_data = array(
-            'siteCode'=>'102',
-            'auth'=>'',
-            'DateTime'=>'2016-03-15 18:00:00'
-            );
-        $data = $this->request->api_post($post_url,$post_data);
-        //var_dump($post_data,$data);exit;
-        return $data;
+    public function msconsume($msconsume=array()){
+        $action = array('ctl'=>'members','act'=>'msconsume');
+        $post_url = $this->URL.'msconsume';
+        $param = $this->request->dbdata($action,$post_data);
+        if(is_array($param)){
+            $data = $this->request->api_post($post_url,$post_data);
+            return $data;
+        }
+        return false;
     }
 
 }

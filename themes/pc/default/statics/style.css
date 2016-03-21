@@ -178,19 +178,26 @@ ol {
   height: 24px;
   line-height: 24px;
 }
-.glist-container .goods-listbox .goods-item .caption .g-ctl a {
+.glist-container .goods-listbox .goods-item .caption .g-ctl a,
+.glist-container .goods-listbox .goods-item .caption .g-ctl button {
   color: #666;
   cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
 }
-.glist-container .goods-listbox .goods-item .caption .g-ctl a i {
+.glist-container .goods-listbox .goods-item .caption .g-ctl a i,
+.glist-container .goods-listbox .goods-item .caption .g-ctl button i {
   color: #ed3326;
   display: inline-block;
   margin-right: 5px;
 }
-.glist-container .goods-listbox .goods-item .caption .g-ctl a.add_cart {
+.glist-container .goods-listbox .goods-item .caption .g-ctl .add_cart {
   position: relative;
+  background: none;
+  border: none;
 }
-.glist-container .goods-listbox .goods-item .caption .g-ctl a.add_cart em {
+.glist-container .goods-listbox .goods-item .caption .g-ctl .add_cart em {
   position: absolute;
   font-size: 24px;
 }
@@ -382,6 +389,11 @@ ol {
 .product-container .product-page .product_firstRow .pref_info .pref_table table td.num-price {
   color: #c13e2c;
   font-size: 18px;
+  font-weight: bold;
+}
+.product-container .product-page .product_firstRow .pref_info .pref_table table td.discount {
+  color: #c13e2c;
+  font-size: 16px;
   font-weight: bold;
 }
 .product-container .product-page .product_firstRow .pref_info p {

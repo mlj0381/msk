@@ -42,7 +42,7 @@ class buyer_ctl_site_passport extends buyer_frontpage{
 		 * $is_login = $this->passport_obj->is_login();
 		 */
 		$is_login = $this->object_obj->is_login();
-		if (0 < $is_login['account']['seller']){
+		if (0 < $is_login){
             $redirect = $this->gen_url(array(
                 'app' => 'buyer',
                 'ctl' => 'site_buyer',
@@ -56,7 +56,7 @@ class buyer_ctl_site_passport extends buyer_frontpage{
 	/**
 	 * 登陆页面
 	 */
-	public function login(){	
+	public function login(){
 		$this->check_login();
 
 		if ($_POST){
@@ -107,7 +107,12 @@ class buyer_ctl_site_passport extends buyer_frontpage{
 		}else {
 			vmc::singleton('base_session')->start();
 			if ($this->object_obj->get_session()){
-				$this->splash('error', '', '已经是登录状态！');
+				$redirect = $this->gen_url(array(
+						'app' => 'buyer',
+						'ctl' => 'site_buyer',
+						'act' => 'index',
+				));
+				$this->splash('success', $redirect, '已经是登录状态！');
 			}else {
 				$this->set_tmpl('passport');
 				$this->page('site/passport/login.html');
@@ -170,8 +175,14 @@ class buyer_ctl_site_passport extends buyer_frontpage{
 				$this->page('site/passport/signup_baseInfo.html');
 			}			
 		}else {
-			$this->pagedata['show'] = 'yes';
-			$this->page('site/passport/signup.html');
+// 			$this->pagedata['show'] = 'yes';
+// 			$this->page('site/passport/signup.html');
+			$redirect = $this->gen_url(array(
+					'app' => 'b2c',
+					'ctl' => 'site_index',
+					'act' => 'index',
+			));
+			$this->splash('error', $redirect, '无效操作');
 		}
 		        
 	}

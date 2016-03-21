@@ -28,7 +28,20 @@ class buyer_ctl_site_accounts extends buyer_frontpage{
 	/**
 	 * 结算管理（list）
 	 */
-	public function index(){
+	public function index($status = 'all', $page = 1){
+		$this->pagedata['current_status'] = $status;
+		$this->pagedata['pager'] = array(
+				'current' => $page,
+				'link' => array(
+						'app' => 'buyer',
+						'ctl' => 'site_accounts',
+						'act' => 'index',
+						'args' => array(
+								$status,
+								($token = time()),
+						),
+				),
+		);
 		$this->output();
 	}
 	

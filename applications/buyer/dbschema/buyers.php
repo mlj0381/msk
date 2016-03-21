@@ -15,12 +15,17 @@
  */
 $db['buyers'] = array(
     'columns' => array(
+
     	'buyer_id' => array(
+
     		'type' => 'number',
     		'required' => true,
-    		'pkey' => true,
+
+            'pkey' => true,
+
+			'extra' => 'auto_increment',
+            
     		'comment' => '买手店ID',
-    			
     	),
         'local' => array(
             'type' => 'varchar(50)',
@@ -189,11 +194,10 @@ $db['buyers'] = array(
         ),
     ),
     'index' => array(
-    	'uni_mobile' => array(
+    	'ind_mobile' => array(
     		'columns' => array(
     			0 => 'mobile',
     		),
-    		'prefix' => 'UNIQUE',
     	),
     	'ind_local' => array(
     		'columns' => array(

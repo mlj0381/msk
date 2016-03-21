@@ -210,17 +210,22 @@ ul,ol{
 				.g-ctl{
 					height:24px;
 					line-height: 24px;
-					a{
+					a,button{
 						color:#666;
 						cursor: pointer;
+						background: none;
+						border:none;
+						padding:0;
 						i{
 							color:#ed3326;
 							display: inline-block;
 							margin-right:5px;
 						}
 					}
-					a.add_cart{
+					.add_cart{
 						position: relative;
+						background: none;
+						border:none;
 						em{
 							position: absolute;
 							font-size: 24px;
@@ -436,6 +441,11 @@ ul,ol{
 							&.num-price{
 								color:#c13e2c;
 								font-size: 18px;
+								font-weight: bold;
+							}
+							&.discount{
+								color:#c13e2c;
+								font-size: 16px;
 								font-weight: bold;
 							}
 						}
@@ -1166,6 +1176,8 @@ ul,ol{
 	}
 	
 }
+
+
 
 
 //END 会员注册页面

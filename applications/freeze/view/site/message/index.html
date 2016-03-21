@@ -1,0 +1,70 @@
+<div class="content message-center">
+	<div class="page-header">
+		<h1>我的消息中心</h1>
+		<!-- <a class="btn btn-default pull-right" href="">
+		    发送站内信
+		</a> -->
+	</div>
+	<!-- foreach站内信开始 -->
+	<div class="list-group">
+	    <a class="list-group-item">
+	        <div class="row">
+	            <div class="col-xs-1 text-center">
+	                <h2 class="glyphicon glyphicon-envelope"></h2>
+	            </div>
+	            <div class="col-xs-8">
+	                <h4>您的订单已发货</h4>
+	                <p>您的订单已于今天下午14:30分由上海浦东发出</p>
+	            </div>
+	            <div class="col-xs-3 text-right">
+	                <h4>
+	                	<i class="glyphicon glyphicon-chevron-down show_state active"></i>
+	                	<i class="glyphicon glyphicon-chevron-up hide_state"></i>
+	                </h4>
+	            </div>
+	        </div>
+	    	<div class="logistics-state">
+	    		物流信息区域
+	    	</div>
+	    </a>
+	</div>
+	<div class="list-group">
+	    <a class="list-group-item">
+	        <div class="row">
+	            <div class="col-xs-1 text-center">
+	                <h2 class="glyphicon glyphicon-envelope"></h2>
+	            </div>
+	            <div class="col-xs-8">
+	                <h4>您的订单已发货</h4>
+	                <p>您的订单已于今天下午14:30分由上海浦东发出</p>
+	            </div>
+	            <div class="col-xs-3 text-right">
+	                <h4>
+	                	<i class="glyphicon glyphicon-chevron-down show_state active"></i>
+	                	<i class="glyphicon glyphicon-chevron-up hide_state"></i>
+	                </h4>
+	            </div>
+	        </div>
+	    	<div class="logistics-state">
+	    		物流信息区域
+	    	</div>
+	    </a>
+	</div>
+	<!-- foreach站内信结束 -->
+
+</div>
+<script type="text/javascript">
+	(function(){
+		$('.list-group').find('.show_state').on('click', function() {
+			$(this).parents('.list-group').find('.logistics-state').slideDown('fast');
+			$(this).removeClass('active')
+			$(this).parents('.list-group').find('.hide_state').addClass('active')
+		});
+		$('.list-group').find('.hide_state').on('click', function() {
+			$(this).parents('.list-group').find('.logistics-state').slideUp('fast');
+			$(this).removeClass('active')
+			$(this).parents('.list-group').find('.show_state').addClass('active')
+		});
+	})();
+</script>
+

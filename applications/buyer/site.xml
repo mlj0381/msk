@@ -1,7 +1,7 @@
 <site>
 	<module controller='site_passport' id="buyer">
 		<name>buyerpassport</name>
-		<title>买手店</title>
+		<title>买手店验证</title>
 		<disable>false</disable>
 	</module>
 	
@@ -27,6 +27,18 @@
 	<module controller='site_accounts' id="buyer">
 		<name>buyeraccounts</name>
 		<title>结算管理</title>
+		<disable>false</disable>
+	</module>
+	
+	<module controller='site_message' id="buyer">
+		<name>buyermessage</name>
+		<title>消息中心</title>
+		<disable>false</disable>
+	</module>
+	
+	<module controller='site_service' id="buyer">
+		<name>buyerservice</name>
+		<title>客户服务</title>
 		<disable>false</disable>
 	</module>
 

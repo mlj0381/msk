@@ -1,0 +1,77 @@
+<div class="buyer-list">
+    <div class="page-header">
+        <h1>我的买家列表</h1>
+    </div>
+    <ul class="nav nav-tabs mem-check-nav">
+        <li <{if $current_status =='all'}>class="active"<{/if}>><a href="<{link app=freeze ctl=site_center act=buyer_list }>">全部</a></li>
+        <li <{if $current_status =='1'}>class="active"<{/if}>><a href="<{link app=freeze ctl=site_center act=buyer_list arg0=1}>">已绑定买家</a></li>
+        <li <{if $current_status =='0'}>class="active"<{/if}>><a href="<{link app=freeze ctl=site_center act=buyer_list arg0=0}>">待确认买家</a></li>
+    </ul>
+	<table class="table mo-list-head">
+        <thead>
+            <tr class="text-nowrap">
+                <th width="30%" class="text-center">
+                    企业名称
+                </th>
+                <th width="15%" class="text-center">
+                    主营品类
+                </th>
+                <th width="15%" class="text-center">
+                    联系方式
+                </th>
+                <th width="15%" class="text-center">
+                    营业地址
+                </th>
+                <th width="10%" class="text-center">
+                    状态
+                </th>
+                <th width="15%" class="text-center">
+                    操作
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+        <!-- foreach 开始 -->
+        <{foreach from=$list item=v}>
+        <tr>
+            <td width="30%" class="buyer-info">
+                <div class="row">
+                    <div class="col-xs-5 buyer-head"><img src="<{$v.avatar|storager:s}>"></div>
+                    <div class="col-xs-7 buyer-name"><{$company[$v.member_id].name}></div>
+                </div>
+            </td>
+            <td width="15%" class="text-center">
+                <{$cat[$v.member_id].cat_name}>
+            </td>
+            <td width="15%" class="text-center">
+                <{$v.mobile}>
+            </td>
+            <td width="10%" class="text-center">
+                <{$company[$v.member_id].area|region}> <{$company[$v.member_id].address}>
+            </td>
+            <td width="10%" class="text-center">
+                <{if $v.status == '0'}>
+                    申请绑定
+                <{elseif $v.status == 1}>
+                    已绑定
+                <{elseif $v.status == 2}>
+                    拒绝绑定
+                <{elseif $v.status == 3}>
+                    已解除绑定
+                <{else}>
+                    未绑定
+                <{/if}>
+            </td>
+            <td width="15%" class="text-center opt">
+                <{if !$v.status && $v.status != '0'}>
+                    <a href="<{link app=freeze ctl=site_center act=apply_bind  arg0=$v.member_id arg1=1}>" class="btn btn-danger">申请绑定</a>
+                <{/if}>
+            </td>
+        </tr>
+        <{/foreach}>
+
+        <!-- foreach 结束 -->
+        </tbody>
+    </table>
+</div>
+<{pagers data=$pager}>

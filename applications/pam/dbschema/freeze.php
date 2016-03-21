@@ -29,6 +29,7 @@ $db['freeze'] = array(
             'comment' => '登录账号',
         ),
         'login_type' => array(
+            'pkey' => true,
             'type' => array(
                 'local' => '用户名',
                 'mobile' => '手机号码',

@@ -7,8 +7,61 @@ class freeze_user_passport {
 
     public function __construct(&$app) {
         $this->app = $app;
-        $this->user_obj = vmc::singleton('b2c_user_object');
+        $this->user_obj = vmc::singleton('freeze_user_object');
         vmc::singleton('base_session')->start();
+    }
+    /*
+     * 检查注册账号合法性
+     * */
+
+    public function check_signup_account($login_name, &$msg) {
+        if (empty($login_name)) {
+            $msg = ('请输入用户名');
+            return false;
+        }
+        //获取到注册时账号类型
+        $login_type = $this->get_login_account_type($login_name);
+        switch ($login_type) {
+            case 'local':
+                if (strlen(trim($login_name)) < 6) {
+                    $msg = $this->app->_('登录账号最少6个字符');
+
+                    return false;
+                } elseif (strlen($login_name) > 18) {
+                    $msg = $this->app->_('登录账号过长，请换一个重试');
+                }
+                if (is_numeric($login_name) && !preg_match('/^1[3578]\d{9}$/', $login_name)) {
+                    $msg = $this->app->_('请填写正确的手机号码');
+                    return false;
+                }
+                if (!preg_match('/^[^\x00-\x2d^\x2f^\x3a-\x3f]+$/i', trim($login_name))) {
+                    $msg = $this->app->_('该登录账号包含非法字符');
+
+                    return false;
+                }
+                $exists_msg = $this->app->_('用户名' . $login_name . '已经被占用，请换一个重试');
+                break;
+            case 'email':
+                if (!preg_match('/^(?:[a-z\d]+[_\-\+\.]?)*[a-z\d]+@(?:([a-z\d]+\-?)*[a-z\d]+\.)+([a-z]{2,})+$/i', trim($login_name))) {
+                    $msg = $this->app->_('邮件格式不正确');
+
+                    return false;
+                }
+                $exists_msg = $this->app->_('该邮箱已被注册，请更换一个');
+                break;
+            case 'mobile':
+                $exists_msg = $this->app->_('该手机号已被注册，请更换一个');
+                break;
+        }
+        //判断账号是否存在
+        if ($this->is_exists_login_name($login_name)) {
+            $msg = $exists_msg;
+
+            return false;
+        }
+        $msg = $login_type;
+
+        return true;
     }
 
     /*
@@ -117,8 +170,6 @@ class freeze_user_passport {
         return true;
     }
 
-//end function
-
     /**
      * 注册pam_members 表数据结构.
      */
@@ -140,8 +191,6 @@ class freeze_user_passport {
 
         return $account;
     }
-
-
 
     //获取会员注册项加载
     public function get_signup_attr($member_id = null) {
@@ -227,27 +276,24 @@ class freeze_user_passport {
         return $attr;
     }
 
-//end function
-
     /*
      * 保存会员信息members表和注册扩展项数据
      *
      * */
-
     public function save_members($saveData, &$msg) {
         $freeze_model = $this->app->model('freeze');
-        $db = vmc::database();
-        $db->beginTransaction();
+//        $db = vmc::database();
+//        $db->beginTransaction();
         if ($freeze_model->save($saveData['freeze'])) {
             $freeze_id = $saveData['freeze']['freeze_id'];
             $saveData['pam_account']['freeze_id'] = $freeze_id;
             if (!app::get('pam')->model('freeze')->save($saveData['pam_account'])) {
-                $db->rollBack();
+//                $db->rollBack();
                 $msg = '账户数据保存异常!';
 
                 return false;
             }
-            $db->commit();
+//            $db->commit();
         } else {
             $msg = '保存失败!';
 
@@ -256,5 +302,87 @@ class freeze_user_passport {
 
         return $freeze_id;
     }
+
+    //设置绑定手机号
+    public function set_mobile($mobile, &$msg) {
+        $member_id = $this->user_obj->get_member_id();
+        if (!$member_id) {
+            $msg = ('页面已过期，请重新登录，到管家中心中心设置');
+
+            return false;
+        }
+        $membersData = $this->user_obj->get_pam_data('*', $member_id);
+        if ($membersData['mobile']) {
+            $msg = ('手机号已设置，不可更改');
+
+            return false;
+        }
+        if (!$this->check_signup_account($mobile, $msg)) {
+            return false;
+        }
+        if ($msg != 'mobile') {
+            $msg = '错误的手机号!';
+
+            return false;
+        }
+
+        $pamMembersModel = app::get('pam')->model('freeze');
+        $row = $pamMembersModel->getList('login_account,login_password,password_account,createtime', array(
+            'freeze_id' => $member_id,
+        ));
+        $row = $row[0];
+        $data['freeze_id'] = $member_id;
+        $data['login_account'] = $mobile;
+        $data['login_type'] = 'mobile';
+        $data['login_password'] = $row['login_password'];
+        $data['password_account'] = $row['password_account'];
+        $data['createtime'] = $row['createtime'];
+        if ($pamMembersModel->insert($data)) {
+            $msg = ('手机号设置成功');
+
+            return true;
+        } else {
+            $msg = ('手机号设置失败');
+
+            return false;
+        }
+    }
+
+    /*
+     * 根据会员ID 修改用户密码
+     * */
+
+    public function reset_password($member_id, $password) {
+        return $this->reset_passport($member_id, $password);
+    }
+
+    public function reset_passport($member_id, $password) {
+        $pamMembersModel = app::get('pam')->model('freeze');
+        $pamData = $pamMembersModel->getList('login_account,password_account,createtime', array(
+            'freeze_id' => $member_id,
+        ));
+        $db = vmc::database();
+        $db->beginTransaction();
+        foreach ($pamData as $row) {
+            $use_pass_data['login_name'] = $row['password_account'];
+            $use_pass_data['createtime'] = $row['createtime'];
+            $login_password = pam_encrypt::get_encrypted_password(trim($password), 'member', $use_pass_data);
+            if (!$pamMembersModel->update(array(
+                'login_password' => $login_password,
+            ), array(
+                'login_account' => $row['login_account'],
+            ))) {
+                $db->rollBack();
+
+                return false;
+            }
+        }
+        $db->commit();
+
+        return true;
+    }
+
+
+
 
 }

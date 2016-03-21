@@ -38,8 +38,10 @@ class b2c_ctl_site_list extends b2c_frontpage
         return $cat;
     }
 
+
     public function index($fix_brand = false)
     {
+        var_dump();
         $params = utils::_filter_input($_GET);
         //属性查找面包屑组合
         $search_info = $this->objSearch->init_crumbs($params);
@@ -97,7 +99,7 @@ class b2c_ctl_site_list extends b2c_frontpage
             }
             $page = 'index';
         }
-
+        $this->pagedata['buyer_id'] = vmc::singleton('buyer_user_object')->get_session();
         $this->pagedata['pager']['link'] = $this->gen_url(array(
                 'app' => 'b2c',
                 'ctl' => 'site_list',

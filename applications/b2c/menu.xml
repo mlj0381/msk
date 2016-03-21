@@ -20,6 +20,8 @@
 
         <!-- <menu app='b2c' controller='site_member' action='index' display='true' order="60">多鲜乐会员</menu> -->
         <menu app='site' controller='index' action='build' display='true' order="60">多鲜乐会员</menu>
+
+        <menu app='b2c' controller='site_member' action='freeze' display='true' order="60">我的冻品管家</menu>
     </menugroup>
 
     <menugroup name="setting" label="帐户设置">

@@ -55,11 +55,6 @@
                         <li>总成交量<span><{$data_detail.buy_count|default:0}><small>笔</small></span></li>
                         <li>累计评价<span><{$data_detail.comment_count|default:0}><small>条</small></span></li>
                         <li>
-                            <!-- <i class="icon-star"></i>
-                            <i class="icon-star"></i>
-                            <i class="icon-star"></i>
-                            <i class="icon-star"></i>
-                            <i class="icon-star-empty"></i> -->
                             <{*$data_detail.mark_star|star*}>
                         </li>
                     </ul>
@@ -111,15 +106,22 @@
                                 <tr>
                                     <th>起批量</th>
                                     <th>销售价格</th>
+                                    <{if $buyer_id && $data_detail.agent eq '1'}>
+                                    <th>折扣率</th>
+                                    <{/if}>
                                 </tr>
                             </thead>
                             <tbody class="interval">
                             <{foreach from=$data_detail.product.interval key=key item=item}>
                                 <tr>
-                                <td>
-                                    <span class="num-dn"><{$item.num_dn|default:1}></span>-
-                                    <span class="num-up"><{$item.num_up|default:不限}></span></td>
+                                    <td>
+                                        <span class="num-dn"><{$item.num_dn|default:1}></span>-
+                                        <span class="num-up"><{$item.num_up|default:不限}></span>
+                                    </td>
                                     <td class="num-price">￥ <span><{$item.price|cur}></span></td>
+                                    <{if $buyer_id && $data_detail.agent eq '1'}>
+                                    <td class="discount"><span class="text-danger"><{$item.discount}>%</span></td>
+                                    <{/if}>
                                 </tr>
                             <{/foreach}>
                             </tbody>
@@ -149,8 +151,14 @@
                         </span>
                     </div>
                     <hr>
-                    <a class="btn cart btn-danger btn-lg btn-buy" data-url="<{link app=b2c ctl=site_cart act=add args0=$data_detail.product.product_id args1=$store_info.store_id args2=1 }>" href="javascript:;">加入购物车</a>
-                    <a class="btn cart btn-success btn-lg btn-buy" data-url="<{link app=b2c ctl=site_cart act=fastbuy args0=$data_detail.product.product_id args1=$store_info.store_id args2=1 }>" href="javascript:;">立即购买</a>
+
+                    <button <{if $from_type}> disabled <{/if}> class="btn cart btn-danger btn-lg btn-buy" data-url="<{link app=b2c ctl=site_cart act=add args0=$data_detail.product.product_id args1=$store_info.store_id args2=1 }>" href="javascript:;">加入购物车</button>
+
+
+                    <a class="btn cart btn-success btn-lg btn-buy" data-url="<{link app=b2c ctl=site_cart act=fastbuy args0=$data_detail.product.product_id args1=$store_info.store_id args2=1}>?<{if $from_type.buyer}>buyer=<{$from_type.buyer}><{/if}>
+                    <{if $from_type.manager}>&manager=<{$from_type.manager}><{/if}>" href="javascript:;">立即购买</a>
+
+
                     <a class="btn btn-link btn-lg favorite-button" data-url="<{link app=b2c ctl=site_member act=favorite args0=add args1=$data_detail.goods_id args2=goods}>" href='javascript:;'>
                         <i class="glyphicon glyphicon-heart-empty"></i>
                         <small>Favorite<em></em></small>
@@ -195,7 +203,7 @@
         <div class="row goods-detailRow">
             <div class="goods_side_left">
                 <!-- 店铺信息 -->
-                <{WIDGET_STORE_DETAILS app=b2c store_id=$store_info.store_id}>
+                <{WIDGET_STORE_DETAILS app=b2c store_id=$data_detail.store_id}>
 
                 <!-- 客服中心 -->
                 <div class="kefu_list">
@@ -303,7 +311,7 @@
                                         <td><{$item.createtime|cdate}></td>
                                     </tr>
                                 <{/foreach}>
-                                </tbody> 
+                                </tbody>
                             </table>
                         </div>
                         <div class="tab-pane fade" id="comment">
@@ -345,14 +353,20 @@
     //快速登录
     $('.cart').click(function (e) {
         var _self = $(this);
-        $.post('<{link app=b2c ctl=site_passport act=check_login}>', '', function (re) {
-            if (re.success) {
-                var url = $(_self).attr('data-url') ? $(_self).attr('data-url') : '<{link app=b2c ctl=site_cart act=index}>';
-                location = url;
-            } else {
-                $('#quickLogin').modal('show');
-            }
-        });
+        var buyer = '<{$buyer_id}>';
+        var url = $(_self).attr('data-url');
+        if(buyer) {
+            location = url;
+        }else{
+            $.post('<{link app=b2c ctl=site_passport act=check_login}>', '', function (re) {
+                if (re.success) {
+                    location = url ? url : '<{link app=b2c ctl=site_cart act=index}>';
+                } else {
+                    $('#quickLogin').modal('show');
+                }
+            });
+        }
+
     });
     $('.quickLogin').on('click', 'button', function (e) {
         var login_form = $('.quickLogin');
@@ -429,18 +443,27 @@
          * 商品价盘价格计算
          **/
         var priceCount = function(num){
+            var buyerIdentity = '<{$buyer_id}>';
+            var agent = '<{$data_detail.agent}>';
             var index = 0;
             var price = 0;
+            var discount = 0;
             $('.pref_info .interval tr').each(function(idx, item){
                 var minNum = parseInt($(item).find('.num-dn').text().trim());
                 if(minNum > num){
-                    price = parseFloat($(item).prev().find('.num-price span').text().trim());
+                    if(buyerIdentity > 0 && agent == 1)
+                        discount = parseFloat($(item).prev('tr').find('.discount').text().trim());
+                    price = parseFloat($(item).prev('tr').find('.num-price span').text().trim());
                     index = idx;
                     return false;
                 }
+                discount = parseFloat($(item).find('.discount').text().trim());
                 price = parseFloat($(item).find('.num-price span').text().trim());
             });
-            return (num * price).toFixed(2);
+            var sumPrice = num * price;
+            if(buyerIdentity > 0 && agent == 1)
+                sumPrice = sumPrice * discount / 100;
+            return sumPrice.toFixed(2);
         };
 
 
@@ -460,10 +483,6 @@
                 button.attr('data-url', href);
             });
         }).trigger('_change', [$('.product-quantity .spinner-input').val(), 0]);
-
-
-
-
 
         //相册切换
         var enter_timer = 0;

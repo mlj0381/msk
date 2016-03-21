@@ -1,20 +1,32 @@
 <menus>    
     
-     <menugroup label="个人中心" name="buyer">
-        <menu app='buyer' controller='site_buyer' action='buyer_info' display='true' order="60">个人信息</menu>
-        <menu app='buyer' controller='site_buyer' action='reset_password' display='true' order="60">修改密码</menu>
-        <menu app='buyer' controller='site_buyer' action='buyer_security' display='true' order="60">账户安全</menu>
-        <menu app='buyer' controller='site_buyer' action='message' display='true' order="60">站内消息</menu>
+     <menugroup label="个人资料" name="buyer">
+        <menu app='buyer' controller='site_buyer' action='basic_info' display='true' order="60">基本信息</menu>
+        <!-- <menu app='buyer' controller='site_buyer' action='reset_password' display='true' order="60">修改密码</menu> -->
+        <menu app='buyer' controller='site_buyer' action='buyer_info' display='true' order="60">买手店信息</menu>
     </menugroup>
     
-    <menugroup label="商品管理" name="goods">
-        <menu app='buyer' controller='site_goods' action='index' display='true' order="60">出货管理</menu>
+    <menugroup label="安全设置" name="buyer">
+        <menu app='buyer' controller='site_buyer' action='update_mobile' display='true' order="60">修改手机</menu>
+		<menu app='buyer' controller='site_buyer' action='update_email' display='true' order="60">修改邮箱</menu>
+		<menu app='buyer' controller='site_buyer' action='update_email_hint' display='true' order="60">修改邮箱提示</menu>
+        <menu app='buyer' controller='site_buyer' action='reset_password' display='true' order="60">重置密码</menu>
+        <menu app='buyer' controller='site_buyer' action='reset_hint' display='true' order="60">重置提示</menu>
+		<menu app='buyer' controller='site_buyer' action='bind_mobile' display='true' order="60">绑定手机</menu>
+		<menu app='buyer' controller='site_buyer' action='bind_hint' display='true' order="60">绑定提示</menu>
+		<menu app='buyer' controller='site_buyer' action='ident_auth' display='true' order="60">身份认证</menu>
+		<menu app='buyer' controller='site_buyer' action='ident_auth_hint' display='true' order="60">认证提示</menu>
+		<menu app='buyer' controller='site_buyer' action='add_security' display='true' order="60">添加密保</menu>
+    </menugroup>
+    
+    <menugroup label="交易管理" name="goods">
+    	<menu app='buyer' controller='site_goods' action='stock' display='true' order="60">订单管理</menu>
         <menu app='buyer' controller='site_accounts' action='index' display='true' order="60">结算管理</menu>
-        <menu app='buyer' controller='site_goods' action='stock' display='true' order="60">进货管理</menu>
+        <!-- <menu app='buyer' controller='site_goods' action='index' display='true' order="60">出货管理</menu> -->      
     </menugroup>
 
-    <menugroup label="库存管理" name="goods">
-        <menu app='buyer' controller='site_goods' action='repertory' display='true' order="60">库存管理</menu>
+    <menugroup label="商品管理" name="goods">
+        <menu app='buyer' controller='site_goods' action='repertory' display='true' order="60">仓库中的商品</menu>
     </menugroup>
 
     <menugroup label="冻品管家管理" name="manager">
@@ -22,6 +34,21 @@
         <menu app='buyer' controller='site_manager' action='manager_signup' display='true' order="60">管家注册</menu>
         <!--<menu app='buyer' controller='site_manager' action='certification' display='true' order="60">资质信息</menu>-->
         <menu app='buyer' controller='site_manager' action='feat' display='true' order="60">业绩查询</menu>
+    </menugroup>
+    
+    <menugroup label="客户服务" name="service">
+        <menu app='buyer' controller='site_service' action='cancel_goods' display='true' order="60">退货管理</menu>
+        <menu app='buyer' controller='site_service' action='refund' display='true' order="60">退款管理</menu>
+        <menu app='buyer' controller='site_service' action='customer' display='true' order="60">售后管理</menu>
+        <menu app='buyer' controller='site_service' action='out' display='true' order="60">违规处理</menu>
+        <menu app='buyer' controller='site_service' action='report' display='true' order="60">举报管理</menu>
+        <menu app='buyer' controller='site_service' action='consult' display='true' order="60">咨询回复</menu>
+ 
+    </menugroup>
+    
+     <menugroup label="消息中心" name="message">
+        <menu app='buyer' controller='site_message' action='index' display='true' order="60">站内信</menu>
+        <menu app='buyer' controller='site_message' action='send_message' display='true' order="60">发送站内信</menu>
     </menugroup>
     
 </menus>
