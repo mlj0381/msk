@@ -18,7 +18,7 @@ $.validator.regex = {
 	'zipcode'   : /^[0-9]{6}$/,
 	'idcard'    : /^(\d{6})()?(\d{4})(\d{2})(\d{2})(\d{3})(\w)$/,
 	'tel'       : /^(\d{3,4}-?)?\d{7,9}$/g,
-	'time'		:  /^(([01]?[0-9])|(2[0-3])):[0-5]?[0-9]$/,
+	'time'		: /^(([01]?[0-9])|(2[0-3])):[0-5]?[0-9]$/,
 	'password'	: /^[a-zA-Z0-9_]{6,20}$/,
 	'brankcard'	: /^(\d{16}|\d{19})$/,
 	'positive'	: /^[0-9]+(\.\d+)?$/, //正数
@@ -212,6 +212,10 @@ $.validator.messages = {
 		return value === target.val();
 
 	},
+	/*timecompare:function( value, element, param ){
+		var target = $( param );
+		
+	},*/
 	fun : function(value, element, param)
 	{
 		if (this.optional( element ) ) {

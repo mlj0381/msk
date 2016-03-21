@@ -18,7 +18,7 @@
 					请在订单提交后<span class="text-danger">24小时</span>内完成支付，否则订单会自动取消！
 				</div>
 			</div>
-			<div class="row order_detailbox">
+			<div class="row order_detailbox hide" id="showbox">
 				<div class="col-xs-12">
 					订单编号：324253234535345234
 				</div>
@@ -108,12 +108,19 @@
 
 </div>
 
-
-
 <script type="text/javascript">
 	$(function(){
 		$('.order_detail_btn').bind('click',function(){
-			$('.order_detailbox').slideToggle();
+			var _this = $('#showbox');
+			var oldhtml = '订单详情 <i class="text-danger glyphicon glyphicon-chevron-down"></i>';
+			var newhtml = '收起 <i class="text-danger glyphicon glyphicon-chevron-up"></i>';
+			if(_this.hasClass('hide')){
+				_this.removeClass('hide');
+				$(this).text('').append(newhtml);
+			}else{
+				_this.addClass('hide');
+				$(this).text('').append(oldhtml);
+			}
 		})
 	})
 </script>
