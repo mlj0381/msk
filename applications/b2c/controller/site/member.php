@@ -803,6 +803,42 @@ vmc_b2c_orders WHERE `member_id`={$this->member['member_id']} AND `status` = 'ac
     }
 
     /**
+     * 申请绑定
+     */
+    public function apply_bind($bind_id,$status = '0')
+    {
+        $mdl_freeze_member = app::get('freeze')->model('freeze_member');
+        $freeze_member = array(
+            'updatetime' => time(),
+        );
+        if($status == '0')
+        {
+            $freeze_member['apply_type'] = '0';
+            $freeze_member['time'] = time();
+        }
+       //买家
+        $redirect = $this->gen_url(array(
+            'app' => 'b2c',
+            'ctl' => 'site_member',
+            'act' => 'freeze',
+        ));
+
+        $freeze_member['freeze_id'] = $bind_id;
+        $member_id =  $this->member['member_id'];
+        if(!$bind_id && !$member_id)
+        {
+            $this->splash('error',$redirect,'绑定信息错误');
+        }
+        $freeze_member['member_id'] = $member_id;
+        $freeze_member['status'] = $status;
+        if(!$mdl_freeze_member->save($freeze_member))
+        {
+            $this->splash('error',$redirect,'绑定失败');
+        }
+        $this->splash('success',$redirect,'绑定成功');
+    }
+
+    /**
      * 我的冻品管家
      */
     public function freeze()

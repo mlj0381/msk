@@ -33,7 +33,7 @@
                             <span class="text-danger">*</span>手机号：
                         </label>
                         <div class="col-xs-4">
-                            <input type="text" class="form-control" name="mobile" value="<{$info.mobile}>" required="true">
+                            <input type="text" disabled="true" class="form-control" name="mobile" value="<{$info.mobile}>" required="true"> <a href="<{link app=freeze ctl=site_account act=set_pam_mobile}>">绑定手机号码</a>
                             <span class="msgTip" data-message="format">格式不正确</span>
                         </div>
                     </div>

@@ -93,12 +93,24 @@ $db['freeze'] = array(
             'in_list' => true,
             'default_in_list' => true,
         ) ,
-//        'ID_image' => array(
-//            'type' => 'char(32)',
-//            'default' => null,
-//            'label' => ('身份证图片') ,
-//            'in_list' => true,
-//        ) ,
+        'ID_name' => array(
+            'type' => 'varchar(50)',
+            'label' => ('身份证名称') ,
+
+            'searchtype' => 'has',
+            'editable' => true,
+            'filtertype' => 'normal',
+            'filterdefault' => 'true',
+            'in_list' => true,
+            'is_title' => true,
+            'default_in_list' => false,
+        ) ,
+        'ID_image' => array(
+            'type' => 'char(32)',
+            'default' => null,
+            'label' => ('身份证图片') ,
+            'in_list' => true,
+        ) ,
         'area' => array(
             'label' => ('虚拟经营地址') ,
             'default' => null,

@@ -1,7 +1,7 @@
 <desktop>
     <permissions>
 
-		<permission display='true' id="shipment">配送设置</permission>
+		<permission display='true' id="shipment">仓库管理</permission>
       <!--   <permission display='false' id="printstylesetting">单据打印样式配置</permission>
 	-->        
 		<permission display='true' workground="b2c.wrokground.shop" id="shopsetting">商城设置</permission>        
