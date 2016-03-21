@@ -818,14 +818,7 @@ vmc_b2c_orders WHERE `member_id`={$this->member['member_id']} AND `status` = 'ac
         $this->output();
     }
 
-    /**
-     * 管家列表
-     */
-    public function freeze_list()
-    {
-        $this->set_tmpl('default');
-        $this->page('site/member/action/freeze_list.html');
-    }
+
 
 
 
