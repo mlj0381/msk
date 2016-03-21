@@ -116,7 +116,7 @@ class apicenter_api
 
 	private function post($url, $param =array()){
 		if(is_array($param)){
-			$data = ison_encode($param);
+			$data = json_encode($param);
 		}else{
 			return false;
 		}
