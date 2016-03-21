@@ -112,54 +112,38 @@ class freeze_ctl_site_center extends freeze_frontpage{
     /**
      * 申请绑定
      */
-    public function apply_bind($bind_id,$apply_type,$status = '')
+    public function apply_bind($bind_id,$status = '0')
     {
+        $mdl_freeze_member = app::get('freeze')->model('freeze_member');
+        $freeze_member = array(
+            'updatetime' => time(),
+        );
+        if($status == '0')
+        {
+            $freeze_member['apply_type'] = '1';
+            $freeze_member['time'] = time();
+        }
+         //冻品管家
+
         $redirect = $this->gen_url(array(
             'app' => 'freeze',
             'ctl' => 'site_center',
             'act' => 'buyer_list',
         ));
-        $mdl_freeze_member = app::get('freeze')->model('freeze_member');
-        $freeze_member = array(
-            'time' => time(),
-            'updatetime' => time(),
-        );
-        if($apply_type == 0)  //买家
-        {
 
-            $freeze_member['freeze_id'] = $bind_id;
-            $freeze_id = $this->user_obj->get_member_id();
-            if(!$bind_id && !$freeze_id)
-            {
-                $this->splash('error',$redirect,'绑定信息错误');
-            }
-            $freeze_member['freeze_id'] = $freeze_id;
-            $freeze_member['apply_type'] = $apply_type;
-            $freeze_member['status'] = $status;
-            if(!$mdl_freeze_member->save($freeze_member))
-            {
-                $this->splash('error',$redirect,'绑定失败');
-            }
-            $this->splash('success',$redirect,'绑定成功');
-
-        }elseif($apply_type == 1) //冻品管家
+        $freeze_member['member_id'] = $bind_id;
+        $freeze_id = $this->user_obj->get_member_id();
+        if(!$bind_id && !$freeze_id)
         {
-            $freeze_member['member_id'] = $bind_id;
-            $freeze_id = $this->user_obj->get_member_id();
-            if(!$bind_id && !$freeze_id)
-            {
-                $this->splash('error',$redirect,'绑定信息错误');
-            }
-            $freeze_member['freeze_id'] = $freeze_id;
-            $freeze_member['apply_type'] = $apply_type;
-            $freeze_member['status'] = $status;
-            if(!$mdl_freeze_member->save($freeze_member))
-            {
-                $this->splash('error',$redirect,'绑定失败');
-            }
-            $this->splash('success',$redirect,'绑定成功');
+            $this->splash('error',$redirect,'绑定信息错误');
         }
-        $this->splash('error',$redirect,'未知绑定');
+        $freeze_member['freeze_id'] = $freeze_id;
+        $freeze_member['status'] = $status;
+        if(!$mdl_freeze_member->save($freeze_member))
+        {
+            $this->splash('error',$redirect,'绑定失败');
+        }
+        $this->splash('success',$redirect,'绑定成功');
     }
 
     /**
