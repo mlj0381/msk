@@ -130,17 +130,14 @@ class apicenter_api
 	        CURLOPT_RETURNTRANSFER => 1,
 	        CURLOPT_SSL_VERIFYPEER => false,
 	        CURLOPT_SSL_VERIFYHOST => false,
+            CURLOPT_URL => $url,
+            CURLOPT_POST => 1,
+            CURLOPT_POSTFIELDS => $data,
+            CURLOPT_HTTPHEADER => array(
+                'Content-Type: application/json; charset=utf-8',
+                'Content-Length: ' . strlen($data),
+            )
 	    );
-        $opts[CURLOPT_URL] = $url;
-	    $opts[CURLOPT_POST] = 1;
-	    $opts[CURLOPT_POSTFIELDS] = $data;
-	    if(is_string($data)){ //发送JSON数据
-	        $opts[CURLOPT_HTTPHEADER] = array(
-	        	'Content-Type: application/json; charset=utf-8',
-	        	'Content-Length: ' . strlen($data),
-	        );
-	    }
-
 	    $ch = curl_init();
 	    curl_setopt_array($ch, $opts);
 	    $data  = curl_exec($ch);
