@@ -55,7 +55,7 @@ class apicenter_interaction_members
      * @param post_data array
      * @return false | array
      */
-    public function msbasic($post_data=array()){
+    public function msbasic(&$post_data=array()){
         $action = array('ctl'=>'members','act'=>'msbasic');
         $post_url = $this->URL.'msbasic';
         $param = $this->request->dbdata($action,$post_data);
@@ -73,7 +73,7 @@ class apicenter_interaction_members
      * @return false | array
      */
 
-    public function msconsume($msconsume=array()){
+    public function msconsume(&$msconsume=array()){
         $action = array('ctl'=>'members','act'=>'msconsume');
         $post_url = $this->URL.'msconsume';
         $param = $this->request->dbdata($action,$post_data);
