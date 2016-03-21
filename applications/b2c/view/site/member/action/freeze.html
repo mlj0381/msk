@@ -1,20 +1,112 @@
-<h1>我的冻品管家</h1>
-<hr>
-<!--<{if $freeze.status == 0 && $freeze.apply_type == 0}>-->
-    <!--您的绑定申请正在等待对方确认。-->
-<!--<{elseif $freeze.status == 0 && $freeze.apply_type == 1}>-->
-    <!--<{$freeze.freeze_id}>管家向你提出申请 <a href="<{link app=freeze ctl=stie_center }>">同意绑定</a>-->
-<!--<{elseif $freeze.status == 1}>-->
-    <!--//这里写列表-->
-    <!--管家名称：111-->
-    <!--主销品类：鸡产品-->
-    <!--推荐商品:-->
-    <!--<div>-->
+<{if $freeze.status == '0' && $freeze.apply_type == 0}>
+    <h4 class="text-center">您的绑定申请正在等待对方确认。</h4>
+<{elseif $freeze.status == 0 && $freeze.apply_type == 1}>
+    <h4 class="text-center">管家向你提出申请<a class="text-success"  href="<{link app=b2c ctl=site_member act=apply_bind arg0=$freeze.freeze_id arg1=1  }>">同意绑定</a></h4>
+<{elseif $freeze.status == 1}>
+    <div class="content my-freeze">
+    <div class="page-header">
+        <h1>我的冻品管家</h1>
+    </div>
+    <div class="main-content">
+        <div class="manage-item row">
+            <div class="col-xs-2 head-img">
+                <img src="" class="img-circle">
+            </div>
+            <div class="col-xs-8">
+                <h3>管家名称</h3>
+                <h5>主销品类:<span>鸡产品</span></h5>
+                <p>专注冻品管理20年，平台推荐金牌管家</p>
+            </div>
+            <div class="col-xs-2 pull-right text-right">
+                <button class="btn btn-success"><i class="glyphicon glyphicon-plus"></i> 绑定</button>
+            </div>
+        </div>
+        <div class="panel panel-default rec-itemlist">
+            <div class="panel-heading clearfix">
+                <h3 class="panel-title pull-left">推荐商品</h3>
+            </div>
+            <div class="panel-body">
+                <div class="glist-container">
+                    <div class="row goods-list gl-default">
+                        <div class="col-xs-3">
+                            <a href="">
+                                <div class="item-img">
+                                    <img src="../../themes/pc/default/statics/images/ex-pic.png">
+                                </div>
+                                <h4>98.00</h4>
+                            </a>
+                        </div>
+                        <div class="col-xs-3">
+                            <a href="">
+                                <div class="item-img">
+                                    <img src="../../themes/pc/default/statics/images/ex-pic.png">
+                                </div>
+                                <h4>98.00</h4>
+                            </a>
+                        </div>
+                        <div class="col-xs-3">
+                            <a href="">
+                                <div class="item-img">
+                                    <img src="../../themes/pc/default/statics/images/ex-pic.png">
+                                </div>
+                                <h4>98.00</h4>
+                            </a>
+                        </div>
+                        <div class="col-xs-3">
+                            <a href="">
+                                <div class="item-img">
+                                    <img src="../../themes/pc/default/statics/images/ex-pic.png">
+                                </div>
+                                <h4>98.00</h4>
+                            </a>
+                        </div>
+                        <div class="col-xs-3">
+                            <a href="">
+                                <div class="item-img">
+                                    <img src="../../themes/pc/default/statics/images/ex-pic.png">
+                                </div>
+                                <h4>98.00</h4>
+                            </a>
+                        </div>
+                        <div class="col-xs-3">
+                            <a href="">
+                                <div class="item-img">
+                                    <img src="../../themes/pc/default/statics/images/ex-pic.png">
+                                </div>
+                                <h4>98.00</h4>
+                            </a>
+                        </div>
+                        <div class="col-xs-3">
+                            <a href="">
+                                <div class="item-img">
+                                    <img src="../../themes/pc/default/statics/images/ex-pic.png">
+                                </div>
+                                <h4>98.00</h4>
+                            </a>
+                        </div>
+                        <div class="col-xs-3">
+                            <a href="">
+                                <div class="item-img">
+                                    <img src="../../themes/pc/default/statics/images/ex-pic.png">
+                                </div>
+                                <h4>98.00</h4>
+                            </a>
+                        </div>
+                        <div class="col-xs-3">
+                            <a href="">
+                                <div class="item-img">
+                                    <img src="../../themes/pc/default/statics/images/ex-pic.png">
+                                </div>
+                                <h4>98.00</h4>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<{else}>
+    <h4 class="text-center">暂无绑定的冻品管家，这就去<a class="text-success" target="_blank" href="<{link app=freeze ctl=site_list act=freeze_list }>">绑定</a></h4>
+<{/if}>
 
-    <!--</div>-->
-<!--<{else}>-->
-    <!--暂无绑定的冻品管家，这就去<a target="_blank" href="<{link app=freeze ctl=site_center }>">绑定</a>-->
-<!--<{/if}>-->
-
-
-暂无绑定的冻品管家，这就去<a target="_blank" href="<{link app=freeze ctl=site_list act=freeze_list }>">绑定</a>

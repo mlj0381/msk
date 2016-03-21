@@ -24,6 +24,13 @@ class freeze_ctl_site_list extends freeze_frontpage
         $this->page('site/list/freeze_goods.html');
     }
 
+    public function apply_bind_1()
+    {
+        var_dump($GLOBALS);
+        var_dump($_GET);
+        die;
+    }
+
 }
 
 ?>

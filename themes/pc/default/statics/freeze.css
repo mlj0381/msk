@@ -429,3 +429,205 @@
   padding: 10px;
   display: none;
 }
+.my-freeze {
+  margin-top: 20px;
+}
+.my-freeze .page-header {
+  margin-bottom: 10px;
+}
+.my-freeze .main-content .manage-item {
+  border: 1px solid #ddd;
+  padding: 10px 15px;
+  margin-bottom: 10px;
+}
+.my-freeze .main-content .manage-item .head-img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50px;
+  line-height: 100px;
+  text-align: center;
+  padding: 0;
+  background-color: #ddd;
+}
+.my-freeze .main-content .manage-item .head-img img {
+  max-width: 100%;
+  max-height: 100%;
+  vertical-align: middle;
+}
+.my-freeze .main-content .manage-item .col-xs-8 h3 {
+  margin-top: 10px;
+}
+.my-freeze .main-content .manage-item .pull-right button {
+  margin-top: 30px;
+}
+.my-freeze .main-content .rec-itemlist .goods-list .col-xs-3 {
+  height: 200px;
+  margin-bottom: 15px;
+}
+.my-freeze .main-content .rec-itemlist .goods-list .col-xs-3 a {
+  display: block;
+  position: relative;
+  font-size: 0;
+}
+.my-freeze .main-content .rec-itemlist .goods-list .col-xs-3 a .item-img {
+  width: 100%;
+  height: 200px;
+  text-align: center;
+  background-color: #ddd;
+  line-height: 200px;
+}
+.my-freeze .main-content .rec-itemlist .goods-list .col-xs-3 a .item-img img {
+  vertical-align: middle;
+  max-height: 100%;
+  max-width: 100%;
+}
+.my-freeze .main-content .rec-itemlist .goods-list .col-xs-3 a h4 {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+  padding: 10px 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: #a40001;
+  margin: 0;
+}
+.managerlist {
+  margin-top: 20px;
+}
+.managerlist .panel {
+  border: none;
+  box-shadow: none;
+}
+.managerlist .panel .panel-heading {
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+.managerlist .panel .panel-heading form .form-group {
+  margin-top: 0;
+}
+.managerlist .panel .panel-heading form .form-group label {
+  padding: 8px 20px;
+}
+.managerlist .panel .panel-heading form .form-group select {
+  width: 150px;
+}
+.managerlist .panel .panel-body .mlist-container .item {
+  border: 2px solid #ccc;
+  height: 320px;
+  padding: 10px;
+}
+.managerlist .panel .panel-body .mlist-container .item .sec-info {
+  overflow: hidden;
+  width: 100%;
+}
+.managerlist .panel .panel-body .mlist-container .item .sec-info .head-img {
+  width: 64px;
+  height: 64px;
+  background-color: #ddd;
+  border-radius: 32px;
+}
+.managerlist .panel .panel-body .mlist-container .item .sec-info .intro {
+  width: 145px;
+  margin-left: 5px;
+}
+.managerlist .panel .panel-body .mlist-container .item .sec-info .intro h4 {
+  margin: 5px 0;
+}
+.managerlist .panel .panel-body .mlist-container .item .sec-info .intro h5 {
+  margin-top: 0;
+  margin-bottom: 5px;
+}
+.managerlist .panel .panel-body .mlist-container .item .sec-info .add-btn a.btn {
+  margin-top: 10px;
+  padding: 5px;
+}
+.managerlist .panel .panel-body .mlist-container .item .sex-imglist {
+  height: 200px;
+  margin: 0;
+}
+.managerlist .panel .panel-body .mlist-container .item .sex-imglist .col-xs-9 {
+  height: 200px;
+  padding: 0;
+  text-align: center;
+  background-color: #ddd;
+  line-height: 200px;
+  font-size: 0;
+}
+.managerlist .panel .panel-body .mlist-container .item .sex-imglist .col-xs-9 img {
+  vertical-align: middle;
+  max-height: 100%;
+  max-width: 100%;
+}
+.managerlist .panel .panel-body .mlist-container .item .sex-imglist .col-xs-3 .sm-img {
+  width: 100%;
+  height: 50px;
+  line-height: 50px;
+  text-align: center;
+}
+.managerlist .panel .panel-body .mlist-container .item .sex-imglist .col-xs-3 .sm-img img {
+  max-width: 100%;
+  max-height: 100%;
+  vertical-align: middle;
+}
+.managerlist .panel .panel-body .mlist-container .item:hover {
+  border-color: #a40001;
+}
+.freeze-glist {
+  margin-top: 20px;
+}
+.freeze-glist .manage-item {
+  border: 1px solid #ddd;
+  padding: 10px 15px;
+  margin: 0;
+  margin-bottom: 10px;
+}
+.freeze-glist .manage-item .head-img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50px;
+  line-height: 100px;
+  text-align: center;
+  padding: 0;
+  background-color: #ddd;
+}
+.freeze-glist .manage-item .head-img img {
+  max-width: 100%;
+  max-height: 100%;
+  vertical-align: middle;
+}
+.freeze-glist .manage-item .col-xs-8 h3 {
+  margin-top: 10px;
+}
+.freeze-glist .manage-item .pull-right button {
+  margin-top: 30px;
+}
+.freeze-glist .glist-container .goods-list {
+  margin-left: -10px;
+}
+.freeze-glist .glist-container .goods-list .item {
+  border: 1px solid #ddd;
+  border-radius: 2px;
+  height: 360px;
+  margin: 10px;
+  width: 285px;
+}
+.freeze-glist .glist-container .goods-list .item a {
+  display: block;
+}
+.freeze-glist .glist-container .goods-list .item a .item-img {
+  height: 250px;
+  line-height: 250px;
+  text-align: center;
+}
+.freeze-glist .glist-container .goods-list .item a .item-img img {
+  vertical-align: middle;
+  max-height: 100%;
+  max-width: 100%;
+}
+.freeze-glist .glist-container .goods-list .item a .item-price span {
+  color: #a40001;
+}
+.freeze-glist .glist-container .goods-list .item:hover {
+  border-color: #a40001;
+}
