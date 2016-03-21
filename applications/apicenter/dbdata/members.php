@@ -1,5 +1,8 @@
 <?php
 $dbdata['card_provide'] = array(
+
+    'label' => '会员发卡接口',
+    'comment' => '根据买家用户ID，分配一张未使用的会员卡，返回会员卡卡号和密码',
     'columns' => array(
         'siteCode'=> array(
             'type'=> array(
@@ -21,7 +24,7 @@ $dbdata['card_provide'] = array(
 
         'loginId'=> array(
             'type'=> 'String',
-            'required' => 'Y',
+            'required' => 'N',
             'default' => '',
             'comment' => '登陆的用户ID',
         ),
@@ -45,12 +48,12 @@ $dbdata['card_provide'] = array(
             'comment' => '业务参数',
         ),
     ),
-
-    'label' => '会员发卡接口',
-    'comment' => '根据买家用户ID，分配一张未使用的会员卡，返回会员卡卡号和密码',
 );
 
 $dbdata['msbasic'] = array(
+
+    'label' => '会员卡基本信息查询接口',
+    'comment' => '根据买家用户ID查询会员卡的基本信息，例如持卡人姓名，卡号，密码（加密后）',
     'columns' => array(
         'siteCode' => array(
             'type'=> array(
@@ -90,12 +93,12 @@ $dbdata['msbasic'] = array(
             'comment' => '业务参数',
         ),
     ),
-
-    'label' => '会员卡基本信息查询接口',
-    'comment' => '根据买家用户ID查询会员卡的基本信息，例如持卡人姓名，卡号，密码（加密后）',
 );
 
-$dbdata['msbasic'] = array(
+$dbdata['msconsume'] = array(
+	
+    'label' => '会员消费信息查询接口',
+    'comment' => '根据用户ID和指定的起始和结束时间，查询该段时间内的消费一览',
     'columns' => array(
         'siteCode' => array(
             'type'=> array(
@@ -149,7 +152,4 @@ $dbdata['msbasic'] = array(
             'comment' => '业务参数',
         ),
     ),
-
-    'label' => '会员消费信息查询接口',
-    'comment' => '根据用户ID和指定的起始和结束时间，查询该段时间内的消费一览',
 );
