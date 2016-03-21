@@ -74,16 +74,20 @@ class apicenter_api
     				foreach($value['param'] as $ke=>$val){
     					foreach($verify['param'] as $num=>$v){
     						if($val['required'] == 'Y' && empty($v[$ke])){
-    							$verify['msg'] = $num.'->'.$ke.'不能为空';
+    							$verify['msg'] = $num.'->'.$ke.' 不能为空';
     							return false;
     						}
-							$data['param'][$num][$ke] = $verify['param'][$num][$ke];
+                            if(is_array($verify['param'][0])){
+                                $data['paramList'][$num][$ke] = $verify['param'][$num][$ke];
+                            }else{
+                                $data['paramList'][0] = $verify['param'][$ke];  
+                            }
     					}
     				}
     			}elseif($value['type'] == 'array'){
     				foreach($value['param'] as $k=>$va){
     					if($va['required'] == 'Y' && empty($verify['param'][$k])){
-    						$verify['msg'] = $k.'不能为空';
+    						$verify['msg'] = $k.' 不能为空';
     						return false;
     					}
 						$data['param'][$k] = $verify['param'][$k];
@@ -91,7 +95,7 @@ class apicenter_api
     				//self::verify($base[$key]['param'],$verify[$key]);
     			}else{
     				if($value['required'] == 'Y' && empty($verify[$key])){
-    					$verify['msg'] = $key.'不能为空';
+    					$verify['msg'] = $key.' 不能为空';
     					return false;
     				}
 					$data[$key] = $verify[$key];

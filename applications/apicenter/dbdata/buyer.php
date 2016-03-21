@@ -288,7 +288,7 @@ $dbdata['pdClassification_update'] = array(
         ),
 
         'param'=> array(
-            'type'=> 'array',
+            'type'=> 'list',
             'param'=> array(
                 'buyerId'=> array(
                     'type'=> 'String',
@@ -349,7 +349,7 @@ $dbdata['salesTarget_update'] = array(
         ),
 
         'param'=> array(
-            'type'=> 'array',
+            'type'=> 'list',
             'param'=> array(
                 'buyerId'=> array(
                     'type'=> 'String',
@@ -568,7 +568,7 @@ $dbdata['employee_update'] = array(
         ),
 
         'param'=> array(
-            'type'=> 'array',
+            'type'=> 'list',
             'param'=> array(
                 'buyerId'=> array(
                     'type'=> 'String',
@@ -671,7 +671,7 @@ $dbdata['receiveAddr_update'] = array(
         ),
 
         'param'=> array(
-            'type'=> 'array',
+            'type'=> 'list',
             'param'=> array(
                 'buyerId'=> array(
                     'type'=> 'String',
@@ -726,7 +726,7 @@ $dbdata['receiveTime_update'] = array(
         ),
 
         'param'=> array(
-            'type'=> 'array',
+            'type'=> 'list',
             'param'=> array(
                 'buyerId'=> array(
                     'type'=> 'String',
