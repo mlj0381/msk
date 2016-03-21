@@ -24,7 +24,7 @@ $dbdata['card_provide'] = array(
 
         'loginId'=> array(
             'type'=> 'String',
-            'required' => 'Y',
+            'required' => 'N',
             'default' => '',
             'comment' => '登陆的用户ID',
         ),
@@ -95,7 +95,7 @@ $dbdata['msbasic'] = array(
     ),
 );
 
-$dbdata['msbasic'] = array(
+$dbdata['msconsume'] = array(
 	
     'label' => '会员消费信息查询接口',
     'comment' => '根据用户ID和指定的起始和结束时间，查询该段时间内的消费一览',

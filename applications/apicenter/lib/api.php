@@ -88,7 +88,7 @@ class apicenter_api
     					}
 						$data['param'][$k] = $verify['param'][$k];
     				}
-    				//$this->verify($base[$key]['param'],$verify[$key]);
+    				//self::verify($base[$key]['param'],$verify[$key]);
     			}else{
     				if($value['required'] == 'Y' && empty($verify[$key])){
     					$verify['msg'] = $key.'不能为空';
@@ -96,6 +96,7 @@ class apicenter_api
     				}
 					$data[$key] = $verify[$key];
     			}
+    			unset($key,$value,$ke,$val,$k,$va);
     		}
     		return $data;
     	}else{
@@ -126,6 +127,7 @@ class apicenter_api
 	        CURLOPT_SSL_VERIFYPEER => false,
 	        CURLOPT_SSL_VERIFYHOST => false,
 	    );
+        $opts[CURLOPT_URL] = $url;
 	    $opts[CURLOPT_POST] = 1;
 	    $opts[CURLOPT_POSTFIELDS] = $data;
 	    if(is_string($data)){ //发送JSON数据

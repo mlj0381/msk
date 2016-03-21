@@ -24,7 +24,7 @@ class apicenter_interaction_members
     }
 
     /**
-     * 会员发卡
+     * 会员发卡接口
      *
      * @param post_data array
      * @return false | array
@@ -33,9 +33,9 @@ class apicenter_interaction_members
         $action = array('ctl'=>'members','act'=>'card_provide');
         $post_url = $this->URL.'card_provide';
         // $post_data = array(
-        //     'siteCode'=>'1',
+        //     'siteCode'=>1,
         //     'auth'=>'1',
-        //     'loginId'=>1,
+        //     'loginId'=>'',
         //     'param'=>array(
         //         'userID'=>'d',
         //         'userName'=>'e'
@@ -67,7 +67,7 @@ class apicenter_interaction_members
     }
 
     /**
-     * 会员卡基本信息查询接口
+     * 会员消费信息查询接口
      *
      * @param msconsume array
      * @return false | array
