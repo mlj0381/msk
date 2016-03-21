@@ -1838,7 +1838,7 @@ ul,ol{
 								border:1px solid #ccc;
 								background: #fff;
 								color:#ccc;
-								padding:0px 3px;
+								padding:0px 2px;
 								cursor: pointer;
 								font-size: 12px;
 								&.active{
@@ -1849,7 +1849,57 @@ ul,ol{
 						}
 					}
 				}
+				
 
+				//标准资质、档案卡
+				.category_add_modal{
+					width:100%;
+					padding:0;
+					.table_scroll{
+						min-width:100%;
+						min-height:520px;
+						max-height:520px;
+						overflow: auto;
+						table{
+							min-width:100%;
+							border:1px solid #ddd;
+							border-collapse: collapse;
+							th{
+								background: #f1f1f1;
+								color:#333;
+								text-align: center;
+								border:1px solid #ddd;
+								height:30px;
+								line-height: 30px;
+							}
+							tbody{
+								tr{
+									&:hover{
+										background: #f1f1f1;
+									}
+									&.par_row{
+										background: #f3f3f3;
+										border-bottom:1px solid #ddd;
+									}	
+								}
+								td{
+									padding:5px;
+									border:1px solid #ddd;
+									min-height: 30px;
+									textarea{
+										min-width:100%;
+										resize:none;
+										min-height:70px;
+										max-height:70px;
+										overflow-y: auto;
+										margin-bottom:0px;
+									}
+								}
+							}
+						}
+					}
+					
+				}
 				
 			}
 		}
