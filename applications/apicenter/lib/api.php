@@ -33,6 +33,7 @@ class apicenter_api
     public function api_post($url,&$post_data=array()){
         $post_url = $this->HOST.$url;
         $res = $this->_request->post($post_url,$post_data);
+        if(!$res) $res = $this->post($post_url,$post_data);
         $data = json_decode($res,1);
         $post_data['msg'] = $data ? $data['message'] : '请求异常';
         if($data['status'] == 'S'){
@@ -69,22 +70,37 @@ class apicenter_api
     protected function verify($base,&$verify){
     	if(is_array($verify)){
     		foreach($base as $key => $value){
-    			if($value['type'] == 'array'){
-    				foreach($value['param'] as $ke=>$va){
-    					if($va['required'] == 'Y' && empty($verify['param'][$ke])){
-    						$verify['msg'] = $verify['param'][$ke].'不能为空';
+    			if($value['type'] == 'list'){
+    				foreach($value['param'] as $ke=>$val){
+    					foreach($verify['param'] as $num=>$v){
+    						if($val['required'] == 'Y' && empty($v[$ke])){
+    							$verify['msg'] = $num.'->'.$ke.' 不能为空';
+    							return false;
+    						}
+                            if(is_array($verify['param'][0])){
+                                $data['paramList'][$num][$ke] = $verify['param'][$num][$ke];
+                            }else{
+                                $data['paramList'][0] = $verify['param'][$ke];  
+                            }
+    					}
+    				}
+    			}elseif($value['type'] == 'array'){
+    				foreach($value['param'] as $k=>$va){
+    					if($va['required'] == 'Y' && empty($verify['param'][$k])){
+    						$verify['msg'] = $k.' 不能为空';
     						return false;
     					}
-						$data['param'][$ke] = $verify['param'][$ke];
+						$data['param'][$k] = $verify['param'][$k];
     				}
-    				//$this->verify($base[$key]['param'],$verify[$key]);
+    				//self::verify($base[$key]['param'],$verify[$key]);
     			}else{
     				if($value['required'] == 'Y' && empty($verify[$key])){
-    					$verify['msg'] = $verify[$key].'不能为空';
+    					$verify['msg'] = $key.' 不能为空';
     					return false;
     				}
 					$data[$key] = $verify[$key];
     			}
+    			unset($key,$value,$ke,$val,$k,$va);
     		}
     		return $data;
     	}else{
@@ -101,4 +117,34 @@ class apicenter_api
         }
         return (object)$e;
     }
+
+
+	private function post($url, $param =array()){
+		if(is_array($param)){
+			$data = json_encode($param);
+		}else{
+			return false;
+		}
+	    $opts = array(
+	        CURLOPT_TIMEOUT        => 30,
+	        CURLOPT_RETURNTRANSFER => 1,
+	        CURLOPT_SSL_VERIFYPEER => false,
+	        CURLOPT_SSL_VERIFYHOST => false,
+            CURLOPT_URL => $url,
+            CURLOPT_POST => 1,
+            CURLOPT_POSTFIELDS => $data,
+            CURLOPT_HTTPHEADER => array(
+                'Content-Type: application/json; charset=utf-8',
+                'Content-Length: ' . strlen($data),
+            )
+	    );
+	    $ch = curl_init();
+	    curl_setopt_array($ch, $opts);
+	    $data  = curl_exec($ch);
+	    $error = curl_error($ch);
+	    curl_close($ch);
+	    if($error) return false ;
+	    return  $data;
+	}
+
 }

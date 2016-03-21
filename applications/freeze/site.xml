@@ -19,5 +19,10 @@
         <title>冻品信息注册</title>
         <disable>true</disable>
     </module>
+    <module controller='site_list' id="freeze">
+        <name>freezelist</name>
+        <title>冻品信息注册</title>
+        <disable>true</disable>
+    </module>
 
 </site>

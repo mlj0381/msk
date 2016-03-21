@@ -100,8 +100,8 @@ class apicenter_interaction_seller
      *
      * @return false | array
      */
-    public function slInfo_slEpBrandcTeam_new($post_data=array()){
-        $post_url = $this->URL.'slInfo/slEpBrandcTeam/new';
+    public function slInfo_slProducer_new($post_data=array()){
+        $post_url = $this->URL.'slInfo/slProducer/new';
         $data = $this->request->api_post($post_url,$post_data);
         //var_dump($post_data,$data);exit;
         return $data;

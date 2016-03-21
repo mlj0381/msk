@@ -1,20 +1,20 @@
 <h1>我的冻品管家</h1>
 <hr>
-<{if $freeze.status == 0 && $freeze.apply_type == 0}>
-    您的绑定申请正在等待对方确认。
-<{elseif $freeze.status == 0 && $freeze.apply_type == 1}>
-    <{$freeze.freeze_id}>管家向你提出申请 <a href="<{link app=freeze ctl=stie_center }>">同意绑定</a>
-<{elseif $freeze.status == 1}>
+<!--<{if $freeze.status == 0 && $freeze.apply_type == 0}>-->
+    <!--您的绑定申请正在等待对方确认。-->
+<!--<{elseif $freeze.status == 0 && $freeze.apply_type == 1}>-->
+    <!--<{$freeze.freeze_id}>管家向你提出申请 <a href="<{link app=freeze ctl=stie_center }>">同意绑定</a>-->
+<!--<{elseif $freeze.status == 1}>-->
+    <!--//这里写列表-->
+    <!--管家名称：111-->
+    <!--主销品类：鸡产品-->
+    <!--推荐商品:-->
+    <!--<div>-->
+
+    <!--</div>-->
+<!--<{else}>-->
+    <!--暂无绑定的冻品管家，这就去<a target="_blank" href="<{link app=freeze ctl=site_center }>">绑定</a>-->
+<!--<{/if}>-->
 
 
-//这里写列表
-管家名称：111
-主销品类：鸡产品
-推荐商品
-<div>
-
-</div>
-
-<{else}>
-    暂无绑定的冻品管家，这就去绑定
-<{/if}>
+暂无绑定的冻品管家，这就去<a target="_blank" href="<{link app=freeze ctl=site_list act=freeze_list }>">绑定</a>
