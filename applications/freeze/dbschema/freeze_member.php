@@ -38,7 +38,7 @@ $db['freeze_member'] = array(
                 '0' => '买家',
                 '1' => '冻品管家',
             ),
-            'label' => ('绑定状态'),
+            'label' => ('申请方'),
         ),
         'time' => array(
             'type' => 'time',

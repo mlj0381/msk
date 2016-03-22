@@ -64,7 +64,7 @@
             </td>
             <td width="15%" class="text-center opt">
                 <{if !$v.status && $v.status != '0'}>
-                    <a href="<{link app=freeze ctl=site_center act=apply_bind  arg0=$v.member_id arg1=1}>" class="btn btn-danger">申请绑定</a>
+                    <a href="<{link app=freeze ctl=site_center act=apply_bind  arg0=$v.member_id}>" class="btn btn-danger">申请绑定</a>
                 <{/if}>
             </td>
         </tr>

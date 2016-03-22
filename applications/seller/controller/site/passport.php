@@ -641,6 +641,63 @@ class seller_ctl_site_passport extends seller_frontpage
     public function add_cat()
     {
         //获取分类
-        $this->display('ui/add-cat.html');
+        $this->display('ui/add-category.html');
     }
+
+    //原种基本信息
+    public function apt_stock()
+    {
+        $this->display('ui/aptitude/apt_stock.html');
+    }
+
+    //原种种源标准指标
+    public function apt_prove()
+    {
+        $this->display('ui/aptitude/apt_prove.html');
+    }
+
+    //原种饲养标准指标
+    public function apt_raise()
+    {
+        $this->display('ui/aptitude/apt_raise.html');
+    }
+
+    //产品加工技术标准指标
+    public function apt_technology()
+    {
+        $this->display('ui/aptitude/apt_technology.html');
+    }
+
+    //产品加工质量标准指标
+    public function apt_quality()
+    {
+        $this->display('ui/aptitude/apt_quality.html');
+    }
+
+    //产品通用质量标准指标
+    public function apt_common()
+    {
+        $this->display('ui/aptitude/apt_common.html');
+    }
+
+    //产品安全标准指标
+    public function apt_safety()
+    {
+        $this->display('ui/aptitude/apt_safety.html');
+    }
+
+    //储存运输标准指标
+    public function apt_transport()
+    {
+        $this->display('ui/aptitude/apt_transport.html');
+    }
+
+    //包装标准指标
+    public function apt_pack()
+    {
+        $this->display('ui/aptitude/apt_pack.html');
+    }
+
+
+
 }

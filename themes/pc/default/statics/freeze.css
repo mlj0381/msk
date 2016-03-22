@@ -1,1 +1,633 @@
-.nav-tabs li{border:none}.nav-tabs li a{font-size:14px;padding:10px 20px}.nav-tabs li.active a,.nav-tabs li.active:hover a{border:none;border-bottom:2px solid #a40001;cursor:pointer;color:#a40001}.order-manage{margin-top:20px}.order-manage .page-header{margin-bottom:5px}.order-manage .mo-list-head{margin-top:10px}.order-manage .mo-list-head thead{background-color:#f2f2f2}.order-manage .mo-list-head thead tr th{border-bottom:none;padding:10px}.order-manage .mo-list-head tbody tr{border:none;border-bottom:1px solid #ddd}.order-manage .mo-list-head tbody tr td{vertical-align:middle}.order-manage .mo-list-head tbody tr .opt a.btn{padding:3px 5px}.freeze-check{margin-top:20px}.freeze-check .page-header{margin-bottom:5px}.freeze-check table{margin-top:10px}.freeze-check table thead{background-color:#f2f2f2}.freeze-check table thead tr th{border-bottom:none;padding:10px}.freeze-check table tbody tr{border:none;border-bottom:1px solid #ddd}.freeze-check table tbody tr td{vertical-align:middle}.freeze-check table tbody tr .opt a.btn{padding:3px 5px}.my-distribution{margin-top:20px}.my-distribution table thead{background-color:#f2f2f2}.my-distribution table thead tr th{border-bottom:none;padding:12px}.my-distribution table tbody tr{border:1px solid #ddd;margin:10px 0}.my-distribution table tbody tr td{vertical-align:middle;border:0}.my-distribution table tbody .goods-info .row .g-img{width:90px;height:90px;text-align:center;line-height:90px;border:1px solid #ddd;margin-left:30px}.my-distribution table tbody .goods-info .row .g-img img{max-width:100%;max-height:100%;vertical-align:middle}.my-distribution table tbody .goods-info .row .g-name{padding-top:30px;text-align:left}.buyer-list{margin-top:20px}.buyer-list .page-header{margin-bottom:5px}.buyer-list table{margin-top:10px}.buyer-list table thead{background-color:#f2f2f2}.buyer-list table thead tr th{border-bottom:none;padding:10px}.buyer-list table tbody tr{border:none;border-bottom:1px solid #ddd}.buyer-list table tbody tr td{vertical-align:middle}.buyer-list table tbody tr .opt a.btn{padding:3px 5px}.buyer-list table tbody tr .buyer-info .row .buyer-head img{width:80px;height:80px;border:1px solid #ddd;border-radius:40px}.buyer-list table tbody tr .buyer-info .row .buyer-name{padding-top:25px}.aftersale-manage,.refund-manage,.reship-manage{margin-top:20px}.aftersale-manage .search-form .search-block,.refund-manage .search-form .search-block,.reship-manage .search-form .search-block{display:none}.aftersale-manage .search-form .search-block #aftersale_search_form,.aftersale-manage .search-form .search-block #refund_search_form,.aftersale-manage .search-form .search-block #reship_search_form,.refund-manage .search-form .search-block #aftersale_search_form,.refund-manage .search-form .search-block #refund_search_form,.refund-manage .search-form .search-block #reship_search_form,.reship-manage .search-form .search-block #aftersale_search_form,.reship-manage .search-form .search-block #refund_search_form,.reship-manage .search-form .search-block #reship_search_form{padding-top:15px}.aftersale-manage .search-form .search-block #aftersale_search_form .select-time input.form-control,.aftersale-manage .search-form .search-block #refund_search_form .select-time input.form-control,.aftersale-manage .search-form .search-block #reship_search_form .select-time input.form-control,.refund-manage .search-form .search-block #aftersale_search_form .select-time input.form-control,.refund-manage .search-form .search-block #refund_search_form .select-time input.form-control,.refund-manage .search-form .search-block #reship_search_form .select-time input.form-control,.reship-manage .search-form .search-block #aftersale_search_form .select-time input.form-control,.reship-manage .search-form .search-block #refund_search_form .select-time input.form-control,.reship-manage .search-form .search-block #reship_search_form .select-time input.form-control{width:180px;display:inline-block}.aftersale-manage .search-form .search-block #aftersale_search_form .handelsts-label,.aftersale-manage .search-form .search-block #refund_search_form .handelsts-label,.aftersale-manage .search-form .search-block #reship_search_form .handelsts-label,.refund-manage .search-form .search-block #aftersale_search_form .handelsts-label,.refund-manage .search-form .search-block #refund_search_form .handelsts-label,.refund-manage .search-form .search-block #reship_search_form .handelsts-label,.reship-manage .search-form .search-block #aftersale_search_form .handelsts-label,.reship-manage .search-form .search-block #refund_search_form .handelsts-label,.reship-manage .search-form .search-block #reship_search_form .handelsts-label{text-align:left!important;width:120px;padding-right:0}.aftersale-manage .search-form .search-block #aftersale_search_form .form-group,.aftersale-manage .search-form .search-block #refund_search_form .form-group,.aftersale-manage .search-form .search-block #reship_search_form .form-group,.refund-manage .search-form .search-block #aftersale_search_form .form-group,.refund-manage .search-form .search-block #refund_search_form .form-group,.refund-manage .search-form .search-block #reship_search_form .form-group,.reship-manage .search-form .search-block #aftersale_search_form .form-group,.reship-manage .search-form .search-block #refund_search_form .form-group,.reship-manage .search-form .search-block #reship_search_form .form-group{margin-bottom:20px}.aftersale-manage .search-form .btn-slidedown a,.aftersale-manage .search-form .btn-slideup a,.refund-manage .search-form .btn-slidedown a,.refund-manage .search-form .btn-slideup a,.reship-manage .search-form .btn-slidedown a,.reship-manage .search-form .btn-slideup a{color:#000}.aftersale-manage .search-form .btn-slidedown a:hover,.aftersale-manage .search-form .btn-slideup a:hover,.refund-manage .search-form .btn-slidedown a:hover,.refund-manage .search-form .btn-slideup a:hover,.reship-manage .search-form .btn-slidedown a:hover,.reship-manage .search-form .btn-slideup a:hover{color:#a40001}.aftersale-manage .page-header,.refund-manage .page-header,.reship-manage .page-header{margin-bottom:5px}.aftersale-manage table,.refund-manage table,.reship-manage table{margin-top:10px}.aftersale-manage table thead,.refund-manage table thead,.reship-manage table thead{background-color:#f2f2f2}.aftersale-manage table thead tr th,.refund-manage table thead tr th,.reship-manage table thead tr th{border-bottom:none;padding:10px}.aftersale-manage table tbody tr,.refund-manage table tbody tr,.reship-manage table tbody tr{border:none;border-bottom:1px solid #ddd}.aftersale-manage table tbody tr td,.refund-manage table tbody tr td,.reship-manage table tbody tr td{vertical-align:middle}.aftersale-manage table tbody tr .opt a.btn,.refund-manage table tbody tr .opt a.btn,.reship-manage table tbody tr .opt a.btn{padding:3px 5px}.break-rule,.consultation-manage,.report-manage{margin-top:20px}.break-rule .list-group .list-group-item,.consultation-manage .list-group .list-group-item,.report-manage .list-group .list-group-item{padding:15px!important}.break-rule .list-group .list-group-item .row .col-xs-1 h2,.consultation-manage .list-group .list-group-item .row .col-xs-1 h2,.report-manage .list-group .list-group-item .row .col-xs-1 h2{margin-top:15px}.break-rule .list-group .list-group-item .row .col-xs-3 span,.consultation-manage .list-group .list-group-item .row .col-xs-3 span,.report-manage .list-group .list-group-item .row .col-xs-3 span{margin-top:40px;display:inline-block}.buyer-info,.seller_regbox{margin-top:20px}.buyer-info .nav-tabs,.seller_regbox .nav-tabs{margin-top:15px;border-color:#a40001}.buyer-info .nav-tabs li,.seller_regbox .nav-tabs li{border:none;margin-bottom:0}.buyer-info .nav-tabs li a,.seller_regbox .nav-tabs li a{border:none}.buyer-info .nav-tabs li.active a,.buyer-info .nav-tabs li.active:hover a,.seller_regbox .nav-tabs li.active a,.seller_regbox .nav-tabs li.active:hover a{background-color:#a40001;cursor:pointer;color:#fff;border:none}.buyer-info .content{margin-top:20px}.buyer-info .content #basicinfo_form,.buyer-info .content #buyerinfo_form{padding:20px 0}.buyer-info .content #basicinfo_form .form-group,.buyer-info .content #buyerinfo_form .form-group{margin-bottom:20px}.buyer-info .content .head-imgbox{width:100px;height:100px;line-height:100px;text-align:center}.buyer-info .content .head-imgbox img{vertical-align:middle;max-width:100%;max-height:100%}.buyer-info .content .edit-notice{padding-left:0;padding-top:35px}.buyer-info .content .text-danger{color:#a40001}.buyer-info .content .bind-opt a{border:none;color:#2f973f;text-decoration:underline;padding:8px 12px;font-size:12px}.buyer-info .content .sex-radio input,.buyer-info .content .type-checkbox input{margin-top:2px}.buyer-info .content .select-region select+select{margin-left:5px}.buyer-info .content .upload-img{padding:0 15px;cursor:pointer}.buyer-info .content .upload-img input{display:inline-block;width:90px}.buyer-info .content .upload-img span{margin-left:-90px;z-index:2;width:90px}.buyer-info .content .submit-opt button{width:100px}.buyer-info .content .submit-opt button+button{margin-left:30px}.buyer-info .content .sale-character textarea{width:100%;height:120px;border-color:#ddd;outline:0}.security-center{margin-top:20px}.security-center .main-content .basic-info{border-bottom:1px solid #ddd;padding-bottom:10px;margin-bottom:15px}.security-center .main-content .basic-info .row{padding:5px 0;font-size:14px}.security-center .main-content .basic-info .row .col-xs-1{width:80px;padding-right:0}.security-center .main-content .list-group .list-group-item{padding:15px!important}.security-center .main-content .list-group .list-group-item .row .col-xs-2 h2{margin-top:15px}.security-center .main-content .list-group .list-group-item .row .text-right h5{margin-top:35px}.security-center .main-content .list-group .list-group-item .row .col-xs-8 h3{margin-top:30px}.message-center{margin-top:20px}.message-center .page-header{position:relative}.message-center .page-header .pull-right{position:absolute;right:0;top:0;padding:2px 12px}.message-center .list-group .list-group-item{padding:15px!important;background-color:#f2f2f2}.message-center .list-group .list-group-item .row .col-xs-1 h2{margin-top:15px;color:#a40001}.message-center .list-group .list-group-item .row .col-xs-3 h4{margin-top:25px}.message-center .list-group .list-group-item .row .col-xs-3 h4 i{display:none;cursor:pointer;padding:5px 5px 5px 7px;background-color:#ddd;border-radius:20px;color:#fff}.message-center .list-group .list-group-item .row .col-xs-3 h4 i.active{display:inline-block}.message-center .list-group .list-group-item .logistics-state{padding:10px;display:none}
+/**
+ * 冻品管家中心样式
+ */
+.nav-tabs li {
+  border: none;
+}
+.nav-tabs li a {
+  font-size: 14px;
+  padding: 10px 20px;
+}
+.nav-tabs li.active a,
+.nav-tabs li.active:hover a {
+  border: none;
+  border-bottom: 2px solid #a40001;
+  cursor: pointer;
+  color: #a40001;
+}
+.order-manage {
+  margin-top: 20px;
+}
+.order-manage .page-header {
+  margin-bottom: 5px;
+}
+.order-manage .mo-list-head {
+  margin-top: 10px;
+}
+.order-manage .mo-list-head thead {
+  background-color: #f2f2f2;
+}
+.order-manage .mo-list-head thead tr th {
+  border-bottom: none;
+  padding: 10px;
+}
+.order-manage .mo-list-head tbody tr {
+  border: none;
+  border-bottom: 1px solid #ddd;
+}
+.order-manage .mo-list-head tbody tr td {
+  vertical-align: middle;
+}
+.order-manage .mo-list-head tbody tr .opt a.btn {
+  padding: 3px 5px;
+}
+.freeze-check {
+  margin-top: 20px;
+}
+.freeze-check .page-header {
+  margin-bottom: 5px;
+}
+.freeze-check table {
+  margin-top: 10px;
+}
+.freeze-check table thead {
+  background-color: #f2f2f2;
+}
+.freeze-check table thead tr th {
+  border-bottom: none;
+  padding: 10px;
+}
+.freeze-check table tbody tr {
+  border: none;
+  border-bottom: 1px solid #ddd;
+}
+.freeze-check table tbody tr td {
+  vertical-align: middle;
+}
+.freeze-check table tbody tr .opt a.btn {
+  padding: 3px 5px;
+}
+.my-distribution {
+  margin-top: 20px;
+}
+.my-distribution table thead {
+  background-color: #f2f2f2;
+}
+.my-distribution table thead tr th {
+  border-bottom: none;
+  padding: 12px;
+}
+.my-distribution table tbody tr {
+  border: 1px solid #ddd;
+  margin: 10px 0;
+}
+.my-distribution table tbody tr td {
+  vertical-align: middle;
+  border: 0;
+}
+.my-distribution table tbody .goods-info .row .g-img {
+  width: 90px;
+  height: 90px;
+  text-align: center;
+  line-height: 90px;
+  border: 1px solid #ddd;
+  margin-left: 30px;
+}
+.my-distribution table tbody .goods-info .row .g-img img {
+  max-width: 100%;
+  max-height: 100%;
+  vertical-align: middle;
+}
+.my-distribution table tbody .goods-info .row .g-name {
+  padding-top: 30px;
+  text-align: left;
+}
+.buyer-list {
+  margin-top: 20px;
+}
+.buyer-list .page-header {
+  margin-bottom: 5px;
+}
+.buyer-list table {
+  margin-top: 10px;
+}
+.buyer-list table thead {
+  background-color: #f2f2f2;
+}
+.buyer-list table thead tr th {
+  border-bottom: none;
+  padding: 10px;
+}
+.buyer-list table tbody tr {
+  border: none;
+  border-bottom: 1px solid #ddd;
+}
+.buyer-list table tbody tr td {
+  vertical-align: middle;
+}
+.buyer-list table tbody tr .opt a.btn {
+  padding: 3px 5px;
+}
+.buyer-list table tbody tr .buyer-info .row .buyer-head img {
+  width: 80px;
+  height: 80px;
+  border: 1px solid #ddd;
+  border-radius: 40px;
+}
+.buyer-list table tbody tr .buyer-info .row .buyer-name {
+  padding-top: 25px;
+}
+.reship-manage,
+.refund-manage,
+.aftersale-manage {
+  margin-top: 20px;
+}
+.reship-manage .search-form .search-block,
+.refund-manage .search-form .search-block,
+.aftersale-manage .search-form .search-block {
+  display: none;
+}
+.reship-manage .search-form .search-block #reship_search_form,
+.refund-manage .search-form .search-block #reship_search_form,
+.aftersale-manage .search-form .search-block #reship_search_form,
+.reship-manage .search-form .search-block #refund_search_form,
+.refund-manage .search-form .search-block #refund_search_form,
+.aftersale-manage .search-form .search-block #refund_search_form,
+.reship-manage .search-form .search-block #aftersale_search_form,
+.refund-manage .search-form .search-block #aftersale_search_form,
+.aftersale-manage .search-form .search-block #aftersale_search_form {
+  padding-top: 15px;
+}
+.reship-manage .search-form .search-block #reship_search_form .select-time input.form-control,
+.refund-manage .search-form .search-block #reship_search_form .select-time input.form-control,
+.aftersale-manage .search-form .search-block #reship_search_form .select-time input.form-control,
+.reship-manage .search-form .search-block #refund_search_form .select-time input.form-control,
+.refund-manage .search-form .search-block #refund_search_form .select-time input.form-control,
+.aftersale-manage .search-form .search-block #refund_search_form .select-time input.form-control,
+.reship-manage .search-form .search-block #aftersale_search_form .select-time input.form-control,
+.refund-manage .search-form .search-block #aftersale_search_form .select-time input.form-control,
+.aftersale-manage .search-form .search-block #aftersale_search_form .select-time input.form-control {
+  width: 180px;
+  display: inline-block;
+}
+.reship-manage .search-form .search-block #reship_search_form .handelsts-label,
+.refund-manage .search-form .search-block #reship_search_form .handelsts-label,
+.aftersale-manage .search-form .search-block #reship_search_form .handelsts-label,
+.reship-manage .search-form .search-block #refund_search_form .handelsts-label,
+.refund-manage .search-form .search-block #refund_search_form .handelsts-label,
+.aftersale-manage .search-form .search-block #refund_search_form .handelsts-label,
+.reship-manage .search-form .search-block #aftersale_search_form .handelsts-label,
+.refund-manage .search-form .search-block #aftersale_search_form .handelsts-label,
+.aftersale-manage .search-form .search-block #aftersale_search_form .handelsts-label {
+  text-align: left !important;
+  width: 120px;
+  padding-right: 0;
+}
+.reship-manage .search-form .search-block #reship_search_form .form-group,
+.refund-manage .search-form .search-block #reship_search_form .form-group,
+.aftersale-manage .search-form .search-block #reship_search_form .form-group,
+.reship-manage .search-form .search-block #refund_search_form .form-group,
+.refund-manage .search-form .search-block #refund_search_form .form-group,
+.aftersale-manage .search-form .search-block #refund_search_form .form-group,
+.reship-manage .search-form .search-block #aftersale_search_form .form-group,
+.refund-manage .search-form .search-block #aftersale_search_form .form-group,
+.aftersale-manage .search-form .search-block #aftersale_search_form .form-group {
+  margin-bottom: 20px;
+}
+.reship-manage .search-form .btn-slidedown a,
+.refund-manage .search-form .btn-slidedown a,
+.aftersale-manage .search-form .btn-slidedown a,
+.reship-manage .search-form .btn-slideup a,
+.refund-manage .search-form .btn-slideup a,
+.aftersale-manage .search-form .btn-slideup a {
+  color: #000000;
+}
+.reship-manage .search-form .btn-slidedown a:hover,
+.refund-manage .search-form .btn-slidedown a:hover,
+.aftersale-manage .search-form .btn-slidedown a:hover,
+.reship-manage .search-form .btn-slideup a:hover,
+.refund-manage .search-form .btn-slideup a:hover,
+.aftersale-manage .search-form .btn-slideup a:hover {
+  color: #a40001;
+}
+.reship-manage .page-header,
+.refund-manage .page-header,
+.aftersale-manage .page-header {
+  margin-bottom: 5px;
+}
+.reship-manage table,
+.refund-manage table,
+.aftersale-manage table {
+  margin-top: 10px;
+}
+.reship-manage table thead,
+.refund-manage table thead,
+.aftersale-manage table thead {
+  background-color: #f2f2f2;
+}
+.reship-manage table thead tr th,
+.refund-manage table thead tr th,
+.aftersale-manage table thead tr th {
+  border-bottom: none;
+  padding: 10px;
+}
+.reship-manage table tbody tr,
+.refund-manage table tbody tr,
+.aftersale-manage table tbody tr {
+  border: none;
+  border-bottom: 1px solid #ddd;
+}
+.reship-manage table tbody tr td,
+.refund-manage table tbody tr td,
+.aftersale-manage table tbody tr td {
+  vertical-align: middle;
+}
+.reship-manage table tbody tr .opt a.btn,
+.refund-manage table tbody tr .opt a.btn,
+.aftersale-manage table tbody tr .opt a.btn {
+  padding: 3px 5px;
+}
+.break-rule,
+.report-manage,
+.consultation-manage {
+  margin-top: 20px;
+}
+.break-rule .list-group .list-group-item,
+.report-manage .list-group .list-group-item,
+.consultation-manage .list-group .list-group-item {
+  padding: 15px !important;
+}
+.break-rule .list-group .list-group-item .row .col-xs-1 h2,
+.report-manage .list-group .list-group-item .row .col-xs-1 h2,
+.consultation-manage .list-group .list-group-item .row .col-xs-1 h2 {
+  margin-top: 15px;
+}
+.break-rule .list-group .list-group-item .row .col-xs-3 span,
+.report-manage .list-group .list-group-item .row .col-xs-3 span,
+.consultation-manage .list-group .list-group-item .row .col-xs-3 span {
+  margin-top: 40px;
+  display: inline-block;
+}
+.seller_regbox,
+.buyer-info {
+  margin-top: 20px;
+}
+.seller_regbox .nav-tabs,
+.buyer-info .nav-tabs {
+  margin-top: 15px;
+  border-color: #a40001;
+}
+.seller_regbox .nav-tabs li,
+.buyer-info .nav-tabs li {
+  border: none;
+  margin-bottom: 0;
+}
+.seller_regbox .nav-tabs li a,
+.buyer-info .nav-tabs li a {
+  border: none;
+}
+.seller_regbox .nav-tabs li.active a,
+.buyer-info .nav-tabs li.active a,
+.seller_regbox .nav-tabs li.active:hover a,
+.buyer-info .nav-tabs li.active:hover a {
+  background-color: #a40001;
+  cursor: pointer;
+  color: #ffffff;
+  border: none;
+}
+.buyer-info .content {
+  margin-top: 20px;
+}
+.buyer-info .content #basicinfo_form,
+.buyer-info .content #buyerinfo_form {
+  padding: 20px 0;
+}
+.buyer-info .content #basicinfo_form .form-group,
+.buyer-info .content #buyerinfo_form .form-group {
+  margin-bottom: 20px;
+}
+.buyer-info .content .head-imgbox {
+  width: 100px;
+  height: 100px;
+  line-height: 100px;
+  text-align: center;
+}
+.buyer-info .content .head-imgbox img {
+  vertical-align: middle;
+  max-width: 100%;
+  max-height: 100%;
+}
+.buyer-info .content .edit-notice {
+  padding-left: 0;
+  padding-top: 35px;
+}
+.buyer-info .content .text-danger {
+  color: #a40001;
+}
+.buyer-info .content .bind-opt a {
+  border: none;
+  color: #2f973f;
+  text-decoration: underline;
+  padding: 8px 12px;
+  font-size: 12px;
+}
+.buyer-info .content .sex-radio input,
+.buyer-info .content .type-checkbox input {
+  margin-top: 2px;
+}
+.buyer-info .content .select-region select + select {
+  margin-left: 5px;
+}
+.buyer-info .content .upload-img {
+  padding: 0px 15px;
+  cursor: pointer;
+}
+.buyer-info .content .upload-img input {
+  display: inline-block;
+  width: 90px;
+}
+.buyer-info .content .upload-img span {
+  margin-left: -90px;
+  z-index: 2;
+  width: 90px;
+}
+.buyer-info .content .submit-opt button {
+  width: 100px;
+}
+.buyer-info .content .submit-opt button + button {
+  margin-left: 30px;
+}
+.buyer-info .content .sale-character textarea {
+  width: 100%;
+  height: 120px;
+  border-color: #ddd;
+  outline: none;
+}
+.security-center {
+  margin-top: 20px;
+}
+.security-center .main-content .basic-info {
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 10px;
+  margin-bottom: 15px;
+}
+.security-center .main-content .basic-info .row {
+  padding: 5px 0;
+  font-size: 14px;
+}
+.security-center .main-content .basic-info .row .col-xs-1 {
+  width: 80px;
+  padding-right: 0px;
+}
+.security-center .main-content .list-group .list-group-item {
+  padding: 15px !important;
+}
+.security-center .main-content .list-group .list-group-item .row .col-xs-2 h2 {
+  margin-top: 15px;
+}
+.security-center .main-content .list-group .list-group-item .row .text-right h5 {
+  margin-top: 35px;
+}
+.security-center .main-content .list-group .list-group-item .row .col-xs-8 h3 {
+  margin-top: 30px;
+}
+.message-center {
+  margin-top: 20px;
+}
+.message-center .page-header {
+  position: relative;
+}
+.message-center .page-header .pull-right {
+  position: absolute;
+  right: 0;
+  top: 0;
+  padding: 2px 12px;
+}
+.message-center .list-group .list-group-item {
+  padding: 15px !important;
+  background-color: #f2f2f2;
+}
+.message-center .list-group .list-group-item .row .col-xs-1 h2 {
+  margin-top: 15px;
+  color: #a40001;
+}
+.message-center .list-group .list-group-item .row .col-xs-3 h4 {
+  margin-top: 25px;
+}
+.message-center .list-group .list-group-item .row .col-xs-3 h4 i {
+  display: none;
+  cursor: pointer;
+  padding: 5px 5px 5px 7px;
+  background-color: #ddd;
+  border-radius: 20px;
+  color: #ffffff;
+}
+.message-center .list-group .list-group-item .row .col-xs-3 h4 i.active {
+  display: inline-block;
+}
+.message-center .list-group .list-group-item .logistics-state {
+  padding: 10px;
+  display: none;
+}
+.my-freeze {
+  margin-top: 20px;
+}
+.my-freeze .page-header {
+  margin-bottom: 10px;
+}
+.my-freeze .main-content .manage-item {
+  border: 1px solid #ddd;
+  padding: 10px 15px;
+  margin-bottom: 10px;
+}
+.my-freeze .main-content .manage-item .head-img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50px;
+  line-height: 100px;
+  text-align: center;
+  padding: 0;
+  background-color: #ddd;
+}
+.my-freeze .main-content .manage-item .head-img img {
+  max-width: 100%;
+  max-height: 100%;
+  vertical-align: middle;
+}
+.my-freeze .main-content .manage-item .col-xs-8 h3 {
+  margin-top: 10px;
+}
+.my-freeze .main-content .manage-item .pull-right button {
+  margin-top: 30px;
+}
+.my-freeze .main-content .rec-itemlist .goods-list .col-xs-3 {
+  height: 200px;
+  margin-bottom: 15px;
+}
+.my-freeze .main-content .rec-itemlist .goods-list .col-xs-3 a {
+  display: block;
+  position: relative;
+  font-size: 0;
+}
+.my-freeze .main-content .rec-itemlist .goods-list .col-xs-3 a .item-img {
+  width: 100%;
+  height: 200px;
+  text-align: center;
+  background-color: #ddd;
+  line-height: 200px;
+}
+.my-freeze .main-content .rec-itemlist .goods-list .col-xs-3 a .item-img img {
+  vertical-align: middle;
+  max-height: 100%;
+  max-width: 100%;
+}
+.my-freeze .main-content .rec-itemlist .goods-list .col-xs-3 a h4 {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+  padding: 10px 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: #a40001;
+  margin: 0;
+}
+.managerlist {
+  margin-top: 20px;
+}
+.managerlist .panel {
+  border: none;
+  box-shadow: none;
+}
+.managerlist .panel .panel-heading {
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+.managerlist .panel .panel-heading form .form-group {
+  margin-top: 0;
+}
+.managerlist .panel .panel-heading form .form-group label {
+  padding: 8px 20px;
+}
+.managerlist .panel .panel-heading form .form-group select {
+  width: 150px;
+}
+.managerlist .panel .panel-body .mlist-container .item {
+  border: 2px solid #ccc;
+  height: 320px;
+  padding: 10px;
+}
+.managerlist .panel .panel-body .mlist-container .item .sec-info {
+  overflow: hidden;
+  width: 100%;
+}
+.managerlist .panel .panel-body .mlist-container .item .sec-info .head-img {
+  width: 64px;
+  height: 64px;
+  background-color: #ddd;
+  border-radius: 32px;
+}
+.managerlist .panel .panel-body .mlist-container .item .sec-info .intro {
+  width: 145px;
+  margin-left: 5px;
+}
+.managerlist .panel .panel-body .mlist-container .item .sec-info .intro h4 {
+  margin: 5px 0;
+}
+.managerlist .panel .panel-body .mlist-container .item .sec-info .intro h5 {
+  margin-top: 0;
+  margin-bottom: 5px;
+}
+.managerlist .panel .panel-body .mlist-container .item .sec-info .add-btn a.btn {
+  margin-top: 10px;
+  padding: 5px;
+}
+.managerlist .panel .panel-body .mlist-container .item .sex-imglist {
+  height: 200px;
+  margin: 0;
+}
+.managerlist .panel .panel-body .mlist-container .item .sex-imglist .col-xs-9 {
+  height: 200px;
+  padding: 0;
+  text-align: center;
+  background-color: #ddd;
+  line-height: 200px;
+  font-size: 0;
+}
+.managerlist .panel .panel-body .mlist-container .item .sex-imglist .col-xs-9 img {
+  vertical-align: middle;
+  max-height: 100%;
+  max-width: 100%;
+}
+.managerlist .panel .panel-body .mlist-container .item .sex-imglist .col-xs-3 .sm-img {
+  width: 100%;
+  height: 50px;
+  line-height: 50px;
+  text-align: center;
+}
+.managerlist .panel .panel-body .mlist-container .item .sex-imglist .col-xs-3 .sm-img img {
+  max-width: 100%;
+  max-height: 100%;
+  vertical-align: middle;
+}
+.managerlist .panel .panel-body .mlist-container .item:hover {
+  border-color: #a40001;
+}
+.freeze-glist {
+  margin-top: 20px;
+}
+.freeze-glist .manage-item {
+  border: 1px solid #ddd;
+  padding: 10px 15px;
+  margin: 0;
+  margin-bottom: 10px;
+}
+.freeze-glist .manage-item .head-img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50px;
+  line-height: 100px;
+  text-align: center;
+  padding: 0;
+  background-color: #ddd;
+}
+.freeze-glist .manage-item .head-img img {
+  max-width: 100%;
+  max-height: 100%;
+  vertical-align: middle;
+}
+.freeze-glist .manage-item .col-xs-8 h3 {
+  margin-top: 10px;
+}
+.freeze-glist .manage-item .pull-right button {
+  margin-top: 30px;
+}
+.freeze-glist .glist-container .goods-list {
+  margin-left: -10px;
+}
+.freeze-glist .glist-container .goods-list .item {
+  border: 1px solid #ddd;
+  border-radius: 2px;
+  height: 360px;
+  margin: 10px;
+  width: 285px;
+}
+.freeze-glist .glist-container .goods-list .item a {
+  display: block;
+}
+.freeze-glist .glist-container .goods-list .item a .item-img {
+  height: 250px;
+  line-height: 250px;
+  text-align: center;
+}
+.freeze-glist .glist-container .goods-list .item a .item-img img {
+  vertical-align: middle;
+  max-height: 100%;
+  max-width: 100%;
+}
+.freeze-glist .glist-container .goods-list .item a .item-price span {
+  color: #a40001;
+}
+.freeze-glist .glist-container .goods-list .item:hover {
+  border-color: #a40001;
+}

@@ -16,7 +16,7 @@ class freeze_mdl_freeze_buyer extends dbeav_model
 
     public function get_account($data)
     {
-        $buyer_id = $data['seller_id'];
+        $buyer_id = $data['buyer_id'];
         $count = $this->count(array('buyer_id' => $buyer_id));
         $account_name = $data['login_account'];
         if ($count < 10) {

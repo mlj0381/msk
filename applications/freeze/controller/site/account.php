@@ -65,9 +65,8 @@ class freeze_ctl_site_account extends freeze_frontpage
     public function security()
     {
         $this->is_complete_info();
-
         $user_obj = vmc::singleton('freeze_user_object');
-        $this->pagedata['pam_data'] = $user_obj->get_pam_data('*',$user_obj->get_member_id());
+        $this->pagedata['pam_data'] = $user_obj->get_pam_data('*',$this->app->freeze_id);
         $this->output();
     }
 
@@ -80,27 +79,68 @@ class freeze_ctl_site_account extends freeze_frontpage
         {
             $redirect_here = array('app' => 'freeze', 'ctl' => 'site_account', 'act' => 'set_pam_mobile');
             $redirect = $this->gen_url(array('app' => 'freeze', 'ctl' => 'site_account', 'act' => 'security'));
+            $model_freeze = app::get('freeze')->model('freeze');
             $params = $_POST;
             $mobile = $params['mobile'];
             if (!vmc::singleton('b2c_user_vcode')->verify($params['vcode'], $params['mobile'], 'freeze_reset')) {
                 $this->splash('error', $redirect_here, '手机短信验证码不正确');
             }
-
-            if (!vmc::singleton('freeze_user_passport')->set_mobile($mobile, $msg)) {
+//            !vmc::singleton('freeze_user_passport')->set_mobile($mobile, $msg) //该方法添加多个登录账号的时候
+            $data = array(
+                'freeze_id' => $params['freeze_id'],
+                'mobile' => $mobile
+            );
+            if (!$model_freeze->save($data)) {
                 $this->splash('error', $redirect_here, $msg);
             } else {
                 $this->splash('success', $redirect, $msg);
             }
         }else{
             $user_obj = vmc::singleton('freeze_user_object');
-            $info = $user_obj->get_members_data(array('freeze'=>'name'));
-            if($mobile = $user_obj->_get_pam_type_data('login_account','mobile'))
-            {
-                $info['freeze']['mobile'] = $mobile['login_account'];
-            };
-            $this->pagedata['freeze'] = $info['freeze'];
+            $info = $user_obj->get_members_data(array('account'=>'login_account','freeze'=>'mobile,freeze_id'));
+//            if($mobile = $user_obj->_get_pam_type_data('login_account','mobile'))  //该方法取的是手机为登录账号
+//            {
+//                $info['freeze']['mobile'] = $mobile['login_account'];
+//            };
+            $this->pagedata['info'] = $info;
             $this->output();
         }
+    }
+
+    /**
+     * 设置身份证号码
+     */
+    public function set_ID($action)
+    {
+        if ($action == 'save')
+        {
+            $redirect_here = array('app' => 'freeze', 'ctl' => 'site_account', 'act' => 'set_ID');
+            $redirect = $this->gen_url(array('app' => 'freeze', 'ctl' => 'site_account', 'act' => 'security'));
+            $mdl_freeze = app::get('freeze')->model('freeze');
+            $user_obj = vmc::singleton('freeze_user_object');
+            $freeze_id = $this->app->freeze_id;
+            $data = $_POST;
+            $data['freeze_id'] = $freeze_id;
+            if(!$mdl_freeze->save($data))
+            {
+                $this->splash('error', $redirect_here, $msg);
+            }else{
+                $this->splash('success', $redirect, '身份保存成功');
+            }
+        }else{
+            $user_obj = vmc::singleton('freeze_user_object');
+            $info = $user_obj->get_members_data(array('freeze'=>'*'));
+            $this->pagedata['info'] = $info;
+            $this->output();
+        }
+    }
+
+    /**
+     * 设置邮箱
+     */
+    public function set_email()
+    {
+        $this->output();
     }
 
     /**
@@ -173,7 +213,6 @@ class freeze_ctl_site_account extends freeze_frontpage
         $freeze_model = app::get('freeze')->model('freeze');
         $generate_data = array();
         $generate_data['self_image'] = $data['self_image'];
-        $generate_data['mobile'] = $data['mobile'];
         $generate_data['email'] = $data['email'];
         $generate_data['name'] = $data['name'];
         $generate_data['sex'] = $data['sex'];
@@ -189,7 +228,7 @@ class freeze_ctl_site_account extends freeze_frontpage
         //处理3种情况：管家直接更改信息，管家自己修改信息，买手管家信息更改
         if(!$data['freeze_id'])
         {
-            if($freeze_id = $user_obj->get_member_id())
+            if($freeze_id = $this->app->freeze_id)
             {
                 $generate_data['freeze_id'] = $freeze_id;
             }else{
