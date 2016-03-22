@@ -19,6 +19,9 @@ $setting = array(
 			'port' => '8080',
 			'root' => 'msk-web/api/',
 			'version'	=> 'v1',
+			'headers' => array(
+				'Content-Type : application/json'
+			),			
 			'param' => array(
 				'siteCode' => '102',
 				'auth' => 'msk'
