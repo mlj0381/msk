@@ -1,6 +1,7 @@
 <?php
 
-$remote['seller_register'] = array(
+$remote['member_register'] = array(
+	'url' => '/by/account/register',
 	'params' => array(
 		'member_id' => array(
 			'name' => '登陆的用户ID',
@@ -20,7 +21,7 @@ $remote['seller_register'] = array(
 		),
 		'account' => array(
 			'name' => '账号',
-			'accountName' => 'telNo',
+			'column' => 'accountName',
 			'type' => 'String',
 			'parent' => 'param',
 			'default' => '',
@@ -32,6 +33,23 @@ $remote['seller_register'] = array(
 			'column' => 'accountPass',
 			'type' => 'md5',
 			'parent' => 'param',
+			'default' => '',
+			'require'=> false
+		),
+
+		'cate_name' => array(
+			'name' => '来源',
+			'column' => 'cateName',
+			'type' => 'String',
+			'parent' => 'param/cate',
+			'default' => '',
+			'require'=> false
+		),
+		'cate_id' => array(
+			'name' => '来源',
+			'column' => 'cateNo',
+			'type' => 'String',
+			'parent' => 'param/cate',
 			'default' => '',
 			'require'=> false
 		),
@@ -56,6 +74,6 @@ $remote['seller_register'] = array(
 	),
 
 	'result' => array(
-		// 'buyerId' => 
+		// 'buyerId' => // os id
 	),
 );
