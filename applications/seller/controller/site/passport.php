@@ -130,11 +130,16 @@ class seller_ctl_site_passport extends seller_frontpage
                 $this->pagedata['info'] = $this->passport_obj->edit_info($selfPage, $this->seller['seller_id'], $identity);
             $this->pagedata['pageIndex'] = $step;
             $this->pagedata['info']['company_extra']['page_setting'] = $this->passport_obj->columns();
-            var_dump($step);
             if ($step > $countPage) {
                 $sumPage = $this->passport_obj->countPage();
-                $redirect = $this->gen_url(array('app' => 'seller', 'ctl' => 'site_passport', 'act' => 'entry', 'args0' => ($sumPage['sum'] - 1)));
-                $this->splash('success', $redirect, '资质添加成功');
+                $store_id = app::get('store')->model('store')->getRow('store_id', array('seller_id' => $this->seller['seller_id']));
+                $redirect = array('app' => 'seller', 'ctl' => 'site_passport', 'act' => 'entry', 'args0' => ($sumPage['sum'] - 1));
+                if(is_numeric($store_id) && $store_id > 0){
+                    //商家中心添加品牌
+                    $redirect = array('app' => 'seller', 'ctl' => 'site_brand', 'act' => 'add');
+                }
+                $url = $this->gen_url($redirect);
+                $this->splash('success', $url, '资质添加成功');
             }
         }
         $this->pagedata['ident'] = $this->seller['ident'];

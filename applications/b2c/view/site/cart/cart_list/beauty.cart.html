@@ -7,7 +7,7 @@
             <a href="<{link app=store ctl=site_store act=index args0=$object.store_info.store_id}>"><{$object.store_info.store_name}></a><a
                 href="#" class="icon-comments"></a>
         </div>
-        <div class="row <{$object.obj_ident}> cart-item <{if $object.disabled!='true'}>enabled<{/if}>">
+        <div class="row <{$object.obj_ident}> cart-item <{if $object.disabled!='true'}>enabled<{/if}>" id="cart-row">
             <div class="col-xs-1 c-ci-check">
                 <label class="control-label">
                     <input type="checkbox" data-ident="<{$object.obj_ident}>" name="ident[]"
@@ -27,7 +27,6 @@
                         <h5>
                             <a href="<{link app=b2c ctl=site_product args0=$object.item.product.product_id args1=$object.store_info.store_id}>"><{$object.item.product.name}></a>
                         </h5>
-
                         <p class="spec-info">
                             <{$object.item.product.spec_info}>
                         </p>
@@ -50,8 +49,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-xs-1 c-ci-price" data-bind="item/product/buy_price"><{$object.item.product.buy_price|cur}>
-            </div>
+            <div class="col-xs-1 c-ci-price" data-bind="item/product/buy_price"><{$object.item.product.buy_price|cur}></div>
             <div class="interval  hide" >
                 <{foreach from=$object.item.product.interval key=key item=item}>
                     <div data-type="<{$object.type}>">

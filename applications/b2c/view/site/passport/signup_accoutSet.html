@@ -86,7 +86,7 @@ void function(signup_form){
     //获得短信验证码
     var _cutdown_sms = function(btn){
         btn.addClass('disabled');
-        var cutdown = 10,btn_o_text = btn.text(),timer =
+        var cutdown = 120,btn_o_text = btn.text(),timer =
         setInterval((function(){
             btn.text('短信已发送,'+(cutdown--)+'秒后可重试');
             if(cutdown<1){

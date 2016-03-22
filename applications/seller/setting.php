@@ -79,7 +79,7 @@ $setting = array(
                         'label' => '生产商企业基本资质',
                         'page' => array(
                             'three_lesstion', 'business_licence', 'tax_licence', 'organization_licence', 'bank_lesstion',
-                            'food_business_licence', 'food_flow_licence', 'agent_auth_lesstion')
+                            'f_b_licence', 'food_flow_licence', 'agent_auth_lesstion')
                     ),
                     2 => array(
                         'label' => '生产商企业基本生产能力',
@@ -110,7 +110,7 @@ $setting = array(
                         'label' => '生产商企业基本资质',
                         'page' => array(
                             'three_lesstion', 'business_licence', 'tax_licence', 'organization_licence', 'bank_lesstion',
-                            'food_business_licence', 'food_flow_licence', 'oem_auth_lesstion')
+                            'f_b_licence', 'food_flow_licence', 'oem_auth_lesstion')
                     ),
 //                    2 => array(
 //                        'label' => '生产商企业专业资质',

@@ -325,8 +325,8 @@ class b2c_ctl_site_passport extends b2c_frontpage
             ),
         ));
         $login_type = $this->passport_obj->get_login_account_type($params['pam_account']['login_name']);
-
-        if ($login_type == 'mobile' && !vmc::singleton('b2c_user_vcode')->verify($params['smscode'], $params['pam_account']['mobile'], 'signup')) {
+        //$login_type == 'mobile' &&
+        if (!vmc::singleton('b2c_user_vcode')->verify($params['smscode'], $params['pam_account']['mobile'], 'signup')) {
             $this->splash('error', $signup_url, '手机短信验证码不正确');
         } elseif ($login_type != 'mobile' && !base_vcode::verify('passport', $params['vcode'])) {
             $this->splash('error', $signup_url, '验证码不正确');
