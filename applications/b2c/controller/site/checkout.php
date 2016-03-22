@@ -161,7 +161,8 @@ class b2c_ctl_site_checkout extends b2c_frontpage
         $this->pagedata['selected_payapp'] = $selected_payapp;
         $this->pagedata['flow_success'] = $flow_success;
         //$this->set_tmpl('checkout');
-        $this->page('site/checkout/payment.html');
+        //$this->page('site/checkout/payment.html');
+        $this->page('site/checkout/new_orderpay.html');
     }
 
     public function dopayment($order_id)
@@ -267,14 +268,5 @@ class b2c_ctl_site_checkout extends b2c_frontpage
         $this->pagedata['order'] = $this->app->model('orders')->dump($bill['order_id']);
         //$this->set_tmpl('checkout');
         $this->page('site/checkout/payresult.html');
-    }
-
-
-
-
-    //新增订单提交页面
-    public function orderpay()
-    {
-        $this->page('site/checkout/new_orderpay.html');
     }
 }

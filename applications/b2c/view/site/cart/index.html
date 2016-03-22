@@ -206,7 +206,7 @@
 //        }
 //    });
         var sumPrice = 0;
-        $('.c-ci-price').each(function (index) {
+        $('.c-ci-price').each(function (index, cart) {
             var input_obj = $('.c-ci-quantity input[type=text]').eq(index);
             var buy_price = $('.c-ci-amount strong').eq(index);
             var num = parseInt(input_obj.val());
@@ -227,9 +227,10 @@
                 price = type == '1' ? parseFloat($(item).find('.price').text().trim()) * discount / 100 :
                         parseFloat($(item).find('.price').text().trim());
             });
-
             buy_price.text((num * price).toFixed(2));
-            sumPrice += num * price;
+            if($(cart).closest('#cart-row').find('input[type=checkbox]').prop('checked')){
+                sumPrice += num * price;
+            }
             $('.c-cf-amount strong').text(sumPrice.toFixed(2));
         });
 

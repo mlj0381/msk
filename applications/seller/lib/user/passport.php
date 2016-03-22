@@ -765,9 +765,11 @@ class seller_user_passport
                         'from' => '1',
                         'identity' => $params['typeId'],
                         'company_id' => $company_id ?: $company_extra[0]['company_id'],
-                        'company_name' => $value['key']['name'],
+                        'company_name' => $params[$value['key']]['name'],
                         'createtime' => time(),
                     );
+                    $cs_id = $mdl_company_seller->getRow('cs_id', array('company_id' => $company_seller['company_id'], 'uid' => $seller['seller_id'], 'from' => '1'));
+                    $company_seller['cs_id'] = $cs_id['cs_id'];
                     if (!$mdl_company_seller->$fun_name($company_seller)) {
                         $db->rollback();
                         return false;
@@ -794,6 +796,7 @@ class seller_user_passport
                 $params[$col]['uid'] = $seller['seller_id'];
                 $params[$col]['createtime'] = time();
                 $params[$col]['from'] = 1;
+
                 //电商成员信息
                 if (is_array(reset($params[$col]['value']))) {
 
