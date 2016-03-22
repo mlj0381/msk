@@ -134,7 +134,7 @@ class seller_ctl_site_passport extends seller_frontpage
                 $sumPage = $this->passport_obj->countPage();
                 $store_id = app::get('store')->model('store')->getRow('store_id', array('seller_id' => $this->seller['seller_id']));
                 $redirect = array('app' => 'seller', 'ctl' => 'site_passport', 'act' => 'entry', 'args0' => ($sumPage['sum'] - 1));
-                if(is_numeric($store_id) && $store_id > 0){
+                if (is_numeric($store_id) && $store_id > 0) {
                     //商家中心添加品牌
                     $redirect = array('app' => 'seller', 'ctl' => 'site_brand', 'act' => 'add');
                 }
@@ -587,7 +587,7 @@ class seller_ctl_site_passport extends seller_frontpage
         $redirect = $this->gen_url($redirect);
         $_POST['seller_id'] = $this->seller['seller_id'];
         $result = $this->passport_obj->identity_update($_POST);
-        if($result && $_POST['type'] == '1'){
+        if ($result && $_POST['type'] == '1') {
             //返回成功 并且 选择成功买手身份
             $this->user_obj->set_session(null);
             vmc::singleton('buyer_user_object')->set_session($result['buyer_id']);
@@ -640,15 +640,17 @@ class seller_ctl_site_passport extends seller_frontpage
      * 
      */
 
-    public function display_type($html_type =false){
-        $html_arr = array('apt_stock', 'apt_prove');
-        if(in_array($html_type, $html_arr)){
-            $this->display('ui/aptitude/'.$html_type.'.html');
-        }else{
-
+    public function display_type($html_type, $cat_id)
+    {
+        empty($html_type) && $html_type = 'apt_common';
+        $html_arr = array('apt_common',
+            'apt_pack', 'apt_prove',
+            'apt_quality', 'apt_raise',
+            'apt_safety', 'apt_stock',
+            'apt_technology', 'apt_transport');
+        if (in_array($html_type, $html_arr)) {
+            $this->display('ui/aptitude/' . $html_type . '.html');
         }
-        
-
     }
 
     public function add_cat()
@@ -656,61 +658,5 @@ class seller_ctl_site_passport extends seller_frontpage
         //获取分类
         $this->display('ui/add-category.html');
     }
-
-    //原种基本信息
-    public function apt_stock()
-    {
-        $this->display('ui/aptitude/apt_stock.html');
-    }
-
-    //原种种源标准指标
-    public function apt_prove()
-    {
-        $this->display('ui/aptitude/apt_prove.html');
-    }
-
-    //原种饲养标准指标
-    public function apt_raise()
-    {
-        $this->display('ui/aptitude/apt_raise.html');
-    }
-
-    //产品加工技术标准指标
-    public function apt_technology()
-    {
-        $this->display('ui/aptitude/apt_technology.html');
-    }
-
-    //产品加工质量标准指标
-    public function apt_quality()
-    {
-        $this->display('ui/aptitude/apt_quality.html');
-    }
-
-    //产品通用质量标准指标
-    public function apt_common()
-    {
-        $this->display('ui/aptitude/apt_common.html');
-    }
-
-    //产品安全标准指标
-    public function apt_safety()
-    {
-        $this->display('ui/aptitude/apt_safety.html');
-    }
-
-    //储存运输标准指标
-    public function apt_transport()
-    {
-        $this->display('ui/aptitude/apt_transport.html');
-    }
-
-    //包装标准指标
-    public function apt_pack()
-    {
-        $this->display('ui/aptitude/apt_pack.html');
-    }
-
-
 
 }

@@ -106,7 +106,7 @@ class b2c_goods_search
         //查询店铺
         $mdl_store = app::get('store')->model('store');
         $filter = array('store_name|has' => $params['keywords']['keywords']);
-        $this->_keywords($params['keywords']['keywords'], 'store');
+        $this->_keywords($params['keywords'], 'store');
         $result = $mdl_store->getList('*', $filter, $params['page']['size'] * ($params['page']['index'] - 1),
             $params['page']['size'], $params['orderdy']);
         $mdl_brand = app::get('b2c')->model('brand');
@@ -136,9 +136,11 @@ class b2c_goods_search
             //>>
         }
         $result = Array();
+        $keywords_array = array($keywords['keywords'], $keywords['having']);
+        print_r(array_filter($keywords_array));
         foreach($search as $mdlName => $column){
              $return = $this->$mdlName->getList($column['result'],
-                 array_merge($filter[$mdlName], array($column['filter'] . '|has' => $keywords)));
+                 array_merge($filter[$mdlName], array($column['filter'] . '|has' => $keywords_array)));
             if($column['result'] != 'goods_id'){
                 $return = $this->mGoods->getList('goods_id', array('goods_id|in' => join(',', $return[$column['result']])));
             }
@@ -148,6 +150,7 @@ class b2c_goods_search
         }
         return array_unique($result);
     }
+
 
 
     public function goods_list($params)
@@ -160,8 +163,9 @@ class b2c_goods_search
         cachemgr::co_start();
         extract($params['filter']);
         //关键词查询
-        if (!empty($params['keywords']['keywords'])) {
-            $filter['goods_id|in'] = $this->_keywords($params['keywords']['keywords'], 'goods');
+
+        if (array_filter($params['keywords'])) {
+            $filter['goods_id|in'] = $this->_keywords($params['keywords'], 'goods');
             if(!$filter['goods_id|in']) return array();
         }
         $filter['cat_id'] = $cat;
