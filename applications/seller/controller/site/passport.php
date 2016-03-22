@@ -632,7 +632,20 @@ class seller_ctl_site_passport extends seller_frontpage
 
     /*
      * 商家入驻添加经营类别
-     * */
+     * 
+     */
+
+    public function display_type($html_type =false){
+        $html_arr = array('apt_stock', 'apt_prove');
+        if(in_array($html_type, $html_arr)){
+            $this->display('ui/aptitude/'.$html_type.'.html');
+        }else{
+
+        }
+        
+
+    }
+
     public function add_cat()
     {
         //获取分类

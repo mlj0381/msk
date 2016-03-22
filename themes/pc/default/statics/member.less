@@ -1793,9 +1793,11 @@ ul,ol{
 
 				.cat_wrapbox{
 					margin-top:15px;
-					height:300px;
-					overflow: scroll;
-					overflow-x: hidden;
+					max-height:300px;
+					overflow-y: auto;
+					max-width:100%;
+					overflow-x:auto;
+					display: none;
 					.cat_header{
 						height:30px;
 						line-height: 30px;
