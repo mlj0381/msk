@@ -1,5 +1,4 @@
 <?php
-
 // +----------------------------------------------------------------------
 // | VMCSHOP [V M-Commerce Shop]
 // +----------------------------------------------------------------------
@@ -9,13 +8,35 @@
 // +----------------------------------------------------------------------
 // | Author: Shanghai ChenShang Software Technology Co., Ltd.
 // +----------------------------------------------------------------------
-
-/* +----------------------------------------------------------------------
-	// $this->Rpc = vmc::singleton('base_rpc');
+// | 接口基类
+// +----------------------------------------------------------------------
+// | example:
+/* 
+	//$orderRpc = $this->app->rpc('register'); // rpc调用的两种方式，同model
+	$orderRpc = app::get('b2c')->rpc('order_create');
+	$extract = compact('address', 'goods')
 	$data = array(
-		'tel' => '13212312312'
+		'member_id' => 2,
+		'years' => '2016-03',
+		'region_id'=> '111',
+		'status' => '123123',
+		'goods' => array(
+			array(
+				'goods_id' => '12',
+				'goods_name' => '大盘鸡'
+			),
+			array(
+				'goods_id' => '13',
+				'goods_name' => '三黄鸡'
+			)
+		),
+		'address' => array(
+			'region_id' => 1,
+			'mobile' => '13212321232',
+			'address' => '碧波路5号'
+		),
 	);
-	$res = $this->Rpc->app('seller')->request('register', $data);
+	//$result = $orderRpc->request($data, false);	
 	+----------------------------------------------------------------------
 */
 
@@ -79,7 +100,7 @@ class base_rpc
 				$this->$key = $item;
 			}
 			self::$initialized = true;			
-        }		
+        }
 	}
 
 	public function request(Array $data, $expire=false)
@@ -92,8 +113,7 @@ class base_rpc
 			$key = $index . md5(json_encode($data));			
 			$path = $this->_cache_path . $this->app_id;			
 			base_kvstore::instance($path)->fetch($key, $result);			
-		}
-		
+		}		
 		$this->_config($index, $data);
 		if(empty($result))
 		{
@@ -128,10 +148,7 @@ class base_rpc
 			$column = isset($item['column']) ? $item['column'] : $key;
 			if(!empty($item['require']) && !isset($data[$key])) return $this->error('参数错误！');
 			$type = strtolower($item['type']);  
-			$value = $key == 'param' ? $data : $data[$key];// 放在外层
-			echo $key . "\t" . $column . "\n";
-			print_r($value);
-			echo "\n---------------------------------------------------------------\n";
+			$value = $key == 'param' ? $data : $data[$key];// 放在外层			
 			if($type == 'object')
 			{	
 				isset($this->postData[$column]) || $this->postData[$column] = Array();				
