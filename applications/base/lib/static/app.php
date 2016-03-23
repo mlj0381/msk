@@ -68,7 +68,8 @@ class app
 
 	public function rpc($rpc)
 	{		
-		return vmc::singleton('base_rpc', $this, $rpc);
+		$result = vmc::singleton('base_rpc', $this);
+		return $result->get($rpc);
 	}
 
     public function router()

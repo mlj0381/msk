@@ -1,21 +1,25 @@
 <div id="store_info">
     <input type="hidden" name="store[store_id]" value="<{$extra.store.store_id}>" class="form-control">
     <h4>店铺信息</h4>
+
     <div class="form-group">
         <label class="col-xs-2 control-label">
             <span class="text-danger">*</span>店铺类型：
         </label>
+
         <div class="col-xs-4">
             <!-- <{input type=select required="true" name="store[store_type]" rows=$extra.page_setting.store valueColumn="id" labelColumn="label" value=$extra.store.store_type}> -->
-            <input type="text" class="form-control" disabled name="store[store_type]" value="<{$extra.store.store_type}>">
+            <input type="text" class="form-control" disabled name="store[store_type]"
+                   value="<{$extra.store.store_type}>">
         </div>
     </div>
     <div class="form-group">
         <label class="col-xs-2 control-label">
             <span class="text-danger">*</span>店铺名称：
         </label>
+
         <div class="col-xs-4">
-            <input name="store[store_name]" value="<{$extra.store.store_name}>" class="form-control" required="true" />
+            <input name="store[store_name]" value="<{$extra.store.store_name}>" class="form-control" required="true"/>
             <span class="msgTip" data-message="error"></span>
         </div>
     </div>
@@ -23,8 +27,10 @@
         <label class="col-xs-2 control-label">
             <span class="text-danger">*</span>店铺logo：
         </label>
+
         <div class="col-xs-4">
-            <{input type="imageupload" tag="图片上传" name="store[logo]" value=$extra.store.logo required='true' accept="jpg|png|gif" }>
+            <{input type="imageupload" tag="图片上传" name="store[logo]" value=$extra.store.logo required='true'
+            accept="jpg|png|gif" }>
             <span class="msgTip" data-message="error">不能为空</span>
         </div>
     </div>
@@ -32,11 +38,16 @@
         <label class="col-xs-2 control-label">
             <span class="text-danger">*</span>经营品牌：
         </label>
+
         <div class="col-xs-4">
-            <button type="button" class="btn btn-md btn-default brand_add_btn" data-toggle="modal" data-target=".brand_add_modal" href="<{link app=seller ctl=site_passport act=add_brand}>"><i class="icon-plus"></i> 添加品牌</button>
+            <button type="button" class="btn btn-md btn-default brand_add_btn" data-toggle="modal"
+                    data-target=".brand_add_modal" href="<{link app=seller ctl=site_passport act=add_brand}>"><i
+                    class="icon-plus"></i> 添加品牌
+            </button>
             <div class="brand_list" data-list="brand_list">
                 <{foreach from=$extra.brand item=item}>
-                    <span class="brand_item"><{$item.brand_name}> <i class="icon-remove" data-id="<{$item.brand_id}>"></i></span>
+                <span class="brand_item"><{$item.brand_name}> <i class="icon-remove"
+                                                                 data-id="<{$item.brand_id}>"></i></span>
                 <{/foreach}>
             </div>
         </div>
@@ -45,20 +56,23 @@
         <label class="col-xs-2 control-label">
             <span class="text-danger">*</span>经营商品类别：
         </label>
+
         <div class="col-xs-10">
-            <button type="button" class="btn btn-md btn-default cat_add_btn" href="<{link app=seller ctl=site_passport act=add_cat}>"><i class="icon-plus"></i> 选择分类</button>
+            <button type="button" class="btn btn-md btn-default cat_add_btn"
+                    href="<{link app=seller ctl=site_passport act=add_cat}>"><i class="icon-plus"></i> 选择分类
+            </button>
             <div class="cat_wrapbox">
                 <p class="cat_header"><span class="icon-list"></span> 产品分类目录</p>
                 <table class="cat_tree table-hover">
                     <tr>
-                        <tr>
-                            <th width="20%">编码</th>
-                            <th width="50%">名称</th>
-                            <th width="30%">标准资质</th>
-                        </tr>
+                    <tr>
+                        <th width="20%">编码</th>
+                        <th width="50%">名称</th>
+                        <th width="30%">标准资质</th>
+                    </tr>
                     </tr>
                     <tr data-treeId="01" data-catName="鸡产品">
-                    <td><span class="arrow icon-caret-right"></span>01</td>
+                        <td><span class="arrow icon-caret-right"></span>01</td>
                         <td>鸡产品</td>
                         <td></td>
                     </tr>
@@ -66,31 +80,50 @@
                         <td><span class="arrow icon-caret-right"></span>1</td>
                         <td><input type="checkbox">白条鸡</td>
                         <td>
-                            <span class="apt_tag active" data-toggle="modal" data-target=".category_add_modal"  href="<{link app=seller ctl=site_passport act=apt_stock}>" data-tagId="1" title="原种">原</span>
-                            <span class="apt_tag active" data-toggle="modal" data-target=".category_add_modal"  href="<{link app=seller ctl=site_passport act=apt_prove args0=apt_prove}>" data-tagId="2" title="原种种源标准指标">种</span>
-                            <span class="apt_tag active" data-toggle="modal" data-target=".category_add_modal"  href="<{link app=seller ctl=site_passport act=apt_raise}>" data-tagId="3" title="原种饲养标准指标">饲</span>
-                            <span class="apt_tag active" data-toggle="modal" data-target=".category_add_modal"  href="<{link app=seller ctl=site_passport act=apt_technology}>" data-tagId="4" title="产品加工技术标准指标">技</span>
-                            <span class="apt_tag active" data-toggle="modal" data-target=".category_add_modal"  href="<{link app=seller ctl=site_passport act=apt_quality}>" data-tagId="5" title="产品加工质量标准指标">质</span>
-                            <span class="apt_tag active" data-toggle="modal" data-target=".category_add_modal"  href="<{link app=seller ctl=site_passport act=apt_common}>" data-tagId="6" title="产品通用质量标准指标">通</span>
-                            <span class="apt_tag active" data-toggle="modal" data-target=".category_add_modal"  href="<{link app=seller ctl=site_passport act=apt_safety}>" data-tagId="7" title="产品安全标准指标">安</span>
-                            <span class="apt_tag active" data-toggle="modal" data-target=".category_add_modal"  href="<{link app=seller ctl=site_passport act=apt_transport}>" data-tagId="8" title="储存运输标准指标">运</span>
-                            <span class="apt_tag active" data-toggle="modal" data-target=".category_add_modal"  href="<{link app=seller ctl=site_passport act=apt_pack}>" data-tagId="9" title="包装标准指标">包</span>
+                            <span class="apt_tag active" data-toggle="modal" data-target=".category_add_modal"
+                                  href="<{link app=seller ctl=site_passport act=display_type args0=apt_stock}>" data-tagId="1"
+                                  title="原种">原</span>
+                            <span class="apt_tag active" data-toggle="modal" data-target=".category_add_modal"
+                                  href="<{link app=seller ctl=site_passport act=display_type args0=apt_prove args1=1}>"
+                                  data-tagId="2" title="原种种源标准指标">种</span>
+                            <span class="apt_tag active" data-toggle="modal" data-target=".category_add_modal"
+                                  href="<{link app=seller ctl=site_passport act=display_type args0=apt_raise args1=1}>" data-tagId="3"
+                                  title="原种饲养标准指标">饲</span>
+                            <span class="apt_tag active" data-toggle="modal" data-target=".category_add_modal"
+                                  href="<{link app=seller ctl=site_passport act=display_type args0=apt_technology args1=1}>" data-tagId="4"
+                                  title="产品加工技术标准指标">技</span>
+                            <span class="apt_tag active" data-toggle="modal" data-target=".category_add_modal"
+                                  href="<{link app=seller ctl=site_passport act=display_type args0=apt_quality args1=1}>" data-tagId="5"
+                                  title="产品加工质量标准指标">质</span>
+                            <span class="apt_tag active" data-toggle="modal" data-target=".category_add_modal"
+                                  href="<{link app=seller ctl=site_passport act=display_type args0=apt_common args1=1}>" data-tagId="6"
+                                  title="产品通用质量标准指标">通</span>
+                            <span class="apt_tag active" data-toggle="modal" data-target=".category_add_modal"
+                                  href="<{link app=seller ctl=site_passport act=display_type args0=apt_safety args1=1}>" data-tagId="7"
+                                  title="产品安全标准指标">安</span>
+                            <span class="apt_tag active" data-toggle="modal" data-target=".category_add_modal"
+                                  href="<{link app=seller ctl=site_passport act=display_type args0=apt_transport args1=1}>" data-tagId="8"
+                                  title="储存运输标准指标">运</span>
+                            <span class="apt_tag active" data-toggle="modal" data-target=".category_add_modal"
+                                  href="<{link app=seller ctl=site_passport act=display_type args0=apt_pack args1=1}>" data-tagId="9"
+                                  title="包装标准指标">包</span>
                         </td>
                     </tr>
-                    <tr data-treeId="01-2" data-catName="白条鸡">
-                        <td><span class="arrow icon-caret-right"></span>01</td>
-                        <td><input type="checkbox">白条肉鸡</td>
-                        <td>
-                            <span class="apt_tag active" data-toggle="modal" data-target=".category_add_modal"  href="<{link app=seller ctl=site_cat act=add_cat}>" data-tagId="1">原</span>
-                            <span class="apt_tag active" data-tagId="2">种</span>
-                            <span class="apt_tag active" data-tagId="3">饲</span>
-                            <span class="apt_tag active" data-tagId="4">技</span>
-                            <span class="apt_tag active" data-tagId="5">质</span>
-                            <span class="apt_tag active" data-tagId="6">通</span>
-                            <span class="apt_tag active" data-tagId="7">安</span>
-                            <span class="apt_tag active" data-tagId="8">运</span>
-                        </td>
-                    </tr>
+                    <!--<tr data-treeId="01-2" data-catName="白条鸡">-->
+                        <!--<td><span class="arrow icon-caret-right"></span>01</td>-->
+                        <!--<td><input type="checkbox">白条肉鸡</td>-->
+                        <!--<td>-->
+                            <!--<span class="apt_tag active" data-toggle="modal" data-target=".category_add_modal"-->
+                                  <!--href="<{link app=seller ctl=site_cat act=add_cat}>" data-tagId="1">原</span>-->
+                            <!--<span class="apt_tag active" data-tagId="2">种</span>-->
+                            <!--<span class="apt_tag active" data-tagId="3">饲</span>-->
+                            <!--<span class="apt_tag active" data-tagId="4">技</span>-->
+                            <!--<span class="apt_tag active" data-tagId="5">质</span>-->
+                            <!--<span class="apt_tag active" data-tagId="6">通</span>-->
+                            <!--<span class="apt_tag active" data-tagId="7">安</span>-->
+                            <!--<span class="apt_tag active" data-tagId="8">运</span>-->
+                        <!--</td>-->
+                    <!--</tr>-->
                 </table>
             </div>
         </div>
@@ -103,7 +136,7 @@
             </div>
         </div>
     </div>
-    
+
     <!-- 商品类目添加模态框 -->
     <div class="modal fade category_add_modal" id="category_add_modal" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-lg">
@@ -118,61 +151,70 @@
 
 <script type="text/javascript">
 
-    $(function(){
+    $(function () {
 
         //创建品牌
-        $('#brand_add_modal').on('click','.brand_save_btn',function(){
+        $('#brand_add_modal').on('click', '.brand_save_btn', function () {
             var brand = $.trim($('.brand_name').val());
-            var brand_html ='<span class="brand_item">'+brand+' <i class="icon-remove"></i></span>';
-            if(brand != '' && brand != null && brand != undefined){
+            var brand_html = '<span class="brand_item">' + brand + ' <i class="icon-remove"></i></span>';
+            if (brand != '' && brand != null && brand != undefined) {
                 $('.brand_list').append(brand_html);
             }
             $("#brand_add_modal").modal('hide');
         })
 
         //移除品牌
-        $('.brand_list').on('click','.icon-remove',function(){
-            if(confirm("您真的要删除吗？")){
+        $('.brand_list').on('click', '.icon-remove', function () {
+            if (confirm("您真的要删除吗？")) {
                 var brandId = $(this).attr('data-id');
-                if(brandId <= 0) {
+                if (brandId <= 0) {
                     alert('删除失败');
                     return false;
                 }
                 var _self = $(this);
                 var url = '<{link app=seller ctl=site_brand act=remove}>';
-                $.post(url, {'brand_id' : brandId}, function(re){
-                    if(re.success){
+                $.post(url, {'brand_id': brandId}, function (re) {
+                    if (re.success) {
                         _self.parent('.brand_item').remove();
-                    }else{
+                    } else {
                         alert('删除失败');
                     }
                 });
 
-            }  
+            }
         });
-    
+
         $('#brand_add_modal').on('shown.bs.modal', function () {
             $.VMC.init();  //重新绑定图片上传事件
         });
-        $("#brand_add_modal").on("hidden.bs.modal", function() {  
+        $("#brand_add_modal").on("hidden.bs.modal", function () {
             $(this).removeData("bs.modal");  //关闭时清空数据
-        }); 
+        });
 
         $('[data-toggle="tooltip"]').tooltip();
 
-
+        $('.cat_tree input[type="checkbox"]').click(function(){
+            var spanList = $(this).closest('tr').find('span.apt_tag');
+            if($(this).prop('checked')){
+                spanList.attr('data-toggle', 'modal');
+                spanList.attr('data-target', '.category_add_modal');
+            }else {
+                spanList.removeAttr('data-toggle');
+                spanList.removeAttr('data-target');
+            }
+        });
 
         //经营商品类别添加
-        $(".cat_add_btn").on('click',function(){
+        $(".cat_add_btn").on('click', function () {
             $(".cat_wrapbox").slideToggle();
         })
         $('#category_add_modal').on('shown.bs.modal', function () {
             var readonly = $(this).find('.modal-body').attr('data-readonly');
-            if(readonly=="readonly"){
-                $(this).find('input,textarea').attr('readonly','readonly');
+            if (readonly == "readonly") {
+                $(this).find('input,textarea').attr('readonly', 'readonly');
             }
         });
-        $("#category_add_modal").on("hidden.bs.modal", function() {  
+        $("#category_add_modal").on("hidden.bs.modal", function () {
             $(this).removeData("bs.modal");  //关闭时清空数据
         });
     })
