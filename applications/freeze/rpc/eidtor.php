@@ -1,91 +1,129 @@
 <?php
 $remote['freeze_editor'] = array(
-	'url' => '/by/account/register',
-	'params' => array(
-		'member_id' => array(
-			'name' => '登陆的用户ID',
-			'column' => 'loginId',
-			'type' => 'String',
-			'parent' => '',
-			'default' => '',
-			'require'=> false // ture|false 注册|修改			
-		),
+    'url' => '/bs/slInfo/slSeller/newOrUpdate',
+    'params' => array(
+        '' => array(
+            'name' => '买手店编码',
+            'column' => 'slCode',
+            'type' => 'String',
+            'parent' => '',
+            'default' => '',
+            'require' => true
+        ),
+        '' => array(
+            'name' => '管家账号',
+            'column' => 'houseAccount',
+            'type' => 'String',
+            'parent' => '',
+            'default' => '',
+            'require' => true
+        ),
+        '' => array(
+            'name' => '登录手机号码',
+            'column' => 'houseTel',
+            'type' => 'String',
+            'parent' => '',
+            'default' => '',
+            'require' => true
+        ),
+        '' => array(
+            'name' => '卖家显示名称',
+            'column' => 'houseShowName',
+            'type' => 'String',
+            'parent' => '',
+            'default' => '',
+            'require' => true
+        ),
+        '' => array(
+            'name' => '联系人姓名',
+            'column' => 'houseContact',
+            'type' => 'String',
+            'parent' => '',
+            'default' => '',
+            'require' => true
+        ),
+        '' => array(
+            'name' => '登录密码',
+            'column' => 'accountPsd',
+            'type' => 'String',
+            'parent' => '',
+            'default' => '',
+            'require' => true
+        ),
+        '' => array(
+            'name' => '认证状态',
+            'column' => 'authStatus',
+            'type' => 'Integer',
+            'parent' => '',
+            'default' => '',
+            'require' => false
+        ),
+        '' => array(
+            'name' => '管家身份证号',
+            'column' => 'slIdcard',
+            'type' => 'String',
+            'parent' => '',
+            'default' => '',
+            'require' => true
+        ),
+        '' => array(
+            'name' => '国籍',
+            'column' => 'slConFlg',
+            'type' => 'String',
+            'parent' => '',
+            'default' => '',
+            'require' => true
+        ),
+        '' => array(
+            'name' => '大区编码',
+            'column' => 'areaCode',
+            'type' => 'String',
+            'parent' => '',
+            'default' => '',
+            'require' => false
+        ),
+        '' => array(
+            'name' => '物流区编码',
+            'column' => 'lgcsAreaCode',
+            'type' => 'String',
+            'parent' => '',
+            'default' => '',
+            'require' => false
+        ),
+        '' => array(
+            'name' => '省编码',
+            'column' => 'provinceCode',
+            'type' => 'String',
+            'parent' => '',
+            'default' => '',
+            'require' => false
+        ),
+        '' => array(
+            'name' => '地区编码',
+            'column' => 'cityCode',
+            'type' => 'String',
+            'parent' => '',
+            'default' => '',
+            'require' => false
+        ),
+        '' => array(
+            'name' => '区编码',
+            'column' => 'districtCode',
+            'type' => 'String',
+            'parent' => '',
+            'default' => '',
+            'require' => false
+        ),
+        '' => array(
+            'name' => '管家地址',
+            'column' => 'houseAddress',
+            'type' => 'String',
+            'parent' => '',
+            'default' => '',
+            'require' => true
+        ),
 
-		'param' => array(
-			'name' => '参数',
-			'column' => 'param',
-			'type' => 'object'			
-		),
-
-		'mobile' => array(
-			'name' => '手机',
-			'column' => 'telNo',
-			'type' => 'String',
-			'parent' => 'param',
-			'default' => '',
-			'require'=> true
-		),
-		'account' => array(
-			'name' => '账号',
-			'column' => 'accountName',
-			'type' => 'String',
-			'parent' => 'param',
-			'default' => '',
-			'require'=> false
-		),
-		'password' => array(
-			'name' => '密码',
-			'column' => 'accountPass',
-			'type' => 'md5',
-			'parent' => 'param',
-			'default' => '',
-			'require'=> false
-		),
-		'source' => array(
-			'name' => '来源',
-			'column' => 'registerSource',
-			'type' => 'String',
-			'parent' => 'param',
-			'default' => 'msk',
-			'require'=> true
-		),
-		'operator' => array(
-			'name' => '操作者',
-			'column' => 'updId',
-			'type' => 'String',
-			'parent' => 'param',
-			'default' => '',
-			'require'=> false
-		),		
-		'cate' => array(
-			'name' => '参数',
-			'column' => 'cateList',
-			'type' => 'object',
-			'parent' => 'param',
-			'require' => true
-		)
-	),
-
-	'cate' => array(
-		'cate_name' => array(
-			'name' => '分类名称',
-			'column' => 'cateName',
-			'type' => 'String',
-			'parent' => 'param/cate',
-			'default' => '',
-			'require'=> false
-		),
-		'cate_id' => array(
-			'name' => '分类ID',
-			'column' => 'cateNo',
-			'type' => 'String',
-			'parent' => 'param/cate',
-			'default' => '',
-			'require'=> false
-		)
-	),
-
-	'result' => array(
-		// 'buyerId' => // os id
-	),
-);
+        'result' => array(
+            // 'buyerId' => // os id
+        ),
+    );
