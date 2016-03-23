@@ -5,7 +5,7 @@
 $remote['freeze_editorbuyer'] = array(
     'url' => '/bs/slInfo/slExclusive/newOrUpdate',
 
-    'params' => array(
+    'request' => array(
         'member_id' => array(
             'name' => '登陆的用户ID',
             'column' => 'loginId',
@@ -23,77 +23,77 @@ $remote['freeze_editorbuyer'] = array(
     ),
 
     'param' => array(
-        '' => array(
+        'buyerFlag' => array(
             'name' => '1:专属买家、2：抢单买家',
             'column' => 'buyerFlag',
             'type' => 'String',
             'default' => '',
             'require' => true
         ),
-        '' => array(
+        'slCode' => array(
             'name' => '买手店编码',
             'column' => 'slCode',
             'type' => 'String',
             'default' => '',
             'require' => true
         ),
-        '' => array(
+        'houseAccount' => array(
             'name' => '管家账号',
             'column' => 'houseAccount',
             'type' => 'String',
             'default' => '',
             'require' => true
         ),
-        '' => array(
+        'buyerid' => array(
             'name' => '买家编码',
             'column' => 'buyerid',
             'type' => 'String',
             'default' => '',
             'require' => true
         ),
-        '' => array(
+        'startTime' => array(
             'name' => '开始日时',
             'column' => 'startTime',
             'type' => 'datetime',
             'default' => '',
             'require' => false
         ),
-        '' => array(
+        'applyTime' => array(
             'name' => '申请日时',
             'column' => 'applyTime',
             'type' => 'datetime',
             'default' => '',
             'require' => false
         ),
-        '' => array(
+        'applyStatus' => array(
             'name' => '申请状态',
             'column' => 'applyStatus',
             'type' => 'String',
             'default' => '',
             'require' => true
         ),
-        '' => array(
+        'applySide' => array(
             'name' => '认证方式',
             'column' => 'applySide',
             'type' => 'String',
             'default' => '',
             'require' => true
         ),
-        '' => array(
+        'ver' => array(
             'name' => '  版本号',
             'column' => 'ver',
             'type' => 'Integer',
             'default' => '',
             'require' => false
         ),
-        '' => array(
+        'delFlg' => array(
             'name' => '  删除标志',
             'column' => 'delFlg',
             'type' => 'String',
             'default' => '',
             'require' => false
         ),
-        '' => array(
+        'loginId' => array(
             'name' => '创建者ID/更新者ID',
             'column' => 'loginId',
             'type' => 'String',
@@ -102,7 +102,7 @@ $remote['freeze_editorbuyer'] = array(
         ),
     ),
 
-    'result' => array(
+    'response' => array(
         // 'buyerId' => // os id
     ),
 );
