@@ -9,8 +9,8 @@ $remote['b2c_quality_standard'] = array(
 			'name' => '登陆的用户ID',
 			'column' => 'loginId',
 			'type' => 'String',			
-			'default' => '',
-			'require'=> false // ture|false 注册|修改			
+			'default' => '2',
+			'require'=> true // ture|false 注册|修改			
 		),
 		'param' => array(
 			'name' => '参数',
