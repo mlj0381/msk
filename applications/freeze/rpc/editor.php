@@ -1,6 +1,10 @@
 <?php
+/**
+ * 编辑冻品管家信息---------------IBS2101104
+ */
 $remote['freeze_editor'] = array(
     'url' => '/bs/slInfo/slSeller/newOrUpdate',
+
     'params' => array(
         'buyer_code' => array(
             'name' => '买手店编码',
@@ -122,9 +126,234 @@ $remote['freeze_editor'] = array(
             'default' => '',
             'require' => true
         ),
-
-        'result' => array(
-            // 'buyerId' => // os id
+        '' => array(
+            'name' => '管家介绍',
+            'column' => 'houseIntroduce',
+            'type' => 'String',
+            'parent' => '',
+            'default' => '',
+            'require' => false
         ),
-    )
+        '' => array(
+            'name' => '级别',
+            'column' => 'houseClass',
+            'type' => 'String',
+            'parent' => '',
+            'default' => '',
+            'require' => false
+        ),
+        '' => array(
+            'name' => '管家分类',
+            'column' => 'houseCategory',
+            'type' => 'String',
+            'parent' => '',
+            'default' => '',
+            'require' => false
+        ),
+        '' => array(
+            'name' => '管家分类基本',
+            'column' => 'HOUSE_CATEGORY0',
+            'type' => 'String',
+            'parent' => '',
+            'default' => '',
+            'require' => false
+        ),
+        '' => array(
+            'name' => '管家分类分销',
+            'column' => 'HOUSE_CATEGORY1',
+            'type' => 'String',
+            'parent' => '',
+            'default' => '',
+            'require' => false
+        ),
+        '' => array(
+            'name' => '管家分类菜场',
+            'column' => 'HOUSE_CATEGORY2',
+            'type' => 'String',
+            'parent' => '',
+            'default' => '',
+            'require' => false
+        ),
+        '' => array(
+            'name' => '管家分类团膳',
+            'column' => 'HOUSE_CATEGORY3',
+            'type' => 'String',
+            'parent' => '',
+            'default' => '',
+            'require' => false
+        ),
+        '' => array(
+            'name' => '管家分类火锅',
+            'column' => 'HOUSE_CATEGORY4',
+            'type' => 'String',
+            'parent' => '',
+            'default' => '',
+            'require' => false
+        ),
+        '' => array(
+            'name' => '管家分类中餐',
+            'column' => 'HOUSE_CATEGORY5',
+            'type' => 'String',
+            'parent' => '',
+            'default' => '',
+            'require' => false
+        ),
+        '' => array(
+            'name' => '管家分类西餐',
+            'column' => 'HOUSE_CATEGORY6',
+            'type' => 'String',
+            'parent' => '',
+            'default' => '',
+            'require' => false
+        ),
+        '' => array(
+            'name' => '管家分类小吃烧烤',
+            'column' => 'HOUSE_CATEGORY7',
+            'type' => 'String',
+            'parent' => '',
+            'default' => '',
+            'require' => false
+        ),
+        '' => array(
+            'name' => '管家分类加工厂',
+            'column' => 'HOUSE_CATEGORY8',
+            'type' => 'String',
+            'parent' => '',
+            'default' => '',
+            'require' => false
+        ),
+        '' => array(
+            'name' => '等级',
+            'column' => 'grade',
+            'type' => 'Integer',
+            'parent' => '',
+            'default' => '',
+            'require' => false
+        ),
+        '' => array(
+            'name' => '创建者ID/更新者ID',
+            'column' => 'loginId',
+            'type' => 'String',
+            'parent' => '',
+            'default' => '',
+            'require' => false
+        ),
+        '' => array(
+            'name' => '删除标志',
+            'column' => 'delFlg',
+            'type' => 'String',
+            'parent' => '',
+            'default' => '',
+            'require' => false
+        ),
+        '' => array(
+            'name' => '版本号',
+            'column' => 'ver',
+            'type' => 'Integer',
+            'parent' => '',
+            'default' => '',
+            'require' => false
+        ),
+        'list_1' => array(
+            'name' => '经营区域List',
+            'column' => 'slAreaList',
+            'type' => 'list',
+            'default' => '',
+            'require' => false
+        ),
+        'list_2' => array(
+            'name' => '',
+            'column' => 'housePdList',
+            'type' => 'list',
+            'default' => '',
+            'require' => false
+        ),
+    ),
+
+    'list_1' => array(
+        '' => array(
+            'name' => '经营区域ID',
+            'column' => 'slAreaId',
+            'type' => 'Integer',
+            'default' => '',
+            'require'=> false
+        ),
+        '' => array(
+            'name' => '物流区编码',
+            'column' => 'lgcsAreaCode',
+            'type' => 'String',
+            'default' => '',
+            'require'=> false
+        ),
+        '' => array(
+            'name' => '省编码',
+            'column' => 'provinceCode',
+            'type' => 'String',
+            'default' => '',
+            'require'=> false
+        ),
+        '' => array(
+            'name' => '地区编码',
+            'column' => 'cityCode',
+            'type' => 'String',
+            'default' => '',
+            'require'=> false
+        ),
+        '' => array(
+            'name' => '区编码',
+            'column' => 'districtCode',
+            'type' => 'String',
+            'default' => '',
+            'require'=> false
+        ),
+        '' => array(
+            'name' => '经营地址',
+            'column' => 'address',
+            'type' => 'String',
+            'default' => '',
+            'require'=> false
+        ),
+    ),
+
+    'list_2' => array(
+        '' => array(
+            'name' => '管家管理产品ID',
+            'column' => 'pdId',
+            'type' => 'Integer',
+            'default' => '',
+            'require'=> false
+        ),
+        '' => array(
+            'name' => '产品类别',
+            'column' => 'pdClassesCode',
+            'type' => 'String',
+            'default' => '',
+            'require'=> false
+        ),
+        '' => array(
+            'name' => '产品二级分类编码',
+            'column' => 'machiningCode',
+            'type' => 'String',
+            'default' => '',
+            'require'=> false
+        ),
+        '' => array(
+            'name' => '产品品种',
+            'column' => 'pdBreedCode',
+            'type' => 'String',
+            'default' => '',
+            'require'=> false
+        ),
+        '' => array(
+            'name' => '产品特征',
+            'column' => 'pdFeatureCode',
+            'type' => 'String',
+            'default' => '',
+            'require'=> false
+        ),
+    ),
+
+    'result' => array(
+            // 'buyerId' => // os id
+    ),
 );
