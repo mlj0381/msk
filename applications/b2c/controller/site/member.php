@@ -822,7 +822,6 @@ vmc_b2c_orders WHERE `member_id`={$this->member['member_id']} AND `status` = 'ac
             'ctl' => 'site_member',
             'act' => 'freeze',
         ));
-
         $freeze_member['freeze_id'] = $bind_id;
         $member_id =  $this->member['member_id'];
         if(!$bind_id && !$member_id)
@@ -845,11 +844,27 @@ vmc_b2c_orders WHERE `member_id`={$this->member['member_id']} AND `status` = 'ac
     {
         $member_id = $this->member['member_id'];
         $mdl_freeze_member = app::get('freeze')->model('freeze_member');
-        $mdl_freeze = app::get('freeze')->model('freeze');
         $freeze = $mdl_freeze_member->getRow('*',array('member_id'=>$member_id));
-        $freeze_list = $mdl_freeze->getList('*');
+        if($freeze['status'] == 1)
+        {
+            //已绑定冻品管家，查询出管家信息
+            $mdl_freeze = app::get('freeze')->model('freeze');
+            $freeze_info = $mdl_freeze->getRow('*',array('freeze_id'=>$freeze['freeze_id']));
 
-        $this->pagedata['freeze_list'] = $freeze_list;
+            //推荐商品
+            $filter = array();
+            $mdl_goods = app::get('b2c')->model('goods');
+            $goods_list = $mdl_goods->getList('*', $filter, 0, 10);
+            $goods_list = is_array($goods_list) ? $goods_list : array();
+            $obj_goods_stage = vmc::singleton('b2c_goods_stage');
+            $obj_goods_stage->gallery($goods_list); //引用传递
+
+
+            $this->pagedata['goods_list'] = $goods_list;
+            $this->pagedata['freeze_info'] = $freeze_info;
+
+        }
+
         $this->pagedata['freeze'] = $freeze;
         $this->output();
     }

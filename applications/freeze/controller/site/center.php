@@ -56,7 +56,7 @@ class freeze_ctl_site_center extends freeze_frontpage{
             );
         }
         //买家信息
-        $member_list = $mdl_freeze_member->get_freeze_member('bm.*,fm.status', $filter, ($page - 1) * $limit, $limit);
+        $member_list = $mdl_freeze_member->get_freeze_member('bm.*,fm.status,fm.apply_type', $filter, ($page - 1) * $limit, $limit);
         $member_ids = array_keys(utils::array_change_key($member_list,'member_id'));
         $count = $mdl_freeze_member->count_freeze_member($filter);
 
@@ -104,6 +104,7 @@ class freeze_ctl_site_center extends freeze_frontpage{
             ),
             'token' => $token,
         );
+
         $this->pagedata['current_status'] = $status;
         $this->pagedata['list'] = $member_list;
         $this->output();
@@ -112,7 +113,7 @@ class freeze_ctl_site_center extends freeze_frontpage{
     /**
      * 申请绑定
      */
-    public function apply_bind($bind_id,$status = '0')
+    public function apply_bind($bind_id,$status = '0',$freeze_member_id = null)
     {
         $mdl_freeze_member = app::get('freeze')->model('freeze_member');
         $freeze_member = array(
@@ -132,6 +133,7 @@ class freeze_ctl_site_center extends freeze_frontpage{
         ));
 
         $freeze_member['member_id'] = $bind_id;
+        $freeze_member['freeze_member_id'] = $freeze_member_id;
         $freeze_id = $this->user_obj->get_member_id();
         if(!$bind_id && !$freeze_id)
         {

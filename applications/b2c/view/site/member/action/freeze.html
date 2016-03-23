@@ -10,15 +10,15 @@
     <div class="main-content">
         <div class="manage-item row">
             <div class="col-xs-2 head-img">
-                <img src="" class="img-circle">
+                <img src="<{$freeze_info.head_image|storager:'s'}>" class="img-circle">
             </div>
             <div class="col-xs-8">
-                <h3>管家名称</h3>
-                <h5>主销品类:<span>鸡产品</span></h5>
+                <h3><a href="<{link app=freeze ctl=site_list act=freeze_goods arg0=$freeze.freeze_id}>"><{$freeze_info.name}></a></h3>
+                <!--<h5>主销品类:<span>鸡产品</span></h5>-->
                 <p>专注冻品管理20年，平台推荐金牌管家</p>
             </div>
             <div class="col-xs-2 pull-right text-right">
-                <button class="btn btn-success"><i class="glyphicon glyphicon-plus"></i> 绑定</button>
+                <!--<button class="btn btn-success"><i class="glyphicon glyphicon-plus"></i> 绑定</button>-->
             </div>
         </div>
         <div class="panel panel-default rec-itemlist">
@@ -28,78 +28,16 @@
             <div class="panel-body">
                 <div class="glist-container">
                     <div class="row goods-list gl-default">
+                        <{foreach from=$goods_list item=item}>
                         <div class="col-xs-3">
-                            <a href="">
+                            <a target="_blank" href="<{link app=b2c ctl=site_product args0=$item.product.product_id}>?freeze_id=<{$freeze.freeze_id}>">
                                 <div class="item-img">
-                                    <img src="../../themes/pc/default/statics/images/ex-pic.png">
+                                    <img src="<{$item.image|storager:'s'}>">
                                 </div>
-                                <h4>98.00</h4>
+                                <h4><{$item.product.buy_price|cur}></h4>
                             </a>
                         </div>
-                        <div class="col-xs-3">
-                            <a href="">
-                                <div class="item-img">
-                                    <img src="../../themes/pc/default/statics/images/ex-pic.png">
-                                </div>
-                                <h4>98.00</h4>
-                            </a>
-                        </div>
-                        <div class="col-xs-3">
-                            <a href="">
-                                <div class="item-img">
-                                    <img src="../../themes/pc/default/statics/images/ex-pic.png">
-                                </div>
-                                <h4>98.00</h4>
-                            </a>
-                        </div>
-                        <div class="col-xs-3">
-                            <a href="">
-                                <div class="item-img">
-                                    <img src="../../themes/pc/default/statics/images/ex-pic.png">
-                                </div>
-                                <h4>98.00</h4>
-                            </a>
-                        </div>
-                        <div class="col-xs-3">
-                            <a href="">
-                                <div class="item-img">
-                                    <img src="../../themes/pc/default/statics/images/ex-pic.png">
-                                </div>
-                                <h4>98.00</h4>
-                            </a>
-                        </div>
-                        <div class="col-xs-3">
-                            <a href="">
-                                <div class="item-img">
-                                    <img src="../../themes/pc/default/statics/images/ex-pic.png">
-                                </div>
-                                <h4>98.00</h4>
-                            </a>
-                        </div>
-                        <div class="col-xs-3">
-                            <a href="">
-                                <div class="item-img">
-                                    <img src="../../themes/pc/default/statics/images/ex-pic.png">
-                                </div>
-                                <h4>98.00</h4>
-                            </a>
-                        </div>
-                        <div class="col-xs-3">
-                            <a href="">
-                                <div class="item-img">
-                                    <img src="../../themes/pc/default/statics/images/ex-pic.png">
-                                </div>
-                                <h4>98.00</h4>
-                            </a>
-                        </div>
-                        <div class="col-xs-3">
-                            <a href="">
-                                <div class="item-img">
-                                    <img src="../../themes/pc/default/statics/images/ex-pic.png">
-                                </div>
-                                <h4>98.00</h4>
-                            </a>
-                        </div>
+                        <{/foreach}>
                     </div>
                 </div>
             </div>
