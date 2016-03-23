@@ -55,7 +55,12 @@ class freeze_ctl_site_account extends freeze_frontpage
     public function buyer_info()
     {
         $this->is_complete_info();
+        $mdl_buyer = app::get('buyer')->model('buyers');
+        $mdl_freeze_buyer = app::get('freeze')->model('freeze_buyer');
+        $buyer_id = $mdl_freeze_buyer->getRow('*',array('freeze_id'=>$this->app->freeze_id));
 
+        $buyer_info = $mdl_buyer->getRow('*',array('buyer_id'=>$buyer_id['buyer_id']));
+        $this->pagedata['buyer'] = $buyer_info;
         $this->output();
     }
 
@@ -138,9 +143,29 @@ class freeze_ctl_site_account extends freeze_frontpage
     /**
      * 设置邮箱
      */
-    public function set_email()
+    public function set_email($action)
     {
-        $this->output();
+        if ($action == 'save')
+        {
+            $redirect_here = array('app' => 'freeze', 'ctl' => 'site_account', 'act' => 'set_email');
+            $redirect = $this->gen_url(array('app' => 'freeze', 'ctl' => 'site_account', 'act' => 'security'));
+            $mdl_freeze = app::get('freeze')->model('freeze');
+            $user_obj = vmc::singleton('freeze_user_object');
+            $freeze_id = $this->app->freeze_id;
+            $data = $_POST;
+            $data['freeze_id'] = $freeze_id;
+            if(!$mdl_freeze->save($data))
+            {
+                $this->splash('error', $redirect_here, $msg);
+            }else{
+                $this->splash('success', $redirect, '邮箱保存成功');
+            }
+        }else{
+            $user_obj = vmc::singleton('freeze_user_object');
+            $info = $user_obj->get_members_data(array('freeze'=>'*'));
+            $this->pagedata['info'] = $info;
+            $this->output();
+        }
     }
 
     /**

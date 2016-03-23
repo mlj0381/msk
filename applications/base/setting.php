@@ -17,10 +17,10 @@ $setting = array(
 			'scheme' => 'http',
 			'host' => '121.40.103.229',
 			'port' => '8080',
-			'root' => 'msk-web/api/',
+			'root' => '/msk-web/api',
 			'version'	=> 'v1',
 			'headers' => array(
-				'Content-Type : application/json'
+				'Content-Type:application/json'
 			),			
 			'param' => array(
 				'siteCode' => '102',
