@@ -34,7 +34,8 @@
             </div>
         </div>
         <{else}>
-        <!--此处添加未搜索到店铺页面 <include file=''> -->
+        <!--此处添加未搜索到店铺页面-->
+        <{include file="site/list/store_blank.html"}>
         <{/if}>
         <{pagers data=$pager}>
     </div>
