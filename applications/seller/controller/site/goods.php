@@ -105,6 +105,15 @@ class seller_ctl_site_goods extends seller_frontpage
     //添加商品
     public function add($goods_id)
     {
+        /**
+         * 润和接口
+         * ISL231109 查询卖家产品和标准
+         * IPD141129 货品（商品特征）
+         * IPD141111 产品查询价盘_接口定义
+         * IPD141115 产品信息
+         * 品牌列表
+         * IPD141114 2 物流区（仓库）
+         */
         if (is_numeric($goods_id)) {
             $this->pagedata['goods'] = $this->mB2cGoods->dump($goods_id, '*', 'default');
             //获取商品库存信息
@@ -176,6 +185,25 @@ class seller_ctl_site_goods extends seller_frontpage
     //商品目录
     public function directory()
     {
+        /**
+         * 润和接口 商品目录
+         * 全部分类
+         * IPD141101 一级目录
+         * IPD141104 二级目录
+         * IPD141128 三级目录
+         *
+         * 已添加的分类
+         * 获取我已添加的分类 接口没有
+         *
+         * 添加分类
+         * ISL231109 查询卖家产品和标准
+         * ISL231106 编辑卖家产品和标准
+         *
+         * 展示店铺信息 我的品牌
+         * ISL231149 查询企业产品品牌
+         * ISL231153 查询卖家产品品牌
+         * 店铺基本信息 自己数据库查询
+         */
         if ($_POST) {
             $this->edit_directory($_POST);
         }

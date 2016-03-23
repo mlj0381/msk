@@ -253,6 +253,25 @@ class b2c_ctl_site_member extends b2c_frontpage
 
     public function save_company()
     {
+        /**
+         * 润和接口 会员详细信息提交
+         * IBY121202 更新买家基本信息
+         * IBY121203 更新买家经营产品类别
+         * IBY121204 更新买家销售对象
+         * IBY121203 更新买家经营产品类别
+         * IBY121204 更新买家销售对象
+         * IBY121205 更新证照信息
+         * IBY121206 更新证照图片
+         * IBY121207 更新雇员信息
+         *
+         * 查询
+         * IBY121202 买家基本信息查询
+         * IBY121203 买家经营产品类别查询
+         * IBY121204 买家销售对象查询
+         * IBY121205 证照信息查询
+         * IBY121206 证照图片查询
+         * IBY121207 雇员信息查询
+         */
         if ($_POST) {
             $pageSetting = $this->app->getConf('member_extra_column');
             $obj_passport = vmc::singleton('b2c_user_passport');
@@ -322,6 +341,13 @@ class b2c_ctl_site_member extends b2c_frontpage
      */
     public function orders($status = 'all', $page = 1)
     {
+        /**
+         * 润和接口
+         * ISO151416 买家订单列表 卖家订单列表 买手销售订单列表 买手囤货订单列表 买家订单明细
+         *          卖家订单明细 买手销售订单明细 买手囤货订单明细 订单明细查询接口 订单列表查询接口
+         * ISO151415 订单整体取消 订单已付款状态 订单已全部发货 订单全部收货 订单部分发货 订单部分收货
+         * ISO151412 删除/恢复订单
+         */
         $mdl_order = $this->app->model('orders');
         $mdl_order_items = $this->app->model('order_items');
         $limit = 5;
@@ -334,10 +360,7 @@ class b2c_ctl_site_member extends b2c_frontpage
         $filter['member_id'] = $this->member['member_id'];
         if ($status == 's2') {
             $where = $search['sql'];
-            $sql = "SELECT
-* FROM
-vmc_b2c_orders WHERE `member_id`={$this->member['member_id']} AND `status` = 'active' AND `confirm` = 'N' AND (`is_cod`='Y' OR
-`pay_status`='1') {$where} AND `ship_status`='0' ORDER BY createtime desc LIMIT " . (($page - 1) * $limit) . ", {$limit}";
+            $sql = "SELECT * FROM vmc_b2c_orders WHERE `member_id`={$this->member['member_id']} AND `status` = 'active' AND `confirm` = 'N' AND (`is_cod`='Y' OR `pay_status`='1') {$where} AND `ship_status`='0' ORDER BY createtime desc LIMIT " . (($page - 1) * $limit) . ", {$limit}";
             $order_list = vmc::database()->select($sql);
         } else {
             $search['order_id|has'] && $filter['order_id|has'] = $search['order_id|has'];
@@ -636,6 +659,12 @@ vmc_b2c_orders WHERE `member_id`={$this->member['member_id']} AND `status` = 'ac
      * */
     public function receiver($action = 'list', $addr_id = false)
     {
+        /**
+         * 润和接口
+         * IBY121208 更新收货地址
+         * IBY121208 删除收货地址
+         * IBY121209 收货时间查询
+         */
         $this->menuSetting = 'setting';
         $this->pagedata['action'] = $action;
         $mdl_maddr = $this->app->model('member_addrs');

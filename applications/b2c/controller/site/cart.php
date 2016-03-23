@@ -40,6 +40,12 @@ class b2c_ctl_site_cart extends b2c_frontpage {
 
     //购物车主页
     public function index() {
+        /**
+         * 润和接口
+         * 查看购买需求订单接口无
+         * 删除购买需求订单接口无
+         */
+
         /*
         $cart_api = vmc::singleton('b2c_source_cart');
         $goods_api = vmc::singleton('b2c_source_goods');
@@ -84,6 +90,10 @@ class b2c_ctl_site_cart extends b2c_frontpage {
 
     //向购物车添加商品
     public function add($product_id, $store_id, $num) {
+        /**
+         * 润和接口
+         * ISO151401 创建购买需求订单
+         */
         $params = $this->_request->get_params(true);
         $product_id = ($product_id ? $product_id : $params['product_id']);
         $store_id = ($store_id ? $store_id : $params['store_id']);
@@ -125,6 +135,10 @@ class b2c_ctl_site_cart extends b2c_frontpage {
 
     //成功加入购物车后
     public function addtocart($ident) {
+        /**
+         * 润和接口
+         * 查看购买需求订单接口无
+         */
         $exist_cart = $this->cart_stage->result();
         if ($this->cart_stage->is_empty($exist_cart)) {
             $this->splash('error', $this->blank_url, '购物车为空！');

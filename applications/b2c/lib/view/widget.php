@@ -19,6 +19,12 @@ class b2c_view_widget {
      * 分类挂件
      */
     public function function_WIDGET_B2C_GOODS_CAT($params, &$smarty) {
+        /**
+         * 润和接口 分类
+         * IPD141101 一级
+         * IPD141104 二级
+         * IPD141128 三级
+         */
         $render = new base_render(app::get('b2c'));
         $mdl_goods_cat = app::get('b2c')->model('goods_cat');
         $tree = $mdl_goods_cat->get_tree();
@@ -103,6 +109,10 @@ class b2c_view_widget {
 
     //所在城市
     public function function_WIDGET_B2C_INDEX_CITY($params, &$smarty) {
+        /**
+         * 润和接口 物流区
+         * IPD141114 2 物流区
+         */
         $render = new base_render(app::get('b2c'));
         $render->pagedata['city'] = vmc::service('view_datasetting')->city();
         return $render->fetch('widget/b2c.city.html');

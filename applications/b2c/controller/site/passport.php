@@ -97,6 +97,9 @@ class b2c_ctl_site_passport extends b2c_frontpage
         //_POST过滤
         $params = utils::_filter_input($_POST);
         unset($_POST);
+        /*
+         * 润和接口 会员登录 IBY121201
+         * */
         $account_data = array(
             'login_account' => $params['uname'],
             'login_password' => $params['password'],
@@ -202,6 +205,18 @@ class b2c_ctl_site_passport extends b2c_frontpage
     //注册经营信息
     public function business_info($pageIndex = 0, $type = null)
     {
+
+        /**
+         * 润和接口 会员详细信息提交
+         * IBY121202 更新买家基本信息
+         * IBY121203 更新买家经营产品类别
+         * IBY121204 更新买家销售对象
+         * IBY121203 更新买家经营产品类别
+         * IBY121204 更新买家销售对象
+         * IBY121205 更新证照信息
+         * IBY121206 更新证照图片
+         * IBY121207 更新雇员信息
+         */
         $this->verify_member();
         if (!is_numeric($pageIndex)) $pageIndex = 1;
         $page_setting = $this->app->getConf('member_extra_column');
@@ -325,7 +340,7 @@ class b2c_ctl_site_passport extends b2c_frontpage
             ),
         ));
         /*
-         * 调用润和接口
+         * 润和接口买家注册 IBY121201
          * */
 
         $login_type = $this->passport_obj->get_login_account_type($params['pam_account']['mobile']);
@@ -358,6 +373,9 @@ class b2c_ctl_site_passport extends b2c_frontpage
      */
     public function reset_password($action)
     {
+        /**
+         * 润和接口 修改密码 IBY121201
+         */
         $this->title = '重置密码';
         if ($action == 'doreset') {
             $redirect_here = array('app' => 'b2c', 'ctl' => 'site_passport', 'act' => 'reset_password');
@@ -497,6 +515,9 @@ class b2c_ctl_site_passport extends b2c_frontpage
 
     public function logout($forward)
     {
+        /**
+         * 润和接口 退出登录  IBY121201
+         */
         $this->unset_member();
         if (!$forward) {
             $forward = $this->gen_url(array(

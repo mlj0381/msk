@@ -33,6 +33,10 @@ class seller_ctl_site_seller extends seller_frontpage {
     //账户信息
     public function account()
     {
+        /**
+         * 润和接口 商家基本信息
+         * ISL231105 查询卖家账户
+         */
         $this->menuSetting = 'account';
         if (!empty($_POST['seller'])) {
             $this->_account($_POST['seller']);
@@ -54,6 +58,11 @@ class seller_ctl_site_seller extends seller_frontpage {
     //商户信息
     public function businessInfo($step = 1, $storeType = 1, $index = 1)
     {
+        /**
+         * 润和接口 商家入驻
+         * ISL231180 编辑卖家信息All
+         * ISL231181 查询卖家信息All
+         */
         !is_numeric($step) && $step = 1;
         $companyInfo = $this->app->getConf('seller_entry');
         $step == 1 && $licence_type = $this->_request->get_get('card') ?:

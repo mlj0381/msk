@@ -27,6 +27,18 @@ class b2c_ctl_site_checkout extends b2c_frontpage
     //checkout 主页
     public function index($fastbuy = false, $params)
     {
+        /**
+         * 润和接口
+         * 查看购买需求订单接口无
+         * IBY121208 收货地址查询
+         * IBY121208 更新收货地址
+         * IBY121208 删除收货地址
+         * IBY121209 收货时间查询
+         * ISO151414 标准分销订单 分销买手囤货订单 第三方订单 第三方买手囤货订单
+         * 查看购买需求订单接口无
+         * 买手购买 不用收货地址，支付方式在线地付，发货时间等都无
+         */
+
         $blank_url = $this->gen_url(array(
             'app' => 'b2c',
             'ctl' => 'site_cart',
@@ -172,10 +184,10 @@ class b2c_ctl_site_checkout extends b2c_frontpage
             'ctl' => 'site_member',
             'act' => 'orders',
         ));
-        if($this->app->model('orders')->update(array('pay_status' => '1'), array('order_id' => $order_id))){
-            $this->splash('success', $redirect, '支付成功');
-        }
-        $this->splash('error', $redirect, '支付失败');
+//        if($this->app->model('orders')->update(array('pay_status' => '1'), array('order_id' => $order_id))){
+//            $this->splash('success', $redirect, '支付成功');
+//        }
+//        $this->splash('error', $redirect, '支付失败');
 
         $obj_bill = vmc::singleton('ectools_bill');
         $mdl_bills = app::get('ectools')->model('bills');

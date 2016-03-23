@@ -24,6 +24,11 @@ class seller_ctl_site_order extends seller_frontpage
     //商家订单
     public function index($status = 'all', $page = 1)
     {
+        /**
+         * 润和接口
+         * ISO151416 买家订单列表 卖家订单列表 买手销售订单列表 买手囤货订单列表 买家订单明细
+         *          卖家订单明细 买手销售订单明细 买手囤货订单明细 订单明细查询接口 订单列表查询接口
+         */
         $mdl_order = app::get('b2c')->model('orders');
         $mdl_order_items = app::get('b2c')->model('order_items');
         $limit = 5;
@@ -38,10 +43,7 @@ class seller_ctl_site_order extends seller_frontpage
 
         if($status == 's2'){
             $where = $search['sql'];
-            $sql = "SELECT
-* FROM
- vmc_b2c_orders WHERE `store_id`={$this->store['store_id']} AND `status` = 'active' AND `confirm` = 'N' AND `ship_status` = '0'  (`is_cod`='Y' OR
-`pay_status`='1')  {$where}   ORDER BY createtime desc LIMIT ". (($page - 1) * $limit). ", {$limit}";
+            $sql = "SELECT * FROM  vmc_b2c_orders WHERE `store_id`={$this->store['store_id']} AND `status` = 'active' AND `confirm` = 'N' AND `ship_status` = '0'  (`is_cod`='Y' OR `pay_status`='1')  {$where}   ORDER BY createtime desc LIMIT ". (($page - 1) * $limit). ", {$limit}";
             $order_list = vmc::database()->select($sql);
         }else{
             $search['order_id|has'] && $filter['order_id|has'] = $search['order_id|has'];

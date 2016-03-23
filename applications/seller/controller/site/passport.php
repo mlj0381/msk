@@ -322,6 +322,10 @@ class seller_ctl_site_passport extends seller_frontpage
     //商家入驻帐号注册
     private function _signup_account($post, $signup_url)
     {
+        /**
+         * 润和接口
+         * 卖家注册 缺少接口
+         */
         extract($post);
         if (!vmc::singleton('seller_user_vcode')->verify($smscode, $pam_account['mobile'], 'signup')) {
             $this->splash('error', $signup_url, '手机短信验证码不正确');
@@ -445,6 +449,10 @@ class seller_ctl_site_passport extends seller_frontpage
     //重置密码
     public function reset_password()
     {
+        /**
+         * 润和接口 卖家修改密码
+         * ISL231183 卖家账号密码修改
+         */
         if (!empty($_POST)) {
             $redirect = $this->gen_url(array(
                 'app' => 'seller',
@@ -490,6 +498,25 @@ class seller_ctl_site_passport extends seller_frontpage
     // 入驻
     public function entry($step = 0, $type)
     {
+        /**
+         * 润和接口 商家入驻
+         * ISL231180 编辑卖家信息All
+         * ISL231181 查询卖家信息All
+         *
+         * 电商团队 检测设备 企业荣誉 车间概况 可以添加多条数据接口待定
+         *
+         * 添加多个品牌资质
+         * ISL231146 增加企业产品品牌 添加别人的
+         * ISL231149 查询企业产品品牌
+         * ISL231150 增加卖家产品品牌 添加自己的
+         * ISL231153 查询卖家产品品牌
+         *
+         * 填写申请店铺
+         * ISL231109 查询卖家产品和标准
+         * ISL231106 编辑卖家产品和标准
+         *
+         * 店铺信息本地保存不提交到接口
+         */
         $this->verify();
         $redirect = $this->gen_url(array(
             'app' => 'seller',
