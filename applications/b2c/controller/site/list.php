@@ -41,7 +41,6 @@ class b2c_ctl_site_list extends b2c_frontpage
 
     public function index($fix_brand = false)
     {
-        var_dump();
         $params = utils::_filter_input($_GET);
         //属性查找面包屑组合
         $search_info = $this->objSearch->init_crumbs($params);

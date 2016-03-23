@@ -1,6 +1,5 @@
 <?php
-
-$remote['member_register'] = array(
+$remote['freeze_editor'] = array(
 	'url' => '/by/account/register',
 	'params' => array(
 		'member_id' => array(
@@ -11,6 +10,13 @@ $remote['member_register'] = array(
 			'default' => '',
 			'require'=> false // ture|false 注册|修改			
 		),
+
+		'param' => array(
+			'name' => '参数',
+			'column' => 'param',
+			'type' => 'object'			
+		),
+
 		'mobile' => array(
 			'name' => '手机',
 			'column' => 'telNo',
@@ -27,7 +33,6 @@ $remote['member_register'] = array(
 			'default' => '',
 			'require'=> false
 		),
-
 		'password' => array(
 			'name' => '密码',
 			'column' => 'accountPass',
@@ -36,33 +41,14 @@ $remote['member_register'] = array(
 			'default' => '',
 			'require'=> false
 		),
-
-		'cate_name' => array(
-			'name' => '来源',
-			'column' => 'cateName',
-			'type' => 'String',
-			'parent' => 'param/cate',
-			'default' => '',
-			'require'=> false
-		),
-		'cate_id' => array(
-			'name' => '来源',
-			'column' => 'cateNo',
-			'type' => 'String',
-			'parent' => 'param/cate',
-			'default' => '',
-			'require'=> false
-		),
-
 		'source' => array(
 			'name' => '来源',
 			'column' => 'registerSource',
 			'type' => 'String',
 			'parent' => 'param',
-			'default' => '',
-			'require'=> false
+			'default' => 'msk',
+			'require'=> true
 		),
-
 		'operator' => array(
 			'name' => '操作者',
 			'column' => 'updId',
@@ -70,7 +56,33 @@ $remote['member_register'] = array(
 			'parent' => 'param',
 			'default' => '',
 			'require'=> false
-		)		
+		),		
+		'cate' => array(
+			'name' => '参数',
+			'column' => 'cateList',
+			'type' => 'object',
+			'parent' => 'param',
+			'require' => true
+		)
+	),
+
+	'cate' => array(
+		'cate_name' => array(
+			'name' => '分类名称',
+			'column' => 'cateName',
+			'type' => 'String',
+			'parent' => 'param/cate',
+			'default' => '',
+			'require'=> false
+		),
+		'cate_id' => array(
+			'name' => '分类ID',
+			'column' => 'cateNo',
+			'type' => 'String',
+			'parent' => 'param/cate',
+			'default' => '',
+			'require'=> false
+		)
 	),
 
 	'result' => array(

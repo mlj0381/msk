@@ -868,12 +868,4 @@ vmc_b2c_orders WHERE `member_id`={$this->member['member_id']} AND `status` = 'ac
         $this->pagedata['freeze'] = $freeze;
         $this->output();
     }
-
-
-
-
-
-
-
-
 }

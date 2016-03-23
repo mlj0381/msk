@@ -324,13 +324,18 @@ class b2c_ctl_site_passport extends b2c_frontpage
                 $forward,
             ),
         ));
-        $login_type = $this->passport_obj->get_login_account_type($params['pam_account']['login_name']);
+        /*
+         * 调用润和接口
+         * */
+
+        $login_type = $this->passport_obj->get_login_account_type($params['pam_account']['mobile']);
         //$login_type == 'mobile' &&
-        if (!vmc::singleton('b2c_user_vcode')->verify($params['smscode'], $params['pam_account']['mobile'], 'signup')) {
+        if ($login_type == 'mobile' &&!vmc::singleton('b2c_user_vcode')->verify($params['smscode'], $params['pam_account']['mobile'], 'signup')) {
             $this->splash('error', $signup_url, '手机短信验证码不正确');
-        } elseif ($login_type != 'mobile' && !base_vcode::verify('passport', $params['vcode'])) {
-            $this->splash('error', $signup_url, '验证码不正确');
         }
+//        elseif ($login_type != 'mobile' && !base_vcode::verify('passport', $params['vcode'])) {
+//            $this->splash('error', $signup_url, '验证码不正确');
+//        }
         if (!$this->passport_obj->check_signup($params, $msg)) {
             $this->splash('error', $signup_url, $msg);
         }
@@ -408,11 +413,8 @@ class b2c_ctl_site_passport extends b2c_frontpage
     {
         $account = $_POST['account'];
         $login_type = $this->passport_obj->get_login_account_type($account);
-        if ($login_type != 'email') {
-            $this->splash('error', null, '请输入正确的邮箱!');
-        }
-        if ($login_type != 'mobile') {
-            $this->splash('error', null, '请输入正确的手机!');
+        if ($login_type != 'email' && $login_type != 'mobile') {
+            $this->splash('error', null, '请输入正确的手机或邮箱!');
         }
         if (!$this->passport_obj->is_exists_mobile($account)) {
             $this->splash('error', null, '验证手机不正确!');

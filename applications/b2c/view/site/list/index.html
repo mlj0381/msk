@@ -145,12 +145,12 @@
                           <nav>
                             <ul class="pagination pagination-sm">
                                 <li>
-                                  <a href="<{link app=b2c ctl=site_list act=index}>?<{$query|merge_query:page:$page_index - 1}>" aria-label="Previous">
+                                  <a <{if $page_index eq '1'}> href="javascript:;"<{/if}> href="<{link app=b2c ctl=site_list act=index}>?<{$query|merge_query:page:$page_index - 1}>" aria-label="Previous">
                                     <span aria-hidden="true">&laquo;</span>
                                   </a>
                                 </li>
                                 <li>
-                                  <a href="<{link app=b2c ctl=site_list act=index}>?<{$query|merge_query:page:$page_index + 1}>" aria-label="Next">
+                                  <a <{if $page_index eq $pager.total}> href="javascript:;"<{/if}>  href="<{link app=b2c ctl=site_list act=index}>?<{$query|merge_query:page:$page_index + 1}>" aria-label="Next">
                                     <span aria-hidden="true">&raquo;</span>
                                   </a>
                                 </li>
