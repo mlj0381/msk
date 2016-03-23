@@ -20,6 +20,10 @@ class seller_ctl_site_aftersales extends seller_frontpage
     }
 
     public function order($list = 'all', $page = 1){
+        /**
+         * 润和接口 退货列表
+         * ISO151409 查询退货单
+         */
         $this->_list($list, 'goods', $page);
         $this->output();
     }

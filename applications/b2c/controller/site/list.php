@@ -41,6 +41,15 @@ class b2c_ctl_site_list extends b2c_frontpage
 
     public function index($fix_brand = false)
     {
+        /**
+         * 润和接口
+         * IPD141129 货品（商品特征）
+         * IPD141111 产品查询价盘_接口定义
+         * IPD141115 产品信息
+         * 品牌列表
+         * ISO151416 订单数
+         * IPD141114 2 物流区
+         */
         $params = utils::_filter_input($_GET);
         //属性查找面包屑组合
         $search_info = $this->objSearch->init_crumbs($params);

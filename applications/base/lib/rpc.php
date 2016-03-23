@@ -121,6 +121,11 @@ class base_rpc
 				base_kvstore::instance($path)->store($key, $this->result, $expire);
 			}
 		}
+		return $this->response();
+	}
+
+	private function response()
+	{
 		return array(
 			'status' => $this->status,
 			'returnCode' => $this->returnCode,
@@ -128,6 +133,7 @@ class base_rpc
 			'result' => $this->result
 		);
 	}
+
 	private function _request($index, $data)
 	{
 		if(!isset(self::$_rpc_config[$index]))
@@ -148,7 +154,7 @@ class base_rpc
 
 		foreach($this->configs['request'] as $key => $item){
 			$column = isset($item['column']) ? $item['column'] : $key;
-			if(!empty($item['require']) && !isset($data[$key])) return $this->error('参数错误！');
+			if(!empty($item['require']) && !isset($data[$key])) return $this->error("{$key}=>{$column}为必填字段！");
 			$type = strtolower($item['type']);  
 			$value = $key == 'param' ? $data : $data[$key];// 放在外层			
 			$this->postData[$column] = $this->_convert($key, $item, $value);		
@@ -162,7 +168,10 @@ class base_rpc
 		
 	}
 	
-	private function _convert($key, $item, $data){		
+	private function _convert($key, $item, $data){
+		
+		if(!empty($item['require']) && !isset($data[$key])) return $this->error("{$key}=>{$column}为必填字段！");
+
 		extract($item);  
 		$result = isset($data) ? $data : $item['default'];
 		if(!isset($type)) return $value;
@@ -283,6 +292,7 @@ class base_rpc
 		$this->status = false;
 		$this->message = $message;
 		if($code) $this->returnCode = $code;
+		logger::error("{$this->app_id}_{$this->action}\n\tmessage:{$this->message}");
 		return false;
 	}
 }

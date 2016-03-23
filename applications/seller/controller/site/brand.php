@@ -23,6 +23,11 @@ class seller_ctl_site_brand extends seller_frontpage {
     }
 
     public function index() {
+        /**
+         * 润和接口 品牌列表
+         * ISL231149 查询企业产品品牌
+         * ISL231153 查询卖家产品品牌
+         */
         $this->title = '商品品牌';
         //查询详细信息
         $this->pagedata['brands'] = $this->mB2cbrand->getList('*', array('seller_id' => $this->seller['seller_id']));
@@ -31,6 +36,11 @@ class seller_ctl_site_brand extends seller_frontpage {
 
     //添加品牌
     public function add($brand_id) {
+        /**
+         * 润和接口 品牌列表
+         * ISL231146 增加企业产品品牌
+         * ISL231150 增加卖家产品品牌
+         */
         if ($_POST) {
             $params = utils::_filter_input($_POST);
             unset($_POST);
