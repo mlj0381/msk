@@ -153,6 +153,14 @@ ol {
 .glist-container .goods-listbox {
   margin-top: 20px;
 }
+.glist-container .goods-listbox .search_tip {
+  width: 100%;
+  border: 1px solid #fce7ad;
+  color: #595959;
+  background: #fff8e4;
+  margin-bottom: 10px;
+  padding: 15px;
+}
 .glist-container .goods-listbox .goods-item .gi-image-wrapper {
   padding: 10px 0;
   height: 256px;

@@ -17,7 +17,6 @@
 		<menu app='site' controller='index' action='build' display='false' order="60">大促会</menu>
 
 
-
         <!-- <menu app='b2c' controller='site_member' action='index' display='true' order="60">多鲜乐会员</menu> -->
         <menu app='site' controller='index' action='build' display='false' order="60">多鲜乐会员</menu>
 

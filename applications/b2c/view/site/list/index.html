@@ -34,7 +34,7 @@
             </li>
         </ol>
 
-        <div class="col-xs-2 about_goods_total">共<span><{$all_count}></span>件相关商品  </div>
+        <div class="col-xs-2 about_goods_total">共<span><{$all_count|defualt:0}></span>件相关商品  </div>
     </div>
     <{if $search_info}>
         <div class="gfilter_condition clearfix">
@@ -287,8 +287,8 @@
             <{/if}>
         </div>
         <{else}>
-            <!--此处添加未搜索到商品页面 <include file=''> -->
-
+            <!--此处添加未搜索到商品页面 -->
+            <{include file="site/list/index_blank.html"}>
         <{/if}>
         <{pagers data=$pager}>
     </div>
