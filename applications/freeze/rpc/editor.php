@@ -6,11 +6,27 @@ $remote['freeze_editor'] = array(
     'url' => '/bs/slInfo/slSeller/newOrUpdate',
 
     'params' => array(
+        'member_id' => array(
+            'name' => '登陆的用户ID',
+            'column' => 'loginId',
+            'type' => 'String',
+            'default' => '',
+            'require'=> false
+        ),
+        'param' => array(
+            'name' => '参数',
+            'column' => 'param',
+            'type' => 'object',
+            'default' => Array(),
+            //'require'=> true
+        ),
+    ),
+
+    'param' => array(
         'buyer_code' => array(
             'name' => '买手店编码',
             'column' => 'slCode',
             'type' => 'String',
-            'parent' => '',
             'default' => '',
             'require' => true
         ),
@@ -18,7 +34,6 @@ $remote['freeze_editor'] = array(
             'name' => '管家账号',
             'column' => 'houseAccount',
             'type' => 'String',
-            'parent' => '',
             'default' => '',
             'require' => true
         ),
@@ -26,7 +41,6 @@ $remote['freeze_editor'] = array(
             'name' => '登录手机号码',
             'column' => 'houseTel',
             'type' => 'String',
-            'parent' => '',
             'default' => '',
             'require' => true
         ),
@@ -34,7 +48,6 @@ $remote['freeze_editor'] = array(
             'name' => '卖家显示名称',
             'column' => 'houseShowName',
             'type' => 'String',
-            'parent' => '',
             'default' => '',
             'require' => true
         ),
@@ -42,7 +55,6 @@ $remote['freeze_editor'] = array(
             'name' => '联系人姓名',
             'column' => 'houseContact',
             'type' => 'String',
-            'parent' => '',
             'default' => '',
             'require' => true
         ),
@@ -50,7 +62,6 @@ $remote['freeze_editor'] = array(
             'name' => '登录密码',
             'column' => 'accountPsd',
             'type' => 'String',
-            'parent' => '',
             'default' => '',
             'require' => true
         ),
@@ -58,7 +69,6 @@ $remote['freeze_editor'] = array(
             'name' => '认证状态',
             'column' => 'authStatus',
             'type' => 'Integer',
-            'parent' => '',
             'default' => '',
             'require' => false
         ),
@@ -66,7 +76,6 @@ $remote['freeze_editor'] = array(
             'name' => '管家身份证号',
             'column' => 'slIdcard',
             'type' => 'String',
-            'parent' => '',
             'default' => '',
             'require' => true
         ),
@@ -74,7 +83,6 @@ $remote['freeze_editor'] = array(
             'name' => '国籍',
             'column' => 'slConFlg',
             'type' => 'String',
-            'parent' => '',
             'default' => '',
             'require' => true
         ),
@@ -82,7 +90,6 @@ $remote['freeze_editor'] = array(
             'name' => '大区编码',
             'column' => 'areaCode',
             'type' => 'String',
-            'parent' => '',
             'default' => '',
             'require' => false
         ),
@@ -90,7 +97,6 @@ $remote['freeze_editor'] = array(
             'name' => '物流区编码',
             'column' => 'lgcsAreaCode',
             'type' => 'String',
-            'parent' => '',
             'default' => '',
             'require' => false
         ),
@@ -98,7 +104,6 @@ $remote['freeze_editor'] = array(
             'name' => '省编码',
             'column' => 'provinceCode',
             'type' => 'String',
-            'parent' => '',
             'default' => '',
             'require' => false
         ),
@@ -106,7 +111,6 @@ $remote['freeze_editor'] = array(
             'name' => '地区编码',
             'column' => 'cityCode',
             'type' => 'String',
-            'parent' => '',
             'default' => '',
             'require' => false
         ),
@@ -114,7 +118,6 @@ $remote['freeze_editor'] = array(
             'name' => '区编码',
             'column' => 'districtCode',
             'type' => 'String',
-            'parent' => '',
             'default' => '',
             'require' => false
         ),
@@ -122,7 +125,6 @@ $remote['freeze_editor'] = array(
             'name' => '管家地址',
             'column' => 'houseAddress',
             'type' => 'String',
-            'parent' => '',
             'default' => '',
             'require' => true
         ),
@@ -130,7 +132,6 @@ $remote['freeze_editor'] = array(
             'name' => '管家介绍',
             'column' => 'houseIntroduce',
             'type' => 'String',
-            'parent' => '',
             'default' => '',
             'require' => false
         ),
@@ -138,7 +139,6 @@ $remote['freeze_editor'] = array(
             'name' => '级别',
             'column' => 'houseClass',
             'type' => 'String',
-            'parent' => '',
             'default' => '',
             'require' => false
         ),
@@ -146,7 +146,6 @@ $remote['freeze_editor'] = array(
             'name' => '管家分类',
             'column' => 'houseCategory',
             'type' => 'String',
-            'parent' => '',
             'default' => '',
             'require' => false
         ),
@@ -154,7 +153,6 @@ $remote['freeze_editor'] = array(
             'name' => '管家分类基本',
             'column' => 'HOUSE_CATEGORY0',
             'type' => 'String',
-            'parent' => '',
             'default' => '',
             'require' => false
         ),
@@ -162,7 +160,6 @@ $remote['freeze_editor'] = array(
             'name' => '管家分类分销',
             'column' => 'HOUSE_CATEGORY1',
             'type' => 'String',
-            'parent' => '',
             'default' => '',
             'require' => false
         ),
@@ -170,7 +167,6 @@ $remote['freeze_editor'] = array(
             'name' => '管家分类菜场',
             'column' => 'HOUSE_CATEGORY2',
             'type' => 'String',
-            'parent' => '',
             'default' => '',
             'require' => false
         ),
@@ -178,7 +174,6 @@ $remote['freeze_editor'] = array(
             'name' => '管家分类团膳',
             'column' => 'HOUSE_CATEGORY3',
             'type' => 'String',
-            'parent' => '',
             'default' => '',
             'require' => false
         ),
@@ -186,7 +181,6 @@ $remote['freeze_editor'] = array(
             'name' => '管家分类火锅',
             'column' => 'HOUSE_CATEGORY4',
             'type' => 'String',
-            'parent' => '',
             'default' => '',
             'require' => false
         ),
@@ -194,7 +188,6 @@ $remote['freeze_editor'] = array(
             'name' => '管家分类中餐',
             'column' => 'HOUSE_CATEGORY5',
             'type' => 'String',
-            'parent' => '',
             'default' => '',
             'require' => false
         ),
@@ -202,7 +195,6 @@ $remote['freeze_editor'] = array(
             'name' => '管家分类西餐',
             'column' => 'HOUSE_CATEGORY6',
             'type' => 'String',
-            'parent' => '',
             'default' => '',
             'require' => false
         ),
@@ -210,7 +202,6 @@ $remote['freeze_editor'] = array(
             'name' => '管家分类小吃烧烤',
             'column' => 'HOUSE_CATEGORY7',
             'type' => 'String',
-            'parent' => '',
             'default' => '',
             'require' => false
         ),
@@ -218,7 +209,6 @@ $remote['freeze_editor'] = array(
             'name' => '管家分类加工厂',
             'column' => 'HOUSE_CATEGORY8',
             'type' => 'String',
-            'parent' => '',
             'default' => '',
             'require' => false
         ),
@@ -226,7 +216,6 @@ $remote['freeze_editor'] = array(
             'name' => '等级',
             'column' => 'grade',
             'type' => 'Integer',
-            'parent' => '',
             'default' => '',
             'require' => false
         ),
@@ -234,7 +223,6 @@ $remote['freeze_editor'] = array(
             'name' => '创建者ID/更新者ID',
             'column' => 'loginId',
             'type' => 'String',
-            'parent' => '',
             'default' => '',
             'require' => false
         ),
@@ -242,7 +230,6 @@ $remote['freeze_editor'] = array(
             'name' => '删除标志',
             'column' => 'delFlg',
             'type' => 'String',
-            'parent' => '',
             'default' => '',
             'require' => false
         ),
@@ -250,7 +237,6 @@ $remote['freeze_editor'] = array(
             'name' => '版本号',
             'column' => 'ver',
             'type' => 'Integer',
-            'parent' => '',
             'default' => '',
             'require' => false
         ),
