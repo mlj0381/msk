@@ -1,9 +1,31 @@
 <?php
+/*
+request = array(
+	'member_id' => 2,
+	'years' => '2016-03',
+	'region_id'=> '111',
+	'status' => '123123',
+	'goods' => array(
+		array(
+			'goods_id' => '12',
+			'goods_name' => '大盘鸡'
+		),
+		array(
+			'goods_id' => '13',
+			'goods_name' => '三黄鸡'
+		)
+	),
+	'address' => array(
+		'region_id' => 1,
+		'mobile' => '13212321232',
+		'address' => '碧波路5号'
+	)
+)
+*/
 $remote['b2c_order_create'] = array(
-	
-	'url' => '/so/pro/new',	
-	
-	'params' => array(
+	'requestNo' => 'ISO151401',
+	'url' => '/so/pro/new',
+	'request' => array(
 		'member_id' => array(
 			'name' => '登陆的用户ID',
 			'column' => 'loginId',
@@ -19,6 +41,7 @@ $remote['b2c_order_create'] = array(
 			//'require'=> true
 		),
 	),
+
 	'param' => array(		
 		'years' => array(
 			'name' => '年月',
@@ -101,9 +124,12 @@ $remote['b2c_order_create'] = array(
 			'default' => '',
 			'require'=> false
 		),
-	),
-	
-	'result' => array(
-		// 'buyerId' => // os id
+	),	
+	'response' => array(
+		'proCode' => array(
+			'name' => '产品规格',
+			'column' => 'goods_code',
+			'type' => 'String'
+		)
 	),
 );

@@ -13,8 +13,7 @@
 // | example:
 /* 
 	//$orderRpc = $this->app->rpc('register'); // rpc调用的两种方式，同model
-	$orderRpc = app::get('b2c')->rpc('order_create');
-	$extract = compact('address', 'goods')
+	$orderRpc = app::get('b2c')->rpc('order_create');	
 	$data = array(
 		'member_id' => 2,
 		'years' => '2016-03',
@@ -62,9 +61,11 @@ class base_rpc
 
 	private $_cache_path = 'rpc/';
 
-	public $status = true;
-	public $message = "";
-	public $returnCode = "";
+	private $status = true;
+	private $message = "";
+	private $returnCode = "";
+
+	private $_timeout = 300;
 
 	public function __construct($app)
     {
@@ -106,26 +107,28 @@ class base_rpc
 	public function request(Array $data, $expire=false)
 	{	
 		if(!$this->action || !$data) return $this->error('错误的请求');
-		$index = $this->app_id . "_" . $this->action;
-		$result = Array();
+		$index = $this->app_id . "_" . $this->action;		
 		if($expire !== false)
 		{			
 			$key = $index . md5(json_encode($data));			
 			$path = $this->_cache_path . $this->app_id;			
-			base_kvstore::instance($path)->fetch($key, $result);			
-		}		
-		$this->_config($index, $data);
-		if(empty($result))
+			base_kvstore::instance($path)->fetch($key, $this->result);			
+		}	
+		if(empty($this->result))
 		{
-			$result = $this->_result($data);
-			if($expire !== false && $result) {
-				base_kvstore::instance($path)->store($key, $result, $expire);
+			$this->_request($index, $data);
+			if($this->status && $expire !== false && $this->result) {
+				base_kvstore::instance($path)->store($key, $this->result, $expire);
 			}
-		}		
-		return $result;
+		}
+		return array(
+			'status' => $this->status,
+			'returnCode' => $this->returnCode,
+			'message' => $this->message,
+			'result' => $this->result
+		);
 	}
-	
-	private function _config($index)
+	private function _request($index, $data)
 	{
 		if(!isset(self::$_rpc_config[$index]))
 		{
@@ -134,89 +137,39 @@ class base_rpc
 			if(!isset($remote[$index])) return $this->error('Not found this request!');			
 			self::$_rpc_config[$index] = $remote[$index];
 		}
-		$this->configs = self::$_rpc_config[$index];
+		$this->configs = self::$_rpc_config[$index];		
+		if(empty($this->configs['request'])) return ;	
+		
 		if(empty(self::$_rpc_config[$index]['url'])){
 			$this->error('Not found this Url!');
 		}else{
-			$this->url = $this->base_url . $config['url'];
-		}		
-	}
+			$this->url = $this->base_url . self::$_rpc_config[$index]['url'];
+		}
 
-	private function _result($data){
-		if(empty($this->configs['params'])) return ;		
-		foreach($this->configs['params'] as $key => $item){
+		foreach($this->configs['request'] as $key => $item){
 			$column = isset($item['column']) ? $item['column'] : $key;
 			if(!empty($item['require']) && !isset($data[$key])) return $this->error('参数错误！');
 			$type = strtolower($item['type']);  
 			$value = $key == 'param' ? $data : $data[$key];// 放在外层			
-			if($type == 'object')
-			{	
-				isset($this->postData[$column]) || $this->postData[$column] = Array();				
-				foreach($this->configs[$key] as $k => $val)
-				{					
-					$sub_cloumn = isset($val['column']) ? $val['column'] : $k;
-					$_value = $key == 'param' ? $value[$key] : $value;
-					$this->postData[$column][$sub_cloumn] = $this->_convert($k, $val, $_value[$k]);
-				}
-			}else if($type == 'list'){
-				isset($this->postData[$column]) || $this->postData[$column] = Array();				
-				if(!isset($this->configs[$key])) continue;
-				foreach($value as $k => $val)
-				{
-					$vals = Array();
-					foreach($this->configs[$key] as $s => $sub)
-					{		
-						$sub_cloumn = isset($sub['column']) ? $sub['column'] : $k;
-						$vals[$sub_cloumn] = $this->_convert($k, $sub, $val[$s]);						
-					}
-					$this->postData[$column][] = $vals;
-				}
-			}else{
-				$this->postData[$column] = $this->_convert($key, $item, $value);
-			}			
+			$this->postData[$column] = $this->_convert($key, $item, $value);		
 		}
-		// 处理参数
-		print_r($this->postData);
-		return $this;
-		// 发起请求
-		if($this->status) $result = $this->remote();
-		// 处理结果
-		if($result)
-		{
-			foreach($result as $key => $val)
-			{
-				$this->$key = $val;
-			}
-		}
-		return $this->result;
-		//return $this;
+		// 处理参数			
+		if(!$this->status) return ;
+		$this->result = $this->remote();
+	}
+
+	private function _param_merge($data){		
+		
 	}
 	
-	// object
-	/*
-	 * data => array(
-	 *	    'member_id' => '1',
-	 *		'name' => 'mskseller',
-	 *		'goods' => array(
-	 *			0 => array(
-	 *				'goods_id' => 1,
-	 *				'goods_name' => '鸡产品1.6公斤'
-	 *			),
-	 *			1 => array(
-	 *				'goods_id' => 1,
-	 *				'goods_name' => '鸡产品1.8公斤'
-	 *			),
-	 *		)
-	 * )
-	*/
 	private function _convert($key, $item, $data){		
 		extract($item);  
 		$result = isset($data) ? $data : $item['default'];
 		if(!isset($type)) return $value;
-		$type = strtolower($type);		
+		$type = strtolower($type);
 		switch($type)
 		{
-			case 'object':
+			case 'object':				
 				$value = $result;
 				$result = Array();
 				if(isset($this->configs[$key]))
@@ -224,23 +177,22 @@ class base_rpc
 					foreach($this->configs[$key] as $k => $val)
 					{
 						$column = isset($val['column']) ? $val['column'] : $k;
-						$result[$column] = $this->_convert($k, $val, $value);
+						$result[$column] = $this->_convert($k, $val, $value[$k]);
 					}
-				}
-				$result = (Object)$result;
+				}				
 				break;
 			case 'list':
 				$value = $result;
-				$result = Array();
+				$result = Array();				
 				if(isset($this->configs[$key]))
-				{
+				{	
 					foreach($value as $val)
 					{				
 						$vals = Array();
 						foreach($this->configs[$key] as $k => $sub)
 						{
 							$column = isset($sub['column']) ? $sub['column'] : $k;
-							$vals[$column] = $this->_convert($k, $sub, $val);
+							$vals[$column] = $this->_convert($k, $sub, $val[$k]);
 						}
 						$result[] = $vals;
 					}
@@ -249,16 +201,8 @@ class base_rpc
 			case 'md5':
 				$result && $result = md5($result);
 				break;
-		}
-		//print_r($result);
-		//echo "\n================================================================================\n";
+		}		
 		return $result;
-	}
-	
-	private function __result($status=true, $message="sucess", $result=Array()){
-		$this->status = $status;
-		$this->message = $message;
-		$this->result = $result;
 	}
 	
 	private $_page = 1;
@@ -269,124 +213,76 @@ class base_rpc
 		$this->_page = $page;
 		$this->_perpage = $perpage;
 	}
-	
-	/*
-	 * data = array();
-	*/
-	private function _convert2($index, $data){	
-		$params = self::$_rpc_config[$index]['params']; // 无须参数未处理
-		$objects = isset(self::$_rpc_config[$index]['objects']) ? self::$_rpc_config[$index]['objects'] : Array();
-		foreach($params as $key=>$item)
-		{
-			if(isset($item['require']) && $item['require'] === 'true' && !isset($data[$key])) return $this->error("{$key}为必填！");
-			$value = isset($data[$key]) ? $data[$key] : $item['default'];
-			$column = isset($item['column']) ?  $item['column'] : $key;			
-			if($item['type'] == 'object' && !$value) $value = array();
-
-			if(isset($objects[$key])) 
-
-			if(isset($item['parent']) && $parent = $item['parent'])
-			{
-				isset($this->param[$item]) || $this->param[$key] = array();
-				$this->param[$parent] = $this->_convert();
-			}
-			$this->param[$column] = $value;			
-		}
-		
-			/*
-			//echo $item['parent'] . "\n";
-			//if(!empty($item['require']) && !isset($data[$key])) return $this->error("{$key} 不能为空！");			
-			$value = isset($data[$key]) ? $data[$key] : $item['default'];
-			$column = isset($item['column']) ?  $item['column'] : $key;			
-			if(isset($item['type']) && $type = $item['type'])
-			{
-				if(function_exists($type) && $data[$key]) $value = $type($value);
-				
-				switch($type){
-					case 'md5' : 
-						$value = md5($value);
-						break;
-					case 'hash':
-						break;
-				}
-				
-			}			
-			if(empty($item['parent'])){
-				if(empty($item['require']) && !isset($data[$key])) continue;
-				if($item['type'] == 'object' && !$value) $value = array();
-				$this->param[$column] = $value;
-			}else{
-				echo $item['parent'] . "\n";
-				$parents = explode("/", $item['parent']); // buyer/order/goods
-				print_r($parents);
-				if(count($parents) > 1) // 数组
-				{
-					while($parents)
-					{
-						$k = array_pop($parents);
-						isset($first) || $first = $k;
-						$_key = $params[$k]['column'];
-						if(isset($value[$k])) break; // 若value本身是数组
-						$tmp = Array();
-						$tmp[$k] = $value;
-						$value = $tmp;					
-					}
-					print_r($value);
-					$this->param = array_merge_recursive($this->param, $value);
-				}else{
-					$parent = empty($params[$item['parent']]['column']) ? $item['parent'] : $params[$item['parent']]['column'];
-					isset($this->param[$parent]) || $this->param[$parent] = Array();
-					$this->param[$parent][$column] = $value;
-				}
-			}	
-			
-			*/
-	}
-	
-	private function _prepare(){
-		
-	}
-
-	// 
-	private function _request_value($value, $param){
-		isset($param['default']) || $param['default'] = '';		
-	}
-
-	
-
 	private function build_url( $param ){
 		$result = $param['scheme'] . '://' . $param['host'];
 		if(isset($param['port']) && $param['port'] != 80){
 			$result.= ':' .$param['port'];
 		}
-		$result.= "/" .$param['root'] . $param['version'] ."/";	
+		$result.= $param['root'] ."/". $param['version'];	
+		return $result;
+	}
+	private function remote() {
+		//echo $this->url . "\n";
+		//echo json_encode($this->postData, true) . "\n";
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $this->url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_HEADER, 0);		
+		curl_setopt($ch, CURLOPT_POST, 1);
+		curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($this->postData, true));
+		//print_r($this->headers);
+		curl_setopt($ch, CURLOPT_HTTPHEADER, $this->headers);
+        curl_setopt($ch, CURLOPT_TIMEOUT, $this->_timeout);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		//curl_setopt($ch, CURLOPT_COOKIEJAR, $this->_cookieFileLocation);
+        //curl_setopt($ch, CURLOPT_COOKIEFILE, $this->_cookieFileLocation);
+		//print_r(curl_getinfo($ch));
+		$return = curl_exec($ch);
+		$requestHeader = curl_getinfo($ch, CURLINFO_HTTP_CODE);		
+		if($requestHeader != 200) $this->error("Conection Error {$requestHeader}", $requestHeader);
+        return $this->_result($return);
+    }
+	
+	private function _result($data){	
+		$result = Array();	
+		//print_r($this->postData);
+		$object = json_decode($data);		
+		if(!isset($object->status) || $object->status != 'S') {
+			$this->message = isset($object->message) ? $object->message : 'Request Fail';
+			$this->returnCode = isset($object->returnCode) ? $object->returnCode : 0;
+			return $this->error($this->message, $this->returnCode);
+		}
+		if(empty($object->result)) return $result;
+		if(is_object($object->result))
+		{			
+			$resource = json_decode($data, true);
+			foreach($this->configs['response'] as $key => $item)
+			{		
+				if(!isset($resource['result'][$key])) continue;
+				$column = isset($item['column']) ? $item['column'] : $key;
+				$result[$column] = $this->_convert($key, $item, $resource['result'][$key]);
+			}
+		}else if(is_array($object->result)){
+			$resource = json_decode($data, true);
+			foreach($resource['result'] as $val){
+				$vals = Array();
+				foreach($this->configs['response'] as $key => $item)
+				{		
+					if(!isset($val[$key])) continue;
+					$column = isset($item['column']) ? $item['column'] : $key;
+					$vals[$column] = $this->_convert($key, $item, $val[$key]);
+				}
+				$result[] = $vals;
+			}
+		}
 		return $result;
 	}
 
-	private function remote() {
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $this->Url);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($ch, CURLOPT_HEADER, 0);
-       
-		curl_setopt($ch, CURLOPT_POST, 1);
-		curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($this->params));
-        
-        curl_setopt($ch, CURLOPT_HTTPHEADER, $this->headers);
-
-        curl_setopt($ch, CURLOPT_TIMEOUT, $this->_timeout);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_COOKIEJAR, $this->_cookieFileLocation);
-        curl_setopt($ch, CURLOPT_COOKIEFILE, $this->_cookieFileLocation);
-        $return = curl_exec($ch);
-        curl_close($ch);
-        return $return;
-    }
-
-	private function error($message = 'Request Fail', $status=false)
+	private function error($message = 'Request Fail', $code='')
 	{
-		$this->status = $status;
+		$this->status = false;
 		$this->message = $message;
-		return $this;
+		if($code) $this->returnCode = $code;
+		return false;
 	}
 }
