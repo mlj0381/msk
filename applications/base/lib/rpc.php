@@ -105,18 +105,19 @@ class base_rpc
 	}
 
 	public function request(Array $data, $expire=false)
-	{	
-		if(!$this->action || !$data) return $this->error('错误的请求');
-		$index = $this->app_id . "_" . $this->action;		
+	{		
+		if(!$this->action /*||  !$data */) return $this->error('错误的请求');
+		$index = $this->app_id . "_" . $this->action;	
+		$this->result = Array();
 		if($expire !== false)
 		{			
 			$key = $index . md5(json_encode($data));			
 			$path = $this->_cache_path . $this->app_id;			
 			base_kvstore::instance($path)->fetch($key, $this->result);			
-		}	
+		}		
 		if(empty($this->result))
 		{
-			$this->_request($index, $data);
+			$this->_request($index, $data);			
 			if($this->status && $expire !== false && $this->result) {
 				base_kvstore::instance($path)->store($key, $this->result, $expire);
 			}
