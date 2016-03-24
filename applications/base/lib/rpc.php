@@ -151,7 +151,6 @@ class base_rpc
 		}else{
 			$this->url = $this->base_url . self::$_rpc_config[$index]['url'];
 		}
-
 		foreach($this->configs['request'] as $key => $item){
 			$column = isset($item['column']) ? $item['column'] : $key;
 			if(!empty($item['require']) && !isset($data[$key])) return $this->error("{$key}=>{$column}为必填字段！");
@@ -162,38 +161,31 @@ class base_rpc
 		// 处理参数			
 		if(!$this->status) return ;
 		$this->result = $this->remote();
-	}
-
-	private function _param_merge($data){		
-		
-	}
-	
-	private function _convert($key, $item, $data){
-		
-		if(!empty($item['require']) && !isset($data[$key])) return $this->error("{$key}=>{$column}为必填字段！");
-
-		extract($item);  
-		$result = isset($data) ? $data : $item['default'];
-		if(!isset($type)) return $value;
-		$type = strtolower($type);
-		switch($type)
+	}	
+	private function _convert($key, $item, $data){		
+		extract($item);
+		$default = isset($default) ? $default : '';		
+		$value = $data === NUll ? $default : $data;
+		if(isset($item['require']) && $item['require'] == true && $value === '') {
+			return $this->error("{$key}=>{$column}为必填字段！");	
+		}
+		if(!isset($type)) $type == 'string';		
+		switch(strtolower($type))
 		{
 			case 'object':				
-				$value = $result;
 				$result = Array();
 				if(isset($this->configs[$key]))
 				{				
 					foreach($this->configs[$key] as $k => $val)
 					{
-						$column = isset($val['column']) ? $val['column'] : $k;
-						$result[$column] = $this->_convert($k, $val, $value[$k]);
+						$column = isset($val['column']) ? $val['column'] : $k;						
+						$result[$column] = $this->_convert($k, $val, isset($value[$k]) ? $value[$k] : Null);
 					}
 				}				
 				break;
-			case 'list':
-				$value = $result;
+			case 'list':				
 				$result = Array();				
-				if(isset($this->configs[$key]))
+				if(isset($this->configs[$key]) && is_array($value))
 				{	
 					foreach($value as $val)
 					{				
@@ -201,7 +193,7 @@ class base_rpc
 						foreach($this->configs[$key] as $k => $sub)
 						{
 							$column = isset($sub['column']) ? $sub['column'] : $k;
-							$vals[$column] = $this->_convert($k, $sub, $val[$k]);
+							$vals[$column] = $this->_convert($k, $sub, isset($val[$k]) ? $val[$k] : Null);
 						}
 						$result[] = $vals;
 					}
@@ -210,17 +202,20 @@ class base_rpc
 			case 'md5':
 				$result && $result = md5($result);
 				break;
+			default : 
+				$result = $value;
 		}		
 		return $result;
 	}
 	
-	private $_page = 1;
-	private $_perpage = 10;
+	private $_page = Null;
+	private $_perpage = Null;
 	
 	public function limit($page, $perpage)
 	{
 		$this->_page = $page;
 		$this->_perpage = $perpage;
+		return $this;
 	}
 	private function build_url( $param ){
 		$result = $param['scheme'] . '://' . $param['host'];
@@ -230,15 +225,22 @@ class base_rpc
 		$result.= $param['root'] ."/". $param['version'];	
 		return $result;
 	}
-	private function remote() {
-		//echo $this->url . "\n";
-		//echo json_encode($this->postData, true) . "\n";
+
+	private function _prepare()
+	{
+		if($this->_page !== Null) $this->postData['param']['pageNo'] = $this->_page;
+		if($this->_perpage !== Null) $this->postData['param']['pageCount'] = $this->_page;
+		//print_r($this->postData);
+		$query = json_encode($this->postData, true);
+		return $query;
+	}
+	private function remote() {		
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $this->url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_HEADER, 0);		
 		curl_setopt($ch, CURLOPT_POST, 1);
-		curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($this->postData, true));
+		curl_setopt($ch, CURLOPT_POSTFIELDS, $this->_prepare());
 		//print_r($this->headers);
 		curl_setopt($ch, CURLOPT_HTTPHEADER, $this->headers);
         curl_setopt($ch, CURLOPT_TIMEOUT, $this->_timeout);
@@ -253,8 +255,7 @@ class base_rpc
     }
 	
 	private function _result($data){	
-		$result = Array();	
-		//print_r($this->postData);
+		$result = Array();
 		$object = json_decode($data);		
 		if(!isset($object->status) || $object->status != 'S') {
 			$this->message = isset($object->message) ? $object->message : 'Request Fail';
