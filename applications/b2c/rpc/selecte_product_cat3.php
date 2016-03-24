@@ -1,9 +1,9 @@
 <?php
 /**
- * 查询产品分类---------------IPD141110
+ * 查询产品三级分类---------------IPD141128
  */
-$remote['b2c_selecte_product_cat'] = array(
-    'url' => '/pd/pdBidType',
+$remote['b2c_selecte_product_cat3'] = array(
+    'url' => '/pd/pd_breed',
 
     'request' => array(
         'member_id' => array(
@@ -12,6 +12,29 @@ $remote['b2c_selecte_product_cat'] = array(
             'type' => 'String',
             'default' => '',
             'require' => false,
+        ),
+        'param' => array(
+            'name' => '业务参数',
+            'column' => 'param',
+            'type' => 'Object',
+            'require' => false,
+        ),
+    ),
+
+    'param' => array(
+        'classesCode' => array(
+            'name' => '一级分类编码',
+            'column' => 'classesCode',
+            'type' => 'String',
+            'default' => '01',
+            'require' => true,
+        ),
+        'machiningCode' => array(
+            'name' => '二级分类编码',
+            'column' => 'machiningCode',
+            'type' => 'String',
+            'default' => '01',
+            'require' => true,
         ),
     ),
 
