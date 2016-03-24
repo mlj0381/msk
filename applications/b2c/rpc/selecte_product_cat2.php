@@ -22,7 +22,7 @@ $remote['b2c_selecte_product_cat2'] = array(
     ),
 
     'param' => array(
-        'classesCode' => array(
+        'cat_id1' => array(
             'name' => '一级分类编码',
             'column' => 'classesCode',
             'type' => 'String',
@@ -32,14 +32,14 @@ $remote['b2c_selecte_product_cat2'] = array(
     ),
 
     'response' => array(
-        'breedCode' => array(
+        'machiningCode' => array(
             'name' => '产品品种编码',
-            'column' => 'breedCode',
+            'column' => 'machiningCode',
             'type' => 'String',
         ),
-        'breedName' => array(
+        'machiningName' => array(
             'name' => '产品品种名称',
-            'column' => 'breedName',
+            'column' => 'machiningName',
             'type' => 'String',
         ),
     ),

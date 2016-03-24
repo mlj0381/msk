@@ -45,7 +45,6 @@ class b2c_ctl_site_cart extends b2c_frontpage {
          * 查看购买需求订单接口无
          * 删除购买需求订单接口无
          */
-
         /*
         $cart_api = vmc::singleton('b2c_source_cart');
         $goods_api = vmc::singleton('b2c_source_goods');

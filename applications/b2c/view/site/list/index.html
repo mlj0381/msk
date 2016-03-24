@@ -33,8 +33,7 @@
                 </form>
             </li>
         </ol>
-
-        <div class="col-xs-2 about_goods_total">共<span><{$all_count|defualt:0}></span>件相关商品  </div>
+        <div class="col-xs-2 about_goods_total">共<span><{$all_count|default:0}></span>件相关商品  </div>
     </div>
     <{if $search_info}>
         <div class="gfilter_condition clearfix">
@@ -106,14 +105,14 @@
           <div class="panel-heading clearfix">
                   <div class="form-inline col-xs-8">
                       <div class="btn-group order-btn btn-sm" role="group" aria-label="...">
-                          <a class="btn  btn-sm <{if !$env.get.orderby}>btn-danger<{else}>btn-default<{/if}>" href="<{link app=b2c ctl=site_list act=index}>?<{$query|merge_query:'orderby'}>">
-                              综合排序
-                              <i class="glyphicon glyphicon-sort-by-attributes-alt"></i>
-                          </a>
-                          <a class="btn  btn-sm <{if $env.get.orderby=='buy_count-desc'}>btn-danger<{else}>btn-default<{/if}>" href="<{link app=b2c ctl=site_list act=index}>?<{$query|merge_query:'orderby':'buy_count-desc'}>">
-                              销量
-                              <i class="glyphicon glyphicon-sort-by-order-alt"></i>
-                          </a>
+                          <!--<a class="btn  btn-sm <{if !$env.get.orderby}>btn-danger<{else}>btn-default<{/if}>" href="<{link app=b2c ctl=site_list act=index}>?<{$query|merge_query:'orderby'}>">-->
+                              <!--综合排序-->
+                              <!--<i class="glyphicon glyphicon-sort-by-attributes-alt"></i>-->
+                          <!--</a>-->
+                          <!--<a class="btn  btn-sm <{if $env.get.orderby=='buy_count-desc'}>btn-danger<{else}>btn-default<{/if}>" href="<{link app=b2c ctl=site_list act=index}>?<{$query|merge_query:'orderby':'buy_count-desc'}>">-->
+                              <!--销量-->
+                              <!--<i class="glyphicon glyphicon-sort-by-order-alt"></i>-->
+                          <!--</a>-->
                           <!-- <{if $env.get.orderby=='price-desc'}>
                           <a class="btn  btn-sm btn-danger" href="<{link app=b2c ctl=site_list act=index}>?<{$query|merge_query:'orderby':'price-asc'}>">价格 <i class="glyphicon glyphicon-sort-by-order-alt"></i></a>
                           <{elseif $env.get.orderby=='price-asc'}>
@@ -121,10 +120,10 @@
                           <{else}>
                           <a class="btn  btn-sm btn-default" href="<{link app=b2c ctl=site_list act=index}>?<{$query|merge_query:'orderby':'price-desc'}>">价格</a>
                           <{/if}> -->
-                          <a class="btn  btn-sm <{if $env.get.orderby=='comment_count-desc'}>btn-danger<{else}>btn-default<{/if}>" href="<{link app=b2c ctl=site_list act=index}>?<{$query|merge_query:'orderby':'comment_count-desc'}>">
-                              评价数
-                              <i class="glyphicon glyphicon-sort-by-order-alt"></i>
-                          </a>
+                          <!--<a class="btn  btn-sm <{if $env.get.orderby=='comment_count-desc'}>btn-danger<{else}>btn-default<{/if}>" href="<{link app=b2c ctl=site_list act=index}>?<{$query|merge_query:'orderby':'comment_count-desc'}>">-->
+                              <!--评价数-->
+                              <!--<i class="glyphicon glyphicon-sort-by-order-alt"></i>-->
+                          <!--</a>-->
                       </div>
                         <input type="text" id="input_keyword" value="<{$search_having}>" class="form-control input-sm input-small" placeholder="在结果中搜索">
                         <button type="button" class="btn btn-sm btn-default result_search">确定</button>

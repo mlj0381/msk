@@ -9,23 +9,25 @@
                         </a>
 
                         <div class="location-menu clearfix">
-                            <{foreach from=$basic.addrs item=addrs}>
-
+                            <{*foreach from=$basic.addrs.logiAreaList item=addrs*}>
                             <dl class="clearfix">
-                                <dt title="<{$addrs.local_name}>"><{$addrs.dp_label}>：</dt>
+                                <!--<dt title="<{$addrs.local_name}>"><{$addrs.dp_label}>：</dt>-->
+                                <dt></dt>
                                 <dd>
-                                    <{foreach from=$addrs.warehouse item=item}>
-                                    <{if $item.disabled eq 'false'}>
-                                    <{break}>
-                                    <{/if}>
+                                    <{foreach from=$basic.addrs.logiAreaList item=addrs}>
+                                    <{*foreach from=$addrs.warehouse item=item*}>
+                                    <!--<{if $item.disabled eq 'false'}>-->
+                                    <!--<{break}>-->
+                                    <!--<{/if}>-->
                                     <a title="<{$item.title}>" <{if $activeAddrs eq
-                                    $item.addr_id}>class="active"<{/if}>" data-url="<{link app=site ctl=index
-                                    act=changeAddr args0=$item.addr_id}>"><{$item.title}></a>
+                                    $addrs.addr_id}>class="active"<{/if}>" data-url="<{link app=site ctl=index
+                                    act=changeAddr args0=$addrs.logiAreaCode}>"><{$addrs.logiAreaName}></a>
+                                    <{*/foreach*}>
                                     <{/foreach}>
                                 </dd>
 
                             </dl>
-                            <{/foreach}>
+                            <{*/foreach*}>
                         </div>
 
                     </div>

@@ -114,6 +114,14 @@ class b2c_ctl_site_order extends b2c_frontpage
 //             $this->logger->fail('create', '购物车发生变化', $params);
 //             $this->splash('error', $redirect_cart, '购物车发生变化');
 //         }
+
+        /**
+         * 润和接口 创建订单
+         * ISO151414 标准分销订单 分销买手囤货订单 第三方订单 第三方买手囤货订单
+         */
+        //$rpc_data = array();
+        //$result = $this->app->rpc('order_create')->request($rpc_data);
+        // end 接口
         $db = vmc::database();
         //开启事务
         $this->transaction_status = $db->beginTransaction();

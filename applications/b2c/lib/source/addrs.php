@@ -103,9 +103,16 @@ class b2c_source_addrs extends base_source {
      */
 
     public function &basic($params) {
-        $dlyplace = app::get('b2c')->model('dlyplace')->getDlyplaceAll();
-		$_SESSION['account']['addr'] = $_SESSION['account']['addr'] ?: $dlyplace[0]['warehouse'][0]['addr_id'];
-		return $dlyplace;
+        /**
+         * 润和接口 物流区
+         * IPD141114 2 物流区
+         */
+        $result = app::get('b2c')->rpc('selecte_area')->request(array(1));
+        //end 接口
+        //$dlyplace = app::get('b2c')->model('dlyplace')->getDlyplaceAll();
+		//$_SESSION['account']['addr'] = $_SESSION['account']['addr'] ?: $dlyplace[0]['warehouse'][0]['addr_id'];
+        $_SESSION['account']['addr'] = $_SESSION['account']['addr'] ?: $result['result']['logiAreaList'][0]['logiAreaCode'];
+		return $result['result'];
     }
     
     /*

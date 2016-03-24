@@ -50,6 +50,7 @@ class b2c_ctl_site_list extends b2c_frontpage
          * ISO151416 订单数
          * IPD141114 2 物流区
          */
+
         $params = utils::_filter_input($_GET);
         //属性查找面包屑组合
         $search_info = $this->objSearch->init_crumbs($params);

@@ -1,79 +1,65 @@
 <?php
+/**
+ * 买家账号注册---------------IBY121201
+ */
+$remote['b2c_register'] = array(
+    'url' => '/by/account/register',
 
-$remote['member_register'] = array(
-	'url' => '/by/account/register',
-	'params' => array(
-		'member_id' => array(
-			'name' => '登陆的用户ID',
-			'column' => 'loginId',
-			'type' => 'String',
-			'parent' => '',
-			'default' => '',
-			'require'=> false // ture|false 注册|修改			
-		),
-		'mobile' => array(
-			'name' => '手机',
-			'column' => 'telNo',
-			'type' => 'String',
-			'parent' => 'param',
-			'default' => '',
-			'require'=> true
-		),
-		'account' => array(
-			'name' => '账号',
-			'column' => 'accountName',
-			'type' => 'String',
-			'parent' => 'param',
-			'default' => '',
-			'require'=> false
-		),
+    'request' => array(
+        'member_id' => array(
+            'name' => '登陆的用户ID',
+            'column' => 'loginId',
+            'type' => 'String',
+            'default' => '',
+            'require' => false
+        ),
+        'param' => array(
+            'name' => '参数',
+            'column' => 'param',
+            'type' => 'object',
+            'default' => Array(),
+            //'require'=> true
+        ),
+    ),
 
-		'password' => array(
-			'name' => '密码',
-			'column' => 'accountPass',
-			'type' => 'md5',
-			'parent' => 'param',
-			'default' => '',
-			'require'=> false
-		),
+    'param' => array(
+        'mobile' => array(
+            'name' => '手机号，用户手机号为必填',
+            'column' => 'telNo',
+            'type' => 'String',
+            'default' => '',
+            'require' => false
+        ),
+        'login_account' => array(
+            'name' => '账号名，若不填，则以手机号存入DB',
+            'column' => 'accountName',
+            'type' => 'String',
+            'default' => '',
+            'require' => false
+        ),
+        'login_password' => array(
+            'name' => '账号密码，若不填，则以手机号存入DB',
+            'column' => 'accountPass',
+            'type' => 'String',
+            'default' => '',
+            'require' => false
+        ),
+        'registerSource' => array(
+            'name' => '注册来源',
+            'column' => 'registerSource',
+            'type' => 'String',
+            'default' => '',
+            'require' => false
+        ),
+        'updId' => array(
+            'name' => '更新者ID',
+            'column' => 'updId',
+            'type' => 'String',
+            'default' => '',
+            'require' => false
+        ),
+    ),
 
-		'cate_name' => array(
-			'name' => '来源',
-			'column' => 'cateName',
-			'type' => 'String',
-			'parent' => 'param/cate',
-			'default' => '',
-			'require'=> false
-		),
-		'cate_id' => array(
-			'name' => '来源',
-			'column' => 'cateNo',
-			'type' => 'String',
-			'parent' => 'param/cate',
-			'default' => '',
-			'require'=> false
-		),
-
-		'source' => array(
-			'name' => '来源',
-			'column' => 'registerSource',
-			'type' => 'String',
-			'parent' => 'param',
-			'default' => '',
-			'require'=> false
-		),
-
-		'operator' => array(
-			'name' => '操作者',
-			'column' => 'updId',
-			'type' => 'String',
-			'parent' => 'param',
-			'default' => '',
-			'require'=> false
-		)		
-	),
-
-	'result' => array(
-		// 'buyerId' => // os id
-	),
+    'response' => array(// 'buyerId' => // os id
+    ),
 );
