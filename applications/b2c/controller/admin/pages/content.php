@@ -132,7 +132,7 @@ class b2c_ctl_admin_pages_content extends desktop_controller
 			$group['add'] = array(
 				'label' => ('添加页面') ,
 				'icon'=>'fa-plus',
-				'href' =>  $this->_url('position', 'add', $this->_filter),
+				'href' =>  $this->_url('', 'add', $this->_filter),
 				'data-target' => '#pages_dialog',
 				'data-toggle' => 'modal'
 			);
