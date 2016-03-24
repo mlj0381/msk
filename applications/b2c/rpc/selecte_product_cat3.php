@@ -39,40 +39,14 @@ $remote['b2c_selecte_product_cat3'] = array(
     ),
 
     'response' => array(
-        'pdList' => array(
-            'name' => '产品信息列表',
-            'column' => 'pdList',
-            'type' => 'List',
-        ),
-    ),
-
-    'pdList' => array(
-        'pdTypeCode1' => array(
-            'name' => '产品1级分类编码',
-            'column' => 'pdTypeCode1',
+        'breedCode' => array(
+            'name' => '产品品种编码',
+            'column' => 'breedCode',
             'type' => 'String',
         ),
-        'pdTypeName1' => array(
-            'name' => '产品1级分类名称',
-            'column' => 'pdTypeName1',
-            'type' => 'String',
-        ),
-        'pdType2List' => array(
-            'name' => '产品信息列表',
-            'column' => 'pdType2List',
-            'type' => 'List',
-        ),
-    ),
-
-    'pdType2List' => array(
-        'pdTypeCode2' => array(
-            'name' => '产品2级分类编码',
-            'column' => 'pdTypeCode2',
-            'type' => 'String',
-        ),
-        'pdTypeName2' => array(
-            'name' => '产品2级分类名称',
-            'column' => 'pdTypeName2',
+        'breedName' => array(
+            'name' => '产品品种名称',
+            'column' => 'breedName',
             'type' => 'String',
         ),
     ),
