@@ -165,4 +165,11 @@ class b2c_ctl_site_product extends b2c_frontpage {
         );
         $this->display('site/comment/list.html');
     }
+
+    //修改首頁的区域地址
+    public function changeAddr($region_id){
+        if(!is_numeric($region_id)) $this->splash('error', '', '非法请求');
+        $_SESSION['account']['addr'] = $region_id;
+        $this->splash('success', '', $_SESSION['account']['addr']);
+    }
 }
