@@ -10,7 +10,7 @@ class freeze_ctl_site_center extends freeze_frontpage{
 
     public function index()
     {
-
+        app::get('b2c')->model('dlyplace')->get_api_area();
         $this->output();
     }
 

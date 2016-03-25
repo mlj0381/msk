@@ -2,7 +2,7 @@
 /**
  * 查询物流区---------------IPD141114
  */
-$remote['b2c_selecte_area'] = array(
+$remote['b2c_select_area'] = array(
     'url' => '/pd/logiArea',
 
     'request' => array(

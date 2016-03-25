@@ -25,4 +25,21 @@ class b2c_mdl_dlyplace extends dbeav_model
         }
         return $dlyplace;
     }
+
+    /**
+     * 润和接口 物流区
+     * IPD141114 2 物流区
+     */
+    public function get_api_area()
+    {
+        $rpc_area = app::get('b2c')->rpc('select_area');
+        $area = $rpc_area->request(array(1),2592000); //缓存时间一个月
+        if($area['status'])
+        {
+            return $area['result'];
+        }else{
+            return array();
+        }
+    }
+
 }

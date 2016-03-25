@@ -19,8 +19,9 @@
                                     <!--<{if $item.disabled eq 'false'}>-->
                                     <!--<{break}>-->
                                     <!--<{/if}>-->
+                                    <{$activeAddrs}>
                                     <a title="<{$item.title}>" <{if $activeAddrs eq
-                                    $addrs.addr_id}>class="active"<{/if}>" data-url="<{link app=site ctl=index
+                                    $addrs.logiAreaCode}>class="active"<{/if}>" data-url="<{link app=site ctl=index
                                     act=changeAddr args0=$addrs.logiAreaCode}>"><{$addrs.logiAreaName}></a>
                                     <{*/foreach*}>
                                     <{/foreach}>
