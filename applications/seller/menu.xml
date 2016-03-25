@@ -34,7 +34,7 @@
 
     <menugroup label="售后管理" name="service">
         <menu app='seller' controller='site_aftersales' action='order' display='true' order="60">退货管理</menu>
-        <menu app='seller' controller='site_aftersales' action='price_manage' display='true' order="60">退款管理</menu>
+        <menu app='seller' controller='site_aftersales' action='price_manage' display='false' order="60">退款管理</menu>
         <menu app='seller' controller='site_aftersales' action='order' display='false' order="60">售后管理</menu>
         <menu app='seller' controller='site_aftersales' action='' display='false' order="60">违规处理</menu>
         <menu app='seller' controller='site_store' action='complaints' display='false' order="60">举报管理</menu>
