@@ -36,6 +36,14 @@ class b2c_mdl_dlyplace extends dbeav_model
         $area = $rpc_area->request(array(1),2592000); //缓存时间一个月
         if($area['status'])
         {
+            foreach($area['result']['logiAreaList'] as $v){
+                if($v['logiAreaCode'] == $_SESSION['account']['addr'])
+                {
+                    $area['result']['default']['logiAreaCode'] =  $v['logiAreaCode'];
+                    $area['result']['default']['logiAreaName'] =  $v['logiAreaName'];
+                    break;
+                }
+            }
             return $area['result'];
         }else{
             return array();
