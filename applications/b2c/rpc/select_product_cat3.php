@@ -2,7 +2,7 @@
 /**
  * 查询产品三级分类---------------IPD141128
  */
-$remote['b2c_selecte_product_cat3'] = array(
+$remote['b2c_select_product_cat3'] = array(
     'url' => '/pd/pd_breed',
 
     'request' => array(
