@@ -27,7 +27,7 @@ $remote['freeze_editorbuyer'] = array(
             'name' => '1:专属买家、2：抢单买家',
             'column' => 'buyerFlag',
             'type' => 'String',
-            'default' => '',
+            'default' => '1',
             'require' => true
         ),
         'slCode' => array(
