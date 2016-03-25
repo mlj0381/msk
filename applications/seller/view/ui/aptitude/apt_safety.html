@@ -2,6 +2,10 @@
     <button type="button" class="close" data-dismiss="modal" aria-label="Close" required="true"><span aria-hidden="true">&times;</span></button>
     <h4 class="modal-title" id="myModalLabel">产品安全标准指标</h4>
 </div>
+
+<!--<form method="post" action="<{link app=seller ctl=site_passport act=addBlock}>">-->
+    <!--<input name="type" type="hidden" value="apt_safety"/>-->
+    <!--<input name="cat_id" type="hidden" value="<{$cat_id}>"/>-->
 <div class="modal-body" data-readonly="readonly">
     <div class="table_scroll" >
         <table class="table-hover">
@@ -19,11 +23,11 @@
                 <tr>
                     <td>微生物指标</td>
                     <td>
-                        <textarea name="sftOkValArray">"菌落总数:≤5*105cfu/g 大肠菌群:≤5*103 MPN/100g 沙门氏菌:0/25g 出血性大肠埃希氏菌:0/25g"
+                        <textarea name="qualified[one_class]">"菌落总数:≤5*105cfu/g 大肠菌群:≤5*103 MPN/100g 沙门氏菌:0/25g 出血性大肠埃希氏菌:0/25g"
                         </textarea>
                     </td>
                     <td>
-                        <textarea name="sftNgValArray">"菌落总数:&gt;5*105cfu/g 大肠菌群：&gt;5*103 MPN/100g 沙门氏菌：样品检出 出血性大肠埃希氏菌：样品检出"
+                        <textarea name="unqualified[one_class]">"菌落总数:&gt;5*105cfu/g 大肠菌群：&gt;5*103 MPN/100g 沙门氏菌：样品检出 出血性大肠埃希氏菌：样品检出"
                         </textarea>
                     </td>
                 </tr>
@@ -33,22 +37,22 @@
                 <tr>
                     <td>农药残留指标</td>
                     <td>
-                        <textarea name="sftOkValArray">"六六六：≤0.1mg/kg 滴滴涕：≤0.2mg/kg 敌敌畏：≤0.05mg/kg"
+                        <textarea name="qualified[two_class]">"六六六：≤0.1mg/kg 滴滴涕：≤0.2mg/kg 敌敌畏：≤0.05mg/kg"
                         </textarea>
                     </td>
                     <td>
-                        <textarea name="sftNgValArray">"六六六：&gt;0.1mg/kg 滴滴涕：&gt;0.2mg/kg 敌敌畏：&gt;0.05mg/kg"
+                        <textarea name="unqualified[two_class]">"六六六：&gt;0.1mg/kg 滴滴涕：&gt;0.2mg/kg 敌敌畏：&gt;0.05mg/kg"
                         </textarea>
                     </td>
                 </tr>
                 <tr>
                     <td>兽药残留指标</td>
                     <td>
-                        <textarea name="sftOkValArray">"四环素：≤0.25mg/kg 土霉素：≤0.1mg/kg 金霉素：≤1mg/kg 乙烯雌酚：未检出 磺胺二甲嘧啶：≤0.01mg/kg 二氯二甲吡啶酚（克球酚）：≤0.01mg/kg"
+                        <textarea name="qualified[veterinary]">"四环素：≤0.25mg/kg 土霉素：≤0.1mg/kg 金霉素：≤1mg/kg 乙烯雌酚：未检出 磺胺二甲嘧啶：≤0.01mg/kg 二氯二甲吡啶酚（克球酚）：≤0.01mg/kg"
                         </textarea>
                     </td>
                     <td>
-                        <textarea name="sftNgValArray">"四环素：&gt;0.25mg/kg 土霉素：&gt;0.1mg/kg 金霉素：&gt;1mg/kg 乙烯雌酚：检出 磺胺二甲嘧啶：&gt;0.01mg/kg 二氯二甲吡啶酚（克球酚）：&gt;0.01mg/kg"
+                        <textarea name="unqualified[veterinary]">"四环素：&gt;0.25mg/kg 土霉素：&gt;0.1mg/kg 金霉素：&gt;1mg/kg 乙烯雌酚：检出 磺胺二甲嘧啶：&gt;0.01mg/kg 二氯二甲吡啶酚（克球酚）：&gt;0.01mg/kg"
                         </textarea>
                     </td>
                 </tr>
@@ -58,11 +62,11 @@
                 <tr>
                     <td>重金属指标</td>
                     <td>
-                        <textarea name="sftOkValArray">"铅：≤0.2mg/kg 砷：≤0.5mg/kg 汞：≤0.05mg/kg 镉：≤0.1mg/kg 铬：≤1mg/kg"
+                        <textarea name="qualified[three_class]">"铅：≤0.2mg/kg 砷：≤0.5mg/kg 汞：≤0.05mg/kg 镉：≤0.1mg/kg 铬：≤1mg/kg"
                         </textarea>
                     </td>
                     <td>
-                        <textarea name="sftNgValArray">"铅：&gt;0.2mg/kg 砷：&gt;0.5mg/kg 汞：&gt;0.05mg/kg 镉：&gt;0.1mg/kg 铬：1mg/kg"
+                        <textarea name="unqualified[three_class]">"铅：&gt;0.2mg/kg 砷：&gt;0.5mg/kg 汞：&gt;0.05mg/kg 镉：&gt;0.1mg/kg 铬：1mg/kg"
                         </textarea>
                     </td>
                 </tr>
@@ -74,3 +78,5 @@
 <div class="modal-footer apt_safety">
     <button type="button" class="btn btn-default confirm-<{$cat_id}>" data-dismiss="modal">确定</button>
 </div>
+<!--</form>
+-->

@@ -2,6 +2,9 @@
     <button type="button" class="close" data-dismiss="modal" aria-label="Close" required="true"><span aria-hidden="true">&times;</span></button>
     <h4 class="modal-title" id="myModalLabel">产品原种饲养标准指标</h4>
 </div>
+<!--<form method="post" action="<{link app=seller ctl=site_passport act=addBlock}>">-->
+    <!--<input name="type" type="hidden" value="apt_raise"/>-->
+    <!--<input name="cat_id" type="hidden" value="<{$cat_id}>"/>-->
 <div class="modal-body" data-readonly="readonly">
     <div class="table_scroll">
         <table class="table-hover">
@@ -20,78 +23,63 @@
                 <tr>
                     <td>幼苗季节性标准指标</td>
                     <td>
-                        <textarea name="fedGoodValArray">春雏</textarea>
+                        <textarea name="excellent[season]">春雏</textarea>
                     </td>
                     <td>
-                        <textarea name="fedNormalValArray">晚春雏</textarea>
+                        <textarea name="good[season]">晚春雏</textarea>
                     </td>
                     <td>
-                        <textarea name="fedBadValArray">冬雏</textarea>
-                    </td>
-                    <td style="display:none;">
-                        <input type="hidden" value="i01" id="fedStdItemIdArray" name="fedStdItemIdArray">
+                        <textarea name="poor[season]">冬雏</textarea>
                     </td>
                 </tr>
                 <tr>
                     <td>饲养方式标准指标</td>
                     <td>
-                        <textarea name="fedGoodValArray">散养</textarea>
+                        <textarea name="excellent[raise]">散养</textarea>
                     </td>
                     <td>
-                        <textarea name="fedNormalValArray">半饲养</textarea>
+                        <textarea name="good[raise]">半饲养</textarea>
                     </td>
                     <td>
-                        <textarea name="fedBadValArray">笼养</textarea>
-                    </td>
-                    <td style="display:none;">
-                        <input type="hidden" value="i02" id="fedStdItemIdArray" name="fedStdItemIdArray">
+                        <textarea name="poor[raise]">笼养</textarea>
                     </td>
                 </tr>
                 <tr>
                     <td>饲养地点、温湿度标准指标</td>
                     <td>
-                        <textarea name="fedGoodValArray">环境广，污染少（山林、草原） 5~27摄氏度，60~70%
+                        <textarea name="excellent[raise_norm]">环境广，污染少（山林、草原） 5~27摄氏度，60~70%
                         </textarea>
                     </td>
                     <td>
-                        <textarea name="fedNormalValArray">饲养环境较小，有一定污染（人口聚集、有工业生产） 5~27摄氏度，60~70%
+                        <textarea name="good[raise_norm]">饲养环境较小，有一定污染（人口聚集、有工业生产） 5~27摄氏度，60~70%
                         </textarea>
                     </td>
                     <td>
-                        <textarea name="fedBadValArray">饲养环境小或污染严重（雾霾严重，禽舍空气不通风）</textarea>
-                    </td>
-                    <td style="display:none;">
-                        <input type="hidden" value="i03" id="fedStdItemIdArray" name="fedStdItemIdArray">
+                        <textarea name="poor[raise_norm]">饲养环境小或污染严重（雾霾严重，禽舍空气不通风）</textarea>
                     </td>
                 </tr>
                 <tr>
                     <td>饲料种类，喂养情况标准指标</td>
                     <td>
-                        <textarea name="fedGoodValArray">天然饲料</textarea>
+                        <textarea name="excellent[fodder]">天然饲料</textarea>
                     </td>
                     <td>
-                        <textarea name="fedNormalValArray">浓缩复合饲料</textarea>
+                        <textarea name="good[fodder]">浓缩复合饲料</textarea>
                     </td>
                     <td>
-                        <textarea name="fedBadValArray">含有水产类饲料（易使鸡肉带腥味）</textarea>
-                    </td>
-                    <td style="display:none;">
-                        <input type="hidden" value="i04" id="fedStdItemIdArray" name="fedStdItemIdArray">
+                        <textarea name="poor[fodder]">含有水产类饲料（易使鸡肉带腥味）</textarea>
                     </td>
                 </tr>
                 <tr>
                     <td>生长周期标准指标</td>
                     <td>
-                        <textarea name="fedGoodValArray">生长周期49天</textarea>
+                        <textarea name="excellent[cycle]">生长周期49天</textarea>
                     </td>
                     <td>
-                        <textarea name="fedNormalValArray">生长周期45-49天</textarea>
+                        <textarea name="good[cycle]">生长周期45-49天</textarea>
                     </td>
                     <td>
-                        <textarea name="fedBadValArray">生长周期45天</textarea>
-                    </td>
-                    <td style="display:none;">
-                        <input type="hidden" value="i05" id="fedStdItemIdArray" name="fedStdItemIdArray">
+                        <textarea name="poor[cycle]">生长周期45天</textarea>
                     </td>
                 </tr>
             </tbody>
@@ -103,3 +91,5 @@
 <div class="modal-footer apt_raise">
     <button type="button" class="btn btn-default confirm-<{$cat_id}>" data-dismiss="modal">确定</button>
 </div>
+<!--</form>
+-->
