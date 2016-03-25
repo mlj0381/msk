@@ -27,18 +27,18 @@ class b2c_view_widget {
          */
         $api_b2c_rpc = app::get('b2c');
 
-        $cat1 = $api_b2c_rpc->rpc('selecte_product_cat1')->request();
+        $cat1 = $api_b2c_rpc->rpc('select_product_cat1')->request();
         $tmp = Array();
         foreach($cat1['result'] as $k1 => $v1)
         {
             $tmp[$k1]['cat_name'] = $v1['classesName'];
             $tmp[$k1]['cat_id'] = $v1['classesCode'];
-            $cat2 = $api_b2c_rpc->rpc('selecte_product_cat2')->request(array('cat_id1' => $v1['classesCode']));
+            $cat2 = $api_b2c_rpc->rpc('select_product_cat2')->request(array('cat_id1' => $v1['classesCode']));
             foreach($cat2['result'] as $k2 => $v2)
             {
                 $tmp[$k1]['son'][$k2]['cat_name'] = $v2['machiningName'];
                 $tmp[$k1]['son'][$k2]['cat_id'] = $v2['machiningCode'];
-                $cat3 = $api_b2c_rpc->rpc('selecte_product_cat3')->request(array('cat_id1' => $v1['classesCode'], 'cat_id2' => $v2['machiningCode']));
+                $cat3 = $api_b2c_rpc->rpc('select_product_cat3')->request(array('cat_id1' => $v1['classesCode'], 'cat_id2' => $v2['machiningCode']));
                 foreach($cat3['result'] as $k3 => $v3)
                 {
                     $tmp[$k1]['son'][$k2]['son'][$k3]['cat_name'] = $v3['breedName'];
