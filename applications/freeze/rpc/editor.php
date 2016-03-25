@@ -23,6 +23,27 @@ $remote['freeze_editor'] = array(
     ),
 
     'param' => array(
+        'slHouseAccount'=> array(
+            'name' => '冻品管家账号信息',
+            'column' => 'slHouseAccount',
+            'type' => 'object',
+        ),
+        'slAreaList' => array(
+            'name' => '经营区域List',
+            'column' => 'slAreaList',
+            'type' => 'list',
+            'default' => '',
+            'require' => false
+        ),
+        'housePdList' => array(
+            'name' => '',
+            'column' => 'housePdList',
+            'type' => 'list',
+            'default' => '',
+            'require' => false
+        ),
+    ),
+    'slHouseAccount' => array(
         'buyer_code' => array(
             'name' => '买手店编码',
             'column' => 'slCode',
@@ -45,7 +66,7 @@ $remote['freeze_editor'] = array(
             'require' => true
         ),
         'buyer_name' => array(
-            'name' => '卖家显示名称',
+            'name' => '卖家显示名称(买手名称)',
             'column' => 'houseShowName',
             'type' => 'String',
             'default' => '',
@@ -83,7 +104,7 @@ $remote['freeze_editor'] = array(
             'name' => '国籍',
             'column' => 'slConFlg',
             'type' => 'String',
-            'default' => '',
+            'default' => '1',
             'require' => true
         ),
         'area_code' => array(
@@ -240,22 +261,7 @@ $remote['freeze_editor'] = array(
             'default' => '',
             'require' => false
         ),
-        'slAreaList' => array(
-            'name' => '经营区域List',
-            'column' => 'slAreaList',
-            'type' => 'list',
-            'default' => '',
-            'require' => false
-        ),
-        'housePdList' => array(
-            'name' => '',
-            'column' => 'housePdList',
-            'type' => 'list',
-            'default' => '',
-            'require' => false
-        ),
     ),
-
     'slAreaList' => array(
         'slAreaId' => array(
             'name' => '经营区域ID',

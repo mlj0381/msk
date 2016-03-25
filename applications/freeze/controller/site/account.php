@@ -42,10 +42,19 @@ class freeze_ctl_site_account extends freeze_frontpage
         {
             $this->splash('error',$error_url,$msg);
         };
+
         if(!$freeze_model->save($data))
         {
             $this->splash('error',$error_url,'信息保存失败');
         }
+
+        $rpc_editor = app::get('freeze')->rpc("editor");
+
+        $result = $rpc_editor->request($data);
+
+        echo '<pre>';
+        var_dump($result);
+        die;
         $this->splash('success',$url,'信息保存成功');
     }
 
