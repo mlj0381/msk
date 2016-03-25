@@ -14,7 +14,7 @@
         </menugroup>
         <menugroup name="站点管理">
             <menu controller='admin_setting' action='index' permission='site' display='true' order="55">站点设置</menu>
-            <menu controller='admin_setting' action='website' permission='site' display='true' order="55">站点地图</menu>
+            <menu controller='admin_setting' action='website' permission='site' display='true' order="55">网站导航</menu>
             <menu controller='admin_seo' action='index' permission='seo' display='false' order="60">SEO优化</menu>
         </menugroup>
     </workground>-->
