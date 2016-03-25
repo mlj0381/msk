@@ -5,7 +5,7 @@
 $remote['freeze_editor'] = array(
     'url' => '/bs/slInfo/slSeller/newOrUpdate',
 
-    'params' => array(
+    'request' => array(
         'member_id' => array(
             'name' => '登陆的用户ID',
             'column' => 'loginId',
@@ -23,6 +23,27 @@ $remote['freeze_editor'] = array(
     ),
 
     'param' => array(
+        'slHouseAccount'=> array(
+            'name' => '冻品管家账号信息',
+            'column' => 'slHouseAccount',
+            'type' => 'object',
+        ),
+        'slAreaList' => array(
+            'name' => '经营区域List',
+            'column' => 'slAreaList',
+            'type' => 'list',
+            'default' => '',
+            'require' => false
+        ),
+        'housePdList' => array(
+            'name' => '',
+            'column' => 'housePdList',
+            'type' => 'list',
+            'default' => '',
+            'require' => false
+        ),
+    ),
+    'slHouseAccount' => array(
         'buyer_code' => array(
             'name' => '买手店编码',
             'column' => 'slCode',
@@ -45,7 +66,7 @@ $remote['freeze_editor'] = array(
             'require' => true
         ),
         'buyer_name' => array(
-            'name' => '卖家显示名称',
+            'name' => '卖家显示名称(买手名称)',
             'column' => 'houseShowName',
             'type' => 'String',
             'default' => '',
@@ -83,7 +104,7 @@ $remote['freeze_editor'] = array(
             'name' => '国籍',
             'column' => 'slConFlg',
             'type' => 'String',
-            'default' => '',
+            'default' => '1',
             'require' => true
         ),
         'area_code' => array(
@@ -128,171 +149,156 @@ $remote['freeze_editor'] = array(
             'default' => '',
             'require' => true
         ),
-        '' => array(
+        'houseIntroduce' => array(
             'name' => '管家介绍',
             'column' => 'houseIntroduce',
             'type' => 'String',
             'default' => '',
             'require' => false
         ),
-        '' => array(
+        'houseClass' => array(
             'name' => '级别',
             'column' => 'houseClass',
             'type' => 'String',
             'default' => '',
             'require' => false
         ),
-        '' => array(
+        'houseCategory' => array(
             'name' => '管家分类',
             'column' => 'houseCategory',
             'type' => 'String',
             'default' => '',
             'require' => false
         ),
-        '' => array(
+        'HOUSE_CATEGORY0' => array(
             'name' => '管家分类基本',
             'column' => 'HOUSE_CATEGORY0',
             'type' => 'String',
             'default' => '',
             'require' => false
         ),
-        '' => array(
+        'HOUSE_CATEGORY1' => array(
             'name' => '管家分类分销',
             'column' => 'HOUSE_CATEGORY1',
             'type' => 'String',
             'default' => '',
             'require' => false
         ),
-        '' => array(
+        'HOUSE_CATEGORY2' => array(
             'name' => '管家分类菜场',
             'column' => 'HOUSE_CATEGORY2',
             'type' => 'String',
             'default' => '',
             'require' => false
         ),
-        '' => array(
+        'HOUSE_CATEGORY3' => array(
             'name' => '管家分类团膳',
             'column' => 'HOUSE_CATEGORY3',
             'type' => 'String',
             'default' => '',
             'require' => false
         ),
-        '' => array(
+        'HOUSE_CATEGORY4' => array(
             'name' => '管家分类火锅',
             'column' => 'HOUSE_CATEGORY4',
             'type' => 'String',
             'default' => '',
             'require' => false
         ),
-        '' => array(
+        'HOUSE_CATEGORY5' => array(
             'name' => '管家分类中餐',
             'column' => 'HOUSE_CATEGORY5',
             'type' => 'String',
             'default' => '',
             'require' => false
         ),
-        '' => array(
+        'HOUSE_CATEGORY6' => array(
             'name' => '管家分类西餐',
             'column' => 'HOUSE_CATEGORY6',
             'type' => 'String',
             'default' => '',
             'require' => false
         ),
-        '' => array(
+        'HOUSE_CATEGORY7' => array(
             'name' => '管家分类小吃烧烤',
             'column' => 'HOUSE_CATEGORY7',
             'type' => 'String',
             'default' => '',
             'require' => false
         ),
-        '' => array(
+        'HOUSE_CATEGORY8' => array(
             'name' => '管家分类加工厂',
             'column' => 'HOUSE_CATEGORY8',
             'type' => 'String',
             'default' => '',
             'require' => false
         ),
-        '' => array(
+        'grade' => array(
             'name' => '等级',
             'column' => 'grade',
             'type' => 'Integer',
             'default' => '',
             'require' => false
         ),
-        '' => array(
+        'loginId' => array(
             'name' => '创建者ID/更新者ID',
             'column' => 'loginId',
             'type' => 'String',
             'default' => '',
             'require' => false
         ),
-        '' => array(
+        'delFlg' => array(
             'name' => '删除标志',
             'column' => 'delFlg',
             'type' => 'String',
             'default' => '',
             'require' => false
         ),
-        '' => array(
+        'ver' => array(
             'name' => '版本号',
             'column' => 'ver',
             'type' => 'Integer',
             'default' => '',
             'require' => false
         ),
-        'list_1' => array(
-            'name' => '经营区域List',
-            'column' => 'slAreaList',
-            'type' => 'list',
-            'default' => '',
-            'require' => false
-        ),
-        'list_2' => array(
-            'name' => '',
-            'column' => 'housePdList',
-            'type' => 'list',
-            'default' => '',
-            'require' => false
-        ),
     ),
-
-    'list_1' => array(
-        '' => array(
+    'slAreaList' => array(
+        'slAreaId' => array(
             'name' => '经营区域ID',
             'column' => 'slAreaId',
             'type' => 'Integer',
             'default' => '',
             'require'=> false
         ),
-        '' => array(
+        'lgcsAreaCode' => array(
             'name' => '物流区编码',
             'column' => 'lgcsAreaCode',
             'type' => 'String',
             'default' => '',
             'require'=> false
         ),
-        '' => array(
+        'provinceCode' => array(
             'name' => '省编码',
             'column' => 'provinceCode',
             'type' => 'String',
             'default' => '',
             'require'=> false
         ),
-        '' => array(
+        'cityCode' => array(
             'name' => '地区编码',
             'column' => 'cityCode',
             'type' => 'String',
             'default' => '',
             'require'=> false
         ),
-        '' => array(
+        'districtCode' => array(
             'name' => '区编码',
             'column' => 'districtCode',
             'type' => 'String',
             'default' => '',
             'require'=> false
         ),
-        '' => array(
+        'address' => array(
             'name' => '经营地址',
             'column' => 'address',
             'type' => 'String',
@@ -301,36 +307,36 @@ $remote['freeze_editor'] = array(
         ),
     ),
 
-    'list_2' => array(
-        '' => array(
+    'housePdList' => array(
+        'pdId' => array(
             'name' => '管家管理产品ID',
             'column' => 'pdId',
             'type' => 'Integer',
             'default' => '',
             'require'=> false
         ),
-        '' => array(
+        'pdClassesCode' => array(
             'name' => '产品类别',
             'column' => 'pdClassesCode',
             'type' => 'String',
             'default' => '',
             'require'=> false
         ),
-        '' => array(
+        'machiningCode' => array(
             'name' => '产品二级分类编码',
             'column' => 'machiningCode',
             'type' => 'String',
             'default' => '',
             'require'=> false
         ),
-        '' => array(
+        'pdBreedCode' => array(
             'name' => '产品品种',
             'column' => 'pdBreedCode',
             'type' => 'String',
             'default' => '',
             'require'=> false
         ),
-        '' => array(
+        'pdFeatureCode' => array(
             'name' => '产品特征',
             'column' => 'pdFeatureCode',
             'type' => 'String',
@@ -339,7 +345,7 @@ $remote['freeze_editor'] = array(
         ),
     ),
 
-    'result' => array(
+    'response' => array(
             // 'buyerId' => // os id
     ),
 );

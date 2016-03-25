@@ -1,109 +1,112 @@
 <?php
+/**
+ * 创建购买需求订单---------------ISO151401
+ */
 $remote['b2c_order_create'] = array(
-	
-	'url' => '/so/pro/new',	
-	
-	'params' => array(
-		'member_id' => array(
-			'name' => '登陆的用户ID',
-			'column' => 'loginId',
-			'type' => 'String',			
-			'default' => '',
-			'require'=> false // ture|false 注册|修改			
-		),
-		'param' => array(
-			'name' => '参数',
-			'column' => 'param',
-			'type' => 'object',
-			'default' => Array(),
-			//'require'=> true
-		),
-	),
-	'param' => array(		
-		'years' => array(
-			'name' => '年月',
-			'column' => 'years',
-			'type' => 'date@yyyy-mm',
-			'default' => '',
-			'require'=> true
-		),
-		'region_id' => array(
-			'name' => '账号',
-			'column' => 'districtCode',
-			'type' => 'String',
-			'default' => '',
-			'require'=> true
-		),
-		'status' => array(
-			'name' => '密码',
-			'column' => 'orderStatus',
-			'type' => 'number',
-			'default' => '1',
-			'require'=> true
-		),
-		'goods' => array(
-			'name' => '产品',
-			'column' => 'products',
-			'type' => 'list',
-			'default' => '',
-			'require'=> true
-		),
-		'address' => array(
-			'name' => '收货地址',
-			'column' => 'areaStr',
-			'type' => 'object',			
-			'default' => '',
-			'require'=> true
-		),
-	),	
-	'goods' => array(
-		'goods_id' => array(
-			'name' => '产品ID',
-			'column' => 'pdCode',
-			'type' => 'String',			
-			'default' => '',
-			'require'=> false
-		),
-		'goods_name' => array(
-			'name' => '产品名称',
-			'column' => 'pdName',
-			'type' => 'String',		
-			'default' => '',
-			'require'=> false
-		),
-	),
-	'address' => array(
-		'id' => array(
-			'name' => '收货ID',
-			'column' => 'relaverId',
-			'type' => 'String',			
-			'default' => '',
-			'require'=> false
-		),
-		'region_id' => array(
-			'name' => '区域',
-			'column' => 'relaverCode',
-			'type' => 'String',			
-			'default' => '',
-			'require'=> false
-		),
-		'address' => array(
-			'name' => '地址',
-			'column' => 'relaverAddress',
-			'type' => 'String',		
-			'default' => '',
-			'require'=> false
-		),
-		'mobile' => array(
-			'name' => '手机',
-			'column' => 'telNo',
-			'type' => 'String',		
-			'default' => '',
-			'require'=> false
-		),
-	),
-	
-	'result' => array(
-		// 'buyerId' => // os id
-	),
+    'url' => '/so/pro/new',
+    'request' => array(
+        'member_id' => array(
+            'name' => '登陆的用户ID',
+            'column' => 'loginId',
+            'type' => 'String',
+            'default' => '',
+            'require' => false,
+        ),
+        'param' => array(
+            'name' => '参数',
+            'column' => 'param',
+            'type' => 'object',
+        ),
+    ),
+
+    'param' => array(
+        'districtCode' => array(
+            'name' => '区域',
+            'column' => 'districtCode',
+            'type' => 'String',
+            'require' => true,
+        ),
+        'buyersId' => array(
+            'name' => '买家ID',
+            'column' => 'buyersId',
+            'type' => 'String',
+            'require' => true,
+        ),
+        'buyersCode' => array(
+            'name' => '买家编码',
+            'column' => 'buyersCode',
+            'type' => 'String',
+            'require' => true,
+        ),
+        'buyersType' => array(
+            'name' => '买家类别',
+            'column' => 'buyersType',
+            'type' => 'String',
+            'require' => true,
+        ),
+        'buyersName' => array(
+            'name' => '买家名称',
+            'column' => 'buyersName',
+            'type' => 'String',
+            'require' => true,
+        ),
+        'sellerCode' => array(
+            'name' => '卖家编码',
+            'column' => 'sellerCode',
+            'type' => 'String',
+            'require' => true,
+        ),
+        'sellerName' => array(
+            'name' => '卖家名称',
+            'column' => 'sellerName',
+            'type' => 'String',
+            'require' => true,
+        ),
+        'products' => array(
+            'name' => '产品列表,包含至少一件产品',
+            'column' => 'products',
+            'type' => 'List',
+            'require' => false,
+        ),
+    ),
+    'products' => array(
+        'pdCode' => array(
+            'name' => '产品编码',
+            'column' => 'pdCode',
+            'type' => 'String',
+            'require' => true,
+        ),
+        'pdName' => array(
+            'name' => '产品名称',
+            'column' => 'pdName',
+            'type' => 'String',
+            'require' => true,
+        ),
+        'orderPrice' => array(
+            'name' => '订单价格',
+            'column' => 'orderPrice',
+            'type' => 'String',
+            'require' => false,
+        ),
+        'priceCycle' => array(
+            'name' => '价盘周期',
+            'column' => 'priceCycle',
+            'type' => 'String',
+            'require' => false,
+        ),
+        'orderQty' => array(
+            'name' => '订单数量',
+            'column' => 'orderQty',
+            'type' => 'String',
+            'require' => false,
+        ),
+    ),
+
+    'response' => array(
+        'proCode' => array(
+            'name' => '购物需求订单编码',
+            'column' => 'proCode',
+            'type' => 'String',
+        ),
+    ),
 );

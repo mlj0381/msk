@@ -2,7 +2,7 @@
 /**
  * 买家账号注册---------------IBY121201
  */
-$remote['b2c_register'] = array(
+$remote['buyer_register'] = array(
     'url' => '/by/account/register',
 
     'request' => array(
@@ -11,7 +11,7 @@ $remote['b2c_register'] = array(
             'column' => 'loginId',
             'type' => 'String',
             'default' => '',
-            'require' => false
+            'require'=> false
         ),
         'param' => array(
             'name' => '参数',
@@ -23,21 +23,21 @@ $remote['b2c_register'] = array(
     ),
 
     'param' => array(
-        'mobile' => array(
+        'telNo' => array(
             'name' => '手机号，用户手机号为必填',
             'column' => 'telNo',
             'type' => 'String',
             'default' => '',
-            'require' => false
+            'require' => true
         ),
-        'login_account' => array(
+        'accountName' => array(
             'name' => '账号名，若不填，则以手机号存入DB',
             'column' => 'accountName',
             'type' => 'String',
             'default' => '',
             'require' => false
         ),
-        'login_password' => array(
+        'accountPass' => array(
             'name' => '账号密码，若不填，则以手机号存入DB',
             'column' => 'accountPass',
             'type' => 'String',
@@ -60,6 +60,7 @@ $remote['b2c_register'] = array(
         ),
     ),
 
-    'response' => array(// 'buyerId' => // os id
+    'response' => array(
+        // 'buyerId' => // os id
     ),
 );

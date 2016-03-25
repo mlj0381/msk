@@ -19,13 +19,43 @@ class b2c_view_widget {
      * 分类挂件
      */
     public function function_WIDGET_B2C_GOODS_CAT($params, &$smarty) {
-        $render = new base_render(app::get('b2c'));
-        $mdl_goods_cat = app::get('b2c')->model('goods_cat');
-        $tree = $mdl_goods_cat->get_tree();
-        foreach ($tree as &$value) {
-            $value['son'] = $mdl_goods_cat->children($value['cat_id']);
+        /**
+         * 润和接口 分类
+         * IPD141101 一级
+         * IPD141104 二级
+         * IPD141128 三级
+         */
+        $api_b2c_rpc = app::get('b2c');
+
+        $cat1 = $api_b2c_rpc->rpc('select_product_cat1')->request();
+        $tmp = Array();
+        foreach($cat1['result'] as $k1 => $v1)
+        {
+            $tmp[$k1]['cat_name'] = $v1['classesName'];
+            $tmp[$k1]['cat_id'] = $v1['classesCode'];
+            $cat2 = $api_b2c_rpc->rpc('select_product_cat2')->request(array('cat_id1' => $v1['classesCode']));
+            foreach($cat2['result'] as $k2 => $v2)
+            {
+                $tmp[$k1]['son'][$k2]['cat_name'] = $v2['machiningName'];
+                $tmp[$k1]['son'][$k2]['cat_id'] = $v2['machiningCode'];
+                $cat3 = $api_b2c_rpc->rpc('select_product_cat3')->request(array('cat_id1' => $v1['classesCode'], 'cat_id2' => $v2['machiningCode']));
+                foreach($cat3['result'] as $k3 => $v3)
+                {
+                    $tmp[$k1]['son'][$k2]['son'][$k3]['cat_name'] = $v3['breedName'];
+                    $tmp[$k1]['son'][$k2]['son'][$k3]['cat_id'] = $v3['breedCode'];
+
+                }
+            }
         }
-        $render->pagedata['category_tree'] = $tree;
+        //end 接口
+        $render = new base_render(app::get('b2c'));
+//        $mdl_goods_cat = app::get('b2c')->model('goods_cat');
+//        $tree = $mdl_goods_cat->get_tree();
+//        foreach ($tree as &$value) {
+//            $value['son'] = $mdl_goods_cat->children($value['cat_id']);
+//        }
+
+        $render->pagedata['category_tree'] = $tmp;
         return $render->fetch('widget/category.html');
     }
 
@@ -101,12 +131,13 @@ class b2c_view_widget {
         return $render->fetch('widget/good.comment.html');
     }
 
-    //所在城市
-    public function function_WIDGET_B2C_INDEX_CITY($params, &$smarty) {
-        $render = new base_render(app::get('b2c'));
-        $render->pagedata['city'] = vmc::service('view_datasetting')->city();
-        return $render->fetch('widget/b2c.city.html');
-    }
+//    //所在城市
+//    public function function_WIDGET_B2C_INDEX_CITY($params, &$smarty) {
+//
+//        $render = new base_render(app::get('b2c'));
+//        $render->pagedata['city'] = vmc::service('view_datasetting')->city();
+//        return $render->fetch('widget/b2c.city.html');
+//    }
 
     //楼层左侧推荐
     public function function_WIDGET_B2C_INDEX_LEFT_GOOD($params, &$smaryt) {

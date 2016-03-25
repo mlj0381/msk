@@ -164,6 +164,10 @@ class aftersales_ctl_site_member extends b2c_ctl_site_member
      */
     public function request($page = 1)
     {
+        /**
+         * 润和接口
+         * ISO151409 查询退货单
+         */
         $limit = 5;
         $mdl_as_request = $this->app_current->model('request');
         $mdl_products = app::get('b2c')->model('products');

@@ -1,11 +1,11 @@
 <?php
 /**
- * 查询买手冻品管家的买家信息---------------IBS2101107
+ * 买家账号登陆---------------IBY121201
  */
-$remote['freeze_inquirebuyer'] = array(
-    'url' => '/bs/slInfo/slExclusive/search',
+$remote['b2c_login'] = array(
+    'url' => '/by/account/login',
 
-    'params' => array(
+    'request' => array(
         'member_id' => array(
             'name' => '登陆的用户ID',
             'column' => 'loginId',
@@ -23,30 +23,27 @@ $remote['freeze_inquirebuyer'] = array(
     ),
 
     'param' => array(
-        '' => array(
-            'name' => '卖家编码',
-            'column' => 'slCode',
+        'login_account' => array(
+            'name' => '买家账号或者手机号',
+            'column' => 'accountName',
             'type' => 'String',
             'default' => '',
             'require' => false
         ),
-        '' => array(
-            'name' => '买家编码',
-            'column' => 'buyerid',
-            'type' => 'String',
-            'default' => '',
-            'require' => false
-        ),
-        '' => array(
-            'name' => '1:专属买家、2：抢单买家',
-            'column' => 'buyerFlag',
+        'login_password' => array(
+            'name' => '密码',
+            'column' => 'accountPass',
             'type' => 'String',
             'default' => '',
             'require' => false
         ),
     ),
 
-    'result' => array(
-        // 'buyerId' => // os id
+    'response' => array(
+        'buyerId' => array(
+            'name' => '买家ID',
+            'column' => 'buyerId',
+            'type' => 'String'
+        )
     ),
 );
