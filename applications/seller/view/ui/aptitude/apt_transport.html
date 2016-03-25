@@ -4,7 +4,7 @@
 </div>
 <div class="modal-body" data-readonly="readonly">
     <div class="table_scroll">
-        <table table-hover>
+        <table class="table-hover">
             <thead>
                 <tr>
                     <th>指标内容</th>
@@ -19,28 +19,68 @@
                 <tr>
                     <td>冰库温度指标</td>
                     <td>
-                        <textarea>—18度～—22度</textarea>
+                        <textarea name="tspOkValArray">—18度～—22度</textarea>
                     </td>
                     <td>
-                        <textarea>-16度以上</textarea>
+                        <textarea name="tspNgValArray">-16度以上</textarea>
                     </td>
                 </tr>
                 <tr>
                     <td>冷库温度指标</td>
                     <td>
-                        <textarea>湿度：75%～85%</textarea>
+                        <textarea name="tspOkValArray">湿度：75%～85%</textarea>
                     </td>
                     <td>
-                        <textarea>湿度：＜75%或＞85%</textarea>
+                        <textarea name="tspNgValArray">湿度：＜75%或＞85%</textarea>
                     </td>
                 </tr>
                 <tr>
                     <td>制冷方式指标</td>
                     <td>
-                        <textarea>液氨、盘管</textarea>
+                        <textarea name="tspOkValArray">液氨、盘管</textarea>
                     </td>
                     <td>
-                        <textarea>水冷</textarea>
+                        <textarea name="tspNgValArray">水冷</textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td>储存状况指标</td>
+                    <td>
+                        <textarea name="tspOkValArray">不得与有异味产品混放</textarea>
+                    </td>
+                    <td>
+                        <textarea name="tspNgValArray">与其他产品混放导致异味</textarea>
+                    </td>
+                </tr>
+
+                <tr class="par_row">
+                    <td colspan="3">运输指标</td>
+                </tr>
+                <tr>
+                    <td>运输前处置指标</td>
+                    <td>
+                        <textarea name="tspOkValArray">装车前预冷，温度18度以下</textarea>
+                    </td>
+                    <td>
+                        <textarea name="tspNgValArray">装车温度超过18度</textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td>运输工具指标</td>
+                    <td>
+                        <textarea name="tspOkValArray">冷冻车或冷藏车</textarea>
+                    </td>
+                    <td>
+                        <textarea name="tspNgValArray">厢式货车</textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td>运输过程管控指标</td>
+                    <td>
+                        <textarea name="tspOkValArray">全程制冷，保持车厢温度-10度以下</textarea>
+                    </td>
+                    <td>
+                        <textarea name="tspNgValArray">车厢温度-10度以上</textarea>
                     </td>
                 </tr>
             </tbody>
