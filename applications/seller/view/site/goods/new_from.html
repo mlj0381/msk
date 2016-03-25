@@ -17,7 +17,7 @@
             <!-- 商品基本信息 -->
             <{include file="site/goods/new_detail/basic.html"}>
             <!-- 属性参数 -->
-            <{include file="site/goods/new_detail/params.html"}>
+            <{*include file="site/goods/new_detail/params.html"*}>
             <!-- 商品规格 -->
             <{include file="site/goods/new_detail/spec.html"}>
             <!-- 图文介绍 -->
@@ -38,13 +38,6 @@
         </div>
     </form>
 </div>
-
-
-<script>
-    
-            
-</script>
-
 
 
 <script>
@@ -147,6 +140,19 @@ $(function() {
     })
 });
 </script>
+
+<script>
+    $('#category_add_modal').on('shown.bs.modal', function () {
+        var readonly = $(this).find('.modal-body').attr('data-readonly');
+        if (readonly == "readonly") {
+            $(this).find('input,textarea').attr('readonly', 'readonly');
+        }
+    });
+    $("#category_add_modal").on("hidden.bs.modal", function () {
+        $(this).removeData("bs.modal");  //关闭时清空数据
+    });
+</script>
+
 
 <script type="text/javascript">
 var htmlEditor = {

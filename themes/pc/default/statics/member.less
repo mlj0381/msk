@@ -1858,60 +1858,6 @@ ul,ol{
 					}
 				}
 				
-
-				//标准资质、档案卡
-				.category_add_modal{
-					width:100%;
-					padding:0;
-					.agree{
-						margin-top:20px;
-					}
-					.table_scroll{
-						min-width:100%;
-						min-height:520px;
-						max-height:520px;
-						overflow: auto;
-						table{
-							min-width:100%;
-							border:1px solid #ddd;
-							border-collapse: collapse;
-							th{
-								background: #f1f1f1;
-								color:#333;
-								text-align: center;
-								border:1px solid #ddd;
-								height:30px;
-								line-height: 30px;
-							}
-							tbody{
-								tr{
-									&:hover{
-										background: #f1f1f1;
-									}
-									&.par_row{
-										background: #f3f3f3;
-										border-bottom:1px solid #ddd;
-									}	
-								}
-								td{
-									padding:5px;
-									border:1px solid #ddd;
-									min-height: 30px;
-									textarea{
-										min-width:100%;
-										resize:none;
-										min-height:70px;
-										max-height:70px;
-										overflow-y: auto;
-										margin-bottom:0px;
-									}
-								}
-							}
-						}
-					}
-					
-				}
-				
 			}
 		}
 
@@ -2365,7 +2311,39 @@ ul,ol{
 		margin-top:40px;
 		padding-bottom:30px;
 
-
+		#baseinfo{
+			.form-item{
+				span{
+					display: inline-block;
+					width:115px;
+					input[type='checkbox']{
+					
+					}
+				}
+			}
+			.fileCard{
+				.apt_tag{
+					.radius(3px);
+					display: inline-block;
+					width:18px;
+					height:18px;
+					line-height: 16px;
+					border:1px solid #ccc;
+					background: #fff;
+					color:#ccc;
+					padding:0 1px;
+					cursor: pointer;
+					font-size: 12px;
+					margin:6px 1px;
+					text-align: center;
+					&.active{
+						border:1px solid #008000;
+						color:#008000;
+					}
+				}
+			}
+			
+		}
 		.goods_keywords_box{
 			min-height: 34px;
 			line-height: 34px;
@@ -4110,7 +4088,58 @@ ul,ol{
 
 
 
-
+//标准资质、档案卡
+.category_add_modal{
+	width:100%;
+	padding:0;
+	.agree{
+		margin-top:20px;
+	}
+	.table_scroll{
+		min-width:100%;
+		min-height:520px;
+		max-height:520px;
+		overflow: auto;
+		table{
+			min-width:100%;
+			border:1px solid #ddd;
+			border-collapse: collapse;
+			th{
+				background: #f1f1f1;
+				color:#333;
+				text-align: center;
+				border:1px solid #ddd;
+				height:30px;
+				line-height: 30px;
+			}
+			tbody{
+				tr{
+					&:hover{
+						background: #f1f1f1;
+					}
+					&.par_row{
+						background: #f3f3f3;
+						border-bottom:1px solid #ddd;
+					}	
+				}
+				td{
+					padding:5px;
+					border:1px solid #ddd;
+					min-height: 30px;
+					textarea{
+						min-width:100%;
+						resize:none;
+						min-height:70px;
+						max-height:70px;
+						overflow-y: auto;
+						margin-bottom:0px;
+					}
+				}
+			}
+		}
+	}
+	
+}
 
 
 
