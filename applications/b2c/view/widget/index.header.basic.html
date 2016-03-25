@@ -5,7 +5,7 @@
                 <div class="topLeft">
                     <div class="location">
                         <a id="cityPlan">
-                            <span>所在城市：<small>上海</small></span> <i class="icon-angle-down"></i>
+                            <span>所在城市：<small><{$basic.addrs.default.logiAreaName}></small></span> <i class="icon-angle-down"></i>
                         </a>
 
                         <div class="location-menu clearfix">
@@ -19,8 +19,8 @@
                                     <!--<{if $item.disabled eq 'false'}>-->
                                     <!--<{break}>-->
                                     <!--<{/if}>-->
-                                    <a title="<{$item.title}>" <{if $activeAddrs eq
-                                    $addrs.addr_id}>class="active"<{/if}>" data-url="<{link app=site ctl=index
+                                    <a title="<{$item.logiAreaName}>" <{if $activeAddrs eq
+                                    $addrs.logiAreaCode}>class="active"<{/if}>" data-url="<{link app=b2c ctl=site_product
                                     act=changeAddr args0=$addrs.logiAreaCode}>"><{$addrs.logiAreaName}></a>
                                     <{*/foreach*}>
                                     <{/foreach}>
