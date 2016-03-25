@@ -1660,6 +1660,8 @@ ol {
   padding: 0px 2px;
   cursor: pointer;
   font-size: 12px;
+  margin: 0 2px;
+  text-align: center;
 }
 .buyer_container .seller_regbox .companyInfo_form #store_info .cat_wrapbox .cat_tree td .apt_tag.active {
   border: 1px solid #008000;
