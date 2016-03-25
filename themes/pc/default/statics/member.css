@@ -1654,12 +1654,18 @@ ol {
   -ms-border-radius: 3px;
   -o-border-radius: 3px;
   border-radius: 3px;
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  line-height: 14px;
   border: 1px solid #ccc;
   background: #fff;
   color: #ccc;
-  padding: 0px 2px;
+  padding: 0 1px;
   cursor: pointer;
   font-size: 12px;
+  margin: 0 1px;
+  text-align: center;
 }
 .buyer_container .seller_regbox .companyInfo_form #store_info .cat_wrapbox .cat_tree td .apt_tag.active {
   border: 1px solid #008000;
@@ -1668,6 +1674,9 @@ ol {
 .buyer_container .seller_regbox .companyInfo_form #store_info .category_add_modal {
   width: 100%;
   padding: 0;
+}
+.buyer_container .seller_regbox .companyInfo_form #store_info .category_add_modal .agree {
+  margin-top: 20px;
 }
 .buyer_container .seller_regbox .companyInfo_form #store_info .category_add_modal .table_scroll {
   min-width: 100%;
