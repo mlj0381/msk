@@ -78,52 +78,63 @@
                     </tr>
                     <tr data-treeId="01-1" data-catName="白条鸡">
                         <td><span class="arrow icon-caret-right"></span>1</td>
-                        <td><input type="checkbox">白条鸡</td>
+                        <td><input type="checkbox" name="cat_id" value="1">白条鸡</td>
                         <td>
-                            <span class="apt_tag active" data-toggle="modal" data-target=".category_add_modal"
-                                  href="<{link app=seller ctl=site_passport act=display_type args0=apt_stock}>" data-tagId="1"
-                                  title="原种">原</span>
-                            <span class="apt_tag active" data-toggle="modal" data-target=".category_add_modal"
+                            <!--data-toggle="modal" data-target=".category_add_modal"-->
+                            <span class="apt_tag active apt_stock-1"
+                                  href="<{link app=seller ctl=site_passport act=display_type args0=apt_stock args1=1}>"
+                                  data-tagId="1" title="原种">原
+                                <input type="hidden" name="apt_stock" value="0"/>
+                            </span>
+                            <span class="apt_tag active apt_prove-1"
                                   href="<{link app=seller ctl=site_passport act=display_type args0=apt_prove args1=1}>"
-                                  data-tagId="2" title="原种种源标准指标">种</span>
-                            <span class="apt_tag active" data-toggle="modal" data-target=".category_add_modal"
-                                  href="<{link app=seller ctl=site_passport act=display_type args0=apt_raise args1=1}>" data-tagId="3"
-                                  title="原种饲养标准指标">饲</span>
-                            <span class="apt_tag active" data-toggle="modal" data-target=".category_add_modal"
-                                  href="<{link app=seller ctl=site_passport act=display_type args0=apt_technology args1=1}>" data-tagId="4"
-                                  title="产品加工技术标准指标">技</span>
-                            <span class="apt_tag active" data-toggle="modal" data-target=".category_add_modal"
-                                  href="<{link app=seller ctl=site_passport act=display_type args0=apt_quality args1=1}>" data-tagId="5"
-                                  title="产品加工质量标准指标">质</span>
-                            <span class="apt_tag active" data-toggle="modal" data-target=".category_add_modal"
-                                  href="<{link app=seller ctl=site_passport act=display_type args0=apt_common args1=1}>" data-tagId="6"
-                                  title="产品通用质量标准指标">通</span>
-                            <span class="apt_tag active" data-toggle="modal" data-target=".category_add_modal"
-                                  href="<{link app=seller ctl=site_passport act=display_type args0=apt_safety args1=1}>" data-tagId="7"
-                                  title="产品安全标准指标">安</span>
-                            <span class="apt_tag active" data-toggle="modal" data-target=".category_add_modal"
-                                  href="<{link app=seller ctl=site_passport act=display_type args0=apt_transport args1=1}>" data-tagId="8"
-                                  title="储存运输标准指标">运</span>
-                            <span class="apt_tag active" data-toggle="modal" data-target=".category_add_modal"
-                                  href="<{link app=seller ctl=site_passport act=display_type args0=apt_pack args1=1}>" data-tagId="9"
-                                  title="包装标准指标">包</span>
+                                  data-tagId="2" title="原种种源标准指标">种
+                                <input type="hidden" name="apt_prove" value="0"/>
+                            </span>
+                            <span class="apt_tag active apt_raise-1" data-toggle="modal"
+                                  data-target=".category_add_modal"
+                                  href="<{link app=seller ctl=site_passport act=display_type args0=apt_raise args1=1}>"
+                                  data-tagId="3"
+                                  title="原种饲养标准指标">饲
+                                <input type="hidden" name="apt_raise" value="0" />
+                            </span>
+                            <span class="apt_tag active apt_technology-1"
+                                  href="<{link app=seller ctl=site_passport act=display_type args0=apt_technology args1=1}>"
+                                  data-tagId="4"
+                                  title="产品加工技术标准指标">技
+                                <input type="hidden" name="apt_technology" value="0" />
+                            </span>
+                            <span class="apt_tag active apt_quality-1"
+                                  href="<{link app=seller ctl=site_passport act=display_type args0=apt_quality args1=1}>"
+                                  data-tagId="5"
+                                  title="产品加工质量标准指标">质
+                                <input type="hidden" name="apt_quality" value="0" />
+                            </span>
+                            <span class="apt_tag active apt_common-1"
+                                  href="<{link app=seller ctl=site_passport act=display_type args0=apt_common args1=1}>"
+                                  data-tagId="6"
+                                  title="产品通用质量标准指标">通
+                                <input type="hidden" name="apt_common" value="0" />
+                            </span>
+                            <span class="apt_tag active apt_safety-1"
+                                  href="<{link app=seller ctl=site_passport act=display_type args0=apt_safety args1=1}>"
+                                  data-tagId="7"
+                                  title="产品安全标准指标">安
+                                <input type="hidden" name="apt_safety" value="0" />
+                            </span>
+                            <span class="apt_tag active apt_transport-1"
+                                  href="<{link app=seller ctl=site_passport act=display_type args0=apt_transport args1=1}>"
+                                  data-tagId="8"
+                                  title="储存运输标准指标">运
+                                <input type="hidden" name="apt_transport" value="0" />
+                            </span>
+                            <span class="apt_tag active apt_pack-1"
+                                  href="<{link app=seller ctl=site_passport act=display_type args0=apt_pack args1=1}>"
+                                  data-tagId="9"
+                                  title="包装标准指标">包
+                                <input type="hidden" name="apt_pack" value="0" />
+                            </span>
                         </td>
-                    </tr>
-                    <!--<tr data-treeId="01-2" data-catName="白条鸡">-->
-                        <!--<td><span class="arrow icon-caret-right"></span>01</td>-->
-                        <!--<td><input type="checkbox">白条肉鸡</td>-->
-                        <!--<td>-->
-                            <!--<span class="apt_tag active" data-toggle="modal" data-target=".category_add_modal"-->
-                                  <!--href="<{link app=seller ctl=site_cat act=add_cat}>" data-tagId="1">原</span>-->
-                            <!--<span class="apt_tag active" data-tagId="2">种</span>-->
-                            <!--<span class="apt_tag active" data-tagId="3">饲</span>-->
-                            <!--<span class="apt_tag active" data-tagId="4">技</span>-->
-                            <!--<span class="apt_tag active" data-tagId="5">质</span>-->
-                            <!--<span class="apt_tag active" data-tagId="6">通</span>-->
-                            <!--<span class="apt_tag active" data-tagId="7">安</span>-->
-                            <!--<span class="apt_tag active" data-tagId="8">运</span>-->
-                        <!--</td>-->
-                    <!--</tr>-->
                 </table>
             </div>
         </div>
@@ -193,21 +204,30 @@
 
         $('[data-toggle="tooltip"]').tooltip();
 
-        $('.cat_tree input[type="checkbox"]').click(function(){
+        /**
+         * 产品档案卡信息确定
+         */
+
+        $('.cat_tree input[type="checkbox"]').click(function () {
             var spanList = $(this).closest('tr').find('span.apt_tag');
-            if($(this).prop('checked')){
+            if ($(this).prop('checked')) {
                 spanList.attr('data-toggle', 'modal');
                 spanList.attr('data-target', '.category_add_modal');
-            }else {
+            } else {
                 spanList.removeAttr('data-toggle');
                 spanList.removeAttr('data-target');
             }
         });
 
+        $('.modal-footer button').click(function(){
+            alert($(this).attr('id'));
+        });
+        //end 产品档案卡信息确定
+
         //经营商品类别添加
         $(".cat_add_btn").on('click', function () {
             $(".cat_wrapbox").slideToggle();
-        })
+        });
         $('#category_add_modal').on('shown.bs.modal', function () {
             var readonly = $(this).find('.modal-body').attr('data-readonly');
             if (readonly == "readonly") {
@@ -217,6 +237,8 @@
         $("#category_add_modal").on("hidden.bs.modal", function () {
             $(this).removeData("bs.modal");  //关闭时清空数据
         });
-    })
+
+
+    });
 
 </script>

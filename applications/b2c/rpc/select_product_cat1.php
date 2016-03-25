@@ -2,7 +2,7 @@
 /**
  * 查询产品一级分类---------------IPD141101
  */
-$remote['b2c_selecte_product_cat1'] = array(
+$remote['b2c_select_product_cat1'] = array(
     'url' => '/pd/pd_classes',
 
     'request' => array(

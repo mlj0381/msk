@@ -2,7 +2,7 @@
 /**
  * 查询产品分类---------------IPD141111
  */
-$remote['b2c_selecte_product_price'] = array(
+$remote['b2c_select_product_price'] = array(
     'url' => '/pd/pd_pricecycle',
 
     'request' => array(

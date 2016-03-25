@@ -676,6 +676,7 @@ class seller_ctl_site_passport extends seller_frontpage
             'apt_safety', 'apt_stock',
             'apt_technology', 'apt_transport');
         if (in_array($html_type, $html_arr)) {
+            $this->pagedata['cat_id'] = $cat_id;
             $this->display('ui/aptitude/' . $html_type . '.html');
         }
     }

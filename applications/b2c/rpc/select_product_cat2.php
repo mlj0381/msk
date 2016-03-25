@@ -2,7 +2,7 @@
 /**
  * 查询产品二级分类---------------IPD141104
  */
-$remote['b2c_selecte_product_cat2'] = array(
+$remote['b2c_select_product_cat2'] = array(
     'url' => '/pd/pd_machining',
 
     'request' => array(
