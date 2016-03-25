@@ -2,9 +2,12 @@
     <button type="button" class="close" data-dismiss="modal" aria-label="Close" required="true"><span aria-hidden="true">&times;</span></button>
     <h4 class="modal-title" id="myModalLabel">产品加工技术标准指标</h4>
 </div>
+<!--<form method="post" action="<{link app=seller ctl=site_passport act=addBlock}>">-->
+    <!--<input name="type" type="hidden" value="apt_technology"/>-->
+    <!--<input name="cat_id" type="hidden" value="<{$cat_id}>"/>-->
 <div class="modal-body" data-readonly="readonly">
     <div class="table_scroll">
-        <table table-hover>
+        <table class="table-hover">
             <thead>
                 <tr>
                     <th width="30%" rowspan="2">指标内容</th>
@@ -17,36 +20,44 @@
             </thead>
             <tbody>
                 <tr>
-                    <td>皮肤，肉质，脂肪指标标准</td>
+                    <td>冷冻工艺指标</td>
                     <td>
-                        <textarea>1.皮肤：细腻，棕黄 2.肉质：结实，有弹性，胸肌发达 3.脂肪：色泽金黄，丰富，分布均匀
+                        <textarea name="qualified[freeze]">冷冻形式:7只、8只板冻，14只独立包装，单冻 冷冻设备:急冻库速冻
                         </textarea>
                     </td>
                     <td>
-                        <textarea>1.皮肤：细腻，淡黄
-2.肉质：结实，有弹性，胸肌发达
-3.脂肪：色泽金黄，丰富，分布均匀</textarea>
+                        <textarea name="unqualified[freeze]">冷冻形式:7只、8只单冻，14只板冻 冷冻设备:
+                        </textarea>
                     </td>
-                    
                 </tr>
                 <tr>
-                    <td>肌肉颜色标准指标</td>
+                    <td>工艺流程关键点指标</td>
                     <td>
-                        <textarea>鲜红色</textarea>
+                        <textarea name="qualified[craft]">预冷设备:螺旋预冷机 预冷时间:40分钟以内 产品中心温度:产品中心温度&mdash;18度以下
+                        </textarea>
                     </td>
                     <td>
-                        <textarea>深红色</textarea>
+                        <textarea name="unqualified[craft]">预冷设备:不预冷 预冷时间:45分钟以上 产品中心温度:产品中心温度&mdash;18度以上
+                        </textarea>
                     </td>
-                    
+                </tr>
+                <tr>
+                    <td>配方指标</td>
+                    <td>
+                        <textarea name="qualified[recipe]"> &mdash;&mdash; </textarea>
+                    </td>
+                    <td>
+                        <textarea name="unqualified[recipe]"> &mdash;&mdash; </textarea>
+                    </td>
                 </tr>
             </tbody>
         </table>
     </div>
+    <div class="agree">
+        <input type="checkbox" checked="checked" disabled="disabled"> 我同意该产品加工技术标准指标</div>
 </div>
-
 <div class="modal-footer apt_technology">
-    <!--<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>-->
-    <!--<button type="button" class="btn btn-primary" data-save="category_save">保存</button>-->
-
     <button type="button" class="btn btn-default confirm" id="confirm-<{$cat_id}>" data-dismiss="modal">确定</button>
 </div>
+    <!--</form>
+-->

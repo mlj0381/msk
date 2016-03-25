@@ -2,9 +2,12 @@
     <button type="button" class="close" data-dismiss="modal" aria-label="Close" required="true"><span aria-hidden="true">&times;</span></button>
     <h4 class="modal-title" id="myModalLabel">产品原种饲养标准指标</h4>
 </div>
+<!--<form method="post" action="<{link app=seller ctl=site_passport act=addBlock}>">-->
+    <!--<input name="type" type="hidden" value="apt_raise"/>-->
+    <!--<input name="cat_id" type="hidden" value="<{$cat_id}>"/>-->
 <div class="modal-body" data-readonly="readonly">
     <div class="table_scroll">
-        <table table-hover>
+        <table class="table-hover">
             <thead>
                 <tr>
                     <th width="20%" rowspan="2">指标内容</th>
@@ -18,69 +21,75 @@
             </thead>
             <tbody>
                 <tr>
-                    <td>皮肤，肉质，脂肪指标标准</td>
+                    <td>幼苗季节性标准指标</td>
                     <td>
-                        <textarea>1.皮肤：细腻，棕黄 2.肉质：结实，有弹性，胸肌发达 3.脂肪：色泽金黄，丰富，分布均匀
+                        <textarea name="excellent[season]">春雏</textarea>
+                    </td>
+                    <td>
+                        <textarea name="good[season]">晚春雏</textarea>
+                    </td>
+                    <td>
+                        <textarea name="poor[season]">冬雏</textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td>饲养方式标准指标</td>
+                    <td>
+                        <textarea name="excellent[raise]">散养</textarea>
+                    </td>
+                    <td>
+                        <textarea name="good[raise]">半饲养</textarea>
+                    </td>
+                    <td>
+                        <textarea name="poor[raise]">笼养</textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td>饲养地点、温湿度标准指标</td>
+                    <td>
+                        <textarea name="excellent[raise_norm]">环境广，污染少（山林、草原） 5~27摄氏度，60~70%
                         </textarea>
                     </td>
                     <td>
-                        <textarea>1.皮肤：细腻，淡黄
-2.肉质：结实，有弹性，胸肌发达
-3.脂肪：色泽金黄，丰富，分布均匀</textarea>
+                        <textarea name="good[raise_norm]">饲养环境较小，有一定污染（人口聚集、有工业生产） 5~27摄氏度，60~70%
+                        </textarea>
                     </td>
                     <td>
-                        <textarea>1.皮肤：松弛，毛孔较粗
-2.肉质：肥厚不结实
-3.脂肪：较少，颜色偏淡</textarea>
+                        <textarea name="poor[raise_norm]">饲养环境小或污染严重（雾霾严重，禽舍空气不通风）</textarea>
                     </td>
                 </tr>
                 <tr>
-                    <td>肌肉颜色标准指标</td>
+                    <td>饲料种类，喂养情况标准指标</td>
                     <td>
-                        <textarea>鲜红色</textarea>
+                        <textarea name="excellent[fodder]">天然饲料</textarea>
                     </td>
                     <td>
-                        <textarea>深红色</textarea>
+                        <textarea name="good[fodder]">浓缩复合饲料</textarea>
                     </td>
                     <td>
-                        <textarea>深红色</textarea>
-                    </td>
-                </tr>
-                <tr>
-                    <td>肌肉系水率标准指标</td>
-                    <td>
-                        <textarea>持水能力≥66%</textarea>
-                    </td>
-                    <td>
-                        <textarea>持水能力≥62%</textarea>
-                    </td>
-                    <td>
-                        <textarea>持水能力＜60%</textarea>
+                        <textarea name="poor[fodder]">含有水产类饲料（易使鸡肉带腥味）</textarea>
                     </td>
                 </tr>
                 <tr>
-                    <td>肌肉失水率标准指标</td>
+                    <td>生长周期标准指标</td>
                     <td>
-                        <textarea>1、汁液流失≤3.0%；
-2、加压失水率≤40.0%；
-3、离心损失≤15.0%；</textarea>
+                        <textarea name="excellent[cycle]">生长周期49天</textarea>
                     </td>
                     <td>
-                        <textarea>1、汁液流失≤3.0%；
-2、加压失水率≤40.0%；
-3、离心损失≤15.0%；</textarea>
+                        <textarea name="good[cycle]">生长周期45-49天</textarea>
                     </td>
                     <td>
-                        <textarea>1、汁液流失＞3.0%；
-2、加压失水率＞40.0%；
-3、离心损失＞15.0%；</textarea>
+                        <textarea name="poor[cycle]">生长周期45天</textarea>
                     </td>
                 </tr>
             </tbody>
         </table>
     </div>
+    <div class="agree">
+        <input type="checkbox" checked="checked" disabled="disabled"> 我同意该产品原种饲养标准指标</div>
 </div>
 <div class="modal-footer apt_raise">
-    <button type="button" class="btn btn-default abolish-<{$cat_id}>" data-dismiss="modal">取消</button>
     <button type="button" class="btn btn-default confirm-<{$cat_id}>" data-dismiss="modal">确定</button>
 </div>
+<!--</form>
+-->

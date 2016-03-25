@@ -15,9 +15,26 @@
         </div>
     </div>
     <div class="form-group">
-        <label class="col-xs-2 control-label"><span class="text-danger">*</span><span>所在仓库</span></label>
+        <label class="col-xs-2 control-label"><span class="text-danger">*</span><span>所在物流区</span></label>
         <div class="col-xs-5">
-            <{input type=region name="goods[stock]" detail=1 value=$goods.stock required="true"}>
+            <{*input type=region name="goods[stock]" detail=1 value=$goods.stock required="true"*}>
+            <div class="form-item">
+                <span><input type="checkbox"> 上海</span>
+                <span><input type="checkbox"> 无锡</span>
+                <span><input type="checkbox"> 苏州</span>
+                <span><input type="checkbox"> 南通</span>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-xs-2 control-label"><span class="text-danger">*</span><span>包装</span></label>
+        <div class="col-xs-5">
+            <div class="form-item">
+                <span><input type="checkbox"> 10只/袋/9.5kg</span>
+                <span><input type="checkbox"> 10只/袋/9.5kg</span>
+                <span><input type="checkbox"> 10只/袋/9.5kg</span>
+                <span><input type="checkbox"> 10只/袋/9.5kg</span>
+            </div>
         </div>
     </div>
     <div class="form-group">
@@ -54,11 +71,92 @@
         </div>
     </div>
     <div class="form-group">
-        <label class="col-xs-2 control-label"><span class="text-danger">*</span><span>产品相册</span></label>
+        <label class="col-xs-2 control-label"><span class="text-danger">*</span>产品相册</label>
         <{input type="siteimagearray" name="goods[images]" default="image_default" default_val=$goods.image_default_id value=$goods.images}>
     </div>
+    <div class="form-group">
+        <label class="col-xs-2 control-label">产品档案卡</label>
+        <div class="col-xs-5 fileCard">
+            <span class="apt_tag active apt_stock-1" data-toggle="modal"
+                  data-target=".category_add_modal"
+                  href="<{link app=seller ctl=site_passport act=display_type args0=apt_stock args1=1}>"
+                  data-tagId="1" title="原种">原
+                <input type="hidden" name="apt_stock" value="0"/>
+            </span>
+            <span class="apt_tag active apt_prove-1" data-toggle="modal"
+                  data-target=".category_add_modal"
+                  href="<{link app=seller ctl=site_passport act=display_type args0=apt_prove args1=1}>"
+                  data-tagId="2" title="原种种源标准指标">种
+                <input type="hidden" name="apt_prove" value="0"/>
+            </span>
+            <span class="apt_tag active apt_raise-1" data-toggle="modal"
+                  data-target=".category_add_modal"
+                  href="<{link app=seller ctl=site_passport act=display_type args0=apt_raise args1=1}>"
+                  data-tagId="3"
+                  title="原种饲养标准指标">饲
+                <input type="hidden" name="apt_raise" value="0" />
+            </span>
+            <span class="apt_tag active apt_technology-1" data-toggle="modal"
+                  data-target=".category_add_modal"
+                  href="<{link app=seller ctl=site_passport act=display_type args0=apt_technology args1=1}>"
+                  data-tagId="4"
+                  title="产品加工技术标准指标">技 
+                <input type="hidden" name="apt_technology" value="0" />
+            </span>
+            <span class="apt_tag active apt_quality-1" data-toggle="modal"
+                  data-target=".category_add_modal"
+                  href="<{link app=seller ctl=site_passport act=display_type args0=apt_quality args1=1}>"
+                  data-tagId="5"
+                  title="产品加工质量标准指标">质
+                <input type="hidden" name="apt_quality" value="0" />
+            </span>
+            <span class="apt_tag active apt_common-1" data-toggle="modal"
+                  data-target=".category_add_modal"
+                  href="<{link app=seller ctl=site_passport act=display_type args0=apt_common args1=1}>"
+                  data-tagId="6"
+                  title="产品通用质量标准指标">通
+                <input type="hidden" name="apt_common" value="0" />
+            </span>
+            <span class="apt_tag active apt_safety-1" data-toggle="modal"
+                  data-target=".category_add_modal"
+                  href="<{link app=seller ctl=site_passport act=display_type args0=apt_safety args1=1}>"
+                  data-tagId="7"
+                  title="产品安全标准指标">安
+                <input type="hidden" name="apt_safety" value="0" />
+            </span>
+            <span class="apt_tag active apt_transport-1" data-toggle="modal"
+                  data-target=".category_add_modal"
+                  href="<{link app=seller ctl=site_passport act=display_type args0=apt_transport args1=1}>"
+                  data-tagId="8"
+                  title="储存运输标准指标">运
+                <input type="hidden" name="apt_transport" value="0" />
+            </span>
+            <span class="apt_tag active apt_pack-1" data-toggle="modal"
+                  data-target=".category_add_modal"
+                  href="<{link app=seller ctl=site_passport act=display_type args0=apt_pack args1=1}>"
+                  data-tagId="9"
+                  title="包装标准指标">包
+                <input type="hidden" name="apt_pack" value="0" />
+            </span>
+        </div>
+    </div>
     <hr>
+    <div class="form-group">
+        <label class="col-xs-2 control-label"></label>
+        <a href="javascript:;" class="btn btn-danger">根据以上信息生成商品规格</a>
+    </div>
 </div>
+
+<!-- 商品档案卡模态框 -->
+<div class="modal fade category_add_modal" id="category_add_modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+
+        </div>
+    </div>
+</div>
+
+
 <textarea class="hide last-add">
     <div class="form-group last-option">
         <label class="col-xs-2 control-label">
@@ -98,9 +196,6 @@
         });
     }
 
-//    var callBack = function(cat_id){
-//        if(!cat_id) return;
-//
-//            load_page('<{link app=seller ctl=site_goods act=getProp}>?cat_id='+cat_id,$('#param'));
-//    };
+
+    
 </script>

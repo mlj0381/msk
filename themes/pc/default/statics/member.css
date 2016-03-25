@@ -1654,59 +1654,22 @@ ol {
   -ms-border-radius: 3px;
   -o-border-radius: 3px;
   border-radius: 3px;
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  line-height: 14px;
   border: 1px solid #ccc;
   background: #fff;
   color: #ccc;
-  padding: 0px 2px;
+  padding: 0 1px;
   cursor: pointer;
   font-size: 12px;
+  margin: 0 1px;
+  text-align: center;
 }
 .buyer_container .seller_regbox .companyInfo_form #store_info .cat_wrapbox .cat_tree td .apt_tag.active {
   border: 1px solid #008000;
   color: #008000;
-}
-.buyer_container .seller_regbox .companyInfo_form #store_info .category_add_modal {
-  width: 100%;
-  padding: 0;
-}
-.buyer_container .seller_regbox .companyInfo_form #store_info .category_add_modal .table_scroll {
-  min-width: 100%;
-  min-height: 520px;
-  max-height: 520px;
-  overflow: auto;
-}
-.buyer_container .seller_regbox .companyInfo_form #store_info .category_add_modal .table_scroll table {
-  min-width: 100%;
-  border: 1px solid #ddd;
-  border-collapse: collapse;
-}
-.buyer_container .seller_regbox .companyInfo_form #store_info .category_add_modal .table_scroll table th {
-  background: #f1f1f1;
-  color: #333;
-  text-align: center;
-  border: 1px solid #ddd;
-  height: 30px;
-  line-height: 30px;
-}
-.buyer_container .seller_regbox .companyInfo_form #store_info .category_add_modal .table_scroll table tbody tr:hover {
-  background: #f1f1f1;
-}
-.buyer_container .seller_regbox .companyInfo_form #store_info .category_add_modal .table_scroll table tbody tr.par_row {
-  background: #f3f3f3;
-  border-bottom: 1px solid #ddd;
-}
-.buyer_container .seller_regbox .companyInfo_form #store_info .category_add_modal .table_scroll table tbody td {
-  padding: 5px;
-  border: 1px solid #ddd;
-  min-height: 30px;
-}
-.buyer_container .seller_regbox .companyInfo_form #store_info .category_add_modal .table_scroll table tbody td textarea {
-  min-width: 100%;
-  resize: none;
-  min-height: 70px;
-  max-height: 70px;
-  overflow-y: auto;
-  margin-bottom: 0px;
 }
 .buyer_container .seller_regbox .panel-rt {
   width: 960px;
@@ -2093,6 +2056,33 @@ ol {
 .buyer_container .addgoods_form {
   margin-top: 40px;
   padding-bottom: 30px;
+}
+.buyer_container .addgoods_form #baseinfo .form-item span {
+  display: inline-block;
+  width: 115px;
+}
+.buyer_container .addgoods_form #baseinfo .fileCard .apt_tag {
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  -ms-border-radius: 3px;
+  -o-border-radius: 3px;
+  border-radius: 3px;
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  line-height: 16px;
+  border: 1px solid #ccc;
+  background: #fff;
+  color: #ccc;
+  padding: 0 1px;
+  cursor: pointer;
+  font-size: 12px;
+  margin: 6px 1px;
+  text-align: center;
+}
+.buyer_container .addgoods_form #baseinfo .fileCard .apt_tag.active {
+  border: 1px solid #008000;
+  color: #008000;
 }
 .buyer_container .addgoods_form .goods_keywords_box {
   min-height: 34px;
@@ -3525,4 +3515,50 @@ ol {
   float: left;
   height: 50px;
   line-height: 50px;
+}
+.category_add_modal {
+  width: 100%;
+  padding: 0;
+}
+.category_add_modal .agree {
+  margin-top: 20px;
+}
+.category_add_modal .table_scroll {
+  min-width: 100%;
+  min-height: 520px;
+  max-height: 520px;
+  overflow: auto;
+}
+.category_add_modal .table_scroll table {
+  min-width: 100%;
+  border: 1px solid #ddd;
+  border-collapse: collapse;
+}
+.category_add_modal .table_scroll table th {
+  background: #f1f1f1;
+  color: #333;
+  text-align: center;
+  border: 1px solid #ddd;
+  height: 30px;
+  line-height: 30px;
+}
+.category_add_modal .table_scroll table tbody tr:hover {
+  background: #f1f1f1;
+}
+.category_add_modal .table_scroll table tbody tr.par_row {
+  background: #f3f3f3;
+  border-bottom: 1px solid #ddd;
+}
+.category_add_modal .table_scroll table tbody td {
+  padding: 5px;
+  border: 1px solid #ddd;
+  min-height: 30px;
+}
+.category_add_modal .table_scroll table tbody td textarea {
+  min-width: 100%;
+  resize: none;
+  min-height: 70px;
+  max-height: 70px;
+  overflow-y: auto;
+  margin-bottom: 0px;
 }

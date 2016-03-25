@@ -687,4 +687,17 @@ class seller_ctl_site_passport extends seller_frontpage
         $this->display('ui/add-category.html');
     }
 
+    public function addBlock()
+    {
+        header('Content-Type : text/html; charset=utf-8');
+        base_kvstore::instance('catCard')->fetch('cat_id1', $result);
+        $params = $_POST;
+        unset($params['type']);
+        unset($params['cat_id']);
+        $result[$_POST['cat_id']][$_POST['type']] = $params;
+        base_kvstore::instance('catCard')->store('cat_id' . $_POST['cat_id'], $result);
+
+        //print_r($_POST);
+        print_r($result);
+    }
 }
