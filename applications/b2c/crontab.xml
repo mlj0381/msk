@@ -14,4 +14,9 @@
   <schedule>*/30 * * * *</schedule>
   <enabled>true</enabled>
 </cron>
+  <cron id="b2c_tasks_api_cats">
+    <description>更新产品分类</description>
+    <schedule>* 23 59 * *</schedule>
+    <enabled>true</enabled>
+  </cron>
 </cronentries>

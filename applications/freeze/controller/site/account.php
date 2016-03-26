@@ -1,4 +1,5 @@
 <?php
+
 class freeze_ctl_site_account extends freeze_frontpage
 {
     function __construct(&$app)
@@ -13,8 +14,9 @@ class freeze_ctl_site_account extends freeze_frontpage
      */
     public function index()
     {
+
         $user_obj = vmc::singleton('freeze_user_object');
-        $info = $user_obj->get_members_data(array('account'=>'login_account','freeze'=>'*'));
+        $info = $user_obj->get_members_data(array('account' => 'login_account', 'freeze' => '*'));
 
         $this->pagedata['login_account'] = $info['account']['login_account'];
         $this->pagedata['info'] = $info['freeze'];
@@ -38,24 +40,15 @@ class freeze_ctl_site_account extends freeze_frontpage
         ));
         $data = $_POST;
         $freeze_model = app::get('freeze')->model('freeze');
-        if(!$this->generate($data,$msg))
-        {
-            $this->splash('error',$error_url,$msg);
+        if (!$this->generate($data, $msg)) {
+            $this->splash('error', $error_url, $msg);
         };
 
-        if(!$freeze_model->save($data))
-        {
-            $this->splash('error',$error_url,'信息保存失败');
+        if (!$freeze_model->save($data)) {
+            $this->splash('error', $error_url, '信息保存失败');
         }
 
-        $rpc_editor = app::get('freeze')->rpc("editor");
-
-        $result = $rpc_editor->request($data);
-
-        echo '<pre>';
-        var_dump($result);
-        die;
-        $this->splash('success',$url,'信息保存成功');
+        $this->splash('success', $url, '信息保存成功');
     }
 
     /**
@@ -66,9 +59,9 @@ class freeze_ctl_site_account extends freeze_frontpage
         $this->is_complete_info();
         $mdl_buyer = app::get('buyer')->model('buyers');
         $mdl_freeze_buyer = app::get('freeze')->model('freeze_buyer');
-        $buyer_id = $mdl_freeze_buyer->getRow('*',array('freeze_id'=>$this->app->freeze_id));
+        $buyer_id = $mdl_freeze_buyer->getRow('*', array('freeze_id' => $this->app->freeze_id));
 
-        $buyer_info = $mdl_buyer->getRow('*',array('buyer_id'=>$buyer_id['buyer_id']));
+        $buyer_info = $mdl_buyer->getRow('*', array('buyer_id' => $buyer_id['buyer_id']));
         $this->pagedata['buyer'] = $buyer_info;
         $this->output();
     }
@@ -80,7 +73,7 @@ class freeze_ctl_site_account extends freeze_frontpage
     {
         $this->is_complete_info();
         $user_obj = vmc::singleton('freeze_user_object');
-        $this->pagedata['pam_data'] = $user_obj->get_pam_data('*',$this->app->freeze_id);
+        $this->pagedata['pam_data'] = $user_obj->get_pam_data('*', $this->app->freeze_id);
         $this->output();
     }
 
@@ -89,8 +82,7 @@ class freeze_ctl_site_account extends freeze_frontpage
      */
     public function set_pam_mobile($action)
     {
-        if($action == 'save')
-        {
+        if ($action == 'save') {
             $redirect_here = array('app' => 'freeze', 'ctl' => 'site_account', 'act' => 'set_pam_mobile');
             $redirect = $this->gen_url(array('app' => 'freeze', 'ctl' => 'site_account', 'act' => 'security'));
             $model_freeze = app::get('freeze')->model('freeze');
@@ -109,9 +101,9 @@ class freeze_ctl_site_account extends freeze_frontpage
             } else {
                 $this->splash('success', $redirect, $msg);
             }
-        }else{
+        } else {
             $user_obj = vmc::singleton('freeze_user_object');
-            $info = $user_obj->get_members_data(array('account'=>'login_account','freeze'=>'mobile,freeze_id'));
+            $info = $user_obj->get_members_data(array('account' => 'login_account', 'freeze' => 'mobile,freeze_id'));
 //            if($mobile = $user_obj->_get_pam_type_data('login_account','mobile'))  //该方法取的是手机为登录账号
 //            {
 //                $info['freeze']['mobile'] = $mobile['login_account'];
@@ -126,8 +118,7 @@ class freeze_ctl_site_account extends freeze_frontpage
      */
     public function set_ID($action)
     {
-        if ($action == 'save')
-        {
+        if ($action == 'save') {
             $redirect_here = array('app' => 'freeze', 'ctl' => 'site_account', 'act' => 'set_ID');
             $redirect = $this->gen_url(array('app' => 'freeze', 'ctl' => 'site_account', 'act' => 'security'));
             $mdl_freeze = app::get('freeze')->model('freeze');
@@ -135,15 +126,14 @@ class freeze_ctl_site_account extends freeze_frontpage
             $freeze_id = $this->app->freeze_id;
             $data = $_POST;
             $data['freeze_id'] = $freeze_id;
-            if(!$mdl_freeze->save($data))
-            {
+            if (!$mdl_freeze->save($data)) {
                 $this->splash('error', $redirect_here, $msg);
-            }else{
+            } else {
                 $this->splash('success', $redirect, '身份保存成功');
             }
-        }else{
+        } else {
             $user_obj = vmc::singleton('freeze_user_object');
-            $info = $user_obj->get_members_data(array('freeze'=>'*'));
+            $info = $user_obj->get_members_data(array('freeze' => '*'));
             $this->pagedata['info'] = $info;
             $this->output();
         }
@@ -154,8 +144,7 @@ class freeze_ctl_site_account extends freeze_frontpage
      */
     public function set_email($action)
     {
-        if ($action == 'save')
-        {
+        if ($action == 'save') {
             $redirect_here = array('app' => 'freeze', 'ctl' => 'site_account', 'act' => 'set_email');
             $redirect = $this->gen_url(array('app' => 'freeze', 'ctl' => 'site_account', 'act' => 'security'));
             $mdl_freeze = app::get('freeze')->model('freeze');
@@ -163,15 +152,14 @@ class freeze_ctl_site_account extends freeze_frontpage
             $freeze_id = $this->app->freeze_id;
             $data = $_POST;
             $data['freeze_id'] = $freeze_id;
-            if(!$mdl_freeze->save($data))
-            {
+            if (!$mdl_freeze->save($data)) {
                 $this->splash('error', $redirect_here, $msg);
-            }else{
+            } else {
                 $this->splash('success', $redirect, '邮箱保存成功');
             }
-        }else{
+        } else {
             $user_obj = vmc::singleton('freeze_user_object');
-            $info = $user_obj->get_members_data(array('freeze'=>'*'));
+            $info = $user_obj->get_members_data(array('freeze' => '*'));
             $this->pagedata['info'] = $info;
             $this->output();
         }
@@ -206,8 +194,8 @@ class freeze_ctl_site_account extends freeze_frontpage
                 $this->splash('error', $redirect_here, '手机短信验证码不正确');
             }
 
-            $result = app::get('pam')->model('freeze')->getRow('freeze_id', array('login_account' => $params['mobile'],'login_type'=>'mobile'));
-            if(empty($result)){
+            $result = app::get('pam')->model('freeze')->getRow('freeze_id', array('login_account' => $params['mobile'], 'login_type' => 'mobile'));
+            if (empty($result)) {
                 $this->splash('error', $redirect_here, '未知帐号!');
             }
             $member_id = $result['freeze_id'];
@@ -217,8 +205,7 @@ class freeze_ctl_site_account extends freeze_frontpage
 
             //退出当前登录状态
             $auth = pam_auth::instance(pam_account::get_account_type($this->app->app_id));
-            if(!$auth->type)
-            {
+            if (!$auth->type) {
                 $auth->type = $this->app->app_id;
             }
             foreach (vmc::servicelist('passport') as $k => $passport) {
@@ -229,19 +216,18 @@ class freeze_ctl_site_account extends freeze_frontpage
             $this->splash('success', $redirect, '密码重置成功，请重新登录');
         } else {
             $user_obj = vmc::singleton('freeze_user_object');
-            $mobile = $user_obj->_get_pam_type_data('login_account','mobile');
+            $mobile = $user_obj->_get_pam_type_data('login_account', 'mobile');
 
             $this->pagedata['mobile'] = $mobile['login_account'];
-           $this->output();
+            $this->output();
         }
     }
-
 
 
     /**
      * 管家信息管理数据组织
      */
-    public function generate(&$data,&$msg)
+    public function generate(&$data, &$msg)
     {
         $user_obj = vmc::singleton('freeze_user_object');
         $freeze_model = app::get('freeze')->model('freeze');
@@ -260,22 +246,19 @@ class freeze_ctl_site_account extends freeze_frontpage
         $generate_data['head_image'] = $data['head_image'];
 
         //处理3种情况：管家直接更改信息，管家自己修改信息，买手管家信息更改
-        if(!$data['freeze_id'])
-        {
-            if($freeze_id = $this->app->freeze_id)
-            {
+        if (!$data['freeze_id']) {
+            if ($freeze_id = $this->app->freeze_id) {
                 $generate_data['freeze_id'] = $freeze_id;
-            }else{
+            } else {
                 $freeze_buyer_model = app::get('freeze')->model('freeze_buyer');
-                $buyer_user_object= vmc::singleton('buyer_user_object');
+                $buyer_user_object = vmc::singleton('buyer_user_object');
                 $buyer_id = $buyer_user_object->get_id();
-                $freeze_id  = $freeze_buyer_model->getRow('freeze_id',array('buyer_id'=>$buyer_id));
+                $freeze_id = $freeze_buyer_model->getRow('freeze_id', array('buyer_id' => $buyer_id));
                 $generate_data['freeze_id'] = $freeze_id['freeze_id'];
             }
         }
-        if(!$generate_data['freeze_id'])
-        {
-            $msg  = '无效基本信息';
+        if (!$generate_data['freeze_id']) {
+            $msg = '无效基本信息';
             return false;
         }
 //        if($freeze_model->count(array('ID'=>$data['ID'],'freeze_id|notin'=>$generate_data['freeze_id'])) >0)
@@ -283,7 +266,7 @@ class freeze_ctl_site_account extends freeze_frontpage
 //            $msg  = '身份证已存在';
 //            return false;
 //        };
-        $data  = $generate_data;
+        $data = $generate_data;
         return true;
     }
 
