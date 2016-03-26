@@ -1,9 +1,9 @@
 <?php
 /**
- * 产品品种查询接口---------------IPD141128
+ * 产品特征查询接口---------------IPD141129
  */
-$remote['b2c_select_product_cat3'] = array(
-    'url' => '/pd/pd_breed',
+$remote['b2c_select_product_cat4'] = array(
+    'url' => '/pd/pd_feature',
 
     'request' => array(
         'member_id' => array(
@@ -33,20 +33,27 @@ $remote['b2c_select_product_cat3'] = array(
             'name' => '二级分类编码',
             'column' => 'machiningCode',
             'type' => 'String',
+            'default' => '1',
+            'require' => true,
+        ),
+        'breedCode' => array(
+            'name' => '品种编码',
+            'column' => 'breedCode',
+            'type' => 'String',
             'default' => '01',
             'require' => true,
         ),
     ),
 
     'response' => array(
-        'breedCode' => array(
-            'name' => '产品品种编码',
-            'column' => 'breedCode',
+        'featureCode' => array(
+            'name' => '产品特征编码',
+            'column' => 'featureCode',
             'type' => 'String',
         ),
-        'breedName' => array(
-            'name' => '产品品种名称',
-            'column' => 'breedName',
+        'featureName' => array(
+            'name' => '产品特征名称',
+            'column' => 'featureName',
             'type' => 'String',
         ),
     ),
