@@ -53,6 +53,11 @@ class buyer_ctl_site_buyer extends buyer_frontpage{
 			));
 			$params = utils::_filter_input($_POST);
 			unset($_POST);
+			
+			/**
+			 * 更新店铺信息---也即是调用编辑buyer基本信息接口
+			 * 
+			 */
 			if ($this->app->model('buyers')->update($params, array('buyer_id' => $this->buyer_id))){
 				$this->splash('success', $redirect, '店铺信息更新成功！');
 			}else {
@@ -77,6 +82,11 @@ class buyer_ctl_site_buyer extends buyer_frontpage{
 			if ($params['new_password'] != $params['confirm_password']){
 				$this->splash('error', '', '两次输入的新密码不一致！');
 			}
+			
+			
+			/***
+			 * 修改密码----调用buyer查询和编辑接口
+			 */
 			$status = $this->app->model('buyers')->reset_password($user_id,$params['old_password'],$params['new_password']);
 			
 			switch ($status){
@@ -118,6 +128,12 @@ class buyer_ctl_site_buyer extends buyer_frontpage{
 	public function basic_info($action = false){
 		$this->menuSetting = 'account';
 		//$buyer_id = vmc::singleton('buyer_user_object')->get_session();
+		
+		/**
+		 * 编辑buyer基本信息接口
+		 * 
+		 * 
+		 */
 		if ($action == 'update' and $_POST){
 			$redirect = $this->gen_url(array(
 					'app' => 'buyer',
@@ -138,6 +154,11 @@ class buyer_ctl_site_buyer extends buyer_frontpage{
 				$this->splash('error', $redirect, '基本信息更新失败！');
 			}	
 		}
+		
+		/***
+		 * 查询buyer基本信息接口
+		 * 
+		 */
 		$this->pagedata['basic_info'] = $this->app->model('buyers')->getRow('*', array('buyer_id' => $this->buyer_id));
 		$this->output();
 	}

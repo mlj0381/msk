@@ -1,6 +1,6 @@
 <div class="buyer_page pruchase-manage">
     <div class="page-header">
-        <h1>进货管理</h1>
+        <h1>订单管理</h1>
     </div>
     <ul class="nav nav-tabs my-pruchase-nav">
         <li <{if !$current_status||$current_status=='all' }>class="active"
@@ -70,7 +70,7 @@
                         <li>订单编号:<a class="text-muted" href="<{link app=buyer ctl=site_goods act=detail args0=$order.order_id}>"><strong>2378237928736</strong></a></li>
                         <li><a class="text-muted" href="#">店铺AAA</a></li>
                         <li class="opt-contact"><a class="text-muted" href="#">联系客服</a></li>
-                        <li class="opt-delete"><a class="confirm" href="javascript:;" data-url="<{link app=buyer ctl=site_goods act=del args0=$order.order_id}>">删除</a></li>
+                        <li class="opt-delete"><a class="confirm" href="javascript:;" data-url="<{link app=buyer ctl=site_goods act=del args0='88'}>">删除</a></li>
                     </ul>
                 </th>
             </tr>
@@ -320,4 +320,17 @@
     <h2>暂无</h2>
 </div>
 <!-- /if -->
-
+<script>
+$(function(){
+	$('.confirm').click(function(){
+	            if(confirm('确认删除')){
+	                var url = $(this).attr('data-url');
+	                $.getJSON(url, function (re) {
+	                    if (re.success) {
+	                        location = window.location.href;
+	                    }
+	                });
+	            }
+	        });
+})
+</script>

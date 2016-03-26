@@ -74,6 +74,12 @@ class buyer_ctl_site_passport extends buyer_frontpage{
 			$password = $params['password'];
 			$mdl_buyers = $this->app->model('buyers');
 			//获取buyer_id,login_account/login_account,给出要显示的账号（用户名or手机号orEmail）
+			
+			
+			/***
+			 * 通过用户名 密码登录 调用 查询接口
+			 * 
+			 */
 			$userdata = $mdl_buyers->get_buyer_account($username);
 			
 			if (!$userdata){
@@ -137,6 +143,9 @@ class buyer_ctl_site_passport extends buyer_frontpage{
 			if ($_POST){
 				$params = utils::_filter_input($_POST);
 				unset($_POST);
+				/**
+				 * 数据格式判断和验证前段+后端
+				 */
 				if (!$params['name']){
 					$this->splash('error', '', '姓名不能为空');
 				}
@@ -159,6 +168,10 @@ class buyer_ctl_site_passport extends buyer_frontpage{
 					$this->splash('error', '', 'QQ号不能为空');
 				}
 				$params['buyer_id'] = $this->object_obj->get_session();
+				
+				/**
+				 * 编辑buyer基本信息----接口
+				 */
 				if ($this->app->model('buyers')->save_buyer_data($params)){
 					$this->set_tmpl('passport');
 					$this->page('site/passport/signup_complete.html');
@@ -182,7 +195,7 @@ class buyer_ctl_site_passport extends buyer_frontpage{
 					'ctl' => 'site_index',
 					'act' => 'index',
 			));
-			$this->splash('error', $redirect, '无效操作');
+			$this->splash('', $redirect, '');
 		}
 		        
 	}
