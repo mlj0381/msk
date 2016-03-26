@@ -13,6 +13,7 @@ class freeze_ctl_site_account extends freeze_frontpage
      */
     public function index()
     {
+
         $user_obj = vmc::singleton('freeze_user_object');
         $info = $user_obj->get_members_data(array('account'=>'login_account','freeze'=>'*'));
 
@@ -48,13 +49,6 @@ class freeze_ctl_site_account extends freeze_frontpage
             $this->splash('error',$error_url,'信息保存失败');
         }
 
-        $rpc_editor = app::get('freeze')->rpc("editor");
-
-        $result = $rpc_editor->request($data);
-
-        echo '<pre>';
-        var_dump($result);
-        die;
         $this->splash('success',$url,'信息保存成功');
     }
 
