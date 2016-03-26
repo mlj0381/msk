@@ -7,26 +7,27 @@
     </menugroup>
     
     <menugroup label="安全设置" name="buyer">
-        <menu app='buyer' controller='site_buyer' action='update_mobile' display='true' order="60">修改手机</menu>
+        <!-- <menu app='buyer' controller='site_buyer' action='update_mobile' display='true' order="60">修改手机</menu> -->
 		<menu app='buyer' controller='site_buyer' action='update_email' display='true' order="60">修改邮箱</menu>
-		<menu app='buyer' controller='site_buyer' action='update_email_hint' display='true' order="60">修改邮箱提示</menu>
+		<!-- <menu app='buyer' controller='site_buyer' action='update_email_hint' display='true' order="60">修改邮箱提示</menu> -->
         <menu app='buyer' controller='site_buyer' action='reset_password' display='true' order="60">重置密码</menu>
-        <menu app='buyer' controller='site_buyer' action='reset_hint' display='true' order="60">重置提示</menu>
-		<menu app='buyer' controller='site_buyer' action='bind_mobile' display='true' order="60">绑定手机</menu>
-		<menu app='buyer' controller='site_buyer' action='bind_hint' display='true' order="60">绑定提示</menu>
-		<menu app='buyer' controller='site_buyer' action='ident_auth' display='true' order="60">身份认证</menu>
-		<menu app='buyer' controller='site_buyer' action='ident_auth_hint' display='true' order="60">认证提示</menu>
-		<menu app='buyer' controller='site_buyer' action='add_security' display='true' order="60">添加密保</menu>
+        <!-- <menu app='buyer' controller='site_buyer' action='reset_hint' display='true' order="60">重置提示</menu> -->
+		<!-- <menu app='buyer' controller='site_buyer' action='bind_mobile' display='true' order="60">绑定手机</menu>-->
+		<!-- <menu app='buyer' controller='site_buyer' action='bind_hint' display='true' order="60">绑定提示</menu> -->
+		<!-- <menu app='buyer' controller='site_buyer' action='ident_auth' display='true' order="60">身份认证</menu> -->
+		<!-- <menu app='buyer' controller='site_buyer' action='ident_auth_hint' display='true' order="60">认证提示</menu> -->
+		<!-- <menu app='buyer' controller='site_buyer' action='add_security' display='true' order="60">添加密保</menu> -->
     </menugroup>
     
     <menugroup label="交易管理" name="goods">
     	<menu app='buyer' controller='site_goods' action='stock' display='true' order="60">订单管理</menu>
-        <menu app='buyer' controller='site_accounts' action='index' display='true' order="60">结算管理</menu>
+        <!-- <menu app='buyer' controller='site_accounts' action='index' display='true' order="60">结算管理</menu> -->
         <!-- <menu app='buyer' controller='site_goods' action='index' display='true' order="60">出货管理</menu> -->      
     </menugroup>
 
     <menugroup label="商品管理" name="goods">
-        <menu app='buyer' controller='site_goods' action='repertory' display='true' order="60">仓库中的商品</menu>
+        <!-- <menu app='buyer' controller='site_goods' action='repertory' display='true' order="60">仓库中的商品</menu> -->
+        <menu app='buyer' controller='site_goods' action='store' display='true' order="60">囤货订单</menu>
     </menugroup>
 
     <menugroup label="冻品管家管理" name="manager">
@@ -38,8 +39,8 @@
     
     <menugroup label="客户服务" name="service">
         <menu app='buyer' controller='site_service' action='cancel_goods' display='true' order="60">退货管理</menu>
-        <menu app='buyer' controller='site_service' action='refund' display='true' order="60">退款管理</menu>
-        <menu app='buyer' controller='site_service' action='customer' display='true' order="60">售后管理</menu>
+        <!-- <menu app='buyer' controller='site_service' action='refund' display='true' order="60">退款管理</menu> -->
+        <!-- <menu app='buyer' controller='site_service' action='customer' display='true' order="60">售后管理</menu> -->
         <menu app='buyer' controller='site_service' action='out' display='true' order="60">违规处理</menu>
         <menu app='buyer' controller='site_service' action='report' display='true' order="60">举报管理</menu>
         <menu app='buyer' controller='site_service' action='consult' display='true' order="60">咨询回复</menu>

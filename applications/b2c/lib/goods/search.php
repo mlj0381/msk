@@ -137,21 +137,24 @@ class b2c_goods_search
             );
             //>>
         }
-        $result = Array();
-        $keywords_array = array($keywords['keywords'], $keywords['having']);
-        foreach($search as $mdlName => $column){
-             $return = $this->$mdlName->getList($column['result'],
-                 array_merge($filter[$mdlName], array($column['filter'] . '|has' => $keywords_array)));
-            if($column['result'] != 'goods_id'){
-                $return = $this->mGoods->getList('goods_id', array('goods_id|in' => join(',', $return[$column['result']])));
-            }
-            foreach($return as $goods){
-                $result[] = $goods['goods_id'];
-            }
+        if ($keywords['keywords'] and $keywords['having']){
+        	$sql = 'SELECT a.`goods_id` FROM `vmc_b2c_goods_keywords` a,`vmc_b2c_goods` b WHERE a.`keyword` LIKE "%'.$keywords['keywords'].'%" AND b.`name` LIKE "%'.$keywords['having'].'%" AND a.`goods_id` = b.`goods_id`';
+        	$return = vmc::database()->select($sql);
+        }else {
+        	foreach($search as $mdlName => $column){
+        		$return = $this->$mdlName->getList($column['result'],
+        				array_merge($filter[$mdlName], array($column['filter'] . '|has' => $keywords['keywords'] ?:$keywords['having'])));
+        		if($column['result'] != 'goods_id'){
+        			$return = $this->mGoods->getList('goods_id', array('goods_id|in' => join(',', $return[$column['result']])));
+        		}
+        	}
         }
+        $result = Array();
+        foreach($return as $goods){
+        	$result[] = $goods['goods_id'];
+        }        
         return array_unique($result);
     }
-
 
 
     public function goods_list($params)

@@ -21,6 +21,7 @@ class buyer_ctl_site_goods extends buyer_frontpage{
 	public function __construct(&$app){
 		parent::__construct($app);
 		$this->verify_buyer();
+		$this->buyer_id = vmc::singleton('buyer_user_object')->get_session();
 		//后面还需要什么............
 	}
 	
@@ -29,7 +30,6 @@ class buyer_ctl_site_goods extends buyer_frontpage{
 	 * 出货管理
 	 */
 	public function index(){
-		
 		$this->output();
 	}
 	
@@ -46,6 +46,30 @@ class buyer_ctl_site_goods extends buyer_frontpage{
 	 * 已购买商品(订单管理)
 	 */
 	public function stock($status = 'all', $page = 1){
+		
+		$rpc_model = $this->app->rpc('get_order_list');
+		$data = array(
+				'member_id' => 2,
+				'years' => '2016-03',
+				'region_id'=> '111',
+				'status' => '123123',
+				'goods' => array(
+						array(
+								'goods_id' => '12',
+								'goods_name' => '大盘鸡'
+						),
+						array(
+								'goods_id' => '13',
+								'goods_name' => '三黄鸡'
+						)
+				),
+				'address' => array(
+						'region_id' => 1,
+						'mobile' => '13212321232',
+						'address' => '碧波路5号'
+				),
+		);
+		
 		$order_list = array(
 			0 => array(''),
 				
@@ -91,6 +115,8 @@ class buyer_ctl_site_goods extends buyer_frontpage{
 	 * @param unknown $goods_id
 	 */
 	public function del($goods_id){
+		//echo $goods_id;exit;
+		var_dump($this->buyer_id);exit;
 		echo '订单号'.$goods_id;
 	}
 	
@@ -112,5 +138,14 @@ class buyer_ctl_site_goods extends buyer_frontpage{
 		$this->output();
 	}
 	
+	/**
+	 * 囤货订单
+	 */
+	public function store(){
+		$json = '';
+		$list = json_decode($json,TRUE);
+		$this->pagedata['list'] = $list;
+		$this->output();
+	}
 	
 }
