@@ -31,47 +31,47 @@ $remote['seller_edit_seller_info'] = array(
     ),
 
     'slAccount' => array(
-        'slAccount' => array(
+        'login_account' => array(
             'name' => '卖家账号',
             'column' => 'slAccount',
             'type' => 'String',
-            'require' => true
+            'require' => false
         ),
-        'slTel' => array(
+        'mobile' => array(
             'name' => '登录手机号码',
             'column' => 'slTel',
             'type' => 'String',
-            'require' => true
+            'require' => false
         ),
-        'slShowName' => array(
+        'show_name' => array(
             'name' => '卖家显示名称',
             'column' => 'slShowName',
             'type' => 'String',
-            'require' => true
+            'require' => false
         ),
-        'slContact' => array(
+        'contact_person' => array(
             'name' => '联系人姓名',
             'column' => 'slContact',
             'type' => 'String',
-            'require' => true
+            'require' => false
         ),
-        'accountPsd' => array(
+        'login_password' => array(
             'name' => '登录密码',
             'column' => 'accountPsd',
             'type' => 'String',
-            'require' => true
+            'require' => false
         ),
         'authStatus' => array(
             'name' => '认证状态',
             'column' => 'authStatus',
             'type' => 'Integer',
-            'require' => true
+            'require' => false
         ),
         'fromFlg' => array(
             'name' => '注册来源',
             'column' => 'fromFlg',
             'type' => 'String',
-            'require' => true
+            'require' => false
         ),
     ),
 

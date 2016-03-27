@@ -263,4 +263,38 @@ class b2c_mdl_goods extends dbeav_model
              //没定义接口调用本地数据
          }
      }
+
+    /**
+     * 根据选择的当前档案卡id筛选相应的档案卡信息
+     * @param $type
+     * @param $cat_id
+     * @return array
+     */
+    public function &fileCard($type, $cat)
+    {
+        $card = array(
+            //'apt_stock' => '',//
+            'apt_prove' => 'card_pd_org',//原种种源标准指标
+            'apt_raise' => 'card_pd_fed',//原种饲养标准指标
+            'apt_technology' => 'card_pd_mct',//产品加工技术标准指标
+            'apt_quality' => 'card_pd_tnc',//产品加工质量标准指标
+            'apt_common' => 'card_pd_gnq',//产品通用质量标准指标
+            'apt_safety' => 'card_pd_sft',//产品安全标准指标
+            'apt_transport' => 'card_pd_tsp',//储存运输标准指标
+        );
+        $result = Array();
+        if(array_key_exists($type, $card))
+        {
+            $result = app::get('seller')->rpc($card[$type])->request('', 604800);//一星期
+        }
+
+        $cat_id = explode('-', $cat); //01-1-01 分类编码组合 一级 - 二级 - 三级
+        foreach($result['result']['searchList'] as $value)
+        {
+            if($value['classesCode'] == $cat_id[0] && $value['machiningCode'] == $cat_id[1] && $value['breedCode'] == $cat_id[2])
+            {
+                return $value;
+            }
+        }
+    }
 }

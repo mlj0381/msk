@@ -46,8 +46,7 @@
             </button>
             <div class="brand_list" data-list="brand_list">
                 <{foreach from=$extra.brand item=item}>
-                <span class="brand_item"><{$item.brand_name}> <i class="icon-remove"
-                                                                 data-id="<{$item.brand_id}>"></i></span>
+                <span class="brand_item"><{$item.brand_name}> <i class="icon-remove" data-id="<{$item.brand_id}>"></i></span>
                 <{/foreach}>
             </div>
         </div>
@@ -64,131 +63,148 @@
             <div class="cat_wrapbox">
                 <p class="cat_header"><span class="icon-list"></span> 产品分类目录</p>
                 <table class="cat_tree table-hover">
-                    <tr>
+
                     <tr>
                         <th width="20%">编码</th>
                         <th width="50%">名称</th>
                         <th width="30%">标准资质</th>
                     </tr>
-                    </tr>
-                    <tr data-treeId="01" data-catName="鸡产品">
-                        <td><span class="arrow icon-caret-right"></span>01</td>
-                        <td>鸡产品</td>
-                        <td></td>
-                    </tr>
-                    <tr data-treeId="01-1" data-catName="白条鸡">
-                        <td><span class="arrow icon-caret-right"></span>1</td>
-                        <td><input type="checkbox" name="cat_id" value="1">白条鸡</td>
-                        <td>
-                            <!--data-toggle="modal" data-target=".category_add_modal"-->
+                    <{foreach from=$extra.store.cat item=cat1}>
+                        <tr data-treeId="01" data-catName="<{$cat1.cat_name}>">
+                            <td><span class="arrow icon-caret-right"></span><{$cat1.addon}></td>
+                            <td><input type="checkbox" name="cat_id[]" value="<{$cat1.cat_id}>"><{$cat1.cat_name}></td>
+                            <td></td>
+                        </tr>
+                        <{foreach from=$cat1.son item=cat2}>
+                            <tr data-treeId="01-1" data-catName="<{$cat1.cat_name}>">
+                            <td>&nbsp;&nbsp;&nbsp;&nbsp;<span class="arrow icon-caret-right"></span><{$cat2.addon}></td>
+                            <td>&nbsp;&nbsp;&nbsp;&nbsp;<label><input type="checkbox" name="cat_id[]" value="<{$cat2.cat_id}>"><{$cat2.cat_name}></label></td>
+
+                            <td>
+                                <!--data-toggle="modal" data-target=".category_add_modal"-->
+                                <span class="apt_tag active apt_stock-1"
+                                      href="<{link app=seller ctl=site_passport act=display_type args0=apt_stock}>?cat=<{$cat1.addon}>-<{$cat2.addon}>"
+                                      data-tagId="1" title="原种">原
+                                    <input type="hidden" name="apt_stock" value="0"/>
+                                </span>
+                                <span class="apt_tag active apt_prove-1"
+                                      href="<{link app=seller ctl=site_passport act=display_type args0=apt_prove}>?cat=<{$cat1.addon}>-<{$cat2.addon}>"
+                                      data-tagId="2" title="原种种源标准指标">种
+                                    <input type="hidden" name="apt_prove" value="0"/>
+                                </span>
+                                <span class="apt_tag active apt_raise-1" data-toggle="modal"
+                                      data-target=".category_add_modal"
+                                      href="<{link app=seller ctl=site_passport act=display_type args0=apt_raise}>?cat=<{$cat1.addon}>-<{$cat2.addon}>"
+                                      data-tagId="3"
+                                      title="原种饲养标准指标">饲
+                                    <input type="hidden" name="apt_raise" value="0"/>
+                                </span>
+                                <span class="apt_tag active apt_technology-1"
+                                      href="<{link app=seller ctl=site_passport act=display_type args0=apt_technology}>?cat=<{$cat1.addon}>-<{$cat2.addon}>"
+                                      data-tagId="4"
+                                      title="产品加工技术标准指标">技
+                                    <input type="hidden" name="apt_technology" value="0"/>
+                                </span>
+                                <span class="apt_tag active apt_quality-1"
+                                      href="<{link app=seller ctl=site_passport act=display_type args0=apt_quality}>?cat=<{$cat1.addon}>-<{$cat2.addon}>"
+                                      data-tagId="5"
+                                      title="产品加工质量标准指标">质
+                                    <input type="hidden" name="apt_quality" value="0"/>
+                                </span>
+                                <span class="apt_tag active apt_common-1"
+                                      href="<{link app=seller ctl=site_passport act=display_type args0=apt_common}>?cat=<{$cat1.addon}>-<{$cat2.addon}>"
+                                      data-tagId="6"
+                                      title="产品通用质量标准指标">通
+                                    <input type="hidden" name="apt_common" value="0"/>
+                                </span>
+                                <span class="apt_tag active apt_safety-1"
+                                      href="<{link app=seller ctl=site_passport act=display_type args0=apt_safety}>?cat=<{$cat1.addon}>-<{$cat2.addon}>"
+                                      data-tagId="7"
+                                      title="产品安全标准指标">安
+                                    <input type="hidden" name="apt_safety" value="0"/>
+                                </span>
+                                <span class="apt_tag active apt_transport-1"
+                                      href="<{link app=seller ctl=site_passport act=display_type args0=apt_transport}>?cat=<{$cat1.addon}>-<{$cat2.addon}>"
+                                      data-tagId="8"
+                                      title="储存运输标准指标">运
+                                    <input type="hidden" name="apt_transport" value="0"/>
+                                </span>
+                                <!--<span class="apt_tag active apt_pack-1"-->
+                                <!--href="<{link app=seller ctl=site_passport act=display_type args0=apt_pack args1=1}>"-->
+                                <!--data-tagId="9"-->
+                                <!--title="包装标准指标">包-->
+                                <!--<input type="hidden" name="apt_pack" value="0" />-->
+                                <!--</span>-->
+                            </td>
+                        </tr>
+                            <{foreach from=$cat2.son item=cat3}>
+                                <tr data-treeId="01-2" data-catName="<{$cat1.cat_name}>">
+                                <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="arrow icon-caret-right"></span><{$cat3.addon}></td>
+                                <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label><input type="checkbox" name="cat_id[]" value="<{$cat3.cat_id}>"><{$cat3.cat_name}></label></td>
+                                <td>
                             <span class="apt_tag active apt_stock-1"
-                                  href="<{link app=seller ctl=site_passport act=display_type args0=apt_stock args1=1}>"
+                                  href="<{link app=seller ctl=site_passport act=display_type args0=apt_stock}>?cat=<{$cat1.addon}>-<{$cat2.addon}>-<{$cat3.addon}>"
                                   data-tagId="1" title="原种">原
-                                <input type="hidden" name="apt_stock" value="0"/>
-                            </span>
-                            <span class="apt_tag active apt_prove-1"
-                                  href="<{link app=seller ctl=site_passport act=display_type args0=apt_prove args1=1}>"
-                                  data-tagId="2" title="原种种源标准指标">种
-                                <input type="hidden" name="apt_prove" value="0"/>
-                            </span>
-                            <span class="apt_tag active apt_raise-1" data-toggle="modal"
-                                  data-target=".category_add_modal"
-                                  href="<{link app=seller ctl=site_passport act=display_type args0=apt_raise args1=1}>"
-                                  data-tagId="3"
-                                  title="原种饲养标准指标">饲
-                                <input type="hidden" name="apt_raise" value="0"/>
-                            </span>
-                            <span class="apt_tag active apt_technology-1"
-                                  href="<{link app=seller ctl=site_passport act=display_type args0=apt_technology args1=1}>"
-                                  data-tagId="4"
-                                  title="产品加工技术标准指标">技
-                                <input type="hidden" name="apt_technology" value="0"/>
-                            </span>
-                            <span class="apt_tag active apt_quality-1"
-                                  href="<{link app=seller ctl=site_passport act=display_type args0=apt_quality args1=1}>"
-                                  data-tagId="5"
-                                  title="产品加工质量标准指标">质
-                                <input type="hidden" name="apt_quality" value="0"/>
-                            </span>
-                            <span class="apt_tag active apt_common-1"
-                                  href="<{link app=seller ctl=site_passport act=display_type args0=apt_common args1=1}>"
-                                  data-tagId="6"
-                                  title="产品通用质量标准指标">通
-                                <input type="hidden" name="apt_common" value="0"/>
-                            </span>
-                            <span class="apt_tag active apt_safety-1"
-                                  href="<{link app=seller ctl=site_passport act=display_type args0=apt_safety args1=1}>"
-                                  data-tagId="7"
-                                  title="产品安全标准指标">安
-                                <input type="hidden" name="apt_safety" value="0"/>
-                            </span>
-                            <span class="apt_tag active apt_transport-1"
-                                  href="<{link app=seller ctl=site_passport act=display_type args0=apt_transport args1=1}>"
-                                  data-tagId="8"
-                                  title="储存运输标准指标">运
-                                <input type="hidden" name="apt_transport" value="0"/>
-                            </span>
-                            <!--<span class="apt_tag active apt_pack-1"-->
-                            <!--href="<{link app=seller ctl=site_passport act=display_type args0=apt_pack args1=1}>"-->
-                            <!--data-tagId="9"-->
-                            <!--title="包装标准指标">包-->
-                            <!--<input type="hidden" name="apt_pack" value="0" />-->
-                            <!--</span>-->
-                        </td>
-                    </tr>
-                    <tr data-treeId="01-2" data-catName="三黄鸡">
-                        <td><span class="arrow icon-caret-right"></span>01</td>
-                        <td><input type="checkbox">三黄鸡</td>
-                        <td>
-                    <span class="apt_tag active apt_stock-1"
-                          href="<{link app=seller ctl=site_passport act=display_type args0=apt_stock args1=1}>"
-                          data-tagId="1" title="原种">原
-                                <input type="hidden" name="apt_stock" value="0"/>
-                            </span>
-                            <span class="apt_tag active apt_prove-1"
-                                  href="<{link app=seller ctl=site_passport act=display_type args0=apt_prove args1=1}>"
-                                  data-tagId="2" title="原种种源标准指标">种
-                                <input type="hidden" name="apt_prove" value="0"/>
-                            </span>
-                            <span class="apt_tag active apt_raise-1" data-toggle="modal"
-                                  data-target=".category_add_modal"
-                                  href="<{link app=seller ctl=site_passport act=display_type args0=apt_raise args1=1}>"
-                                  data-tagId="3"
-                                  title="原种饲养标准指标">饲
-                                <input type="hidden" name="apt_raise" value="0"/>
-                            </span>
-                            <span class="apt_tag active apt_technology-1"
-                                  href="<{link app=seller ctl=site_passport act=display_type args0=apt_technology args1=1}>"
-                                  data-tagId="4"
-                                  title="产品加工技术标准指标">技
-                                <input type="hidden" name="apt_technology" value="0"/>
-                            </span>
-                            <span class="apt_tag active apt_quality-1"
-                                  href="<{link app=seller ctl=site_passport act=display_type args0=apt_quality args1=1}>"
-                                  data-tagId="5"
-                                  title="产品加工质量标准指标">质
-                                <input type="hidden" name="apt_quality" value="0"/>
-                            </span>
-                            <span class="apt_tag active apt_common-1"
-                                  href="<{link app=seller ctl=site_passport act=display_type args0=apt_common args1=1}>"
-                                  data-tagId="6"
-                                  title="产品通用质量标准指标">通
-                                <input type="hidden" name="apt_common" value="0"/>
-                            </span>
-                            <span class="apt_tag active apt_safety-1"
-                                  href="<{link app=seller ctl=site_passport act=display_type args0=apt_safety args1=1}>"
-                                  data-tagId="7"
-                                  title="产品安全标准指标">安
-                                <input type="hidden" name="apt_safety" value="0"/>
-                            </span>
-                            <span class="apt_tag active apt_transport-1"
-                                  href="<{link app=seller ctl=site_passport act=display_type args0=apt_transport args1=1}>"
-                                  data-tagId="8"
-                                  title="储存运输标准指标">运
-                                <input type="hidden" name="apt_transport" value="0"/>
-                            </span>
-                        </td>
-                    </tr>
+                                        <input type="hidden" name="apt_stock" value="0"/>
+                                    </span>
+                                    <span class="apt_tag active apt_prove-1"
+                                          href="<{link app=seller ctl=site_passport act=display_type args0=apt_prove}>?cat=<{$cat1.addon}>-<{$cat2.addon}>-<{$cat3.addon}>"
+                                          data-tagId="2" title="原种种源标准指标">种
+                                        <input type="hidden" name="apt_prove" value="0"/>
+                                    </span>
+                                    <span class="apt_tag active apt_raise-1" data-toggle="modal"
+                                          data-target=".category_add_modal"
+                                          href="<{link app=seller ctl=site_passport act=display_type args0=apt_raise}>?cat=<{$cat1.addon}>-<{$cat2.addon}>-<{$cat3.addon}>"
+                                          data-tagId="3"
+                                          title="原种饲养标准指标">饲
+                                        <input type="hidden" name="apt_raise" value="0"/>
+                                    </span>
+                                    <span class="apt_tag active apt_technology-1"
+                                          href="<{link app=seller ctl=site_passport act=display_type args0=apt_technology}>?cat=<{$cat1.addon}>-<{$cat2.addon}>-<{$cat3.addon}>"
+                                          data-tagId="4"
+                                          title="产品加工技术标准指标">技
+                                        <input type="hidden" name="apt_technology" value="0"/>
+                                    </span>
+                                    <span class="apt_tag active apt_quality-1"
+                                          href="<{link app=seller ctl=site_passport act=display_type args0=apt_quality}>?cat=<{$cat1.addon}>-<{$cat2.addon}>-<{$cat3.addon}>"
+                                          data-tagId="5"
+                                          title="产品加工质量标准指标">质
+                                        <input type="hidden" name="apt_quality" value="0"/>
+                                    </span>
+                                    <span class="apt_tag active apt_common-1"
+                                          href="<{link app=seller ctl=site_passport act=display_type args0=apt_common}>?cat=<{$cat1.addon}>-<{$cat2.addon}>-<{$cat3.addon}>"
+                                          data-tagId="6"
+                                          title="产品通用质量标准指标">通
+                                        <input type="hidden" name="apt_common" value="0"/>
+                                    </span>
+                                    <span class="apt_tag active apt_safety-1"
+                                          href="<{link app=seller ctl=site_passport act=display_type args0=apt_safety}>?cat=<{$cat1.addon}>-<{$cat2.addon}>-<{$cat3.addon}>"
+                                          data-tagId="7"
+                                          title="产品安全标准指标">安
+                                        <input type="hidden" name="apt_safety" value="0"/>
+                                    </span>
+                                    <span class="apt_tag active apt_transport-1"
+                                          href="<{link app=seller ctl=site_passport act=display_type args0=apt_transport}>?cat=<{$cat1.addon}>-<{$cat2.addon}>-<{$cat3.addon}>"
+                                          data-tagId="8"
+                                          title="储存运输标准指标">运
+                                        <input type="hidden" name="apt_transport" value="0"/>
+                                    </span>
+                                </td>
+                            </tr>
+                                <{foreach from=$cat3.son item=cat4}>
+                                    <tr data-treeId="01-2" data-catName="三黄鸡">
+                                        <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                            <span class="arrow icon-caret-right"></span><{$cat4.addon}>
+                                        </td>
+                                        <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                            <!--<input type="checkbox">--><{$cat4.cat_name}>
+                                        </td>
+
+                                    </tr>
+                                <{/foreach}>
+                            <{/foreach}>
+                        <{/foreach}>
+                    <{/foreach}>
                 </table>
             </div>
         </div>
@@ -291,8 +307,6 @@
         $("#category_add_modal").on("hidden.bs.modal", function () {
             $(this).removeData("bs.modal");  //关闭时清空数据
         });
-
-
     });
 
 </script>

@@ -63,24 +63,24 @@ class store_mdl_goods_cat extends dbeav_model {
     /**
      * 分类树.
      */
-    public function get_tree($parent_id = 0, $step = 1, $store_id) {
-        $tree = $this->tree($parent_id, $step, $store_id);
+    public function get_tree($seller_id, $parent_id = 0, $step = 1) {
+        $tree = $this->tree($parent_id, $step, $seller_id);
         $this->touch_cache(true);
 
         return $tree;
     }
 
-    private function tree($parent_id = 0, $step = null, $store_id) {
+    private function tree($parent_id = 0, $step = null, $seller_id) {
 
         $step_key = (is_null($step)) ? 'all' : 's-' . $step;
-        $tree = $this->children($parent_id, $store_id);
+        $tree = $this->children($parent_id, $seller_id);
         if ($step !== null) {
             $step = $step - 1;
         }
 
         if ($step === null || $step > 0) {
             foreach ($tree as $cat_id => &$cat) {
-                $cat["children"] = $this->tree($cat["cat_id"], $step, $store_id);
+                $cat["children"] = $this->tree($cat["cat_id"], $step, $seller_id);
             }
         }
         return $tree;
@@ -89,14 +89,14 @@ class store_mdl_goods_cat extends dbeav_model {
     /**
      * 获得子类.
      */
-    public function children($parent_id, $store_id) {
+    public function children($parent_id, $seller_id) {
         $cache_expired = $this->touch_cache();
-        if (cacheobject::get('b2c-gcat-tree-cache-' . $parent_id, $children) && $children && $cache_expired > 0) {
+        if (cacheobject::get('seller-gcat-tree-cache-' . $parent_id, $children) && $children && $cache_expired > 0) {
             return $children;
         } else {
-            $children = $this->getList('*', array('parent_id' => $parent_id, 'store_id' => $store_id), 0, -1, ' p_order ASC');
+            $children = $this->getList('*', array('parent_id' => $parent_id, 'seller_id' => $seller_id), 0, -1, ' p_order ASC');
             $children = utils::array_change_key($children, 'cat_id');
-            cacheobject::set('b2c-gcat-tree-cache-' . $parent_id, $children, time() + 60 * 60 * 24 * 30);
+            cacheobject::set('seller-gcat-tree-cache-' . $parent_id, $children, time() + 60 * 60 * 24 * 30);
             return $children;
         }
     }
@@ -253,4 +253,21 @@ class store_mdl_goods_cat extends dbeav_model {
         app::get('b2c')->setConf('goods_cat_cache_expired', -1);
     }
 
+    /**
+     * 批量添加经营分类
+     */
+    public function addCat($catId, $sellerId)
+    {
+        $catList = app::get('b2c')->model('goods_cat')->getList('*', array('cat_id|in' => $catId));
+        foreach($catList as $value)
+        {
+            $value['seller_id'] = $sellerId;
+            unset($value['last_modify']);
+            if(!$this->save($value))
+            {
+                return false;
+            }
+        }
+        return true;
+    }
 }
