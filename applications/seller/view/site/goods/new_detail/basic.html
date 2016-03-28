@@ -240,7 +240,7 @@
                 $tmp = $('.product-item-tpl').val();
                 var html = '';
                 for(var i = 0; i < result.data.length; i++ ){
-                    html += $.VMC.format($tmp, result.data[i].product_label, result.data[i].product_id);
+                    html += $.VMC.format($tmp, result.data[i].product_label, result.data[i].product_id, i);
                 }
                 $('.spec_table tbody').append(html);
             });

@@ -229,14 +229,14 @@ class seller_goods_data
         $mdl_interval = app::get('b2c')->model('interval');
         foreach($goods['product'] as $produce)
         {
-            foreach($produce['interval']['price'] as $key => $value)
+            foreach($produce['interval_info']['price'] as $key => $value)
             {
                 $data = array(
                     'product_id' => $produce['product_id'],
-                    'num_dn' => trim($produce['interval']['num_dn'][$key]),
-                    'num_up' => trim($produce['interval']['num_up'][$key]),
-                    'price' => trim($produce['interval']['price'][$key]),
-                    'discount' => trim($produce['interval']['discount'][$key]),
+                    'num_dn' => trim($produce['interval_info']['num_dn'][$key]),
+                    'num_up' => trim($produce['interval_info']['num_up'][$key]),
+                    'price' => trim($produce['interval_info']['price'][$key]),
+                    'discount' => trim($produce['interval_info']['discount'][$key]),
                     'createtime' => time(),
                 );
                 if(!$mdl_interval->save($data))

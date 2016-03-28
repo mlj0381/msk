@@ -302,6 +302,8 @@ class seller_ctl_site_goods extends seller_frontpage
             $db->rollback();
             $this->splash('error', $redirect_url, '保存失败');
         }
+
+
         if (!$objGoodsData->interval($goods)) {
             $db->rollback();
             $this->splash('error', $redirect_url, '保存失败');
