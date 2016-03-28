@@ -61,9 +61,8 @@
                         </label>
                         <div class="col-xs-4">
                             <select class="form-control"  name="sex" required="true">
-                                <option value="0" <{if $info.sex == 0}>checked<{/if}>>女</option>
-                                <option value="1" <{if $info.sex == 1}>checked<{/if}>>男</option>
-                                <option value="1" <{if $info.sex == 2}>checked<{/if}>>其他</option>
+                                <option value="0" <{if $info.sex == 0}>selected<{/if}>>女</option>
+                                <option value="1" <{if $info.sex == 1}>selected<{/if}>>男</option>
                             </select>
                             <span class="msgTip" data-message="format">格式不正确</span>
                         </div>

@@ -675,13 +675,15 @@ nav.mainNav ul.nav_ul li .category-container .category .tab-pane .tab-pane-brand
   height: 30px;
   margin-bottom: 15px;
 }
-.filebox {
+.filebox,
+.fileboxs {
   display: inline-block;
   position: relative;
   height: 120px;
   width: 120px;
 }
-.filebox .file_input {
+.filebox .file_input,
+.fileboxs .file_input {
   position: absolute;
   z-index: 10;
   width: 120px;
@@ -690,7 +692,8 @@ nav.mainNav ul.nav_ul li .category-container .category .tab-pane .tab-pane-brand
   filter: alpha(opacity=0);
   cursor: pointer;
 }
-.filebox .showImg {
+.filebox .showImg,
+.fileboxs .showImg {
   width: 118px;
   height: 118px;
   overflow: hidden;
@@ -700,21 +703,25 @@ nav.mainNav ul.nav_ul li .category-container .category .tab-pane .tab-pane-brand
   text-align: center;
   cursor: pointer;
 }
-.filebox .showImg img {
+.filebox .showImg img,
+.fileboxs .showImg img {
   display: block;
   margin: auto;
   max-height: 118px;
   max-width: 118px;
 }
-.filebox .showImg .loading {
+.filebox .showImg .loading,
+.fileboxs .showImg .loading {
   font-size: 30px;
 }
-.filebox .file_ctr {
+.filebox .file_ctr,
+.fileboxs .file_ctr {
   position: absolute;
   margin-left: 130px;
   top: 40px;
 }
-.filebox .file_ctr a {
+.filebox .file_ctr a,
+.fileboxs .file_ctr a {
   display: block;
   font-size: 14px;
 }
