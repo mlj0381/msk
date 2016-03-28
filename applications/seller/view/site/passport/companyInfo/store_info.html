@@ -70,13 +70,13 @@
                         <th width="30%">标准资质</th>
                     </tr>
                     <{foreach from=$extra.store.cat item=cat1}>
-                        <tr data-treeId="01" data-catName="<{$cat1.cat_name}>">
+                        <tr data-treeId="<{$cat1.addon}>" data-catName="<{$cat1.cat_name}>">
                             <td><span class="arrow icon-caret-right"></span><{$cat1.addon}></td>
                             <td><input type="checkbox" name="cat_id[]" value="<{$cat1.cat_id}>"><{$cat1.cat_name}></td>
                             <td></td>
                         </tr>
                         <{foreach from=$cat1.son item=cat2}>
-                            <tr data-treeId="01-1" data-catName="<{$cat1.cat_name}>">
+                            <tr data-treeId="<{$cat1.addon}>-<{$cat2.addon}>" data-catName="<{$cat1.cat_name}>">
                             <td>&nbsp;&nbsp;&nbsp;&nbsp;<span class="arrow icon-caret-right"></span><{$cat2.addon}></td>
                             <td>&nbsp;&nbsp;&nbsp;&nbsp;<label><input type="checkbox" name="cat_id[]" value="<{$cat2.cat_id}>"><{$cat2.cat_name}></label></td>
 
@@ -138,14 +138,14 @@
                             </td>
                         </tr>
                             <{foreach from=$cat2.son item=cat3}>
-                                <tr data-treeId="01-2" data-catName="<{$cat1.cat_name}>">
+                                <tr data-treeId="<{$cat1.addon}>-<{$cat2.addon}>-<{$cat3.addon}>" data-catName="<{$cat1.cat_name}>">
                                 <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="arrow icon-caret-right"></span><{$cat3.addon}></td>
                                 <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label><input type="checkbox" name="cat_id[]" value="<{$cat3.cat_id}>"><{$cat3.cat_name}></label></td>
                                 <td>
-                            <span class="apt_tag active apt_stock-1"
-                                  href="<{link app=seller ctl=site_passport act=display_type args0=apt_stock}>?cat=<{$cat1.addon}>-<{$cat2.addon}>-<{$cat3.addon}>"
-                                  data-tagId="1" title="原种">原
-                                        <input type="hidden" name="apt_stock" value="0"/>
+                                    <span class="apt_tag active apt_stock-1"
+                                      href="<{link app=seller ctl=site_passport act=display_type args0=apt_stock}>?cat=<{$cat1.addon}>-<{$cat2.addon}>-<{$cat3.addon}>"
+                                      data-tagId="1" title="原种">原
+                                            <input type="hidden" name="apt_stock" value="0"/>
                                     </span>
                                     <span class="apt_tag active apt_prove-1"
                                           href="<{link app=seller ctl=site_passport act=display_type args0=apt_prove}>?cat=<{$cat1.addon}>-<{$cat2.addon}>-<{$cat3.addon}>"
@@ -192,14 +192,14 @@
                                 </td>
                             </tr>
                                 <{foreach from=$cat3.son item=cat4}>
-                                    <tr data-treeId="01-2" data-catName="三黄鸡">
+                                    <tr data-treeId="<{$cat1.addon}>-<{$cat2.addon}>-<{$cat3.addon}>-<{$cat4.addon}>" data-catName="三黄鸡">
                                         <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                             <span class="arrow icon-caret-right"></span><{$cat4.addon}>
                                         </td>
                                         <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                             <!--<input type="checkbox">--><{$cat4.cat_name}>
                                         </td>
-
+                                        <td></td>
                                     </tr>
                                 <{/foreach}>
                             <{/foreach}>
@@ -306,6 +306,31 @@
         });
         $("#category_add_modal").on("hidden.bs.modal", function () {
             $(this).removeData("bs.modal");  //关闭时清空数据
+        });
+
+        //分类树展开收缩
+        $('.cat_tree tr[data-treeid]').each(function(index){
+            var $treeid = $(this).attr('data-treeId');
+            if($treeid.indexOf('-')>0){
+                $(this).addClass('hide');   //隐藏所有子分类
+            }
+        });
+
+        $('.cat_tree tr').on('click','.arrow',function(e){
+
+            var target = e.target || e.srcElement;
+            var $curtr = $(target).parents('tr');
+            var parTreeId = $($curtr).attr('data-treeId');
+            if(!$(this).hasClass('icon-caret-down')){
+                $('.cat_tree tr[data-treeid]').each(function(index){
+                    
+                    $('.cat_tree tr[data-treeId^='+parTreeId+']').removeClass('hide').find('.arrow').attr('class','arrow icon-caret-down');;
+                });
+            }else{
+                $(this).attr('class','arrow icon-caret-right');
+                $('.cat_tree tr[data-treeId^='+parTreeId+']').addClass('hide');
+                $('.cat_tree tr[data-treeId='+parTreeId+']').removeClass('hide');
+            }
         });
     });
 
