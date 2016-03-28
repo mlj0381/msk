@@ -43,6 +43,7 @@ $db['goods'] = array(
         'type_id' => array(
             'type' => 'table:goods_type',
             'required' => true,
+            'default' => 0,
             'label' => ('扩展分类') ,
         ) ,
         'norms_id' => array(
@@ -257,7 +258,7 @@ $db['goods'] = array(
         'stock' => array(
             'type' => 'region',
             'in_list' => true,
-            'required' => true,
+            //'required' => true,
             'label' => ('所属仓库'),
             'comment' => '所属仓库',
         ),

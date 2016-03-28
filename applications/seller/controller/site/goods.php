@@ -137,10 +137,8 @@ class seller_ctl_site_goods extends seller_frontpage
     {
         $return = array();
         //商品类目
-        //$mdl_goods_cat = app::get('b2c')->model('goods_cat');
-        //$return['cat'] = $mdl_goods_cat->get_tree('', null);
-        //调用润和接口获取分类
-        //$return['cat'] = app::get('b2c')->model('goods_cat')->getApiCatAll();
+        $mdl_goods_cat = app::get('b2c')->model('goods_cat');
+        $return['cat'] = $mdl_goods_cat->get_tree('', null);
 
         //商品品牌
         $return['brand'] = $this->app->model('brand')->getList('*', array('seller_id' => $this->seller['seller_id']));
@@ -216,7 +214,7 @@ class seller_ctl_site_goods extends seller_frontpage
         }
         //查询自己的店铺分类
         $store_tree = app::get('store')->model('goods_cat');
-        $this->pagedata['this_cat'] = $store_tree->get_tree('', null, $this->seller['seller_id']);
+        $this->pagedata['this_cat'] = $store_tree->get_tree($this->seller['seller_id'], '', null);
         $this->pagedata['info'] = $this->basic();
         $this->output();
     }
@@ -454,6 +452,29 @@ class seller_ctl_site_goods extends seller_frontpage
      * 润和接口
      */
     public function createProduct()
+    {
+        if(!$_POST) $this->splash('error', '', '非法请求');
+        extract($_POST);
+        $dlyplace = app::get('b2c')->model('dlyplace')->get_api_area();
+        $dlyplace = utils::array_change_key($dlyplace['logiAreaList'], 'logiAreaCode');
+        $product = Array();
+        $index = 0;
+        foreach($logistics as $v1)
+        {
+            foreach($pack as $v2)
+            {
+                $product[$index]['product_label'] = $dlyplace[$v1]['logiAreaName'] . '/' . $v2 . '包装';
+                $product[$index]['product_id'] = $dlyplace[$v1]['logiAreaCode'] . '-' . $v2;
+                $index ++;
+            }
+        }
+        $this->splash('success', '', $product);
+    }
+
+    /**
+     * 获取分类下的包装信息
+     */
+    public function getPack()
     {
         if(!$_POST) $this->splash('error', '', '非法请求');
     }

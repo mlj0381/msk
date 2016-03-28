@@ -134,6 +134,8 @@ class b2c_mdl_goods extends dbeav_model
             }
         }
         #↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑记录编辑商品日志-end@lujy↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
+        //print_r($goods);
+        die;
         $rs = parent::save($goods, $mustUpdate);
         #↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓记录编辑商品日志-start@lujy↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
         

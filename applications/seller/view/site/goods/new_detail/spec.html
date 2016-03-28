@@ -1,4 +1,4 @@
-<div id="sepcInfo" class="hide">
+<div id="sepcInfo" >
     <h4><span class="text-danger">*</span>商品规格</h4>
     <!-- spec -->
     <table class="table spec_table">
@@ -22,12 +22,12 @@
         <tr>
             <td>
                 <input type="text" name="goods[product][new_0][spec_info]" class="form-control input-sm spec-info"
-                       value="A1/袋" readonly=true>
-                <input type="hidden" name="goods[product][new_0][spec_desc]" class="spec-desc" value="">
+                       value="{0}" readonly=true>
+                <input type="hidden" name="goods[product][new_0][spec_desc]" class="spec-desc" value="{0}:::{1}">
             </td>
             <td>
                 <input type="text" required="true" data-map="bn" class="form-control input-sm"
-                       name="goods[product][new_0][bn]" value="15616-0">
+                       name="goods[product][new_0][bn]" value="{1}">
             </td>
             <td class="price_set">
                 <div class="set_panel">
@@ -93,11 +93,11 @@
 <script type="text/javascript">
 
     $(function () {
-        !(function load_spec() {
-            var $html = $('.product-item-tpl').val();
-            var $spec_row = $('.spec_table tbody');
-            $spec_row.append($html);
-        })();
+//        !(function load_spec() {
+//            var $html = $('.product-item-tpl').val();
+//            var $spec_row = $('.spec_table tbody');
+//            $spec_row.append($html);
+//        })();
         //load_spec();
 
         //价盘panel 显隐
