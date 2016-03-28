@@ -24,7 +24,7 @@ class buyer_user_object{
     /**
      * 设置会员登录session seller_id
      */
-    public function set_session($buyer_id, $buyer_code){
+    public function set_session($buyer_id, $buyer_code=''){
         $_SESSION['account'] = ['buyer_id' => (int)$buyer_id, 'buyer_code' => $buyer_code];
     }
 
@@ -40,5 +40,9 @@ class buyer_user_object{
     }
     
     
+    public function get_id(){
+        return $_SESSION['account']['buyer_id'] ?: false;
+    }
+
     
 }

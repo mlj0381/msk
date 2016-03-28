@@ -629,7 +629,7 @@ class seller_ctl_site_passport extends seller_frontpage
         if ($result && $_POST['type'] == '1') {
             //返回成功 并且 选择成功买手身份
             $this->user_obj->set_session(null);
-            vmc::singleton('buyer_user_object')->set_session($result['buyer_id'], null);
+            vmc::singleton('buyer_user_object')->set_session($result['buyer_id'], '');
             //设置cookie
         }
         $this->splash($result ? 'success' : 'error', $redirect, $result ? '操作成功' : '操作失败');
@@ -700,20 +700,4 @@ class seller_ctl_site_passport extends seller_frontpage
         $this->display('ui/add-category.html');
     }
 
-
-    //没用的方法
-    //润和接口没写好，生成测试数据专用
-    public function addBlock()
-    {
-        header('Content-Type : text/html; charset=utf-8');
-        base_kvstore::instance('catCard')->fetch('cat_id1', $result);
-        $params = $_POST;
-        unset($params['type']);
-        unset($params['cat_id']);
-        $result[$_POST['cat_id']][$_POST['type']] = $params;
-        base_kvstore::instance('catCard')->store('cat_id' . $_POST['cat_id'], $result);
-
-        //print_r($_POST);
-        print_r($result);
-    }
 }
