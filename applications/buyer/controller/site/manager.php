@@ -39,7 +39,7 @@ class buyer_ctl_site_manager extends buyer_frontpage{
 		 * 
 		 ************ $object_obj->get_id() 这个方法以及废了*******
 		 */
-		$buyer_id = $object_obj->get_id();
+		//$buyer_id = $object_obj->get_id();
 
 		$freeze_list = $freeze_buyer_model->get_freezeList('*',array('buyer_id' => $buyer_id),($page - 1) * $limit, $limit);
 		$count = $freeze_buyer_model->get_freezeCount(array('buyer_id' => $buyer_id));
@@ -65,7 +65,7 @@ class buyer_ctl_site_manager extends buyer_frontpage{
 	/**
 	 * 管家注册（有下一步）
 	 */
-	public function manager_signup(){
+	public function signup(){
 		//处理冻品管家登录账号
 		$object_obj = vmc::singleton('buyer_user_object');
 		
@@ -73,7 +73,7 @@ class buyer_ctl_site_manager extends buyer_frontpage{
 		 *
 		************ $object_obj->get_id() 这个方法以及废了*******
 		*/
-		$buyer_id = $object_obj->get_id();
+		//$buyer_id = $object_obj->get_id();
 		$buyer = app::get('pam')->model('buyers')->getRow('*',array('buyer_id'=>$buyer_id));
 
 		$account_name = app::get('freeze')->model('freeze_buyer')->get_account($buyer);
