@@ -30,9 +30,9 @@ $remote['freeze_inquirebuyer'] = array(
             'default' => '',
             'require' => false
         ),
-        'buyerid' => array(
+        'buyerId' => array(
             'name' => '买家编码',
-            'column' => 'buyerid',
+            'column' => 'buyerId',
             'type' => 'String',
             'default' => '',
             'require' => false
@@ -70,9 +70,9 @@ $remote['freeze_inquirebuyer'] = array(
             'coloumn' => 'houseAccount',
             'type' => 'String',
         ),
-        'buyerid' => array(
+        'buyerId' => array(
             'name' => '买家编码',
-            'coloumn' => 'buyerid',
+            'coloumn' => 'buyerId',
             'type' => 'String',
         ),
         'startTime' => array(
