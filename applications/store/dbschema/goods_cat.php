@@ -48,7 +48,7 @@ $db['goods_cat'] = array(
             'width' => 110,
             'in_list' => true,
         ),
-        'is_leaf' => array(
+        'has_children' => array(
             'type' => 'bool',
             'required' => true,
             'default' => 'false',
@@ -96,10 +96,10 @@ $db['goods_cat'] = array(
             'orderby' => true,
         ),
         // 商家
-        'store_id' => array(
+        'seller_id' => array(
             'type' => 'number',
-            'label' => ('店铺ID'),
-            'comment' => ('店铺ID'),
+            'label' => ('商家ID'),
+            'comment' => ('商家ID'),
             'default' => 0,
             'width' => 110,
             'in_list' => false,
@@ -129,9 +129,9 @@ $db['goods_cat'] = array(
                 0 => 'cat_path',
             ),
         ),
-        'ind_store' => array(
+        'ind_seller' => array(
             'columns' => array(
-                0 => 'store_id',
+                0 => 'seller_id',
             ),
         ),
         'ind_disabled' => array(

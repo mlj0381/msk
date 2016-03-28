@@ -23,6 +23,7 @@ $.validator.regex = {
 	'brankcard'	: /^(\d{16}|\d{19})$/,
 	'positive'	: /^[0-9]+(\.\d+)?$/, //正数
 	'age'		: /^([1-9]|[1-9][0-9]|1[01][0-9])$/,  //1-119
+	'qq'		: /^\d{6,11}$/,  
 	'ip'        : /^(([1-9]|([1-9]\d)|(1\d\d)|(2([0-4]\d|5[0-5])))\.)(([1-9]|([1-9]\d)|(1\d\d)|(2([0-4]\d|5[0-5])))\.){2}([1-9]|([1-9]\d)|(1\d\d)|(2([0-4]\d|5[0-5])))$/
 };
 $.validator.messages = {
@@ -48,7 +49,8 @@ $.validator.messages = {
 	accept : $.validator.format("仅支持{0}文件！"),
 	size : $.validator.format("文件大小控制在{0}以内！"),
 	username : $.validator.format("文件大小控制在{0}以内！"),
-	brankcard: $.validator.format("请填写正确的银行卡号！")
+	brankcard: $.validator.format("请填写正确的银行卡号！"),
+	qq: $.validator.format("请填写正确的QQ号")
 	//format : $.validator.format("格式{0}错误！")
 };
  $.extend(true, $.validator.methods, {

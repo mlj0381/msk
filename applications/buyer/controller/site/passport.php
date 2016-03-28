@@ -75,24 +75,17 @@ class buyer_ctl_site_passport extends buyer_frontpage{
 			$mdl_buyers = $this->app->model('buyers');
 			//获取buyer_id,login_account/login_account,给出要显示的账号（用户名or手机号orEmail）
 			
-			
-			/***
-			 * 通过用户名 密码登录 调用 查询接口
-			 * 
-			 */
 			$userdata = $mdl_buyers->get_buyer_account($username);
-			
 			if (!$userdata){
 				$this->splash('error', '', '用户名不存在！');
 			}
-			$check_password = $this->app->model('buyers')->check_password($userdata['buyer_id'], $password);
-			
+			$check_password = $mdl_buyers->check_password($userdata['buyer_id'], $password);
 			if ($check_password){
 				/**
 				 * 重新用seller的session验证规则
 				 * $this->app->model('buyers')->autologin($userdata);
 				 */
-				$this->object_obj->set_session($userdata['buyer_id']);
+				$this->object_obj->set_session($userdata['buyer_id'], '');
 				$this->set_cookie('UNAME', $userdata['login_account']);
 				$this->set_cookie('SELLER_IDENT', $userdata['buyer_id']);	
 				$redirect = $this->gen_url(array(
@@ -111,7 +104,6 @@ class buyer_ctl_site_passport extends buyer_frontpage{
 				$this->splash('error', $redirect, '用户名或者密码错误！');
 			}
 		}else {
-			vmc::singleton('base_session')->start();
 			if ($this->object_obj->get_session()){
 				$redirect = $this->gen_url(array(
 						'app' => 'buyer',
@@ -149,7 +141,7 @@ class buyer_ctl_site_passport extends buyer_frontpage{
 				if (!$params['name']){
 					$this->splash('error', '', '姓名不能为空');
 				}
-				if (!$params['card_id']){
+				if (strlen($params['card_id']) !=18){
 					$this->splash('error', '', '身份证不能为空');
 				}
 				if (!$params['buyer_type']){
@@ -164,10 +156,10 @@ class buyer_ctl_site_passport extends buyer_frontpage{
 				if (!$params['wechat']){
 					$this->splash('error', '', '微信号不能为空');
 				}
-				if (!$params['qq']){
-					$this->splash('error', '', 'QQ号不能为空');
+				if (!is_numeric($params['qq'])){
+					$this->splash('error', '', 'QQ号格式错误');
 				}
-				$params['buyer_id'] = $this->object_obj->get_session();
+				$params['buyer_id'] = $this->object_obj->get_session()['buyer_id'];
 				
 				/**
 				 * 编辑buyer基本信息----接口
@@ -289,15 +281,13 @@ class buyer_ctl_site_passport extends buyer_frontpage{
 	
 	
 	
-	
 	/**
 	 * 退出登陆
 	 */
 	public function logout($forward){
-		vmc::singleton('base_session')->start();
-		$_SESSION['buyer_auth']			=	null;
-		$_SESSION['buyer_auth_sign']	=	null;
+		$this->object_obj->set_session(null, null);
 		$this->set_cookie('UNAME', null);
+		$this->set_cookie('BUYER_IDENT', null);
 		if (!$forward) {
 			$forward = $this->gen_url(array(
 					'app' => 'buyer',
@@ -305,7 +295,7 @@ class buyer_ctl_site_passport extends buyer_frontpage{
 					'full' => 'login',
 			));
 		}
-		$this->splash('success', $forward, '退出登录成功');
+		$this->splash('success', $forward, '退出成功');
 	}
 	
 	

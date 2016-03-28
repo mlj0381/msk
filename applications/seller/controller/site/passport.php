@@ -324,7 +324,8 @@ class seller_ctl_site_passport extends seller_frontpage
     {
         /**
          * 润和接口
-         * 卖家注册 缺少接口
+         * 卖家注册 ISL231180
+         *
          */
         extract($post);
         if (!vmc::singleton('seller_user_vcode')->verify($smscode, $pam_account['mobile'], 'signup')) {
@@ -334,7 +335,18 @@ class seller_ctl_site_passport extends seller_frontpage
             $this->splash('error', $signup_url, $msg);
         }
         $seller_sdf_data = $this->passport_obj->pre_signup_process($post);
-
+        //调用润和接口
+//        $api_data = array(
+//            'login_account' => $seller_sdf_data['pam_account']['login_account'],
+//            'mobile' => $seller_sdf_data['seller_sellers']['mobile'],
+//            'login_password' => $post['pam_account']['login_password'],
+//            'contact_person' => $seller_sdf_data['pam_account']['login_account'],
+//            'fromFlg' => '1',
+//            'show_name' => $seller_sdf_data['pam_account']['login_account'],
+//            'insertFlag' => '1',
+//        );
+        //$result = $this->app->rpc('edit_seller_info')->request($api_data);
+        //end接口调用
         if ($seller_id = $this->passport_obj->save_sellers($seller_sdf_data, $msg)) {
             /*
               //本站会员注册完成后做某些操作!
@@ -617,7 +629,7 @@ class seller_ctl_site_passport extends seller_frontpage
         if ($result && $_POST['type'] == '1') {
             //返回成功 并且 选择成功买手身份
             $this->user_obj->set_session(null);
-            vmc::singleton('buyer_user_object')->set_session($result['buyer_id']);
+            vmc::singleton('buyer_user_object')->set_session($result['buyer_id'], '');
             //设置cookie
         }
         $this->splash($result ? 'success' : 'error', $redirect, $result ? '操作成功' : '操作失败');
@@ -667,19 +679,20 @@ class seller_ctl_site_passport extends seller_frontpage
      * 
      */
 
-    public function display_type($html_type, $cat_id)
+    public function display_type($html_type)
     {
         empty($html_type) && $html_type = 'apt_common';
-        $html_arr = array('apt_common',
-            'apt_pack', 'apt_prove',
+        $html_arr = array(
+            'apt_common', 'apt_prove', //apt_pack包装规格
             'apt_quality', 'apt_raise',
             'apt_safety', 'apt_stock',
             'apt_technology', 'apt_transport');
         if (in_array($html_type, $html_arr)) {
-            $this->pagedata['cat_id'] = $cat_id;
+            $this->pagedata['card'] = app::get('b2c')->model('goods')->fileCard($html_type, $this->_request->get_get('cat'));
             $this->display('ui/aptitude/' . $html_type . '.html');
         }
     }
+
 
     public function add_cat()
     {
@@ -687,17 +700,4 @@ class seller_ctl_site_passport extends seller_frontpage
         $this->display('ui/add-category.html');
     }
 
-    public function addBlock()
-    {
-        header('Content-Type : text/html; charset=utf-8');
-        base_kvstore::instance('catCard')->fetch('cat_id1', $result);
-        $params = $_POST;
-        unset($params['type']);
-        unset($params['cat_id']);
-        $result[$_POST['cat_id']][$_POST['type']] = $params;
-        base_kvstore::instance('catCard')->store('cat_id' . $_POST['cat_id'], $result);
-
-        //print_r($_POST);
-        print_r($result);
-    }
 }

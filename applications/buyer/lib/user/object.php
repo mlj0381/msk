@@ -17,209 +17,32 @@ class buyer_user_object{
      * 判断当前用户是否登录
      */
     public function is_login(){
-        $seller_id = $this->get_session();
-        return $seller_id ? $seller_id : false;
+        return $this->get_session();
     }
-
-    /**
-     * 获取当前用户ID
-     */
-    public function get_id(){
-        return $seller_id = $this->get_session();
-    }
-
-    //根据用户名得到会员ID
-    public function get_seller_id_by_username($login_account){
-        $pam_sellers_model = app::get('pam')->model('sellers');
-        $data = $pam_sellers_model->getList('seller_id',array('login_account'=>$login_account));
-        return $data[0]['seller_id'];
-    }
-
+    
+    
     /**
      * 设置会员登录session seller_id
      */
-    public function set_session($buyer_id){
-        unset($_SESSION['error_count']['buyer']);
-        $_SESSION['account']['buyer'] = $buyer_id;
+    public function set_session($buyer_id, $buyer_code=''){
+        $_SESSION['account'] = ['buyer_id' => (int)$buyer_id, 'buyer_code' => $buyer_code];
     }
 
     /**
      * 获取会员登录session seller_id
      */
     public function get_session(){
-        if($this->seller_id)return $this->seller_id;
-        if(isset($_SESSION['account']['buyer']) &&  $_SESSION['account']['buyer']){
-            return $_SESSION['account']['buyer'];
+        if($_SESSION['account']['buyer_id'] &&  isset($_SESSION['account']['buyer_code'])){
+        	return $_SESSION['account'];
         }else{
             return false;
         }
     }
-
-    /**
-	 * 得到当前登陆用户的信息
-     *
-     * @param null
-	 * @return array 用户信息
-	 */
-	public function get_current_seller(){
-        if($this->seller_info){
-          return $this->seller_info;
-        }
-        return $this->get_seller_info( );
+    
+    
+    public function get_id(){
+        return $_SESSION['account']['buyer_id'] ?: false;
     }
 
-    /**
-     *当前商家信息
-     */
-    public function get_seller_info( $seller_id ) {
-        if(!$seller_id){
-            $seller_id = $this->seller_id = $this->get_id();
-        }
-        $sellerFilter = array(
-            'account' => 'seller_id, login_account, login_type',
-            'sellers'=> 'seller_id, avatar, email, mobile,name, ident, schedule, type',
-            'company'=> 'company_id, name',
-        );
-        $sellerData = $this->get_sellers_data($sellerFilter,$seller_id);
-        $seller_sdf = $sellerData['sellers'];
-
-        if( !empty($seller_sdf) ) {
-            $login_name = $this->get_seller_name();
-            $this->seller_info['seller_id'] = $seller_sdf['seller_id'];
-            $this->seller_info['local_uname'] =  $sellerData['account']['local'];
-            $this->seller_info['login_account'] =  $sellerData['account']['login_account'];
-            $this->seller_info['name'] = $seller_sdf['name'];
-            $this->seller_info['avatar'] = $seller_sdf['avatar'];
-            $this->seller_info['email'] =  $seller_sdf['email'];
-            $this->seller_info['mobile'] =  $seller_sdf['mobile'];
-            $this->seller_info['ident'] =  $seller_sdf['ident'];
-			$this->seller_info['schedule'] =  $seller_sdf['schedule'];
-            $this->seller_info['type'] =  $seller_sdf['type'];
-        }
-        return $this->seller_info;
-    }
-
-    /**
-     * 获取当前会员信息(标准格式，按照表结构获取)
-     * $columns = array(
-     *      'account' => 'seller_id',
-     *      'sellers' => 'seller_id',
-     * );
-     */
-    public function get_sellers_data($columns,$seller_id=null){
-        if(!$seller_id){
-            $this->seller_id = $this->get_id();
-        }
-
-        if( $columns['account'] ){
-            $data['account'] = $this->_get_pam_sellers_data($columns['account'],$seller_id);
-        }
-
-        if($columns['sellers']){
-            $data['sellers'] = $this->_get_seller_sellers_data($columns['sellers'],$seller_id);
-        }
-
-        return $data;
-    }
-
-    /**
-     * 获取当前会员用户基本信息(sellers)
-     */
-     private function _get_seller_sellers_data($columns='*',$seller_id=null){
-        if(!$seller_id){
-            $seller_id = $this->seller_id;
-        }
-        $seller_sellers_model = app::get('seller')->model('sellers');
-        if(is_array($columns) ){
-            $columns = implode(',',$columns);
-        }
-        $sellersData = $seller_sellers_model->getList($columns,array('seller_id'=>$seller_id));
-        return $sellersData[0];
-    }
-
-    /**
-     * 获取当前登录账号(pam_sellers)表信息
-     */
-    private function _get_pam_sellers_data($columns='*',$seller_id){
-        if(!$seller_id){
-            $seller_id = $this->seller_id;
-        }
-        $pam_sellers_model = app::get('pam')->model('sellers');
-        if(is_array($columns)){
-            $columns = implode(',',$columns);
-        }
-        if( $columns != '*' && !strpos($columns,'login_type') ){
-            $columns .= ',login_type';
-        }
-        $accountData = $pam_sellers_model->getList($columns,array('seller_id'=>$seller_id));
-        foreach((array)$accountData as $row){
-            foreach((array)$row as $key=>$val){
-                if($key == 'login_type'){
-                    $arr_colunms[$val] = $row['login_account'];
-                }else{
-                    $arr_colunms[$key] = $val;
-                }
-            }
-        }
-        return $arr_colunms;
-    }
-
-    public function get_pam_data($columns="*",$seller_id){
-        if(is_array($columns)){
-            $columns = implode(',',$columns);
-        }
-        if( $columns != '*' && !strpos($columns,'login_type') ){
-            $columns .= ',login_type';
-        }
-        $pam_sellers_model = app::get('pam')->model('sellers');
-        $accountData = $pam_sellers_model->getList($columns,array('seller_id'=>$seller_id));
-        foreach((array)$accountData as $row){
-          $arr_colunms[$row['login_type']] = $row;
-        }
-        return $arr_colunms;
-    }
-
-    /**
-     * 获取当前会员用户名/或指定用户的用户名
-     */
-    public function get_seller_name($login_name=null,$seller_id=null){
-        if(!$login_name){
-            $seller_id = $seller_id ? $seller_id : $this->get_id();
-            $pam_sellers_model = app::get('pam')->model('sellers');
-            $data = $pam_sellers_model->getList('*',array('seller_id'=>$seller_id));
-            foreach((array)$data as $row){
-                $arr_name[$row['login_type']] = $row['login_account'];
-            }
-
-            if( isset($arr_name['local']) ){
-                $login_name = $arr_name['local'];
-            }elseif(isset($arr_name['email'])){
-                $login_name = $arr_name['email'];
-            }elseif(isset($arr_name['mobile'])){
-                $login_name = $arr_name['mobile'];
-            }else{
-                $login_name = current($arr_name);
-            }
-        }
-
-        //信任登录用户名显示
-        $service = vmc::service('pam_account_login_name');
-        if(is_object($service)){
-            if(method_exists($service,'get_login_name')){
-                $login_name = $service->get_login_name($login_name);
-            }
-        }
-        return $login_name;
-    }
-
-    public function get_company($seller_id, $columns = '*'){
-        return $this->app->model('company')->getRow($columns, array('seller_id' => $seller_id));
-    }
-
-    public function get_store($seller_id, $columns = '*'){
-        return app::get('store')->model('store')->getRow($columns, array('seller_id' => $seller_id));
-    }
-    public function get_contact($seller_id, $columns = '*'){
-        return $this->app->model('contact')->getRow($columns, array('seller_id' => $seller_id));
-    }
+    
 }

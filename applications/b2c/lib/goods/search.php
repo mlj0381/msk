@@ -138,7 +138,7 @@ class b2c_goods_search
             //>>
         }
         if ($keywords['keywords'] and $keywords['having']){
-        	$sql = 'SELECT a.`goods_id` FROM `vmc_b2c_goods_keywords` a,`vmc_b2c_goods` b WHERE a.`keyword` LIKE "%'.$keywords['keywords'].'%" AND b.`name` LIKE "%'.$keywords['having'].'%" AND a.`goods_id` = b.`goods_id`';
+        	$sql = 'SELECT a.`goods_id` FROM `vmc_b2c_goods_keywords` a,`vmc_b2c_goods` b WHERE a.`goods_id` = b.`goods_id` >= 1 and a.`keyword` LIKE "%'.$keywords['keywords'].'%" AND b.`name` LIKE "%'.$keywords['having'].'%" AND a.`goods_id` = b.`goods_id`';
         	$return = vmc::database()->select($sql);
         }else {
         	foreach($search as $mdlName => $column){

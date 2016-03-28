@@ -43,11 +43,11 @@ class buyer_ctl_site_goods extends buyer_frontpage{
 	
 	
 	/**
-	 * 已购买商品(订单管理)
+	 * 销售商品订单(订单管理)
 	 */
 	public function stock($status = 'all', $page = 1){
 		
-		$rpc_model = $this->app->rpc('get_order_list');
+		$rpc_model = $this->app->rpc('out_order_list');
 		$data = array(
 				'member_id' => 2,
 				'years' => '2016-03',
@@ -70,12 +70,8 @@ class buyer_ctl_site_goods extends buyer_frontpage{
 				),
 		);
 		
-		$order_list = array(
-			0 => array(''),
-				
-				
-				
-		);
+		
+		
 		$this->pagedata['order_list'] = $order_list;
 		$this->pagedata['current_status'] = $status;
 		$this->pagedata['pager'] = array(

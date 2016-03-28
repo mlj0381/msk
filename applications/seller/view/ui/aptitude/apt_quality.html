@@ -19,72 +19,24 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr class="par_row">
-                    <td colspan="4">产品解冻失水率指标（包冰率指标）</td>
+                <{foreach from=$card.tncList item=item}>
+                <tr class="par_row"><!-- tncStdItemId-->
+                    <td colspan="4"><{$item.tncStdItemName}></td>
                 </tr>
                 <tr>
                     <td></td>
                     <td>
-                        <textarea name="content1[water]">≤6.5%</textarea>
+                        <textarea name="content1[water]"><{$items.goodVal}></textarea>
                     </td>
                     <td>
-                        <textarea name="content2[water]">≤7%</textarea>
+                        <textarea name="content2[water]"><{$items.normalVal}></textarea>
                     </td>
                     <td>
-                        <textarea name="content3[water]">≤7.5%</textarea>
+                        <textarea name="content3[water]"><{$items.badVal}></textarea>
                     </td>
+
                 </tr>
-                <tr class="par_row">
-                    <td colspan="4">产品均匀度指标</td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td>
-                        <textarea name="content1[balance]">单个产品重量误差范围：±30g</textarea>
-                    </td>
-                    <td>
-                        <textarea name="content2[balance]">单个产品重量误差范围：±50g</textarea>
-                    </td>
-                    <td>
-                        <textarea name="content3[balance]">单个产品重量误差范围：±50g</textarea>
-                    </td>
-                </tr>
-                <tr class="par_row">
-                    <td colspan="4">产品感官指标</td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td>
-                        <textarea name="content1[sense]">硬杆毛:无硬杆毛 淤血:无淤血 折腿率:无折腿 折翅率:无折翅 冰块:无明显冰块
-                        </textarea>
-                    </td>
-                    <td>
-                        <textarea name="content2[sense]">硬杆毛:硬杆毛轻度超标 淤血:淤血轻度超标 折腿率:折腿率轻度超标 折翅率:折翅率轻度超标 冰块:冰块轻度超标
-                        </textarea>
-                    </td>
-                    <td>
-                        <textarea name="content3[sense]">硬杆毛:硬杆毛轻度超标 淤血:淤血轻度超标 折腿率:折腿率轻度超标 折翅率:折翅率轻度超标 冰块:冰块轻度超标
-                        </textarea>
-                    </td>
-                </tr>
-                <tr class="par_row">
-                    <td colspan="4">加工净率指标</td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td>
-                        <textarea name="content1[process]">黄皮:无黄皮 内脏:无内脏残留
-                        </textarea>
-                    </td>
-                    <td>
-                        <textarea name="content2[process]">黄皮:黄皮轻度超标 内脏:内脏残留轻度超标
-                        </textarea>
-                    </td>
-                    <td>
-                        <textarea name="content3[process]">黄皮:黄皮轻度超标 内脏:内脏残留轻度超标
-                        </textarea>
-                    </td>
-                </tr>
+                <{/foreach}>
                 </tbody>
             </table>
         </div>

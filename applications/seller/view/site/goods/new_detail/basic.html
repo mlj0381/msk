@@ -1,44 +1,52 @@
 <div id="baseinfo">
     <h4>基本信息</h4>
-    <input name="goods[goods_id]" value="<{$goods.goods_id}>" type="hidden" />
-    <input name="goods[checkin]" value="1" type="hidden" />
+    <input name="goods[goods_id]" value="<{$goods.goods_id}>" type="hidden"/>
+    <input name="goods[checkin]" value="1" type="hidden"/>
+
     <div class="form-group">
         <label class="col-xs-2 control-label"><span class="text-danger">*</span><span>商品类目</span></label>
+
         <div class="col-xs-8">
-            <{input type="category" class="study" name="goods[category][cat_id]" value=$goods.category.cat_id callback="callBack"}>
+            <{input type="category" class="study" identity="store" seller=$seller_id name="goods[category][cat_id]"
+            value=$goods.category.cat_id
+            callback="callBack"}>
         </div>
     </div>
     <div class="form-group">
         <label class="col-xs-2 control-label"><span class="text-danger">*</span><span>所属品牌</span></label>
+
         <div class="col-xs-5">
-            <{input type=select name="goods[brand][brand_id]" rows=$params.brand labelColumn="brand_name" valueColumn="brand_id" value=$goods.brand.brand_id required="true"}>
+            <{input type=select name="goods[brand][brand_id]" rows=$params.brand labelColumn="brand_name"
+            valueColumn="brand_id" value=$goods.brand.brand_id required="true"}>
         </div>
     </div>
     <div class="form-group">
         <label class="col-xs-2 control-label"><span class="text-danger">*</span><span>所在物流区</span></label>
+
         <div class="col-xs-5">
             <{*input type=region name="goods[stock]" detail=1 value=$goods.stock required="true"*}>
-            <div class="form-item">
-                <span><input type="checkbox"> 上海</span>
-                <span><input type="checkbox"> 无锡</span>
-                <span><input type="checkbox"> 苏州</span>
-                <span><input type="checkbox"> 南通</span>
+            <div class="form-item logistics">
+                <{foreach from=$params.logistics item=item}>
+                <span><input type="checkbox" value="<{$item.logiAreaCode}>"> <{$item.logiAreaName}></span>
+                <{/foreach}>
             </div>
         </div>
     </div>
     <div class="form-group">
         <label class="col-xs-2 control-label"><span class="text-danger">*</span><span>包装</span></label>
+
         <div class="col-xs-5">
-            <div class="form-item">
-                <span><input type="checkbox"> 10只/袋/9.5kg</span>
-                <span><input type="checkbox"> 10只/袋/9.5kg</span>
-                <span><input type="checkbox"> 10只/袋/9.5kg</span>
-                <span><input type="checkbox"> 10只/袋/9.5kg</span>
+            <div class="form-item pack">
+                <span><input type="checkbox" name="" value="1"> 10只/袋/9.5kg</span>
+                <span><input type="checkbox" name="" value="2"> 10只/袋/9.5kg</span>
+                <span><input type="checkbox" name="" value="3"> 10只/袋/9.5kg</span>
+                <span><input type="checkbox" name="" value="4"> 10只/袋/9.5kg</span>
             </div>
         </div>
     </div>
     <div class="form-group">
         <label class="col-xs-2 control-label"><span>商品编号</span></label>
+
         <div class="col-xs-5">
             <input type="text" value="<{$goods.gid}>" remote="<{link app=seller ctl=site_goods act=check_gid}>"
             <{if $goods.gid}> readonly=true<{/if}>name="goods[gid]" placeholder="不填则系统自动生成" class="form-control" >
@@ -47,103 +55,110 @@
     </div>
     <div class="form-group">
         <label class="col-xs-2 control-label"><span class="text-danger">*</span><span>商品名称</span></label>
+
         <div class="col-xs-5">
-            <input type="text" name="goods[name]" value="<{$goods.name}>" placeholder="请输入商品名称" class="form-control" required="true">
+            <input type="text" name="goods[name]" value="<{$goods.name}>" placeholder="请输入商品名称" class="form-control"
+                   required="true">
         </div>
     </div>
     <div class="form-group">
         <label class="col-xs-2 control-label"><span>文字描述</span></label>
+
         <div class="col-xs-5">
             <input type="text" value="<{$goods.brief}>" name="goods[brief]" placeholder="请输文字描述" class="form-control">
         </div>
     </div>
     <div class="form-group">
         <label class="col-xs-2 control-label"><span>关键词</span></label>
+
         <div class="col-xs-5">
-   
-              <{foreach from=$goods.keywords item=keywords}>
+
+            <{foreach from=$goods.keywords item=keywords}>
             <{assign var='keyword' value="{$keyword},{$keywords.keyword}"}>
             <{/foreach}>
             <div class="goods_keywords_box">
-                <input type="text" id="goods_keywords_input" name="keywords" value="<{$keyword|trim:'|'}>" style="display: none;">
+                <input type="text" id="goods_keywords_input" name="keywords" value="<{$keyword|trim:'|'}>"
+                       style="display: none;">
             </div>
-            
+
         </div>
     </div>
     <div class="form-group">
         <label class="col-xs-2 control-label"><span class="text-danger">*</span>产品相册</label>
-        <{input type="siteimagearray" name="goods[images]" default="image_default" default_val=$goods.image_default_id value=$goods.images}>
+        <{input type="siteimagearray" name="goods[images]" default="image_default" default_val=$goods.image_default_id
+        value=$goods.images}>
     </div>
     <div class="form-group">
         <label class="col-xs-2 control-label">产品档案卡</label>
+
         <div class="col-xs-5 fileCard">
             <span class="apt_tag active apt_stock-1" data-toggle="modal"
                   data-target=".category_add_modal"
-                  href="<{link app=seller ctl=site_passport act=display_type args0=apt_stock args1=1}>"
+                  href="<{link app=seller ctl=site_passport act=display_type args0=apt_stock}>?cat=1"
                   data-tagId="1" title="原种">原
                 <input type="hidden" name="apt_stock" value="0"/>
             </span>
             <span class="apt_tag active apt_prove-1" data-toggle="modal"
                   data-target=".category_add_modal"
-                  href="<{link app=seller ctl=site_passport act=display_type args0=apt_prove args1=1}>"
+                  href="<{link app=seller ctl=site_passport act=display_type args0=apt_prove}>"
                   data-tagId="2" title="原种种源标准指标">种
                 <input type="hidden" name="apt_prove" value="0"/>
             </span>
             <span class="apt_tag active apt_raise-1" data-toggle="modal"
                   data-target=".category_add_modal"
-                  href="<{link app=seller ctl=site_passport act=display_type args0=apt_raise args1=1}>"
+                  href="<{link app=seller ctl=site_passport act=display_type args0=apt_raise}>"
                   data-tagId="3"
                   title="原种饲养标准指标">饲
-                <input type="hidden" name="apt_raise" value="0" />
+                <input type="hidden" name="apt_raise" value="0"/>
             </span>
             <span class="apt_tag active apt_technology-1" data-toggle="modal"
                   data-target=".category_add_modal"
-                  href="<{link app=seller ctl=site_passport act=display_type args0=apt_technology args1=1}>"
+                  href="<{link app=seller ctl=site_passport act=display_type args0=apt_technology}>"
                   data-tagId="4"
                   title="产品加工技术标准指标">技 
-                <input type="hidden" name="apt_technology" value="0" />
+                <input type="hidden" name="apt_technology" value="0"/>
             </span>
             <span class="apt_tag active apt_quality-1" data-toggle="modal"
                   data-target=".category_add_modal"
-                  href="<{link app=seller ctl=site_passport act=display_type args0=apt_quality args1=1}>"
+                  href="<{link app=seller ctl=site_passport act=display_type args0=apt_quality}>"
                   data-tagId="5"
                   title="产品加工质量标准指标">质
-                <input type="hidden" name="apt_quality" value="0" />
+                <input type="hidden" name="apt_quality" value="0"/>
             </span>
             <span class="apt_tag active apt_common-1" data-toggle="modal"
                   data-target=".category_add_modal"
-                  href="<{link app=seller ctl=site_passport act=display_type args0=apt_common args1=1}>"
+                  href="<{link app=seller ctl=site_passport act=display_type args0=apt_common}>"
                   data-tagId="6"
                   title="产品通用质量标准指标">通
-                <input type="hidden" name="apt_common" value="0" />
+                <input type="hidden" name="apt_common" value="0"/>
             </span>
             <span class="apt_tag active apt_safety-1" data-toggle="modal"
                   data-target=".category_add_modal"
-                  href="<{link app=seller ctl=site_passport act=display_type args0=apt_safety args1=1}>"
+                  href="<{link app=seller ctl=site_passport act=display_type args0=apt_safety}>"
                   data-tagId="7"
                   title="产品安全标准指标">安
-                <input type="hidden" name="apt_safety" value="0" />
+                <input type="hidden" name="apt_safety" value="0"/>
             </span>
             <span class="apt_tag active apt_transport-1" data-toggle="modal"
                   data-target=".category_add_modal"
-                  href="<{link app=seller ctl=site_passport act=display_type args0=apt_transport args1=1}>"
+                  href="<{link app=seller ctl=site_passport act=display_type args0=apt_transport}>"
                   data-tagId="8"
                   title="储存运输标准指标">运
-                <input type="hidden" name="apt_transport" value="0" />
+                <input type="hidden" name="apt_transport" value="0"/>
             </span>
             <span class="apt_tag active apt_pack-1" data-toggle="modal"
                   data-target=".category_add_modal"
-                  href="<{link app=seller ctl=site_passport act=display_type args0=apt_pack args1=1}>"
+                  href="<{link app=seller ctl=site_passport act=display_type args0=apt_pack}>"
                   data-tagId="9"
                   title="包装标准指标">包
-                <input type="hidden" name="apt_pack" value="0" />
+                <input type="hidden" name="apt_pack" value="0"/>
             </span>
         </div>
     </div>
     <hr>
     <div class="form-group">
         <label class="col-xs-2 control-label"></label>
-        <a href="javascript:;" class="btn btn-danger">根据以上信息生成商品规格</a>
+        <a href="javascript:;" class="btn btn-danger create-product">根据以上信息生成商品规格</a>
     </div>
 </div>
 
@@ -162,8 +177,9 @@
         <label class="col-xs-2 control-label">
             <span>{0}</span>
         </label>
+
         <div class="col-xs-5">
-            <select class=" form-control" required="true" name="{1}" type="select" >
+            <select class=" form-control" required="true" name="{1}" type="select">
                 {2}
             </select>
         </div>
@@ -172,30 +188,74 @@
 </textarea>
 
 <script>
-
-    var callBack = function(cat_id) {
-        var url = "<{link app=seller ctl=site_goods act=getProp}>";
-        if(!cat_id) return false;
-        $.post(url, {cat_id : cat_id}, function(re){
-            $('#param div.last-option').remove();
-            var length = $('#param select').size();
-            $('#param .form-body input[name="goods[type_id]"]').val('0');
-            if(!re.data.son) return false;
-            var tpl = $('.last-add').val();
-            var selectStr = '';
-            for(select in re.data.son.props){
-                var optionStr = '';
-                for(option in re.data.son.props[select].props_value){
-                    optionStr += '<option value="'+re.data.son.props[select].props_value[option].props_value_id+'">'
-                    +re.data.son.props[select].props_value[option].name+'</option>';
-                }
-                selectStr += $.VMC.format(tpl, re.data.son.props[select].name, 'goods[props][p_' + ++length + '][value]', optionStr);
-            }
-            $('#param .form-body input[name="goods[type_id]"]').val(re.data.son.type_id);
-            $('#param .form-body').append($(selectStr));
+    /*
+     var callBack = function (cat_id) {
+     var url = "<{link app=seller ctl=site_goods act=getProp}>";
+     if (!cat_id) return false;
+     $.post(url, {cat_id: cat_id}, function (re) {
+     $('#param div.last-option').remove();
+     var length = $('#param select').size();
+     $('#param .form-body input[name="goods[type_id]"]').val('0');
+     if (!re.data.son) return false;
+     var tpl = $('.last-add').val();
+     var selectStr = '';
+     for (select in re.data.son.props) {
+     var optionStr = '';
+     for (option in re.data.son.props[select].props_value) {
+     optionStr += '<option value="' + re.data.son.props[select].props_value[option].props_value_id + '">'
+     + re.data.son.props[select].props_value[option].name + '</option>';
+     }
+     selectStr += $.VMC.format(tpl, re.data.son.props[select].name, 'goods[props][p_' + ++length + '][value]', optionStr);
+     }
+     $('#param .form-body input[name="goods[type_id]"]').val(re.data.son.type_id);
+     $('#param .form-body').append($(selectStr));
+     });
+     };
+     */
+    var callBack = function (cat_id) {
+        var apiCatArray = [];
+        $('.api-cat select').each(function (idx, item) {
+            apiCatArray[idx] = $(item).find('option:selected').attr('apiCatId');
         });
-    }
+        var apiCatId = apiCatArray.join('-');
 
+        $('.fileCard span').each(function (idx, item) {
+            var url = $(item).attr('href').split('?');
+            $(item).attr('href', url[0] + '?cat=' + apiCatId);
+        });
+        //获取包装信息根据 1 2 3 4 5 级分类获取
+        var url = '<{link app=seller ctl=site_goods act=getPack}>';
+        var data = {cat : '01-1-01-02-01'};
+        $.post(url, data, function(re){
 
-    
+        });
+    };
+    $(function (re) {
+        $('.create-product').click(function () {
+            $('.spec_table tbody').empty();
+            var products = {'logistics': createProduct('logistics'), 'pack': createProduct('pack')};
+            var url = '<{link app=seller ctl=site_goods act=createProduct}>';
+            $.post(url, products, function (result) {
+                if(!result.data) return false;
+                $tmp = $('.product-item-tpl').val();
+                var html = '';
+                for(var i = 0; i < result.data.length; i++ ){
+                    html += $.VMC.format($tmp, result.data[i].product_label, result.data[i].product_id, i);
+                }
+                $('.spec_table tbody').append(html);
+            });
+        });
+
+        var createProduct = function (styleClass) {
+            var logistics = [];
+            var index = 0;
+            $('.' + styleClass + ' input[type="checkbox"]').each(function (idx, item) {
+                if ($(item).prop('checked')) {
+                    logistics[index] = $(item).val().trim();
+                    index++;
+                }
+            });
+            return logistics;
+        };
+    });
 </script>

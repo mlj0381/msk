@@ -1,4 +1,4 @@
-<div id="category_sel_<{$params.domid}>" class="form-inline">
+<div id="category_sel_<{$params.domid}>" class="form-inline api-cat">
     <input type="hidden" name="<{$params.name}>" value="<{$params.value}>">
     <select class="form-control">
         <option value="-1">
@@ -9,14 +9,14 @@
             <{/if}>
         </option>
         <{foreach from=$tree_data_root item=item}>
-            <option value="<{$item.cat_id}>" <{if $root == $item.cat_id}>selected<{/if}>><{$item.cat_name}></option>
+            <option value="<{$item.cat_id}>" apiCatId="<{$item.addon}>" <{if $root == $item.cat_id}>selected<{/if}>><{$item.cat_name}></option>
         <{/foreach}>
     </select>
     <{foreach from=$tree_data item=item key=key}>
     <select class="form-control">
         <option value="-1">…</option>
         <{foreach from=$item item=cat}>
-            <option value="<{$cat.cat_id}>" <{if $cat.selected}>selected<{/if}>><{$cat.cat_name}></option>
+            <option value="<{$cat.cat_id}>" apiCatId="<{$item.addon}>" <{if $cat.selected}>selected<{/if}>><{$cat.cat_name}></option>
         <{/foreach}>
     </select>
     <{/foreach}>
@@ -58,7 +58,7 @@ $(function(){
             if(re.result == 'success'){
                 var options = '';
                 $.each(re.data,function(cat_id,cat){
-                    options+="<option value='"+cat.cat_id+"'>"+cat.cat_name+"</option>";
+                    options+="<option value='"+cat.cat_id+"' apiCatId='"+cat.addon+"'>"+cat.cat_name+"</option>";
                 });
                 $('<select class="form-control"><option value=-1>…</option></select>')
                         .append("<optgroup label='"+selected_label+"'>"+options+"</optgroup>")
