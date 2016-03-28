@@ -237,6 +237,10 @@
             $('.loginStatus span').text('你好，' + $.cookie('UNAME'));
             $('.loginStatus > a').text('注销').attr('href', '<{link app=seller ctl=site_passport act=logout}>');
         }
+        if ($.cookie('UNAME') && $.cookie('BUYER_IDENT')) {
+            $('.loginStatus span').text('你好，' + $.cookie('UNAME'));
+            $('.loginStatus > a').text('注销').attr('href', '<{link app=buyer ctl=site_passport act=logout}>');
+        }
 
 
         /**

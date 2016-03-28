@@ -617,7 +617,7 @@ class seller_ctl_site_passport extends seller_frontpage
         if ($result && $_POST['type'] == '1') {
             //返回成功 并且 选择成功买手身份
             $this->user_obj->set_session(null);
-            vmc::singleton('buyer_user_object')->set_session($result['buyer_id']);
+            vmc::singleton('buyer_user_object')->set_session($result['buyer_id'], null);
             //设置cookie
         }
         $this->splash($result ? 'success' : 'error', $redirect, $result ? '操作成功' : '操作失败');

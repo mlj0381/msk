@@ -3,7 +3,7 @@
  * 买家账号登陆---------------IBY121201
  */
 $remote['buyer_login'] = array(
-    'url' => '/by/account/login',
+    'url' => '/bs/slInfo/slAccount/search',
 
     'request' => array(
         'member_id' => array(
@@ -23,27 +23,30 @@ $remote['buyer_login'] = array(
     ),
 
     'param' => array(
-        'accountName' => array(
+        'uname' => array(
             'name' => '买家账号或者手机号',
-            'column' => 'accountName',
+            'column' => 'slAccount',
             'type' => 'String',
             'default' => '',
-            'require' => true
+            'require' => false
         ),
-        'accountPass' => array(
+        'password' => array(
             'name' => '密码',
-            'column' => 'accountPass',
+            'column' => 'accountPsd',
             'type' => 'String',
             'default' => '',
-            'require' => true
+            'require' => false
         ),
     ),
 
     'response' => array(
-        'buyerId' => array(
+        'totalCount' => array(
             'name' => '买家ID',
-            'column' => 'buyerId',
+            'column' => 'totalCount',
             'type' => 'String'
+        ),
+        'buyershopList' => array(
+        	
         )
     ),
 );

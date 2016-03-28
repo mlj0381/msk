@@ -134,12 +134,17 @@ class buyer_mdl_buyers extends dbeav_model{
 		
 	}
 	
+	/**
+	 * 判断用户是否注册完成
+	 * @param unknown $user_id
+	 * @return unknown|NULL
+	 */
 	public function check_buyer($user_id){
 		$is_user = $this->app->model('buyers')->getRow('schedule',array('buyer_id'=>$user_id));		
 		if ((int)$is_user['schedule'] == 2){
-			return $user_id;
+			return 2;
 		}else {
-			return null;
+			return (int)$is_user['schedule'] ?: 0;
 		}
 		
 	}

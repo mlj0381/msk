@@ -22,7 +22,7 @@ class buyer_frontpage extends site_controller{
         $this->_response->set_header('Cache-Control', 'no-cache');
         $this->_response->set_header('Cache-Control', 'must-revalidate');
         header('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // 强制查询etag
-        vmc::singleton('base_session')->start();
+        $this->object_obj = vmc::singleton('buyer_user_object');
         $this->action = $this->_request->get_act_name();
         $this->controller = $this->_request->get_ctl_name();
         $this->menuSetting = 'index';
@@ -38,16 +38,15 @@ class buyer_frontpage extends site_controller{
 	 * 检测用户登陆
 	 */
 	 function verify_buyer(){
-		if (defined('BUYERID'))	return ;
+	 	//if ($this->object_obj->is_login()) return ;
 		/**
 		 * define('BUYERID', vmc::singleton('buyer_user_passport')->is_login());
 		 * 这个走seller的session规则
 		 * @var unknown
 		 */
-		define('BUYERID', vmc::singleton('buyer_user_object')->is_login());
-		if (!BUYERID){
-			$this->set_cookie('UNAME', '');
-			$this->set_cookie('SELLER_IDENT', '');
+		if (!$this->object_obj->is_login()){
+		$this->set_cookie('UNAME', null);
+		$this->set_cookie('BUYER_IDENT', null);
 			$login_url = $this->gen_url(array(
 					'app' => 'buyer',
 					'ctl' => 'site_passport',
@@ -56,14 +55,16 @@ class buyer_frontpage extends site_controller{
 			
 			$this->splash('error', $login_url, '请重新登陆');exit;
 		}else {
-			$is_user = app::get('buyer')->model('buyers')->check_buyer(BUYERID);
-			if (!$is_user){
+			$schedule_id = app::get('buyer')->model('buyers')->check_buyer($this->object_obj->is_login()['buyer_id']);
+			if ($schedule_id !=2){
 				$redirect = $this->gen_url(array(
 						'app' => 'buyer',
 						'ctl' => 'site_passport',
 						'act' => 'signup',
 				));
 				$this->splash('error', $redirect, '未注册完成！');
+			}else {
+				return ;
 			}
 		}
 	}
