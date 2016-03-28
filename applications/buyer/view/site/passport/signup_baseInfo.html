@@ -59,8 +59,8 @@
                 <div class="form-group">
                 	<label class="col-xs-2 control-label"><span class="text-danger">*</span>身份证号</label>
                 	<div class="col-xs-4">
-						<input type="text" class="form-control" name="card_id" value="" required="true" formate="idcard">
-						<span class="msgTip" data-msg="format">身份证填写错误</span>
+						<input type="text" class="form-control" name="card_id" value="" required="true" format="idcard">
+						<span class="msgTip" data-message="format">身份证填写错误</span>
                     </div>
                 </div>
                 <div class="form-group">
@@ -84,7 +84,7 @@
                     </div>
                 </div>
              <div class="form-group">
-                 <label class="col-md-2 control-label"><span class="required" aria-required="true">*</span>所在地区</label>
+                 <label class="col-md-2 control-label"><span class="text-danger">*</span>所在地区</label>
                  <div class="col-md-5">
                      <{input type=region name='consignor[area]' value=$dlyplace.consignor.area}>
                  </div>
@@ -113,8 +113,8 @@
                 <div class="form-group">
                 	<label class="col-xs-2 control-label"><span class="text-danger">*</span>QQ号</label>
                 	<div class="col-xs-4">
-						<input type="text" class="form-control" name="qq" value="" required="true">
-						<span class="msgTip" data-msg="error"></span>
+						<input type="text" class="form-control" name="qq" value="" required="true" format="qq">
+						<span class="msgTip" data-message="format">请输入6-11位数字的QQ号</span>
                     </div>
                 </div>
                 <hr>
