@@ -19,37 +19,19 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>冷冻工艺指标</td>
+            <{foreach from=$card.mctList item=item}>
+                <tr><!-- mctStdItemId-->
+                    <td><{$item.okVal}></td>
                     <td>
-                        <textarea name="qualified[freeze]">冷冻形式:7只、8只板冻，14只独立包装，单冻 冷冻设备:急冻库速冻
+                        <textarea name="qualified[freeze]"><{$item.fedStdItemName}>
                         </textarea>
                     </td>
                     <td>
-                        <textarea name="unqualified[freeze]">冷冻形式:7只、8只单冻，14只板冻 冷冻设备:
-                        </textarea>
-                    </td>
-                </tr>
-                <tr>
-                    <td>工艺流程关键点指标</td>
-                    <td>
-                        <textarea name="qualified[craft]">预冷设备:螺旋预冷机 预冷时间:40分钟以内 产品中心温度:产品中心温度&mdash;18度以下
-                        </textarea>
-                    </td>
-                    <td>
-                        <textarea name="unqualified[craft]">预冷设备:不预冷 预冷时间:45分钟以上 产品中心温度:产品中心温度&mdash;18度以上
+                        <textarea name="unqualified[freeze]"><{$item.ngVal}>
                         </textarea>
                     </td>
                 </tr>
-                <tr>
-                    <td>配方指标</td>
-                    <td>
-                        <textarea name="qualified[recipe]"> &mdash;&mdash; </textarea>
-                    </td>
-                    <td>
-                        <textarea name="unqualified[recipe]"> &mdash;&mdash; </textarea>
-                    </td>
-                </tr>
+            <{/foreach}>
             </tbody>
         </table>
     </div>

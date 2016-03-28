@@ -18,103 +18,24 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr class="par_row">
-                    <td colspan="3">理化指标</td>
+                <{foreach from=$card.gnqList item=items}>
+                <tr class="par_row"><!--gnqStdClaId -->
+                    <td colspan="3"><{$items.gnqStdClaName}></td>
                 </tr>
-                <tr>
-                    <td>水份含量指标</td>
+                <tr><!-- gnqStdItemId-->
+                    <{foreach from=$items.gnqStdSublist item=item}>
+                    <td><{$item.gnqStdClaName}></td>
                     <td>
-                        <textarea name="qualified[water]">≤77%
-                        </textarea>
-                    </td>
-                    <td>
-                        <textarea name="unqualified[water]">＞77%
-                        </textarea>
-                    </td>
-                </tr>
-                <tr>
-                    <td>其他理化指标</td>
-                    <td>
-                        <textarea name="qualified[other]">&mdash;&mdash;
+                        <textarea name="qualified[water]"><{$item.okVal}>
                         </textarea>
                     </td>
                     <td>
-                        <textarea name="unqualified[other]">&mdash;&mdash;
+                        <textarea name="unqualified[water]"><{$item.ngVal}>
                         </textarea>
                     </td>
+                    <{/foreach}>
                 </tr>
-                <tr class="par_row">
-                    <td colspan="3">新鲜度指标</td>
-                </tr>
-                <tr>
-                    <td>挥发性盐基氮</td>
-                    <td>
-                        <textarea name="qualified[fresh]">≤15mg/100g
-                        </textarea>
-                    </td>
-                    <td>
-                        <textarea name="unqualified[fresh]">＞15mg/100g
-                        </textarea>
-                    </td>
-                </tr>
-                <tr>
-                    <td>PH值</td>
-                    <td>
-                        <textarea name="qualified[ph]">pH值：5.8-6.6
-                        </textarea>
-                    </td>
-                    <td>
-                        <textarea name="unqualified[ph]"> pH值＞6.6
-                        </textarea>
-                    </td>
-                </tr>
-
-
-                <tr class="par_row">
-                    <td colspan="3">解冻后感官指标</td>
-                </tr>
-                <tr>
-                    <td>解冻后感官指标</td>
-                    <td width="25%">
-                        <textarea name="qualified[sense]">1.眼球：饱满平坦 2.皮肤：有光泽；呈现品种应有颜色 3.粘度：表面微湿润，不沾手 4.肌肉：丰满，紧密 5.恢复性：指压后的凹陷恢复慢，且不能完全恢复 6.气味：正常的气味
-                        </textarea>
-                    </td>
-                    <td width="25%">
-                        <textarea name="unqualified[sense]">1.眼球：干缩凹陷，晶状体混浊 2.皮肤：体表无光泽，头颈部有暗褐色 3.粘度：表面或干燥或粘腻；新切面粘手 4.肌肉：骨肉软散 5.恢复性：指压后凹陷不能恢复，且鸡肉易被戳破。 6.气味：无其他异味，唯腹腔内有轻度不快感
-                        </textarea>
-                    </td>
-                </tr>
-
-                <tr class="par_row">
-                    <td colspan="3">煮后滋气味指标</td>
-                </tr>
-                <tr>
-                    <td>煮后滋气味指标</td>
-                    <td>
-                        <textarea name="qualified[smell]">1.汤色透明、澄清 2.具特有香味
-                        </textarea>
-                    </td>
-                    <td>
-                        <textarea name="unqualified[smell]">1.汤色混浊 2.香味差或无鲜味
-                        </textarea>
-                    </td>
-                </tr>
-
-                <tr class="par_row">
-                    <td colspan="3">异物指标</td>
-                </tr>
-                <tr>
-                    <td>异物指标</td>
-                    <td>
-                        <textarea name="qualified[foreign]">无金属、沙粒、木屑、软硬塑料，各种纤维线，纸屑、毛发、玻璃虫害、饲料粒、鸡毛等非原料鸡肉成分
-                        </textarea>
-                    </td>
-                    <td>
-                        <textarea name="unqualified[foreign]"> 有非原料异物成分
-                        </textarea>
-                    </td>
-                </tr>
-
+                <{/foreach}>
                 </tbody>
             </table>
         </div>

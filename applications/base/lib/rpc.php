@@ -105,7 +105,7 @@ class base_rpc
 	}
 
 	public function request(Array $data, $expire=false)
-	{		
+	{
 		if(!$this->action /*||  !$data */) return $this->error('错误的请求');
 		$index = $this->app_id . "_" . $this->action;	
 		$this->result = Array();
@@ -170,7 +170,7 @@ class base_rpc
 		if(isset($item['require']) && $item['require'] == true && $value === '') {
 			return $this->error("{$key}=>{$column}为必填字段！");	
 		}
-		if(!isset($type)) $type == 'string';		
+		if(!isset($type)) $type == 'string';
 		switch(strtolower($type))
 		{
 			case 'object':				
@@ -232,6 +232,7 @@ class base_rpc
 		if($this->_page !== Null) $this->postData['param']['pageNo'] = $this->_page;
 		if($this->_perpage !== Null) $this->postData['param']['pageCount'] = $this->_page;
 		//print_r($this->postData);
+        if(count($this->postData['param']) <= 0) unset($this->postData['param']);
 		$query = json_encode($this->postData, true);
 		return $query;
 	}
@@ -255,14 +256,16 @@ class base_rpc
         return $this->_result($return);
     }
 	
-	private function _result($data){	
+	private function _result($data){
 		$result = Array();
-		$object = json_decode($data);		
+		$object = json_decode($data);
+
 		if(!isset($object->status) || $object->status != 'S') {
 			$this->message = isset($object->message) ? $object->message : 'Request Fail';
 			$this->returnCode = isset($object->returnCode) ? $object->returnCode : 0;
 			return $this->error($this->message, $this->returnCode);
 		}
+
 		if(empty($object->result)) return $result;
 		if(is_object($object->result))
 		{			
@@ -278,7 +281,7 @@ class base_rpc
 			foreach($resource['result'] as $val){
 				$vals = Array();
 				foreach($this->configs['response'] as $key => $item)
-				{		
+				{
 					if(!isset($val[$key])) continue;
 					$column = isset($item['column']) ? $item['column'] : $key;
 					$vals[$column] = $this->_convert($key, $item, $val[$key]);

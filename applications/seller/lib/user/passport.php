@@ -119,7 +119,7 @@ class seller_user_passport
         //$data['currency'] = $arrDefCurrency['cur_code'];
         $seller['reg_ip'] = base_request::get_remote_addr();
         $seller['regtime'] = time();
-        //$seller['mobile'] = $data['pam_account']['mobile'];
+        $seller['mobile'] = $data['pam_account']['mobile'];
         //--防止恶意修改
         foreach ($data as $key => $val) {
             if (strpos($key, 'box:') !== false) {
@@ -703,8 +703,8 @@ class seller_user_passport
         $store_type = $this->countPage();
         $info['company_extra']['store']['store_type'] = $store_type['label'];
         //获取商品类目信息
-        $api_cat_obj = vmc::singleton('seller_source_cat');
-        $info['company_extra']['store']['cat'] = $api_cat_obj->get_cat(); //调用接品获取分类
+        //调用接口获取分类下的档案卡信息
+        $info['company_extra']['store']['cat'] = app::get('b2c')->model('goods_cat')->get_tree('', null);
     }
 
     //保存注册信息
@@ -748,6 +748,12 @@ class seller_user_passport
                         $params[$value['key']]['store_id'] && $sqlType = true;
                         $params[$value['key']]['seller_id'] = $seller['seller_id'];
                         $params[$value['key']]['store_type'] = $seller['ident'];
+                        //添加经营分类
+                        if (array_filter($params['cat_id']) && !app::get('store')->model('goods_cat')->addCat($params['cat_id'], $seller['seller_id'])) {
+                            $db->rollback();
+                            $msg = '经营分类添加失败';
+                            return false;
+                        }
                         continue;
                 }
                 $mdlObj = app::get($value['app'])->model($value['key']);
@@ -929,8 +935,8 @@ class seller_user_passport
         if (!$mdl_seller->delete(array('seller_id' => $post['seller_id']))) {
             return false;
         }
-        
-		$seller_data[$pam_data['login_type']] = $pam_data['login_account'];
+
+        $seller_data[$pam_data['login_type']] = $pam_data['login_account'];
         if (!app::get('buyer')->model('buyers')->save($seller_data)) {
             return false;
         }

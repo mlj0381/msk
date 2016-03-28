@@ -15,13 +15,14 @@ class b2c_view_input
 {
     public function input_category($params)
     {
-
-        $mdl_goods_cat = app::get('b2c')->model('goods_cat');
+        $app = $params['identity'] ?: 'b2c';
+        $mdl_goods_cat = app::get($app)->model('goods_cat');
         $render = new base_render(app::get('b2c'));
         $params['cat_openapi'] = vmc::openapi_url('openapi.goods', 'catalog');
         $params['cat_path_openapi'] = vmc::openapi_url('openapi.goods', 'catalog_path');
         $params['domid'] = substr(md5(uniqid()), 0, 6);
-        $render->pagedata['tree_data_root'] = $mdl_goods_cat->get_tree();
+        $args = $app == 'store' && $params['seller'] ? $params['seller'] : 0;
+        $render->pagedata['tree_data_root'] = $mdl_goods_cat->get_tree($args);
         if ($params['value'] && $params['value'] > 0) {
             $cat = $mdl_goods_cat->getRow('cat_path,cat_id', array('cat_id' => $params['value']));
             if ($cat) {

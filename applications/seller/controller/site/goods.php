@@ -114,6 +114,7 @@ class seller_ctl_site_goods extends seller_frontpage
          * 品牌列表
          * IPD141114 2 物流区（仓库）
          */
+
         if (is_numeric($goods_id)) {
             $this->pagedata['goods'] = $this->mB2cGoods->dump($goods_id, '*', 'default');
             //获取商品库存信息
@@ -126,8 +127,8 @@ class seller_ctl_site_goods extends seller_frontpage
             }
         }
         $this->pagedata['params'] = $this->basic();
+        $this->pagedata['seller_id'] = $this->seller['seller_id'];
         $this->pagedata['_PAGE_'] = 'new_from.html';
-        $this->_editor();
         $this->output();
     }
 
@@ -136,8 +137,10 @@ class seller_ctl_site_goods extends seller_frontpage
     {
         $return = array();
         //商品类目
-        $mdl_goods_cat = app::get('b2c')->model('goods_cat');
-        $return['cat'] = $mdl_goods_cat->get_tree('', null);
+        //$mdl_goods_cat = app::get('b2c')->model('goods_cat');
+        //$return['cat'] = $mdl_goods_cat->get_tree('', null);
+        //调用润和接口获取分类
+        //$return['cat'] = app::get('b2c')->model('goods_cat')->getApiCatAll();
 
         //商品品牌
         $return['brand'] = $this->app->model('brand')->getList('*', array('seller_id' => $this->seller['seller_id']));
@@ -157,7 +160,11 @@ class seller_ctl_site_goods extends seller_frontpage
         $return['setting'] = $this->app->getConf('goods_setting');
 
         //获取仓库信息
-
+        /**
+         * 调用润和接口 获取物流区信息
+         */
+        $dlyplace = app::get('b2c')->model('dlyplace')->get_api_area();
+        $return['logistics'] = $dlyplace['logiAreaList'];
         return $return;
     }
 
@@ -208,10 +215,8 @@ class seller_ctl_site_goods extends seller_frontpage
             $this->edit_directory($_POST);
         }
         //查询自己的店铺分类
-        $mdl_store = app::get('store')->model('store');
-        $store_id = $mdl_store->getRow('store_id', array('seller_id' => $this->seller['seller_id']));
         $store_tree = app::get('store')->model('goods_cat');
-        $this->pagedata['this_cat'] = $store_tree->get_tree('', null, $store_id['store_id']);
+        $this->pagedata['this_cat'] = $store_tree->get_tree('', null, $this->seller['seller_id']);
         $this->pagedata['info'] = $this->basic();
         $this->output();
     }
@@ -444,34 +449,13 @@ class seller_ctl_site_goods extends seller_frontpage
     }
 
 
-    private function _editor()
+    /**
+     * ajax调用api获取商品特征下的包装、价盘信息
+     * 润和接口
+     */
+    public function createProduct()
     {
-        $this->pagedata['sections'] = array(
-            'basic' => array(
-                'label' => ('基本信息'),
-                'file' => 'site/goods/goods/basic.html',
-            ),
-            'content' => array(
-                'label' => ('图文介绍'),
-                'file' => 'site/goods/goods/content.html',
-            ),
-            'params' => array(
-                'label' => ('属性参数'),
-                'file' => 'site/goods/goods/params.html',
-            ),
-            'template' => array(
-                'label' => ('展示模板'),
-                'file' => 'site/goods/goods/template.html',
-            ),
-            'rel' => array(
-                'label' => ('相关商品'),
-                'file' => 'site/goods/goods/rel.html',
-            ),
-            'price' => array(
-                'label' => ('价格修改'),
-                'file' => 'site/goods/goods/price.html',
-            ),
-        );
+        if(!$_POST) $this->splash('error', '', '非法请求');
     }
 
     //价格修改

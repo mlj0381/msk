@@ -15,7 +15,7 @@ $db['members'] = array(
     'columns' => array(
         'member_id' => array(
             'type' => 'number',
-            'extra' => 'auto_increment',
+            //'extra' => 'auto_increment',
             'pkey' => true,
             'label' => ('会员ID') ,
         ) ,
