@@ -1,9 +1,9 @@
 <?php
 /**
- * 产品主码查询接口---------------IPD141129
+ * 产品净重分类查询---------------IPD141138
  */
 $remote['b2c_select_product_cat5'] = array(
-    'url' => '/pd/pd_standard',
+    'url' => '/pd/pd_weight',
 
     'request' => array(
         'member_id' => array(
@@ -23,39 +23,44 @@ $remote['b2c_select_product_cat5'] = array(
 
     'param' => array(
         'classesCode' => array(
-            'name' => '类别编码：如果传值，则返回指定类别的产品主码，如果没有传值，则返回全部类别的产品主码',
+            'name' => '一级分类编码',
             'column' => 'classesCode',
             'type' => 'String',
-            'require' => false,
+            'default' => '01',
+            'require' => true,
         ),
-        'codeLevel' => array(
-            'name' => '希望返回的编码等级:0:返回11位：国家编码2位+产品分类2位+二级分类1位+产品品种2位+产品特征2位+产品净重2位;1：返回5位产品分类2位+二级分类1位+产品品种2位;2：返回7位产品分类2位+二级分类1位+产品品种2位+产品特征2位',
-            'column' => 'codeLevel',
-            'type' => 'Integer',
-            'default' => '0',
+        'machiningCode' => array(
+            'name' => '二级分类编码',
+            'column' => 'machiningCode',
+            'type' => 'String',
+            'default' => '1',
+            'require' => true,
+        ),
+        'breedCode' => array(
+            'name' => '品种编码',
+            'column' => 'breedCode',
+            'type' => 'String',
+            'default' => '01',
+            'require' => true,
+        ),
+        'featureCode' => array(
+            'name' => '特征编码',
+            'column' => 'featureCode',
+            'type' => 'String',
+            'default' => '01',
             'require' => true,
         ),
     ),
 
     'response' => array(
-        'classesCode' => array(
-            'name' => '',
-            'column' => 'classesCode',
+        'weightCode' => array(
+            'name' => '产品净重编码',
+            'column' => 'weightCode',
             'type' => 'String',
         ),
-        'classesName' => array(
-            'name' => '',
-            'column' => 'classesName',
-            'type' => 'String',
-        ),
-        'pdCode' => array(
-            'name' => '指定位数产品主码',
-            'column' => 'pdCode',
-            'type' => 'String',
-        ),
-        'pdName' => array(
-            'name' => '指定位数产品名称',
-            'column' => 'pdName',
+        'weightName' => array(
+            'name' => '产品净重名称',
+            'column' => 'weightName',
             'type' => 'String',
         ),
     ),

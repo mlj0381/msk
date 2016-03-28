@@ -159,7 +159,7 @@ class buyer_ctl_site_passport extends buyer_frontpage{
 				if (!is_numeric($params['qq'])){
 					$this->splash('error', '', 'QQ号格式错误');
 				}
-				$params['buyer_id'] = $this->object_obj->get_session();
+				$params['buyer_id'] = $this->object_obj->get_session()['buyer_id'];
 				
 				/**
 				 * 编辑buyer基本信息----接口
