@@ -223,13 +223,26 @@
             var url = $(item).attr('href').split('?');
             $(item).attr('href', url[0] + '?cat=' + apiCatId);
         });
+        //获取包装信息根据 1 2 3 4 5 级分类获取
+        var url = '<{link app=seller ctl=site_goods act=getPack}>';
+        var data = {cat : '01-1-01-02-01'};
+        $.post(url, data, function(re){
+
+        });
     };
     $(function (re) {
         $('.create-product').click(function () {
+            $('.spec_table tbody').empty();
             var products = {'logistics': createProduct('logistics'), 'pack': createProduct('pack')};
             var url = '<{link app=seller ctl=site_goods act=createProduct}>';
             $.post(url, products, function (result) {
-
+                if(!result.data) return false;
+                $tmp = $('.product-item-tpl').val();
+                var html = '';
+                for(var i = 0; i < result.data.length; i++ ){
+                    html += $.VMC.format($tmp, result.data[i].product_label, result.data[i].product_id, i);
+                }
+                $('.spec_table tbody').append(html);
             });
         });
 

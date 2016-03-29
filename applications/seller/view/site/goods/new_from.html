@@ -118,7 +118,7 @@ $(function() {
             var re = $.parseJSON(data.result);
             var input = e.target || e.srcElement;
             var content = $('.pro_img_showbox').val();
-            $('.filebox').before(substitute(content, re));
+            $('.fileboxs').before(substitute(content, re));
 
             if($('.pro_imgs .pro_img_item').size()==1){
                 $('.pro_imgs .pro_img_item').find('.default').addClass('selected');
