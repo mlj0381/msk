@@ -7,6 +7,7 @@ class seller_user_passport
 {
     public function __construct(&$app)
     {
+        $this->company = Array();
         $this->app = $app;
         $this->entryType = 'entry'; //entry 商家入驻 brand 品牌添加资质  centre 商家中心
         $this->user_obj = vmc::singleton('seller_user_object');
@@ -120,6 +121,7 @@ class seller_user_passport
         $seller['reg_ip'] = base_request::get_remote_addr();
         $seller['regtime'] = time();
         $seller['mobile'] = $data['pam_account']['mobile'];
+        $seller['contact']['area'] = $data['pam_account']['area'];
         //--防止恶意修改
         foreach ($data as $key => $val) {
             if (strpos($key, 'box:') !== false) {
@@ -142,6 +144,7 @@ class seller_user_passport
         if ($accountData['login_type'] == 'email') {
             $data['contact']['email'] = $accountData['login_account'];
         }
+        $accountData['password'] = $data['pam_account']['psw_confirm'];
         //---end
         $return = array(
             'pam_account' => $accountData,
@@ -707,6 +710,7 @@ class seller_user_passport
         $info['company_extra']['store']['cat'] = app::get('b2c')->model('goods_cat')->get_tree('', null);
     }
 
+
     //保存注册信息
     public function entry($params, &$msg)
     {
@@ -765,7 +769,6 @@ class seller_user_passport
                 if ($value['key'] == 'company') {
                     $company_id = $mdl_company_seller->db->lastinsertid();
                     $mdl_company_seller = app::get('base')->model('company_seller');
-                    $fun_name = $value['key']['company_id'] > 0 ? 'update' : 'insert';
                     $company_seller = array(
                         'uid' => $seller['seller_id'],
                         'from' => '1',
@@ -776,7 +779,7 @@ class seller_user_passport
                     );
                     $cs_id = $mdl_company_seller->getRow('cs_id', array('company_id' => $company_seller['company_id'], 'uid' => $seller['seller_id'], 'from' => '1'));
                     $company_seller['cs_id'] = $cs_id['cs_id'];
-                    if (!$mdl_company_seller->$fun_name($company_seller)) {
+                    if (!$mdl_company_seller->save($company_seller)) {
                         $db->rollback();
                         return false;
                     }
@@ -886,13 +889,255 @@ class seller_user_passport
 
 
     /**
+     * 提交商家入驻信息
+     */
+    public function apiEntry()
+    {
+        $seller = vmc::singleton('seller_user_object')->get_current_seller();
+        $this->company = app::get('base')->model('company_seller')->getList('*', array('uid' => $seller['seller_id'], 'from' => '1'));
+        $mdl_company_extra = app::get('base')->model('company_extra');
+        $api_data = Array();
+        foreach ($this->company as $key => $value) {
+            $api_data[$value['company_id']] = $mdl_company_extra->getList('*', array('uid' => $seller['seller_id'], 'from' => '1'));
+        }
+        $this->pre_entry_process($api_data);
+        //$result = app::get('seller')->rpc('edit_seller_info')->request($data);
+        //return true;
+    }
+
+    /**
+     * 组织提交给接口的数据
+     */
+    public function &pre_entry_process(&$api_data)
+    {
+        $result = Array();
+        $this->_process_account($api_data, $result);
+        $this->_process_company($api_data, $result);
+        $result['loginId'] = '0';
+        $result['delFlg'] = '0';
+        $result['ver'] = '1';
+        $result['insertFlag'] = '0';
+        return $result;
+    }
+
+    /**
+     * 整理帐户基本信息
+     */
+    private function _process_account(&$api_data, &$result)
+    {
+        $tmp['pam'] = app::get('pam')->model('sellers')->getRow('*', array('seller_id' => $post['seller_id']));
+        $tmp['seller'] = app::get('seller')->model('sellers')->getRow('*', array('seller_id' => $post['seller_id']));
+        $data['slAccount'] = array(
+            'login_account' => $tmp['pam']['login_account'],
+            'mobile' => $tmp['seller']['mobile'],
+            'show_name' => $tmp['pam']['login_account'],
+            'contact_person' => $tmp['pam']['login_account'],
+            'login_password' => $tmp['pam']['password'],
+            'authStatus' => 1,
+            'fromFlg' => '2',
+        );
+        $seller_type = Array();
+        if ($post['ident'] & 1) {
+            $seller_type['selfFlg'] = '1';
+        }
+        if ($post['ident'] & 2) {
+            $seller_type['agentFlg'] = '2';
+        }
+        if ($post['ident'] & 4) {
+            $seller_type['oemFlg'] = '3';
+        }
+        $result['slSeller'] = array(
+            'slConFlg' => '1',
+            'provinceCode' => '1',
+            'cityCode' => '1',
+            'districtCode' => '1',
+            'slMainClass' => $post['type'] == '1' ? 4 : (int)$seller_type[array_rand($seller_type)],
+            'snkFlg' => '0',
+            'selfFlg' => $seller_type['selfFlg'] ? '1' : '0',
+            'agentFlg' => $seller_type['agentFlg'] ? '1' : '0',
+            'oemFlg' => $seller_type['oemFlg'] ? '1' : '0',
+            'buyerFlg' => $post['type'] == '1' ? '1' : '0',
+        );
+
+        return $data;
+    }
+
+    /**
+     * 整理公司信息
+     */
+    private function _process_company(&$api_data, &$result)
+    {
+        foreach ($api_data as $key => $value) {
+            //卖家产品类别
+            $result[$key]['pdClassesCodeList'] = array(
+                'pdClassesCode' => '',
+                'machiningCode' => '',
+                'slCode' => '',
+            );
+            //企业基本资质
+            $result[$key]['slEnterprise'] = array(
+                'slCode' => '',
+                'epId' => '',
+                'epName' => $value['business_licence']['name'],
+                'licType' => $this->company['business_type'],
+                'licName' => $this->company['name'],
+                'licNo' => $this->company['business'],
+                'licAddr' => $this->company['address'],
+                'licBusiType' => '',
+                'licBusiScope' => $this->company['operating_period'],
+                'licLegalPerson' => $this->company['leagl_person'],
+                'licRegCapital' => $this->company['registered_capital'],
+                'licPaidinCapital' => $this->company['reality_capital'],
+                'licCrtDate' => $this->company['establishment_date'],
+                'licTermBegin' => $this->company['establishment_date']['begin'],
+                'licTermEnd' => $this->company['establishment_date']['end'],
+                'licTermUnliimited' => '0',
+                'taxNo' => $value['tax_licence']['value']['code'],
+                'taxVatNo' => $value['tax_licence']['value']['num'],
+                'orgNo' => $value['organization_licence']['value']['code'],
+                //'orgTermBegin' => '',
+                //'orgTermEnd' => '',
+
+                //银行开户许可证
+                'balLegalPerson' => $value['bank_lesstion']['value']['legal'],
+                'balBank' => $value['bank_lesstion']['value']['name'],
+                'balAccount' => $value['bank_lesstion']['value']['code'],
+                //食品流通许可证
+                'fdlNo' => $value['food_flow_licence']['value']['code'],
+                'fdlTermBegin' => $value['food_flow_licence']['value']['date_start'],
+                'fdlTermEnd' => $value['food_flow_licence']['value']['date_end'],
+            );
+
+            //企业专业资质
+            $result[$key]['certInfoList'] = array(
+                array(
+                    'epId' => '',
+                    'certId' => '',
+                    'certName' => '',
+                    'certItemList' => array(
+                        'certId' => '',
+                        'certItemId' => '',
+                        'certItemName' => '',
+                        'certItemValue' => '',
+                    ),
+                ),
+            );
+
+            //企业荣誉
+            $result[$key]['slEpHonorList'] = array(
+                array(
+                    'epId' => '',
+                    'honorId' => '',
+                    'honorDesc' => $value['company_touted']['desc'],
+                    'certDate' => $value['company_touted']['date'],
+                    'certIssuer' => '',
+                ),
+            );
+            //企业产品品牌
+            $result[$key]['slEpBrandList'] = array(
+                array(
+                    'epId' => '',
+                    'brandId' => '',
+                    'brandClass' => '',
+                    'brandName' => '',
+                    'brandNo' => '',
+                    'brandTermBegin' => '',
+                    'brandTermEnd' => '',
+                ),
+            );
+
+            //卖家产品品牌
+            $result[$key]['slPdBrandList'] = array(
+                'slCode' => '',
+                'brandEpId' => '',
+                'brandId' => '',
+                'brandName' => '',
+                'brandType' => '',
+                'brandClass' => '',
+                'contractNo' => '',
+                'termBegin' => '',
+                'termEnd' => '',
+            );
+
+            //企业车间
+            $result[$key]['slEpWorkshopList'] = array(
+                'epId' => '',
+                'workshopId' => '',
+                'workshopName' => '',
+                'product' => '',
+                'process' => '',
+            );
+
+            //企业生产能力
+            $result[$key]['slEpCap'] = array(
+                'slCode' => '',
+                'epId' => '',
+                'ftyAsset' => '',
+                'ftyRegCapital' => '',
+                'ftyLandArea' => '',
+                'ftyFloorArea' => '',
+                'ftyEquipment' => '',
+                'ftyDesignCap' => '',
+                'ftyActualCap' => '',
+                'ftyFtRate' => '',
+                'ftyDsRate' => '',
+                'ftyAsRate' => '',
+                'scapMaterial' => '',
+                'scapProduct' => '',
+                'labArea' => '',
+                'labFunction' => '',
+                'labInvestment' => '',
+                'labMember' => '',
+                'ddEquipment' => '',
+            );
+
+            //生产商
+            $result[$key]['slEpAuthList'] = array(
+                'flag' => '',
+                'slCode' => '',
+                'producerEpId' => '',
+                'contractNo' => '',
+                'authEpName' => '',
+                'authTermBegin' => '',
+                'authTermEnd' => '',
+                'authTermUnliimited' => '',
+
+            );
+            //企业管理团队
+            $result[$key]['slEpManagerList'] = array(
+                'epId' => '',
+                'memberId' => '',
+                'memberDuties' => '',
+                'memberName' => '',
+                'memberAge' => '',
+                'memberEduc' => '',
+                'memberTel' => '',
+            );
+            //卖家电商团队
+            $result[$key]['slEcTeamList'] = array(
+                array(
+                    'slCode' => '',
+                    'memberId' => '',
+                    'leaderFlg' => '',
+                    'memberName' => '',
+                    'memberAge' => '',
+                    'birthday' => '',
+                    'memberEduc' => '',
+                    'memberTel' => '',
+                ),
+            );
+        }
+    }
+
+
+    /**
      * 商家身份更新
      **/
     public function identity_update(&$post)
     {
         $db = vmc::database();
         $db->beginTransaction();
-        $result = '';
+        $result = false;
         switch ($post['type']) {
             case '0':
                 $result = $this->_seller_update($post);
@@ -913,6 +1158,7 @@ class seller_user_passport
         if (!$this->app->model('sellers')->update($dataValue, $filter)) {
             return false;
         }
+
         return true;
     }
 
@@ -940,7 +1186,6 @@ class seller_user_passport
         if (!app::get('buyer')->model('buyers')->save($seller_data)) {
             return false;
         }
-
         $pam_data['buyer_id'] = $seller_data['buyer_id'];
         if (!app::get('pam')->model('buyers')->save($pam_data)) {
             return false;

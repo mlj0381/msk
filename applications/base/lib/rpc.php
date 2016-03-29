@@ -52,6 +52,7 @@ class base_rpc
 	private $result = array();	
 	private $base_url = "";
 	private $url = "";
+	private $version = 'v1';
 
 	private $headers = array();	
 	private $postData = array(); //
@@ -86,6 +87,7 @@ class base_rpc
 			$setting = new base_setting($base);
 			$config = $setting->get_conf('remote');
 			$this->base_url = $this->build_url($config);
+			$this->version = $config['version'];
 			if(!empty($config['param']))
 			{
 				$this->postData = $config['param'];
@@ -114,10 +116,10 @@ class base_rpc
 			$key = $index . md5(json_encode($data));			
 			$path = $this->_cache_path . $this->app_id;			
 			base_kvstore::instance($path)->fetch($key, $this->result);			
-		}		
+		}
 		if(empty($this->result))
 		{
-			$this->_request($index, $data);			
+			$this->_request($index, $data);
 			if($this->status && $expire !== false && $this->result) {
 				base_kvstore::instance($path)->store($key, $this->result, $expire);
 			}
@@ -142,7 +144,7 @@ class base_rpc
 			$filePath = $this->app_dir . "/rpc/" . $this->action . ".php";
 			@require_once($filePath);
 			if(!isset($remote[$index])) return $this->error('Not found this request!');			
-			self::$_rpc_config[$index] = $remote[$index];
+			self::$_rpc_config[$index] = $remote[$index];			
 		}
 		$this->configs = self::$_rpc_config[$index];		
 		if(empty($this->configs['request'])) return ;	
@@ -150,7 +152,8 @@ class base_rpc
 		if(empty(self::$_rpc_config[$index]['url'])){
 			$this->error('Not found this Url!');
 		}else{
-			$this->url = $this->base_url . self::$_rpc_config[$index]['url'];
+			$version = empty(self::$_rpc_config[$index]['version']) ? $this->version : self::$_rpc_config[$index]['version'];
+			$this->url = $this->base_url . '/'. $version . self::$_rpc_config[$index]['url'];
 		}
 		foreach($this->configs['request'] as $key => $item){
 			$column = isset($item['column']) ? $item['column'] : $key;
@@ -223,7 +226,7 @@ class base_rpc
 		if(isset($param['port']) && $param['port'] != 80){
 			$result.= ':' .$param['port'];
 		}
-		$result.= $param['root'] ."/". $param['version'];	
+		$result.= $param['root'];// ."/". $param['version'];	
 		return $result;
 	}
 
@@ -236,7 +239,8 @@ class base_rpc
 		$query = json_encode($this->postData, true);
 		return $query;
 	}
-	private function remote() {		
+	
+	private function remote() {
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $this->url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -251,7 +255,8 @@ class base_rpc
         //curl_setopt($ch, CURLOPT_COOKIEFILE, $this->_cookieFileLocation);
 		//print_r(curl_getinfo($ch));
 		$return = curl_exec($ch);
-		$requestHeader = curl_getinfo($ch, CURLINFO_HTTP_CODE);		
+		$requestHeader = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+		//$this->request_logs = curl_getinfo($ch);	
 		if($requestHeader != 200) $this->error("Conection Error {$requestHeader}", $requestHeader);
         return $this->_result($return);
     }

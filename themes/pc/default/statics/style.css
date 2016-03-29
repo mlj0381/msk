@@ -364,6 +364,24 @@ ol {
 .product-container .product-page .product_firstRow h1 {
   font-size: 18px;
 }
+.product-container .product-page .product_firstRow .pricebox {
+  background: #eb8787;
+  width: 1140px;
+  margin: 10px auto 0px;
+  color: #fff;
+}
+.product-container .product-page .product_firstRow .pricebox table {
+  border-collapse: collapse;
+  width: 100%;
+}
+.product-container .product-page .product_firstRow .pricebox table tr td {
+  border: 1px solid #fff;
+  height: 30px;
+  line-height: 30px;
+  padding: 5px;
+  font-size: 14px;
+  text-align: center;
+}
 .product-container .product-page .product_firstRow .pref_info {
   width: 100%;
   height: auto;
@@ -422,9 +440,26 @@ ol {
   padding: 10px 0;
   border-bottom: 1px dashed #ddd;
 }
+.product-container .product-page .product_firstRow .distr_info label {
+  width: 80px;
+  display: inline-block;
+  margin-right: 10px;
+}
+.product-container .product-page .product_firstRow .distr_info .region select {
+  height: 24px;
+  line-height: 14px;
+  padding: 0;
+  box-shadow: none;
+  margin-right: 0px !important;
+  width: auto !important;
+  font-size: 12px;
+  top: 8px;
+  min-width: 60px;
+}
 .product-container .product-page .product_firstRow .distr_info span {
   display: inline-block;
-  margin-right: 15px;
+  margin-right: 20px;
+  min-width: 100px;
 }
 .product-container .product-page .product_firstRow .turnover_info {
   width: 100%;
@@ -457,6 +492,7 @@ ol {
 }
 .product-container .product-page .product_firstRow .product-spec-options dl dt {
   width: 80px;
+  padding: 5px 5px 5px 0px;
   text-align: left;
 }
 .product-container .product-page .product_firstRow .product-spec-options dl dd {

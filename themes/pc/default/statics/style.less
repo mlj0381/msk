@@ -415,6 +415,27 @@ ul,ol{
 			h1{
 				font-size: 18px;
 			}
+			.pricebox{
+				background: #eb8787;
+				width:1140px;
+				margin:10px auto 0px;
+				color:#fff;
+				table{
+					border-collapse: collapse;
+					width:100%;
+					tr{
+						td{
+							//width:10%;
+							border:1px solid #fff;
+							height:30px;
+							line-height: 30px;
+							padding:5px;
+							font-size: 14px;
+							text-align: center;
+						}
+					}
+				}
+			}
 			.pref_info{
 				width:100%;
 				height: auto;
@@ -477,10 +498,28 @@ ul,ol{
 			.distr_info{
 				padding:10px 0;
 				border-bottom:1px dashed #ddd;
+				label{
+					width:80px;
+					display: inline-block;
+					margin-right:10px;
+				}
+				.region{
+					select{
+						height:24px;
+						line-height: 14px; 
+						padding:0;
+						box-shadow: none;
+						margin-right:0px !important;
+						width:auto !important;
+						font-size: 12px;
+						top:8px;
+						min-width:60px;
+					}
+				}
 				span{
 					display: inline-block;
-					margin-right:15px;
-
+					margin-right:20px;
+					min-width: 100px;
 				}
 			}
 
@@ -514,6 +553,7 @@ ul,ol{
 					margin:0;
 					dt{
 						width:80px;
+						padding: 5px 5px 5px 0px;
 						text-align: left;
 					}
 					dd{

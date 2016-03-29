@@ -47,30 +47,13 @@ class buyer_ctl_site_goods extends buyer_frontpage{
 	 */
 	public function stock($status = 'all', $page = 1){
 		
-		$rpc_model = $this->app->rpc('out_order_list');
+		$rpc_model = $this->app->rpc('get_orders_list');
 		$data = array(
-				'member_id' => 2,
-				'years' => '2016-03',
-				'region_id'=> '111',
-				'status' => '123123',
-				'goods' => array(
-						array(
-								'goods_id' => '12',
-								'goods_name' => '大盘鸡'
-						),
-						array(
-								'goods_id' => '13',
-								'goods_name' => '三黄鸡'
-						)
-				),
-				'address' => array(
-						'region_id' => 1,
-						'mobile' => '13212321232',
-						'address' => '碧波路5号'
-				),
+				'buyersId'	=>'BI01',
+				'buyersCode'=>'BC01',
 		);
-		
-		
+		$return = $rpc_model->request($data, false);
+		var_dump($return);exit;
 		
 		$this->pagedata['order_list'] = $order_list;
 		$this->pagedata['current_status'] = $status;
@@ -138,8 +121,14 @@ class buyer_ctl_site_goods extends buyer_frontpage{
 	 * 囤货订单
 	 */
 	public function store(){
-		$json = '';
-		$list = json_decode($json,TRUE);
+		$rpc_model = $this->app->rpc('get_orders_list');
+		$data = array(
+				'buyersId'	=>'BI01',
+				'buyersCode'=>'BC01',
+		);
+		$return = $rpc_model->request($data, false);
+		var_dump($return);
+		
 		$this->pagedata['list'] = $list;
 		$this->output();
 	}

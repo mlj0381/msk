@@ -197,7 +197,7 @@
                                             <span class="arrow icon-caret-right"></span><{$cat4.addon}>
                                         </td>
                                         <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                            <!--<input type="checkbox">--><{$cat4.cat_name}>
+                                            <input type="checkbox" name="cat_id[]" value="<{$cat4.cat_id}>"><{$cat4.cat_name}>
                                         </td>
                                         <td></td>
                                     </tr>
@@ -272,11 +272,9 @@
             $(this).removeData("bs.modal");  //关闭时清空数据
         });
 
-        $('[data-toggle="tooltip"]').tooltip();
+        //$('[data-toggle="tooltip"]').tooltip();
 
-        /**
-         * 产品档案卡信息确定
-         */
+        //产品档案卡信息确定
 
         $('.cat_tree input[type="checkbox"]').click(function () {
             var spanList = $(this).closest('tr').find('span.apt_tag');
@@ -289,9 +287,6 @@
             }
         });
 
-        $('.modal-footer button').click(function () {
-            alert($(this).attr('id'));
-        });
         //end 产品档案卡信息确定
 
         //经营商品类别添加

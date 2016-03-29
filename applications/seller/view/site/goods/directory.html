@@ -29,23 +29,35 @@
                         <input type="hidden" value="<{$items.cat_name}>" name="cat[<{$key}>][cat_name]"/>
                         <input type="hidden" value="<{$this_cat[$key].id}>" name="cat[<{$key}>][id]"/>
 	            	<span class="dir_title"><i class="icon-th"></i><{$items.cat_name}></span>
-	                <div class="btn-group btn-group-xs pull-right" role="group">
+	                <!-- <div class="btn-group btn-group-xs pull-right" role="group">
 	                    <button type="button" class="btn btn-default btn_qx">全选</button>
 	                    <button type="button" class="btn btn-default btn_fx">反选</button>
-	                </div>
+	                </div> -->
 	            </div>
 	            <div class="panel-body">
-                        <{foreach from=$items.children key=k item=item}>
+                        <{*foreach from=$items.children key=k item=item}>
                         <input type="hidden" value="<{$item.cat_name}>" name="cat[<{$key}>][parent][<{$k}>][cat_name]"/>
                         <input type="hidden" value="<{$this_cat[$key].children[$k].id}>" name="cat[<{$key}>][parent][<{$k}>][id]"/>
                         <input type="hidden" value="<{$item.cat_id}>" name="cat[<{$key}>][parent][<{$k}>][cat_id]"/>
-                        <label class="dir_item">
+                        <!-- <label class="dir_item">
                             <input type="checkbox"
                                    <{if $this_cat[$key].children[$k].cat_id eq $item.cat_id}> checked <{/if}>
                                    name="cat[<{$key}>][parent][<{$k}>][check]" >
                             <span><{$item.cat_name}></span>
+                        </label> -->
+                        <{/foreach*}>
+                        <label class="dir_item">
+                        	<input type="checkbox"
+                                   <{if $this_cat[$key].children[$k].cat_id eq $item.cat_id}> checked <{/if}>
+                                   name="cat[<{$key}>][parent][<{$k}>][check]" >
+                                   <span>三黄鸡</span>
                         </label>
-                        <{/foreach}>
+                        <label class="dir_item">
+                        	<input type="checkbox" disabled="disabled"
+                                   name="cat[<{$key}>][parent][<{$k}>][check]" >
+                                   <span>白斩鸡</span>
+                                   <a href="<{link app=seller ctl=site_cat act=write_aptitude}>" data-toggle="modal" data-target="#write_apt_modal" class="warning"><i class="text-danger icon-exclamation-sign"> </i><small>缺少资质</small></a>
+                        </label>
 	            </div>
 	        </div>                
                 <{/foreach}>
@@ -61,12 +73,26 @@
 	</div>
 </div>
 
-
+<!-- 填写资质modal 开始-->
+<div class="modal fade" id="write_apt_modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+    </div>
+  </div>
+</div>
+<!-- 填写资质modal 结束-->
 <script type="text/javascript">
+	$('#write_apt_modal').on('shown.bs.modal', function () {
+        $.VMC.init();  //重新绑定图片上传事件
+    });
+	$("#write_apt_modal").on("hidden.bs.modal", function () {
+        $(this).removeData("bs.modal");  //关闭时清空数据
+    });
+
 	/*
 	 *全选/反选
 	 */
-	$(function(){
+	/*$(function(){
 		$('.btn_qx').bind('click',function(){
 			var cks = $(this).parents('.dir_list').children('.panel-body').find(':checkbox');
 			cks.prop('checked',true).addClass('ck');
@@ -88,5 +114,5 @@
 				$(this).prop('checked',true).addClass('ck');
 			}
 		})
-	})
+	})*/
 </script>
