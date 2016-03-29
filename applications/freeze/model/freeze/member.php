@@ -13,6 +13,30 @@
 class freeze_mdl_freeze_member extends dbeav_model
 {
 
+    public function save(&$data, $mustUpdate = null, $mustInsert = false)
+    {
+        parent::save($data, $mustUpdate = null, $mustInsert = false);
+
+        $freeze = app::get('freeze')->model('freeze')->getRow('buyer_id,code',array('freeze_id'=>$data['freeze_id']));
+        $buyer_code = app::get('buyer')->model('buyers')->getRow('buyer_code',array('buyer_id'=>$freeze['buyer_id']));
+        $refer_id =  app::get('b2c')->model('members')->getRow('refer_id',array('member_id'=>$data['member_id']));
+        $api_data = $data;
+        $api_data['refer_id'] = $refer_id['refer_id'];
+        $api_data['buyer_code'] = $buyer_code['buyer_code'];
+        $api_data['code'] = $freeze['code'];
+        $api_data['apply_type'] = $api_data['apply_type']=='1'?'A':'B';
+        $api_data['status'] = $api_data['status']=='0'?'1':'2';
+        $api_data['time'] = date('Y-m-d',$api_data['time']);
+        $api_data['apply_time'] = date('Y-m-d',$api_data['time']);
+        $rpc_editorbuyer = app::get('freeze')->rpc("editorbuyer");
+        $result = $rpc_editorbuyer->request($api_data);
+        if($result)
+        {
+
+            //成功或需要做什么操作 ，没有返回值暂时不做处理
+        }
+        return true;
+    }
 
     public function get_freeze_member($cols = '*', $filter = array(), $offset = false, $limit = false, $orderType = null)
     {

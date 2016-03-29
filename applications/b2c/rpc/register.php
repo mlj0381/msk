@@ -66,5 +66,10 @@ $remote['b2c_register'] = array(
             'column' => 'member_id',
             'type' => 'String',
         ),
+        'buyerId' => array(
+            'name' => '买家编码',
+            'column' => 'member_code',
+            'type' => 'String',
+        ),
     ),
 );

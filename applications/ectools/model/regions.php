@@ -189,4 +189,53 @@ class ectools_mdl_regions extends dbeav_model
             return $arr_region_name[1].$arr_region_name[2];
         }
     }
+
+    /**
+     * 地区格式化处理
+     */
+    function region_decode($area)
+    {
+        if(!$area)
+        {
+            return false;
+        }
+        $arr_region = explode('/',$area);
+        $count = count($arr_region);
+
+        $data = array();
+        if($count > 0)
+        {
+            if($count == 3) {
+                $province =  substr($arr_region[0],(strpos($arr_region[0],':')+1));
+                $city = $arr_region[1];
+                $district = substr($arr_region[2],0,strpos($arr_region[2],':'));
+            }elseif($count == 2) {
+                $province =  substr($arr_region[0],(strpos($arr_region[0],':')+1));
+                $city = substr($arr_region[1],0,strpos($arr_region[1],':'));
+            }elseif($count == 1)
+            {
+                $province =  substr($arr_region[0],(strpos($arr_region[0],':')+1));
+                $province = substr($province,0,strpos($province,':'));
+            }
+            $mdl_regions = app::get('ectools')->model('regions');
+            if($province) {
+                $province = $mdl_regions->getRow('p_1,local_name,region_id',array('local_name'=>$province,'region_grade'=>'1'));
+                $data['province']['code'] = $province['p_1'];
+                $data['province']['local_name'] = $province['local_name'];
+            }
+            if($city) {
+                $city = $mdl_regions->getRow('p_1,local_name,region_id',array('local_name'=>$city,'region_grade'=>'2','p_region_id'=>$province['region_id']));
+                $data['city']['code'] = $city['p_1'];
+                $data['city']['local_name'] = $city['local_name'];
+            }
+            if($district) {
+                $district = $mdl_regions->getRow('p_1,local_name,region_id',array('local_name'=>$district,'region_grade'=>'3','p_region_id'=>$city['region_id']));
+                $data['district']['code'] = $district['p_1'];
+                $data['district']['local_name'] = $district['local_name'];
+            }
+            return $data;
+        }
+        return false;
+    }
+
 }

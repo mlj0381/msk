@@ -30,49 +30,49 @@ $remote['freeze_editorbuyer'] = array(
             'default' => '1',
             'require' => true
         ),
-        'slCode' => array(
+        'buyer_code' => array(
             'name' => '买手店编码',
             'column' => 'slCode',
             'type' => 'String',
             'default' => '',
             'require' => true
         ),
-        'houseAccount' => array(
-            'name' => '管家账号',
-            'column' => 'houseAccount',
+        'code' => array(
+            'name' => '管家id',
+            'column' => 'houseCode',
             'type' => 'String',
             'default' => '',
             'require' => true
         ),
-        'buyerid' => array(
+        'refer_id' => array(
             'name' => '买家编码',
-            'column' => 'buyerid',
+            'column' => 'buyerId',
             'type' => 'String',
             'default' => '',
             'require' => true
         ),
-        'startTime' => array(
+        'time' => array(
             'name' => '开始日时',
             'column' => 'startTime',
             'type' => 'datetime',
             'default' => '',
             'require' => false
         ),
-        'applyTime' => array(
+        'apply_time' => array(
             'name' => '申请日时',
             'column' => 'applyTime',
             'type' => 'datetime',
             'default' => '',
             'require' => false
         ),
-        'applyStatus' => array(
+        'status' => array(
             'name' => '申请状态',
             'column' => 'applyStatus',
             'type' => 'String',
             'default' => '',
             'require' => true
         ),
-        'applySide' => array(
+        'apply_type' => array(
             'name' => '认证方式',
             'column' => 'applySide',
             'type' => 'String',
