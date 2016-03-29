@@ -1,0 +1,32 @@
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <h4 class="modal-title" id="myModalLabel">资质填写</h4>
+</div>
+<div class="modal-body">
+    <form class="write_apt_form form-horizontal" method="post" action="" data-module="validator">
+        <!-- 动检证 -->
+        <{include file="site/passport/companyInfo/animal_certificate.html"}>
+        <!-- 食品生产许可证 -->
+        <{include file="site/passport/companyInfo/f_p_lesstion.html"}> 
+        <!-- 定点屠宰证 -->
+        <{include file="site/passport/companyInfo/slaughter_lesstion.html"}> 
+
+
+        <!-- 选填 -->
+
+        <!-- 进沪证 -->
+        <{include file="site/passport/companyInfo/entry_lesstion.html"}>
+
+        <!-- ISO证 -->
+        <{include file="site/passport/companyInfo/iso14001_lesstion.html"}> 
+        <{include file="site/passport/companyInfo/iso22000_lesstion.html"}> 
+        <{include file="site/passport/companyInfo/iso9001_lesstion.html"}> 
+
+        <!-- 清真食品生产经营许可证 -->
+        <{include file="site/passport/companyInfo/food_mosque_lesstion.html"}>
+    </form>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+    <button type="button" class="btn btn-primary">保存</button>
+</div>

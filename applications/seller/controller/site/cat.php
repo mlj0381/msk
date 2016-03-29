@@ -70,4 +70,10 @@ class seller_ctl_site_cat extends seller_frontpage
         //获取分类
         $this->display('ui/add-cat.html');
     }
+
+    //选择商品类目填写相关资质
+    public function write_aptitude()
+    {
+        $this->display('site/goods/write_aptitude.html');
+    }
 }

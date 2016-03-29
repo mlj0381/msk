@@ -14,7 +14,30 @@
         <{/if}>
     </ol>
     <div class="product-page">
+        
         <div class="row product_firstRow">
+            <div class="row pricebox">
+            <table>
+                <tbody>
+                    <tr>
+                        <td>随心量</td>
+                        <!-- foreach开始 -->
+                        <td>
+                            <span class="num-dn"><{$item.num_dn|default:1}></span>-
+                            <span class="num-up"><{$item.num_up|default:不限}></span>箱
+                        </td>
+                        <!-- foreach结束 -->
+                    </tr>
+                    <tr>
+                        <td>通道阶梯价</td>
+                        <{foreach from=$data_detail.product.interval key=key item=item}>
+                        <td><span><{$item.price|cur}></span>元/箱</td>
+                        <{/foreach}>
+                    </tr>
+                </tbody>
+
+            </table>
+        </div>
             <div class="col-xs-5">
                 <div class="product-main-image" style="position: relative; overflow: hidden; width:450px; height:450px; margin-top:15px;">
                     <a href="<{$data_detail.image_default_id|storager:'l'}>" target="_blank">
@@ -45,28 +68,27 @@
                 <!--</div>-->
 
                 <div class="distr_info">
-                    物流区域：
+                    <label>配送至 </label>
                     <span>
-                        <select>
+                        <{input type="region" name="address" id="address"}>
+                        <!-- <select>
                             <option value="1">上海</option>
                             <option value="2">无锡</option>
                             <option value="3">苏州</option>
                             <option value="4">南通</option>
-                        </select>
+                        </select> -->
                     </span>
-                    <!--<span>运费 ￥:10.00</span>-->
+                    <span><b>运费</b> ￥:10.00</span>
                 </div>
-
-                <div class="turnover_info">
-                    <ul>
-                        <li>总成交量<span><{$data_detail.buy_count|default:0}><small>笔</small></span></li>
-                        <li>累计评价<span><{$data_detail.comment_count|default:0}><small>条</small></span></li>
-                        <li>
-                            <{*$data_detail.mark_star|star*}>
-                        </li>
-                    </ul>
+                <div class="distr_info">
+                    <label>商品编号 </label>
+                    <span>ASF3242342</span>
+                    <span><b>品牌：</b>美侍客</span>
                 </div>
-
+                <div class="distr_info">
+                    <label>产品规格 </label>
+                    <span>1.5kg/只</span>
+                </div>
                 <ul class="list-unstyled promotion-list">
                 </ul>
                 <{if $data_detail.spec_desc}>
@@ -90,7 +112,7 @@
                                     <i class="check glyphicon glyphicon-ok-sign"></i>
                                     <{else}>
                                     <a href="<{if $option.marketable!='true'}>javascript:;<{else}><{link app=b2c ctl=site_product act=index args0=$option.product_id args1=$store_info.store_id}><{/if}>">
-                                        <{if $option.p_image_id}>aaaaaaaa
+                                        <{if $option.p_image_id}>
                                         <img  src="<{$option.p_image_id|storager:'xs'}>">
                                         <{/if}>
                                         <{$option.label}>
@@ -104,9 +126,7 @@
                     </dl>
                 </div>
                 <{/if}>
-                <div class="pref_info clearfix">
-                     <!--<p><span>采购数量</span><span>&gt;<{$data_detail.product.price_interval}>箱</span><span>&lt;<{$data_detail.product.price_interval}>箱</span></p>-->
-                    <!--<p><span>价格</span><span>￥<{$data_detail.product.price_up|cur}>/箱</span><span>￥<{$data_detail.product.price_dn|cur}>/箱</span></p>-->
+                <!-- <div class="pref_info clearfix">
                     <div class="pref_table">
                         <table>
                             <thead>
@@ -134,7 +154,7 @@
                             </tbody>
                         </table>
                     </div>
-                </div>
+                </div> -->
 
                 <!--购买区-->
                 <div class="product-page-cart clearfix">
