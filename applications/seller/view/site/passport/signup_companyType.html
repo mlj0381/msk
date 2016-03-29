@@ -56,10 +56,10 @@
             requestPost(url, data);
         });
         $('.typebox li').click(function(){
-            $(this).toggleClass('selected');
-            if($('.buyer_type').hasClass('selected')){
+            $(this).toggleClass('selected').siblings().removeClass('selected');
+            /*if($('.buyer_type').hasClass('selected')){    //买手店不与其他并选
                 $(this).siblings().removeClass('selected');
-            }
+            }*/
         });
     });
 
