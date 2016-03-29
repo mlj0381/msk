@@ -39,6 +39,9 @@ class buyer_user_object{
         }
     }
     
+    public function get_id(){
+    	return $_SESSION['account']['buyer_id'] ?: false;
+    }
     
     
 }
