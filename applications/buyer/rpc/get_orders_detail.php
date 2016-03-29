@@ -1,9 +1,9 @@
 <?php
 /**
- * 订单列表查询接口---------------ISO151416
+ * 订单明细查询接口---------------ISO151416
  */
-$remote['buyer_get_orders_list'] = array(
-    'url' => '/so/sdo/list',
+$remote['buyer_get_orders_detail'] = array(
+    'url' => '/so/sdo/detail',
 
     'request' => array(
         'member_id' => array(
