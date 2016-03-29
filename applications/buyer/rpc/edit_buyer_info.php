@@ -67,31 +67,31 @@ $remote['buyer_edit_buyer_info'] = array(
     ),
 
     'slAccount' => array(
-        'slAccount' => array(
+        'login_account' => array(
             'name' => '卖家账号',
             'column' => 'slAccount',
             'type' => 'String',
             'require' => true,
         ),
-        'slTel' => array(
+        'mobile' => array(
             'name' => '登录手机号码',
             'column' => 'slTel',
             'type' => 'String',
             'require' => true,
         ),
-        'slShowName' => array(
+        'local' => array(
             'name' => '卖家显示名称',
             'column' => 'slShowName',
             'type' => 'String',
             'require' => false,
         ),
-        'slContact' => array(
+        'name' => array(
             'name' => '联系人姓名',
             'column' => 'slContact',
             'type' => 'String',
             'require' => true,
         ),
-        'accountPsd' => array(
+        'password' => array(
             'name' => '登录密码',
             'column' => 'accountPsd',
             'type' => 'String',
@@ -112,18 +112,18 @@ $remote['buyer_edit_buyer_info'] = array(
     ),
 
     'slSeller' => array(
-        'slAccount' => array(
+        'login_account' => array(
             'name' => '卖家账号',
             'column' => 'slAccount',
             'type' => 'String',
             'require' => true,
         ),
-        'slCode' => array(
-            'name' => '买手ID',
-            'column' => 'slCode',
-            'type' => 'String',
-            'require' => false,
-        ),
+//         'buyer_code' => array(
+//             'name' => '买手ID',
+//             'column' => 'slCode',
+//             'type' => 'String',
+//             'require' => false,
+//         ),
         'slConFlg' => array(
             'name' => '生产国籍',
             'column' => 'slConFlg',
@@ -326,13 +326,13 @@ $remote['buyer_edit_buyer_info'] = array(
     ),
 
     'slBuyerShop' => array(
-        'slCode' => array(
-            'name' => '买手ID',
-            'column' => 'slCode',
-            'type' => 'String',
-            'require' => false,
-        ),
-        'slIdcard' => array(
+//         'slCode' => array(
+//             'name' => '买手ID',
+//             'column' => 'slCode',
+//             'type' => 'String',
+//             'require' => false,
+//         ),
+        'card_id' => array(
             'name' => '买手身份证号',
             'column' => 'slIdcard',
             'type' => 'String',
@@ -344,7 +344,7 @@ $remote['buyer_edit_buyer_info'] = array(
             'type' => 'int',
             'require' => true,
         ),
-        'slAddress' => array(
+        'addr' => array(
             'name' => '买手地址',
             'column' => 'slAddress',
             'type' => 'String',
@@ -427,25 +427,25 @@ $remote['buyer_edit_buyer_info'] = array(
     ),
 
     'slShopInfo' => array(
-        'slCode' => array(
-            'name' => '买手ID',
-            'column' => 'slCode',
-            'type' => 'String',
-            'require' => false,
-        ),
+//         'slCode' => array(
+//             'name' => '买手ID',
+//             'column' => 'slCode',
+//             'type' => 'String',
+//             'require' => false,
+//         ),
         'shopId' => array(
             'name' => '店铺ID',
             'column' => 'shopId',
             'type' => 'Integer',
             'require' => false,
         ),
-        'shopName' => array(
+        'store_name' => array(
             'name' => '店铺名称',
             'column' => 'shopName',
             'type' => 'String',
             'require' => true,
         ),
-        'shopLogo' => array(
+        'store_logo' => array(
             'name' => '店铺Logo',
             'column' => 'shopLogo',
             'type' => 'String',

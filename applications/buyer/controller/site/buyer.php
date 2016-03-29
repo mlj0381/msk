@@ -62,15 +62,42 @@ class buyer_ctl_site_buyer extends buyer_frontpage{
 			$data = app::get('pam')->model('buyers')->getRow('login_account,login_password', array('buyer_id'=>$this->buyer_id));
 			$basic_data = $this->app->model('buyers')->getRow('*', array('buyer_id'=>$this->buyer_id));
 			
-			var_dump(array_merge($data, $basic_data));exit;
-			$mdl_rpc = $this->app->rpc('edit_buyer_info');
-			$data = array(
-				
-			);
-			$request = $mdl_rpc->request($data, false);
-			var_dump($request);exit;
 			if ($this->app->model('buyers')->update($params, array('buyer_id' => $this->buyer_id))){
 				//////////////////////////////////走API
+				$mdl_rpc = $this->app->rpc('edit_buyer_info');
+				$request = array(
+						'slAccount'=>array(
+								'login_account'	=>$data['login_account'],
+								'mobile'		=>$basic_data['mobile'],
+								'local'			=>$basic_data['local'],
+								'name'			=>$basic_data['name'],
+								'password'		=>$basic_data['password'],
+								'authStatus'	=>2,
+						),
+						'slSeller'=>array(
+								'login_account'	=>$data['login_account'],
+								'slConFlg'		=>'1',//生产国籍
+								'areaCode'		=>'1',//大区编码
+								'lgcsAreaCode'	=>'1',//物流区编码
+								'provinceCode'	=>'1',//省编码
+								'cityCode'		=>'1',//地区编码
+								'districtCode'	=>'1',//区编码
+								'slMainClass'	=>4,//卖家主分类
+								'snkFlg'		=>'否',//神农客标志
+								'selfFlg'		=>'否',//自产型卖家标志
+								'agentFlg'		=>'否',//代理型卖家标志
+								'oemFlg'		=>'否',//OEM型卖家标志
+								'buyerFlg'		=>'否',//买手型卖家标志
+						),
+						'slBuyerShop'=>array(
+								'card_id'	=>$basic_data['card_id'],
+								'slSort'	=>2,
+								'addr'		=>$basic_data['addr'],
+						),
+						'slShopInfo'=>$basic_data,
+							
+				);
+				$mdl_rpc->request($request, false);
 				$this->splash('success', $redirect, '店铺信息更新成功！');
 			}else {
 				$this->splash('error', $redirect, '店铺信息更新失败！');
