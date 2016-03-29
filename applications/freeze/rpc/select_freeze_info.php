@@ -23,19 +23,19 @@ $remote['freeze_select_freeze_info'] = array(
     ),
 
     'param' => array(
-        'slCode' => array(
+        'buyer_code' => array(
             'name' => '买手店编码',
             'column' => 'slCode',
             'type' => 'String',
-            'require' => false,
+            'require' => true,
         ),
-        'houseAccount' => array(
+        'account' => array(
             'name' => '管家账号',
             'column' => 'houseAccount',
             'type' => 'String',
             'require' => false,
         ),
-        'accountPsd' => array(
+        'password' => array(
             'name' => '登录密码',
             'column' => 'accountPsd',
             'type' => 'String',

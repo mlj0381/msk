@@ -19,6 +19,18 @@ $db['freeze'] = array(
             'pkey' => true,
             'comment' => '冻结商家ID',
         ),
+        'buyer_id' => array(
+            'type' => 'number',
+            'label' => ('买手账号id') ,
+        ) ,
+        'code' => array(
+            'type' => 'varchar(255)',
+            'label' => ('润和返回的管家编码') ,
+        ) ,
+        'account' => array(
+            'type' => 'varchar(255)',
+            'label' => ('润和返回的管家账号') ,
+        ) ,
         'head_image' => array(
             'type' => 'varchar(32)',
             'label' => ('头像'),

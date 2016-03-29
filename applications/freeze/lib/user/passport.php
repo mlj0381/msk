@@ -128,11 +128,14 @@ class freeze_user_passport {
             $accountData = $this->pre_account_signup_process($data['pam_account']);
         }
 
+        $user_obj = vmc::singleton('buyer_user_object');
+        $buyer_id = $user_obj->get_id();
         //---end
         $return = array(
             'pam_account' => $accountData,
             'freeze' => array(
                 'updatetime' => time(),
+                'buyer_id' => $buyer_id
             ),
         );
         return $return;
@@ -184,6 +187,7 @@ class freeze_user_passport {
             'login_type' => $login_type,
             'login_account' => $login_account,
             'login_password' => $login_password,
+            'password' => $accountData['login_password'],
             'password_account' => $password_account, //登录密码加密账号
             'disabled' => $login_type == 'email' ? 'true' : 'false', //邮箱需要到会员中心进行验证
             'createtime' => $use_pass_data['createtime'],
@@ -282,18 +286,22 @@ class freeze_user_passport {
      * */
     public function save_members($saveData, &$msg) {
         $freeze_model = $this->app->model('freeze');
-//        $db = vmc::database();
-//        $db->beginTransaction();
+        if(empty($saveData['freeze']['buyer_id']))
+        {
+            $msg = '不明买手!';
+
+            return false;
+        }
         if ($freeze_model->save($saveData['freeze'])) {
             $freeze_id = $saveData['freeze']['freeze_id'];
             $saveData['pam_account']['freeze_id'] = $freeze_id;
+
             if (!app::get('pam')->model('freeze')->save($saveData['pam_account'])) {
-//                $db->rollBack();
+
                 $msg = '账户数据保存异常!';
 
                 return false;
             }
-//            $db->commit();
         } else {
             $msg = '保存失败!';
 

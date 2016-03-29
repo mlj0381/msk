@@ -51,13 +51,20 @@ $remote['freeze_editor'] = array(
             'default' => '',
             'require' => true
         ),
-        'login_account' => array(
-            'name' => '管家账号',
-            'column' => 'houseAccount',
+        'code' => array(
+            'name' => '买手店编码',
+            'column' => 'houseCode',
             'type' => 'String',
             'default' => '',
-            'require' => true
+            'require' => false
         ),
+//        'login_account' => array(
+//            'name' => '管家账号',
+//            'column' => 'houseAccount',
+//            'type' => 'String',
+//            'default' => '',
+//            'require' => true
+//        ),
         'mobile' => array(
             'name' => '登录手机号码',
             'column' => 'houseTel',
@@ -72,7 +79,7 @@ $remote['freeze_editor'] = array(
             'default' => '',
             'require' => true
         ),
-        'login_password' => array(
+        'password' => array(
             'name' => '登录密码',
             'column' => 'accountPsd',
             'type' => 'String',
@@ -135,7 +142,7 @@ $remote['freeze_editor'] = array(
             'default' => '',
             'require' => false
         ),
-        'manage_area' => array(
+        'manage_address' => array(
             'name' => '管家地址',
             'column' => 'houseAddress',
             'type' => 'String',
@@ -153,14 +160,14 @@ $remote['freeze_editor'] = array(
             'name' => '级别',
             'column' => 'houseClass',
             'type' => 'String',
-            'default' => '',
+            'default' => '1',
             'require' => false
         ),
         'houseCategory' => array(
             'name' => '管家分类',
             'column' => 'houseCategory',
             'type' => 'String',
-            'default' => '',
+            'default' => '0',
             'require' => false
         ),
         'HOUSE_CATEGORY0' => array(
@@ -339,6 +346,16 @@ $remote['freeze_editor'] = array(
     ),
 
     'response' => array(
-            // 'buyerId' => // os id
-    ),
+        'houseAccount' => array(
+            'name' => '管家账号',
+            'column' => 'account',
+            'type' => 'String',
+        ),
+        'houseCode' => array(
+            'name' => '管家编码',
+            'column' => 'code',
+            'type' => 'String',
+        ),
+
+    )
 );
