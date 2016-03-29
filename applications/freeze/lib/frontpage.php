@@ -127,33 +127,33 @@ class freeze_frontpage extends site_controller
         $this->page('site/main.html');
     }
 
-    public function bind_freeze($member_id) {
-        $user_obj = vmc::singleton('buyer_user_object');
-        $buyer_id = $user_obj->get_id();
-        if(!$buyer_id && !$member_id)
-        {
-            $url = $this->gen_url(array(
-                'app' => 'buyer',
-                'ctl' => 'site_passport',
-                'act' => 'login',
-            ));
-            $this->splash('error', $url, '未登陆');
-        }
-        $data = array(
-            'freeze_id' => $member_id,
-            'buyer_id' => $buyer_id,
-        );
-        $freeze_model = app::get('freeze')->model('freeze_buyer');
-        if(!$freeze_model->save($data))
-        {
-            $signup_url = $this->gen_url(array(
-                'app' => 'buyer',
-                'ctl' => 'site_manager',
-                'act' => 'manager_signup',
-            ));
-            $this->splash('error', $signup_url, '冻品管家绑定失败');
-        };
-    }
+//    public function bind_freeze($member_id) {
+//        $user_obj = vmc::singleton('buyer_user_object');
+//        $buyer_id = $user_obj->get_id();
+//        if(!$buyer_id && !$member_id)
+//        {
+//            $url = $this->gen_url(array(
+//                'app' => 'buyer',
+//                'ctl' => 'site_passport',
+//                'act' => 'login',
+//            ));
+//            $this->splash('error', $url, '未登陆');
+//        }
+//        $data = array(
+//            'freeze_id' => $member_id,
+//            'buyer_id' => $buyer_id,
+//        );
+//        $freeze_model = app::get('freeze')->model('freeze_buyer');
+//        if(!$freeze_model->save($data))
+//        {
+//            $signup_url = $this->gen_url(array(
+//                'app' => 'buyer',
+//                'ctl' => 'site_manager',
+//                'act' => 'manager_signup',
+//            ));
+//            $this->splash('error', $signup_url, '冻品管家绑定失败');
+//        };
+//    }
 
 
 }

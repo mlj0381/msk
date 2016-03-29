@@ -16,7 +16,7 @@ class freeze_ctl_site_account extends freeze_frontpage
     {
 
         $user_obj = vmc::singleton('freeze_user_object');
-        $info = $user_obj->get_members_data(array('account' => 'login_account', 'freeze' => '*'));
+        $info = $user_obj->get_members_data(array('account' => '*', 'freeze' => '*'));
 
         $this->pagedata['login_account'] = $info['account']['login_account'];
         $this->pagedata['info'] = $info['freeze'];
@@ -57,9 +57,9 @@ class freeze_ctl_site_account extends freeze_frontpage
     public function buyer_info()
     {
         $this->is_complete_info();
+        $mdl_freeze = app::get('freeze')->model('freeze');
         $mdl_buyer = app::get('buyer')->model('buyers');
-        $mdl_freeze_buyer = app::get('freeze')->model('freeze_buyer');
-        $buyer_id = $mdl_freeze_buyer->getRow('*', array('freeze_id' => $this->app->freeze_id));
+        $buyer_id = $mdl_freeze->getRow('buyer_id', array('freeze_id' => $this->app->freeze_id));
 
         $buyer_info = $mdl_buyer->getRow('*', array('buyer_id' => $buyer_id['buyer_id']));
         $this->pagedata['buyer'] = $buyer_info;
@@ -249,12 +249,6 @@ class freeze_ctl_site_account extends freeze_frontpage
         if (!$data['freeze_id']) {
             if ($freeze_id = $this->app->freeze_id) {
                 $generate_data['freeze_id'] = $freeze_id;
-            } else {
-                $freeze_buyer_model = app::get('freeze')->model('freeze_buyer');
-                $buyer_user_object = vmc::singleton('buyer_user_object');
-                $buyer_id = $buyer_user_object->get_id();
-                $freeze_id = $freeze_buyer_model->getRow('freeze_id', array('buyer_id' => $buyer_id));
-                $generate_data['freeze_id'] = $freeze_id['freeze_id'];
             }
         }
         if (!$generate_data['freeze_id']) {

@@ -176,7 +176,7 @@ $(function() {
      * 单个图片上传功能
      */
 
-    $('.filebox input[type="file"]').fileupload({
+    /*$('.filebox input[type="file"]').fileupload({
         add: function(e, data) {            
             if (!data.files[0]['type'].match(/^image/)) {
                 alert('非法上传，不是图片类型');
@@ -212,7 +212,7 @@ $(function() {
 
     function loading() {
         $('.filebox .showImg').append('<span class="loading hidden icon-spinner icon-spin"></span>');
-    }
+    }*/
 
 
 

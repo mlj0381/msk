@@ -24,30 +24,74 @@ $remote['buyer_edit_buyer_info'] = array(
 
     'param' => array(
         'slAccount' => array(
+            'name' => '买手账号信息',
+            'column' => 'slAccount',
+            'type' => 'object',
+        ),
+        'slSeller' => array(
+            'name' => '买手基本信息',
+            'column' => 'slSeller',
+            'type' => 'object',
+        ),
+        'slBuyerShop' => array(
+            'name' => '买手资质信息',
+            'column' => 'slBuyerShop',
+            'type' => 'object',
+        ),
+        'slShopInfo' => array(
+            'name' => '买手店铺信息',
+            'column' => 'slShopInfo',
+            'type' => 'object',
+        ),
+        'loginId' => array(
+            'name' => '  创建者ID/更新者ID',
+            'column' => 'loginId',
+            'type' => 'String',
+            'default' => '',
+            'require' => false,
+        ),
+        'delFlg' => array(
+            'name' => '  删除标志',
+            'column' => 'delFlg',
+            'type' => 'String',
+            'default' => '0：有效，1：删除',
+            'require' => false,
+        ),
+        'ver' => array(
+            'name' => '  版本号',
+            'column' => 'ver',
+            'type' => 'Integer',
+            'default' => '',
+            'require' => false,
+        ),
+    ),
+
+    'slAccount' => array(
+        'login_account' => array(
             'name' => '卖家账号',
             'column' => 'slAccount',
             'type' => 'String',
             'require' => true,
         ),
-        'slTel' => array(
+        'mobile' => array(
             'name' => '登录手机号码',
             'column' => 'slTel',
             'type' => 'String',
             'require' => true,
         ),
-        'slShowName' => array(
+        'local' => array(
             'name' => '卖家显示名称',
             'column' => 'slShowName',
             'type' => 'String',
             'require' => false,
         ),
-        'slContact' => array(
+        'name' => array(
             'name' => '联系人姓名',
             'column' => 'slContact',
             'type' => 'String',
             'require' => true,
         ),
-        'accountPsd' => array(
+        'password' => array(
             'name' => '登录密码',
             'column' => 'accountPsd',
             'type' => 'String',
@@ -65,12 +109,21 @@ $remote['buyer_edit_buyer_info'] = array(
             'type' => 'String',
             'require' => false,
         ),
-        'slCode' => array(
-            'name' => '卖家编码',
-            'column' => 'slCode',
+    ),
+
+    'slSeller' => array(
+        'login_account' => array(
+            'name' => '卖家账号',
+            'column' => 'slAccount',
             'type' => 'String',
-            'require' => false,
+            'require' => true,
         ),
+//         'buyer_code' => array(
+//             'name' => '买手ID',
+//             'column' => 'slCode',
+//             'type' => 'String',
+//             'require' => false,
+//         ),
         'slConFlg' => array(
             'name' => '生产国籍',
             'column' => 'slConFlg',
@@ -104,24 +157,6 @@ $remote['buyer_edit_buyer_info'] = array(
         'districtCode' => array(
             'name' => '区编码',
             'column' => 'districtCode',
-            'type' => 'String',
-            'require' => true,
-        ),
-        'slIdcard' => array(
-            'name' => '买手身份证号',
-            'column' => 'slIdcard',
-            'type' => 'String',
-            'require' => true,
-        ),
-        'slSort' => array(
-            'name' => '合营优先顺方式',
-            'column' => 'slSort',
-            'type' => 'int',
-            'require' => true,
-        ),
-        'slAddress' => array(
-            'name' => '买手地址',
-            'column' => 'slAddress',
             'type' => 'String',
             'require' => true,
         ),
@@ -286,6 +321,36 @@ $remote['buyer_edit_buyer_info'] = array(
             'type' => 'String',
             'require' => false,
         ),
+
+
+    ),
+
+    'slBuyerShop' => array(
+//         'slCode' => array(
+//             'name' => '买手ID',
+//             'column' => 'slCode',
+//             'type' => 'String',
+//             'require' => false,
+//         ),
+        'card_id' => array(
+            'name' => '买手身份证号',
+            'column' => 'slIdcard',
+            'type' => 'String',
+            'require' => true,
+        ),
+        'slSort' => array(
+            'name' => '合营优先顺方式',
+            'column' => 'slSort',
+            'type' => 'int',
+            'require' => true,
+        ),
+        'addr' => array(
+            'name' => '买手地址',
+            'column' => 'slAddress',
+            'type' => 'String',
+            'require' => true,
+        ),
+
         'flag1' => array(
             'name' => '性别',
             'column' => 'flag1',
@@ -346,23 +411,45 @@ $remote['buyer_edit_buyer_info'] = array(
             'type' => 'String',
             'require' => false,
         ),
+        'lat' => array(
+            'name' => '维度',
+            'column' => 'lat',
+            'type' => 'String',
+            'require' => false,
+        ),
+        'lon' => array(
+            'name' => '精度',
+            'column' => 'lon',
+            'type' => 'String',
+            'require' => false,
+        ),
+
+    ),
+
+    'slShopInfo' => array(
+//         'slCode' => array(
+//             'name' => '买手ID',
+//             'column' => 'slCode',
+//             'type' => 'String',
+//             'require' => false,
+//         ),
         'shopId' => array(
             'name' => '店铺ID',
             'column' => 'shopId',
             'type' => 'Integer',
             'require' => false,
         ),
-        'shopName' => array(
+        'store_name' => array(
             'name' => '店铺名称',
             'column' => 'shopName',
             'type' => 'String',
-            'require' => false,
+            'require' => true,
         ),
-        'shopLogo' => array(
+        'store_logo' => array(
             'name' => '店铺Logo',
             'column' => 'shopLogo',
             'type' => 'String',
-            'require' => false,
+            'require' => true,
         ),
         'managingCharact10' => array(
             'name' => '经营特色10',
@@ -593,6 +680,7 @@ $remote['buyer_edit_buyer_info'] = array(
             'require' => false,
         ),
     ),
+
 
     'response' => array(),
 

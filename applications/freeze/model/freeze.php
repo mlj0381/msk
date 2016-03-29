@@ -18,24 +18,45 @@ class freeze_mdl_freeze extends dbeav_model
         parent::save($data, $mustUpdate = null, $mustInsert = false);
 
         //调用接口推送全部最新信息
-        $api_data = $this->getRow('*',array('freeze_id',$data['freeze_id']));
-        $api_pam_data = app::get('pam')->model('freeze')->getRow('*',array('*',$data['freeze_id']));
-        $buyer_id = app::get('freeze')->model('freeze_buyer')->getRow('*',array('buyer_id',$data['freeze_id']));
-        $buyer_code = app::get('buyer')->model('buyers')->getRow('buyer_code',array('*',$buyer_id['buyer_id']));
-        $api_data['buyer_code'] = $buyer_code['buyer_code']?$buyer_code['buyer_code']:'7010900117';
+        $api_data = $this->getRow('*',array('freeze_id'=>$data['freeze_id']));
+        $api_pam_data = app::get('pam')->model('freeze')->getRow('*',array('freeze_id'=>$data['freeze_id']));
+        $buyer_code = app::get('buyer')->model('buyers')->getRow('buyer_code',array('buyer_id'=>$api_data['buyer_id']));
+        $api_data['buyer_code'] = $buyer_code['buyer_code']?$buyer_code['buyer_code']:'7010900155';
         $api_data = array_merge($api_data,$api_pam_data);
+        if(empty($api_data['code']))
+        {
+            unset($api_data['code']);
+        }
 
         //调用接口更新数据
         $rpc_editor = app::get('freeze')->rpc("editor");
         $result = $rpc_editor->request(array('account_data'=>$api_data));
-        if(!$result['status'])
+        if(!empty($result['status']) && !empty($result['result']['account']) && !empty($result['result']['code']))
         {
-            //暂时不做什么处理
+            $this->update(array( 'account' => $result['result']['account'], 'code' => $result['result']['code']),array('freeze_id' => $data['freeze_id']));
         }
         return true;
     }
 
 
+
+    /**
+     * 得到管家账号
+     */
+    public function get_account($buyer_id)
+    {
+
+        $data = app::get('pam')->model('buyers')->getRow("login_account",array('buyer_id'=>$buyer_id));
+        $count = $this->count(array('buyer_id' => $buyer_id));
+        $account_name = $data['login_account'];
+        if ($count < 10) {
+            $account_name .= '0' . ($count + 1);
+        } else {
+            $account_name .= ($count + 1);
+        }
+
+        return $account_name;
+    }
 
 
 }

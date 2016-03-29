@@ -103,6 +103,20 @@ class freeze_user_object{
 
         if($columns['freeze']){
             $data['freeze'] = $this->_get_b2c_members_data($columns['freeze'],$member_id);
+
+            //调取接口的信息,用登陆信息还可以查询
+            if($data['account'])
+            {
+//                $rpc_select_freeze_info = app::get('freeze')->rpc("select_freeze_info");
+//                $buyer_code = app::get('buyer')->model('buyers')->getRow('buyer_code',array('buyer_id'=>$data['freeze']['buyer_id']));
+//                $request_data = array(
+//                    'buyer_code' =>  $buyer_code['buyer_code']?$buyer_code['buyer_code']:'7010900155',
+//                    'account' => $data['freeze']['account'],
+//                    'password' => $data['account']['password']
+//                );
+//                $result = $rpc_select_freeze_info->request($request_data);
+            }
+
         }
 
         return $data;

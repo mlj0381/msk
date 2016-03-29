@@ -272,11 +272,9 @@
             $(this).removeData("bs.modal");  //关闭时清空数据
         });
 
-        $('[data-toggle="tooltip"]').tooltip();
+        //$('[data-toggle="tooltip"]').tooltip();
 
-        /**
-         * 产品档案卡信息确定
-         */
+        //产品档案卡信息确定
 
         $('.cat_tree input[type="checkbox"]').click(function () {
             var spanList = $(this).closest('tr').find('span.apt_tag');
@@ -289,9 +287,6 @@
             }
         });
 
-        $('.modal-footer button').click(function () {
-            alert($(this).attr('id'));
-        });
         //end 产品档案卡信息确定
 
         //经营商品类别添加

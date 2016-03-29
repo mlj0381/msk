@@ -11,7 +11,54 @@ class freeze_ctl_site_center extends freeze_frontpage{
     public function index()
     {
         app::get('b2c')->model('dlyplace')->get_api_area();
+        $result = $this->region_decode("mainland:福建/龙岩市:242",1);
+        var_dump($result);
         $this->output();
+    }
+
+    /**
+     * 地区格式化处理
+     */
+    function region_decode($area,$index=0)
+    {
+        if(!$area)
+        {
+            return false;
+        }
+        $city = array(
+            '北京',
+            '天津',
+            '上海',
+            '重庆',
+        );
+        $arr_region = explode('/',$area);
+        if($index == 0)
+        {
+            $str = $arr_region[0];
+            $str =  substr($str,(strpos($str,':')+1));
+            if(strpos($str,':'))
+            {
+                $str =  substr($str,0,strpos($str,':'));
+            }
+            if(in_array($str,$city))
+            {
+                $str .= '市';
+            }else{
+                $str .= '省';
+            }
+            return $str;
+        }elseif($index == 1)
+        {
+            $str = $arr_region[1];
+            $str =  substr($str,0,strpos($str,':'));
+            return $str;
+        }elseif($index == 2)
+        {
+            $str = $arr_region[2];
+            $str =  substr($str,0,strpos($str,':'));
+            return $str;
+        }
+        return false;
     }
 
     /**
