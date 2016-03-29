@@ -11,7 +11,7 @@ $remote['freeze_editor'] = array(
             'column' => 'loginId',
             'type' => 'String',
             'default' => '',
-            'require'=> false
+            'require' => false,
         ),
         'param' => array(
             'name' => '参数',
@@ -23,7 +23,7 @@ $remote['freeze_editor'] = array(
     ),
 
     'param' => array(
-        'account_data'=> array(
+        'account_data' => array(
             'name' => '冻品管家账号信息',
             'column' => 'slHouseAccount',
             'type' => 'object',
@@ -33,14 +33,14 @@ $remote['freeze_editor'] = array(
             'column' => 'slAreaList',
             'type' => 'list',
             'default' => '',
-            'require' => false
+            'require' => false,
         ),
         'housePdList' => array(
             'name' => '',
             'column' => 'housePdList',
             'type' => 'list',
             'default' => '',
-            'require' => false
+            'require' => false,
         ),
     ),
     'account_data' => array(
@@ -49,14 +49,14 @@ $remote['freeze_editor'] = array(
             'column' => 'slCode',
             'type' => 'String',
             'default' => '',
-            'require' => true
+            'require' => true,
         ),
         'code' => array(
             'name' => '买手店编码',
             'column' => 'houseCode',
             'type' => 'String',
             'default' => '',
-            'require' => false
+            'require' => false,
         ),
 //        'login_account' => array(
 //            'name' => '管家账号',
@@ -65,283 +65,570 @@ $remote['freeze_editor'] = array(
 //            'default' => '',
 //            'require' => true
 //        ),
+        'houseCodeDis' => array(
+            'name' => '管家编码',
+            'column' => 'houseCodeDis',
+            'type' => 'String',
+            'default' => '',
+            'require' => false,
+        ),
         'mobile' => array(
             'name' => '登录手机号码',
             'column' => 'houseTel',
             'type' => 'String',
             'default' => '',
-            'require' => true
+            'require' => true,
         ),
         'name' => array(
             'name' => '联系人姓名',
             'column' => 'houseContact',
             'type' => 'String',
             'default' => '',
-            'require' => true
+            'require' => true,
         ),
         'password' => array(
             'name' => '登录密码',
             'column' => 'accountPsd',
             'type' => 'String',
             'default' => '',
-            'require' => true
+            'require' => true,
         ),
         'auth_status' => array(
             'name' => '认证状态',
             'column' => 'authStatus',
             'type' => 'Integer',
             'default' => '',
-            'require' => false
+            'require' => false,
         ),
         'ID' => array(
             'name' => '管家身份证号',
             'column' => 'slIdcard',
             'type' => 'String',
             'default' => '',
-            'require' => true
+            'require' => true,
         ),
         'nationality' => array(
             'name' => '国籍',
             'column' => 'slConFlg',
             'type' => 'String',
             'default' => '1',
-            'require' => true
+            'require' => true,
         ),
         'area_code' => array(
             'name' => '大区编码',
             'column' => 'areaCode',
             'type' => 'String',
             'default' => '',
-            'require' => false
+            'require' => false,
         ),
         'logistics_code' => array(
             'name' => '物流区编码',
             'column' => 'lgcsAreaCode',
             'type' => 'String',
             'default' => '',
-            'require' => false
+            'require' => false,
         ),
         'province_code' => array(
             'name' => '省编码',
             'column' => 'provinceCode',
             'type' => 'String',
             'default' => '',
-            'require' => false
+            'require' => false,
         ),
         'city_code' => array(
             'name' => '地区编码',
             'column' => 'cityCode',
             'type' => 'String',
             'default' => '',
-            'require' => false
+            'require' => false,
         ),
         'district_code' => array(
             'name' => '区编码',
             'column' => 'districtCode',
             'type' => 'String',
             'default' => '',
-            'require' => false
+            'require' => false,
         ),
         'manage_address' => array(
             'name' => '管家地址',
             'column' => 'houseAddress',
             'type' => 'String',
             'default' => '',
-            'require' => true
+            'require' => true,
+        ),
+        'lat' => array(
+            'name' => '维度',
+            'column' => 'lat',
+            'type' => 'String',
+            'default' => '',
+            'require' => false,
+        ),
+        'lon' => array(
+            'name' => '精度',
+            'column' => 'lon',
+            'type' => 'String',
+            'default' => '',
+            'require' => false,
+        ),
+        'vareaCode' => array(
+            'name' => '虚拟大区编码',
+            'column' => 'vareaCode',
+            'type' => 'String',
+            'default' => '',
+            'require' => false,
+        ),
+        'vlgcsAreaCode' => array(
+            'name' => '虚拟物流区编码',
+            'column' => 'vlgcsAreaCode',
+            'type' => 'String',
+            'default' => '',
+            'require' => false,
+        ),
+        'vprovinceCode' => array(
+            'name' => '虚拟省编码',
+            'column' => 'vprovinceCode',
+            'type' => 'String',
+            'default' => '',
+            'require' => false,
+        ),
+        'vcityCode' => array(
+            'name' => '虚拟地区编码',
+            'column' => 'vcityCode',
+            'type' => 'String',
+            'default' => '',
+            'require' => false,
+        ),
+        'vdistrictCode' => array(
+            'name' => '虚拟区编码',
+            'column' => 'vdistrictCode',
+            'type' => 'String',
+            'default' => '',
+            'require' => false,
+        ),
+        'vhouseAddress' => array(
+            'name' => '虚拟管家地址',
+            'column' => 'vhouseAddress',
+            'type' => 'String',
+            'default' => '',
+            'require' => false,
+        ),
+        'vlat' => array(
+            'name' => '虚拟维度',
+            'column' => 'vlat',
+            'type' => 'String',
+            'default' => '',
+            'require' => false,
+        ),
+        'vlon' => array(
+            'name' => '虚拟精度',
+            'column' => 'vlon',
+            'type' => 'String',
+            'default' => '',
+            'require' => false,
+        ),
+        'buyerAsign' => array(
+            'name' => '买手签署',
+            'column' => 'buyerAsign',
+            'type' => 'String',
+            'default' => '',
+            'require' => false,
+        ),
+        'wechat' => array(
+            'name' => '微信号码',
+            'column' => 'wechat',
+            'type' => 'String',
+            'default' => '',
+            'require' => false,
+        ),
+        'qq' => array(
+            'name' => 'QQ号码',
+            'column' => 'qq',
+            'type' => 'String',
+            'default' => '',
+            'require' => false,
+        ),
+        'email' => array(
+            'name' => '邮箱',
+            'column' => 'email',
+            'type' => 'String',
+            'default' => '',
+            'require' => false,
+        ),
+        'fixedTel' => array(
+            'name' => '固定电话',
+            'column' => 'fixedTel',
+            'type' => 'String',
+            'default' => '',
+            'require' => false,
+        ),
+        'fax' => array(
+            'name' => '传真号',
+            'column' => 'fax',
+            'type' => 'String',
+            'default' => '',
+            'require' => false,
+        ),
+        'flag1' => array(
+            'name' => '备用1',
+            'column' => 'flag1',
+            'type' => 'String',
+            'default' => '',
+            'require' => false,
+        ),
+        'flag2' => array(
+            'name' => '备用2',
+            'column' => 'flag2',
+            'type' => 'String',
+            'default' => '',
+            'require' => false,
+        ),
+        'flag3' => array(
+            'name' => '备用3',
+            'column' => 'flag3',
+            'type' => 'String',
+            'default' => '',
+            'require' => false,
+        ),
+        'flag4' => array(
+            'name' => '备用4',
+            'column' => 'flag4',
+            'type' => 'String',
+            'default' => '',
+            'require' => false,
+        ),
+        'flag5' => array(
+            'name' => '备用5',
+            'column' => 'flag5',
+            'type' => 'String',
+            'default' => '',
+            'require' => false,
+        ),
+        'flag6' => array(
+            'name' => '备用6',
+            'column' => 'flag6',
+            'type' => 'String',
+            'default' => '',
+            'require' => false,
+        ),
+        'flag7' => array(
+            'name' => '备用7',
+            'column' => 'flag7',
+            'type' => 'String',
+            'default' => '',
+            'require' => false,
+        ),
+        'flag8' => array(
+            'name' => '备用8',
+            'column' => 'flag8',
+            'type' => 'String',
+            'default' => '',
+            'require' => false,
+        ),
+        'flag9' => array(
+            'name' => '备用9',
+            'column' => 'flag9',
+            'type' => 'String',
+            'default' => '',
+            'require' => false,
+        ),
+        'flag10' => array(
+            'name' => '备用10',
+            'column' => 'flag10',
+            'type' => 'String',
+            'default' => '',
+            'require' => false,
+        ),
+        'flag11' => array(
+            'name' => '备用11',
+            'column' => 'flag11',
+            'type' => 'String',
+            'default' => '',
+            'require' => false,
+        ),
+        'flag12' => array(
+            'name' => '备用12',
+            'column' => 'flag12',
+            'type' => 'String',
+            'default' => '',
+            'require' => false,
+        ),
+        'flag13' => array(
+            'name' => '备用13',
+            'column' => 'flag13',
+            'type' => 'String',
+            'default' => '',
+            'require' => false,
+        ),
+        'flag14' => array(
+            'name' => '备用14',
+            'column' => 'flag14',
+            'type' => 'String',
+            'default' => '',
+            'require' => false,
+        ),
+        'flag15' => array(
+            'name' => '备用15',
+            'column' => 'flag15',
+            'type' => 'String',
+            'default' => '',
+            'require' => false,
+        ),
+        'flag16' => array(
+            'name' => '备用16',
+            'column' => 'flag16',
+            'type' => 'String',
+            'default' => '',
+            'require' => false,
+        ),
+        'flag17' => array(
+            'name' => '备用17',
+            'column' => 'flag17',
+            'type' => 'String',
+            'default' => '',
+            'require' => false,
+        ),
+        'flag18' => array(
+            'name' => '备用18',
+            'column' => 'flag18',
+            'type' => 'String',
+            'default' => '',
+            'require' => false,
+        ),
+        'flag19' => array(
+            'name' => '备用19',
+            'column' => 'flag19',
+            'type' => 'String',
+            'default' => '',
+            'require' => false,
+        ),
+        'flag20' => array(
+            'name' => '备用20',
+            'column' => 'flag20',
+            'type' => 'String',
+            'default' => '',
+            'require' => false,
         ),
         'houseIntroduce' => array(
             'name' => '管家介绍',
             'column' => 'houseIntroduce',
             'type' => 'String',
             'default' => '',
-            'require' => false
+            'require' => false,
         ),
         'houseClass' => array(
             'name' => '级别',
             'column' => 'houseClass',
             'type' => 'String',
             'default' => '1',
-            'require' => false
+            'require' => false,
         ),
         'houseCategory' => array(
             'name' => '管家分类',
             'column' => 'houseCategory',
             'type' => 'String',
             'default' => '0',
-            'require' => false
+            'require' => false,
         ),
         'HOUSE_CATEGORY0' => array(
             'name' => '管家分类基本',
             'column' => 'HOUSE_CATEGORY0',
             'type' => 'String',
             'default' => '',
-            'require' => false
+            'require' => false,
         ),
         'HOUSE_CATEGORY1' => array(
             'name' => '管家分类分销',
             'column' => 'HOUSE_CATEGORY1',
             'type' => 'String',
             'default' => '',
-            'require' => false
+            'require' => false,
         ),
         'HOUSE_CATEGORY2' => array(
             'name' => '管家分类菜场',
             'column' => 'HOUSE_CATEGORY2',
             'type' => 'String',
             'default' => '',
-            'require' => false
+            'require' => false,
         ),
         'HOUSE_CATEGORY3' => array(
             'name' => '管家分类团膳',
             'column' => 'HOUSE_CATEGORY3',
             'type' => 'String',
             'default' => '',
-            'require' => false
+            'require' => false,
         ),
         'HOUSE_CATEGORY4' => array(
             'name' => '管家分类火锅',
             'column' => 'HOUSE_CATEGORY4',
             'type' => 'String',
             'default' => '',
-            'require' => false
+            'require' => false,
         ),
         'HOUSE_CATEGORY5' => array(
             'name' => '管家分类中餐',
             'column' => 'HOUSE_CATEGORY5',
             'type' => 'String',
             'default' => '',
-            'require' => false
+            'require' => false,
         ),
         'HOUSE_CATEGORY6' => array(
             'name' => '管家分类西餐',
             'column' => 'HOUSE_CATEGORY6',
             'type' => 'String',
             'default' => '',
-            'require' => false
+            'require' => false,
         ),
         'HOUSE_CATEGORY7' => array(
             'name' => '管家分类小吃烧烤',
             'column' => 'HOUSE_CATEGORY7',
             'type' => 'String',
             'default' => '',
-            'require' => false
+            'require' => false,
         ),
         'HOUSE_CATEGORY8' => array(
             'name' => '管家分类加工厂',
             'column' => 'HOUSE_CATEGORY8',
             'type' => 'String',
             'default' => '',
-            'require' => false
+            'require' => false,
         ),
         'grade' => array(
             'name' => '等级',
             'column' => 'grade',
             'type' => 'Integer',
             'default' => '',
-            'require' => false
+            'require' => false,
         ),
         'loginId' => array(
             'name' => '创建者ID/更新者ID',
             'column' => 'loginId',
             'type' => 'String',
             'default' => '',
-            'require' => false
+            'require' => false,
         ),
         'delFlg' => array(
             'name' => '删除标志',
             'column' => 'delFlg',
             'type' => 'String',
             'default' => '',
-            'require' => false
+            'require' => false,
         ),
         'ver' => array(
             'name' => '版本号',
             'column' => 'ver',
             'type' => 'Integer',
             'default' => '',
-            'require' => false
+            'require' => false,
         ),
     ),
     'slAreaList' => array(
+        'slCode' => array(
+            'name' => '买手店ID',
+            'column' => 'slCode',
+            'type' => 'String',
+            'default' => '',
+            'require' => true,
+        ),
+        'houseCode' => array(
+            'name' => '管家ID',
+            'column' => 'houseCode',
+            'type' => 'String',
+            'default' => '',
+            'require' => false,
+        ),
         'slAreaId' => array(
             'name' => '经营区域ID',
             'column' => 'slAreaId',
             'type' => 'Integer',
             'default' => '',
-            'require'=> false
+            'require' => false,
         ),
         'lgcsAreaCode' => array(
             'name' => '物流区编码',
             'column' => 'lgcsAreaCode',
             'type' => 'String',
             'default' => '',
-            'require'=> false
+            'require' => false,
         ),
         'provinceCode' => array(
             'name' => '省编码',
             'column' => 'provinceCode',
             'type' => 'String',
             'default' => '',
-            'require'=> false
+            'require' => false,
         ),
         'cityCode' => array(
             'name' => '地区编码',
             'column' => 'cityCode',
             'type' => 'String',
             'default' => '',
-            'require'=> false
+            'require' => false,
         ),
         'districtCode' => array(
             'name' => '区编码',
             'column' => 'districtCode',
             'type' => 'String',
             'default' => '',
-            'require'=> false
+            'require' => false,
         ),
         'address' => array(
             'name' => '经营地址',
             'column' => 'address',
             'type' => 'String',
             'default' => '',
-            'require'=> false
+            'require' => false,
         ),
     ),
 
     'housePdList' => array(
+        'slCode' => array(
+            'name' => '买手店ID',
+            'column' => 'slCode',
+            'type' => 'String',
+            'default' => '',
+            'require' => true,
+        ),
+        'houseCode' => array(
+            'name' => '管家ID',
+            'column' => 'houseCode',
+            'type' => 'String',
+            'default' => '',
+            'require' => false,
+        ),
         'pdId' => array(
             'name' => '管家管理产品ID',
             'column' => 'pdId',
             'type' => 'Integer',
             'default' => '',
-            'require'=> false
+            'require' => false,
         ),
         'pdClassesCode' => array(
             'name' => '产品类别',
             'column' => 'pdClassesCode',
             'type' => 'String',
             'default' => '',
-            'require'=> false
+            'require' => false,
         ),
         'machiningCode' => array(
             'name' => '产品二级分类编码',
             'column' => 'machiningCode',
             'type' => 'String',
             'default' => '',
-            'require'=> false
+            'require' => false,
         ),
         'pdBreedCode' => array(
             'name' => '产品品种',
             'column' => 'pdBreedCode',
             'type' => 'String',
             'default' => '',
-            'require'=> false
+            'require' => false,
         ),
         'pdFeatureCode' => array(
             'name' => '产品特征',
             'column' => 'pdFeatureCode',
             'type' => 'String',
             'default' => '',
-            'require'=> false
+            'require' => false,
         ),
     ),
 
@@ -357,5 +644,5 @@ $remote['freeze_editor'] = array(
             'type' => 'String',
         ),
 
-    )
+    ),
 );
