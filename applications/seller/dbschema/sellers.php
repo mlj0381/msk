@@ -105,6 +105,11 @@ $db['sellers'] = array(
             'default' => 0,
             'comment' => '身份类型(1生产型\2代理型\4OEM)扩展信息',
         ),
+        'api_seller' => array(
+            'type' => 'number',
+            'default' => 0,
+            'comment' => '润和商家主键id',
+        ),
 		'schedule' => array(
             'type' => 'number',
             'label' => '入驻进度',

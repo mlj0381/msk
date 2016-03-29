@@ -48,6 +48,16 @@ $db['sellers'] = array(
             'required' => true,
             'comment' => '登录密码加密所用账号',
         ),
+        'password' => array(
+            'type' => 'varchar(100)',
+            'required' => true,
+            'comment' => '明文登录密码',
+        ),
+        'api_seller' => array(
+            'type' => 'number',
+            'default' => 0,
+            'comment' => '润和商家主键id',
+        ),
         'disabled' => array(
             'type' => 'bool',
             'default' => 'false',

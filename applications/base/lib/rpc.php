@@ -114,10 +114,10 @@ class base_rpc
 			$key = $index . md5(json_encode($data));			
 			$path = $this->_cache_path . $this->app_id;			
 			base_kvstore::instance($path)->fetch($key, $this->result);			
-		}		
+		}
 		if(empty($this->result))
 		{
-			$this->_request($index, $data);			
+			$this->_request($index, $data);
 			if($this->status && $expire !== false && $this->result) {
 				base_kvstore::instance($path)->store($key, $this->result, $expire);
 			}

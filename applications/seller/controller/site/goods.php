@@ -114,7 +114,8 @@ class seller_ctl_site_goods extends seller_frontpage
          * 品牌列表
          * IPD141114 2 物流区（仓库）
          */
-
+        base_kvstore::instance('seller_goods')->fetch('seller_'. $goods_id, $goods);
+        if($goods) return $goods;
         if (is_numeric($goods_id)) {
             $this->pagedata['goods'] = $this->mB2cGoods->dump($goods_id, '*', 'default');
             //获取商品库存信息
@@ -339,6 +340,7 @@ class seller_ctl_site_goods extends seller_frontpage
             }
         }
         $db->commit();
+        base_kvstore::instance('seller_goods')->store('seller_'. $goods['goods_id'], $goods, 2592000);
         $this->splash('success', $redirect_url, '商品添加成功');
     }
 

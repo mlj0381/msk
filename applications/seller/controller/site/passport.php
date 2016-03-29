@@ -335,18 +335,6 @@ class seller_ctl_site_passport extends seller_frontpage
             $this->splash('error', $signup_url, $msg);
         }
         $seller_sdf_data = $this->passport_obj->pre_signup_process($post);
-        //调用润和接口
-//        $api_data = array(
-//            'login_account' => $seller_sdf_data['pam_account']['login_account'],
-//            'mobile' => $seller_sdf_data['seller_sellers']['mobile'],
-//            'login_password' => $post['pam_account']['login_password'],
-//            'contact_person' => $seller_sdf_data['pam_account']['login_account'],
-//            'fromFlg' => '1',
-//            'show_name' => $seller_sdf_data['pam_account']['login_account'],
-//            'insertFlag' => '1',
-//        );
-        //$result = $this->app->rpc('edit_seller_info')->request($api_data);
-        //end接口调用
         if ($seller_id = $this->passport_obj->save_sellers($seller_sdf_data, $msg)) {
             /*
               //本站会员注册完成后做某些操作!
@@ -507,9 +495,12 @@ class seller_ctl_site_passport extends seller_frontpage
         $this->splash('success', $forward, '退出登录成功');
     }
 
+
+
     // 入驻
     public function entry($step = 0, $type)
     {
+
         /**
          * 润和接口 商家入驻
          * ISL231180 编辑卖家信息All
@@ -530,6 +521,7 @@ class seller_ctl_site_passport extends seller_frontpage
          * 店铺信息本地保存不提交到接口
          */
         $this->verify();
+        //$result = $this->passport_obj->apiEntry();die;
         $redirect = $this->gen_url(array(
             'app' => 'seller',
             'ctl' => 'site_passport',
@@ -570,6 +562,10 @@ class seller_ctl_site_passport extends seller_frontpage
         if ($step > $countPage['sum']) {
             $this->page('site/passport/signup_complete.html');
         } else {
+            //信息全部已提交全部
+
+            $redirect = $this->gen_url(array('app' => 'seller', 'ctl' => 'site_passport', 'act' => 'entry'));
+            //!$result && $this->splash('error', $redirect, '注册失败');
             $this->page('site/passport/signup_companyInfo.html');
         }
     }
@@ -689,6 +685,7 @@ class seller_ctl_site_passport extends seller_frontpage
             'apt_technology', 'apt_transport');
         if (in_array($html_type, $html_arr)) {
             $this->pagedata['card'] = app::get('b2c')->model('goods')->fileCard($html_type, $this->_request->get_get('cat'));
+
             $this->display('ui/aptitude/' . $html_type . '.html');
         }
     }
