@@ -26,7 +26,7 @@ $remote['seller_select_company_brand'] = array(
             'name' => '企业ID',
             'column' => 'epId',
             'type' => 'Integer',
-            'require' => true,
+            'require' => false,
         ),
         'brandId' => array(
             'name' => '品牌ID',
@@ -58,6 +58,11 @@ $remote['seller_select_company_brand'] = array(
         'brandName' => array(
             'name' => '品牌名称',
             'column' => 'brandName',
+            'type' => 'String',
+        ),
+        'brandClass' => array(
+            'name' => '品牌分类',
+            'column' => 'brandClass',
             'type' => 'String',
         ),
         'brandNo' => array(
