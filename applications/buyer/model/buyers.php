@@ -87,18 +87,24 @@ class buyer_mdl_buyers extends dbeav_model{
 		$request['regtime'] = $request['createtime'] = $log_data['createtime'];
 		$request['schedule'] = '2';
 		if ($this->app->model('buyers')->update($request,array('buyer_id'=>$request['buyer_id']))){
-			$userdata = array(
-				'buyer_id' => $request['buyer_id'],
-				'login_account' => $log_data['login_account'],
-			);
-			$this->autologin($userdata);
+			$this->request_rpc($request);
 			return TRUE;
 		}
 		return FALSE;
 		
 	}
 	
-	
+	public function request_rpc($request){
+		$rpc_model = $this->app->rpc('register');
+		$data = [
+			'telNo' => '',
+		
+			
+		
+		
+		];
+		
+	}
 	
 	public function get_schedule($buyer_id){
 		$data = $this->getRow('schedule',array('buyer_id' => (int)$buyer_id));
@@ -110,16 +116,15 @@ class buyer_mdl_buyers extends dbeav_model{
 	}
 	
 	public function reset_password($user_id,$old_password,$new_password){
-		$mdl_pm_sellers = app::get('pam')->model('sellers');
-		$check_data = $mdl_pm_sellers->getRow('login_account,createtime,password_account,login_password',array('seller_id'=>$user_id));
+		$mdl_pm_buyers = app::get('pam')->model('buyers');
+		$check_data = $mdl_pm_buyers->getRow('login_account,createtime,password_account,login_password',array('buyer_id'=>$user_id));
 		
 		$use_pass_data['login_name'] = $check_data['password_account'];
 		$use_pass_data['createtime'] = $check_data['createtime'];
 		if (pam_encrypt::get_encrypted_password($old_password, 'seller',$use_pass_data) == $check_data['login_password']){
 			$reset['login_password'] = pam_encrypt::get_encrypted_password($new_password, 'seller',$use_pass_data);
-			if ($mdl_pm_sellers->update($reset,array('seller_id'=>$user_id))){
-				vmc::singleton('base_session')->start();
-				vmc::singleton('buyer_user_object')->set_session();
+			if ($mdl_pm_buyers->update($reset,array('buyer_id'=>$user_id))){
+				vmc::singleton('buyer_user_object')->set_session($user_id, '');
 				//修改成功
 				return 'success';
 			}else {
