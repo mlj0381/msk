@@ -1,10 +1,10 @@
 <?php
 /**
- * 更新收货地址---------------IBY121208
+ * 验证码短信平台接口---------------IOL101001
  */
-$remote['b2c_update_delivery_address'] = array(
+$remote['b2c_send_code'] = array(
 
-    'url' => '/by/receiveAddr/update',
+    'url' => '/ol/send/captcha',
 
     'request' => array(
         'member_id' => array(
@@ -23,25 +23,19 @@ $remote['b2c_update_delivery_address'] = array(
     ),
 
     'param' => array(
-        'buyerId' => array(
-            'name' => '买家ID',
-            'column' => 'buyerId',
+        'mobile' => array(
+            'name' => '手机号码',
+            'column' => 'mobile',
             'type' => 'String',
             'require' => true,
-        ),
-        'receiveAddr' => array(
-            'name' => '收货地址',
-            'column' => 'receiveAddr',
-            'type' => 'String',
-            'require' => true,
-        ),
-        'updId' => array(
-            'name' => '更新者ID',
-            'column' => 'updId',
-            'type' => 'String',
-            'require' => false,
         ),
     ),
 
-    'response' => array(),
+    'response' => array(
+        'captcha' => array(
+            'name' => '手机验证码',
+            'column' => 'captcha',
+            'type' => 'String',
+        ),
+    ),
 );

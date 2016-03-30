@@ -1,0 +1,51 @@
+<div class="order-detail-container">
+    <div class="page-header">
+        <h1>订单详情
+        </h1>
+    </div>
+<div class="panel panel-default">
+    <div class="panel-heading clearfix">
+        <h3 class="panel-title">订单信息</h3>
+    </div>
+    <div class="panel-body">
+        <dl class="dl-horizontal">
+            <dt>收货人信息:</dt>
+            <dd><{$detail.buyersName}></dd>
+            <dt>收货地址:</dt>
+            <dd><{$detail.receiveInfo.receiverProvince}><{$detail.receiveInfo.receiverCity}><{$detail.receiveInfo.receiverDistrict}><{$detail.receiveInfo.receiverAddr}></dd>
+            <dt>订单备注:</dt>
+            <dd><{$detail.receiveInfo.remark}></dd>
+            <dt>状态:</dt>
+            <dd><{$detail.pay_status}></dd>
+        </dl>
+        <dl class="dl-horizontal">
+            <dt>订单编号:</dt>
+            <dd><{$detail.orderCode}></dd>
+            <dt>下单时间:</dt>
+            <dd><{$detail.orderTime}></dd>
+        </dl>
+    </div>
+    <ul class="list-group">
+        <li>
+            <div class="row goods_item_thead">
+                <div class="col-xs-10">
+                    <div class="col-xs-5 left" style="padding-left:0">商品信息</div>
+                    <div class="col-xs-2">数量：<{$detail.count_goods}></div>
+                </div>
+            </div>
+        </li>
+        <li class="list-group-item clearfix">
+            <div class="row">
+                <div class="col-xs-4">
+                    <dl class="dl-horizontal">
+                        <br>
+                        <dt>订单应付总金额：</dt>
+                        <dd class="text-danger">￥<strong><{$detail.orderAmount}></strong></dd>
+                    </dl>
+                </div>
+            </div>
+        </li>
+
+    </ul>
+</div>
+</div>

@@ -4,17 +4,16 @@
     </div>
     <ul class="nav nav-tabs my-pruchase-nav">
         <li <{if !$current_status||$current_status=='all' }>class="active"
-            <{/if}>><a href="<{link app=buyer ctl=site_goods act=stock}>">全部订单</a></li>
-        <li <{if $current_status=='s1' }>class="active"
-            <{/if}>><a href="<{link app=buyer ctl=site_goods act=stock args0=s1}>">待付款</a></li>
-        <li <{if $current_status=='s2' }>class="active"
-            <{/if}>><a href="<{link app=buyer ctl=site_goods act=stock args0=s2}>">交易成功</a></li>
-        <li class="order-trash"><a href="<{link app=buyer ctl=site_goods act=stock_trash}>">订单回收站</a></li>
+            <{/if}>><a href="<{link app=buyer ctl=site_goods act=store}>">全部订单</a></li>
+        <li <{if $current_status=='2' }>class="active"
+            <{/if}>><a href="<{link app=buyer ctl=site_goods act=store args0=2}>">待付款</a></li>
+        <li <{if $current_status=='8' }>class="active"
+            <{/if}>><a href="<{link app=buyer ctl=site_goods act=store args0=8}>">交易成功</a></li>
     </ul>
     <div class="order-screening clearfix">
-        <form class="form-inline" action="<{link app=buyer ctl=site_goods act=stock args0=$current_status}>" method="post">
+        <form class="form-inline" action="<{link app=buyer ctl=site_goods act=store args0=$current_status}>" method="post">
           <div class="form-group">
-            <input type="text" class="form-control" name="search" value="<{$search}>" placeholder="订单号/订单日期" >
+            <input type="text" class="form-control" name="search" value="<{$search}>" placeholder="订单号" >
           </div>
           <div class="form-group">
             <button type="submit" class="btn btn-default">搜索</button>
@@ -23,6 +22,7 @@
     </div>
 </div>
 <!-- if $order_list -->
+<{if $order_list}>
 <div class="my-orders-list mem-pruchase-list">
     <table class="table mo-list-head">
         <thead>
@@ -59,27 +59,28 @@
         </thead>
     </table>
     <!-- foreach订单开始 -->
+    <{foreach from=$order_list item=order}>
     <table class="table mo-list-items table-bordered status-<{$order.status}>">
         <thead>
             <tr class="text-nowrap">
-                <th width="100%" colspan="4">
+                <th width="100%" colspan="5">
                     <ul class="list-inline">
                         <li>
-                            <{$order.createtime|cdate}>
+                            <{$order.orderTime|cdate}>
                         </li>
-                        <li>订单编号:<a class="text-muted" href="<{link app=buyer ctl=site_goods act=detail args0=$order.order_id}>"><strong>2378237928736</strong></a></li>
-                        <li><a class="text-muted" href="#">店铺AAA</a></li>
+                        <li>订单编号:<a class="text-muted" href="<{link app=buyer ctl=site_goods act=detail args0=$order.order_id}>"><strong><{$order.orderCode}></strong></a></li>
+                        <li>店铺:<a class="text-muted" href="#"><{$order.sellerName}></a></li>
                         <li class="opt-contact"><a class="text-muted" href="#">联系客服</a></li>
-                        <li class="opt-delete"><a class="confirm" href="javascript:;" data-url="<{link app=buyer ctl=site_goods act=del args0='88'}>">删除</a></li>
                     </ul>
                 </th>
             </tr>
         </thead>
         <tbody>
             <tr>
-                <td width="70%" class="item-info">
+                <td width="60%" class="item-info">
                     <div>
                     <!-- foreach 商品开始-->
+                    <{foreach from=$order.orderDetail item=goods}>
 	                    <div class="row mo-item <{if $env.foreach.oig.last}>last<{/if}>">
 	                        <div class="col-xs-2 i-img">
 	                            <a href="<{link app=b2c ctl=site_product act=index args0=$item.product_id args1=$order.store_id}>">
@@ -88,238 +89,58 @@
 	                        <div class="col-xs-3 i-name">
 	                            <a class="text-muted" href="<{link app=b2c ctl=site_product act=index args0=$item.product_id args1=$order.store_id}>">
 	                                <!-- <{$item.name}> -->
-	                                沙县小吃专用食材 冻鸡腿 单冻鸡琵琶腿
+	                                <{$goods.pdName}>
 	                            </a>
 	                            <br>
 	                            50只/包
 	                        </div>
 	                        <div class="col-xs-2 i-amount text-center">
 	                            <!-- <{$item.amount|cur}> -->
-	                            2包
+	                            <{$goods.orderQty}>
 	                        </div>
 	                        <div class="col-xs-2 i-price text-center">
 	                            <!-- <{$item.buy_price|cur}> -->
-	                            ￥100.00
-	                        </div>
-	                        <div class="col-xs-3 i-opt text-center">
-	                            <a href="#" class="btn btn-default">评价商品</a>
-	                            <a href="#" class="btn btn-default">退款/退货</a>
-	                        </div>
-	                    </div>
-	                    <div class="row mo-item <{if $env.foreach.oig.last}>last<{/if}>">
-	                        <div class="col-xs-2 i-img">
-	                            <a href="<{link app=b2c ctl=site_product act=index args0=$item.product_id args1=$order.store_id}>">
-	                                <img class="img-thumbnail" src="<{$item.image_id|storager:'xs'}>" alt="<{$item.name}>" /></a>
-	                        </div>
-	                        <div class="col-xs-3 i-name">
-	                            <a class="text-muted" href="<{link app=b2c ctl=site_product act=index args0=$item.product_id args1=$order.store_id}>">
-	                                <!-- <{$item.name}> -->
-	                                沙县小吃专用食材 冻鸡腿 单冻鸡琵琶腿
-	                            </a>
-	                            <br>
-	                            50只/包
-	                        </div>
-	                        <div class="col-xs-2 i-amount text-center">
-	                            <!-- <{$item.amount|cur}> -->
-	                            2包
-	                        </div>
-	                        <div class="col-xs-2 i-price text-center">
-	                            <!-- <{$item.buy_price|cur}> -->
-	                            ￥100.00
-	                        </div>
-	                        <div class="col-xs-3 i-opt text-center">
-	                            <a href="#" class="btn btn-default">评价商品</a>
-	                            <a href="#" class="btn btn-default">退款/退货</a>
+	                            	￥<{$goods.pdPrice}>
 	                        </div>
 	                    </div>
                     <!-- /foreach结束 -->
+                    <{/foreach}>
                     </div>
                 </td>
                 <!-- 订单总价 -->
+                <td class="text-center" width="10%">
+					<a href="#" class="btn btn-default">退货</a>
+				</td>
 				<td class="text-center" width="10%">
-					￥200.00
+					￥<{$order.orderAmount}>
 				</td>
 				<!-- 订单状态 -->
                 <td class="text-center" width="10%">
-
-                	待付款
-
-                    <{if $order.pay_status eq '0' && $order.status eq 'active' && $order.is_cod eq 'N'}>
-                    待付款<br/>
-                    <{/if}>
-                    <{if ($order.pay_status eq '1' || $order.is_cod eq 'Y') &&$order.ship_status eq '0' && $order.status eq
-                    'active'}>
-                    待发货<br/>
-                    <{/if}>
-                    <{if ($order.pay_status eq '1' || $order.is_cod eq 'Y') &&$order.ship_status eq '1' && $order.confirm eq 'N'}>
-                    待收货<br/>
-                    <{/if}>
-                    
-                    <{if ($order.pay_status eq '1' || $order.is_cod eq 'Y') && $order.ship_status eq '1' && $order.confirm eq 'Y' && $order.comment_type eq '0'}>
-                    待评价<br />
-                    <{/if}>
-                    
-                    <{if $order.pay_status eq '1' &&$order.ship_status eq '1' && $order.confirm eq 'Y' && $order.comment_type neq '0'}>
-                    交易成功<br/>
-                    <{/if}>
-                    
-                    <{if $order.status eq 'dead'}>
-                    交易关闭<br/>
-                    <{/if}>
-                    
-                    <br>
-                    <{if $order.is_cod=='Y' }>
-                    <span class="label label-default">货到付款</span>
-                    <br>
-                    <{/if}>
+                <{$order.pay_status}>
                 </td>
                 <!-- 订单操作 -->
                 <td width="10%" class="o-opt">
                     <div class="order_cz">
                             <!-- <a href="<{link app=b2c ctl=site_order act=detail args0=$order.order_id args1=logistics_tracker}>" class="btn_link btn-block">追踪物流</a> -->
-                            <a href="<{link app=b2c ctl=site_checkout act=payment args0=$order.order_id}>" class="btn btn-danger">去付款</a>
-                            <a href="<{link app=buyer ctl=site_goods act=detail args0=$order.order_id}>" class="btn btn_link btn-default">订单详情</a>
+                            <a href="<{link app=b2c ctl=site_checkout act=payment args0=$order.orderId}>" class="btn btn-danger">去付款</a>
+                            <a href="<{link app=b2c ctl=site_order act=detail args0=$order.orderId}>" class="btn btn_link btn-default">订单详情</a>
                     </div>
                 </td>
             </tr>
         </tbody>
     </table>
-
-
-    <table class="table mo-list-items table-bordered status-<{$order.status}>">
-        <thead>
-            <tr class="text-nowrap">
-                <th width="100%" colspan="4">
-                    <ul class="list-inline">
-                        <li>
-                            <{$order.createtime|cdate}>
-                        </li>
-                        <li>订单编号:<a class="text-muted" href="<{link app=buyer ctl=site_goods act=detail args0=$order.order_id}>"><strong>2378237928736</strong></a></li>
-                        <li><a class="text-muted" href="#">店铺AAA</a></li>
-                        <li class="opt-contact"><a class="text-muted" href="#">联系客服</a></li>
-                        <li class="opt-delete"><a class="confirm" href="javascript:;" data-url="<{link app=buyer ctl=site_goods act=del args0=$order.order_id}>">删除</a></li>
-                    </ul>
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td width="70%" class="item-info">
-                    <div>
-                    <!-- foreach 商品-->
-	                    <div class="row mo-item <{if $env.foreach.oig.last}>last<{/if}>">
-	                        <div class="col-xs-2 i-img">
-	                            <a href="<{link app=b2c ctl=site_product act=index args0=$item.product_id args1=$order.store_id}>">
-	                                <img class="img-thumbnail" src="<{$item.image_id|storager:'xs'}>" alt="<{$item.name}>" /></a>
-	                        </div>
-	                        <div class="col-xs-3 i-name">
-	                            <a class="text-muted" href="<{link app=b2c ctl=site_product act=index args0=$item.product_id args1=$order.store_id}>">
-	                                <!-- <{$item.name}> -->
-	                                沙县小吃专用食材 冻鸡腿 单冻鸡琵琶腿
-	                            </a>
-	                            <br>
-	                            50只/包
-	                        </div>
-	                        <div class="col-xs-2 i-amount text-center">
-	                            <!-- <{$item.amount|cur}> -->
-	                            2包
-	                        </div>
-	                        <div class="col-xs-2 i-price text-center">
-	                            <!-- <{$item.buy_price|cur}> -->
-	                            ￥100.00
-	                        </div>
-	                        <div class="col-xs-3 i-opt text-center">
-	                            <a href="#" class="btn btn-default">评价商品</a>
-	                            <a href="#" class="btn btn-default">退款/退货</a>
-	                        </div>
-	                    </div>
-	                    <div class="row mo-item <{if $env.foreach.oig.last}>last<{/if}>">
-	                        <div class="col-xs-2 i-img">
-	                            <a href="<{link app=b2c ctl=site_product act=index args0=$item.product_id args1=$order.store_id}>">
-	                                <img class="img-thumbnail" src="<{$item.image_id|storager:'xs'}>" alt="<{$item.name}>" /></a>
-	                        </div>
-	                        <div class="col-xs-3 i-name">
-	                            <a class="text-muted" href="<{link app=b2c ctl=site_product act=index args0=$item.product_id args1=$order.store_id}>">
-	                                <!-- <{$item.name}> -->
-	                                沙县小吃专用食材 冻鸡腿 单冻鸡琵琶腿
-	                            </a>
-	                            <br>
-	                            50只/包
-	                        </div>
-	                        <div class="col-xs-2 i-amount text-center">
-	                            <!-- <{$item.amount|cur}> -->
-	                            2包
-	                        </div>
-	                        <div class="col-xs-2 i-price text-center">
-	                            <!-- <{$item.buy_price|cur}> -->
-	                            ￥100.00
-	                        </div>
-	                        <div class="col-xs-3 i-opt text-center">
-	                            <a href="#" class="btn btn-default">评价商品</a>
-	                            <a href="#" class="btn btn-default">退款/退货</a>
-	                        </div>
-	                    </div>
-                    <!-- /foreach -->
-                    </div>
-                </td>
-                <!-- 订单总价 -->
-				<td class="text-center" width="10%">
-					￥200.00
-				</td>
-				<!-- 订单状态 -->
-                <td class="text-center" width="10%">
-
-                	待付款
-
-                    <{if $order.pay_status eq '0' && $order.status eq 'active' && $order.is_cod eq 'N'}>
-                    待付款<br/>
-                    <{/if}>
-                    <{if ($order.pay_status eq '1' || $order.is_cod eq 'Y') &&$order.ship_status eq '0' && $order.status eq
-                    'active'}>
-                    待发货<br/>
-                    <{/if}>
-                    <{if ($order.pay_status eq '1' || $order.is_cod eq 'Y') &&$order.ship_status eq '1' && $order.confirm eq 'N'}>
-                    待收货<br/>
-                    <{/if}>
-                    
-                    <{if ($order.pay_status eq '1' || $order.is_cod eq 'Y') && $order.ship_status eq '1' && $order.confirm eq 'Y' && $order.comment_type eq '0'}>
-                    待评价<br />
-                    <{/if}>
-                    
-                    <{if $order.pay_status eq '1' &&$order.ship_status eq '1' && $order.confirm eq 'Y' && $order.comment_type neq '0'}>
-                    交易成功<br/>
-                    <{/if}>
-                    
-                    <{if $order.status eq 'dead'}>
-                    交易关闭<br/>
-                    <{/if}>
-                    
-                    <br>
-                    <{if $order.is_cod=='Y' }>
-                    <span class="label label-default">货到付款</span>
-                    <br>
-                    <{/if}>
-                </td>
-                <!-- 订单操作 -->
-                <td width="10%" class="o-opt">
-                    <div class="order_cz">
-                            <!-- <a href="<{link app=b2c ctl=site_order act=detail args0=$order.order_id args1=logistics_tracker}>" class="btn_link btn-block">追踪物流</a> -->
-                            <a href="<{link app=buyer ctl=site_order act=detail args0=$order.order_id}>" class="btn btn-danger">去付款</a>
-                            <a href="<{link app=buyer ctl=site_order act=detail args0=$order.order_id}>" class="btn btn_link btn-default">订单详情</a>
-                    </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+    <{/foreach}>
     <!-- /foreach 结束-->
 </div>
 <{pagers data=$pager}>
 <!-- else -->
+    <{else}>
 <br>
 <div class="alert alert-info">
     <h2>暂无</h2>
 </div>
 <!-- /if -->
+<{/if}>
 <script>
 $(function(){
 	$('.confirm').click(function(){

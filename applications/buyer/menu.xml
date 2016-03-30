@@ -20,7 +20,7 @@
     </menugroup>
     
     <menugroup label="交易管理" name="goods">
-    	<menu app='buyer' controller='site_goods' action='stock' display='true' order="60">订单管理</menu>
+    	<menu app='buyer' controller='site_goods' action='stock' display='true' order="60">销售订单管理</menu>
         <!-- <menu app='buyer' controller='site_accounts' action='index' display='true' order="60">结算管理</menu> -->
         <!-- <menu app='buyer' controller='site_goods' action='index' display='true' order="60">出货管理</menu> -->      
     </menugroup>
@@ -34,7 +34,7 @@
         <menu app='buyer' controller='site_manager' action='index' display='true' order="60">冻品管家管理</menu>
         <menu app='buyer' controller='site_manager' action='signup' display='true' order="60">管家注册</menu>
         <!--<menu app='buyer' controller='site_manager' action='certification' display='true' order="60">资质信息</menu>-->
-        <menu app='buyer' controller='site_manager' action='feat' display='true' order="60">业绩查询</menu>
+        <!--<menu app='buyer' controller='site_manager' action='feat' display='true' order="60">业绩查询</menu>-->
     </menugroup>
     
     <menugroup label="客户服务" name="service">
