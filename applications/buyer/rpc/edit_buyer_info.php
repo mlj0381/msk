@@ -134,13 +134,13 @@ $remote['buyer_edit_buyer_info'] = array(
             'name' => '大区编码',
             'column' => 'areaCode',
             'type' => 'String',
-            'require' => true,
+            'require' => false,
         ),
         'lgcsAreaCode' => array(
             'name' => '物流区编码',
             'column' => 'lgcsAreaCode',
             'type' => 'String',
-            'require' => true,
+            'require' => false,
         ),
         'provinceCode' => array(
             'name' => '省编码',
