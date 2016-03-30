@@ -3,8 +3,8 @@
  * 订单列表查询接口---------------ISO151416
  */
 $remote['buyer_get_orders_list'] = array(
-    'url' => '/so/sdo/list',
-
+    'url' => '/so/sdo/detail',
+	'version' => 'v2',
     'request' => array(
         'member_id' => array(
             'name' => '登陆的用户ID',
@@ -32,12 +32,6 @@ $remote['buyer_get_orders_list'] = array(
         'buyersCode' => array(
             'name' => '买家编码',
             'column' => 'buyersCode',
-            'type' => 'String',
-            'require' => false,
-        ),
-        'sellerCode' => array(
-            'name' => '卖家编码',
-            'column' => 'sellerCode',
             'type' => 'String',
             'require' => false,
         ),

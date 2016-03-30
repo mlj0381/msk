@@ -40,23 +40,7 @@ class b2c_ctl_site_list extends b2c_frontpage
 
 
     public function index($fix_brand = false)
-    {
-    	
-    	$mdl_rpc = $this->app->rpc('goods_info');
-    	$data = [];
-    	$return = $mdl_rpc->request($data,false);
-    	$cart_objects = utils::array_change_key($return['result']['goods'], 'goods_code');
-    	var_dump($cart_objects['011010301']);exit;
-    	
-    	
-    	
-    	
-    	
-    	
-    	
-    	
-    	
-    	
+    { 	
         /**
          * 润和接口
          * IPD141129 货品（商品特征）
