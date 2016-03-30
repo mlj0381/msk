@@ -33,7 +33,7 @@ $remote['b2c_send_code'] = array(
 
     'response' => array(
         'captcha' => array(
-            'name' => '手机号码',
+            'name' => '手机验证码',
             'column' => 'captcha',
             'type' => 'String',
         ),
