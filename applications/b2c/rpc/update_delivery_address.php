@@ -14,15 +14,15 @@ $remote['b2c_update_delivery_address'] = array(
             'default' => '',
             'require' => false,
         ),
-        'paramList' => array(
+        'param' => array(
             'name' => '业务参数',
-            'column' => 'paramList',
+            'column' => 'param',
             'type' => 'Object',
             'require' => false,
         ),
     ),
 
-    'paramList' => array(
+    'param' => array(
         'buyerId' => array(
             'name' => '买家ID',
             'column' => 'buyerId',
