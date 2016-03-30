@@ -90,7 +90,7 @@ $remote['freeze_editorbuyer'] = array(
             'name' => '  删除标志',
             'column' => 'delFlg',
             'type' => 'String',
-            'default' => '',
+            'default' => '1',
             'require' => false
         ),
         'loginId' => array(
