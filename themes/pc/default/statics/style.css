@@ -362,7 +362,8 @@ ol {
   border: 1px solid #ddd;
 }
 .product-container .product-page .product_firstRow h1 {
-  font-size: 18px;
+  font-size: 16px;
+  line-height: 24px;
 }
 .product-container .product-page .product_firstRow .pricebox {
   background: #eb8787;
@@ -727,7 +728,7 @@ ol {
 }
 .product-container .product-page .goods-detailRow .product-page-content .tab-content .description .pro_param li {
   float: left;
-  width: 200px;
+  width: 270px;
   height: 22px;
   line-height: 22px;
   color: #666;
