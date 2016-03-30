@@ -85,10 +85,11 @@ class freeze_ctl_site_passport extends freeze_frontpage{
         $this->user_obj->set_member_session($member_id);
 
         $forward = $params['forward'];
+
         if (!$forward) {
             $forward = $this->gen_url(array(
                 'app' => 'freeze',
-                'ctl' => 'site_freeze',
+                'ctl' => 'site_account',
                 'act' => 'index',
             ));
         }
@@ -143,9 +144,9 @@ class freeze_ctl_site_passport extends freeze_frontpage{
         $this->unset_member();
         if (!$forward) {
             $forward = $this->gen_url(array(
-                'app' => 'site',
-                'ctl' => 'index',
-                'full' => 1,
+                'app' => 'freeze',
+                'ctl' => 'site_passport',
+                'act' => 'login',
             ));
         }
         $this->splash('success', $forward, '退出登录成功');

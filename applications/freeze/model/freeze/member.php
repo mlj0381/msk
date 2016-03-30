@@ -21,14 +21,23 @@ class freeze_mdl_freeze_member extends dbeav_model
         $buyer_code = app::get('buyer')->model('buyers')->getRow('buyer_code',array('buyer_id'=>$freeze['buyer_id']));
         $refer_id =  app::get('b2c')->model('members')->getRow('refer_id',array('member_id'=>$data['member_id']));
         $api_data = $data;
+        $rpc_editorbuyer = app::get('freeze')->rpc("editorbuyer");
+
+        if($api_data['status'] == '1')
+        {
+            $del_data['code'] = $freeze['code'];
+            $del_data['refer_id'] = $refer_id['refer_id'];
+            $del_data['buyer_code'] = $buyer_code['buyer_code'];
+            $del_data['delFlg'] = '1';
+             $rpc_editorbuyer->request($del_data);
+        }
         $api_data['refer_id'] = $refer_id['refer_id'];
         $api_data['buyer_code'] = $buyer_code['buyer_code'];
         $api_data['code'] = $freeze['code'];
         $api_data['apply_type'] = $api_data['apply_type']=='1'?'A':'B';
         $api_data['status'] = $api_data['status']=='0'?'1':'2';
-        $api_data['time'] = date('Y-m-d',$api_data['time']);
-        $api_data['apply_time'] = date('Y-m-d',$api_data['time']);
-        $rpc_editorbuyer = app::get('freeze')->rpc("editorbuyer");
+        $api_data['time'] = $api_data['apply_time'] = date('Y-m-d',$api_data['time']?$api_data['time']:time());
+
         $result = $rpc_editorbuyer->request($api_data);
         if($result)
         {

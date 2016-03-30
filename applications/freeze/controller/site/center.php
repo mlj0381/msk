@@ -10,7 +10,7 @@ class freeze_ctl_site_center extends freeze_frontpage{
 
     public function index()
     {
-        app::get('b2c')->model('dlyplace')->get_api_area();
+//        app::get('b2c')->model('dlyplace')->get_api_area();
 //        $region = "mainland:江西/抚州/临川区:1775";
 //        $result = app::get('ectools')->model('regions')->region_decode($region);
         $this->output();
