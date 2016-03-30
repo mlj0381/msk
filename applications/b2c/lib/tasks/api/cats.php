@@ -78,6 +78,26 @@ class b2c_tasks_api_cats extends base_task_abstract implements base_interface_ta
                                             'addon' => $cat4['featureCode'],
                                         );
                                         $mdl_cat->save($row4);
+
+                                        //查询五级分类、产品净重分类
+                                        $cat4['classesCode'] = $cat1['classesCode'];
+                                        $cat4['machiningCode'] = $cat2['machiningCode'];
+                                        $cat4['breedCode'] = $cat3['breedCode'];
+                                        $result_cat5 = app::get('b2c')->rpc("select_product_cat5")->request($cat4);
+                                        if ($result_cat5['status'] && !empty($result_cat5['result'])) {
+                                            foreach ($result_cat5['result'] as $cat5) {
+                                                if (!$row5 = $mdl_cat->getRow('cat_id', array('cat_name' => $cat4['featureName'], 'parent_id' => $row4['cat_id']))) {
+                                                    //保存三级级分类
+                                                    $row5 = array(
+                                                        'parent_id' => $row4['cat_id'],
+                                                        'has_children' => 'false',
+                                                        'cat_name' => $cat5['weightName'],
+                                                        'addon' => $cat5['weightCode'],
+                                                    );
+                                                    $mdl_cat->save($row5);
+                                                }
+                                            }
+                                        }
                                     }
                                 }
                             }
