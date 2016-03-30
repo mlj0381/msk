@@ -81,9 +81,8 @@
                     <span><b>运费</b> ￥:10.00</span>
                 </div>
                 <div class="distr_info">
-                    <label>商品编号 </label>
-                    <span>ASF3242342</span>
-                    <span><b>品牌：</b>美侍客</span>
+                    <label>品牌</label>
+                    <span>美侍客</span>
                 </div>
                 <div class="distr_info">
                     <label>产品规格 </label>
@@ -173,6 +172,7 @@
                         </div>
                     </div>
                     <div class="price-availability-block">
+                        <label>支付金额</label>
                         <span class="price text-danger">
                             <strong>￥<{$data_detail.product.price_up|cur}></strong>
                         </span>
@@ -192,6 +192,12 @@
                     </a>
                 </div>
                 <!--购买区end-->
+                <div class="distr_info" style="border:none">
+                    <label>支付方式 </label>
+                    <span>网银支付</span>
+                    <span>POSE支付</span>
+                    <span>会员卡支付</span>
+                </div>
             </div>
         </div>
 
@@ -308,13 +314,31 @@
                             <div class="description">
                                 <!-- <img src="<{$base_url}>/themes/pc/default/statics/images/details.jpg" /> -->
                                 <ul class="pro_param clearfix">
-                                    <li title="<{$data_detail.name}>">商品名称：<{$data_detail.name}></li>
+                                    <!-- <li title="<{$data_detail.name}>">商品名称：<{$data_detail.name}></li>
                                     <li title="<{$data_detail.gid}>">商品编号：<{$data_detail.gid}></li>
                                     <li title="<{$data_detail.brand.brand_name}>">品牌：<{$data_detail.brand.brand_name}></li>
                                     <li title="<{$data_detail.uptime|cdate}>">上架时间：<{$data_detail.uptime|cdate}></li>
                                     <li title="中国大陆">商品产地：中国大陆</li>
                                     <li title="28kg">商品毛重：28kg</li>
-                                    <li title="25kg">商品净重：25kg</li>
+                                    <li title="25kg">商品净重：25kg</li> -->
+                                    <li title="">商品品名：鸡大胸</li>
+                                    <li title="">销售名称：鸡大胸</li>
+                                    <li title="">产品特征：10只装/5.8kg/箱</li>
+                                    <li title="">产品类别：鸡产品</li>
+                                    <li title="">质量等级：A1等级</li>
+                                    <li title="">包装方式：箱</li>
+                                    <li title="">包装规格：10只装/箱</li>
+                                    <li title="">单箱净重：5.8kg</li>
+                                    <li title="">生产厂商：鲜驰达食品有限公司</li>
+                                    <li title="">商品品牌：美侍客</li>
+                                    <li title="">是否进口：否</li>
+                                    <li title="">生产日期：2015/12/15</li>
+                                    <li title="">产地：中国/台湾</li>
+                                    <li title="">配料：鸡大胸</li>
+                                    <li title="">产品标准号：93293220</li>
+                                    <li title="">食品生产许可证号：8234292342</li>
+                                    <li title="">储藏条件：冷冻</li>
+                                    <li title="">保质期：6个月</li>
                                 </ul>
                                 <{$data_detail.description}>
                             </div>
