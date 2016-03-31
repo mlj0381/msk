@@ -5,7 +5,6 @@
 
     <div class="form-group">
         <label class="col-xs-2 control-label"><span class="text-danger">*</span><span>商品类目</span></label>
-
         <div class="col-xs-8">
             <{input type="category" class="study" identity="store" seller=$seller_id name="goods[category][cat_id]"
             value=$goods.category.cat_id
@@ -34,13 +33,9 @@
     </div>
     <div class="form-group">
         <label class="col-xs-2 control-label"><span class="text-danger">*</span><span>包装</span></label>
-
         <div class="col-xs-5">
             <div class="form-item pack">
-                <span><input type="checkbox" name="" value="1"> 10只/袋/9.5kg</span>
-                <span><input type="checkbox" name="" value="2"> 10只/袋/9.5kg</span>
-                <span><input type="checkbox" name="" value="3"> 10只/袋/9.5kg</span>
-                <span><input type="checkbox" name="" value="4"> 10只/袋/9.5kg</span>
+
             </div>
         </div>
     </div>
@@ -146,13 +141,13 @@
                   title="储存运输标准指标">运
                 <input type="hidden" name="apt_transport" value="0"/>
             </span>
-            <span class="apt_tag active apt_pack-1" data-toggle="modal"
-                  data-target=".category_add_modal"
-                  href="<{link app=seller ctl=site_passport act=display_type args0=apt_pack}>"
-                  data-tagId="9"
-                  title="包装标准指标">包
-                <input type="hidden" name="apt_pack" value="0"/>
-            </span>
+            <!--<span class="apt_tag active apt_pack-1" data-toggle="modal"-->
+                  <!--data-target=".category_add_modal"-->
+                  <!--href="<{link app=seller ctl=site_passport act=display_type args0=apt_pack}>"-->
+                  <!--data-tagId="9"-->
+                  <!--title="包装标准指标">包-->
+                <!--<input type="hidden" name="apt_pack" value="0"/>-->
+            <!--</span>-->
         </div>
     </div>
     <hr>
@@ -224,10 +219,16 @@
             $(item).attr('href', url[0] + '?cat=' + apiCatId);
         });
         //获取包装信息根据 1 2 3 4 5 级分类获取
+        $('.pack').empty();
         var url = '<{link app=seller ctl=site_goods act=getPack}>';
-        var data = {cat : '01-1-01-02-01'};
+        var data = {cat : apiCatId + '-1'};
         $.post(url, data, function(re){
-
+            console.log(re.data);
+            var pack = '';
+            for(var i = 0; i < re.data.length; i++ ){
+                pack += $.VMC.format('<span><input type="checkbox" name="" value="{0}">{1}</span>', re.data[i].normsCode, re.data[i].normsName);
+            }
+            $('.pack').append($(pack));
         });
     };
     $(function (re) {

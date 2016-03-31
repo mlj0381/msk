@@ -142,7 +142,7 @@ class seller_ctl_site_goods extends seller_frontpage
         $return['cat'] = $mdl_goods_cat->get_tree('', null);
 
         //商品品牌
-        $return['brand'] = $this->app->model('brand')->getList('*', array('seller_id' => $this->seller['seller_id']));
+        $return['brand'] = app::get('b2c')->model('brand')->getList('*', array('seller_id' => $this->seller['seller_id']));
         //商品参数配置
         $return['goods_type'] = $this->getProp();
         $mdl_goods_type = app::get('b2c')->model('goods_type');
@@ -481,6 +481,16 @@ class seller_ctl_site_goods extends seller_frontpage
     public function getPack()
     {
         if(!$_POST) $this->splash('error', '', '非法请求');
+        $data = explode(',', $_POST['cat']);
+        $api_data = array(
+            'classesCode' => '01',//$data[0],
+            'machiningCode' => '2',//$data[1],
+            'breedCode' => '01',//$data[2],
+            'featureCode' => '01',//$data[3],
+            'weightCode' => '01',//$data[4],
+        );
+        $result = app::get('b2c')->rpc('select_product_cat6')->request($api_data, 2592000);
+        $this->splash('success', '', $result['result']);
     }
 
     //价格修改

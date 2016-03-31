@@ -115,7 +115,7 @@ class base_rpc
 		{			
 			$key = $index . md5(json_encode($data));			
 			$path = $this->_cache_path . $this->app_id;			
-			base_kvstore::instance($path)->fetch($key, $this->result);			
+			base_kvstore::instance($path)->fetch($key, $this->result);
 		}
 		if(empty($this->result))
 		{
@@ -146,8 +146,8 @@ class base_rpc
 			if(!isset($remote[$index])) return $this->error('Not found this request!');			
 			self::$_rpc_config[$index] = $remote[$index];			
 		}
-		$this->configs = self::$_rpc_config[$index];		
-		if(empty($this->configs['request'])) return ;	
+		$this->configs = self::$_rpc_config[$index];
+		if(empty($this->configs['request'])) return ;
 		
 		if(empty(self::$_rpc_config[$index]['url'])){
 			$this->error('Not found this Url!');
@@ -171,7 +171,7 @@ class base_rpc
 		$default = isset($default) ? $default : '';		
 		$value = $data === NUll ? $default : $data;
 		if(isset($item['require']) && $item['require'] == true && $value === '') {
-			return $this->error("{$key}=>{$column}为必填字段！");	
+			return $this->error("{$key}=>{$column}为必填字段！");
 		}
 		if(!isset($type)) $type == 'string';
 		switch(strtolower($type))
@@ -179,13 +179,13 @@ class base_rpc
 			case 'object':				
 				$result = Array();
 				if(isset($this->configs[$key]))
-				{				
+				{		
 					foreach($this->configs[$key] as $k => $val)
 					{
-						$column = isset($val['column']) ? $val['column'] : $k;						
+						$column = isset($val['column']) ? $val['column'] : $k;
 						$result[$column] = $this->_convert($k, $val, isset($value[$k]) ? $value[$k] : Null);
 					}
-				}				
+				}		
 				break;
 			case 'list':				
 				$result = Array();				

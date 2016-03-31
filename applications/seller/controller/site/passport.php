@@ -500,7 +500,6 @@ class seller_ctl_site_passport extends seller_frontpage
     // 入驻
     public function entry($step = 0, $type)
     {
-
         /**
          * 润和接口 商家入驻
          * ISL231180 编辑卖家信息All
@@ -521,7 +520,6 @@ class seller_ctl_site_passport extends seller_frontpage
          * 店铺信息本地保存不提交到接口
          */
         $this->verify();
-        //$result = $this->passport_obj->apiEntry();die;
         $redirect = $this->gen_url(array(
             'app' => 'seller',
             'ctl' => 'site_passport',
@@ -560,12 +558,12 @@ class seller_ctl_site_passport extends seller_frontpage
         $this->pagedata['pageSet'] = $columns;
         $this->pagedata['pageIndex'] = $step;
         if ($step > $countPage['sum']) {
+            $redirect = $this->gen_url(array('app' => 'seller', 'ctl' => 'site_passport', 'act' => 'entry'));
+            $result = $this->passport_obj->apiEntry();
+            !$result && $this->splash('error', $redirect, '注册失败');
             $this->page('site/passport/signup_complete.html');
         } else {
             //信息全部已提交全部
-
-            $redirect = $this->gen_url(array('app' => 'seller', 'ctl' => 'site_passport', 'act' => 'entry'));
-            //!$result && $this->splash('error', $redirect, '注册失败');
             $this->page('site/passport/signup_companyInfo.html');
         }
     }
@@ -655,6 +653,7 @@ class seller_ctl_site_passport extends seller_frontpage
         //查询商家所有的公司
         $this->pagedata['company'] = app::get('base')->model('company_seller')->getList('company_id, company_name',
             array('uid' => $this->seller['seller_id'], 'from' => 1));
+        $this->pagedata['type'] = 'entry';
         $this->display('ui/brand_add_modal.html');
     }
 
@@ -664,7 +663,7 @@ class seller_ctl_site_passport extends seller_frontpage
         $redirect = Array('app' => 'seller', 'ctl' => 'site_passport', 'act' => 'entry', 'args0' => ($count['sum'] - 1));
         $redirect = $this->gen_url($redirect);
         $post['brand']['seller_id'] = $this->seller['seller_id'];
-        if (!$this->mB2cbrand->save_brand($post)) {
+        if (!app::get('b2c')->model('brand')->save_brand($post)) {
             $this->splash('error', $redirect, '操作失败');
         }
         $this->splash('success', $redirect, '添加成功');

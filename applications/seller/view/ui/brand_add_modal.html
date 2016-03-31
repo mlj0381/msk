@@ -1,4 +1,8 @@
+<{if $type eq 'entry'}>
+<form method="post" action="<{link app=seller ctl=site_passport act=add_brand}>" data-module="validator">
+<{else}>
 <form method="post" action="<{link app=seller ctl=site_brand act=brand_add}>" data-module="validator">
+    <{/if}>
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close" required="true"><span
                 aria-hidden="true">&times;</span></button>
