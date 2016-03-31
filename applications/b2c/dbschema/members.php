@@ -143,6 +143,18 @@ $db['members'] = array(
 
             'in_list' => false,
         ) ,
+        'buyer_id' => array(
+            'type' => 'varchar(200)',
+            'label' => ('润和买家ID') ,
+
+            'in_list' => false,
+        ) ,
+        'buyer_code' => array(
+            'type' => 'varchar(200)',
+            'label' => ('润和买家编码') ,
+
+            'in_list' => false,
+        ) ,
         'b_year' => array(
             'label' => ('生年') ,
             'type' => 'smallint unsigned',

@@ -44,7 +44,7 @@ $remote['freeze_editorbuyer'] = array(
             'default' => '',
             'require' => true
         ),
-        'refer_id' => array(
+        'buyer_id' => array(
             'name' => '买家编码',
             'column' => 'buyerId',
             'type' => 'String',
@@ -90,7 +90,7 @@ $remote['freeze_editorbuyer'] = array(
             'name' => '  删除标志',
             'column' => 'delFlg',
             'type' => 'String',
-            'default' => '1',
+            'default' => '0',
             'require' => false
         ),
         'loginId' => array(

@@ -10,10 +10,31 @@ class freeze_ctl_site_center extends freeze_frontpage{
 
     public function index()
     {
-        app::get('b2c')->model('dlyplace')->get_api_area();
-//        $region = "mainland:江西/抚州/临川区:1775";
-//        $result = app::get('ectools')->model('regions')->region_decode($region);
+        $freeze_id = $this->app->freeze_id;
+        $buyer =  app::get('freeze')->model('freeze')->getRow('buyer_id',array('freeze_id'=>$freeze_id));
+        $buyer_code = app::get('buyer')->model('buyers')->getRow('buyer_code',array('buyer_id'=>$buyer['buyer_id']));
+        $member_ids = app::get('freeze')->model('freeze_member')->getList('member_id',array('freeze_id'=>$freeze_id));
+        $member_ids = array_keys(utils::array_change_key($member_ids,'member_id'));
+        $buyer_ids =  app::get('b2c')->model('members')->getList('refer_id',array('member_id'=>$member_ids));
+
+        $filter = array(
+//            'buyersId' => '',//买家id
+            'sellerCode' => $buyer_code['buyer_code']//买手编码
+        );
+        $rpc_order = app::get('buyer')->rpc('get_orders_detail');
+        $order_list = $rpc_order->request($filter);
+//        $order_list = $this->generate($order_list,$buyer_ids,0,5);
+//        var_dump($order_list);
         $this->output();
+    }
+
+
+    public function generate($order_list,$filter,$offset,$limit)
+    {
+
+        foreach($order_list as $order) {
+
+        }
     }
 
 

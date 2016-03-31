@@ -1,6 +1,6 @@
 <menus>
     <menugroup name="index" label="交易管理">
-        <menu app='freeze' controller='site_center' action='orders' display='true' order="60">订单管理</menu>
+        <menu app='freeze' controller='site_center' action='index' display='true' order="60">订单管理</menu>
         <menu app='freeze' controller='site_center' action='settlement' display='true' order="70">结算管理</menu>
     </menugroup>
     <menugroup name="index" label="商品管理">
