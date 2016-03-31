@@ -122,9 +122,6 @@ $db['goods_cat'] = array(
             'width' => 110,
             'in_list' => true,
         ),
-        'aptitude' => array(
-            'type' => 'size'
-        ),
     ),
     'index' => array(
         'ind_cat_path' => array(

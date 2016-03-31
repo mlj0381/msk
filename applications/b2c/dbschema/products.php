@@ -71,32 +71,7 @@ $db['products'] = array(
             'default' => 0,
             'in_list' => true,
         ) ,
-        'price_interval' => array(
 
-            'type' => 'number',
-            'label' => ('价格区间') ,
-            'default' => 0,
-            'in_list' => true,
-        ) ,
-        'price_up' => array(
-
-
-            'type' => 'decimal(20,3)',
-            'label' => ('上行价格') ,
-            'filtertype' => 'number',
-
-            'default' => 0,
-            'in_list' => true,
-        ) ,
-        'price_dn' => array(
-
-            'type' => 'decimal(20,3)',
-            'label' => ('下行价格') ,
-            'filtertype' => 'number',
-
-            'default' => 0,
-            'in_list' => true,
-        ) ,
         'weight' => array(
             'type' => 'decimal(20,3)',
             'label' => ('单位重量') ,
@@ -136,6 +111,13 @@ $db['products'] = array(
             'type' => 'varchar(32)',
             'label' => ('相册图ID') ,
 
+        ) ,
+        'api_product_id' => array(
+            'type' => 'varchar(20)',
+            'label' => ('接口货品id') ,
+            'comment' => ('接口货品id') ,
+            'default' => '',
+            'in_list' => true,
         ) ,
         'uptime' => array(
             'type' => 'time',
