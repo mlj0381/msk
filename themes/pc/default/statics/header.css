@@ -116,14 +116,12 @@ header .container-fulid .topbar .top .topLeft .location .location-menu dl {
   margin-left: 10px;
   margin-bottom: 0px;
   position: relative;
-  padding-left: 60px;
   min-height: 30px;
 }
 header .container-fulid .topbar .top .topLeft .location .location-menu dl dt {
   height: 30px;
   line-height: 30px;
   font-size: 14px;
-  width: 60px;
   overflow: hidden;
   position: absolute;
   left: 0px;
@@ -565,9 +563,12 @@ nav.mainNav ul.nav_ul li .category-container .category .tab-pane .tab-pane-brand
   border-bottom: 1px solid #ddd;
   padding-bottom: 15px;
 }
+.partnerbox .partner ul {
+  text-align: center;
+}
 .partnerbox .partner ul li {
   padding: 10px 0;
-  float: left;
+  display: inline-block;
   width: 171px;
   border-right: 1px solid #ddd;
 }

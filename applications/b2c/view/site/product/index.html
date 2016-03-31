@@ -16,17 +16,73 @@
     <div class="product-page">
         
         <div class="row product_firstRow">
-            <div class="row pricebox">
-            <table>
+            <div class="row pricebox clearfix">
+                <!-- <h4>数量随心订 · 价格大不同</h4> -->
+                <h4><img src="<{$base_url}>/themes/pc/default/statics/images/font_tip.png"></h4>
+                <div class="price_lt">
+                    <p>通道阶梯价</p>
+                    <p>随心量</p>
+                </div>
+                <div class="price_rt">
+                    <ul>
+                        <li>
+                            <span class="price_item"><strong>105</strong>/元</span>
+                            <i></i>
+                            <span class="count_item">1</span>
+                        </li>
+                        <li>
+                            <span class="price_item"><strong>104</strong>/元</span>
+                            <i></i>
+                            <span class="count_item">51</span>
+                        </li>
+                        <li>
+                            <span class="price_item"><strong>103</strong>/元</span>
+                            <i></i>
+                            <span class="count_item">101</span>
+                        </li>
+                        <li>
+                            <span class="price_item"><strong>102</strong>/元</span>
+                            <i></i>
+                            <span class="count_item">151</span>
+                        </li>
+                        <li>
+                            <span class="price_item"><strong>101</strong>/元</span>
+                            <i></i>
+                            <span class="count_item">201</span>
+                        </li>
+                        <li>
+                            <span class="price_item"><strong>100</strong>/元</span>
+                            <i></i>
+                            <span class="count_item">251</span>
+                        </li>
+                        <li>
+                            <span class="price_item"><strong>99</strong>/元</span>
+                            <i></i>
+                            <span class="count_item">301</span>
+                        </li>
+                        <li>
+                            <span class="price_item"><strong>98</strong>/元</span>
+                            <i></i>
+                            <span class="count_item">351</span>
+                        </li>
+                        <li>
+                            <span class="price_item"><strong>97</strong>/元</span>
+                            <i></i>
+                            <span class="count_item">401</span>
+                        </li>
+                    </ul>
+                    <div class="price_bg"></div>
+                </div>
+            <!-- <table>
                 <tbody>
                     <tr>
                         <td>随心量</td>
-                        <!-- foreach开始 -->
+                        foreach开始
                         <td>
                             <span class="num-dn"><{$item.num_dn|default:1}></span>-
                             <span class="num-up"><{$item.num_up|default:不限}></span>箱
                         </td>
-                        <!-- foreach结束 -->
+                        foreach结束
                     </tr>
                     <tr>
                         <td>通道阶梯价</td>
@@ -35,8 +91,7 @@
                         <{/foreach}>
                     </tr>
                 </tbody>
-
-            </table>
+            </table> -->
         </div>
             <div class="col-xs-5">
                 <div class="product-main-image" style="position: relative; overflow: hidden; width:450px; height:450px; margin-top:15px;">
@@ -192,39 +247,24 @@
                     </a>
                 </div>
                 <!--购买区end-->
+
+                <!-- 支付方式 -->
                 <div class="distr_info" style="border:none">
                     <label>支付方式 </label>
                     <span>网银支付</span>
                     <span>POSE支付</span>
                     <span>会员卡支付</span>
                 </div>
-            </div>
-        </div>
 
-        <!-- 支付方式、卖家承诺 -->
-        <div class="row payment-method">
-            <div class="col-xs-6">
-                <p>支付方式</p>
-                <ul>
-                    <!-- <li><a href="#">会员卡支付</a></li> -->
-                    <li><a href="#">银联卡支付</a></li>
-                    <li><a href="#">货到付款</a></li>
-                </ul>
-            </div>
-            <div class="col-xs-6">
-                <p>卖家承诺</p>
-                <ul>
-                    <li><a href="#">72小时极速发货</a></li>
-                </ul>
             </div>
         </div>
         <!-- 商城推荐 -->
-        <div class="mall_reco clearfix">
-            <{WIDGET_PRODUCT label=商城推荐 position_id=35}>
+        <!-- <div class="mall_reco clearfix">
+            <{*WIDGET_PRODUCT label=商城推荐 position_id=35*}>
         </div>
         <script type="text/javascript">
             jQuery(".mall_reco").slide({titCell: ".hd ul", mainCell: ".bd ul", autoPage: true, effect: "left", autoPlay: false, vis: 5, trigger: "click"});
-        </script>
+        </script> -->
         <!-- 相关商品 -->
         <div class="goods-rel-items hide">
             <hr>
@@ -279,9 +319,9 @@
             <div class="product_detail_rt">
                 <div class="product-page-content">
                     <ul id="pp_tabs" class="nav nav-tabs">
-                        <li class="active"><a href="#desc" data-toggle="tab">详情介绍</a></li>
+                        <li class="active"><a href="#desc" data-toggle="tab">商品标签</a></li>
                         <li><a href="#record " data-toggle="tab">成交记录</a></li>
-                        <li><a href="#comment" data-toggle="tab">评价</a></li>
+                        <li><a href="#comment" data-toggle="tab">累计评价</a></li>
                     </ul>
                     <div  class="tab-content">
                         <div class="tab-pane fade in active" id="desc">
