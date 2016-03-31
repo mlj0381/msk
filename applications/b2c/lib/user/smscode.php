@@ -12,6 +12,9 @@ class b2c_user_smscode {
 	
 	public function __construct(&$app) {
 		$this->app = $app;
+		
+		
+		
 		vmc::singleton('base_session')->start();
 	}
 	
