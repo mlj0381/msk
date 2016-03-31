@@ -59,29 +59,30 @@ class buyer_ctl_site_buyer extends buyer_frontpage{
 			 * 
 			 */
 			
-			$data = app::get('pam')->model('buyers')->getRow('login_account,login_password', array('buyer_id'=>$this->buyer_id));
+			$data = app::get('pam')->model('buyers')->getRow('login_account,login_password,password', array('buyer_id'=>$this->buyer_id));
 			$basic_data = $this->app->model('buyers')->getRow('*', array('buyer_id'=>$this->buyer_id));
 			
 			if ($this->app->model('buyers')->update($params, array('buyer_id' => $this->buyer_id))){
 				//////////////////////////////////走API
-				$mdl_rpc = $this->app->rpc('edit_buyer_info');
+				$region = $basic_data['area'];
+				$area_result = app::get('ectools')->model('regions')->region_decode($region);
 				$request = array(
 						'slAccount'=>array(
 								'login_account'	=>$data['login_account'],
 								'mobile'		=>$basic_data['mobile'],
 								'local'			=>$basic_data['local'],
 								'name'			=>$basic_data['name'],
-								'password'		=>$basic_data['password'],
+								'password'		=>$data['password'],
 								'authStatus'	=>2,
 						),
 						'slSeller'=>array(
 								'login_account'	=>$data['login_account'],
 								'slConFlg'		=>'1',//生产国籍
 								'areaCode'		=>'1',//大区编码
-								'lgcsAreaCode'	=>'1',//物流区编码
-								'provinceCode'	=>'1',//省编码
-								'cityCode'		=>'1',//地区编码
-								'districtCode'	=>'1',//区编码
+								'lgcsAreaCode'	=>$area_result['province'],//物流区编码
+								'provinceCode'	=>$area_result['province'],//省编码
+								'cityCode'		=>$area_result['city'],//地区编码
+								'districtCode'	=>$area_result['district'],//区编码
 								'slMainClass'	=>4,//卖家主分类
 								'snkFlg'		=>'否',//神农客标志
 								'selfFlg'		=>'否',//自产型卖家标志
@@ -97,7 +98,12 @@ class buyer_ctl_site_buyer extends buyer_frontpage{
 						'slShopInfo'=>$basic_data,
 							
 				);
-				$mdl_rpc->request($request, false);
+				$edit = $this->app->rpc('edit_buyer_info')->request($request, false);
+				$buyer_info_response = $this->app->rpc('select_buyer_info')->request($data, false);
+
+				if ($buyer_code = $buyer_info_response['result']['buyershopList'][0]['buyer_code']){
+					app::get('pam')->model('buyers')->update(array('buyer_code'=>$buyer_code), array('buyer_id'=>$this->buyer_id));
+				}
 				$this->splash('success', $redirect, '店铺信息更新成功！');
 			}else {
 				$this->splash('error', $redirect, '店铺信息更新失败！');

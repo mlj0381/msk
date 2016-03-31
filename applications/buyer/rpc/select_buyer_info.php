@@ -23,7 +23,7 @@ $remote['buyer_select_buyer_info'] = array(
     ),
 
     'param' => array(
-        'uname' => array(
+        'login_account' => array(
             'name' => '买手账号',
             'column' => 'slAccount',
             'type' => 'String',
@@ -44,8 +44,12 @@ $remote['buyer_select_buyer_info'] = array(
             'type' => 'List',
         ),
     ),
-
     'buyershopList' => array(
+    	'slCode' => array(
+    		'name' => '买手code',
+    		'column' => 'buyer_code',
+    		'type' => 'String',
+    	),
         'slAccount' => array(
             'name' => '卖家账号',
             'column' => 'login_account',
