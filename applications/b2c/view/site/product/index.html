@@ -351,16 +351,8 @@
                             </div>
                             <{/if}>
 
-                            <div class="description">
-                                <!-- <img src="<{$base_url}>/themes/pc/default/statics/images/details.jpg" /> -->
+                            <!-- <div class="description">
                                 <ul class="pro_param clearfix">
-                                    <!-- <li title="<{$data_detail.name}>">商品名称：<{$data_detail.name}></li>
-                                    <li title="<{$data_detail.gid}>">商品编号：<{$data_detail.gid}></li>
-                                    <li title="<{$data_detail.brand.brand_name}>">品牌：<{$data_detail.brand.brand_name}></li>
-                                    <li title="<{$data_detail.uptime|cdate}>">上架时间：<{$data_detail.uptime|cdate}></li>
-                                    <li title="中国大陆">商品产地：中国大陆</li>
-                                    <li title="28kg">商品毛重：28kg</li>
-                                    <li title="25kg">商品净重：25kg</li> -->
                                     <li title="">商品品名：鸡大胸</li>
                                     <li title="">销售名称：鸡大胸</li>
                                     <li title="">产品特征：10只装/5.8kg/箱</li>
@@ -381,9 +373,21 @@
                                     <li title="">保质期：6个月</li>
                                 </ul>
                                 <{$data_detail.description}>
-                            </div>
+                            </div> -->
                         </div>
                         <div class="tab-pane fade" id="record">
+                            <div class="record_head">
+                                <span>成交记录</span>
+                                <select>
+                                    <option value="0" selected>全部记录</option>
+                                    <option value="1">今天</option>
+                                    <option value="2">最近3天</option>
+                                    <option value="3">最近一个月</option>
+                                    <option value="4">最近三个月</option>
+                                    <option value="5">最近一年</option>
+                                    <option value="6">一年前</option>
+                                </select>
+                            </div>
                             <table>
                                 <thead>
                                     <tr>

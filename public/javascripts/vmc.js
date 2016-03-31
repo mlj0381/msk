@@ -335,7 +335,7 @@ $.VMC.validator = function(form){
 				var attr = attrs[i].name;
 				var value = attrs[i].value;
 				if(typeof $.validator.methods[attr] != 'function' && attr != 'format') continue;
-				// if(attr == 'required' && value == 'false') continue ;
+				//if(attr == 'required' && value == 'false') continue ;
 				if(attr == 'format' && typeof $.validator.methods[value] == 'function')
 				{
 					attr = value;
