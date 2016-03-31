@@ -1255,7 +1255,6 @@ class seller_user_passport
         if (empty($seller_data)) return false;
         unset($seller_data['seller_id']);
         unset($seller_data['type']);
-
         if (!$mdl_pam_seller->delete(array('seller_id' => $post['seller_id']))) {
             return false;
         }
