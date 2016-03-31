@@ -1,4 +1,5 @@
 <?php
+
 /**
  * 验证码短信平台接口---------------IOL101001
  */
@@ -34,7 +35,7 @@ $remote['b2c_send_code'] = array(
     'response' => array(
         'captcha' => array(
             'name' => '手机验证码',
-            'column' => 'captcha',
+            'column' => 'vcode',
             'type' => 'String',
         ),
     ),

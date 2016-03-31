@@ -108,6 +108,7 @@ class base_rpc
 
 	public function request(Array $data, $expire=false)
 	{
+		$this->status = true;
 		if(!$this->action /*||  !$data */) return $this->error('错误的请求');
 		$index = $this->app_id . "_" . $this->action;	
 		$this->result = Array();

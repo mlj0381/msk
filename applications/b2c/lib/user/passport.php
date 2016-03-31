@@ -96,6 +96,20 @@ class b2c_user_passport {
         $extra_columns = app::get('b2c')->getConf('member_extra_column');
         if (!empty($params['company'])) {
             $params['company']['uid'] = $params['member_id'];
+            //调用润和接口,修改基本信息
+            $b2c_member = app::get('b2c')->model('members');
+            $buyer_id  = $b2c_member->getRow('buyer_id',array('member_id'=>$params['member_id']));
+            $api_data = array_merge($_POST['company'],$_POST['company_extra']['value'],$buyer_id);
+            $rpc_basic = app::get('b2c')->rpc('update_member_base_info');
+            $result = $rpc_basic->request($api_data);
+            if(!empty($result['result']['buyer_code']))
+            {
+                $data = array(
+                    'member_id'=>$params['member_id'],
+                    'buyer_code'=>$result['result']['buyer_code']
+                );
+                $b2c_member->save($data);
+            }
             if (!app::get('base')->model('company')->save($params['company'])) {
                 $db->rollback();
                 return false;

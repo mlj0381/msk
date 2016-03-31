@@ -48,6 +48,11 @@ $db['buyers'] = array(
         		'required' => true,
         		'comment' => '明文密码',
         ),
+        'buyer_code' => array(
+        		'type' => 'varchar(32)',
+        		'required' => false,
+        		'comment' => '买手code',
+        ),
         'password_account' => array(
             'type' => 'varchar(100)',
             'required' => true,

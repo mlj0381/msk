@@ -1,5 +1,5 @@
 <{if $freeze.status == '0' && $freeze.apply_type == 0}>
-    <h4 class="text-center">您的绑定管家ID:<{$freeze.freeze_name}>管家名:<{$freeze.name}>申请正在等待对方确认。</h4>
+    <h4 class="text-center">您的绑定管家ID:<{$freeze.freeze_id}>申请正在等待对方确认。</h4>
 <{elseif $freeze.status == 0 && $freeze.apply_type == 1}>
     <h4 class="text-center">管家向你提出申请<a class="text-success"  href="<{link app=b2c ctl=site_member act=apply_bind arg0=$freeze.freeze_id arg1=1  }>">同意绑定</a></h4>
 <{elseif $freeze.status == 1}>
