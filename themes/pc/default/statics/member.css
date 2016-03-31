@@ -3394,6 +3394,7 @@ ol {
 }
 .settled_page .maincon .settled_process .process_items .process_item {
   width: 290px;
+  min-height: 260px;
   border: 2px solid #ddd;
   -webkit-border-radius: 10px;
   -moz-border-radius: 10px;
