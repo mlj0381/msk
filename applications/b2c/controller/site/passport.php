@@ -370,7 +370,6 @@ class b2c_ctl_site_passport extends b2c_frontpage
             $this->splash('error', $signup_url, '注册失败,会员数据保存异常');
         }
         //end 调用接口
-        $member_sdf_data['b2c_members']['member_id'] = $result['result']['member_id'];
         $member_sdf_data['b2c_members']['buyer_id'] = $result['result']['buyer_id'];
         if ($member_id = $this->passport_obj->save_members($member_sdf_data, $msg)) {
             $this->user_obj->set_member_session($member_id);

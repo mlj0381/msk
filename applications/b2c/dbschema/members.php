@@ -15,7 +15,7 @@ $db['members'] = array(
     'columns' => array(
         'member_id' => array(
             'type' => 'number',
-            //'extra' => 'auto_increment',
+            'extra' => 'auto_increment',
             'pkey' => true,
             'label' => ('会员ID') ,
         ) ,
@@ -140,6 +140,12 @@ $db['members'] = array(
         'refer_url' => array(
             'type' => 'varchar(200)',
             'label' => ('推广来源URL') ,
+
+            'in_list' => false,
+        ) ,
+        'buyerId' => array(
+            'type' => 'varchar(200)',
+            'label' => ('润和买家主键ID') ,
 
             'in_list' => false,
         ) ,
