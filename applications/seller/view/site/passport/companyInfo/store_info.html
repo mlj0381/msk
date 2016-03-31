@@ -191,17 +191,17 @@
                                     </span>
                                 </td>
                             </tr>
-                                <{foreach from=$cat3.son item=cat4}>
-                                    <tr data-treeId="<{$cat1.addon}>-<{$cat2.addon}>-<{$cat3.addon}>-<{$cat4.addon}>" data-catName="三黄鸡">
-                                        <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                            <span class="arrow icon-caret-right"></span><{$cat4.addon}>
-                                        </td>
-                                        <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                            <input type="checkbox" name="cat_id[]" value="<{$cat4.cat_id}>"><{$cat4.cat_name}>
-                                        </td>
-                                        <td></td>
-                                    </tr>
-                                <{/foreach}>
+                                <!--<{*foreach from=$cat3.son item=cat4*}>-->
+                                    <!--<tr data-treeId="<{$cat1.addon}>-<{$cat2.addon}>-<{$cat3.addon}>-<{$cat4.addon}>" data-catName="三黄鸡">-->
+                                        <!--<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-->
+                                            <!--<span class="arrow icon-caret-right"></span><{$cat4.addon}>-->
+                                        <!--</td>-->
+                                        <!--<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-->
+                                            <!--<input type="checkbox" name="cat_id[]" value="<{$cat4.cat_id}>"><{$cat4.cat_name}>-->
+                                        <!--</td>-->
+                                        <!--<td></td>-->
+                                    <!--</tr>-->
+                                <!--<{*/foreach*}>-->
                             <{/foreach}>
                         <{/foreach}>
                     <{/foreach}>

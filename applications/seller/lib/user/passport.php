@@ -981,7 +981,7 @@ class seller_user_passport
             'slConFlg' => '1',
             'provinceCode' =>'1', //$region['province']['code'],
             'cityCode' => '1',//$region['city']['code'],
-            'districtCode' => '1',//$region['district']['code'],
+            'districtCode' => '1',//s$region['district']['code'],
             'slMainClass' => $this->seller['type'] == '1' ? 4 : (int)$seller_type[array_rand($seller_type)],
             'snkFlg' => '0',
             'selfFlg' => $seller_type['selfFlg'] ? '1' : '0',
@@ -1255,7 +1255,6 @@ class seller_user_passport
         if (empty($seller_data)) return false;
         unset($seller_data['seller_id']);
         unset($seller_data['type']);
-
         if (!$mdl_pam_seller->delete(array('seller_id' => $post['seller_id']))) {
             return false;
         }

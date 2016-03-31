@@ -25,16 +25,40 @@ class b2c_ctl_site_product extends b2c_frontpage {
     }
 
     public function index($typ) {
+    	$typ = '012010101';
+		$response = $this->app->rpc('goods_info')->request($data=array());
+		$data_detail = utils::array_change_key($response['result']['goods'], 'goods_code')[$typ];
+    	//var_dump($data_detail);exit;
+    	
         //获取参数 货品ID
-        $params = $this->_request->get_params();
+        //$params = $this->_request->get_params();
         //调用接口 2015/12/9
         //$data_detail = $this->app->model('products')->goods_detail($params[0]);
         //>>
-        $data_detail = $this->goods_stage->detail($params[0], $msg); //引用传递
+        //$data_detail = $this->goods_stage->detail($params[0], $msg); //引用传递
         if (!$data_detail) {
             vmc::singleton('site_router')->http_status(404);
             $this->splash('error', null, $msg);
         }
+        
+        $data_detail['name'] = str_replace('/'," ",$data_detail['goods_name']);
+        $data_detail['classesCode'] = $data_detail['cat_1'];
+        $data_detail['breedCode'] = $data_detail['breed_code'];
+        $data_detail['featureCode'] = $data_detail['feature'];
+        $data_detail['gradeCode'] = 'A2';
+        $data_detail['deliver_fee'] = '0';
+        /*******************这个需要获取物流区地址：目前写死了************************************/
+        $data_detail['logiAreaCode'] = '41';
+        $price_response = $this->app->rpc('select_product_price')->request($data_detail, false);
+        $data_detail['pricelist'] = $price_response['result'][0]['pricelist'];
+        
+        
+        
+//         is_array($data_detail) and array_walk($data_detail,function(&$v,$k){
+//         	$v['goods_name'] = str_replace('/'," ",$v['productName']);
+//         });
+        
+        
         $this->pagedata['buyer_id'] = vmc::singleton('buyer_user_object')->get_session();
         $this->pagedata['data_detail'] = $data_detail;
         $this->pagedata['store_id'] = $params[1];

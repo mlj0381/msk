@@ -42,8 +42,8 @@
                             <span class="text-danger">*</span>邮箱：
                         </label>
                         <div class="col-xs-4">
-                            <input type="text" class="form-control" name="email" value="<{$info.email}>" required="true">
-                            <span class="msgTip" data-message="format">格式不正确</span>
+                            <input type="text" class="form-control" name="email" value="<{$info.email}>" required="true" format="email">
+                            <span class="msgTip" data-message="format">邮箱格式不正确</span>
                         </div>
                     </div>
                     <div class="form-group">
@@ -52,7 +52,7 @@
                         </label>
                         <div class="col-xs-4">
                             <input type="text" class="form-control" name="name" value="<{$info.name}>" required="true">
-                            <span class="msgTip" data-message="format">格式不正确</span>
+                            <span class="msgTip" data-message="error"></span>
                         </div>
                     </div>
                     <div class="form-group">
@@ -64,7 +64,7 @@
                                 <option value="0" <{if $info.sex == 0}>selected<{/if}>>女</option>
                                 <option value="1" <{if $info.sex == 1}>selected<{/if}>>男</option>
                             </select>
-                            <span class="msgTip" data-message="format">格式不正确</span>
+                            <span class="msgTip" data-message="error"></span>
                         </div>
                     </div>
                     <div class="form-group">
@@ -73,7 +73,7 @@
                         </label>
                         <div class="col-xs-4">
                             <input type="text" class="form-control" name="ID" value="<{$info.ID}>" required="true" formate="idcard">
-                            <span class="msgTip" data-message="format">身份证填写错误</span>
+                            <span class="msgTip" data-message="format">身份证号格式错误</span>
                         </div>
                     </div>
                     <div class="form-group">
@@ -82,9 +82,16 @@
                         </label>
                         <div class="col-xs-4">
                             <{input type=region required="true" name="area" value=$info.area }>
-                            <br>
+                            <span class="msgTip" data-message="error"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-xs-2 control-label">
+                            <span class="text-danger">*</span>虚拟经营详细地址：
+                        </label>
+                        <div class="col-xs-4">
                             <input type="text" class="form-control" name="address" value="<{$info.address}>" required="true">
-                            <span class="msgTip" data-message="format">格式不正确</span>
+                            <span class="msgTip" data-message="error"></span>
                         </div>
                     </div>
                     <div class="form-group">
@@ -93,9 +100,16 @@
                         </label>
                         <div class="col-xs-4">
                             <{input type=region required="true" name="manage_area" value=$info.manage_area }>
-                            <br>
+                            <span class="msgTip" data-message="error"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-xs-2 control-label">
+                            <span class="text-danger">*</span>管理区域注册详细地址：
+                        </label>
+                        <div class="col-xs-4">
                             <input type="text" class="form-control" name="manage_address" value="<{$info.manage_address}>" required="true">
-                            <span class="msgTip" data-message="format">格式不正确</span>
+                            <span class="msgTip" data-message="error"></span>
                         </div>
                     </div>
                     <div class="form-group">
@@ -103,8 +117,8 @@
                             <span class="text-danger">*</span>QQ：
                         </label>
                         <div class="col-xs-4">
-                            <input type="text" value="<{$info.QQ}>" name="QQ" class="form-control" required="true" >
-                            <span class="msgTip" data-message="format">格式不正确</span>
+                            <input type="text" value="<{$info.QQ}>" name="QQ" class="form-control" required="true" format="qq">
+                            <span class="msgTip" data-message="format">QQ号格式不正确</span>
                         </div>
                     </div>
                     <div class="form-group">
@@ -113,7 +127,7 @@
                         </label>
                         <div class="col-xs-4">
                             <input type="text" value="<{$info.WeChat}>" name="WeChat" class="form-control" required="true" >
-                            <span class="msgTip" data-message="format">格式不正确</span>
+                            <span class="msgTip" data-message="error"></span>
                         </div>
                     </div>
                     <div class="form-group">

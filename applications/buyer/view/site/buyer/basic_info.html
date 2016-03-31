@@ -5,110 +5,132 @@
 	   <li><a href="<{link app=buyer ctl=site_buyer act=buyer_info}>">买手店信息</a></li>
 	</ul>
 	<div class="content">
-		<form class="form-horizontal" id="basicinfo_form" action="<{link app=buyer ctl=site_buyer act=basic_info arg0=update}>" method="post" enctype="multipart/form-data">
+		<form class="form-horizontal" id="basicinfo_form" action="<{link app=buyer ctl=site_buyer act=basic_info arg0=update}>" method="post" enctype="multipart/form-data" data-module="validator"> 
 			<div class="form-group">
-			    <label class="col-sm-3 control-label"></label>
-			    <div class="col-sm-6 row">
+			    <label class="col-xs-3 control-label"></label>
+			    <div class="col-xs-6 row">
 			    	<div class="col-md-4">
-                    <div class="filebox">
+                    <!-- <div class="filebox">
                         <input type="hidden" value='<{$basic_info.photo}>' name="photo"/>
                         <input type="file" data-url="<{link app=image ctl=site_upload act=index}>" accept="image/*" class="file_input" />
                         <div class="showImg">
                             <img src="<{if $basic_info.photo eq ''}><{$base_url}>/themes/pc/default/statics/images/file_add.jpg<{else}><{$basic_info.photo|storager:'xs'}><{/if}>">
                         </div>
-                    </div>
+                    </div> -->
+                    <{input type="imageupload" tag="图片上传" name="photo" value=$basic_info.photo required='true' accept="jpg|png|gif"}>   
+            		<span class="msgTip" data-message="error">不能为空</span>
 			    	</div>
 			    	<div class="col-md-8 edit-notice">
-						<small class="help-block">支持2M以内.jpg\.jpeg\.gif\.png 等图片格式文件</small>
+						<xsall class="help-block">支持2M以内.jpg\.jpeg\.gif\.png 等图片格式文件</xsall>
 			    	</div>
 				</div>
 		  	</div>
 			<div class="form-group">
-			    <label class="col-sm-2 control-label"><em class="text-danger">*</em> 用户名</label>
-			    <div class="col-sm-4">
-			      <input type="text"  readonly="readonly" name="local" value="<{$basic_info.local}>" class="form-control">
+			    <label class="col-xs-2 control-label"><em class="text-danger">*</em> 用户名</label>
+			    <div class="col-xs-4">
+			      <input type="text"  readonly="readonly" name="local" value="<{$basic_info.local}>" class="form-control" required="true">
+			      <span class="msgTip" data-message="error"></span>
 			    </div>
 		  	</div>
 		  	<div class="form-group">
-			    <label class="col-sm-2 control-label"><em class="text-danger">*</em> 手机号</label>
-			    <div class="col-sm-4">
-			      <input type="text" name="mobile" value="<{$basic_info.mobile}>" <{if $basic_info.mobile}> readonly="readonly" <{/if}> class="form-control">
+			    <label class="col-xs-2 control-label"><em class="text-danger">*</em> 手机号</label>
+			    <div class="col-xs-4">
+			      <input type="text" name="mobile" value="<{$basic_info.mobile}>" <{if $basic_info.mobile}> readonly="readonly" <{/if}> class="form-control" required="true" format="mobile">
+			      <span class="msgTip" data-message="format">请输入正确的手机号</span>
 			    </div>
-			    <!-- <div class="col-sm-4 bind-opt">
+			    <!-- <div class="col-xs-4 bind-opt">
 			      <a class="btn btn-default" href="">绑定手机</a>
 			    </div> -->
 		  	</div>
 		  	<div class="form-group">
-			    <label class="col-sm-2 control-label"><em class="text-danger">*</em> 电子邮箱</label>
-			    <div class="col-sm-4">
-			      <input type="email" name="email" value="<{$basic_info.email}>" <{if $basic_info.email}> readonly="readonly" <{/if}> class="form-control">
+			    <label class="col-xs-2 control-label"><em class="text-danger">*</em> 电子邮箱</label>
+			    <div class="col-xs-4">
+			      <input type="email" name="email" value="<{$basic_info.email}>" <{if $basic_info.email}> readonly="readonly" <{/if}> class="form-control" required="true" format="email">
+			      <span class="msgTip" data-message="format">邮箱格式错误！</span>
 			    </div>
-			    <!-- <div class="col-sm-4 bind-opt">
+			    <!-- <div class="col-xs-4 bind-opt">
 			      <a class="btn btn-default" href="">绑定邮箱</a>
 			    </div> -->
 		  	</div>
 		  	<div class="form-group">
-			    <label class="col-sm-2 control-label"><em class="text-danger">*</em> 姓名</label>
-			    <div class="col-sm-4">
-			      <input type="text" name="name" value="<{$basic_info.name}>" class="form-control">
+			    <label class="col-xs-2 control-label"><em class="text-danger">*</em> 姓名</label>
+			    <div class="col-xs-4">
+			      <input type="text" name="name" value="<{$basic_info.name}>" class="form-control" required="true">
+			      <span class="msgTip" data-message="error"></span>
 			    </div>
 		  	</div>
 		  	<div class="form-group">
-			    <label class="col-sm-2 control-label"><em class="text-danger">*</em> 性别</label>
-			    <div class="col-sm-4 sex-radio">
-			      	<label class="radio-inline">
-					  	<input type="radio" name="sex" value="0" <{if $basic_info.sex eq 0  }> checked = "checked" <{/if}>> 男
-					</label>
-					<label class="radio-inline">
-					  	<input type="radio" name="sex" value="1" <{if $basic_info.sex eq 1  }>  checked = "checked" <{/if}>> 女
-					</label>
+			    <label class="col-xs-2 control-label"><em class="text-danger">*</em> 性别</label>
+			    <div class="col-xs-4 sex-radio">
+			    	<div class="form-item">
+				      	<label class="radio-inline">
+						  	<input type="radio" name="sex" value="0" <{if $basic_info.sex eq 0  }> checked = "checked" <{/if}>> 男
+						</label>
+						<label class="radio-inline">
+						  	<input type="radio" name="sex" value="1" <{if $basic_info.sex eq 1  }>  checked = "checked" <{/if}> required="true"> 女
+						</label>
+					</div>
+					<span class="msgTip" data-message="error"></span>
 			    </div>
 		  	</div>
 		  	<div class="form-group">
-			    <label class="col-sm-2 control-label"><em class="text-danger">*</em> 身份证号</label>
-			    <div class="col-sm-4">
-			      <input type="text" name="card_id" value="<{$basic_info.card_id}>" class="form-control">
+			    <label class="col-xs-2 control-label"><em class="text-danger">*</em> 身份证号</label>
+			    <div class="col-xs-4">
+			      <input type="text" name="card_id" value="<{$basic_info.card_id}>" class="form-control" required="true" format="idcard">
+			      <span class="msgTip" data-message="format">身份证号格式不正确</span>
 			    </div>
 		  	</div>
 		  	<div class="form-group">
-			    <label class="col-sm-2 control-label"><em class="text-danger">*</em> 买手类型</label>
-			    <div class="col-sm-4 type-checkbox">
-			      	<label class="radio-inline">
-					  	<input type="radio" name="buyer_type" value="1" <{if $basic_info.buyer_type eq 1  }>  checked = "checked" <{/if}>> 行业型
-					</label>
-					<label class="radio-inline">
-					  	<input type="radio" name="buyer_type" value="2" <{if $basic_info.buyer_type eq 2  }>  checked = "checked" <{/if}>> 创业型
-					</label>
-					<label class="radio-inline">
-					  	<input type="radio" name="buyer_type" value="3" <{if $basic_info.buyer_type eq 3  }>  checked = "checked" <{/if}>> 关系型
-					</label>
-					<label class="radio-inline">
-					  	<input type="radio" name="buyer_type" value="4" <{if $basic_info.buyer_type eq 4  }>  checked = "checked" <{/if}>> 配送型
-					</label>
+			    <label class="col-xs-2 control-label"><em class="text-danger">*</em> 买手类型</label>
+			    <div class="col-xs-4 type-checkbox">
+			      	<div class="form-item">
+			      		<label class="radio-inline">
+						  	<input type="radio" name="buyer_type" value="1" <{if $basic_info.buyer_type eq 1  }>  checked = "checked" <{/if}>> 行业型
+						</label>
+						<label class="radio-inline">
+						  	<input type="radio" name="buyer_type" value="2" <{if $basic_info.buyer_type eq 2  }>  checked = "checked" <{/if}>> 创业型
+						</label>
+						<label class="radio-inline">
+						  	<input type="radio" name="buyer_type" value="3" <{if $basic_info.buyer_type eq 3  }>  checked = "checked" <{/if}>> 关系型
+						</label>
+						<label class="radio-inline">
+						  	<input type="radio" name="buyer_type" value="4" <{if $basic_info.buyer_type eq 4  }>  checked = "checked" <{/if}> required="true"> 配送型
+						</label>
+			      	</div>
+			      	<span class="msgTip" data-message="error"></span>
 			    </div>
 		  	</div>
 		  	<div class="form-group select-region">
-			    <label class="col-sm-2 control-label"><em class="text-danger">*</em> 收货地区</label>
-                <div class="col-sm-4">
-                    <{input type=region name="area" id="maddr_region" value=$basic_info.area}><br>
-                    <input type="text" name="addr" id="addr" value="<{$basic_info.addr}>" class="form-control" placeholder="详细收货地址">
+			    <label class="col-xs-2 control-label"><em class="text-danger">*</em> 收货地区</label>
+                <div class="col-xs-4">
+                    <{input type=region name="area" id="maddr_region" value=$basic_info.area required="true"}>
+                    <span class="msgTip" data-message="error"></span>
+                </div>
+		  	</div>
+		  	<div class="form-group select-region">
+			    <label class="col-xs-2 control-label"><em class="text-danger">*</em> 收货地区详细地址</label>
+                <div class="col-xs-4">
+                    <input type="text" name="addr" id="addr" value="<{$basic_info.addr}>" class="form-control" placeholder="详细收货地址" required="true">
+                    <span class="msgTip" data-message="error"></span>
                 </div>
 		  	</div>
 		  	<div class="form-group">
-			    <label class="col-sm-2 control-label"><em class="text-danger">*</em> 微信号</label>
-			    <div class="col-sm-4">
-			      <input type="text" name="wechat" value="<{$basic_info.wechat}>" class="form-control">
+			    <label class="col-xs-2 control-label"><em class="text-danger">*</em> 微信号</label>
+			    <div class="col-xs-4">
+			      <input type="text" name="wechat" value="<{$basic_info.wechat}>" class="form-control" required="true">
+			      <span class="msgTip" data-message="error"></span>
 			    </div>
 		  	</div>
 		  	<div class="form-group">
-			    <label class="col-sm-2 control-label"><em class="text-danger">*</em> QQ号</label>
-			    <div class="col-sm-4">
-			      <input type="text" name="qq" value="<{$basic_info.qq}>" class="form-control">
+			    <label class="col-xs-2 control-label"><em class="text-danger">*</em> QQ号</label>
+			    <div class="col-xs-4">
+			      <input type="text" name="qq" value="<{$basic_info.qq}>" class="form-control" required="true" format="qq">
+			      <span class="msgTip" data-message="format">请填写6-11位QQ号</span>
 			    </div>
 		  	</div>
 		  	<div class="form-group submit-opt">
-			    <div class="col-sm-offset-2 col-sm-10">
-			      <button type="submit" class="btn btn-success">保存</button>
+			    <div class="col-xs-offset-2 col-xs-10">
+			      <button type="submit" class="btn btn-danger">保存</button>
 			      <button type="reset" class="btn btn-default">取消</button>
 			    </div>
 		  	</div>

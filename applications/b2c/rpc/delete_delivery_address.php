@@ -23,13 +23,13 @@ $remote['b2c_delete_delivery_address'] = array(
     ),
 
     'param' => array(
-        'buyerId' => array(
+        'buyer_id' => array(
             'name' => '买家ID',
             'column' => 'buyerId',
             'type' => 'String',
             'require' => true,
         ),
-        'id' => array(
+        'addr_id' => array(
             'name' => '地址ID',
             'column' => 'id',
             'type' => 'long',

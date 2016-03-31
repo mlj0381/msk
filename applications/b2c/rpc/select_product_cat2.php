@@ -26,7 +26,7 @@ $remote['b2c_select_product_cat2'] = array(
             'name' => '一级分类编码',
             'column' => 'classesCode',
             'type' => 'String',
-            'default' => '01',
+            'default' => '',
             'require' => true,
         ),
     ),
