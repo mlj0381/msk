@@ -157,7 +157,7 @@ $db['company'] = array(
             'default_in_list' => false,
             'comment' => '所属',
         ),
-        
+
         
         'uid' => array(
             'type' => 'number',
@@ -165,6 +165,13 @@ $db['company'] = array(
             'default' => 0,
             'label' => '用户ID',
             'comment' => '用户ID',
+        ),
+        'ep_id' => array(
+            'type' => 'number',
+            'required' => true,
+            'default' => 0,
+            'label' => '润和企业id',
+            'comment' => '润和企业id',
         ),
     ),
     'index' => array(

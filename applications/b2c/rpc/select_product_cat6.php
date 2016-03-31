@@ -60,57 +60,57 @@ $remote['b2c_select_product_cat6'] = array(
     ),
 
     'response' => array(
-        '  normsCode' => array(
+        'normsCode' => array(
             'name' => '产品包装编码',
             'column' => 'normsCode',
             'type' => 'String',
         ),
-        '  normsName' => array(
+        'normsName' => array(
             'name' => '产品包装规格名称',
             'column' => 'normsName',
             'type' => 'String',
         ),
-        '  normsSuttle' => array(
+        'normsSuttle' => array(
             'name' => '单个产品规格净重',
             'column' => 'normsSuttle',
             'type' => 'String',
         ),
-        '  normsError' => array(
+        'normsError' => array(
             'name' => '单个产品规格净重误差范围',
             'column' => 'normsError',
             'type' => 'String',
         ),
-        '  normsNumber' => array(
+        'normsNumber' => array(
             'name' => '内包装净重/个数',
             'column' => 'normsNumber',
             'type' => 'String',
         ),
-        '  normsSize' => array(
+        'normsSize' => array(
             'name' => '内包装尺寸',
             'column' => 'normsSize',
             'type' => 'String',
         ),
-        '  normsTexture' => array(
+        'normsTexture' => array(
             'name' => '内包装材质及技术标准',
             'column' => 'normsTexture',
             'type' => 'String',
         ),
-        '  normsOut' => array(
+        'normsOut' => array(
             'name' => '外包装规格',
             'column' => 'normsOut',
             'type' => 'String',
         ),
-        '  normsKg' => array(
+        'normsKg' => array(
             'name' => '外包装净重/毛重',
             'column' => 'normsKg',
             'type' => 'String',
         ),
-        '  normsOutSize' => array(
+        'normsOutSize' => array(
             'name' => '外包装尺寸',
             'column' => 'normsOutSize',
             'type' => 'String',
         ),
-        '  normsOutTexture' => array(
+        'normsOutTexture' => array(
             'name' => '外包装材质及技术标准',
             'column' => 'normsOutTexture',
             'type' => 'String',

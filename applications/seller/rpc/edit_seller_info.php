@@ -30,10 +30,10 @@ $remote['seller_edit_seller_info'] = array(
         ),
         'slSeller' => array(
             'name' => '卖家基本信息',
-            'column' => 'slSeller  ',
+            'column' => 'slSeller',
             'type' => 'Object',
             'default' => '',
-            'require' => '',
+            'require' => false,
         ),
         'pdClassesCodeList' => array(
             'name' => '产品类别List',
@@ -49,13 +49,13 @@ $remote['seller_edit_seller_info'] = array(
             'default' => '',
             'require' => '',
         ),
-        'certInfoList' => array(
-            'name' => '企业证照信息List',
-            'column' => 'certInfoList',
-            'type' => 'List',
-            'default' => '',
-            'require' => '',
-        ),
+//        'certInfoList' => array(
+//            'name' => '企业证照信息List',
+//            'column' => 'certInfoList',
+//            'type' => 'List',
+//            'default' => '',
+//            'require' => '',
+//        ),
         'slEpHonorList' => array(
             'name' => '企业荣誉信息List',
             'column' => 'slEpHonorList',
@@ -70,20 +70,20 @@ $remote['seller_edit_seller_info'] = array(
             'default' => '',
             'require' => '',
         ),
-        'slEpBrandHonorList' => array(
-            'name' => '企业产品品牌荣誉信息List',
-            'column' => 'slEpBrandHonorList',
-            'type' => 'List',
-            'default' => '属于某个企业的品牌',
-            'require' => '',
-        ),
-        'slPdBrandList' => array(
-            'name' => '',
-            'column' => 'slPdBrandList',
-            'type' => 'List',
-            'default' => '不是自己企业的品牌时使用',
-            'require' => '',
-        ),
+//        'slEpBrandHonorList' => array(
+//            'name' => '企业产品品牌荣誉信息List',
+//            'column' => 'slEpBrandHonorList',
+//            'type' => 'List',
+//            'default' => '',
+//            'require' => '',
+//        ),
+//        'slPdBrandList' => array(
+//            'name' => '',
+//            'column' => 'slPdBrandList',
+//            'type' => 'List',
+//            'default' => '不是自己企业的品牌时使用',
+//            'require' => '',
+//        ),
         'slEpWorkshopList' => array(
             'name' => '企业车间List',
             'column' => 'slEpWorkshopList',
@@ -98,13 +98,13 @@ $remote['seller_edit_seller_info'] = array(
             'default' => '',
             'require' => '',
         ),
-        'slEpAuthList' => array(
-            'name' => '',
-            'column' => 'slEpAuthList',
-            'type' => 'List',
-            'default' => '',
-            'require' => '',
-        ),
+//        'slEpAuthList' => array(
+//            'name' => '',
+//            'column' => 'slEpAuthList',
+//            'type' => 'List',
+//            'default' => '',
+//            'require' => '',
+//        ),
         'slEpManagerList' => array(
             'name' => '',
             'column' => 'slEpManagerList',
@@ -119,7 +119,33 @@ $remote['seller_edit_seller_info'] = array(
             'default' => '',
             'require' => '',
         ),
-
+        'loginId' => array(
+            'name' => '  创建者ID/更新者ID',
+            'column' => 'loginId',
+            'type' => 'String',
+            'default' => '',
+            'require' => false,
+        ),
+        'delFlg' => array(
+            'name' => '  删除标志',
+            'column' => 'delFlg',
+            'type' => 'String',
+            'default' => '',
+            'require' => false,
+        ),
+        'ver' => array('name' => '  版本号',
+            'column' => 'ver',
+            'type' => 'Integer',
+            'default' => '',
+            'require' => false
+        ),
+        'insertFlag' => array(
+            'name' => '全体/单个',
+            'column' => 'insertFlag',
+            'type' => 'String',
+            'default' => '',//0：全体，1：单个
+            'require' => false,
+        ),
     ),
 
     'slAccount' => array(
@@ -167,7 +193,7 @@ $remote['seller_edit_seller_info'] = array(
         ),
     ),
 
-    'slSeller  ' => array(
+    'slSeller' => array(
         'login_account' => array(
             'name' => '',
             'column' => 'slAccount',
@@ -179,7 +205,7 @@ $remote['seller_edit_seller_info'] = array(
             'name' => '卖家ID',
             'column' => 'slCode',
             'type' => 'String',
-            'default' => '全体新增时为空，单独新增的时候为空，修改时不为空',
+            'default' => '',
             'require' => false,
         ),
         'slConFlg' => array(
@@ -228,70 +254,70 @@ $remote['seller_edit_seller_info'] = array(
             'name' => '企业ID',
             'column' => 'epId',
             'type' => 'Integer',
-            'default' => '全体新增时为空，单独新增的时候为空，修改时可为空',
+            'default' => '',
             'require' => false,
         ),
         'slMainClass' => array(
             'name' => '卖家主分类',
             'column' => 'slMainClass',
             'type' => 'Integer',
-            'default' => '0：生产商 1.自产型,2:代理型,3:OEM型，4：买手型',
+            'default' => '',
             'require' => false,
         ),
         'snkFlg' => array(
             'name' => '神农客标志',
             'column' => 'snkFlg',
             'type' => 'String',
-            'default' => '0：不是 1：是',
+            'default' => '',
             'require' => false,
         ),
         'selfFlg' => array(
             'name' => '自产型卖家标志',
             'column' => 'selfFlg',
             'type' => 'String',
-            'default' => '0：不是 1：是',
+            'default' => '',
             'require' => false,
         ),
         'agentFlg' => array(
             'name' => '代理型卖家标志',
             'column' => 'agentFlg',
             'type' => 'String',
-            'default' => '0：不是 1：是',
+            'default' => '',
             'require' => false,
         ),
         'oemFlg' => array(
             'name' => 'OEM型卖家标志',
             'column' => 'oemFlg',
             'type' => 'String',
-            'default' => '0：不是 1：是',
+            'default' => '',
             'require' => false,
         ),
         'buyerFlg' => array(
             'name' => '买手型卖家标志',
             'column' => 'buyerFlg',
             'type' => 'String',
-            'default' => '0：不是 1：是',
+            'default' => '',
             'require' => false,
         ),
         'sqaStatus' => array(
             'name' => '神农客贯标审核',
             'column' => 'sqaStatus',
             'type' => 'Integer',
-            'default' => '0:未审核,1:审核中,2:审核通过,3:审核未通过',
+            'default' => '',
             'require' => false,
         ),
         'distQua' => array(
             'name' => '卖家分销资格',
             'column' => 'distQua',
             'type' => 'Integer',
-            'default' => '0:无资格,1:标准分销卖家,2:优良分销卖家,3:重点分销卖家',
+            'default' => '',
             'require' => false,
         ),
         'shopQua' => array(
             'name' => '卖家开店资格',
             'column' => 'shopQua',
             'type' => 'String',
-            'default' => '0:无资格,1:有资格',
+            'default' => '',
             'require' => false,
         ),
         'memo1' => array(
@@ -333,7 +359,7 @@ $remote['seller_edit_seller_info'] = array(
             'name' => '买手类型',
             'column' => 'memo6',
             'type' => 'String',
-            'default' => '1行业型 2创业型 3关系型 4配送型',
+            'default' => '',
             'require' => false,
         ),
         'memo7' => array(
@@ -434,7 +460,6 @@ $remote['seller_edit_seller_info'] = array(
             'default' => '',
             'require' => false,
         ),
-
     ),
 
     'pdClassesCodeList' => array(
@@ -456,7 +481,7 @@ $remote['seller_edit_seller_info'] = array(
             'name' => '卖家ID',
             'column' => 'slCode',
             'type' => 'String',
-            'default' => '全体新增时为空，单独新增时不为空，修改时不为空',
+            'default' => '',
             'require' => false,
         ),
 
@@ -467,14 +492,14 @@ $remote['seller_edit_seller_info'] = array(
             'name' => '卖家ID',
             'column' => 'slCode',
             'type' => 'String',
-            'default' => '全体新增时为空，单独新增时不为空，修改时不为空',
+            'default' => '',
             'require' => false,
         ),
         'epId' => array(
             'name' => '企业ID',
             'column' => 'epId',
             'type' => 'String',
-            'default' => '全体新增时为空，单独新增时为空，修改时不为空',
+            'default' => '',
             'require' => false,
         ),
         'epName' => array(
@@ -488,7 +513,7 @@ $remote['seller_edit_seller_info'] = array(
             'name' => '三证合一营业执照标志',
             'column' => 'licType',
             'type' => 'String',
-            'default' => '0:普通,1:三证合一营业执照',
+            'default' => '',//0:普通,1:三证合一营业执照
             'require' => false,
         ),
         'licName' => array(
@@ -537,14 +562,14 @@ $remote['seller_edit_seller_info'] = array(
             'name' => '营业执照_注册资本',
             'column' => 'licRegCapital',
             'type' => 'BigDecimal',
-            'default' => '单位为万元',
+            'default' => '',
             'require' => false,
         ),
         'licPaidinCapital' => array(
             'name' => '营业执照_实收资本',
             'column' => 'licPaidinCapital',
             'type' => 'BigDecimal',
-            'default' => '单位为万元',
+            'default' => '',
             'require' => false,
         ),
         'licCrtDate' => array(
@@ -572,7 +597,7 @@ $remote['seller_edit_seller_info'] = array(
             'name' => '营业执照_营业期限长期标志',
             'column' => 'licTermUnliimited',
             'type' => 'String',
-            'default' => '0：短期 1:长期',
+            'default' => '',//0：短期 1:长期
             'require' => false,
         ),
         'taxNo' => array(
@@ -655,37 +680,37 @@ $remote['seller_edit_seller_info'] = array(
 
     ),
 
-    'certInfoList' => array(
-        'epId' => array(
-            'name' => '企业ID',
-            'column' => 'epId',
-            'type' => 'Integer',
-            'default' => '全体新增时为空，单独新增时不为空，修改时不为空',
-            'require' => false,
-        ),
-        'certId' => array(
-            'name' => '证照ID',
-            'column' => 'certId',
-            'type' => 'Integer',
-            'default' => '',
-            'require' => false,
-        ),
-        'certName' => array(
-            'name' => '证照名称',
-            'column' => 'certName',
-            'type' => 'String',
-            'default' => '',
-            'require' => false,
-        ),
-        'certItemList' => array(
-            'name' => '企业证照项目信息List',
-            'column' => 'certItemList',
-            'type' => 'List',
-            'default' => '',
-            'require' => false,
-        ),
-
-    ),
+//    'certInfoList' => array(
+//        'epId' => array(
+//            'name' => '企业ID',
+//            'column' => 'epId',
+//            'type' => 'Integer',
+//            'default' => '全体新增时为空，单独新增时不为空，修改时不为空',
+//            'require' => false,
+//        ),
+//        'certId' => array(
+//            'name' => '证照ID',
+//            'column' => 'certId',
+//            'type' => 'Integer',
+//            'default' => '',
+//            'require' => false,
+//        ),
+//        'certName' => array(
+//            'name' => '证照名称',
+//            'column' => 'certName',
+//            'type' => 'String',
+//            'default' => '',
+//            'require' => false,
+//        ),
+//        'certItemList' => array(
+//            'name' => '企业证照项目信息List',
+//            'column' => 'certItemList',
+//            'type' => 'List',
+//            'default' => '',
+//            'require' => false,
+//        ),
+//
+//    ),
     'certItemList' => array(
         'certId' => array(
             'name' => '证照ID',
@@ -723,14 +748,14 @@ $remote['seller_edit_seller_info'] = array(
             'name' => '企业ID',
             'column' => 'epId',
             'type' => 'Integer',
-            'default' => '全体新增时为空，单独新增时不为空，修改时不为空',
+            'default' => '',
             'require' => false,
         ),
         'honorId' => array(
             'name' => '荣誉ID',
             'column' => 'honorId',
             'type' => 'Integer',
-            'default' => '全体新增时为空，单独新增时为空，修改时不为空',
+            'default' => '',
             'require' => false,
         ),
         'honorDesc' => array(
@@ -762,21 +787,21 @@ $remote['seller_edit_seller_info'] = array(
             'name' => '企业ID',
             'column' => 'epId',
             'type' => 'Integer',
-            'default' => '全体新增时为空，单独新增时不为空，修改时不为空',
+            'default' => '',
             'require' => false,
         ),
         'brandId' => array(
             'name' => '品牌ID',
             'column' => 'brandId',
             'type' => 'Integer',
-            'default' => '全体新增时为空，单独新增时为空，修改时不为空',
+            'default' => '',
             'require' => false,
         ),
         'brandClass' => array(
             'name' => '品牌分类',
             'column' => 'brandClass',
             'type' => 'String',
-            'default' => '0:卖家独立品牌,1 :神农先生联合,2:神农客联合3:神农人家联合',
+            'default' => '',
             'require' => false,
         ),
         'brandName' => array(
@@ -815,14 +840,14 @@ $remote['seller_edit_seller_info'] = array(
             'name' => '企业ID',
             'column' => 'epId',
             'type' => 'Integer',
-            'default' => '全体新增时为空，单独新增时不为空，修改时不为空',
+            'default' => '',
             'require' => false,
         ),
         'brandId' => array(
             'name' => '品牌ID',
             'column' => 'brandId',
             'type' => 'Integer',
-            'default' => '全体新增时为空，单独新增时为空，修改时不为空',
+            'default' => '',
             'require' => false,
         ),
         'honorId' => array(
@@ -863,86 +888,86 @@ $remote['seller_edit_seller_info'] = array(
 
     ),
 
-    'slPdBrandList' => array(
-        'slCode' => array(
-            'name' => '卖家ID',
-            'column' => 'slCode',
-            'type' => 'String',
-            'default' => '全体新增时为空，单独新增时不为空，修改时不为空',
-            'require' => false,
-        ),
-        'brandEpId' => array(
-            'name' => '品牌所属企业ID',
-            'column' => 'brandEpId',
-            'type' => 'Integer',
-            'default' => '如果需要操作，必须有',
-            'require' => false,
-        ),
-        'brandId' => array(
-            'name' => '品牌ID',
-            'column' => 'brandId',
-            'type' => 'Integer',
-            'default' => '如果需要操作，必须有',
-            'require' => false,
-        ),
-        'brandName' => array(
-            'name' => '品牌名称',
-            'column' => 'brandName',
-            'type' => 'String',
-            'default' => '',
-            'require' => false,
-        ),
-        'brandType' => array(
-            'name' => '品牌类型',
-            'column' => 'brandType',
-            'type' => 'Integer',
-            'default' => '',
-            'require' => false,
-        ),
-        'brandClass' => array(
-            'name' => '品牌分类',
-            'column' => 'brandClass',
-            'type' => 'String',
-            'default' => '',
-            'require' => false,
-        ),
-        'contractNo' => array(
-            'name' => '代理及分销授权合同号',
-            'column' => 'contractNo',
-            'type' => 'String',
-            'default' => '',
-            'require' => false,
-        ),
-        'termBegin' => array(
-            'name' => '有效期开始',
-            'column' => 'termBegin',
-            'type' => 'Datetime',
-            'default' => '',
-            'require' => false,
-        ),
-        'termEnd' => array(
-            'name' => '有效期截止',
-            'column' => 'termEnd',
-            'type' => 'Datetime',
-            'default' => '',
-            'require' => false,
-        ),
-
-    ),
+//    'slPdBrandList' => array(
+//        'slCode' => array(
+//            'name' => '卖家ID',
+//            'column' => 'slCode',
+//            'type' => 'String',
+//            'default' => '全体新增时为空，单独新增时不为空，修改时不为空',
+//            'require' => false,
+//        ),
+//        'brandEpId' => array(
+//            'name' => '品牌所属企业ID',
+//            'column' => 'brandEpId',
+//            'type' => 'Integer',
+//            'default' => '如果需要操作，必须有',
+//            'require' => false,
+//        ),
+//        'brandId' => array(
+//            'name' => '品牌ID',
+//            'column' => 'brandId',
+//            'type' => 'Integer',
+//            'default' => '如果需要操作，必须有',
+//            'require' => false,
+//        ),
+//        'brandName' => array(
+//            'name' => '品牌名称',
+//            'column' => 'brandName',
+//            'type' => 'String',
+//            'default' => '',
+//            'require' => false,
+//        ),
+//        'brandType' => array(
+//            'name' => '品牌类型',
+//            'column' => 'brandType',
+//            'type' => 'Integer',
+//            'default' => '',
+//            'require' => false,
+//        ),
+//        'brandClass' => array(
+//            'name' => '品牌分类',
+//            'column' => 'brandClass',
+//            'type' => 'String',
+//            'default' => '',
+//            'require' => false,
+//        ),
+//        'contractNo' => array(
+//            'name' => '代理及分销授权合同号',
+//            'column' => 'contractNo',
+//            'type' => 'String',
+//            'default' => '',
+//            'require' => false,
+//        ),
+//        'termBegin' => array(
+//            'name' => '有效期开始',
+//            'column' => 'termBegin',
+//            'type' => 'Datetime',
+//            'default' => '',
+//            'require' => false,
+//        ),
+//        'termEnd' => array(
+//            'name' => '有效期截止',
+//            'column' => 'termEnd',
+//            'type' => 'Datetime',
+//            'default' => '',
+//            'require' => false,
+//        ),
+//
+//    ),
 
     'slEpWorkshopList' => array(
         'epId' => array(
             'name' => '企业ID',
             'column' => 'epId',
             'type' => 'Integer',
-            'default' => '全体新增时为空，单独新增时不为空，修改时不为空',
+            'default' => '',
             'require' => false,
         ),
         'workshopId' => array(
             'name' => '车间ID',
             'column' => 'workshopId',
             'type' => 'Integer',
-            'default' => '全体新增时为空，单独新增时为空，修改时不为空',
+            'default' => '',
             'require' => false,
         ),
         'workshopName' => array(
@@ -973,22 +998,28 @@ $remote['seller_edit_seller_info'] = array(
             'name' => '卖家ID',
             'column' => 'slCode',
             'type' => 'String',
-            'default' => '全体新增时为空，单独新增时不为空，修改时不为空',
+            'default' => '',
             'require' => false,
         ),
-        'epId' => array('name' => '企业ID', 'column' => 'epId', 'type' => 'Integer', 'default' => '', 'require' => ''),
+        'epId' => array(
+            'name' => '企业ID',
+            'column' => 'epId',
+            'type' => 'Integer',
+            'default' => '',
+            'require' => false
+        ),
         'ftyAsset' => array(
             'name' => '厂区_总资产',
             'column' => 'ftyAsset',
             'type' => 'BigDecimal',
-            'default' => '单位万元',
+            'default' => '',
             'require' => false,
         ),
         'ftyRegCapital' => array(
             'name' => '厂区_注册资本',
             'column' => 'ftyRegCapital',
             'type' => 'BigDecimal',
-            'default' => '单位万元',
+            'default' => '',
             'require' => false,
         ),
         'ftyLandArea' => array(
@@ -1098,67 +1129,72 @@ $remote['seller_edit_seller_info'] = array(
         ),
     ),
 
-    'slEpAuthList' => array(
-        'flag' => array(
-            'name' => '1：卖家代理及分销授权:2：卖家OEM委托授权标志',
-            'column' => 'flag',
-            'type' => 'String',
-            'default' => '',
-            'require' => false,
-        ),
-        'slCode' => array(
-            'name' => '卖家ID',
-            'column' => 'slCode',
-            'type' => 'String',
-            'default' => '全体新增时为空，单独新增时不为空，修改时不为空',
-            'require' => false,
-        ),
-        'producerEpId' => array(
-            'name' => '生产商_企业ID',
-            'column' => 'producerEpId',
-            'type' => 'Integer',
-            'default' => '',
-            'require' => false,
-        ),
-        'contractNo' => array(
-            'name' => '授权经销合同号',
-            'column' => 'contractNo',
-            'type' => 'String',
-            'default' => '',
-            'require' => false,
-        ),
-        'authEpName' => array(
-            'name' => '授权单位',
-            'column' => 'authEpName',
-            'type' => 'String',
-            'default' => '',
-            'require' => false,
-        ),
-        'authTermBegin' => array(
-            'name' => '授权期限开始',
-            'column' => 'authTermBegin',
-            'type' => 'Datetime',
-            'default' => '',
-            'require' => false,
-        ),
-        'authTermEnd' => array(
-            'name' => '授权期限结束',
-            'column' => 'authTermEnd',
-            'type' => 'Datetime',
-            'default' => '',
-            'require' => false,
-        ),
-        'authTermUnliimited' => array(
-            'name' => '授权期限长期标志',
-            'column' => 'authTermUnliimited',
-            'type' => 'String',
-            'default' => '',
-            'require' => false,
-        ),
-    ),
+//    'slEpAuthList' => array(
+//        'flag' => array(
+//            'name' => '1：卖家代理及分销授权:2：卖家OEM委托授权标志',
+//            'column' => 'flag',
+//            'type' => 'String',
+//            'default' => '',
+//            'require' => false,
+//        ),
+//        'slCode' => array(
+//            'name' => '卖家ID',
+//            'column' => 'slCode',
+//            'type' => 'String',
+//            'default' => '全体新增时为空，单独新增时不为空，修改时不为空',
+//            'require' => false,
+//        ),
+//        'producerEpId' => array(
+//            'name' => '生产商_企业ID',
+//            'column' => 'producerEpId',
+//            'type' => 'Integer',
+//            'default' => '',
+//            'require' => false,
+//        ),
+//        'contractNo' => array(
+//            'name' => '授权经销合同号',
+//            'column' => 'contractNo',
+//            'type' => 'String',
+//            'default' => '',
+//            'require' => false,
+//        ),
+//        'authEpName' => array(
+//            'name' => '授权单位',
+//            'column' => 'authEpName',
+//            'type' => 'String',
+//            'default' => '',
+//            'require' => false,
+//        ),
+//        'authTermBegin' => array(
+//            'name' => '授权期限开始',
+//            'column' => 'authTermBegin',
+//            'type' => 'Datetime',
+//            'default' => '',
+//            'require' => false,
+//        ),
+//        'authTermEnd' => array(
+//            'name' => '授权期限结束',
+//            'column' => 'authTermEnd',
+//            'type' => 'Datetime',
+//            'default' => '',
+//            'require' => false,
+//        ),
+//        'authTermUnliimited' => array(
+//            'name' => '授权期限长期标志',
+//            'column' => 'authTermUnliimited',
+//            'type' => 'String',
+//            'default' => '',
+//            'require' => false,
+//        ),
+//    ),
 
     'slEpManagerList' => array(
-        'epId' => array('name' => '企业ID', 'column' => 'epId', 'type' => 'Integer', 'default' => '', 'require' => ''),
+        'epId' => array('name' => '企业ID',
+            'column' => 'epId',
+            'type' => 'Integer',
+            'default' => '',
+            'require' => false
+        ),
         'memberId' => array(
             'name' => '管理成员ID',
             'column' => 'memberId',
@@ -1209,21 +1245,21 @@ $remote['seller_edit_seller_info'] = array(
             'name' => '卖家ID',
             'column' => 'slCode',
             'type' => 'String',
-            'default' => '全体新增时为空，单独新增时不为空，修改时不为空',
+            'default' => '',
             'require' => false,
         ),
         'memberId' => array(
             'name' => '成员ID',
             'column' => 'memberId',
             'type' => 'Integer',
-            'default' => '全体新增时为空，单独新增时为空，修改时不为空',
+            'default' => '',
             'require' => false,
         ),
         'leaderFlg' => array(
             'name' => '是否负责人',
             'column' => 'leaderFlg',
             'type' => 'String',
-            'default' => '1:负责人,0:成员',
+            'default' => '',
             'require' => false,
         ),
         'memberName' => array(
@@ -1261,31 +1297,20 @@ $remote['seller_edit_seller_info'] = array(
             'default' => '',
             'require' => false,
         ),
-        'loginId' => array(
-            'name' => '  创建者ID/更新者ID',
-            'column' => 'loginId',
-            'type' => 'String',
-            'default' => '',
-            'require' => false,
-        ),
-        'delFlg' => array(
-            'name' => '  删除标志',
-            'column' => 'delFlg',
-            'type' => 'String',
-            'default' => '0：有效，1：删除',
-            'require' => false,
-        ),
-        'ver' => array('name' => '  版本号', 'column' => 'ver', 'type' => 'Integer', 'default' => '', 'require' => ''),
-        'insertFlag' => array(
-            'name' => '全体/单个',
-            'column' => 'insertFlag',
-            'type' => 'String',
-            'default' => '0：全体，1：单个',
-            'require' => false,
-        ),
-
     ),
 
-    'response' => array(),
+
+    'response' => array(
+        'epId' => array(
+            'name' => '企业id',
+            'column' => 'epId',
+            'type' => 'String',
+        ),
+        'slCode' => array(
+            'name' => '卖家id',
+            'column' => 'slCode',
+            'type' => 'String',
+        ),
+    ),
 
 );

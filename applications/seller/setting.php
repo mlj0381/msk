@@ -227,14 +227,15 @@ $setting = array(
             6 => array('id' => '6', 'label' => '其他'),
         ),
     ),
-    'cat_columns' => array(
+    'education' => array(
         'default' => array(
-            'quality' => array(
-                'label' => '质量管理档案卡',
-                'columns' => array(
-                    '后台系统字段名' => '前台字段名',
-                ),
-            ),
+            '1' => '博士',
+            '2' => '硕士',
+            '3' => '本科',
+            '4' => '大专',
+            '5' => '高中',
+            '6' => '小学',
+            '7' => '其他',
         ),
     ),
 );

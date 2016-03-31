@@ -156,6 +156,11 @@ $db['sellers'] = array(
             'default' => 0,
             'comment' => '商家类型' // 0 卖家 1 买手 ...
         ),
+        'api_seller_id' => array(
+            'type' => 'varchar(20)',
+            'default' => 0,
+            'comment' => '润和商家id'
+        ),
         'checkin' => array(
             'label' => ('审核'),
             'type' => array(
