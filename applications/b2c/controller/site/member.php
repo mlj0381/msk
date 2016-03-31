@@ -665,6 +665,7 @@ class b2c_ctl_site_member extends b2c_frontpage
          * IBY121208 删除收货地址
          * IBY121209 收货时间查询
          */
+        $member_data = $this->app->model('members')->getRow('*',array('member_id'=> $this->member['member_id']));
         $this->menuSetting = 'setting';
         $this->pagedata['action'] = $action;
         $mdl_maddr = $this->app->model('member_addrs');
@@ -682,6 +683,16 @@ class b2c_ctl_site_member extends b2c_frontpage
                 if (!$mdl_maddr->delete(array('member_id' => $member_id, 'addr_id' => $addr_id))) {
                     $this->splash('error', '', '删除失败');
                 }
+                //rpc删除收货地址
+                $delete_data = array(
+                    'buyer_id'=> $member_data['buyer_id'],
+                    'addr_id'=> $addr_id,
+                );
+                $delete_result = $this->app->rpc('delete_delivery_address')->request($delete_data);
+                if (!$delete_result['status']) {
+                    $this->splash('error', '', '同步删除失败');
+                }
+
                 $this->splash('success', $redirect, '删除成功');
                 break;
             case 'edit':
@@ -694,10 +705,25 @@ class b2c_ctl_site_member extends b2c_frontpage
                 if (!$mdl_maddr->save($addr)) {
                     $this->splash('error', '', '保存失败');
                 }
+                //rpc更新或添加收货地址
+                $update_data = array(
+                    'buyer_id'=> $member_data['buyer_id'],
+                    'addr_id'=> $addr['addr_id'],//有则更新，无则添加
+                    'addr'=> $addr['addr'],
+                );
+                $update_result = $this->app->rpc('update_delivery_address')->request(array('param'=>$update_data));
+                if (!$update_result['status']) {
+                    $this->splash('error', '', '同步保存失败');
+                }
                 $this->splash('success', $redirect, '保存成功');
                 break;
             default:
-
+                //rpc查询收货地址列表
+                $data = array(
+                    'buyer_id'=> $member_data['buyer_id'],
+                );
+                $result = $this->app->rpc('select_delivery_address')->request($data);
+//                var_dump($result);die;
                 $this->pagedata['list'] = $mdl_maddr->getList('*', array('member_id' => $member_id));
                 $this->output();
                 break;

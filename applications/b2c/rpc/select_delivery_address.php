@@ -23,7 +23,7 @@ $remote['b2c_select_delivery_address'] = array(
     ),
 
     'param' => array(
-        'buyerId' => array(
+        'buyer_id' => array(
             'name' => '买家ID',
             'column' => 'buyerId',
             'type' => 'String',
@@ -37,7 +37,7 @@ $remote['b2c_select_delivery_address'] = array(
             'column' => 'buyerId',
             'type' => 'String',
         ),
-        'id' => array(
+        'addr_id' => array(
             'name' => '买家收货地址ID',
             'column' => 'id',
             'type' => 'long',

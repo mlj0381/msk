@@ -458,21 +458,64 @@ class seller_ctl_site_goods extends seller_frontpage
     public function createProduct()
     {
         if(!$_POST) $this->splash('error', '', '非法请求');
+
         extract($_POST);
-        $dlyplace = app::get('b2c')->model('dlyplace')->get_api_area();
-        $dlyplace = utils::array_change_key($dlyplace['logiAreaList'], 'logiAreaCode');
-        $product = Array();
+        //获取地区价盘
+        //$dlyplace = app::get('b2c')->model('dlyplace')->get_api_area();
+        //$dlyplace = utils::array_change_key($dlyplace['logiAreaList'], 'logiAreaCode');
         $index = 0;
-        foreach($logistics as $v1)
+        $cat = explode('-', $product);
+        //获取商品列表
+        $pack = app::get('b2c')->rpc('goods_info')->request('', 259000);
+        print_r($pack);
+        $productArray = array();
+        foreach($pack['result']['goods'] as $value)
         {
-            foreach($pack as $v2)
-            {
-                $product[$index]['product_label'] = $dlyplace[$v1]['logiAreaName'] . '/' . $v2 . '包装';
-                $product[$index]['product_id'] = $dlyplace[$v1]['logiAreaCode'] . '-' . $v2;
-                $index ++;
+            if($value['classesCode'] == $cat[0] &&
+                $value['classesCode'] == $cat[1] &&
+                $value['classesCode'] == $cat[2] &&
+                $value['classesCode'] == $cat[3] ){
+
             }
         }
         $this->splash('success', '', $product);
+    }
+
+    private function _formatCat($data)
+    {
+        $data = explode('-', $data);
+        $api_data = array(
+            'classesCode' => $data[0],
+            'machiningCode' => $data[1],
+            'breedCode' => $data[2],
+            'featureCode' => $data[3],
+            'weightCode' => $data[4],
+        );
+        return $api_data;
+    }
+
+
+    /**
+     * 获取分类下的特征信息
+     */
+    public function getFeature()
+    {
+        if(!$_POST) $this->splash('error', '', '非法请求');
+        $api_data = $this->_formatCat($_POST['cat']);
+        $result = app::get('b2c')->rpc('select_product_cat4')->request($api_data, 2592000);
+        $this->splash('success', '', $result['result']);
+    }
+
+
+    /**
+     * 获取特征下的净重
+     */
+    public function getWeight()
+    {
+        if(!$_POST) $this->splash('error', '', '非法请求');
+        $api_data = $this->_formatCat($_POST['cat']);
+        $result = app::get('b2c')->rpc('select_product_cat5')->request($api_data, 2592000);
+        $this->splash('success', '', $result['result']);
     }
 
     /**
@@ -481,14 +524,7 @@ class seller_ctl_site_goods extends seller_frontpage
     public function getPack()
     {
         if(!$_POST) $this->splash('error', '', '非法请求');
-        $data = explode(',', $_POST['cat']);
-        $api_data = array(
-            'classesCode' => '01',//$data[0],
-            'machiningCode' => '2',//$data[1],
-            'breedCode' => '01',//$data[2],
-            'featureCode' => '01',//$data[3],
-            'weightCode' => '01',//$data[4],
-        );
+        $api_data = $this->_formatCat($_POST['cat']);
         $result = app::get('b2c')->rpc('select_product_cat6')->request($api_data, 2592000);
         $this->splash('success', '', $result['result']);
     }
