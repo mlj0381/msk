@@ -38,6 +38,39 @@ class b2c_ctl_site_checkout extends b2c_frontpage
          * 查看购买需求订单接口无
          * 买手购买 不用收货地址，支付方式在线地付，发货时间等都无
          */
+        echo '<pre>';
+
+
+        $member_id =  vmc::singleton('b2c_user_object')->get_member_id();
+        if($member_id)
+        {
+            $member = app::get('b2c')->model('members')->getRow('*',array('member_id'=>$member_id));
+            $api_buyer_id = $member['api_buyer_id'];
+            $buyer_code = $member['buyer_code'];
+        }else{
+            $buyer_id = vmc::singleton('buyer_user_object')->get_id();
+            $buyer = app::get('buyer')->model('buyers')->getRow('*',array('buyer_id'=>$buyer_id));
+            $api_buyer_id = $buyer['api_buyer_id'];
+            $buyer_code = $buyer['buyer_code'];
+        }
+        $api_data = array(
+            'districtCode' => $_SESSION['account']['addr'],
+            'buyers_id' => $api_buyer_id,
+            'buyer_code' => $buyer_code,
+            'buyer_type' => '1',
+            'buyers_name' => '1',
+            'seller_name' => '1',
+            'products' => array(
+                "pdCode"=>"101010101012312310",
+                "pdName"=>"法法师法",
+                "orderPrice"=> "10.00",
+                "priceCycle"=>"01",
+                "orderQty"=>"12"
+            )
+        );
+        var_dump($api_data);
+        die;
+
 
         $blank_url = $this->gen_url(array(
             'app' => 'b2c',
