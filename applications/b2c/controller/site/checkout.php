@@ -38,40 +38,6 @@ class b2c_ctl_site_checkout extends b2c_frontpage
          * 查看购买需求订单接口无
          * 买手购买 不用收货地址，支付方式在线地付，发货时间等都无
          */
-        echo '<pre>';
-
-
-        $member_id =  vmc::singleton('b2c_user_object')->get_member_id();
-        if($member_id)
-        {
-            $member = app::get('b2c')->model('members')->getRow('*',array('member_id'=>$member_id));
-            $api_buyer_id = $member['api_buyer_id'];
-            $buyer_code = $member['buyer_code'];
-        }else{
-            $buyer_id = vmc::singleton('buyer_user_object')->get_id();
-            $buyer = app::get('buyer')->model('buyers')->getRow('*',array('buyer_id'=>$buyer_id));
-            $api_buyer_id = $buyer['api_buyer_id'];
-            $buyer_code = $buyer['buyer_code'];
-        }
-        $api_data = array(
-            'districtCode' => $_SESSION['account']['addr'],
-            'buyers_id' => $api_buyer_id,
-            'buyer_code' => $buyer_code,
-            'buyer_type' => '1',
-            'buyers_name' => '1',
-            'seller_name' => '1',
-            'products' => array(
-                "pdCode"=>"101010101012312310",
-                "pdName"=>"法法师法",
-                "orderPrice"=> "10.00",
-                "priceCycle"=>"01",
-                "orderQty"=>"12"
-            )
-        );
-        var_dump($api_data);
-        die;
-
-
         $blank_url = $this->gen_url(array(
             'app' => 'b2c',
             'ctl' => 'site_cart',
@@ -123,6 +89,53 @@ class b2c_ctl_site_checkout extends b2c_frontpage
                 $available_coupons[$p['coupon_code']]['in_cart'] = 'true';
             }
         }
+        $member_id =  vmc::singleton('b2c_user_object')->get_member_id();
+        if($member_id)
+        {
+            $member = app::get('b2c')->model('members')->getRow('*',array('member_id'=>$member_id));
+            $api_buyer_id = $member['buyer_id'];
+            $buyer_code = $member['buyer_code'];
+            $buyer_name = '1';
+        }else{
+            $buyer_id = vmc::singleton('buyer_user_object')->get_id();
+            $buyer = app::get('buyer')->model('buyers')->getRow('*',array('buyer_id'=>$buyer_id));
+            $api_buyer_id = $buyer['api_buyer_id'];
+            $buyer_code = $buyer['buyer_code'];
+            $buyer_name = $buyer['local'];
+        }
+
+        $api_data = array(
+            'districtCode' => $_SESSION['account']['addr'],
+            'buyer_id' => $api_buyer_id,
+            'buyer_code' => $buyer_code,
+            'buyer_type' => '1',
+            'buyer_name' => $buyer_name,
+            'seller_name' => '1',
+            'seller_code' => '1',
+            'products' => array()
+        );
+        foreach($this->pagedata['cart_result']['objects']['goods'] as $product)
+        {
+            if(!empty($product['item']['product']['disabled']))
+            {
+                $data['bn'] = $product['item']['product']['bn'].'2';
+                $data['name'] = substr($product['item']['product']['name'],0,15);
+                $data['price'] = $product['item']['product']['price'];
+                $data['quantity'] = $product['quantity'];
+                $api_data['products'][] = $data;
+            }
+        }
+        $result = app::get('b2c')->rpc('order_create')->request($api_data);
+
+        if(!$result['result']['proCode'])
+        {
+            $this->splash('error', '', '需求订单下单失败!');
+        }
+        //购物需求订单编码 ，保存用户的session里面，下单时候需要使用单
+        $_SESSION['account']['order_code'] = $result['result']['proCode'];
+        $_SESSION['account']['api_buyer_id'] = $api_buyer_id;
+        $_SESSION['account']['buyer_code'] = $buyer_code;
+
         $this->pagedata['order_from'] = $params['buyer'];
         $this->pagedata['manager'] = $params['manager'];
         $this->pagedata['buyer_id'] = $this->buyer_id;

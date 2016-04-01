@@ -52,7 +52,7 @@ class b2c_ctl_site_order extends b2c_frontpage
             'need_invoice' => $params['need_invoice'],
             'invoice_title' => $params['invoice_title'],
             'platform' => 'pc',
-            'store_id' => $params['store_id'],
+            'store_id' => $params['store_id']?$params['store_id']:'1',
             'addon' => $params['addon']
         );
         $this->buyer_id && $order_sdf['type'] = '1';
@@ -115,13 +115,7 @@ class b2c_ctl_site_order extends b2c_frontpage
 //             $this->splash('error', $redirect_cart, '购物车发生变化');
 //         }
 
-        /**
-         * 润和接口 创建订单
-         * ISO151414 标准分销订单 分销买手囤货订单 第三方订单 第三方买手囤货订单
-         */
-        //$rpc_data = array();
-        //$result = $this->app->rpc('order_create')->request($rpc_data);
-        // end 接口
+
         $db = vmc::database();
         //开启事务
         $this->transaction_status = $db->beginTransaction();
@@ -134,12 +128,74 @@ class b2c_ctl_site_order extends b2c_frontpage
             $this->splash('error', $redirect_cart, $msg);
         }
 
+        /**
+         * 润和接口 创建订单
+         * ISO151414 标准分销订单 分销买手囤货订单 第三方订单 第三方买手囤货订单
+         */
+        //商品没有好查询到卖家信息，，后面完善
+        $goods_id = array_keys(utils::array_change_key($order_sdf['items'],'goods_id'));
+        $api_data = array(
+            'proCode' => $_SESSION['account']['order_code'],
+            'district_code' => $_SESSION['account']['addr'],
+            'buyer_id' => $_SESSION['account']['api_buyer_id'],
+            'buyer_code' => $_SESSION['account']['buyer_code'],
+            'seller_code' => '1',
+            'seller_name' => '1',
+            'need_invoice' => $order_sdf['need_invoice']?'1':'0',
+            'order_amount' => $order_sdf['order_total'],
+            'payment_type' => $order_sdf['pay_app'] == 'offline'?'2':'1',
+            'receiver_info' => $order_sdf['consignee'],
+            'delivery_req' => array(
+                'vic_flg' => $_POST['addon']['certificates']?'1':'0',
+                'unload_req' => $_POST['addon']['uninstall'] ,
+            ),
+            'invoice_req' => array(
+                'invoice_type' => '1',
+                'invoice_title' => $_POST['invoice_title'],
+            ),
+            'products' => array()
+        );
+        $api_data['receiver_info']['remark'] = $order_sdf['memo'];
+        $api_data['receiver_info']['early'] = $_POST['addon']['consignee_time']['best']['early'];
+        $api_data['receiver_info']['lasts'] = $_POST['addon']['consignee_time']['best']['night'];
+        $mdl_ectools = app::get('ectools')->model('regions');
+        $area_code = $mdl_ectools->region_decode($api_data['receiver_info']['area']);
+        $api_data['receiver_info']['province'] = $area_code['province']['local_name'];
+        $api_data['receiver_info']['city'] = $area_code['city']['local_name'];
+        $api_data['receiver_info']['district'] = $area_code['district']['local_name'];
+        foreach($order_sdf['items'] as $product)
+        {
+            $data['bn'] = $product['bn'].'2';
+            $data['name'] = substr($product['name'],0,15);
+            $data['price'] = $product['price'];
+            $data['quantity'] = $product['nums'];
+            $api_data['products'][] = $data;
+        }
+        $result = app::get('buyer')->rpc('create_out_order')->request($api_data);
+        if(!$result['status'])
+        {
+            $db->rollback(); //事务回滚
+            $msg = $msg ? $msg : '数据保存失败';
+            $this->logger->fail('create', $msg, $api_data);
+            $this->splash('error', $redirect_cart, $msg);
+        }else{
+            $order_sdf['api_order_id'] = $result['result']['order_id'];
+            $order_sdf['order_code'] = $result['result']['order_code'];
+        }
+        // end 接口
+
+
         if (!$order_create_service->save($order_sdf, $msg)) {
             $db->rollback(); //事务回滚
             $msg = $msg ? $msg : '数据保存失败';
             $this->logger->fail('create', $msg, $order_sdf);
             $this->splash('error', $redirect_cart, $msg);
         }
+
+
+
+
+
         $db->commit($this->transaction_status); //事务提交
         $this->logger->set_order_id($order_sdf['order_id']);
         $this->logger->success('create', '订单创建成功', $params);
