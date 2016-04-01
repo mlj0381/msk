@@ -102,6 +102,7 @@ class b2c_user_passport {
             $api_data = array_merge($_POST['company'],$_POST['company_extra']['value'],$buyer_id);
             $rpc_basic = app::get('b2c')->rpc('update_member_base_info');
             $result = $rpc_basic->request($api_data);
+
             if(!empty($result['result']['buyer_code']))
             {
                 $data = array(

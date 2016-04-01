@@ -60,6 +60,11 @@ $db['members'] = array(
             'required' => true,
             'comment' => '登录密码',
         ),
+        'password' => array(
+            'type' => 'varchar(32)',
+            'required' => true,
+            'comment' => '接口明文登录密码',
+        ),
         'password_account' => array(
             'type' => 'varchar(100)',
             'required' => true,

@@ -143,12 +143,6 @@ $db['members'] = array(
 
             'in_list' => false,
         ) ,
-        'buyerId' => array(
-            'type' => 'varchar(200)',
-            'label' => ('润和买家主键ID') ,
-
-            'in_list' => false,
-        ) ,
         'buyer_id' => array(
             'type' => 'varchar(200)',
             'label' => ('润和买家ID') ,

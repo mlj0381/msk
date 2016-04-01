@@ -23,6 +23,16 @@ class freeze_mdl_freeze extends dbeav_model
         $buyer_code = app::get('buyer')->model('buyers')->getRow('buyer_code',array('buyer_id'=>$api_data['buyer_id']));
         $api_data['buyer_code'] = $buyer_code['buyer_code']?$buyer_code['buyer_code']:'7010900155';
         $api_data = array_merge($api_data,$api_pam_data);
+        $mdl_ectools = app::get('ectools')->model('regions');
+        $area_code = $mdl_ectools->region_decode($api_data['manage_area']);
+        $api_data['province_code'] = $area_code['province']['code'];
+        $api_data['city_code'] = $area_code['city']['code'];
+        $api_data['district_code'] = $area_code['district']['code'];
+        $v_area_code = $mdl_ectools->region_decode($api_data['area']);
+        $api_data['v_province_code'] = $v_area_code['province']['code'];
+        $api_data['v_city_code'] = $v_area_code['city']['code'];
+        $api_data['v_district_code'] = $v_area_code['district']['code'];
+
         if(empty($api_data['code']))
         {
             unset($api_data['code']);
