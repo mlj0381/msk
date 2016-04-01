@@ -12,9 +12,7 @@ class b2c_user_smscode {
 	
 	public function __construct(&$app) {
 		$this->app = $app;
-		
-		
-		
+
 		vmc::singleton('base_session')->start();
 	}
 	
@@ -86,6 +84,21 @@ class b2c_user_smscode {
 		return md5($mobile . $type);
 	}
 	
+	/**
+	 * 判断验证码是否正确
+	 * @param unknown $mobile
+	 * @param unknown $smscode
+	 * @param string $type
+	 */
+	public function bool_sms($mobile,$smscode,$type='sms'){
+		$vcode = $this->get_smscode($mobile,$type);
+		if($vcode && $smscode == $vcode['vcode']){
+			return true;
+		}else{
+			return false;
+		}
+		
+	}
 	
 	
 }

@@ -126,7 +126,7 @@ class b2c_user_vcode {
     public function verify($vcode, $send, $type) {
         if (empty($vcode)) return false;
         $vcodeData = $this->get_vcode((string)$send, $type);
-        if ($vcodeData && $vcodeData['vcode'] == $vcode) {
+        if ($vcodeData['vcode'] == $vcode) {
             $data = $this->delete_vcode($vcodeData['account'], $type, $vcodeData);
             return $data;
         } else {
