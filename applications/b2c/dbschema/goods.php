@@ -168,6 +168,18 @@ $db['goods'] = array(
             'type' => 'number',
             'label' => ('起定量') ,
         ) ,
+        'api_spec_desc' => array(
+            'type' => 'serialize',
+            'default' => '',
+            'label' => ('api商品特征，净重，包装信息') ,
+            'comment' => ('api商品特征，净重，包装信息') ,
+        ) ,
+        'api_cat' => array(
+            'type' => 'varchar(20)',
+            'default' => '',
+            'label' => ('api商品分类') ,
+            'comment' => ('api商品分类') ,
+        ) ,
         'nostore_sell' => array(
             'type' => 'intbool',
             'default' => '0',
