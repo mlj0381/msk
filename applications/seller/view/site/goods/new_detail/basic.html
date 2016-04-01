@@ -6,11 +6,27 @@
     <div class="form-group">
         <label class="col-xs-2 control-label"><span class="text-danger">*</span><span>商品类目</span></label>
         <div class="col-xs-8">
-            <{input type="category" class="study" identity="store" seller=$seller_id name="goods[category][cat_id]"
-            value=$goods.category.cat_id
-            callback="callBack"}>
+            <!-- identity="store" seller=$seller_id -->
+            <{input type="category" class="study"  name="goods[category][cat_id]"
+            value=$goods.category.cat_id callback="callBack"}>
         </div>
     </div>
+
+    <div class="spec-desc-t">
+        <input type="hidden" name="goods[spec_desc][t][]" value="特征">
+        <input type="hidden" name="goods[spec_desc][t][]" value="包装">
+    </div>
+
+    <div class="api-spec-desc">
+        <!--<input type="hidden" name="goods[api_spec_desc][weight][]" value="">-->
+        <!--<input type="hidden" name="goods[api_spec_desc][pack][]" value="">-->
+        <!--<input type="hidden" name="goods[api_spec_desc][feature][]" value="">-->
+    </div>
+    <input type="hidden" name="goods[api_cat]" class="api_cat" value="<{$goods.api_cat}>">
+    <div class="spec-desc-v">
+
+    </div>
+
 
     <!--<div class="form-group">-->
         <!--<label class="col-xs-2 control-label"><span class="text-danger">*</span><span>所在物流区</span></label>-->
@@ -24,11 +40,17 @@
             <!--</div>-->
         <!--</div>-->
     <!--</div>-->
+
     <div class="form-group">
         <label class="col-xs-2 control-label"><span class="text-danger">*</span><span>特征</span></label>
         <div class="col-xs-5">
             <div class="form-item feature">
-
+                <{foreach from=$api_cat.feature item=item}>
+                <span class="feature<{$item.parent}>">
+                    <input data-type="<{$item.parent}>"
+                           <{if in_array($item.featureCode, $goods.api_spec_desc.feature)}>checked<{/if}>
+                           type="checkbox" name=name value="<{$item.featureCode}>"><{$item.featureName}></span>
+                <{/foreach}>
             </div>
         </div>
     </div>
@@ -36,15 +58,28 @@
         <label class="col-xs-2 control-label"><span class="text-danger">*</span><span>净重</span></label>
         <div class="col-xs-5">
             <div class="form-item weight">
-
+                <{foreach from=$api_cat.weight item=item}>
+                <span class="weight<{$item.parent}>">
+                    <input data-type="<{$item.parent}>" type="checkbox"
+                           <{if in_array($item.weightCode, $goods.api_spec_desc.weight)}>checked<{/if}>
+                           name=name value="<{$item.weightCode}>"><{$item.weightName}>
+                </span>
+                <{/foreach}>
             </div>
         </div>
     </div>
+
     <div class="form-group">
         <label class="col-xs-2 control-label"><span class="text-danger">*</span><span>包装</span></label>
         <div class="col-xs-5">
             <div class="form-item pack">
-
+                <{foreach from=$api_cat.pack item=item}>
+                <span class="pack<{$item.parent}>">
+                    <input data-type="<{$item.parent}>" type="checkbox" name=name
+                           <{if in_array($item.normsCode, $goods.api_spec_desc.pack)}>checked<{/if}>
+                           value="<{$item.normsCode}>"><{$item.normsName}>
+                </span>
+                <{/foreach}>
             </div>
         </div>
     </div>
@@ -241,13 +276,16 @@
         });
         $('.create-product').attr('data-product', apiCatId);
         if(!cat_id) return false;
-        //获取包装信息根据 1 2 3 4 5 级分类获取
-        $('.feature').empty();
+
+        //获取特征信息根据 1 2 3 级分类获取
+
         var url = '<{link app=seller ctl=site_goods act=getFeature}>';
         var data = {cat : apiCatId};
         $.post(url, data, function(re){
             if(!re.data) return ;
+            $('.feature').empty();
             var pack = htmlFormat(re, ['featureCode', 'featureName'], 'feature');
+            $('.api_cat').val(apiCatId);
             $('.feature').append($(pack));
             $('.feature input').click(function(){
                 weight($(this));
@@ -255,19 +293,52 @@
         });
     };
 
+    (function(){
+        $('.feature input').click(function(){
+            weight($(this));
+        });
+        $('.pack input').click(function(){
+            addSpecDesc($(this));
+        });
+        $('.weight input').click(function(){
+            pack($(this));
+        });
+    })();
+
+    var addSpecDesc = function(obj){
+        var idx = obj.val();
+        var apiSpec = $('.api-spec-desc');
+        if(!obj.prop('checked')){
+            apiSpec.find('input[data-type="pack'+idx+'"]').remove();
+            $('.spec-desc-v input[data-id="'+idx+'"]').remove();
+            return false;
+        }
+
+        apiSpec.append($('<input type="hidden" data-type="pack'+idx+'" name="goods[api_spec_desc][pack][]" value="'+idx+'">'));
+
+        var html = '<input type="hidden" name="goods[spec_desc][v][]" data-id="'+obj.val()+'"  value="'+obj.parent('span').text()+'"/>';
+        $('.spec-desc-v').append(html);
+    };
+
     var pack = function(obj){
         var idx = obj.val();
+        var apiSpec = $('.api-spec-desc');
         var catId = apiCat() + obj.attr('data-type')+'-'+ idx;
         if(!obj.prop('checked')){
+
             $('.pack' + idx).remove();
+            console.log($('.pack' + idx));
+            apiSpec.find('input[data-type="weight'+idx+'"]').remove();
             return false;
         }
         if(!catId) return false;
+
+        apiSpec.append($('<input type="hidden" data-type="weight'+idx+'" name="goods[api_spec_desc][weight][]" value="'+idx+'">'));
         var url = '<{link app=seller ctl=site_goods act=getPack}>';
         $.post(url, {cat : catId}, function(re){
             if(!re.data) return false;
 
-            var input = $('.weight input');
+            var input = $('.pack input');
             var result = true;
             input.each(function(idx, item){
                 for(var i in re.data){
@@ -278,20 +349,28 @@
                 }
             });
             if(!result) return false;
-
             var pack = htmlFormat(re, ['normsCode', 'normsName'], 'pack', idx);
             $('.pack').append($(pack));
-
+            //添加商品规格信息spec_desc
+            $('.pack input').click(function(){
+                addSpecDesc($(this));
+            });
         });
     };
     var weight = function(obj){
         var idx = obj.val();
+        var apiSpec = $('.api-spec-desc');
         var catId = apiCat() + idx;
         if(!obj.prop('checked')){
+            alert(idx);
             $('.weight' + idx).remove();
+            apiSpec.find('input[data-type="feature'+idx+'"]').remove();
             return false;
         }
         if(!catId) return false;
+
+        apiSpec.append($('<input type="hidden" data-type="feature'+idx+'" name="goods[api_spec_desc][feature][]" value="'+idx+'">'));
+
         var url = '<{link app=seller ctl=site_goods act=getWeight}>';
         $.post(url, {cat : catId}, function(re){
             if(!re.data) return false;
@@ -308,17 +387,41 @@
             if(!result) return false;
             var weight = htmlFormat(re, ['weightCode', 'weightName'], 'weight', idx);
             $('.weight').append($(weight));
-            input.click(function(){
+
+            $('.weight input').click(function(){
                 pack($(this));
             });
         });
     };
 
+    var formatProduct = function(){
+
+        var featureArray = [];
+        var weightArray = [];
+        var packArray = [];
+        $('.feature input').each(function(idx, item){
+            if($(item).prop('checked')){
+                featureArray[idx] = $(item).val();
+            }
+        });
+        $('.weight input').each(function(idx, item){
+            if($(item).prop('checked')){
+                weightArray[idx] = $(item).val();
+            }
+        });
+        $('.pack input').each(function(idx, item){
+            if($(item).prop('checked')){
+                packArray[idx] = $(item).val();
+            }
+        });
+        return {product : apiCat(), feature : featureArray, weight : weightArray, pack : packArray};
+    };
+
     $(function (re) {
         $('.create-product').click(function () {
             $('.spec_table tbody').empty();
-            var productId = $(this).attr('data-product');
-            var logistics = createProduct('logistics');
+            //var productId = $(this).attr('data-product');
+            //var logistics = createProduct('logistics');
             var pack = createProduct('pack');
 //            if(!logistics){
 //                alert('请选择物流区')
@@ -327,18 +430,23 @@
                 alert('请选择包装规格');
                 return false;
             }
-            var products = {'logistics': logistics, 'pack': pack, product : productId};
+
+            //var products = {'logistics': logistics, 'pack': pack, product : productId};
             var url = '<{link app=seller ctl=site_goods act=createProduct}>';
-            $.post(url, products, function (result) {
+            $.post(url, formatProduct(), function (result) {
                 if(!result.data) return false;
                 $tmp = $('.product-item-tpl').val();
                 var html = '';
                 for(var i = 0; i < result.data.length; i++ ){
-                    html += $.VMC.format($tmp, result.data[i].product_label, result.data[i].product_id, i);
+                    var feature = $('.feature input[value="'+result.data[i].feature+'"]').parent('span').text();
+                    var pack = $('.pack input[value="'+result.data[i].pack+'"]').parent('span').text();
+                    html += $.VMC.format($tmp, result.data[i].name, result.data[i].bn, i, feature, pack);
                 }
                 $('.spec_table tbody').append(html);
             });
         });
+
+
 
         var createProduct = function (styleClass) {
             var logistics = [];

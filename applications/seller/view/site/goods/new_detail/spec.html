@@ -8,7 +8,7 @@
             <td>商品货号</td>
             <td>价盘设置</td>
             <td>商品库存</td>
-            <td>是否分销</td>
+            <!--<td>是否分销</td>-->
             <td>是否上架</td>
         </tr>
         </thead>
@@ -44,20 +44,20 @@
                                 <tbody>
                                 <tr>
                                     <td>
-                                        <input type="text" name="goods[product][new_{2}][interval_info][num_dn][]" value="1"
+                                        <input type="text" name="goods[product][new_<{$key}>][interval_info][num_dn][]" value="1"
                                                class="form-control">
                                     </td>
                                     <td>
-                                        <input type="text" name="goods[product][new_{2}][interval_info][num_up][]" value="50"
+                                        <input type="text" name="goods[product][new_<{$key}>][interval_info][num_up][]" value="50"
                                                class="form-control">
                                     </td>
                                     <td>
-                                        <input type="text" name="goods[product][new_{2}][interval_info][price][]" value="100"
+                                        <input type="text" name="goods[product][new_<{$key}>][interval_info][price][]" value="100"
                                                class="form-control">
                                     </td>
                                     <td>
                                         <div class="input-group">
-                                            <input type="text" name="goods[product][new_{2}][interval_info][discount][]" value="90"
+                                            <input type="text" name="goods[product][new_<{$key}>][interval_info][discount][]" value="90"
                                                    class="form-control">
                                             <span class="input-group-addon">%</span>
                                         </div>
@@ -74,13 +74,14 @@
                 </td>
                 <td>
                     <input type="text" data-map="storage" class="form-control input-sm"
-                           name="goods[product][new_<{$key}>][stock]" value="<{$item.stock.quantity}>">
+                           name="goods[product][new_<{$key}>][quantity]" value="<{$item.stock.quantity}>">
+                    <input type="hidden" name="goods[product][new_<{$key}>][stock_id]" value="<{$item.stock.quantity}>">
                 </td>
+                <!--<td align="center">-->
+                    <!--<input type="checkbox" name="goods[agent]" value="true" checked>-->
+                <!--</td>-->
                 <td align="center">
-                    <input type="checkbox" name="goods[agent]" value="true" checked>
-                </td>
-                <td align="center">
-                    <input type="checkbox" name="goods[product][new_{2}][marketable]" value="true" checked>
+                    <input type="checkbox" name="goods[product][new_<{$key}>][marketable]" value="true" checked>
                 </td>
             </tr>
             <{/foreach}>
@@ -93,7 +94,7 @@
             <td>
                 <input type="text" name="goods[product][new_{2}][spec_info]" class="form-control input-sm spec-info"
                        value="{0}" readonly=true>
-                <input type="hidden" name="goods[product][new_{2}][spec_desc]" class="spec-desc" value="{0}:::{1}">
+                <input type="hidden" name="goods[product][new_{2}][spec_desc]" class="spec-desc" value="{3}:::{4}">
             </td>
             <td>
                 <input type="text" required="true" data-map="bn" class="form-control input-sm"

@@ -39,12 +39,12 @@ $remote['b2c_goods_info'] = array(
 	'pdList' => array(
 		'productCode' => array(
 			'name' => '产品编码',
-			'column' => 'goods_code',
+			'column' => 'bn',
 			'type' => 'String'
 		),
 		'productName' => array(
 			'name' => '产品编码',
-			'column' => 'goods_name',
+			'column' => 'name',
 			'type' => 'String'
 		),
 		'classesCode' => array(
