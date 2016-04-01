@@ -47,8 +47,8 @@
                 <div class="form-group">
                     <label for="input_psw_confirm" class="col-md-2 control-label"><span class="text-danger">*</span>所在地区：</label>
                     <div class="col-md-4">
-                        <{input type=region name='pam_account[area]'}>
-                        <span class="msgTip" data-message="error">两次密码输入不一致</span>
+                        <div><{input type=region name='pam_account[area]' required="true"}></div>
+                        <span class="msgTip" data-message="error"></span>
                     </div>
                 </div>
                 <div class="form-group">

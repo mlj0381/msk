@@ -26,37 +26,37 @@ $remote['b2c_order_create'] = array(
             'type' => 'String',
             'require' => true,
         ),
-        'buyersId' => array(
+        'buyer_id' => array(
             'name' => '买家ID',
             'column' => 'buyersId',
             'type' => 'String',
             'require' => true,
         ),
-        'buyersCode' => array(
+        'buyer_code' => array(
             'name' => '买家编码',
             'column' => 'buyersCode',
             'type' => 'String',
             'require' => true,
         ),
-        'buyersType' => array(
+        'buyer_type' => array(
             'name' => '买家类别',
             'column' => 'buyersType',
             'type' => 'String',
             'require' => true,
         ),
-        'buyersName' => array(
+        'buyer_name' => array(
             'name' => '买家名称',
             'column' => 'buyersName',
             'type' => 'String',
             'require' => true,
         ),
-        'sellerCode' => array(
+        'seller_code' => array(
             'name' => '卖家编码',
             'column' => 'sellerCode',
             'type' => 'String',
             'require' => true,
         ),
-        'sellerName' => array(
+        'seller_name' => array(
             'name' => '卖家名称',
             'column' => 'sellerName',
             'type' => 'String',
@@ -70,19 +70,19 @@ $remote['b2c_order_create'] = array(
         ),
     ),
     'products' => array(
-        'pdCode' => array(
+        'bn' => array(
             'name' => '产品编码',
             'column' => 'pdCode',
             'type' => 'String',
             'require' => true,
         ),
-        'pdName' => array(
+        'name' => array(
             'name' => '产品名称',
             'column' => 'pdName',
             'type' => 'String',
             'require' => true,
         ),
-        'orderPrice' => array(
+        'price' => array(
             'name' => '订单价格',
             'column' => 'orderPrice',
             'type' => 'String',
@@ -94,7 +94,7 @@ $remote['b2c_order_create'] = array(
             'type' => 'String',
             'require' => false,
         ),
-        'orderQty' => array(
+        'quantity' => array(
             'name' => '订单数量',
             'column' => 'orderQty',
             'type' => 'String',

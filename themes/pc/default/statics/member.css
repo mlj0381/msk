@@ -1511,7 +1511,6 @@ ol {
   content: "";
   width: 100px;
   height: 92px;
-  background: url("/themes/pc/default/statics/images/danxuan.png") no-repeat left center;
 }
 .buyer_container .seller_regbox .company_btns {
   width: 100%;
@@ -3348,6 +3347,18 @@ ol {
   padding: 0 15px;
   min-height: 600px;
 }
+.settled_page .maincon .article {
+  width: 100%;
+  padding: 15px 0;
+  font-size: 14px;
+  line-height: 22px;
+}
+.settled_page .maincon .article .article_title {
+  margin-bottom: 20px;
+}
+.settled_page .maincon .article p {
+  color: #727171;
+}
 .settled_page .maincon .page-header {
   margin: 0;
 }
@@ -3395,6 +3406,7 @@ ol {
 }
 .settled_page .maincon .settled_process .process_items .process_item {
   width: 290px;
+  min-height: 260px;
   border: 2px solid #ddd;
   -webkit-border-radius: 10px;
   -moz-border-radius: 10px;

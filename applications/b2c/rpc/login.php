@@ -48,6 +48,7 @@ $remote['b2c_login'] = array(
         'buyerCode' => array(
             'name' => '买家编码',
             'column' => 'buyer_code',
+
             'type' => 'String',
         ),
         'buyerName' => array(

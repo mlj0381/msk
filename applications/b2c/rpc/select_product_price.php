@@ -48,19 +48,29 @@ $remote['b2c_select_product_price'] = array(
     ),
 
     'response' => array(
-        'productID' => array(
+        'productId' => array(
             'name' => '商品ID',
-            'column' => 'productID',
+            'column' => 'product_id',
             'type' => '文本',
         ),
-        'pricelist' => array(
+        'gradeCode' => array(
+        	'name' => '商品ID',
+        	'column' => 'gradeCode',
+        	'type' => '文本',
+        ),
+        'logiAreaCode' => array(
+        	'name' => '商品ID',
+        	'column' => 'logiAreaCode',
+        	'type' => '文本',
+        ),
+        'priceList' => array(
             'name' => '价格列表',
             'column' => 'pricelist',
             'type' => 'List',
         ),
     ),
 
-    'pricelist' => array(
+    'priceList' => array(
         'orderLevel' => array(
             'name' => '订单等级等级',
             'column' => 'orderLevel',

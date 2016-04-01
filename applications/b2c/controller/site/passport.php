@@ -395,8 +395,8 @@ class b2c_ctl_site_passport extends b2c_frontpage
             $this->splash('error', $signup_url, '注册失败,会员数据保存异常');
         }
         //end 调用接口
-        $member_sdf_data['b2c_members']['member_id'] = $result['result']['member_id'];
         $member_sdf_data['b2c_members']['buyer_id'] = $result['result']['buyer_id'];
+        $member_sdf_data['pam_account']['password'] = $params['pam_account']['login_password'];
         if ($member_id = $this->passport_obj->save_members($member_sdf_data, $msg)) {
             $this->user_obj->set_member_session($member_id);
             $this->bind_member($member_id);
@@ -415,9 +415,7 @@ class b2c_ctl_site_passport extends b2c_frontpage
      */
     public function reset_password($action)
     {
-        /**
-         * 润和接口 修改密码 IBY121201
-         */
+
         $this->title = '重置密码';
         if ($action == 'doreset') {
             $redirect_here = array('app' => 'b2c', 'ctl' => 'site_passport', 'act' => 'reset_password');
@@ -436,6 +434,7 @@ class b2c_ctl_site_passport extends b2c_frontpage
                 $this->splash('error', $redirect_here, '两次输入的密码不一致!');
             }
 
+
            /*  if (!vmc::singleton('b2c_user_vcode')->verify($params['vcode'], $params['account'], 'reset')) {
                 $this->splash('error', $redirect_here, '验证码错误！');
             } */
@@ -443,6 +442,9 @@ class b2c_ctl_site_passport extends b2c_frontpage
             if ($login_type == 'mobile'  && !vmc::singleton('b2c_user_smscode')->bool_sms($params['pam_account']['mobile'],$params['smscode'],'sms')) {
             	$this->splash('error', $signup_url, '手机短信验证码不正确');
             }
+//            if (!vmc::singleton('b2c_user_vcode')->verify($params['vcode'], $params['account'], 'reset')) {
+//                $this->splash('error', $redirect_here, '验证码错误！');
+//            }
             $result = $this->app->model('members')->getRow('member_id', array('mobile' => $params['account']));
             if(empty($result)){
                 $this->splash('error', $redirect_here, '未知帐号!');
@@ -455,6 +457,20 @@ class b2c_ctl_site_passport extends b2c_frontpage
             if (!$this->passport_obj->reset_password($member_id, $params['new_password'])) {
                 $this->splash('error', $redirect_here, '密码重置失败!');
             }
+            /**
+             * 润和接口 修改密码 IBY121201
+             */
+            $buyer_id = app::get('b2c')->model('members')->getRow('buyer_id',array('member_id'=>$member_id));
+            $password = app::get('pam')->model('members')->getRow('password,login_account',array('member_id'=>$member_id));
+            $api_data = array(
+                'buyerId' => $buyer_id['buyer_id'],
+                'accountName' => $password['login_account'],
+                'oldAccountPass' => $password['password'],
+                'newAccountPass' => $params['new_password'],
+            );
+            $rpc_password = app::get('b2c')->rpc('edit_password');
+            $result = $rpc_password->request($api_data);
+
 
             /**
              * 直接登录操作
