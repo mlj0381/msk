@@ -559,8 +559,8 @@ class seller_ctl_site_passport extends seller_frontpage
         $this->pagedata['pageIndex'] = $step;
         if ($step > $countPage['sum']) {
             $redirect = $this->gen_url(array('app' => 'seller', 'ctl' => 'site_passport', 'act' => 'entry'));
-            //$result = $this->passport_obj->apiEntry();
-            //!$result && $this->splash('error', $redirect, '注册失败');
+            $result = $this->passport_obj->apiEntry();
+            !$result && $this->splash('error', $redirect, '注册失败');
             $this->page('site/passport/signup_complete.html');
         } else {
             //信息全部已提交全部

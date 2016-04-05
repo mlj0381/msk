@@ -22,7 +22,7 @@ $remote['b2c_update_member_base_info'] = array(
     ),
 
     'param' => array(
-        'buyer_id' => array(
+        'member_id' => array(
             'name' => '买家ID',
             'column' => 'buyerId',
             'type' => 'String',
@@ -40,7 +40,7 @@ $remote['b2c_update_member_base_info'] = array(
             'type' => 'String',
             'require' => false,
         ),
-        'address' => array(
+        'addr' => array(
             'name' => '买家地址',
             'column' => 'buyerAddr',
             'type' => 'String',
@@ -52,7 +52,7 @@ $remote['b2c_update_member_base_info'] = array(
             'type' => 'String',
             'require' => false,
         ),
-        'adv_info' => array(
+        'web_site' => array(
             'name' => '买家网站',
             'column' => 'buyerWebsite',
             'type' => 'String',
