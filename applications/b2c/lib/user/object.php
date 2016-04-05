@@ -77,7 +77,7 @@ class b2c_user_object{
         }
         $memberFilter = array(
             'account' => 'member_id,login_account,login_type',
-            'members'=>'member_id,member_lv_id,avatar,email,mobile,name,sex,experience,cur,advance',
+            'members'=>'member_id,member_lv_id,avatar,email,mobile,name,sex,experience,cur,advance,buyer_id',
         );
         $memberData = $this->get_members_data($memberFilter,$member_id);
         $member_sdf = $memberData['members'];
@@ -98,6 +98,7 @@ class b2c_user_object{
             $this->member_info['email'] = $memberData['account']['email'];
             $this->member_info['member_lv'] = $member_sdf['member_lv_id'];
             $this->member_info['member_cur'] = $member_sdf['cur'];
+            $this->member_info['buyer_id'] = $member_sdf['buyer_id'];
             //$this->member_info['advance'] = $member_sdf['advance'];
             #获取会员等级信息，及下级信息
             $obj_mem_lv = $this->app->model('member_lv');
