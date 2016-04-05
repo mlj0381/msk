@@ -18,25 +18,25 @@ $remote['b2c_update_member_seller'] = array(
         'param' => array(
             'name' => '业务参数',
             'column' => 'param',
-            'type' => 'Object',
+            'type' => 'List',
             'require' => false,
         ),
     ),
 
     'param' => array(
-        'buyerId' => array(
+        'member_id' => array(
             'name' => '买家ID',
             'column' => 'buyerId',
             'type' => 'String',
-            'require' => true,
+            'require' => false,
         ),
-        'salesTargetType' => array(
+        'use_id' => array(
             'name' => '销售对象类型',
             'column' => 'salesTargetType',
             'type' => 'String',
             'require' => false,
         ),
-        'salesTargetName' => array(
+        'user_label' => array(
             'name' => '销售对象名称',
             'column' => 'salesTargetName',
             'type' => 'String',

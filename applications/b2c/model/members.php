@@ -360,12 +360,11 @@ class b2c_mdl_members extends dbeav_model
      */
     public function formatApiData($members)
     {
-        header('Content-Type:text/html; charset=utf-8');
         $user_obj = vmc::singleton('b2c_user_object');
         $company = $user_obj->page_company();
         $manage = $user_obj->page_manage();
         $apiData = array(
-            'member_id' => $$members['buyer_id'],
+            'member_id' => $members['buyer_id'],
             'name' => $company['info']['name'],
             'addr' => $company['info']['address'],
 
@@ -380,12 +379,13 @@ class b2c_mdl_members extends dbeav_model
             'actualOrderNum' => '',
         );
         //基本信息
+
         $result = $this->app->rpc('update_member_base_info')->request($apiData);
         if (empty($result['result']['buyer_code'])) {
             return false;
         }
         $update_value = ['buyer_code' => $result['result']['buyer_code']];
-        $filter = ['member_id' => $$members['member_id']];
+        $filter = ['member_id' => $members['member_id']];
         if (!$this->update($update_value, $filter)) {
             return false;
         }
@@ -393,12 +393,41 @@ class b2c_mdl_members extends dbeav_model
 
         //更新买家经营产品类别
 
+        $cat_path = $this->app->model('goods_cat')->getRow('cat_path, addon, cat_name', array('cat_id' => $manage['info']['manageInfo']['manageInfo']['value']['main']));
+        $apiCat = array();
+        $catList = explode(',', $company['cat_paath']);
+        $catId = '';
+        if(count($catList) > 1){
+            foreach($catList as $v){
+                $catRow = $this->app->model('goods_cat')->getRow('cat_path, addon, cat_name', array('cat_id' => $v));
+                $catId .= $catRow['addon'];
+            }
+        }else{
+            $catId = $cat_path['addon'];
+        }
+        $apiCat['param'][] = array('member_id' => $members['buyer_id'], 'cat_id' => $catId, 'cat_name' => $cat_path['cat_name']);
+
+        $result = $this->app->rpc('update_member_product_cat')->request($apiCat);
+        if(!$result['status']){
+            return false;
+        }
         //end更新买家经营产品类别
 
         //使用方向，销售对象
-
+        $use = array();
+        foreach($manage['info']['manageInfo']['manageInfo']['value']['use'] as $v)
+        {
+            $use[] = array(
+                'member_id' => $members['buyer_id'],
+                'use_id' => $v,
+                'user_label' => $manage['info']['use'][$v]['label'],
+            );
+        }
+        $result = $this->app->rpc('update_member_seller')->request($use);
+        if(!$result['status']){
+            return false;
+        }
         //end使用方向，销售对象
-        var_dump($jg);
-        die;
+        return true;
     }
 }

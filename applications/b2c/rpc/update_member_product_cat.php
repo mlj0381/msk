@@ -18,29 +18,29 @@ $remote['b2c_update_member_product_cat'] = array(
         'param' => array(
             'name' => '业务参数',
             'column' => 'param',
-            'type' => 'Object',
+            'type' => 'List',
             'require' => false,
         ),
     ),
 
     'param' => array(
-        'buyerId' => array(
+        'member_id' => array(
             'name' => '买家ID',
             'column' => 'buyerId',
             'type' => 'String',
-            'require' => true,
+            'require' => false,
         ),
-        'classCode' => array(
+        'cat_id' => array(
             'name' => '产品类别编码',
             'column' => 'classCode',
             'type' => 'String',
-            'require' => true,
+            'require' => false,
         ),
-        'className' => array(
+        'cat_name' => array(
             'name' => '产品类别名称',
             'column' => 'className',
             'type' => 'String',
-            'require' => true,
+            'require' => false,
         ),
         'updId' => array(
             'name' => '更新者ID',

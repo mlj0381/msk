@@ -265,7 +265,9 @@ class b2c_ctl_site_passport extends b2c_frontpage
              * IBY121206 更新证照图片
              * IBY121207 更新雇员信息
              */
-            //$this->app->model('members')->formatApiData($this->member);
+            if(!$this->app->model('members')->formatApiData($this->member));{
+                $this->splash('error', '', '注册失败');
+            }
             $this->page('site/passport/signup_complete.html');
         } else {
             $this->page('site/passport/signup_baseInfo.html');
