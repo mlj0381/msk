@@ -22,7 +22,7 @@ $remote['seller_select_seller_info'] = array(
     ),
 
     'param' => array(
-        'slAccount' => array(
+        'login_account' => array(
             'name' => '卖家账号',
             'column' => 'slAccount',
             'type' => 'String',
@@ -37,8 +37,8 @@ $remote['seller_select_seller_info'] = array(
             'type' => 'Object',
         ),
         'slSeller' => array(
-            'name' => '//卖家基本信息',
-            'column' => 'slSeller  ',
+            'name' => '卖家基本信息',
+            'column' => 'slSeller',
             'type' => 'Object',
         ),
         'pdClassesCodeList' => array(
