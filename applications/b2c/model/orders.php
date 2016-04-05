@@ -332,4 +332,44 @@ class b2c_mdl_orders extends dbeav_model {
             ),
         );
     }
+    
+    
+    /**
+     * 通过goods_id获取成交记录
+     * 查询goods表+order表
+     * @param unknown $goods_id
+     */
+    public function get_goods_order($goods_id, $time_type, $offset=0, $set=2){
+//     	全部记录:1/ 今天:2 / 最近3天:3 /最近一个月 :4/最近三个月:5/最近一年:6/一年前:7
+    	switch ($time_type){
+    		case '1':
+    			$where = ' and o.createtime > 0';
+    			break;
+    		case '2':
+    			$where = ' and o.createtime ='. strtotime(date('Y-m-d'));
+    			break;
+    		case '3':
+    			$where = ' and o.createtime >='.strtotime(date('Y-m-d',strtotime('-3 day')));
+    			break;
+    		case '4':
+    			$where = ' and o.createtime >='.strtotime(date('Y-m-d',strtotime('last month')));
+    			break;
+    		case '5':
+    			$where = ' and o.createtime >='.strtotime(date('Y-m-d',strtotime('-3 months')));
+    			break;
+    		case '6':
+    			$where = ' and o.createtime >='.strtotime(date('Y-m-d',strtotime('last year')));
+    			break;
+    		case '7':
+    			$where = ' and o.createtime <='.strtotime(date('Y-m-d',strtotime('last year')));
+    			break;
+    			
+    	}
+    	$goods_order_list = $this->db->select('SELECT g.order_id,g.goods_id,g.nums,o.last_modified,o.member_id,m.login_account FROM `vmc_b2c_order_items` g, `vmc_b2c_orders` o,`vmc_pam_members` m WHERE goods_id = '.$goods_id.' AND g.order_id = o.order_id AND o.member_id=m.member_id'.$where);
+    	return $goods_order_list;
+    }
+    
+    
+    
+    
 }

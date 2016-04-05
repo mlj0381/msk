@@ -5,6 +5,37 @@
  * */
 class pam_passport_site_basic
 {
+	
+	/**
+	 * 
+	 * @param unknown $data
+	 */
+	public function local_user_rsyns($members,$account)
+	{
+		
+		$buyer_id = $members['buyer_id'];
+		$data = app::get('b2c')->model('members')->getRow("member_id", array('buyer_id' => $buyer_id));
+		if (!$data){
+			$db = vmc::database();
+			$db->beginTransaction();
+			
+			$t1 = app::get('b2c')->model('members')->save($members);
+			$t1 = true ;//2016年4月1日
+			if(!$t1){
+				$db->rollback();
+			}
+			$member_id = vmc::database()->lastinsertid();
+			$account['member_id'] = $member_id;
+			$t2 = app::get('pam')->model('members')->save($account);
+			$t2 = true ;//2016年4月1日
+			if(!$t2){
+				$db->rollback();
+			}
+			$db->commit();
+		}		
+	}
+	
+
     /*
      * 前台用户登录验证方法
      *
@@ -55,9 +86,10 @@ class pam_passport_site_basic
             'createtime' => $account[0]['createtime'],
             'login_name' => $account[0]['password_account'],
         ));
+        
         if ($account[0]['login_password'] != $login_password) {
             $msg = '登录密码错误';
-
+ 
             return false;
         }
 
