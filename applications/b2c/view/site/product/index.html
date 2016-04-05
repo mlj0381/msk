@@ -467,21 +467,19 @@
 	 var url = '<{link app=b2c ctl=site_product act=get_goods_orders}>';
 	 var product_id = '<{$product_id}>';
      $.post(url, {time_type: timeId, product_id : product_id}, function (re) {
-    	 $('.order-comment').remove();
+    	 $('.order-comment').html("");
     	 if(!re.data){
     		 return false;
     	 }
-    	var html = '';
+    	 var html = '';
     	 for(var i in re.data){
-    		 //html +="ssss";
-    		 html += "<tr><td>"+re.data[i].login_account+"</td><td>"+''+"</td><td>"+re.data[i].nums+"</td><td>"+re.data[i].last_modified+"</td></tr>"
-    		 /* html += $.VMC.format('<tr><td>{0}</td><td>{1}</td><td>{2}</td><td>{3}</td></tr>',
-    				 re.data[i].login_account, '', re.data[i].nums, re.data[i].last_modified);
-    		 console.log(html); */
+    		 html += "<tr><td>"
+                    +re.data[i].login_account+"</td><td>"
+                    +''+"</td><td>"
+                    +re.data[i].nums+"</td><td>"
+                    +re.data[i].last_modified+"</td></tr>"
     	 }
-    	 //alert(html)
-    	 //$('.record_list_table tbody').append(html);
-    	 alert($('.record_list_table tbody').size())
+    	 $('.order-comment').append(html);
      });
  });
 
