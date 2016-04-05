@@ -105,10 +105,16 @@ $db['buyers'] = array(
         	'comment' => 'qq',
         ),
         'buyer_code' => array(
-        	'type' => 'char(16)',
+        	'type' => 'varchar(50)',
         	'required' => true,
         	'default' => '',
         	'comment' => '买手店编码',
+        ),
+        'buyer_codedis' => array(
+        		'type' => 'varchar(50)',
+        		'required' => true,
+        		'default' => '',
+        		'comment' => '买手店codedis',
         ),
         'store_name' => array(
         	'type' => 'varchar(50)',

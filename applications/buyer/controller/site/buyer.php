@@ -79,10 +79,10 @@ class buyer_ctl_site_buyer extends buyer_frontpage{
 								'login_account'	=>$data['login_account'],
 								'slConFlg'		=>'1',//生产国籍
 								'areaCode'		=>'1',//大区编码
-								'lgcsAreaCode'	=>$area_result['province'],//物流区编码
-								'provinceCode'	=>$area_result['province'],//省编码
-								'cityCode'		=>$area_result['city'],//地区编码
-								'districtCode'	=>$area_result['district'],//区编码
+								'lgcsAreaCode'	=>$area_result['province']['code'] ?:09,//物流区编码
+								'provinceCode'	=>$area_result['province']['code'] ?:09,//省编码
+								'cityCode'		=>$area_result['city']['code'] ?:09,//地区编码
+								'districtCode'	=>$area_result['district']['code'] ?:09,//区编码
 								'slMainClass'	=>4,//卖家主分类
 								'snkFlg'		=>'否',//神农客标志
 								'selfFlg'		=>'否',//自产型卖家标志
@@ -100,9 +100,9 @@ class buyer_ctl_site_buyer extends buyer_frontpage{
 				);
 				$edit = $this->app->rpc('edit_buyer_info')->request($request, false);
 				$buyer_info_response = $this->app->rpc('select_buyer_info')->request($data, false);
-
-				if ($buyer_code = $buyer_info_response['result']['buyershopList'][0]['buyer_code']){
-					app::get('pam')->model('buyers')->update(array('buyer_code'=>$buyer_code), array('buyer_id'=>$this->buyer_id));
+				if ($buyer_code = $buyer_info_response['result']['buyershopList'][0]){
+					app::get('pam')->model('buyers')->update(array('buyer_code'=>$buyer_code['buyer_code']), array('buyer_id'=>$this->buyer_id));
+					$this->app->model('buyers')->update(array('buyer_code'=>$buyer_code['buyer_code'],'buyer_codedis'=>$buyer_code['buyer_codedis']), array('buyer_id'=>$this->buyer_id));
 				}
 				$this->splash('success', $redirect, '店铺信息更新成功！');
 			}else {
