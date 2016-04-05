@@ -59,7 +59,9 @@ class b2c_mdl_members extends dbeav_model
         if (is_object($info_object)) {
             $info_object->opinfo($sdf, 'b2c_mdl_members', __FUNCTION__);
         }
+      
         $flag = parent::save($sdf, $mustUpdate, $mustInsert);
+       
         return $flag;
     }
 

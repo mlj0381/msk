@@ -3347,6 +3347,18 @@ ol {
   padding: 0 15px;
   min-height: 600px;
 }
+.settled_page .maincon .article {
+  width: 100%;
+  padding: 15px 0;
+  font-size: 14px;
+  line-height: 22px;
+}
+.settled_page .maincon .article .article_title {
+  margin-bottom: 20px;
+}
+.settled_page .maincon .article p {
+  color: #727171;
+}
 .settled_page .maincon .page-header {
   margin: 0;
 }

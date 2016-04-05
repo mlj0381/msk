@@ -5,6 +5,7 @@ class freeze_ctl_site_account extends freeze_frontpage
     function __construct(&$app)
     {
         parent::__construct($app);
+        $this->_response->set_header('Cache-Control', 'no-store');
         $this->verify_member();
         $this->menuSetting = 'account';
     }

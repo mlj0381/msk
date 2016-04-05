@@ -24,40 +24,68 @@ class b2c_ctl_site_product extends b2c_frontpage {
         }
     }
 
-    public function index($typ) {
-    	$typ = '012010101';
-		$response = $this->app->rpc('goods_info')->request($data=array());
-		$data_detail = utils::array_change_key($response['result']['goods'], 'goods_code')[$typ];
-    	//var_dump($data_detail);exit;
+    public function get_goods_orders()
+    {
+    	$params = $_POST;
     	
+    	$goods_data = $this->app->model('products')->getRow('goods_id,bn',array('product_id'=>$params['product_id']));
+    	$goods_data['goods_id'] = 8;
+    	
+    	//成交记录
+    	$goods_order_list = $this->app->model('orders')->get_goods_order($goods_data['goods_id'], $params['time_type'] ?: '1', $offset=0, $set=2);
+    	foreach ($goods_order_list as &$v){
+    		$v['last_modified'] = date('Y-m-d H:i:s',$v['last_modified']);
+    	}
+    	$this->splash('success', '', $goods_order_list);
+    }
+    
+    public function index($typ) {
         //获取参数 货品ID
-        //$params = $this->_request->get_params();
+        $params = $this->_request->get_params();
         //调用接口 2015/12/9
         //$data_detail = $this->app->model('products')->goods_detail($params[0]);
         //>>
-        //$data_detail = $this->goods_stage->detail($params[0], $msg); //引用传递
+        if (empty($params)){
+        	$params = json_decode($_POST['parms_post'],true);
+        }
+        
+        $data_detail = $this->goods_stage->detail($params[0], $msg); //引用传递
         if (!$data_detail) {
             vmc::singleton('site_router')->http_status(404);
             $this->splash('error', null, $msg);
         }
         
-        $data_detail['name'] = str_replace('/'," ",$data_detail['goods_name']);
-        $data_detail['classesCode'] = $data_detail['cat_1'];
-        $data_detail['breedCode'] = $data_detail['breed_code'];
-        $data_detail['featureCode'] = $data_detail['feature'];
+        //通过vmc_b2c_products 表获取goods_id 和 bn
+        $products_data = $this->app->model('products')->getRow('goods_id,bn',array('product_id'=>$params[0]));
+        //调用接口获取四级分类和五级分类
+        $response = $this->app->rpc('goods_info')->request($data=array());
+        $data_detail_response = utils::array_change_key($response['result']['goods'], 'goods_code')[$products_data['bn']];
+        
+        //这个是data_detail拼接
+        $data_detail['name'] = str_replace('/'," ",$data_detail_response['goods_name']);
+        //一级
+        $data_detail['classesCode'] = $data_detail_response['cat_1'];
+        //二级
+        $data_detail['machiningCode'] = $data_detail_response['cat_2'];
+        //三级
+        $data_detail['breedCode'] = $data_detail_response['breed_code'];
+        $data_detail['featureCode'] = $data_detail_response['feature'];
         $data_detail['gradeCode'] = 'A2';
         $data_detail['deliver_fee'] = '0';
         /*******************这个需要获取物流区地址：目前写死了************************************/
         $data_detail['logiAreaCode'] = '41';
         $price_response = $this->app->rpc('select_product_price')->request($data_detail, false);
         $data_detail['pricelist'] = $price_response['result'][0]['pricelist'];
-        
-        
-        
-//         is_array($data_detail) and array_walk($data_detail,function(&$v,$k){
-//         	$v['goods_name'] = str_replace('/'," ",$v['productName']);
-//         });
-        
+
+        $data_detail['feature_data_list'] = $this->app->rpc('select_product_cat4')->request($data_detail, false)['result'];
+        //var_dump($data_detail['feature_data_list']);exit;
+        foreach ($data_detail['feature_data_list'] as $key=>$value){
+        	$data_detail['featureCode'] = $value['featureCode'];
+        	$weight_data[$key] = $this->app->rpc('select_product_cat5')->request($data_detail, false)['result'];
+        }
+       
+        //包装规格  $data[0];
+        $data_detail['weight_data_list'] = array_filter(array_unique($weight_data));
         
         $this->pagedata['buyer_id'] = vmc::singleton('buyer_user_object')->get_session();
         $this->pagedata['data_detail'] = $data_detail;
@@ -72,7 +100,11 @@ class b2c_ctl_site_product extends b2c_frontpage {
         $this->pagedata['from_type'] = $this->_request->get_get();//买手或是冻品管家分销
         $this->pagedata['buy_items'] = $this->_buy_items($data_detail['goods_id']);
         $this->pagedata['goods_path'] = $this->app->model('goods')->getPath($data_detail['goods_id']);
-
+        
+        //成交记录
+        $goods_order_list = $this->app->model('orders')->get_goods_order($goods_id=8, $_POST['time_type'] ?: '1', $offset=0, $set=2);
+        $this->pagedata['goods_order_list'] = $goods_order_list;
+        $this->pagedata['product_id'] = $params[0];
         $this->_set_seo($data_detail);
         $this->page('site/product/index.html');
     }
@@ -188,12 +220,5 @@ class b2c_ctl_site_product extends b2c_frontpage {
             'token' => $token,
         );
         $this->display('site/comment/list.html');
-    }
-
-    //修改首頁的区域地址
-    public function changeAddr($region_id){
-        if(!is_numeric($region_id)) $this->splash('error', '', '非法请求');
-        $_SESSION['account']['addr'] = $region_id;
-        $this->splash('success', '', $_SESSION['account']['addr']);
     }
 }

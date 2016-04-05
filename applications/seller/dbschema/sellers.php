@@ -105,10 +105,10 @@ $db['sellers'] = array(
             'default' => 0,
             'comment' => '身份类型(1生产型\2代理型\4OEM)扩展信息',
         ),
-        'api_seller' => array(
+        'ep_id' => array(
             'type' => 'number',
             'default' => 0,
-            'comment' => '润和商家主键id',
+            'comment' => '润和商家id',
         ),
 		'schedule' => array(
             'type' => 'number',
@@ -156,7 +156,7 @@ $db['sellers'] = array(
             'default' => 0,
             'comment' => '商家类型' // 0 卖家 1 买手 ...
         ),
-        'api_seller_id' => array(
+        'sl_code' => array(
             'type' => 'varchar(20)',
             'default' => 0,
             'comment' => '润和商家id'

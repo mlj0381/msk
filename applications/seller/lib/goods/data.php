@@ -22,6 +22,7 @@ class seller_goods_data
         $last_goods_id = $last_goods['goods_id'];
         $goods = $data['goods'];
         $goods['agent'] = $data['agent'];
+        $goods['showcase'] = $data['showcase'] ?: 0;
         //相册默认图
         if (is_array($goods['images'])) {
             $goods['image_default_id'] = $data['image_default'];

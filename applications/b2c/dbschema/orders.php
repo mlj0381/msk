@@ -26,6 +26,14 @@ $db['orders'] = array(
             'in_list' => true,
             'default_in_list' => true,
         ) ,
+        'api_order_id' => array(
+            'type' => 'varchar(255)',
+            'label' => '润和返回的订单id',
+        ),
+        'order_code' => array(
+            'type' => 'varchar(255)',
+            'label' => '润和返回的订单编码',
+        ),
         'createtime' => array(
             'type' => 'time',
             'label' => ('下单时间') ,

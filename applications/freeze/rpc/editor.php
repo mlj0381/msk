@@ -170,7 +170,7 @@ $remote['freeze_editor'] = array(
             'default' => '',
             'require' => false,
         ),
-        'vareaCode' => array(
+        'vareaode' => array(
             'name' => '虚拟大区编码',
             'column' => 'vareaCode',
             'type' => 'String',
@@ -184,28 +184,28 @@ $remote['freeze_editor'] = array(
             'default' => '',
             'require' => false,
         ),
-        'vprovinceCode' => array(
+        'v_province_code' => array(
             'name' => '虚拟省编码',
             'column' => 'vprovinceCode',
             'type' => 'String',
             'default' => '',
             'require' => false,
         ),
-        'vcityCode' => array(
+        'v_city_code' => array(
             'name' => '虚拟地区编码',
             'column' => 'vcityCode',
             'type' => 'String',
             'default' => '',
             'require' => false,
         ),
-        'vdistrictCode' => array(
+        'v_district_code' => array(
             'name' => '虚拟区编码',
             'column' => 'vdistrictCode',
             'type' => 'String',
             'default' => '',
             'require' => false,
         ),
-        'vhouseAddress' => array(
+        'address' => array(
             'name' => '虚拟管家地址',
             'column' => 'vhouseAddress',
             'type' => 'String',

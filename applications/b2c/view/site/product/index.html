@@ -133,15 +133,27 @@
                             <option value="4">南通</option>
                         </select> -->
                     </span>
-                    <span><b>运费</b> ￥:10.00</span>
+                    <span><b>运费</b> ￥:<{$data_detail.deliver_fee}> 元</span>
                 </div>
                 <div class="distr_info">
                     <label>品牌</label>
                     <span>美侍客</span>
                 </div>
                 <div class="distr_info">
+                    <label>产品等级</label>
+                    <span><{$data_detail.gradeCode}></span>
+                </div>
+                <div class="distr_info">
                     <label>产品规格 </label>
-                    <span>1.5kg/只</span>
+                    <{foreach from=$data_detail.feature_data_list item=feature}>
+                    <span><{$feature.featureName}></span>
+                    <{/foreach}>
+                </div>
+                 <div class="distr_info">
+                    <label>包装规格 </label>
+                    <{foreach from=$data_detail.weight_data_list item=weight}>
+                    <span><{$weight.0.weightName}></span>
+                    <{/foreach}>
                 </div>
                 <ul class="list-unstyled promotion-list">
                 </ul>
@@ -323,6 +335,7 @@
                         <li><a href="#record " data-toggle="tab">成交记录</a></li>
                         <li><a href="#comment" data-toggle="tab">累计评价</a></li>
                     </ul>
+                    
                     <div  class="tab-content">
                         <div class="tab-pane fade in active" id="desc">
                             <{if $data_detail.params}>
@@ -378,17 +391,17 @@
                         <div class="tab-pane fade" id="record">
                             <div class="record_head">
                                 <span>成交记录</span>
-                                <select>
-                                    <option value="0" selected>全部记录</option>
-                                    <option value="1">今天</option>
-                                    <option value="2">最近3天</option>
-                                    <option value="3">最近一个月</option>
-                                    <option value="4">最近三个月</option>
-                                    <option value="5">最近一年</option>
-                                    <option value="6">一年前</option>
+                                <select onchange="window.location.href='#record'">
+                                    <option value="1" selected>全部记录</option>
+                                    <option value="2">今天</option>
+                                    <option value="3">最近3天</option>
+                                    <option value="4">最近一个月</option>
+                                    <option value="5">最近三个月</option>
+                                    <option value="6">最近一年</option>
+                                    <option value="7">一年前</option>
                                 </select>
                             </div>
-                            <table>
+                            <table class="record_list_table">
                                 <thead>
                                     <tr>
                                         <th class="col-xs-4">买家</th>
@@ -397,13 +410,13 @@
                                         <th class="col-xs-3">成交时间</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                <{foreach from=$buy_items item=item}>
+                                <tbody class="order-comment">
+                                <{foreach from=$goods_order_list item=goods_order}>
                                     <tr>
-                                        <td><{$item.member_info.login_account}></td>
-                                        <td><{$item.spec_info}></td>
-                                        <td><{$item.nums}></td>
-                                        <td><{$item.createtime|cdate}></td>
+                                        <td><{$goods_order.login_account}></td>
+                                        <td><{$data_detail.logiAreaCode}></td>
+                                        <td><{$goods_order.nums}></td>
+                                        <td><{$goods_order.last_modified|cdate}></td>
                                     </tr>
                                 <{/foreach}>
                                 </tbody>
@@ -444,6 +457,34 @@
 <script type="text/javascript" src="<{$base_url}>/openapi/goods/counter/goods_id/<{$data_detail.goods_id}>/view_count/1/uv.js"></script>
 <{script src="jquery.zoom.js"}>
 <script charset="utf-8">
+
+/*
+ * 时间条件查询成交记录 
+ *
+ */
+ $('.record_head select').change(function(){
+	 var timeId = $(this).find('option:selected').val();
+	 var url = '<{link app=b2c ctl=site_product act=get_goods_orders}>';
+	 var product_id = '<{$product_id}>';
+     $.post(url, {time_type: timeId, product_id : product_id}, function (re) {
+    	 $('.order-comment').html("");
+    	 if(!re.data){
+    		 return false;
+    	 }
+    	 var html = '';
+    	 for(var i in re.data){
+    		 html += "<tr><td>"
+                    +re.data[i].login_account+"</td><td>"
+                    +''+"</td><td>"
+                    +re.data[i].nums+"</td><td>"
+                    +re.data[i].last_modified+"</td></tr>"
+    	 }
+    	 $('.order-comment').append(html);
+     });
+ });
+
+
+
     //收藏店铺/商品
     //快速登录
     $('.cart').click(function (e) {

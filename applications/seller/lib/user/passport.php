@@ -922,7 +922,7 @@ class seller_user_passport
                 return false;
             }
             $filter = array('seller_id' => $this->seller['seller_id']);
-            $update_value = array('api_seller_id' => $result['result']['slCode']);
+            $update_value = array('sl_code' => $result['result']['slCode']);
             if(!app::get('seller')->model('sellers')->update($update_value, $filter)){
                 $db->rollback();
                 return false;
