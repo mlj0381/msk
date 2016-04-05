@@ -65,42 +65,42 @@ class b2c_tasks_api_cats extends base_task_abstract implements base_interface_ta
                                 $mdl_cat->save($row3);
                             }
                             //查询四级分类、产品特征
-                            $cat3['classesCode'] = $cat1['classesCode'];
-                            $cat3['machiningCode'] = $cat2['machiningCode'];
-                            $result_cat4 = app::get('b2c')->rpc("select_product_cat4")->request($cat3);
-                            if ($result_cat4['status'] && !empty($result_cat4['result'])) {
-                                foreach ($result_cat4['result'] as $cat4) {
-                                    if (!$row4 = $mdl_cat->db->select("SELECT cat_id,cat_name,addon as featureCode FROM `vmc_b2c_goods_cat` WHERE parent_id = {$row3['cat_id']} AND cat_name = '{$cat4['featureName']}'")[0]) {
-                                        //保存三级级分类
-                                        $row4 = array(
-                                            'parent_id' => $row3['cat_id'],
-                                            'has_children' => 'false',
-                                            'cat_name' => $cat4['featureName'],
-                                            'addon' => $cat4['featureCode'],
-                                        );
-                                        $mdl_cat->save($row4);
-                                    }
-                                    //查询五级分类、产品净重分类
-                                    $cat4['classesCode'] = $cat1['classesCode'];
-                                    $cat4['machiningCode'] = $cat2['machiningCode'];
-                                    $cat4['breedCode'] = $cat3['breedCode'];
-                                    $result_cat5 = app::get('b2c')->rpc("select_product_cat5")->request($cat4);
-                                    if ($result_cat5['status'] && !empty($result_cat5['result'])) {
-                                        foreach ($result_cat5['result'] as $cat5) {
-                                            if (!$row5 = $mdl_cat->db->select("SELECT cat_id,cat_name,addon as weightCode FROM `vmc_b2c_goods_cat` WHERE parent_id = {$row4['cat_id']} AND cat_name = '{$cat5['weightName']}'")[0]) {
-                                                //保存三级级分类
-                                                $row5 = array(
-                                                    'parent_id' => $row4['cat_id'],
-                                                    'has_children' => 'false',
-                                                    'cat_name' => $cat5['weightName'],
-                                                    'addon' => $cat5['weightCode'],
-                                                );
-                                                $mdl_cat->save($row5);
-                                            }
-                                        }
-                                    }
-                                }
-                            }
+//                            $cat3['classesCode'] = $cat1['classesCode'];
+//                            $cat3['machiningCode'] = $cat2['machiningCode'];
+//                            $result_cat4 = app::get('b2c')->rpc("select_product_cat4")->request($cat3);
+//                            if ($result_cat4['status'] && !empty($result_cat4['result'])) {
+//                                foreach ($result_cat4['result'] as $cat4) {
+//                                    if (!$row4 = $mdl_cat->db->select("SELECT cat_id,cat_name,addon as featureCode FROM `vmc_b2c_goods_cat` WHERE parent_id = {$row3['cat_id']} AND cat_name = '{$cat4['featureName']}'")[0]) {
+//                                        //保存三级级分类
+//                                        $row4 = array(
+//                                            'parent_id' => $row3['cat_id'],
+//                                            'has_children' => 'false',
+//                                            'cat_name' => $cat4['featureName'],
+//                                            'addon' => $cat4['featureCode'],
+//                                        );
+//                                        $mdl_cat->save($row4);
+//                                    }
+//                                    //查询五级分类、产品净重分类
+//                                    $cat4['classesCode'] = $cat1['classesCode'];
+//                                    $cat4['machiningCode'] = $cat2['machiningCode'];
+//                                    $cat4['breedCode'] = $cat3['breedCode'];
+//                                    $result_cat5 = app::get('b2c')->rpc("select_product_cat5")->request($cat4);
+//                                    if ($result_cat5['status'] && !empty($result_cat5['result'])) {
+//                                        foreach ($result_cat5['result'] as $cat5) {
+//                                            if (!$row5 = $mdl_cat->db->select("SELECT cat_id,cat_name,addon as weightCode FROM `vmc_b2c_goods_cat` WHERE parent_id = {$row4['cat_id']} AND cat_name = '{$cat5['weightName']}'")[0]) {
+//                                                //保存三级级分类
+//                                                $row5 = array(
+//                                                    'parent_id' => $row4['cat_id'],
+//                                                    'has_children' => 'false',
+//                                                    'cat_name' => $cat5['weightName'],
+//                                                    'addon' => $cat5['weightCode'],
+//                                                );
+//                                                $mdl_cat->save($row5);
+//                                            }
+//                                        }
+//                                    }
+//                                }
+//                            }
                         }
                     }
                 }
