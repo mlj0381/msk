@@ -3,7 +3,7 @@
  * 创建第三方买手囤货订单---------------ISO151414
  */
 $remote['buyer_create_get_order'] = array(
-    'url' => '/so/sdo/thirdbuyer/create',
+    'url' => '/so/sdo/thirdparty/create',
 
     'request' => array(
         'member_id' => array(
@@ -29,61 +29,62 @@ $remote['buyer_create_get_order'] = array(
             'type' => 'String',
             'require' => true,
         ),
-        'districtCode' => array(
+        'district_code' => array(
             'name' => '订单区域编码',
             'column' => 'districtCode',
             'type' => 'String',
             'require' => true,
         ),
-        'buyersId' => array(
+        'buyer_id' => array(
             'name' => '买家ID，当买家编码发生变化时也可以用于查询',
             'column' => 'buyersId',
             'type' => 'String',
             'require' => false,
         ),
-        'buyersCode' => array(
+        'buyer_code' => array(
             'name' => '买家编码',
             'column' => 'buyersCode',
             'type' => 'String',
             'require' => false,
         ),
-        'buyersName' => array(
+        'buyer_name' => array(
             'name' => '买家名称',
             'column' => 'buyersName',
             'type' => 'String',
             'require' => false,
         ),
-        'buyersType' => array(
+        'buyer_type' => array(
             'name' => '买家类别，1:分销买家,2:菜场买家,3:团膳买家,4:火锅买家,5:中餐买家,6:西餐买家,7:小吃烧烤买家,8:加工厂买家',
             'column' => 'buyersType',
             'type' => 'Integer',
+            'default' => '1',
             'require' => true,
         ),
-        'sellerCode' => array(
+        'seller_code' => array(
             'name' => '卖家编码',
             'column' => 'sellerCode',
             'type' => 'String',
             'require' => true,
         ),
-        'sellerName' => array(
+        'seller_name' => array(
             'name' => '卖家名称',
             'column' => 'sellerName',
             'type' => 'String',
             'require' => true,
         ),
-        'needInvoice' => array(
+        'need_invoice' => array(
             'name' => '是否开票，1:要',
             'column' => 'needInvoice',
             'type' => 'Integer',
             'require' => true,
         ),
-        'orderAmount' => array(
+        'order_amount' => array(
             'name' => '订单总金额',
             'column' => 'orderAmount',
             'type' => 'BigDecimal',
             'require' => true,
         ),
-        'paymentType' => array(
+        'payment_type' => array(
             'name' => '付款类型，1:在线支付 2:线下支付',
             'column' => 'paymentType',
             'type' => 'Integer',
@@ -95,25 +96,25 @@ $remote['buyer_create_get_order'] = array(
             'type' => 'String',
             'require' => false,
         ),
-        'orderTaker' => array(
+        'order_taker' => array(
             'name' => '订单员',
             'column' => 'orderTaker',
             'type' => 'String',
             'require' => false,
         ),
-        'receiverInfo' => array(
+        'receiver_info' => array(
             'name' => '收货人信息',
             'column' => 'receiverInfo',
             'type' => 'Object',
             'require' => false,
         ),
-        'deliveryReq' => array(
+        'delivery_req' => array(
             'name' => '配送要求',
             'column' => 'deliveryReq',
             'type' => 'Object',
             'require' => false,
         ),
-        'invoiceReq' => array(
+        'invoice_req' => array(
             'name' => '发票要求',
             'column' => 'invoiceReq',
             'type' => 'Object',
@@ -127,68 +128,68 @@ $remote['buyer_create_get_order'] = array(
         ),
     ),
 
-    'receiverInfo' => array(
-        'receiverName' => array(
+    'receiver_info' => array(
+        'name' => array(
             'name' => '收货人名称',
             'column' => 'receiverName',
             'type' => 'String',
-            'require' => true,
+            'require' => false,
         ),
-        'receiverQQ' => array(
+        'QQ' => array(
             'name' => '收货人QQ号',
             'column' => 'receiverQQ',
             'type' => 'Integer',
             'require' => false,
         ),
-        'receiverWeixin' => array(
+        'weixin' => array(
             'name' => '收货人微信号',
             'column' => 'receiverWeixin',
             'type' => 'String',
             'require' => false,
         ),
-        'receiverTel' => array(
+        'tel' => array(
             'name' => '收货人电话',
             'column' => 'receiverTel',
             'type' => 'String',
-            'require' => true,
+            'require' => false,
         ),
-        'receiverProvince' => array(
+        'province' => array(
             'name' => '收货地址省份',
             'column' => 'receiverProvince',
             'type' => 'String',
-            'require' => true,
+            'require' => false,
         ),
-        'receiverCity' => array(
+        'city' => array(
             'name' => '收货地址市',
             'column' => 'receiverCity',
             'type' => 'String',
-            'require' => true,
+            'require' => false,
         ),
-        'receiverDistrict' => array(
+        'district' => array(
             'name' => '收货地址区',
             'column' => 'receiverDistrict',
             'type' => 'String',
-            'require' => true,
+            'require' => false,
         ),
-        'receiverAddr' => array(
+        'addr' => array(
             'name' => '收货人详细地址',
             'column' => 'receiverAddr',
             'type' => 'String',
-            'require' => true,
+            'require' => false,
         ),
-        'receiveTime' => array(
+        'time' => array(
             'name' => '习惯正常收货时间段编码，多个时候，以逗号分隔。',
             'column' => 'receiveTime',
             'type' => 'String',
             'require' => false,
         ),
-        'receiveEarliest' => array(
+        'early' => array(
             'name' => '习惯收货最早时间要求',
             'column' => 'receiveEarliest',
             'type' => 'String',
             'require' => false,
         ),
-        'receiveLast' => array(
+        'last' => array(
             'name' => '习惯收货最晚时间要求',
             'column' => 'receiveLast',
             'type' => 'String',
@@ -220,38 +221,38 @@ $remote['buyer_create_get_order'] = array(
         ),
     ),
 
-    'deliveryReq' => array(
-        'vicFlg' => array(
+    'delivery_req' => array(
+        'vic_flg' => array(
             'name' => '动检证要求，1:要',
             'column' => 'vicFlg',
             'type' => 'Integer',
             'require' => false,
         ),
-        'unloadReq' => array(
+        'unload_req' => array(
             'name' => '装卸要求',
             'column' => 'unloadReq',
             'type' => 'String',
             'require' => false,
         ),
-        'packingReq' => array(
+        'packing_req' => array(
             'name' => '包装要求',
             'column' => 'packingReq',
             'type' => 'String',
             'require' => false,
         ),
-        'parkingDistance' => array(
+        'parking_distance' => array(
             'name' => '距离门店最近停车距离(米)',
             'column' => 'parkingDistance',
             'type' => 'Integer',
             'require' => false,
         ),
-        'otherDeliveryReq' => array(
+        'other_delivery_req' => array(
             'name' => '其它配送服务要求',
             'column' => 'otherDeliveryReq',
             'type' => 'String',
             'require' => false,
         ),
-        'thisDeliveryReq' => array(
+        'this_delivery_req' => array(
             'name' => '本次配送服务要求',
             'column' => 'thisDeliveryReq',
             'type' => 'String',
@@ -259,32 +260,32 @@ $remote['buyer_create_get_order'] = array(
         ),
     ),
 
-    'invoiceReq' => array(
+    'invoice_req' => array(
         'invoiceType' => array(
             'name' => '发票类型,1:普通发票,2:增值税普通发票,3:增值税专用发票',
             'column' => 'invoiceType',
             'type' => 'Integer',
             'require' => false,
         ),
-        'invoiceTitle' => array(
+        'invoice_title' => array(
             'name' => '发票抬头',
             'column' => 'invoiceTitle',
             'type' => 'String',
             'require' => false,
         ),
-        'invoiceContent' => array(
+        'invoice_content' => array(
             'name' => '发票内容',
             'column' => 'invoiceContent',
             'type' => 'String',
             'require' => false,
         ),
-        'invReceiverTel' => array(
+        'inv_receiver_tel' => array(
             'name' => '收发票人手机号码',
             'column' => 'invReceiverTel',
             'type' => 'String',
             'require' => false,
         ),
-        'invTimeReq' => array(
+        'inv_time_req' => array(
             'name' => '开票时间要求',
             'column' => 'invTimeReq',
             'type' => 'Datetime',
@@ -347,19 +348,19 @@ $remote['buyer_create_get_order'] = array(
     ),
 
     'products' => array(
-        'pdCode' => array(
+        'bn' => array(
             'name' => '产品编码',
             'column' => 'pdCode',
             'type' => 'String',
             'require' => true,
         ),
-        'pdName' => array(
+        'name' => array(
             'name' => '产品名称',
             'column' => 'pdName',
             'type' => 'String',
             'require' => true,
         ),
-        'orderPrice' => array(
+        'price' => array(
             'name' => '订单价格',
             'column' => 'orderPrice',
             'type' => 'BigDecimal',
@@ -371,7 +372,7 @@ $remote['buyer_create_get_order'] = array(
             'type' => 'String',
             'require' => false,
         ),
-        'orderQty' => array(
+        'quantity' => array(
             'name' => '订单数量',
             'column' => 'orderQty',
             'type' => 'Integer',
@@ -394,12 +395,12 @@ $remote['buyer_create_get_order'] = array(
     'response' => array(
         'orderId' => array(
             'name' => '订单ID',
-            'column' => 'orderId',
+            'column' => 'order_id',
             'type' => 'Long',
         ),
         'orderCode' => array(
             'name' => '需求订单编码',
-            'column' => 'orderCode',
+            'column' => 'order_code',
             'type' => 'String',
         ),
         'OrderTime' => array(
