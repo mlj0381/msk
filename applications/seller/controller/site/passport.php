@@ -328,9 +328,14 @@ class seller_ctl_site_passport extends seller_frontpage
          *
          */
         extract($post);
-        if (!vmc::singleton('seller_user_vcode')->verify($smscode, $pam_account['mobile'], 'signup')) {
+       /* if (!vmc::singleton('seller_user_vcode')->verify($smscode, $pam_account['mobile'], 'signup')) {
             $this->splash('error', $signup_url, '手机短信验证码不正确');
+        }*/
+     
+        if ( !vmc::singleton('b2c_user_smscode')->bool_sms($post['pam_account']['mobile'],$post['smscode'],'sms')) {
+        	$this->splash('error', $signup_url, '手机短信验证码不正确');
         }
+        
         if (!$this->passport_obj->check_signup($post, $msg)) {
             $this->splash('error', $signup_url, $msg);
         }
@@ -358,6 +363,9 @@ class seller_ctl_site_passport extends seller_frontpage
         if (!vmc::singleton('seller_user_vcode')->verify($smscode, $pam_account['mobile'], 'signup')) {
             $this->splash('error', '', '手机短信验证码不正确');
         }
+        
+        
+        
         $this->splash('success', '', '验证成功');
     }
 
@@ -429,20 +437,18 @@ class seller_ctl_site_passport extends seller_frontpage
             }
         }
 
-        $uvcode_obj = vmc::singleton('seller_user_vcode');
-        $vcode = $uvcode_obj->set_vcode($mobile, $type, $msg);
-        $this->splash('success', $vcode, '短信已发送'); // 2015/9/7 短信直接显示
-
-        if ($vcode) {
-            //发送验证码 发送短信
-            $data['vcode'] = $vcode;
-            if (!$uvcode_obj->send_sms($type, (string)$mobile, $data)) {
-                $this->splash('error', null, '短信发送失败');
-            }
-        } else {
-            $this->splash('failed', null, $msg);
+     	$msg = $this->passport_obj->get_login_account_type($mobile);
+        if ($msg != 'mobile') {
+            $this->splash('error', null, '错误的手机格式');
         }
-        $this->splash('success', null, '短信已发送');
+        
+    	$smscode_obj = vmc::singleton('b2c_user_smscode');
+		$smscode = $smscode_obj->send_smscode($mobile,'sms',$msg);
+		if($smscode){
+			$this->splash('success', $smscode, '短信已发送');
+		}else{
+			$this->splash('error', null, $msg);
+		}
     }
 
 

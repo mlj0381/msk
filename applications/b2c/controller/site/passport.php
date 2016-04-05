@@ -110,9 +110,30 @@ class b2c_ctl_site_passport extends b2c_frontpage
          * 润和接口 会员登录 IBY121201
          * */
         $result = $this->app->rpc('login')->request($account_data);
-        if (!$result['status']) {
+        if(!$result['status']){
             $this->splash('error', $login_url, '登录失败！');
+        }else{
+        	/* 用户基本信息 */
+        	$member	= array();
+        	$member 			= $result['result'];
+        	$member['source'] 	= 'api';
+        	$member['regtime'] 	= time();
+        	
+        	/* 用户账户信息 */
+        	$account = array();
+        	$account['login_account'] 	 = $params['uname'];
+        	$account['createtime'] 		 = time();
+        	
+        	$account['login_password']	 = $login_password = pam_encrypt::get_encrypted_password($params['password'], 'member', array(
+        			'createtime' => $account['createtime'],
+        			'login_name' => $params['uname'],
+        	));
+        	$account['password_account'] = $params['uname'];
+        	$account['login_type'] 		 = 'local';
+        	
+        	vmc::singleton('pam_passport_site_basic')->local_user_rsyns($member,$account);
         }
+        
         //end 接口
         //尝试登陆
         $member_id = vmc::singleton('pam_passport_site_basic')->login($account_data, $params['vcode'], $msg);
@@ -251,8 +272,6 @@ class b2c_ctl_site_passport extends b2c_frontpage
         }
     }
 
-
-
     //注册页面--注册完成
     public function signup_complete($forward)
     {
@@ -347,10 +366,17 @@ class b2c_ctl_site_passport extends b2c_frontpage
         ));
         $login_type = $this->passport_obj->get_login_account_type($params['pam_account']['mobile']);
 
-        //$login_type == 'mobile' &&
+        /*//$login_type == 'mobile' &&
         if ($login_type == 'mobile' && !vmc::singleton('b2c_user_vcode')->verify($params['smscode'], $params['pam_account']['mobile'], 'signup')) {
-            $this->splash('error', $signup_url, '手机短信验证码不正确');
+            $this->splash('error', $signup_url, '手机短信验证码不正确');*/
+        if ($login_type == 'mobile'  && !vmc::singleton('b2c_user_smscode')->bool_sms($params['pam_account']['mobile'],$params['smscode'],'sms')) {
+        	$this->splash('error', $signup_url, '手机短信验证码不正确');
         }
+        //$login_type == 'mobile' &&
+        //if ($login_type == 'mobile' &&!vmc::singleton('b2c_user_vcode')->verify($params['smscode'], $params['pam_account']['mobile'], 'signup')) {
+          //  $this->splash('error', $signup_url, '手机短信验证码不正确');
+       // }
+
 //        elseif ($login_type != 'mobile' && !base_vcode::verify('passport', $params['vcode'])) {
 //            $this->splash('error', $signup_url, '验证码不正确');
 //        }
@@ -410,6 +436,14 @@ class b2c_ctl_site_passport extends b2c_frontpage
                 $this->splash('error', $redirect_here, '两次输入的密码不一致!');
             }
 
+
+           /*  if (!vmc::singleton('b2c_user_vcode')->verify($params['vcode'], $params['account'], 'reset')) {
+                $this->splash('error', $redirect_here, '验证码错误！');
+            } */
+            $login_type = $this->passport_obj->get_login_account_type($params['pam_account']['mobile']);
+            if ($login_type == 'mobile'  && !vmc::singleton('b2c_user_smscode')->bool_sms($params['pam_account']['mobile'],$params['smscode'],'sms')) {
+            	$this->splash('error', $signup_url, '手机短信验证码不正确');
+            }
 //            if (!vmc::singleton('b2c_user_vcode')->verify($params['vcode'], $params['account'], 'reset')) {
 //                $this->splash('error', $redirect_here, '验证码错误！');
 //            }
@@ -467,12 +501,24 @@ class b2c_ctl_site_passport extends b2c_frontpage
         if (!$this->passport_obj->is_exists_mobile($account)) {
             $this->splash('error', null, '验证手机不正确!');
         }
-        if (!$vcode = vmc::singleton('b2c_user_vcode')->set_vcode($account, 'reset', $msg)) {
+       /*  if (!$vcode = vmc::singleton('b2c_user_vcode')->set_vcode($account, 'reset', $msg)) {
             $this->splash('error', null, $msg);
         }
         $this->splash('success', $vcode, '短信已发送');
+        
+         */
+        
+        $smscode_obj = vmc::singleton('b2c_user_smscode');
+        $smscode = $smscode_obj->send_smscode($account,'sms',$msg);
+        if($smscode){
+        	$this->splash('success', $smscode, '短信已发送');
+        }else{
+        	$this->splash('error', null, $msg);
+        }
+        
+        
         //$data[$login_type] = $account;
-        $data['vcode'] = $vcode;
+      /*   $data['vcode'] = $vcode;
         switch ($login_type) {
             case 'email':
                 $send_flag = vmc::singleton('b2c_user_vcode')->send_email('reset', (string)$account, $data);
@@ -484,7 +530,7 @@ class b2c_ctl_site_passport extends b2c_frontpage
         if (!$send_flag) {
             $this->splash('error', null, '发送失败');
         }
-        $this->splash('success', null, '发送成功');
+        $this->splash('success', null, '发送成功'); */
     }
 
     //发送邮件验证码
@@ -516,8 +562,9 @@ class b2c_ctl_site_passport extends b2c_frontpage
     //短信发送验证码
     public function send_vcode_sms($type = 'signup')
     {
-
         $mobile = trim($_POST['mobile']);
+        
+     
         /*
          * 不用判断手机唯一性
         if (!$this->passport_obj->check_signup_account($mobile, $msg)) {
@@ -528,8 +575,17 @@ class b2c_ctl_site_passport extends b2c_frontpage
         if ($msg != 'mobile') {
             $this->splash('error', null, '错误的手机格式');
         }
-        $uvcode_obj = vmc::singleton('b2c_user_vcode');
-        $vcode = $uvcode_obj->set_vcode($mobile, $type, $msg);
+        
+    	$smscode_obj = vmc::singleton('b2c_user_smscode');
+		$smscode = $smscode_obj->send_smscode($mobile,'sms',$msg);
+		if($smscode){
+			$this->splash('success', $smscode, '短信已发送');
+		}else{
+			$this->splash('error', null, $msg);
+		}
+		/* 
+		$uvcode_obj = vmc::singleton('b2c_user_vcode');
+		$vcode = $uvcode_obj->set_vcode($mobile, $type, $msg);
         $this->splash('success', $vcode, '短信已发送');
         if ($vcode) {
             //发送验证码 发送短信
@@ -540,7 +596,7 @@ class b2c_ctl_site_passport extends b2c_frontpage
         } else {
             $this->splash('failed', null, $msg);
         }
-        $this->splash('success', null, '短信已发送');
+        $this->splash('success', null, '短信已发送'); */
     }
 
     public function logout($forward)

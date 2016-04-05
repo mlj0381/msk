@@ -70,19 +70,19 @@ $remote['b2c_order_create'] = array(
         ),
     ),
     'products' => array(
-        'pdCode' => array(
+        'bn' => array(
             'name' => '产品编码',
             'column' => 'pdCode',
             'type' => 'String',
             'require' => true,
         ),
-        'pdName' => array(
+        'name' => array(
             'name' => '产品名称',
             'column' => 'pdName',
             'type' => 'String',
             'require' => true,
         ),
-        'orderPrice' => array(
+        'price' => array(
             'name' => '订单价格',
             'column' => 'orderPrice',
             'type' => 'String',
@@ -94,7 +94,7 @@ $remote['b2c_order_create'] = array(
             'type' => 'String',
             'require' => false,
         ),
-        'orderQty' => array(
+        'quantity' => array(
             'name' => '订单数量',
             'column' => 'orderQty',
             'type' => 'String',

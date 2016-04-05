@@ -50,6 +50,11 @@ $remote['buyer_select_buyer_info'] = array(
     		'column' => 'buyer_code',
     		'type' => 'String',
     	),
+    	'slCodeDis' => array(
+    			'name' => '买手code',
+    			'column' => 'buyer_codedis',
+    			'type' => 'String',
+    	),
         'slAccount' => array(
             'name' => '卖家账号',
             'column' => 'login_account',

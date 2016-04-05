@@ -22,7 +22,7 @@ $remote['b2c_select_product_cat2'] = array(
     ),
 
     'param' => array(
-        'cat_id1' => array(
+        'classesCode' => array(
             'name' => '一级分类编码',
             'column' => 'classesCode',
             'type' => 'String',
