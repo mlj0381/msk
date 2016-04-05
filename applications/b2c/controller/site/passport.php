@@ -110,7 +110,6 @@ class b2c_ctl_site_passport extends b2c_frontpage
          * 润和接口 会员登录 IBY121201
          * */
         $result = $this->app->rpc('login')->request($account_data);
-
         if(!$result['status']){
             $this->splash('error', $login_url, '登录失败！');
         }else{
@@ -227,30 +226,16 @@ class b2c_ctl_site_passport extends b2c_frontpage
     }
 
 
-
-
-
     //注册经营信息
     public function business_info($pageIndex = 0, $type = null)
     {
-        /**
-         * 润和接口 会员详细信息提交
-         * IBY121202 更新买家基本信息
-         * IBY121203 更新买家经营产品类别
-         * IBY121204 更新买家销售对象
-         * IBY121203 更新买家经营产品类别
-         * IBY121204 更新买家销售对象
-         * IBY121205 更新证照信息
-         * IBY121206 更新证照图片
-         * IBY121207 更新雇员信息
-         */
         $this->verify_member();
         if (!is_numeric($pageIndex)) $pageIndex = 1;
         $page_setting = $this->app->getConf('member_extra_column');
-        $pageIndex = $type == 'up' ? $pageIndex -1 : $pageIndex +1;
+        $pageIndex = $type == 'up' ? $pageIndex - 1 : $pageIndex + 1;
         $pageIndex <= 1 && $pageIndex = 1;
         $pageIndexMax = count($page_setting) + 1;
-        $pageIndex >=  $pageIndexMax && $pageIndex = $pageIndexMax;
+        $pageIndex >= $pageIndexMax && $pageIndex = $pageIndexMax;
         $this->pagedata['conf'] = $this->_page_setting($pageIndex);
         if ($_POST) {
             $_POST['pageIndex'] = $pageIndex;
@@ -262,19 +247,31 @@ class b2c_ctl_site_passport extends b2c_frontpage
                 'act' => 'business_info',
                 'args0' => $pageIndex - 1,
             ));
-            if(!$result){
+            if (!$result) {
                 $this->splash('error', $redirect, '注册失败');
             }
         }
         $this->set_tmpl('passport');
         $this->pagedata['pageIndex'] = $pageIndex;
-        if($pageIndex >= $pageIndexMax){
+        if ($pageIndex >= $pageIndexMax) {
+            /**
+             * 润和接口 会员详细信息提交
+             * IBY121202 更新买家基本信息
+             * IBY121203 更新买家经营产品类别
+             * IBY121204 更新买家销售对象
+             * IBY121203 更新买家经营产品类别
+             * IBY121204 更新买家销售对象
+             * IBY121205 更新证照信息
+             * IBY121206 更新证照图片
+             * IBY121207 更新雇员信息
+             */
+            //$this->app->model('members')->formatApiData($this->member);
             $this->page('site/passport/signup_complete.html');
-        }else{
+        } else {
             $this->page('site/passport/signup_baseInfo.html');
         }
     }
-    
+
     //注册页面--注册完成
     public function signup_complete($forward)
     {
@@ -321,21 +318,22 @@ class b2c_ctl_site_passport extends b2c_frontpage
      * 判断前台用户联系手机是否存在
      */
 
-    public function is_exists_mobile() {
+    public function is_exists_mobile()
+    {
         $mobile = $_POST['pam_account']['mobile'];
         if (empty($mobile)) {
             $this->splash('error', '', '手机号不能为空');
         }
         $mobile_type = $this->passport_obj->get_login_account_type($mobile);
 
-        if($mobile_type != 'mobile'){
+        if ($mobile_type != 'mobile') {
             $this->splash('error', '', '请填写正确的手机号');
         }
         $mdl_members = $this->app->model('members');
         $flag = $mdl_members->getList('member_id', array(
             'mobile' => trim($mobile),
         ));
-        if($flag){
+        if ($flag) {
             $this->splash('error', '', '该手机号已被使用');
         }
         $this->splash('success', '', '该手机号可以使用');
@@ -367,6 +365,10 @@ class b2c_ctl_site_passport extends b2c_frontpage
             ),
         ));
         $login_type = $this->passport_obj->get_login_account_type($params['pam_account']['mobile']);
+
+        /*//$login_type == 'mobile' &&
+        if ($login_type == 'mobile' && !vmc::singleton('b2c_user_vcode')->verify($params['smscode'], $params['pam_account']['mobile'], 'signup')) {
+            $this->splash('error', $signup_url, '手机短信验证码不正确');*/
         if ($login_type == 'mobile'  && !vmc::singleton('b2c_user_smscode')->bool_sms($params['pam_account']['mobile'],$params['smscode'],'sms')) {
         	$this->splash('error', $signup_url, '手机短信验证码不正确');
         }
@@ -391,7 +393,7 @@ class b2c_ctl_site_passport extends b2c_frontpage
             'mobile' => $member_sdf_data['b2c_members']['contact']['phone']['mobile'],
         );
         $result = $this->app->rpc('register')->request($rpc_data);
-        if(!$result['status']){
+        if (!$result['status']) {
             $this->splash('error', $signup_url, '注册失败,会员数据保存异常');
         }
         //end 调用接口
@@ -446,7 +448,7 @@ class b2c_ctl_site_passport extends b2c_frontpage
 //                $this->splash('error', $redirect_here, '验证码错误！');
 //            }
             $result = $this->app->model('members')->getRow('member_id', array('mobile' => $params['account']));
-            if(empty($result)){
+            if (empty($result)) {
                 $this->splash('error', $redirect_here, '未知帐号!');
             }
             $p_m = app::get('pam')->model('members')->getRow('member_id', array('member_id' => $result['member_id']));
@@ -460,8 +462,8 @@ class b2c_ctl_site_passport extends b2c_frontpage
             /**
              * 润和接口 修改密码 IBY121201
              */
-            $buyer_id = app::get('b2c')->model('members')->getRow('buyer_id',array('member_id'=>$member_id));
-            $password = app::get('pam')->model('members')->getRow('password,login_account',array('member_id'=>$member_id));
+            $buyer_id = app::get('b2c')->model('members')->getRow('buyer_id', array('member_id' => $member_id));
+            $password = app::get('pam')->model('members')->getRow('password,login_account', array('member_id' => $member_id));
             $api_data = array(
                 'buyerId' => $buyer_id['buyer_id'],
                 'accountName' => $password['login_account'],

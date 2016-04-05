@@ -17,5 +17,6 @@ nbproject/
 .settings/
 .idea/
 data/kvstore/
+data/misc/
 data/cache/
 
