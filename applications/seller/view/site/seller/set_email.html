@@ -1,40 +1,48 @@
 <!---->
 <ol class="breadcrumb">
   <li><a href="<{link app=site ctl=index}>">首页</a></li>
-  <li><a href="<{link app=b2c ctl=site_member}>">会员中心</a></li>
+  <li><a href="<{link app=b2c ctl=site_member}>">商家中心</a></li>
   <li class="active">绑定邮箱</li>
 </ol>
 
-<form class="form-horizontal" action="<{link app=b2c ctl=site_member act=set_pam_email args0=save}>" method="post" id="set_email_form">
-    <{foreach from=$pam_data key=key item=item}>
+<form class="form-horizontal" data-module="validator" action="<{link app=seller ctl=site_seller act=set_pam_email}>" method="post" id="set_email_form">
+    <!--<{foreach from=$pam_data key=key item=item}>-->
+    <!--<div class="form-group">-->
+        <!--<label  class="col-xs-2 control-label">-->
+            <!--<{$pam_type.{$key}}>-->
+        <!--</label>-->
+        <!--<div class="col-xs-4">-->
+            <!--<input type="text" class="form-control" readonly=true value="<{$item.login_account}>">-->
+            <!--&lt;!&ndash;<span class="help-block">设置完后，依然可以用<{$pam_type.{$key}}>登录</span>&ndash;&gt;-->
+        <!--</div>-->
+    <!--</div>-->
+    <!--<{/foreach}>-->
     <div class="form-group">
-        <label  class="col-xs-2 control-label">
-            <{$pam_type.{$key}}>
-        </label>
+        <label  class="col-xs-2 control-label">帐号</label>
         <div class="col-xs-4">
-            <input type="text" class="form-control" readonly=true value="<{$item.login_account}>">
-            <!--<span class="help-block">设置完后，依然可以用<{$pam_type.{$key}}>登录</span>-->
-        </div>
-    </div>
-    <{/foreach}>
-    <div class="form-group">
-        <label  class="col-xs-2 control-label">邮箱Email</label>
-        <div class="col-xs-4">
-            <input type="email" id="email_input" required="true" class="form-control" name="email"  value="">
+            <input type="email" required="true" disabled class="form-control" name="email"  value="<{$seller.local_uname}>">
             <!--<span class="help-block">设置完后，可使用 邮箱 登录</span>-->
         </div>
     </div>
     <div class="form-group">
-        <label for="input_vcode" class="col-xs-2 control-label">验证码<span class="text-danger">*</span></label>
-        <div class="col-xs-2">
-          <input type="text" required="true" name="vcode" class="form-control" id="input_vcode" placeholder="验证码">
-        </div>
-        <div class="col-xs-2">
-            <div class="email-vcode">
-                <button type="button" class="btn btn-default">向邮箱发送验证码</button>
-            </div>
+        <label  class="col-xs-2 control-label">邮箱Email</label>
+        <div class="col-xs-4">
+            <input type="email" id="email_input" required="true" format="email" class="form-control" name="email"  value="">
+            <!--<span class="help-block">设置完后，可使用 邮箱 登录</span>-->
+            <span class="msgTip" data-message="format">邮箱格式错误</span>
         </div>
     </div>
+    <!--<div class="form-group">-->
+        <!--<label for="input_vcode" class="col-xs-2 control-label">验证码<span class="text-danger">*</span></label>-->
+        <!--<div class="col-xs-2">-->
+          <!--<input type="text" required="true" name="vcode" class="form-control" id="input_vcode" placeholder="验证码">-->
+        <!--</div>-->
+        <!--<div class="col-xs-2">-->
+            <!--<div class="email-vcode">-->
+                <!--<button type="button" class="btn btn-default">向邮箱发送验证码</button>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
     <div class="form-group">
         <div class="col-xs-7 col-xs-offset-2">
           <button type="submit" class="btn btn-primary">立即绑定</button>

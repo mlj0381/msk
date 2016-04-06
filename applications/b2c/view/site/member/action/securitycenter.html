@@ -27,7 +27,7 @@
             </div>
         </div>
     </div>
-    <div class="list-group-item <{if $pam_data.email}><{if $pam_data.email.disabled=='true'}>text-warning<{else}>text-success<{/if}><{else}>text-danger<{/if}>">
+    <div class="list-group-item <{if $member.email}><{if $member.email.disabled=='true'}>text-warning<{else}>text-success<{/if}><{else}>text-danger<{/if}>">
         <div class="row">
             <div class="col-xs-2 text-center">
                 <h2 class="glyphicon glyphicon-envelope"></h2>
@@ -36,7 +36,7 @@
                 </p>
             </div>
             <div class="col-xs-8">
-                <{if $pam_data.email}>
+                <{if $member.email}>
                     <h3><{$pam_data.email.login_account}></h3>
                     <{if $pam_data.email.disabled=='true'}>
                     <!-- <span class="label label-warning">未激活</span> -->
@@ -48,7 +48,7 @@
                 <{/if}>
             </div>
             <div class="col-xs-2">
-                <{if $pam_data.email && $pam_data.email.disabled!='true'}>
+                <{if $member.email && $member.email.disabled!='true'}>
                     <h2 class="glyphicon glyphicon-ok-sign"></h2>
                 <{else}>
                     <h2 class="glyphicon glyphicon-warning-sign"></h2>
