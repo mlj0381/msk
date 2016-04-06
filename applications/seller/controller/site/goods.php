@@ -19,7 +19,7 @@ class seller_ctl_site_goods extends seller_frontpage
     {
         parent::__construct($app);
         $this->app = $app;
-        $this->verify();
+        //$this->verify();
         $this->mB2cGoods = app::get('b2c')->model('goods');
         $this->mStoreGoods = app::get('store')->model('goods');
     }
