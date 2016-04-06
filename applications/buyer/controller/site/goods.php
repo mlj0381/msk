@@ -21,6 +21,7 @@ class buyer_ctl_site_goods extends buyer_frontpage{
 	public function __construct(&$app){
 		parent::__construct($app);
 		$this->verify_buyer();
+// 		$this->verify_member();
 		$this->buyer_id = vmc::singleton('buyer_user_object')->get_session();
 		//后面还需要什么............
 	}
@@ -45,51 +46,25 @@ class buyer_ctl_site_goods extends buyer_frontpage{
 	/**
 	 * 销售商品订单(订单管理)
 	 */
-	public function stock($current_status = 'all', $page = 1){
-		$limit = 5;
-		if (!in_array($current_status,array('all','2','8'))){
-			$order_list = null;
-		}else {
-			$rpc_model = $this->app->rpc('get_orders_list');
-			$data = array(
-					'buyersId'	=>'BI01',
-					'buyersCode'=>'BC01',
-			);
-			$response = $rpc_model->request($data, 2);
 
-			if ($current_status == 'all' or empty($current_status)){
-				if (!empty($_POST['search'])){
-					foreach ($response['result']['orders'] as $k=>$v){
-						if ($v['orderCode'] == $_POST['search']){
-							$order_list[$k] = $response['result']['orders'][$k];
-						}
-					}
-				}else {
-					$order_list = $response['result']['orders'];
-				}
-			}else {
-				foreach ($response['result']['orders'] as $k=>$v){
-					if ($v['orderStatus'] == $current_status){
-						$order_list[$k] = $response['result']['orders'][$k];
-					}
-				}
-			}
-			$list = array_slice($order_list, ($page-1)*$limit, $limit);
-		}
+	public function stock($current_status='all', $page = 1){
+		$limit = 20;
+		$where =array();
+		$current_status == 'all' ?$where['orderStatus'] = '': $where['orderStatus'] = $current_status;
+		$_POST['search'] ?$where['orderCode'] = $_POST['search'] : $where['orderCode'] = '';
 
-		is_array($list) and array_walk($list,function(&$v,$k){
-			$v['pay_status'] = self::$_pay_list[$v['orderStatus']];
-		});
-		$this->pagedata['order_list'] = $list;
+		$list = $this->get_goods_order($where);
+		$order_list = array_slice($list, ($page-1)*$limit, $limit);
+		$this->pagedata['order_list'] = $order_list;
 		$this->pagedata['current_status'] = $current_status;
 		$this->pagedata['search'] = $_POST['search'];
 		$this->pagedata['pager'] = array(
-				'total' => ceil(count($order_list) / $limit),
+				'total' => ceil(count($list) / $limit),
 				'current' => $page,
 				'link' => array(
 						'app' => 'buyer',
 						'ctl' => 'site_goods',
-						'act' => 'store',
+						'act' => 'stock',
 						'args' => array($current_status,($token = time())),
 						),
 				'token' => $token,
@@ -220,5 +195,35 @@ class buyer_ctl_site_goods extends buyer_frontpage{
 			14=>'分销失败',
 	);
 	
+	public function get_goods_order($where){
+		$data = array(
+				'buyersId'	=>'BI01',
+				'buyersCode'=>'BC01',
+		);
+		$response = $this->app->rpc('get_orders_list')->request($data, false);
+
+		if ($where['orderStatus'] and $where['orderCode']){
+			foreach ($response['result']['orders'] as $k=>$v){
+				if ( $v['orderCode'] == $where['orderCode'] and $v['orderStatus'] == $where['orderStatus']){
+					$list[$k] = $response['result']['orders'][$k];
+				}
+			}
+		}elseif (empty($where['orderStatus']) and empty($where['orderCode'])){
+			$list = $response['result']['orders'];
+		}else {
+			foreach ($response['result']['orders'] as $k=>$v){
+				foreach ($where as $key=>$param){
+					if ( $v[$key] == $where[$key]){
+						$list[$k] = $response['result']['orders'][$k];
+					}
+				}
+			}
+		}
+		
+		is_array($list) and array_walk($list,function(&$v,$k){
+			$v['pay_status'] = self::$_pay_list[$v['orderStatus']];
+		});
+		return $list ?: null;
+	}
 	
 }

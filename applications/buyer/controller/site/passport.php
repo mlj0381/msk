@@ -116,13 +116,13 @@ class buyer_ctl_site_passport extends buyer_frontpage{
 			if (!$userdata){
 				$this->splash('error', '', '用户名不存在！');
 			}
-			$check_password = $mdl_buyers->check_password($userdata['buyer_id'], $password);
+			$check_password = $mdl_buyers->check_password($userdata, $password);
 			if ($check_password){
 				/**
 				 * 重新用seller的session验证规则
 				 * $this->app->model('buyers')->autologin($userdata);
 				 */
-				$this->object_obj->set_session($userdata['buyer_id'], '');
+				$this->object_obj->set_session($userdata, '');
 				$this->set_cookie('UNAME', $userdata['login_account']);
 				$this->set_cookie('SELLER_IDENT', $userdata['buyer_id']);	
 				$redirect = $this->gen_url(array(

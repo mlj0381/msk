@@ -1261,15 +1261,34 @@ class seller_user_passport
         if (!$mdl_seller->delete(array('seller_id' => $post['seller_id']))) {
             return false;
         }
-
-        $seller_data[$pam_data['login_type']] = $pam_data['login_account'];
-        if (!app::get('buyer')->model('buyers')->save($seller_data)) {
-            return false;
-        }
-        $pam_data['buyer_id'] = $seller_data['buyer_id'];
-        if (!app::get('pam')->model('buyers')->save($pam_data)) {
-            return false;
-        }
+        $this->add_buyer($seller_data, $pam_data);
         return $pam_data;
     }
+    
+    /**
+     * 买手注册走pam_member表,
+     * @param unknown $seller_data
+     * @param unknown $pam_data
+     */
+    public function add_buyer($seller_data, $pam_data){
+    	$check_buyer_account = app::get('buyer')->model('buyers')->getRow($pam_data['login_type'], array($pam_data['login_type']=>$pam_data['login_account']));
+    	//buyer_buyers不存在
+    	if (empty($check_buyer_account[$pam_data['login_type']])){
+    		$check_member_account = app::get('pam')->model('members')->getRow('member_id', array('login_account'=>$pam_data['login_account']));
+    		//pam_members存在
+    		$seller_data['phone'] = $seller_data['mobile'];
+    		$seller_data[$pam_data['login_type']] = $pam_data['login_account'];
+    		if ($check_member_account['member_id']){
+    			$seller_data['member_id'] = $check_member_account['member_id'];
+    			app::get('buyer')->model('buyers')->save($seller_data);
+    		}else {
+    			app::get('b2c')->model('members')->save($seller_data);
+    			$pam_data['member_id'] = $seller_data['member_id'];
+    			app::get('pam')->model('members')->save($pam_data);
+    			app::get('buyer')->model('buyers')->save($seller_data);
+    		}
+    	}
+    }
+    
+    
 }
