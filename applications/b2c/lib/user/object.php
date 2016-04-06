@@ -81,7 +81,6 @@ class b2c_user_object{
         );
         $memberData = $this->get_members_data($memberFilter,$member_id);
         $member_sdf = $memberData['members'];
-
         if( !empty($member_sdf) ) {
             $login_name = $this->get_member_name();
             $this->member_info['member_id'] = $member_sdf['member_id'];
@@ -95,7 +94,7 @@ class b2c_user_object{
             $this->member_info['mobile'] =  $member_sdf['mobile'];
             $this->member_info['integral'] = app::get('b2c')->model('member_integral')->amount($member_id);
             $this->member_info['experience'] = $member_sdf['experience'];
-            $this->member_info['email'] = $memberData['account']['email'];
+            //$this->member_info['email'] = $memberData['account']['email'];
             $this->member_info['member_lv'] = $member_sdf['member_lv_id'];
             $this->member_info['member_cur'] = $member_sdf['cur'];
             $this->member_info['buyer_id'] = $member_sdf['buyer_id'];

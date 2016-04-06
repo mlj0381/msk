@@ -193,10 +193,11 @@ class b2c_ctl_site_member extends b2c_frontpage
         }
         if ($action == 'save') {
             $email = $_POST['email'];
+            /*
             $vcode = $_POST['vcode'];
             if (!vmc::singleton('b2c_user_vcode')->verify($email, $vcode, 'activation')) {
                 $this->splash('error', $signup_url, '验证码不正确');
-            }
+            }*/
             if (!vmc::singleton('b2c_user_passport')->set_email($email, $msg)) {
                 $this->splash('error', $redirect_here, $msg);
             } else {
@@ -299,6 +300,9 @@ class b2c_ctl_site_member extends b2c_frontpage
                 ));
                 if (!$result) {
                     $this->splash('error', $redirect, '修改失败');
+                }
+                if(!$this->app->model('members')->formatApiData($this->member)){
+                    $this->splash('error', '', '修改失败');
                 }
             }
             $this->splash('success', $redirect, '修改成功');
@@ -857,6 +861,7 @@ class b2c_ctl_site_member extends b2c_frontpage
         $this->menuSetting = 'setting';
         $user_obj = vmc::singleton('b2c_user_object');
         $this->pagedata['pam_data'] = $user_obj->get_pam_data('*', $this->member['member_id']);
+        $this->pagedata['member'] = $this->member;
         $this->output();
     }
 

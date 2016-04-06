@@ -133,6 +133,16 @@ class seller_ctl_site_seller extends seller_frontpage {
     }
     //邮箱绑定
     public function set_pam_email() {
+        if($_POST){
+            $redirect = $this->gen_url(array('app' => 'seller', 'ctl' => 'site_seller', 'act' => 'securitycenter'));
+            $update_value = array('email' => $_POST['email']);
+            $filter = array('seller_id' => $this->seller['seller_id']);
+            if(!$this->app->model('sellers')->update($update_value, $filter)){
+                $this->splash('error', $redirect, '绑定失败');
+            }
+            $this->splash('success', $redirect, '绑定成功');
+        }
+        $this->pagedata['seller'] = $this->seller;
         $this->page('site/seller/set_email.html');
     }
 
