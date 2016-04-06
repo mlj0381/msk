@@ -99,11 +99,10 @@ class b2c_ctl_site_checkout extends b2c_frontpage
         }else{
             $buyer_id = vmc::singleton('buyer_user_object')->get_id();
             $buyer = app::get('buyer')->model('buyers')->getRow('*',array('buyer_id'=>$buyer_id));
-            $api_buyer_id = $buyer['api_buyer_id'];
+            $api_buyer_id = $buyer['api_buyer_id']?$buyer['api_buyer_id']:'408880027';
             $buyer_code = $buyer['buyer_code'];
             $buyer_name = $buyer['local'];
         }
-
         $api_data = array(
             'districtCode' => $_SESSION['account']['addr'],
             'buyer_id' => $api_buyer_id,

@@ -35,13 +35,13 @@ $remote['buyer_create_out_order'] = array(
             'type' => 'String',
             'require' => true,
         ),
-        'buyers_id' => array(
+        'buyer_id' => array(
             'name' => '买家ID，当买家编码发生变化时也可以用于查询',
             'column' => 'buyersId',
             'type' => 'String',
             'require' => false,
         ),
-        'buyers_code' => array(
+        'buyer_code' => array(
             'name' => '买家编码',
             'column' => 'buyersCode',
             'type' => 'String',
@@ -53,7 +53,7 @@ $remote['buyer_create_out_order'] = array(
             'type' => 'String',
             'require' => false,
         ),
-        'buyers_ype' => array(
+        'buyer_type' => array(
             'name' => '买家类别，1:分销买家,2:菜场买家,3:团膳买家,4:火锅买家,5:中餐买家,6:西餐买家,7:小吃烧烤买家,8:加工厂买家',
             'column' => 'buyersType',
             'type' => 'Integer',

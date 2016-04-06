@@ -129,17 +129,18 @@ class b2c_ctl_site_passport extends b2c_frontpage
         			'login_name' => $params['uname'],
         	));
         	$account['password_account'] = $params['uname'];
-        	$account['login_type'] 		 = 'local';
+        	$account['login_type'] 		 = $this->passport_obj->get_login_account_type($params['uname']);
         	
         	vmc::singleton('pam_passport_site_basic')->local_user_rsyns($member,$account);
         }
-        
+       
         //end 接口
         //尝试登陆
         $member_id = vmc::singleton('pam_passport_site_basic')->login($account_data, $params['vcode'], $msg);
         if (!$member_id) {
             $this->splash('error', $login_url, $msg);
         }
+       
         $mdl_members = $this->app->model('members');
         $member_data = $mdl_members->getRow('member_lv_id,experience', array(
             'member_id' => $member_id,
@@ -395,7 +396,9 @@ class b2c_ctl_site_passport extends b2c_frontpage
             'mobile' => $member_sdf_data['b2c_members']['contact']['phone']['mobile'],
         );
         $result = $this->app->rpc('register')->request($rpc_data);
+
         if (!$result['status']) {
+
             $this->splash('error', $signup_url, '注册失败,会员数据保存异常');
         }
         //end 调用接口

@@ -22,7 +22,7 @@ $remote['b2c_select_receive_time'] = array(
     ),
 
     'param' => array(
-        'buyerId' => array(
+        'buyer_id' => array(
             'name' => '买家ID',
             'column' => 'buyerId',
             'type' => 'String',
