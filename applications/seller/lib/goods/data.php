@@ -18,6 +18,7 @@ class seller_goods_data
     }
     public function prepare_goods_data(&$data)
     {
+        $seller_id = vmc::singleton('seller_user_object')->get_id();
         $last_goods = $this->mdl_goods->getRow('goods_id', null, 0, 1, 'goods_id desc');
         $last_goods_id = $last_goods['goods_id'];
         $goods = $data['goods'];
@@ -123,6 +124,7 @@ class seller_goods_data
                 $goods['product'][$prok]['price'] = trim($pro['interval']['price'][0]);
             }
             $goods['product'][$prok]['mktprice'] = trim($goods['product'][$prok]['mktprice']);
+            $goods['product'][$prok]['seller_id'] = $seller_id;
         }
         if (is_array($data['linkid'])) {
             foreach ($data['linkid'] as $k => $id) {
