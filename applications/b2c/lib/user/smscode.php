@@ -26,8 +26,18 @@ class b2c_user_smscode {
 		$data = array(
 			'mobile' => $mobile 
 		);
+	/** 远程验证码接口 【验证码短信平台接口】IOL101001  需要用的时候，取消这个注释，删除$result
 		$orderRpc = app::get('b2c')->rpc('send_code');
 		$result = $orderRpc->request($data);
+	*/	
+		
+		$result = array(
+				'status' => '1' ,
+				'result' => array(
+						'vcode' => '666888'
+				)	
+		);
+	
 		$status = $result['status'];
 		if(!$status){
 			return false;

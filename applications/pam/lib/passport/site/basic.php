@@ -79,18 +79,12 @@ class pam_passport_site_basic
 		if (!$data){
 			$db = vmc::database();
 			$db->beginTransaction();
-	
-			$t1 = app::get('buyer')->model('buyers')->save($buyers);
-			$t1 = true ;//待修改的代码，保存成功也返回false
-			if(!$t1){
+			if (!app::get('buyer')->model('buyers')->save($buyers)){
 				$db->rollback();
 			}
-				
 			$buyers_id = vmc::database()->lastinsertid();
 			$account['buyer_id'] = $buyers_id;
-			$t2 = app::get('pam')->model('buyers')->save($account);
-			$t2 = true ;//待修改的代码，保存成功也返回false
-			if(!$t2){
+			if(!app::get('pam')->model('members')->save($account)){
 				$db->rollback();
 			}
 			$db->commit();

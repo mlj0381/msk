@@ -24,11 +24,15 @@ class buyer_ctl_site_buyer extends buyer_frontpage{
 		parent::__construct($app);
 		$this->verify_buyer();
 		$this->buyer_id = vmc::singleton('buyer_user_object')->get_id();
+		$this->member_id = vmc::singleton('buyer_user_object')->get_session()['member_id'];
 		//后面还需要什么............
 	}
 	
 	
 	public function index($status){
+// 		vmc::singleton('base_session')->start();
+// 		var_dump($_SESSION);
+// 		15230315235
 		//'args'=>$status;
         $this->output();
 	}
@@ -59,50 +63,51 @@ class buyer_ctl_site_buyer extends buyer_frontpage{
 			 * 
 			 */
 			
-			$data = app::get('pam')->model('buyers')->getRow('login_account,login_password,password', array('buyer_id'=>$this->buyer_id));
+			$data = app::get('pam')->model('members')->getRow('login_account,login_password,password', array('member_id'=>$this->member_id));
 			$basic_data = $this->app->model('buyers')->getRow('*', array('buyer_id'=>$this->buyer_id));
-			
 			if ($this->app->model('buyers')->update($params, array('buyer_id' => $this->buyer_id))){
-				//////////////////////////////////走API
-				$region = $basic_data['area'];
-				$area_result = app::get('ectools')->model('regions')->region_decode($region);
-				$request = array(
-						'slAccount'=>array(
-								'login_account'	=>$data['login_account'],
-								'mobile'		=>$basic_data['mobile'],
-								'local'			=>$basic_data['local'],
-								'name'			=>$basic_data['name'],
-								'password'		=>$data['password'],
-								'authStatus'	=>2,
-						),
-						'slSeller'=>array(
-								'login_account'	=>$data['login_account'],
-								'slConFlg'		=>'1',//生产国籍
-								'areaCode'		=>'1',//大区编码
-								'lgcsAreaCode'	=>$area_result['province']['code'] ?:09,//物流区编码
-								'provinceCode'	=>$area_result['province']['code'] ?:09,//省编码
-								'cityCode'		=>$area_result['city']['code'] ?:09,//地区编码
-								'districtCode'	=>$area_result['district']['code'] ?:09,//区编码
-								'slMainClass'	=>4,//卖家主分类
-								'snkFlg'		=>'否',//神农客标志
-								'selfFlg'		=>'否',//自产型卖家标志
-								'agentFlg'		=>'否',//代理型卖家标志
-								'oemFlg'		=>'否',//OEM型卖家标志
-								'buyerFlg'		=>'否',//买手型卖家标志
-						),
-						'slBuyerShop'=>array(
-								'card_id'	=>$basic_data['card_id'],
-								'slSort'	=>2,
-								'addr'		=>$basic_data['addr'],
-						),
-						'slShopInfo'=>$basic_data,
-							
-				);
+				if ($this->app->model('buyers')->getRow('buyer_code', array('buyer_id' => $this->buyer_id))['buyer_code']){
+					$this->rpc_update_data($params);
+				}else {
+					$region = $basic_data['area'];
+					$area_result = app::get('ectools')->model('regions')->region_decode($region);
+					$request = array(
+							'slAccount'=>array(
+									'login_account'	=>$data['login_account'],
+									'mobile'		=>$basic_data['mobile'],
+									'local'			=>$basic_data['local'],
+									'name'			=>$basic_data['name'],
+									'password'		=>$data['password'],
+									'authStatus'	=>2,
+							),
+							'slSeller'=>array(
+									'login_account'	=>$data['login_account'],
+									'slConFlg'		=>'1',//生产国籍
+									'areaCode'		=>'1',//大区编码
+									'lgcsAreaCode'	=>$area_result['province']['code'] ?: '09',//物流区编码
+									'provinceCode'	=>$area_result['province']['code'] ?: '09',//省编码
+									'cityCode'		=>$area_result['city']['code'] ?: '09',//地区编码
+									'districtCode'	=>$area_result['district']['code'] ?: '09',//区编码
+									'slMainClass'	=>4,//卖家主分类
+									'snkFlg'		=>'否',//神农客标志
+									'selfFlg'		=>'否',//自产型卖家标志
+									'agentFlg'		=>'否',//代理型卖家标志
+									'oemFlg'		=>'否',//OEM型卖家标志
+									'buyerFlg'		=>'否',//买手型卖家标志
+							),
+							'slBuyerShop'=>array(
+									'card_id'	=>$basic_data['card_id'],
+									'slSort'	=>2,
+									'addr'		=>$basic_data['addr'],
+							),
+							'slShopInfo'=>$basic_data,
+					);
+				}
 				$edit = $this->app->rpc('edit_buyer_info')->request($request, false);
 				$buyer_info_response = $this->app->rpc('select_buyer_info')->request($data, false);
 				if ($buyer_code = $buyer_info_response['result']['buyershopList'][0]){
 					app::get('pam')->model('buyers')->update(array('buyer_code'=>$buyer_code['buyer_code']), array('buyer_id'=>$this->buyer_id));
-					$this->app->model('buyers')->update(array('buyer_code'=>$buyer_code['buyer_code'],'buyer_codedis'=>$buyer_code['buyer_codedis']), array('buyer_id'=>$this->buyer_id));
+					$this->app->model('buyers')->update(array('buyer_code'=>$buyer_code['buyer_code'],'api_buyer_id'=>$buyer_code['buyer_codedis']), array('buyer_id'=>$this->buyer_id));
 				}
 				$this->splash('success', $redirect, '店铺信息更新成功！');
 			}else {
@@ -187,6 +192,9 @@ class buyer_ctl_site_buyer extends buyer_frontpage{
 				$this->splash('error', $redirect, 'QQ号格式或位数错误！');
 			}
 			if ($this->app->model('buyers')->update($params, array('buyer_id' => $this->buyer_id))){
+				if ($this->app->model('buyers')->getRow('buyer_code', array('buyer_id' => $this->buyer_id))['buyer_code']){
+					$this->rpc_update_data($params);
+				}
 				$this->splash('success', $redirect, '基本信息更新成功！');
 			}else {
 				$this->splash('error', $redirect, '基本信息更新失败！');
@@ -198,6 +206,7 @@ class buyer_ctl_site_buyer extends buyer_frontpage{
 		 * 
 		 */
 		$this->pagedata['basic_info'] = $this->app->model('buyers')->getRow('*', array('buyer_id' => $this->buyer_id));
+		$this->pagedata['login'] = app::get('pam')->model('members')->getRow('login_account',array('member_id' => $this->member_id));
 		$this->output();
 	}
 	
@@ -225,6 +234,7 @@ class buyer_ctl_site_buyer extends buyer_frontpage{
 			}
 			if (!$this->app->model('buyers')->getRow('email', array('email'=>$params['email']))){
 				$this->app->model('buyers')->update($params,array('buyer_id'=>$this->buyer_id));
+				$this->rpc_update_data($params);
 				$this->splash('success', $redirect, '新邮箱修改成功！');
 			}else {
 				$this->splash('error', $redirect, '你的新邮箱已经被注册！');
@@ -297,5 +307,56 @@ class buyer_ctl_site_buyer extends buyer_frontpage{
 		$this->output();
 	}
 	
+	public function rpc_update_data($update_params){
+		$data = app::get('pam')->model('buyers')->getRow('login_account,login_password,password', array('buyer_id'=>$this->buyer_id));
+		$basic_data = $this->app->model('buyers')->getRow('*', array('buyer_id'=>$this->buyer_id));
+		$params = array_merge($data, $basic_data);
+		$region = $basic_data['area'];
+		$area_result = app::get('ectools')->model('regions')->region_decode($region);
+		$request = array(
+				'slAccount'=>array(
+						'buyer_code'	=>$params['buyer_code'],
+						'login_account'	=>$params['login_account'],
+						'mobile'		=>$params['mobile'],
+						'local'			=>$update_params['local'] ?:$params['local'],
+						'name'			=>$update_params['name'] ?:$params['name'],
+						'password'		=>$params['password'],
+						'authStatus'	=>2,
+				),
+				'slSeller'=>array(
+						'buyer_code'	=>$params['buyer_code'],
+						'login_account'	=>$params['login_account'],
+						'slConFlg'		=>'1',//生产国籍
+						'areaCode'		=>'1',//大区编码
+						'lgcsAreaCode'	=>$area_result['province']['code'],//物流区编码
+						'provinceCode'	=>$area_result['province']['code'],//省编码
+						'cityCode'		=>$area_result['city']['code'],//地区编码
+						'districtCode'	=>$area_result['district']['code'],//区编码
+						'slMainClass'	=>4,//卖家主分类
+						'snkFlg'		=>'否',//神农客标志
+						'selfFlg'		=>'否',//自产型卖家标志
+						'agentFlg'		=>'否',//代理型卖家标志
+						'oemFlg'		=>'否',//OEM型卖家标志
+						'buyerFlg'		=>'否',//买手型卖家标志
+						'qq'			=>$params['qq'] ?:$update_params['qq'],
+						'wechat'		=>$params['wechat'] ?:$update_params['wechat'],
+						'email'			=>$params['email'] ?:$update_params['email'],
+				),
+				'slBuyerShop'=>array(
+						'buyer_code'	=>$params['buyer_code'],
+						'card_id'	=>$params['card_id'],
+						'slSort'	=>2,
+						'addr'		=>$params['addr'] ?:$update_params['addr'],
+				),
+				'slShopInfo'=>array(
+						'buyer_code'	=>$params['buyer_code'],
+						'store_name'	=>$params['store_name'] ?:$update_params['store_name'],
+						'store_logo'	=>$params['store_logo'] ?:$update_params['store_logo'],
+				),
+					
+		);
+		$this->app->rpc('edit_buyer_info')->request($request, false);
+		
+	}
 	
 }

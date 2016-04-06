@@ -31,6 +31,8 @@
             <menu action="index" controller="roles" display="true" order='30' permission='users'>角色及权限</menu>
             <menu action='setting' controller="email"  display="true" order='40' permission='performance'>邮件发送配置</menu>
             <menu action='setting' controller="sms" display="true" order='50' permission='performance'>短信平台配置</menu>
+            <menu action='index' controller="admin_crontab" app="system" display="true" order='50' permission='performance'>计划任务管理</menu>
+            <menu action='index' controller="admin_queue" app="system" display="true" order='50' permission='performance'>队列管理</menu>
         </menugroup>
     </workground>
 </desktop>
