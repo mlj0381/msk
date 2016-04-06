@@ -30,6 +30,7 @@ class b2c_user_smscode {
 		$orderRpc = app::get('b2c')->rpc('send_code');
 		$result = $orderRpc->request($data);
 	*/	
+		
 		$result = array(
 				'status' => '1' ,
 				'result' => array(
