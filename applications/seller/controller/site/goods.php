@@ -389,6 +389,8 @@ class seller_ctl_site_goods extends seller_frontpage
         $this->splash('success', $redirect_url, '商品添加成功');
     }
 
+
+
     /**
      * 保存商品信息到接口
      * @param $data

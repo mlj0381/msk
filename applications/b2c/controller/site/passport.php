@@ -449,9 +449,14 @@ class b2c_ctl_site_passport extends b2c_frontpage
 //            if (!vmc::singleton('b2c_user_vcode')->verify($params['vcode'], $params['account'], 'reset')) {
 //                $this->splash('error', $redirect_here, '验证码错误！');
 //            }
+
             $result = $this->app->model('members')->getRow('member_id', array('mobile' => $params['account']));
             if (empty($result)) {
                 $this->splash('error', $redirect_here, '未知帐号!');
+            }
+
+            if ($result['member_id'] != $this->member['member_id']) {
+                $this->splash('error', $redirect_here, '手机号填写有误!');
             }
             $p_m = app::get('pam')->model('members')->getRow('member_id', array('member_id' => $result['member_id']));
             if (empty($p_m['member_id'])) {
@@ -461,6 +466,7 @@ class b2c_ctl_site_passport extends b2c_frontpage
             if (!$this->passport_obj->reset_password($member_id, $params['new_password'])) {
                 $this->splash('error', $redirect_here, '密码重置失败!');
             }
+
             /**
              * 润和接口 修改密码 IBY121201
              */
@@ -474,18 +480,19 @@ class b2c_ctl_site_passport extends b2c_frontpage
             );
             $rpc_password = app::get('b2c')->rpc('edit_password');
             $result = $rpc_password->request($api_data);
-
-
+            if(!$result['status']){
+                $this->splash('error', $redirect_here, '密码重置失败');
+            }
             /**
              * 直接登录操作
              */
-//            $this->unset_member();
-//            //设置session
-//            $this->user_obj->set_member_session($member_id);
-//            //设置客户端cookie
-//            $this->bind_member($member_id);
-            $redirect = $this->gen_url(array('app' => 'b2c', 'ctl' => 'site_passport', 'act' => 'login'));
-            $this->splash('success', $redirect, '密码重置成功，请重新登录');
+            $this->unset_member();
+            //设置session
+            $this->user_obj->set_member_session($member_id);
+            //设置客户端cookie
+            $this->bind_member($member_id);
+//            $redirect = $this->gen_url(array('app' => 'b2c', 'ctl' => 'site_passport', 'act' => 'login'));
+//            $this->splash('success', $redirect, '密码重置成功，请重新登录');
         } else {
             $this->set_tmpl('passport');
             $this->page('site/passport/reset_password.html');
@@ -500,9 +507,9 @@ class b2c_ctl_site_passport extends b2c_frontpage
         if ($login_type != 'email' && $login_type != 'mobile') {
             $this->splash('error', null, '请输入正确的手机或邮箱!');
         }
-        if (!$this->passport_obj->is_exists_mobile($account)) {
-            $this->splash('error', null, '验证手机不正确!');
-        }
+//        if (!$this->passport_obj->is_exists_mobile($account)) {
+//            $this->splash('error', null, '验证手机不正确!');
+//        }
        /*  if (!$vcode = vmc::singleton('b2c_user_vcode')->set_vcode($account, 'reset', $msg)) {
             $this->splash('error', null, $msg);
         }
