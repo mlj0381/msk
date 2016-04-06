@@ -87,7 +87,7 @@ class b2c_ctl_site_order extends b2c_frontpage
 //                    $order_sdf['is_cod'] = 'Y';
 //                }
 //            }
-            if (!$params['addr_id']) {
+            if (!$params['addr_id'] && !empty($member_id)) {
                 $this->logger->fail('create', '无收货人信息', $params);
                 $this->splash('error', $redirect_checkout, '无收货人信息');
             } else {
@@ -132,15 +132,24 @@ class b2c_ctl_site_order extends b2c_frontpage
          * 润和接口 创建订单
          * ISO151414 标准分销订单 分销买手囤货订单 第三方订单 第三方买手囤货订单
          */
-        //商品没有好查询到卖家信息，，后面完善
+        //暂时没有做多个商家下单情况
         $goods_id = array_keys(utils::array_change_key($order_sdf['items'],'goods_id'));
+        $store_ids = app::get('b2c')->model('goods')->getList('store_id,goods_id',array('goods_id'=>$goods_id));
+        if(count($store_ids) > 1)
+        {
+            //错误情况，不可以下多个商家商品
+        }
+        $seller_id =  app::get('store')->model('store')->getRow('seller_id',array('store_id'=>$store_ids[0]['store_id']));
+        $seller_code = app::get('seller')->model('sellers')->getRow('sl_code',array('seller_id'=>$seller_id['seller_id']))['sl_code'];
+        $seller_name = app::get('pam')->model('sellers')->getRow('login_account',array('seller_id'=>$seller_id['seller_id']))['login_account'];
+
         $api_data = array(
             'proCode' => $_SESSION['account']['order_code'],
             'district_code' => $_SESSION['account']['addr'],
             'buyer_id' => $_SESSION['account']['api_buyer_id'],
             'buyer_code' => $_SESSION['account']['buyer_code'],
-            'seller_code' => '1',
-            'seller_name' => '1',
+            'seller_code' => $seller_code,
+            'seller_name' => $seller_name,
             'need_invoice' => $order_sdf['need_invoice']?'1':'0',
             'order_amount' => $order_sdf['order_total'],
             'payment_type' => $order_sdf['pay_app'] == 'offline'?'2':'1',
@@ -171,11 +180,17 @@ class b2c_ctl_site_order extends b2c_frontpage
             $data['quantity'] = $product['nums'];
             $api_data['products'][] = $data;
         }
-        $result = app::get('buyer')->rpc('create_out_order')->request($api_data);
+
+        if($member_id)
+        {
+            $result = app::get('buyer')->rpc('create_out_order')->request($api_data);
+        }else{
+            $result = app::get('buyer')->rpc('create_get_order')->request($api_data);
+        }
         if(!$result['status'])
         {
             $db->rollback(); //事务回滚
-            $msg = $msg ? $msg : '数据保存失败';
+            $msg = $result['message'] ? $result['message'] : '数据保存失败';
             $this->logger->fail('create', $msg, $api_data);
             $this->splash('error', $redirect_cart, $msg);
         }else{

@@ -107,6 +107,13 @@ $db['products'] = array(
             'default' => 'false',
 
         ) ,
+        'seller_id' => array(
+            'type' => 'number',
+            'required' => true,
+            'default' => 0,
+            'label' => '商家id',
+            'comment' => '商家id'
+        ) ,
         'image_id' => array(
             'type' => 'varchar(32)',
             'label' => ('相册图ID') ,
@@ -175,7 +182,6 @@ $db['products'] = array(
             'columns' => array(
                 0 => 'bn',
             ) ,
-            'prefix' => 'UNIQUE',
         ) ,
     ) ,
     'engine' => 'innodb',

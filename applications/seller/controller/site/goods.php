@@ -383,10 +383,181 @@ class seller_ctl_site_goods extends seller_frontpage
                 $this->splash('error', $redirect_url, '保存失败');
             }
         }
-
+        $this->_apiAddGoods($goods);
+        die;
         $db->commit();
         base_kvstore::instance('seller_goods')->store('seller_' . $goods['goods_id'], $goods, 2592000);
         $this->splash('success', $redirect_url, '商品添加成功');
+    }
+
+    /**
+     * 提交商品信息到api
+     * @param $goods
+     * @return bool
+     */
+    private function _apiAddGoods($goods)
+    {
+        $api = Array();
+        //基本信息
+        $api['slPdList '] = array(
+            array(
+                'slCode' => $this->seller['sl_code'],
+                'prodEpId' => '',
+                'brandEpId' => '',
+                'brandId' => '',
+                'pdClassesCode' => '',
+                'machiningCode' => '',
+                'pdBreedCode' => '',
+                'pdFeatureCode' => '',
+                'weightCode' => '',
+                'distFlg' => '',
+                'diskmskFlg' => '',
+                'loginId' => '',
+            ),
+        );
+
+
+        //获取产品标准id
+
+        $mdl_b2c_goods = app::get('b2c')->model('goods');
+//        $card = array(
+//            //'apt_stock' => '',//
+//            'apt_prove' => 'card_pd_org',//原种种源标准指标
+//            'apt_raise' => 'card_pd_fed',//原种饲养标准指标
+//            'apt_technology' => 'card_pd_mct',//产品加工技术标准指标
+//            'apt_quality' => 'card_pd_tnc',//产品加工质量标准指标
+//            'apt_common' => 'card_pd_gnq',//产品通用质量标准指标
+//            'apt_safety' => 'card_pd_sft',//产品安全标准指标
+//            'apt_transport' => 'card_pd_tsp',//储存运输标准指标
+//        );
+
+        //卖家产品加工技术标准指标
+        $slPdMctList = $mdl_b2c_goods->fileCard('apt_technology', $goods['api_cat']);
+        $api['slPdMctList'] = array(
+            'slCode' => $this->seller['sl_code'],
+            //'slPdId' =>
+            'slPdMctStdList' => array(
+                array(
+                    'slCode' => '',
+                    'standardId' => '',
+                    'stdItemId' => '',
+                    'agreeFlg' => '',
+                    'stdVal' => '',
+                    'loginId' => '',
+
+                ),
+            ),
+
+        );
+
+
+        //卖家产品加工质量标准指标
+        $slPdTncList = $mdl_b2c_goods->fileCard('apt_quality', $goods['api_cat']);
+        $api['slPdMctList'] = array(
+            'slCode' => $this->seller['sl_code'],
+            //'slPdId' =>
+            'slPdMctStdList' => array(
+                array(
+                    'slCode' => $this->seller['sl_code'],
+                    'standardId' => '',
+                    'stdItemId' => '',
+                    'agreeFlg' => '1',
+                    'stdVal' => '',
+                    'loginId' => '',
+
+                ),
+            ),
+
+        );
+
+        //卖家原种种源标准
+        $slPdOrgStdList = $mdl_b2c_goods->fileCard('apt_prove', $goods['api_cat']);
+        $api['slPdOrgStdList'] = array(
+            'slCode' => $this->seller['sl_code'],
+            //'slPdId' =>
+            'slPdMctStdList' => array(
+                array(
+                    'slCode' => '',
+                    'standardId' => '',
+                    'stdItemId' => '',
+                    'agreeFlg' => '',
+                    'stdVal' => '',
+                    'loginId' => '',
+
+                ),
+            ),
+
+        );
+
+        //卖家产品饲养标准
+        $slPdFedStdList = $mdl_b2c_goods->fileCard('apt_raise', $goods['api_cat']);
+        $api['slPdFedStdList'] = array(
+            'slCode' => $this->seller['sl_code'],
+            //'slPdId' =>
+            'slPdMctStdList' => array(
+                array(
+                    'slCode' => '',
+                    'standardId' => '',
+                    'stdItemId' => '',
+                    'agreeFlg' => '',
+                    'stdVal' => '',
+                    'loginId' => '',
+
+                ),
+            ),
+
+        );
+
+        //卖家产品通用质量标准
+        $slPdGnqStdList = $mdl_b2c_goods->fileCard('apt_common', $goods['api_cat']);
+        $api['slPdGnqStdList'] = array(
+            'slCode' => $this->seller['sl_code'],
+            //'slPdId' =>
+            'slPdMctStdList' => array(
+                array(
+                    'slCode' => '',
+                    'standardId' => '',
+                    'stdItemId' => '',
+                    'agreeFlg' => '',
+                    'stdVal' => '',
+                    'loginId' => '',
+
+                ),
+            ),
+
+        );
+
+        //卖家产品储存运输标准
+        $slPdTspStdList = $mdl_b2c_goods->fileCard('apt_transport', $goods['api_cat']);
+        $api['slPdTspStdList'] = array(
+            'slCode' => $this->seller['sl_code'],
+            //'slPdId' =>
+            'slPdMctStdList' => array(
+                array(
+                    'slCode' => '',
+                    'standardId' => '',
+                    'stdItemId' => '',
+                    'agreeFlg' => '',
+                    'stdVal' => '',
+                    'loginId' => '',
+
+                ),
+            ),
+
+        );
+
+        //卖家产品安全标准
+        $slPdSftStdList = $mdl_b2c_goods->fileCard('apt_safety', $goods['api_cat']);
+        $api['slPdSftStdList'] = array(
+            array(
+                'slCode' => $this->seller['sl_code'],
+                'slPdId' => '',
+                'standardId' => '',
+                'stdItemId' => $slPdSftStdList['sftList'][0]['sftStdClaId'],  //0 1 2 三类标准
+                'agreeFlg' => '1', //同意标致
+            ),
+        );
+        print_r($slPdSftStdList);
     }
 
     /**

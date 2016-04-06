@@ -7,8 +7,9 @@ class pam_passport_site_basic
 {
 	
 	/**
-	 * 
-	 * @param unknown $data
+	 * 买家注册基本信息和账户
+	 * @param array $members 买家基本信息
+	 * @param array $account 买家账户信息
 	 */
 	public function local_user_rsyns($members,$account)
 	{
@@ -20,22 +21,82 @@ class pam_passport_site_basic
 			$db->beginTransaction();
 			
 			$t1 = app::get('b2c')->model('members')->save($members);
-			$t1 = true ;//2016年4月1日
+			$t1 = true ;//待修改的代码，保存成功也返回false
 			if(!$t1){
 				$db->rollback();
 			}
 			$member_id = vmc::database()->lastinsertid();
 			$account['member_id'] = $member_id;
 			$t2 = app::get('pam')->model('members')->save($account);
-			$t2 = true ;//2016年4月1日
+			$t2 = true ;//待修改的代码，保存成功也返回false
 			if(!$t2){
 				$db->rollback();
 			}
 			$db->commit();
 		}		
 	}
+	/**
+	 * 卖家注册基本信息和账户
+	 * @param array $sellers 卖家基本信息
+	 * @param array $account 卖家账户信息
+	 */
+	public function local_seller_rsyns($sellers,$account){
+		
+		$api_seller_id = $sellers['api_seller_id'];
+		$data = app::get('seller')->model('sellers')->getRow("seller_id", array('api_seller_id' => $api_seller_id));
+		
+		if (!$data){
+			$db = vmc::database();
+			$db->beginTransaction();
+				
+			$t1 = app::get('seller')->model('sellers')->save($sellers);
+			$t1 = true ;//待修改的代码，保存成功也返回false
+			if(!$t1){
+				$db->rollback();
+			}
+			
+			$seller_id = vmc::database()->lastinsertid();
+			$account['seller_id'] = $seller_id;
+			$t2 = app::get('pam')->model('sellers')->save($account);
+			$t2 = true ;//待修改的代码，保存成功也返回false
+			if(!$t2){
+				$db->rollback();
+			}
+			$db->commit();
+		}
+		
+	}
+	/**
+	 * 买手注册基本信息和账户
+	 * @param array $buyers 买手基本信息
+	 * @param array $account 买手账户信息
+	 */
+	public function local_buyer_rsyns($buyers,$account){
 	
-
+	
+		$data = app::get('buyer')->model('buyers')->getRow("buyer_id", array('local' => $buyers['local']));
+		
+		if (!$data){
+			$db = vmc::database();
+			$db->beginTransaction();
+	
+			$t1 = app::get('buyer')->model('buyers')->save($buyers);
+			$t1 = true ;//待修改的代码，保存成功也返回false
+			if(!$t1){
+				$db->rollback();
+			}
+				
+			$buyers_id = vmc::database()->lastinsertid();
+			$account['buyer_id'] = $buyers_id;
+			$t2 = app::get('pam')->model('buyers')->save($account);
+			$t2 = true ;//待修改的代码，保存成功也返回false
+			if(!$t2){
+				$db->rollback();
+			}
+			$db->commit();
+		}
+	
+	}
     /*
      * 前台用户登录验证方法
      *
@@ -77,6 +138,7 @@ class pam_passport_site_basic
             $id = 'freeze_id';
         }
         $account = app::get('pam')->model($model)->getList($id . ',password_account,login_password,createtime', $filter);
+ 
         if (!$account) {
             $msg = '不存在的用户';
 

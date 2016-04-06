@@ -7,7 +7,7 @@
         <label class="col-xs-2 control-label"><span class="text-danger">*</span><span>商品类目</span></label>
         <div class="col-xs-8">
             <!-- identity="store" seller=$seller_id -->
-            <{input type="category" class="study"  name="goods[category][cat_id]"
+            <{input type="category" identity="store" seller=$seller_id  name="goods[category][cat_id]"
             value=$goods.category.cat_id callback="callBack"}>
         </div>
     </div>
@@ -323,7 +323,7 @@
     var pack = function(obj){
         var idx = obj.val();
         var apiSpec = $('.api-spec-desc');
-        var catId = apiCat() + obj.attr('data-type')+'-'+ idx;
+        var catId = apiCat() + '-' + obj.attr('data-type')+'-'+ idx;
         if(!obj.prop('checked')){
 
             $('.pack' + idx).remove();
@@ -360,9 +360,8 @@
     var weight = function(obj){
         var idx = obj.val();
         var apiSpec = $('.api-spec-desc');
-        var catId = apiCat() + idx;
+        var catId = apiCat() + '-' + idx;
         if(!obj.prop('checked')){
-            alert(idx);
             $('.weight' + idx).remove();
             apiSpec.find('input[data-type="feature'+idx+'"]').remove();
             return false;

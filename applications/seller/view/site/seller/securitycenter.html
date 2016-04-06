@@ -2,7 +2,7 @@
   <h1>安全中心 <small>Security Center</small></h1>
 </div>
 <div class="list-group">
-    <div class="list-group-item <{if $pam_data.memberData.mobile}>text-success<{else}>text-danger<{/if}>">
+    <div class="list-group-item <{if $seller.mobile}>text-success<{else}>text-danger<{/if}>">
         <div class="row">
             <div class="col-xs-2 text-center">
                 <h2 class="glyphicon glyphicon-phone"></h2>
@@ -11,7 +11,7 @@
                 </p>
             </div>
             <div class="col-xs-8">
-                <{if $pam_data.memberData.mobile}>
+                <{if $seller.mobile}>
                     <h3><{$pam_data.mobile.login_account}></h3>
                     <{else}>
                     <h3>未绑定手机</h3>
@@ -19,7 +19,7 @@
                 <{/if}>
             </div>
             <div class="col-xs-2">
-                <{if $pam_data.memberData.mobile}>
+                <{if $seller.mobile}>
                     <h2 class="glyphicon glyphicon-ok-sign"></h2>
                     <{else}>
                     <h2 class="glyphicon glyphicon-warning-sign"></h2>
@@ -27,7 +27,7 @@
             </div>
         </div>
     </div>
-    <div class="list-group-item <{if $pam_data.email}><{if $pam_data.email.disabled=='true'}>text-warning<{else}>text-success<{/if}><{else}>text-danger<{/if}>">
+    <div class="list-group-item <{if $seller.email}><{if $seller.email.disabled=='true'}>text-warning<{else}>text-success<{/if}><{else}>text-danger<{/if}>">
         <div class="row">
             <div class="col-xs-2 text-center">
                 <h2 class="glyphicon glyphicon-envelope"></h2>
@@ -36,7 +36,7 @@
                 </p>
             </div>
             <div class="col-xs-8">
-                <{if $pam_data.email}>
+                <{if $seller.email}>
                     <h3><{$pam_data.email.login_account}></h3>
                     <{if $pam_data.email.disabled=='true'}>
                     <!-- <span class="label label-warning">未激活</span> -->
@@ -48,7 +48,7 @@
                 <{/if}>
             </div>
             <div class="col-xs-2">
-                <{if $pam_data.email && $pam_data.email.disabled!='true'}>
+                <{if $seller.email && $pam_data.email.disabled!='true'}>
                     <h2 class="glyphicon glyphicon-ok-sign"></h2>
                 <{else}>
                     <h2 class="glyphicon glyphicon-warning-sign"></h2>

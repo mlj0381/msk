@@ -351,11 +351,13 @@ class b2c_user_passport {
         $pamData = $pamMembersModel->getList('login_account,password_account,createtime', array(
             'member_id' => $member_id,
         ));
+
         $db = vmc::database();
         $db->beginTransaction();
         foreach ($pamData as $row) {
             $use_pass_data['login_name'] = $row['password_account'];
             $use_pass_data['createtime'] = $row['createtime'];
+            $use_pass_data['password'] = $password;
             $login_password = pam_encrypt::get_encrypted_password(trim($password), 'member', $use_pass_data);
             if (!$pamMembersModel->update(array(
                         'login_password' => $login_password,
@@ -484,18 +486,21 @@ class b2c_user_passport {
 
             return false;
         }
-        $pamMembersModel = app::get('pam')->model('members');
-        $row = $pamMembersModel->getList('login_account,login_password,password_account,createtime', array(
-            'member_id' => $member_id,
-        ));
-        $row = $row[0];
-        $data['member_id'] = $member_id;
-        $data['login_account'] = $email;
-        $data['login_type'] = 'email';
-        $data['login_password'] = $row['login_password'];
-        $data['password_account'] = $row['password_account'];
-        $data['createtime'] = $row['createtime'];
-        if ($pamMembersModel->insert($data)) {
+//        $pamMembersModel = app::get('pam')->model('members');
+//        $row = $pamMembersModel->getList('login_account,login_password,password_account,createtime, password', array(
+//            'member_id' => $member_id,
+//        ));
+//        $row = $row[0];
+//        $data['member_id'] = $member_id;
+//        $data['login_account'] = $email;
+//        $data['login_type'] = 'email';
+//        $data['login_password'] = $row['login_password'];
+//        $data['password_account'] = $row['password_account'];
+//        $data['createtime'] = $row['createtime'];
+//        $data['password'] = $row['password'];
+        $update_value = array('email' => $email);
+        $filter = array('member_id' => $member_id);
+        if (app::get('b2c')->model('members')->update($update_value, $filter)) {
             $msg = ('邮箱设置成功');
 
             return true;

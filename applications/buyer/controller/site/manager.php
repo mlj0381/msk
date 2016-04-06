@@ -35,7 +35,7 @@ class buyer_ctl_site_manager extends buyer_frontpage{
 		$object_obj = vmc::singleton('buyer_user_object');
 		$buyer_id = $object_obj->get_id();
 
-		$freeze_list = $model_freeze->getList('*',array('buyer_id' => $buyer_id),($page - 1) * $limit, $limit);
+		$freeze_list = $model_freeze->getList('*',array('buyer_id' => $buyer_id,'code|noequal'=>''),($page - 1) * $limit, $limit);
 		$count = $model_freeze->count(array('buyer_id' => $buyer_id));
 
 		$this->pagedata['pager'] = array(

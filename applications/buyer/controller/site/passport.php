@@ -66,16 +66,53 @@ class buyer_ctl_site_passport extends buyer_frontpage{
 			if (empty($params['vcode'])){
 				$this->splash('error', '', '验证码不能为空!');
 			}
-			if (!base_vcode::verify('passport', $params['vcode'])){
-				$this->splash('error', '', '验证码错误！');
-			}
+// 			if (!base_vcode::verify('passport', $params['vcode'])){
+// 				$this->splash('error', '', '验证码错误！');
+// 			}
 			
 			$username = $params['uname'];
 			$password = $params['password'];
+	
+			/**
+			 *  润和接口  查询买手信息 - IBS2101103
+			 */
+			$account_data = array(
+					'uname' => $params['uname'],
+					'password' => $params['password'],
+			);
+			$result = $this->app->rpc('login')->request($account_data);
+			$runheBuyer = $result['result']['buyershopList'][0];
+			if(!$result['status']){
+				//$this->splash('error', $login_url, '登录失败！');
+			}else if($runheBuyer){
+				
+				/* 用户基本信息 */
+				$buyer	= array();
+				$buyer['local']	 = $runheBuyer['slAccount']; //买手账号
+				$buyer['mobile'] = $runheBuyer['slTel'];//手机号
+				
+				/* 用户账户信息 */
+				$account = array();
+				$account['login_account'] 	 =  $runheBuyer['slAccount'];
+				$account['createtime'] 		 = time();
+				$account['login_password']	 = $login_password = pam_encrypt::get_encrypted_password($runheBuyer['accountPsd'], 'buyer', array(
+						'createtime' => $account['createtime'],
+						'login_name' => $params['uname'],
+				));
+				$account['password']	 = $runheBuyer['accountPsd'];
+				$account['password_account'] = $params['uname'];
+				$account['login_type'] 		 = $this->passport_obj->get_login_account_type($params['uname']);
+				
+				vmc::singleton('pam_passport_site_basic')->local_buyer_rsyns($buyer,$account);
+			}
+			
+			
+			
 			$mdl_buyers = $this->app->model('buyers');
 			//获取buyer_id,login_account/login_account,给出要显示的账号（用户名or手机号orEmail）
-			
+
 			$userdata = $mdl_buyers->get_buyer_account($username);
+		
 			if (!$userdata){
 				$this->splash('error', '', '用户名不存在！');
 			}

@@ -129,17 +129,18 @@ class b2c_ctl_site_passport extends b2c_frontpage
         			'login_name' => $params['uname'],
         	));
         	$account['password_account'] = $params['uname'];
-        	$account['login_type'] 		 = 'local';
+        	$account['login_type'] 		 = $this->passport_obj->get_login_account_type($params['uname']);
         	
         	vmc::singleton('pam_passport_site_basic')->local_user_rsyns($member,$account);
         }
-        
+       
         //end 接口
         //尝试登陆
         $member_id = vmc::singleton('pam_passport_site_basic')->login($account_data, $params['vcode'], $msg);
         if (!$member_id) {
             $this->splash('error', $login_url, $msg);
         }
+       
         $mdl_members = $this->app->model('members');
         $member_data = $mdl_members->getRow('member_lv_id,experience', array(
             'member_id' => $member_id,
@@ -395,7 +396,9 @@ class b2c_ctl_site_passport extends b2c_frontpage
             'mobile' => $member_sdf_data['b2c_members']['contact']['phone']['mobile'],
         );
         $result = $this->app->rpc('register')->request($rpc_data);
+
         if (!$result['status']) {
+
             $this->splash('error', $signup_url, '注册失败,会员数据保存异常');
         }
         //end 调用接口
@@ -449,9 +452,14 @@ class b2c_ctl_site_passport extends b2c_frontpage
 //            if (!vmc::singleton('b2c_user_vcode')->verify($params['vcode'], $params['account'], 'reset')) {
 //                $this->splash('error', $redirect_here, '验证码错误！');
 //            }
+
             $result = $this->app->model('members')->getRow('member_id', array('mobile' => $params['account']));
             if (empty($result)) {
                 $this->splash('error', $redirect_here, '未知帐号!');
+            }
+
+            if ($result['member_id'] != $this->member['member_id']) {
+                $this->splash('error', $redirect_here, '手机号填写有误!');
             }
             $p_m = app::get('pam')->model('members')->getRow('member_id', array('member_id' => $result['member_id']));
             if (empty($p_m['member_id'])) {
@@ -461,6 +469,7 @@ class b2c_ctl_site_passport extends b2c_frontpage
             if (!$this->passport_obj->reset_password($member_id, $params['new_password'])) {
                 $this->splash('error', $redirect_here, '密码重置失败!');
             }
+
             /**
              * 润和接口 修改密码 IBY121201
              */
@@ -474,18 +483,19 @@ class b2c_ctl_site_passport extends b2c_frontpage
             );
             $rpc_password = app::get('b2c')->rpc('edit_password');
             $result = $rpc_password->request($api_data);
-
-
+            if(!$result['status']){
+                $this->splash('error', $redirect_here, '密码重置失败');
+            }
             /**
              * 直接登录操作
              */
-//            $this->unset_member();
-//            //设置session
-//            $this->user_obj->set_member_session($member_id);
-//            //设置客户端cookie
-//            $this->bind_member($member_id);
-            $redirect = $this->gen_url(array('app' => 'b2c', 'ctl' => 'site_passport', 'act' => 'login'));
-            $this->splash('success', $redirect, '密码重置成功，请重新登录');
+            $this->unset_member();
+            //设置session
+            $this->user_obj->set_member_session($member_id);
+            //设置客户端cookie
+            $this->bind_member($member_id);
+//            $redirect = $this->gen_url(array('app' => 'b2c', 'ctl' => 'site_passport', 'act' => 'login'));
+//            $this->splash('success', $redirect, '密码重置成功，请重新登录');
         } else {
             $this->set_tmpl('passport');
             $this->page('site/passport/reset_password.html');
@@ -500,9 +510,9 @@ class b2c_ctl_site_passport extends b2c_frontpage
         if ($login_type != 'email' && $login_type != 'mobile') {
             $this->splash('error', null, '请输入正确的手机或邮箱!');
         }
-        if (!$this->passport_obj->is_exists_mobile($account)) {
-            $this->splash('error', null, '验证手机不正确!');
-        }
+//        if (!$this->passport_obj->is_exists_mobile($account)) {
+//            $this->splash('error', null, '验证手机不正确!');
+//        }
        /*  if (!$vcode = vmc::singleton('b2c_user_vcode')->set_vcode($account, 'reset', $msg)) {
             $this->splash('error', null, $msg);
         }

@@ -98,9 +98,12 @@ class base_rpc
 				$this->headers = $config['headers'];
 			}
 			$result = $setting->get_conf('result');
-			foreach($result as $key => $item )
+			if(is_array($result))
 			{
-				$this->$key = $item;
+				foreach($result as $key => $item )
+				{
+					$this->$key = $item;
+				}
 			}
 			self::$initialized = true;			
         }

@@ -13,26 +13,32 @@ $remote['b2c_update_receive_time'] = array(
             'default' => '',
             'require' => false,
         ),
-        'paramList' => array(
+        'param' => array(
             'name' => '业务参数',
-            'column' => 'paramList',
-            'type' => 'Object',
+            'column' => 'param',
+            'type' => 'List',
             'require' => false,
         ),
     ),
 
-    'paramList' => array(
-        'buyerId' => array(
+    'param' => array(
+        'buyer_id' => array(
             'name' => '买家ID',
             'column' => 'buyerId',
             'type' => 'String',
-            'require' => true,
+            'require' => false,
+        ),
+        'recPerType' => array(
+            'name' => '收货时间段类型',
+            'column' => 'recPerType',
+            'type' => 'String',
+            'require' => false,
         ),
         'timeDescribe' => array(
             'name' => '时间描述',
             'column' => 'timeDescribe',
             'type' => 'String',
-            'require' => true,
+            'require' => false,
         ),
         'updId' => array(
             'name' => '更新者ID',

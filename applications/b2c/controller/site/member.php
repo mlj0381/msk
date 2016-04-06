@@ -59,11 +59,16 @@ class b2c_ctl_site_member extends b2c_frontpage
                 'total' => ceil($mdl_member_goods->count($filter) / $pageSize),
                 'token' => $token,
                 'current' => $page,
-                'link' => $this->gen_url(array('app' => 'b2c', 'ctl' => 'site_member', 'act' => 'index', 'args0' => $token)),
+                'link' => $this->gen_url(array(
+                    'app' => 'b2c',
+                    'ctl' => 'site_member',
+                    'act' => 'index',
+                    'args0' => $token,
+                )),
             );
         }
         $this->pagedata['scan'] = $scan;
-        if($this->_request->is_ajax()){
+        if ($this->_request->is_ajax()) {
             $this->display('site/member/action/lately.html');
         }
     }
@@ -85,33 +90,36 @@ class b2c_ctl_site_member extends b2c_frontpage
             $image_name = $_FILES['avatar_file']['name'];
             $ready_tmp_file = $_FILES['avatar_file']['tmp_name'];
             $bt_size = filesize($ready_tmp_file);
-            $max_conf = $this->app->getConf('member_avatar_max_size') . 'M';
+            $max_conf = $this->app->getConf('member_avatar_max_size').'M';
             $max_size = utils::parse_str_size($max_conf); //byte
             if ($_FILES['avatar_file']['error']) {
-                $this->splash('error', $redirect_here, '头像上传失败!' . $_FILES['avatar_file']['error']);
+                $this->splash('error', $redirect_here, '头像上传失败!'.$_FILES['avatar_file']['error']);
             }
             if ($bt_size > $max_size) {
-                $this->splash('error', $redirect_here, '头像文件大小不能超过' . $max_conf);
+                $this->splash('error', $redirect_here, '头像文件大小不能超过'.$max_conf);
             }
             list($w, $h, $t) = getimagesize($ready_tmp_file);
             if (!in_array($t, array(1, 2, 3, 6))) {
                 //1 = GIF,2 = JPG，3 = PNG,6 = BMP
                 $this->splash('error', $redirect_here, '文件类型错误');
             }
-            $image_id = $mdl_image->store($_FILES['avatar_file']['tmp_name'], $this->member['avatar'], null, $image_name);
-            logger::info('前台会员头像上传操作' . 'TMP_NAME:' . $_FILES['avatar_file']['tmp_name'] . ',FILE_NAME:' . $image_name);
+            $image_id = $mdl_image->store($_FILES['avatar_file']['tmp_name'], $this->member['avatar'], null,
+                $image_name);
+            logger::info('前台会员头像上传操作'.'TMP_NAME:'.$_FILES['avatar_file']['tmp_name'].',FILE_NAME:'.$image_name);
             if (!$image_id) {
                 $this->splash('error', $redirect_here, '头像上传失败!');
             }
             $mdl_image->rebuild($image_id, array('S', 'XS'));
-            if ($this->app->model('members')->update(array('avatar' => $image_id), array('member_id' => $this->member['member_id']))) {
+            if ($this->app->model('members')->update(array('avatar' => $image_id),
+                array('member_id' => $this->member['member_id']))
+            ) {
                 $this->splash('success', $redirect_here, '上传并保存成功!');
             } else {
                 $this->splash('error', $redirect_here, '保存失败!');
             }
         }
         $system_max = get_cfg_var("upload_max_filesize");
-        $conf_max = $this->app->getConf('member_avatar_max_size') . 'M';
+        $conf_max = $this->app->getConf('member_avatar_max_size').'M';
         if (utils::parse_str_size($conf_max) > utils::parse_str_size($system_max)) {
             $this->pagedata['upload_max'] = $system_max;
         } else {
@@ -185,10 +193,11 @@ class b2c_ctl_site_member extends b2c_frontpage
         }
         if ($action == 'save') {
             $email = $_POST['email'];
+            /*
             $vcode = $_POST['vcode'];
             if (!vmc::singleton('b2c_user_vcode')->verify($email, $vcode, 'activation')) {
                 $this->splash('error', $signup_url, '验证码不正确');
-            }
+            }*/
             if (!vmc::singleton('b2c_user_passport')->set_email($email, $msg)) {
                 $this->splash('error', $redirect_here, $msg);
             } else {
@@ -214,8 +223,11 @@ class b2c_ctl_site_member extends b2c_frontpage
             if (empty($p_m['member_id']) || $p_m['login_type'] != 'email') {
                 $this->splash('error', '', '账号异常!');
             }
-            if ($mdl_pm->update(array('disabled' => 'false'), array('member_id' => $p_m['member_id'], 'login_type' => $p_m['login_type']))) {
-                $this->splash('success', array('app' => 'b2c', 'ctl' => 'site_member', 'act' => 'securitycenter'), $params['email'] . '已成功激活!');
+            if ($mdl_pm->update(array('disabled' => 'false'),
+                array('member_id' => $p_m['member_id'], 'login_type' => $p_m['login_type']))
+            ) {
+                $this->splash('success', array('app' => 'b2c', 'ctl' => 'site_member', 'act' => 'securitycenter'),
+                    $params['email'].'已成功激活!');
             } else {
                 $this->splash('error', '', '激活异常!');
             }
@@ -231,8 +243,10 @@ class b2c_ctl_site_member extends b2c_frontpage
     public function setting()
     {
         $this->menuSetting = 'setting';
-        $this->pagedata['member_data'] = $this->app->model('members')->getRow('member_id, mobile, email', array('member_id' =>
-            $this->member['member_id']));
+        $this->pagedata['member_data'] = $this->app->model('members')->getRow('member_id, mobile, email', array(
+            'member_id' =>
+                $this->member['member_id'],
+        ));
         $this->output();
     }
 
@@ -287,6 +301,9 @@ class b2c_ctl_site_member extends b2c_frontpage
                 if (!$result) {
                     $this->splash('error', $redirect, '修改失败');
                 }
+                if(!$this->app->model('members')->formatApiData($this->member)){
+                    $this->splash('error', '', '修改失败');
+                }
             }
             $this->splash('success', $redirect, '修改成功');
         }
@@ -314,7 +331,7 @@ class b2c_ctl_site_member extends b2c_frontpage
             'currency',
             'addon',
             'mobile',
-            'email'
+            'email',
         );
         $attr = $this->app->model('member_attr')->getList('attr_column');
         foreach ($attr as $attr_colunm) {
@@ -360,7 +377,7 @@ class b2c_ctl_site_member extends b2c_frontpage
         $filter['member_id'] = $this->member['member_id'];
         if ($status == 's2') {
             $where = $search['sql'];
-            $sql = "SELECT * FROM vmc_b2c_orders WHERE `member_id`={$this->member['member_id']} AND `status` = 'active' AND `confirm` = 'N' AND (`is_cod`='Y' OR `pay_status`='1') {$where} AND `ship_status`='0' ORDER BY createtime desc LIMIT " . (($page - 1) * $limit) . ", {$limit}";
+            $sql = "SELECT * FROM vmc_b2c_orders WHERE `member_id`={$this->member['member_id']} AND `status` = 'active' AND `confirm` = 'N' AND (`is_cod`='Y' OR `pay_status`='1') {$where} AND `ship_status`='0' ORDER BY createtime desc LIMIT ".(($page - 1) * $limit).", {$limit}";
             $order_list = vmc::database()->select($sql);
         } else {
             $search['order_id|has'] && $filter['order_id|has'] = $search['order_id|has'];
@@ -432,32 +449,34 @@ class b2c_ctl_site_member extends b2c_frontpage
         $before_day = $week_num == '0' ? 6 : $week_num - 1;
         $sum_day = $before_day + $after_day + 30;
         $days = array();
-        for($i = 0; $i < $sum_day; $i++){
+        for ($i = 0; $i < $sum_day; $i++) {
             $index = floor($i / 7);
-            if($i > $before_day + 30){
+            if ($i > $before_day + 30) {
                 $time = $current_time + ($i - $before_day - 30) * 86400;
                 $date = date('Y-m-d', $current_time - ($sum_day - $before_day - $i) * 86400);
                 $week = date('w', $current_time - ($sum_day - $before_day - $i) * 86400);
-            }else{
+            } else {
                 $time = $current_time - ($sum_day - $after_day - $i) * 86400;
-                $date = date('Y-m-d',$current_time - ($sum_day - $after_day - $i) * 86400);
-                $week = date('w',$current_time - ($sum_day - $after_day - $i) * 86400);
+                $date = date('Y-m-d', $current_time - ($sum_day - $after_day - $i) * 86400);
+                $week = date('w', $current_time - ($sum_day - $after_day - $i) * 86400);
             }
             $type = 'green';
-            if($i <= $before_day || $i > $before_day + 30){
+            if ($i <= $before_day || $i > $before_day + 30) {
                 $type = 'gray';
             }
             $days[$index][$i] = array(
-                        'type' => $type,
-                        'date' => $date,
-                        'week' => $week,
-                        'time' => $time,);
+                'type' => $type,
+                'date' => $date,
+                'week' => $week,
+                'time' => $time,
+            );
         }
         $this->pagedata['days'] = $days;
         $this->output();
     }
 
-    public function date(){
+    public function date()
+    {
 
     }
 
@@ -481,7 +500,12 @@ class b2c_ctl_site_member extends b2c_frontpage
                 if (!$gid) {
                     $this->splash('error', $redirect_here, '删除收藏失败!');
                 } else {
-                    if ($mdl_member_goods->delete(array('member_id' => $member_id, 'goods_id' => $gid, 'type' => 'fav'))) {
+                    if ($mdl_member_goods->delete(array(
+                        'member_id' => $member_id,
+                        'goods_id' => $gid,
+                        'type' => 'fav',
+                    ))
+                    ) {
                         $this->splash('success', $redirect_here, '删除成功!');
                     } else {
                         $this->splash('error', $redirect_here, '删除收藏失败!');
@@ -503,7 +527,8 @@ class b2c_ctl_site_member extends b2c_frontpage
                 foreach ($list_tmp as $key => &$value) {
                     if ($value['object_type'] == 'goods') {
                         $list['goods'][$key] = $value;
-                        $list['goods'][$key]['store'] = $mdl_goods->getRow('store_id', array('goods_id' => $value['goods_id']));
+                        $list['goods'][$key]['store'] = $mdl_goods->getRow('store_id',
+                            array('goods_id' => $value['goods_id']));
                     } else {
                         $list['store'][$key] = $value;
                     }
@@ -511,7 +536,8 @@ class b2c_ctl_site_member extends b2c_frontpage
                 $list['goods_count'] = count($list['goods']);
                 $list['store_count'] = count($list['store']);
                 unset($list_tmp);
-                $this->pagedata['tag'] = app::get('desktop')->model('tag')->getList('tag_id, tag_name', array('member_id' => $this->member['member_id'], 'tag_mode' => 'favorite'));
+                $this->pagedata['tag'] = app::get('desktop')->model('tag')->getList('tag_id, tag_name',
+                    array('member_id' => $this->member['member_id'], 'tag_mode' => 'favorite'));
                 $this->pagedata['member_lv_name'] = $this->member['levelname'];
                 $this->pagedata['member_lv_discount'] = $this->member['lv_discount'];
                 $this->pagedata['data'] = $list;
@@ -533,7 +559,7 @@ class b2c_ctl_site_member extends b2c_frontpage
             'tag_name' => $tagText,
             'tag_mode' => 'favorite',
             'member_id' => $this->member['member_id'],
-            'app_id' => 'b2c'
+            'app_id' => 'b2c',
         );
         if ($tag_id = $mdl_tag->insert($data)) {
             $this->splash('success', '', $tag_id);
@@ -555,10 +581,12 @@ class b2c_ctl_site_member extends b2c_frontpage
         if ($type == 'add') {
             $tag_array[$tagId] = $tagId;
             $data['tag'] = $tag_array;
-        } else if ($type == 'del') {
-            $tmp = array_flip($tag_array);
-            unset($tmp[$tagId]);
-            $data['tag'] = array_flip($tmp);
+        } else {
+            if ($type == 'del') {
+                $tmp = array_flip($tag_array);
+                unset($tmp[$tagId]);
+                $data['tag'] = array_flip($tmp);
+            }
         }
         if ($mdl_member_goods->save($data)) {
             $this->splash('success', '', '操作成功');
@@ -607,8 +635,15 @@ class b2c_ctl_site_member extends b2c_frontpage
     public function scan_goods()
     {
         $member_api = vmc::singleton('b2c_source_member');
-        if (empty($_POST['goods_id'])) return null;
-        $data = array('goods_id' => $_POST['goods_id'], 'member_id' => $this->member['member_id'], 'type' => 'scan', 'status' => 'ready');
+        if (empty($_POST['goods_id'])) {
+            return null;
+        }
+        $data = array(
+            'goods_id' => $_POST['goods_id'],
+            'member_id' => $this->member['member_id'],
+            'type' => 'scan',
+            'status' => 'ready',
+        );
         $member_api->scan($data);
     }
 
@@ -631,6 +666,7 @@ class b2c_ctl_site_member extends b2c_frontpage
             $msg = $mdl_member_msg->getRow('*', $filter);
             $mdl_member_msg->update(array('status' => 'received'), $filter);
             $this->pagedata['msg'] = $msg;
+
             return $this->display('site/member/action/message-detail.html');
         }
         $msg_list = $mdl_member_msg->getList('*', $filter, ($page - 1) * $limit, $limit);
@@ -665,7 +701,7 @@ class b2c_ctl_site_member extends b2c_frontpage
          * IBY121208 删除收货地址
          * IBY121209 收货时间查询
          */
-        $member_data = $this->app->model('members')->getRow('*',array('member_id'=> $this->member['member_id']));
+        $member_data = $this->app->model('members')->getRow('*', array('member_id' => $this->member['member_id']));
         $this->menuSetting = 'setting';
         $this->pagedata['action'] = $action;
         $mdl_maddr = $this->app->model('member_addrs');
@@ -685,8 +721,8 @@ class b2c_ctl_site_member extends b2c_frontpage
                 }
                 //rpc删除收货地址
                 $delete_data = array(
-                    'buyer_id'=> $member_data['buyer_id'],
-                    'addr_id'=> $addr_id,
+                    'buyer_id' => $member_data['buyer_id'],
+                    'addr_id' => $addr_id,
                 );
                 $delete_result = $this->app->rpc('delete_delivery_address')->request($delete_data);
                 if (!$delete_result['status']) {
@@ -696,7 +732,21 @@ class b2c_ctl_site_member extends b2c_frontpage
                 $this->splash('success', $redirect, '删除成功');
                 break;
             case 'edit':
-                $this->pagedata['maddr'] = $mdl_maddr->getRow('*', array('member_id' => $member_id, 'addr_id' => $addr_id));
+                $maddr = $mdl_maddr->getRow('*', array('member_id' => $member_id, 'addr_id' => $addr_id));
+                //rpc查询收货时间
+                $select_time_data = array(
+                    'buyer_id' => $member_data['buyer_id'],
+//                    'buyer_id' => '9aea70df-393f-4cb0-8fee-a5d50900ce91',
+                );
+                $select_time_result = $this->app->rpc('select_receive_time')->request($select_time_data);
+                if ($select_time_result['status']) {
+                    $a = utils::array_change_key($select_time_result['result'], 'recPerType');
+                    foreach ($a as $k => $v) {
+                        $b[$k] = $v['timeDescribe'];
+                    }
+                    $maddr['habit_normal_time'] = array_merge($b, $maddr['habit_normal_time']);
+                }
+                $this->pagedata['maddr'] = $maddr;
                 $this->output();
                 break;
             case 'save':
@@ -705,22 +755,35 @@ class b2c_ctl_site_member extends b2c_frontpage
                 if (!$mdl_maddr->save($addr)) {
                     $this->splash('error', '', '保存失败');
                 }
+                //rpc更新或添加收货时间
+                foreach ($addr['habit_normal_time'] as $k => $v) {
+                    $update_time_data[] = array(
+                    'buyer_id' => $member_data['buyer_id'],
+//                        'buyer_id' => '9aea70df-393f-4cb0-8fee-a5d50900ce91',
+                        'recPerType' => (string)$k,
+                        'timeDescribe' => $v,
+                    );
+                }
+                $update_time_result = $this->app->rpc('update_receive_time')->request($update_time_data);
+                if (!$update_time_result['status']) {
+                    $this->splash('error', '', '同步收货时间保存失败');
+                }
                 //rpc更新或添加收货地址
                 $update_data = array(
-                    'buyer_id'=> $member_data['buyer_id'],
-                    'addr_id'=> $addr['addr_id'],//有则更新，无则添加
-                    'addr'=> $addr['addr'],
+                    'buyer_id' => $member_data['buyer_id'],
+                    'addr_id' => $addr['addr_id'],//有则更新，无则添加
+                    'addr' => $addr['addr'],
                 );
-                $update_result = $this->app->rpc('update_delivery_address')->request(array('param'=>$update_data));
+                $update_result = $this->app->rpc('update_delivery_address')->request(array('param' => $update_data));
                 if (!$update_result['status']) {
-                    $this->splash('error', '', '同步保存失败');
+                    $this->splash('error', '', '同步收货地址保存失败');
                 }
                 $this->splash('success', $redirect, '保存成功');
                 break;
             default:
                 //rpc查询收货地址列表
                 $data = array(
-                    'buyer_id'=> $member_data['buyer_id'],
+                    'buyer_id' => $member_data['buyer_id'],
                 );
                 $result = $this->app->rpc('select_delivery_address')->request($data);
 //                var_dump($result);die;
@@ -777,13 +840,15 @@ class b2c_ctl_site_member extends b2c_frontpage
     public function coupon($action = 'list')
     {
         $member_id = $this->member['member_id'];
-        $this->pagedata['available_coupons'] = vmc::singleton('b2c_coupon_stage')->get_member_couponlist($member_id, $mycoupons);
+        $this->pagedata['available_coupons'] = vmc::singleton('b2c_coupon_stage')->get_member_couponlist($member_id,
+            $mycoupons);
         $this->pagedata['mycoupons'] = $mycoupons;
         $memc_code_arr = array();
         foreach ($mycoupons as $coupon) {
             $memc_code_arr[] = $coupon['memc_code'];
         }
-        $couponlogs = $this->app->model('member_couponlog')->getList('*', array('member_id' => $member_id, 'memc_code' => $memc_code_arr));
+        $couponlogs = $this->app->model('member_couponlog')->getList('*',
+            array('member_id' => $member_id, 'memc_code' => $memc_code_arr));
         $this->pagedata['couponlogs'] = utils::array_change_key($couponlogs, 'memc_code');
         $this->output();
     }
@@ -796,6 +861,7 @@ class b2c_ctl_site_member extends b2c_frontpage
         $this->menuSetting = 'setting';
         $user_obj = vmc::singleton('b2c_user_object');
         $this->pagedata['pam_data'] = $user_obj->get_pam_data('*', $this->member['member_id']);
+        $this->pagedata['member'] = $this->member;
         $this->output();
     }
 
@@ -837,7 +903,7 @@ class b2c_ctl_site_member extends b2c_frontpage
         $limit = 20;
         $mdl_mintegral = app::get('b2c')->model('member_integral');
         $filter = array(
-            'member_id' => $this->member['member_id']
+            'member_id' => $this->member['member_id'],
         );
         $count = $mdl_mintegral->count($filter);
         $this->pagedata['integral_list'] = $mdl_mintegral->getList('*', $filter, ($page - 1) * $limit, $limit);
@@ -860,36 +926,33 @@ class b2c_ctl_site_member extends b2c_frontpage
     /**
      * 申请绑定
      */
-    public function apply_bind($bind_id,$status = '0')
+    public function apply_bind($bind_id, $status = '0')
     {
         $mdl_freeze_member = app::get('freeze')->model('freeze_member');
         $freeze_member = array(
             'updatetime' => time(),
         );
-        if($status == '0')
-        {
+        if ($status == '0') {
             $freeze_member['apply_type'] = '0';
             $freeze_member['time'] = time();
         }
-       //买家
+        //买家
         $redirect = $this->gen_url(array(
             'app' => 'b2c',
             'ctl' => 'site_member',
             'act' => 'freeze',
         ));
         $freeze_member['freeze_id'] = $bind_id;
-        $member_id =  $this->member['member_id'];
-        if(!$bind_id && !$member_id)
-        {
-            $this->splash('error',$redirect,'绑定信息错误');
+        $member_id = $this->member['member_id'];
+        if (!$bind_id && !$member_id) {
+            $this->splash('error', $redirect, '绑定信息错误');
         }
         $freeze_member['member_id'] = $member_id;
         $freeze_member['status'] = $status;
-        if(!$mdl_freeze_member->save($freeze_member))
-        {
-            $this->splash('error',$redirect,'绑定失败');
+        if (!$mdl_freeze_member->save($freeze_member)) {
+            $this->splash('error', $redirect, '绑定失败');
         }
-        $this->splash('success',$redirect,'绑定成功');
+        $this->splash('success', $redirect, '绑定成功');
     }
 
     /**
@@ -899,12 +962,11 @@ class b2c_ctl_site_member extends b2c_frontpage
     {
         $member_id = $this->member['member_id'];
         $mdl_freeze_member = app::get('freeze')->model('freeze_member');
-        $freeze = $mdl_freeze_member->getRow('*',array('member_id'=>$member_id));
-        if($freeze['status'] == 1)
-        {
+        $freeze = $mdl_freeze_member->getRow('*', array('member_id' => $member_id));
+        if ($freeze['status'] == 1) {
             //已绑定冻品管家，查询出管家信息
             $mdl_freeze = app::get('freeze')->model('freeze');
-            $freeze_info = $mdl_freeze->getRow('*',array('freeze_id'=>$freeze['freeze_id']));
+            $freeze_info = $mdl_freeze->getRow('*', array('freeze_id' => $freeze['freeze_id']));
 
             //推荐商品
             $filter = array();
