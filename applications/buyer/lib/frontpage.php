@@ -11,7 +11,7 @@
 // +----------------------------------------------------------------------
 
 
-class buyer_frontpage extends site_controller{
+class buyer_frontpage extends b2c_frontpage{
 	
 	protected $buyer = array();
 	protected $store = array();
