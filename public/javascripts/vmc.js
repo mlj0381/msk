@@ -216,10 +216,6 @@ $.validator.messages = {
 		return value === target.val();
 
 	},
-	/*timecompare:function( value, element, param ){
-		var target = $( param );
-		
-	},*/
 	fun : function(value, element, param)
 	{
 		if (this.optional( element ) ) {
@@ -296,8 +292,17 @@ $.VMC.validator = function(form){
 		onsubmit: true,
 		ignore: "",
 		ignoreTitle: false,
-		success : function(label) {
-			//$(label).parents(".form-group").find('label.error,label.right').remove();
+		success : function(label, element) {
+
+			if($(element).parents('.timeLimit').length >0)
+			{	
+				if($('.timeStart').val() !="" && $('.timeEnd').val() !="")
+				{
+					label.html("&nbsp;").addClass('right');	
+				}
+				else return;
+				
+			}
 			label.html("&nbsp;").addClass('right');
 		},
 		onkeyup : function(element, event){
@@ -308,7 +313,7 @@ $.VMC.validator = function(form){
 				this.element( element );
 			}
 		},
-		errorPlacement : function(error, element){			
+		errorPlacement : function(error, element){		
 			element.parents('.form-group').find('label.error,label.right').remove();
 			if(element.parents('.form-item').length >0)
 			{
@@ -320,7 +325,19 @@ $.VMC.validator = function(form){
 				error.appendTo ( element.parent() );
 				return ;
 			}
-			
+			if(element.parents('.timeLimit').length >0)
+			{
+				var $par = $(element).parents('.timeLimit');
+
+				if($par.find('.timeStart').val() =="" || $par.find('.timeEnd').val() =="")
+				{
+					error.appendTo ( element.parents('.timeLimit').parent() );	
+				}
+				return;
+			}	
+			/*if(element.is("input[class*=timeStart]") || element.is("input[class*=timeEnd]")){
+				error.appendTo ( element.parents('.timeLimit').parent() );
+			}*/	
 			error.insertAfter(element);
 		}
 	};
