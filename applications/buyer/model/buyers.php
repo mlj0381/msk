@@ -39,7 +39,7 @@ class buyer_mdl_buyers extends dbeav_model{
 		$use_pass_data['login_name'] = $check_data['password_account'];
 		$use_pass_data['createtime'] = $check_data['createtime'];
 		
-		if ($check_data['login_password'] == pam_encrypt::get_encrypted_password($password, 'seller',$use_pass_data)){
+		if ($check_data['login_password'] == pam_encrypt::get_encrypted_password($password, 'member',$use_pass_data)){
 			return true;
 		}else {
 			return false;
@@ -115,8 +115,8 @@ class buyer_mdl_buyers extends dbeav_model{
 		
 		$use_pass_data['login_name'] = $check_data['password_account'];
 		$use_pass_data['createtime'] = $check_data['createtime'];
-		if (pam_encrypt::get_encrypted_password($old_password, 'seller',$use_pass_data) == $check_data['login_password']){
-			$reset['login_password'] = pam_encrypt::get_encrypted_password($new_password, 'seller',$use_pass_data);
+		if (pam_encrypt::get_encrypted_password($old_password, 'member',$use_pass_data) == $check_data['login_password']){
+			$reset['login_password'] = pam_encrypt::get_encrypted_password($new_password, 'member',$use_pass_data);
 			$reset['password'] = $new_password;
 			if ($mdl_pm_buyers->update($reset,array('buyer_id'=>$user_id))){
 				//这个根据RPC的必填项（object） 需要分步提交

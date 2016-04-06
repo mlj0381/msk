@@ -95,7 +95,7 @@ class buyer_ctl_site_passport extends buyer_frontpage{
 				$account = array();
 				$account['login_account'] 	 =  $runheBuyer['slAccount'];
 				$account['createtime'] 		 = time();
-				$account['login_password']	 = $login_password = pam_encrypt::get_encrypted_password($runheBuyer['accountPsd'], 'buyer', array(
+				$account['login_password']	 = $login_password = pam_encrypt::get_encrypted_password($runheBuyer['accountPsd'], 'member', array(
 						'createtime' => $account['createtime'],
 						'login_name' => $params['uname'],
 				));
@@ -405,7 +405,7 @@ class buyer_ctl_site_passport extends buyer_frontpage{
 						$buyer_pm_data['login_type']	=	$login_type;
 						$check_data['createtime']		=	$buyer_pm_data['createtime']	=	time();
 						$check_data['login_password']	=	$arr_data['password'];
-						$buyer_pm_data['login_password']=	pam_encrypt::get_encrypted_password($arr_data['password'], 'buyer',$check_data);
+						$buyer_pm_data['login_password']=	pam_encrypt::get_encrypted_password($arr_data['password'], 'member',$check_data);
 						if (!$this->app->model('buyers')->save($buyer_data)){
 							$db->rollback();
 						}
