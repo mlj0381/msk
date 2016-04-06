@@ -5,7 +5,7 @@
   <li class="active">绑定邮箱</li>
 </ol>
 
-<form class="form-horizontal" action="<{link app=b2c ctl=site_member act=set_pam_email args0=save}>" method="post" id="set_email_form">
+<form class="form-horizontal" action="<{link app=b2c ctl=site_member act=set_pam_email args0=save}>" method="post" id="set_email_form" data-module="validator">
     <{foreach from=$pam_data key=key item=item}>
     <div class="form-group">
         <label  class="col-xs-2 control-label">
@@ -18,9 +18,10 @@
     </div>
     <{/foreach}>
     <div class="form-group">
-        <label  class="col-xs-2 control-label">邮箱Email</label>
+        <label  class="col-xs-2 control-label">邮箱Email<span class="text-danger">*</span></label>
         <div class="col-xs-4">
-            <input type="email" id="email_input" required="true" class="form-control" name="email"  value="">
+            <input type="email" id="email_input" required="true" class="form-control" name="email"  value="" format="email">
+            <span class="msgTip" data-message="format">邮箱格式错误</span>
             <!--<span class="help-block">设置完后，可使用 邮箱 登录</span>-->
         </div>
     </div>

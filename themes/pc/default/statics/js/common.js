@@ -215,8 +215,56 @@ $(function() {
     }
 
 
+    /**
+     * 日期选择
+     */
+     $('.form_datetime').datetimepicker({
+        format: "yyyy-mm-dd",
+        autoclose: true,
+        todayBtn: true,
+        weekStart: 1,
+        todayHighlight: 1,
+        minView:2,
+        language:"zh-CN",
+        pickerPosition: "bottom-left"
+    }).on("hide",function(ev){
+        $(".form_datetime").trigger('blur');
+    });
 
 
+    /*区间日期选择*/
+    $(".timeStart").datetimepicker({
+        format: "yyyy-mm-dd",
+        autoclose: true,
+        todayBtn: true,
+        weekStart: 1,
+        todayHighlight: 1,
+        minView:2,
+        language:"zh-CN",
+        pickerPosition: "bottom-left"
+    }).on("click",function(ev){
+        $(".timeStart").datetimepicker("setEndDate", $(".timeEnd").val());
+    }).on("hide",function(ev){
+        var $value = $(".timeStart").val();
+        $(".timeStart").attr('value',$value);
+        $(".timeStart").trigger('blur');
+    });
+    $(".timeEnd").datetimepicker({
+        format: "yyyy-mm-dd",
+        autoclose: true,
+        todayBtn: true,
+        weekStart: 1,
+        todayHighlight: 1,
+        minView:2,
+        language:"zh-CN",
+        pickerPosition: "bottom-left"
+    }).on("click", function (ev) {
+        $(".timeEnd").datetimepicker("setStartDate", $(".timeStart").val());
+    }).on("hide",function(ev){
+        var $value = $(".timeEnd").val();
+        $(".timeEnd").attr('value',$value);
+        $(".timeEnd").trigger('blur');
+    });
    
 
 
