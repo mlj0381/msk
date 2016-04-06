@@ -48,19 +48,19 @@
     <ul class="nav nav-tabs my-orders-nav">
         <li <{if !$current_status||$current_status=='all' }>class="active"
             <{/if}>><a href="<{link app=seller ctl=site_order act=index}>">全部订单</a></li>
-        <li <{if $current_status=='s1' }>class="active"
-            <{/if}>><a href="<{link app=seller ctl=site_order act=index args0=s1}>">待付款</a></li>
-        <li <{if $current_status=='s2' }>class="active"
-            <{/if}>><a href="<{link app=seller ctl=site_order act=index args0=s2}>">待发货</a></li>
-        <li <{if $current_status=='s3' }>class="active"
-            <{/if}>><a href="<{link app=seller ctl=site_order act=index args0=s3}>">待收货</a></li>
-        <li <{if $current_status=='s4' }>class="active"
-            <{/if}>><a href="<{link app=seller ctl=site_order act=index args0=s4}>">待评价</a></li>
-        <li <{if $current_status=='s5' }> class="active" <{/if}>>
-            <a href="<{link app=seller ctl=site_order act=index args0=s5}>">交易成功</a>
+        <li <{if $current_status=='2' }>class="active"
+            <{/if}>><a href="<{link app=seller ctl=site_order act=index args0=2}>">待付款</a></li>
+        <li <{if $current_status=='9' }>class="active"
+            <{/if}>><a href="<{link app=seller ctl=site_order act=index args0=9}>">待发货</a></li>
+        <li <{if $current_status=='' }>class="active"
+            <{/if}>><a href="<{link app=seller ctl=site_order act=index }>">待收货</a></li>
+        <li <{if $current_status=='' }>class="active"
+            <{/if}>><a href="<{link app=seller ctl=site_order act=index }>">待评价</a></li>
+        <li <{if $current_status=='13' }> class="active" <{/if}>>
+            <a href="<{link app=seller ctl=site_order act=index args0=13}>">交易成功</a>
         </li>
-        <li <{if $current_status=='s6' }> class="active" <{/if}>>
-            <a href="<{link app=seller ctl=site_order act=index args0=s6}>">已关闭</a>
+        <li <{if $current_status=='14' }> class="active" <{/if}>>
+            <a href="<{link app=seller ctl=site_order act=index args0=14}>">已关闭</a>
         </li>
     </ul>
      <{if $order_list}>
@@ -169,7 +169,7 @@
 
 
                 <td class="text-center" width="12%">
-                    <{if $order.pay_status eq '0' && $order.status eq 'active' && $order.is_cod eq 'N'}>
+                    <!--<{if $order.pay_status eq '0' && $order.status eq 'active' && $order.is_cod eq 'N'}>
                     待付款<br/>
                     <{/if}>
                     <{if ($order.pay_status eq '1' || $order.is_cod eq 'Y') &&$order.ship_status eq '0' && $order.status eq
@@ -190,8 +190,8 @@
                     
                     <{if $order.status eq 'dead'}>
                     交易关闭<br/>
-                    <{/if}>
-                    
+                    <{/if}>-->
+                    <{$order.status_name}>
                     <br>
                     <{if $order.is_cod=='Y' }>
                     <span class="label label-default">货到付款</span>

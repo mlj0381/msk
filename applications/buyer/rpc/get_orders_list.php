@@ -23,15 +23,21 @@ $remote['buyer_get_orders_list'] = array(
     ),
 
     'param' => array(
-        'buyersId' => array(
+        'buyer_id' => array(
             'name' => '买家ID，当买家编码发生变化时也可以用于查询 * siteCode为神农客和美侍客时，买家ID为必须',
             'column' => 'buyersId',
             'type' => 'String',
             'require' => false,
         ),
-        'buyersCode' => array(
+        'buyer_code' => array(
             'name' => '买家编码',
             'column' => 'buyersCode',
+            'type' => 'String',
+            'require' => false,
+        ),
+        'sl_code' => array(
+            'name' => '卖家编码',
+            'column' => 'sellerCode',
             'type' => 'String',
             'require' => false,
         ),

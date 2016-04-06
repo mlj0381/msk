@@ -56,6 +56,7 @@ class buyer_ctl_site_goods extends buyer_frontpage{
 					'buyersCode'=>'BC01',
 			);
 			$response = $rpc_model->request($data, 2);
+
 			if ($current_status == 'all' or empty($current_status)){
 				if (!empty($_POST['search'])){
 					foreach ($response['result']['orders'] as $k=>$v){
