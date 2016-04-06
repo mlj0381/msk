@@ -190,7 +190,7 @@ class b2c_ctl_site_order extends b2c_frontpage
         if(!$result['status'])
         {
             $db->rollback(); //事务回滚
-            $msg = $msg ? $msg : '数据保存失败';
+            $msg = $result['message'] ? $result['message'] : '数据保存失败';
             $this->logger->fail('create', $msg, $api_data);
             $this->splash('error', $redirect_cart, $msg);
         }else{
