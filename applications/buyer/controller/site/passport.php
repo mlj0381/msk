@@ -95,7 +95,7 @@ class buyer_ctl_site_passport extends buyer_frontpage{
 				$account = array();
 				$account['login_account'] 	 =  $runheBuyer['slAccount'];
 				$account['createtime'] 		 = time();
-				$account['login_password']	 = $login_password = pam_encrypt::get_encrypted_password($runheBuyer['accountPsd'], 'buyer', array(
+				$account['login_password']	 = $login_password = pam_encrypt::get_encrypted_password($runheBuyer['accountPsd'], 'member', array(
 						'createtime' => $account['createtime'],
 						'login_name' => $params['uname'],
 				));
@@ -122,7 +122,8 @@ class buyer_ctl_site_passport extends buyer_frontpage{
 				 * 重新用seller的session验证规则
 				 * $this->app->model('buyers')->autologin($userdata);
 				 */
-				$this->object_obj->set_session($userdata, '');
+				$userdata['buyer_code'] = '';
+				$this->object_obj->set_session($userdata);
 				$this->set_cookie('UNAME', $userdata['login_account']);
 				$this->set_cookie('SELLER_IDENT', $userdata['buyer_id']);	
 				$redirect = $this->gen_url(array(
@@ -322,7 +323,8 @@ class buyer_ctl_site_passport extends buyer_frontpage{
 	 * 退出登陆
 	 */
 	public function logout($forward){
-		$this->object_obj->set_session(null, null);
+		$buyer_data = ['member' => null,'buyer_id' => null, 'buyer_code' => null];
+		$this->object_obj->set_session($buyer_data);
 		$this->set_cookie('UNAME', null);
 		$this->set_cookie('BUYER_IDENT', null);
 		if (!$forward) {
@@ -405,7 +407,7 @@ class buyer_ctl_site_passport extends buyer_frontpage{
 						$buyer_pm_data['login_type']	=	$login_type;
 						$check_data['createtime']		=	$buyer_pm_data['createtime']	=	time();
 						$check_data['login_password']	=	$arr_data['password'];
-						$buyer_pm_data['login_password']=	pam_encrypt::get_encrypted_password($arr_data['password'], 'buyer',$check_data);
+						$buyer_pm_data['login_password']=	pam_encrypt::get_encrypted_password($arr_data['password'], 'member',$check_data);
 						if (!$this->app->model('buyers')->save($buyer_data)){
 							$db->rollback();
 						}

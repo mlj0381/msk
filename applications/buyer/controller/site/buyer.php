@@ -24,16 +24,12 @@ class buyer_ctl_site_buyer extends buyer_frontpage{
 		parent::__construct($app);
 		$this->verify_buyer();
 		$this->buyer_id = vmc::singleton('buyer_user_object')->get_id();
-		$this->member_id = vmc::singleton('buyer_user_object')->get_session()['member_id'];
+		$this->member_id = vmc::singleton('buyer_user_object')->get_session()['member'];
 		//后面还需要什么............
 	}
 	
 	
 	public function index($status){
-// 		vmc::singleton('base_session')->start();
-// 		var_dump($_SESSION);
-// 		15230315235
-		//'args'=>$status;
         $this->output();
 	}
 	
@@ -138,7 +134,7 @@ class buyer_ctl_site_buyer extends buyer_frontpage{
 			/***
 			 * 修改密码----调用buyer查询和编辑接口
 			 */
-			$status = $this->app->model('buyers')->reset_password($this->buyer_id, $params['old_password'],$params['new_password']);
+			$status = $this->app->model('buyers')->reset_password($this->member_id, $params['old_password'],$params['new_password']);
 			switch ($status){
 				case 'success':
 					$msg = '新密码设置成功！';
