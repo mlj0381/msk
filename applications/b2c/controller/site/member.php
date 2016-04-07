@@ -764,9 +764,10 @@ class b2c_ctl_site_member extends b2c_frontpage
                     $this->splash('error', '', '删除失败');
                 }
                 //rpc删除收货地址
+                $maddr = $mdl_maddr->getRow('*', array('member_id' => $member_id, 'addr_id' => $addr_id));
                 $delete_data = array(
                     'buyer_id'=> $member_data['buyer_id'],
-                    'addr_id'=> $addr_id,
+                    'rpc_addr_id'=> $maddr['rpc_addr_id'],
                 );
                 $delete_result = $this->app->rpc('delete_delivery_address')->request($delete_data);
                 if (!$delete_result['status']) {
@@ -776,7 +777,8 @@ class b2c_ctl_site_member extends b2c_frontpage
                 $this->splash('success', $redirect, '删除成功');
                 break;
             case 'edit':
-                $this->pagedata['maddr'] = $mdl_maddr->getRow('*', array('member_id' => $member_id, 'addr_id' => $addr_id));
+                $maddr = $mdl_maddr->getRow('*', array('member_id' => $member_id, 'addr_id' => $addr_id));
+                $this->pagedata['maddr'] = $maddr;
                 $this->output();
                 break;
             case 'save':
@@ -785,16 +787,19 @@ class b2c_ctl_site_member extends b2c_frontpage
                 if (!$mdl_maddr->save($addr)) {
                     $this->splash('error', '', '保存失败');
                 }
+                $maddr = $mdl_maddr->getRow('*', array('member_id' => $member_id, 'addr_id' => $addr['addr_id']));
                 //rpc更新或添加收货地址
-                $update_data = array(
-                    'buyer_id'=> $member_data['buyer_id'],
-                    'addr_id'=> $addr['addr_id'],//有则更新，无则添加
-                    'addr'=> $addr['addr'],
+                $update_data[] = array(
+                    'buyer_id' => $member_data['buyer_id'],
+                    'rpc_addr_id' => $maddr['rpc_addr_id'],//有则更新，无则添加
+                    'addr' => $maddr['addr'],
                 );
-                $update_result = $this->app->rpc('update_delivery_address')->request(array('param'=>$update_data));
+                $update_result = $this->app->rpc('update_delivery_address')->request($update_data);
                 if (!$update_result['status']) {
-                    $this->splash('error', '', '同步保存失败');
-                }
+                    $this->splash('error', '', '同步收货地址保存失败');
+                }else{
+                    $mdl_maddr->save(array('rpc_addr_id' => $update_result['result'][0]['rpc_addr_id'], 'addr_id' => $addr['addr_id']));
+                };
                 $this->splash('success', $redirect, '保存成功');
                 break;
             default:
@@ -849,6 +854,17 @@ class b2c_ctl_site_member extends b2c_frontpage
                 $this->splash('success', $redirect, $addr);
                 break;
         }
+    }
+
+    /**
+     * 习惯收货时间.
+     */
+    public function receiver_time(){
+        $this->menuSetting = 'setting';
+        $user_obj = vmc::singleton('b2c_user_object');
+        $this->pagedata['receiving'] = $this->app->getConf('receiving_time');
+        $this->pagedata['pam_data'] = $user_obj->get_pam_data('*', $this->member['member_id']);
+        $this->output();
     }
 
     /**

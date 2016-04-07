@@ -46,6 +46,11 @@ $db['member_addrs'] = array(
             'default' => '',
             'comment' => ('收货地址') ,
         ) ,
+        'rpc_addr_id' => array(
+            'type' => 'varchar(255)',
+            'default' => '',
+            'comment' => ('rpc收货地址id') ,
+        ) ,
         'zip' => array(
             'type' => 'varchar(20)',
             'default' => '',

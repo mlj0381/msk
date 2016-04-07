@@ -119,20 +119,6 @@ class buyer_mdl_buyers extends dbeav_model{
 			$reset['login_password'] = pam_encrypt::get_encrypted_password($new_password, 'member',$use_pass_data);
 			$reset['password'] = $new_password;
 			if ($mdl_pm_buyers->update($reset,array('member_id'=>$member_id))){
-				//这个根据RPC的必填项（object） 需要分步提交
-// 				$basic_data = $this->app->model('buyers')->getRow('*', array('buyer_id'=>$user_id));
-// 				$mdl_rpc = $this->app->rpc('edit_buyer_info');
-// 				$request = array(
-// 						'slAccount'=>array(
-// 								'login_account'	=>$check_data['login_account'],
-// 								'mobile'		=>$basic_data['mobile'],
-// 								'local'			=>$basic_data['local'],
-// 								'name'			=>$basic_data['name'],
-// 								'password'		=>$new_password,
-// 								'authStatus'	=>2,
-// 						),);
-// 				$mdl_rpc->request($request, false);
-				//修改成功
 				return 'success';
 			}else {
 				//修改失败

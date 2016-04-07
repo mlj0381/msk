@@ -160,7 +160,7 @@ class base_rpc
 			$this->_postData[$column] = $this->_convert($key, $item, $value);
 		}
 		// 处理参数			
-		if(!$this->status) return ;
+		//if(!$this->status) return ;
 		$this->result = $this->remote();
 	}	
 	private function _convert($key, $item, $data){		
