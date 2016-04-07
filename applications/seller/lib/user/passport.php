@@ -1262,8 +1262,8 @@ class seller_user_passport
         if (!$mdl_seller->delete(array('seller_id' => $post['seller_id']))) {
             return false;
         }
-        $this->add_buyer($seller_data, $pam_data);
-        return $pam_data;
+        $return = $this->add_buyer($seller_data, $pam_data);
+        return $return;
     }
     
     /**
@@ -1288,6 +1288,7 @@ class seller_user_passport
     			app::get('pam')->model('members')->save($pam_data);
     			app::get('buyer')->model('buyers')->save($seller_data);
     		}
+    		return $seller_data ?: null;
     	}
     }
     

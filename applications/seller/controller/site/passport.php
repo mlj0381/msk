@@ -74,35 +74,35 @@ class seller_ctl_site_passport extends seller_frontpage
         if (empty($params['vcode'])) {
             $this->splash('error', $login_url, '请输入验证码');
         }
-
+      
         /**
          * 润和接口 卖家登入  【查询卖家账户 - ISL231105】
          */
-        $result = $this->app->rpc('select_seller_info')->request(array('login_account' =>  $params['uname'] ));
-        if(!$result['status']){
-        	$this->splash('error', $login_url, '登录失败！');
-        }else{
-        	/* 用户基本信息 */
-        	$seller	= array();
-        	$seller['mobile'] = $result['result']['slAccount']['slTel'];
-        	$seller['api_seller_id'] = $result['result']['slSeller']['epId'];
+//         $result = $this->app->rpc('select_seller_info')->request(array('login_account' =>  $params['uname'] ));
+//         if(!$result['status']){
+//         	$this->splash('error', $login_url, '登录失败！');
+//         }else{
+//         	/* 用户基本信息 */
+//         	$seller	= array();
+//         	$seller['mobile'] = $result['result']['slAccount']['slTel'];
+//         	$seller['api_seller_id'] = $result['result']['slSeller']['epId'];
         	
-        	/* 用户账户信息 */
-        	$account = array();
-        	$account['login_account'] 	 = $params['uname'];
-        	$account['createtime'] 		 = time();
-        	$account['login_password']	 = $login_password = pam_encrypt::get_encrypted_password($result['result']['slAccount']['accountPsd'], 'seller', array(
-        			'createtime' => $account['createtime'],
-        			'login_name' => $params['uname'],
-        	));
-        	$account['password']	 = $result['result']['slAccount']['accountPsd'];
-        	$account['password_account'] = $params['uname'];
-        	$account['login_type'] 		 = $this->passport_obj->get_login_account_type($params['uname']);;
-        	$account['api_seller']		 = $result['result']['slSeller']['epId'];
-        	vmc::singleton('pam_passport_site_basic')->local_seller_rsyns($seller,$account);
-        }
+//         	/* 用户账户信息 */
+//         	$account = array();
+//         	$account['login_account'] 	 = $params['uname'];
+//         	$account['createtime'] 		 = time();
+//         	$account['login_password']	 = $login_password = pam_encrypt::get_encrypted_password($result['result']['slAccount']['accountPsd'], 'seller', array(
+//         			'createtime' => $account['createtime'],
+//         			'login_name' => $params['uname'],
+//         	));
+//         	$account['password']	 = $result['result']['slAccount']['accountPsd'];
+//         	$account['password_account'] = $params['uname'];
+//         	$account['login_type'] 		 = $this->passport_obj->get_login_account_type($params['uname']);;
+//         	$account['api_seller']		 = $result['result']['slSeller']['epId'];
+//         	vmc::singleton('pam_passport_site_basic')->local_seller_rsyns($seller,$account);
+//         }
        
-        
+       
         //尝试登陆
         $seller_id = vmc::singleton('pam_passport_site_basic')->login($account_data, $params['vcode'], $msg, 'sellers');
         if (!$seller_id) {
@@ -657,7 +657,8 @@ class seller_ctl_site_passport extends seller_frontpage
         if ($result && $_POST['type'] == '1') {
             //返回成功 并且 选择成功买手身份
             $this->user_obj->set_session(null);
-            vmc::singleton('buyer_user_object')->set_session($result['buyer_id'], '');
+            $result['buyer_code'] = '';
+            vmc::singleton('buyer_user_object')->set_session($result);
             //设置cookie
         }
         $this->splash($result ? 'success' : 'error', $redirect, $result ? '操作成功' : '操作失败');

@@ -134,7 +134,7 @@ class buyer_ctl_site_buyer extends buyer_frontpage{
 			/***
 			 * 修改密码----调用buyer查询和编辑接口
 			 */
-			$status = $this->app->model('buyers')->reset_password($this->buyer_id, $params['old_password'],$params['new_password']);
+			$status = $this->app->model('buyers')->reset_password($this->member_id, $params['old_password'],$params['new_password']);
 			switch ($status){
 				case 'success':
 					$msg = '新密码设置成功！';

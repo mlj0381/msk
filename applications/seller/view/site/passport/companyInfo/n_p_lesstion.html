@@ -16,11 +16,11 @@
 			<span class="text-danger">*</span>有效期：
 		</label>
 		<div class="col-xs-4">
-			<div class="form-item">
-				<input type="text" value="<{$extra.n_p_lesstion.value.validity_start}>" name="n_p_lesstion[value][validity_start]" class="form-control" placeholder="2010-10-20" style="width:46%; display: inline-block;"> 至 
-				<input type="text" value="<{$extra.n_p_lesstion.value.validity_end}>" name="n_p_lesstion[value][validity_end]" class="form-control" placeholder="2010-10-20" style="width:46%; display: inline-block;" required="true" format="date">
+			<div class="timeLimit">
+				<input type="text" value="<{$extra.n_p_lesstion.value.validity_start}>" name="n_p_lesstion[value][validity_start]" class="form-control date timeStart" placeholder="2010-10-20" style="width:46.5%; display: inline-block;" readonly required="true"> 至 
+				<input type="text" value="<{$extra.n_p_lesstion.value.validity_end}>" name="n_p_lesstion[value][validity_end]" class="form-control date timeEnd" placeholder="2010-10-20" style="width:46.5%; display: inline-block;" readonly required="true">
 			</div>
-			<span class="msgTip" data-message="format">请输入有效的日期格式</span>
+			<span class="msgTip" data-message="error"></span>
 		</div>
 	</div>
 
