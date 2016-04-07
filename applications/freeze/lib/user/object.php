@@ -41,6 +41,7 @@ class freeze_user_object{
      */
     public function set_member_session($member_id){
         unset($_SESSION['error_count'][$this->app->app_id]);
+        unset($_SESSION['account']);
         $_SESSION['account'][$this->app->app_id] = $member_id;
     }
 
