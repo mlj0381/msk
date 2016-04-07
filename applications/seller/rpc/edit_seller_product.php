@@ -9,7 +9,7 @@ $remote['seller_edit_seller_product'] = array(
             'name' => '登陆的用户ID',
             'column' => 'loginId',
             'type' => 'String',
-            'default' => '',
+            'default' => '1',
             'require' => false,
         ),
         'param' => array(
