@@ -61,9 +61,9 @@ class buyer_ctl_site_manager extends buyer_frontpage{
 	 */
 	public function signup(){
 		//处理冻品管家登录账号
-		$object_obj = vmc::singleton('b2c_user_object');
-		$member_id = $object_obj->get_member_id();
-		$account_name = app::get('freeze')->model('freeze')->get_account($member_id);
+		$object_obj = vmc::singleton('buyer_user_object');
+		$member_id = $object_obj->get_session();
+		$account_name = app::get('freeze')->model('freeze')->get_account($member_id['member']);
 
 		$this->pagedata['account_name'] = $account_name;
 		$this->output('');

@@ -61,7 +61,7 @@ class b2c_ctl_site_product extends b2c_frontpage {
         $response = $this->app->rpc('goods_info')->request($data=array());
         $data_detail_response = utils::array_change_key($response['result']['goods'], 'bn')[$products_data['bn']];
         //这个是data_detail拼接
-        $data_detail['name'] = str_replace('/'," ",$data_detail_response['goods_name']);
+        $data_detail['name'] = str_replace('/'," ",$data_detail_response['name']);
         //一级
         $data_detail['classesCode'] = $data_detail_response['cat_1'];
         //二级
