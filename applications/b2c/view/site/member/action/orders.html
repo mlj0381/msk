@@ -8,21 +8,21 @@
 <ul class="nav nav-tabs my-orders-nav">
     <li <{if !$current_status||$current_status=='all' }>class="active"
         <{/if}>><a href="<{link app=b2c ctl=site_member act=orders}>">全部订单</a></li>
-    <li <{if $current_status=='s1' }>class="active"
-        <{/if}>><a href="<{link app=b2c ctl=site_member act=orders args0=s1}>">待付款</a></li>
-    <li <{if $current_status=='s2' }>class="active"
-        <{/if}>><a href="<{link app=b2c ctl=site_member act=orders args0=s2}>">待发货</a></li>
-    <li <{if $current_status=='s3' }>class="active"
-        <{/if}>><a href="<{link app=b2c ctl=site_member act=orders args0=s3}>">待收货</a></li>
-    <li <{if $current_status=='s4' }>class="active"
-        <{/if}>><a href="<{link app=b2c ctl=site_member act=orders args0=s4}>">待评价</a></li>
-    <li <{if $current_status=='s5' }>class="active"
-        <{/if}>><a href="<{link app=b2c ctl=site_member act=orders args0=s5}>">交易成功</a></li>
-    <li <{if $current_status=='s6' }>class="active"
-        <{/if}>><a href="<{link app=b2c ctl=site_member act=orders args0=s6}>">交易关闭</a></li>
-    <li <{if $current_status=='s7' }>class="active"
-        <{/if}>><a href="<{link app=b2c ctl=site_member act=orders args0=s7}>">订单回收站</a></li>
-    <li class="last_li">
+    <li <{if $current_status=='2' }>class="active"
+        <{/if}>><a href="<{link app=b2c ctl=site_member act=orders args0=2}>">待付款</a></li>
+    <li <{if $current_status=='9' }>class="active"
+        <{/if}>><a href="<{link app=b2c ctl=site_member act=orders args0=9}>">待发货</a></li>
+    <li <{if $current_status=='' }>class="active"
+        <{/if}>><a href="<{link app=b2c ctl=site_member act=orders }>">待收货</a></li>
+    <li <{if $current_status=='' }>class="active"
+        <{/if}>><a href="<{link app=b2c ctl=site_member act=orders }>">待评价</a></li>
+    <li <{if $current_status=='13' }>class="active"
+        <{/if}>><a href="<{link app=b2c ctl=site_member act=orders args0=13}>">交易成功</a></li>
+    <li <{if $current_status=='14' }>class="active"
+        <{/if}>><a href="<{link app=b2c ctl=site_member act=orders args0=14}>">交易关闭</a></li>
+    <!--<li <{if $current_status=='s7' }>class="active"-->
+        <!--<{/if}>><a href="<{link app=b2c ctl=site_member act=orders args0=s7}>">订单回收站</a></li>-->
+    <!--<li class="last_li">-->
         <form action="<{link app=b2c ctl=site_member act=orders args0=$current_status}>" method="post">
             <div class="form-group">
                 <div class="input-group">
@@ -172,7 +172,7 @@
 
 
                 <td class="text-center" width="12%">
-                    <{if $order.pay_status eq '0' && $order.status eq 'active' && $order.is_cod eq 'N' &&$order.status eq 'active'}>
+                   <!-- <{if $order.pay_status eq '0' && $order.status eq 'active' && $order.is_cod eq 'N' &&$order.status eq 'active'}>
                     待付款
                     <{/if}>
                     <{if ($order.pay_status eq '1' || $order.is_cod eq 'Y') &&$order.ship_status eq '0' &&$order.status eq 'active'}>
@@ -193,8 +193,8 @@
 
                     <{if $order.status eq 'dead'}>
                     交易关闭
-                    <{/if}>
-
+                    <{/if}>-->
+                    <{$order.status_name}>
                     <br>
                     <{if $order.is_cod=='Y' }>
                     <span class="label label-default">货到付款</span>
@@ -209,12 +209,12 @@
                         <a class="btn_link btn-block abolish"  data-orderid="<{$order.order_id}>" data-toggle="modal" data-target="#cancel_order" href="#">取消订单</a>
                               <{/if}>
 
-                        <{if ($order.ship_status eq '0' && $order.pay_status eq '0' && $order.status eq 'active') || $order.status eq
+                        <!--<{if ($order.ship_status eq '0' && $order.pay_status eq '0' && $order.status eq 'active') || $order.status eq
                         'dead' && $order.is_cod eq 'N'}>
                         <a href="javascript:;" data-url="<{link app=b2c ctl=site_order act=del args0=$order.order_id}>"
 
                            class="btn_link btn-block order-del">订单删除</a>
-                        <{/if}>
+                        <{/if}>-->
 
                               <{if ($order.pay_status eq '1' || $order.is_cod eq 'Y') && $order.ship_status eq '1' && $order.status eq 'active' && $order.confirm eq 'N'}>
                               <a href="<{link app=b2c ctl=site_order act=detail args0=$order.order_id args1=logistics_tracker}>" class="btn_link btn-block">追踪物流</a>

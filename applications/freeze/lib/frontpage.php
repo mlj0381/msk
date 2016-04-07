@@ -23,6 +23,19 @@ class freeze_frontpage extends site_controller
         $this->menuSetting = 'index';
         $this->set_tmpl('freeze');
     }
+    public function bind_member($member_id) {
+//        $columns = array(
+//            'account' => 'freeze_id',
+//        );
+        $user_obj = vmc::singleton('freeze_user_object');
+        $cookie_expires = $user_obj->cookie_expires ? time() + $user_obj->cookie_expires * 60 : 0;
+//        $member_data = $user_obj->get_members_data($columns,$member_id);
+        $login_name = $user_obj->get_member_name(null,$member_id);
+        $this->cookie_path = vmc::base_url() . '/';
+        $this->set_cookie('UNAME', $login_name, $cookie_expires);
+        $this->set_cookie('MEMBER_IDENT', $member_id, $cookie_expires);
+//        $this->set_cookie('MEMBER_LEVEL_ID', $member_data['members']['member_lv_id'], $cookie_expires);
+    }
 
     public function is_complete_info()
     {
@@ -127,6 +140,17 @@ class freeze_frontpage extends site_controller
         $this->page('site/main.html');
     }
 
+    function set_cookie($name, $value, $expire = false, $path = null) {
+        if (!$this->cookie_path) {
+            $this->cookie_path = vmc::base_url() . '/';
+            #$this->cookie_path = substr(PHP_SELF, 0, strrpos(PHP_SELF, '/')).'/';
+            $this->cookie_life = app::get('b2c')->getConf('system.cookie.life');
+        }
+        $this->cookie_life = $this->cookie_life > 0 ? $this->cookie_life : 315360000;
+        $expire = $expire === false ? time() + $this->cookie_life : $expire;
+        setcookie($name, $value, $expire, $this->cookie_path);
+        $_COOKIE[$name] = $value;
+    }
 //    public function bind_freeze($member_id) {
 //        $user_obj = vmc::singleton('buyer_user_object');
 //        $buyer_id = $user_obj->get_id();

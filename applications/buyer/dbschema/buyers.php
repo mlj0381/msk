@@ -15,13 +15,18 @@
  */
 $db['buyers'] = array(
     'columns' => array(
-
     	'buyer_id' => array(
     		'type' => 'number',
     		'required' => true,
             'pkey' => true,
 			'extra' => 'auto_increment',            
     		//'comment' => '买手店ID',
+    	),
+    	'member_id' => array(
+    		'type' => 'number',
+    		'required' => true,
+    		'default' => 0,
+    		'comment' => '关联会员ID',
     	),
         'local' => array(
             'type' => 'varchar(50)',
@@ -92,6 +97,12 @@ $db['buyers'] = array(
         	'default' => '',
         	'comment' => '个人一寸照片',
         ),
+        'phone' => array(
+        		'type' => 'bigint unsigned',
+        		'required' => true,
+        		'default' => 0,
+        		'comment' => '电话',
+        ),
         'wechat' => array(
         	'type' => 'varchar(50)',
         	'required' => true,
@@ -110,7 +121,7 @@ $db['buyers'] = array(
         	'default' => '',
         	'comment' => '买手店编码',
         ),
-        'buyer_codedis' => array(
+        'api_buyer_id' => array(
         		'type' => 'varchar(50)',
         		'required' => true,
         		'default' => '',

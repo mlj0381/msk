@@ -30,7 +30,7 @@
 			发证日期：
 		</label>
 		<div class="col-xs-4">
-			<input type="text" value="<{$extra.iso9001_lesstion.value.grant_date}>" name="iso9001_lesstion[value][grant_date]" placeholder="2010-10-20" class="form-control">
+			<input type="text" value="<{$extra.iso9001_lesstion.value.grant_date}>" name="iso9001_lesstion[value][grant_date]" placeholder="2010-10-20" class="form-control date form_datetime" readonly>
 		</div>
 	</div>
 	<div class="form-group">
@@ -38,8 +38,10 @@
 			营业期限：
 		</label>
 		<div class="col-xs-4">
-			<input type="text" value="<{$extra.iso9001_lesstion.value.start}>" name="iso9001_lesstion[value][start]" class="form-control" placeholder="2010-10-20" style="width:46%; display: inline-block;"> 至 
-			<input type="text" value="<{$extra.iso9001_lesstion.value.end}>" name="iso9001_lesstion[value][end]" class="form-control" placeholder="2010-10-20" style="width:46%; display: inline-block;">
+			<div class="timeLimit">
+				<input type="text" value="<{$extra.iso9001_lesstion.value.start}>" name="iso9001_lesstion[value][start]" class="form-control date timeStart" placeholder="2010-10-20" style="width:46.5%; display: inline-block;" readonly> 至 
+				<input type="text" value="<{$extra.iso9001_lesstion.value.end}>" name="iso9001_lesstion[value][end]" class="form-control date timeEnd" placeholder="2010-10-20" style="width:46.5%; display: inline-block;" readonly>
+			</div>
 		</div>
 	</div>
 	<div class="form-group">
