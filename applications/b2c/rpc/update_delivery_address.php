@@ -49,5 +49,21 @@ $remote['b2c_update_delivery_address'] = array(
         ),
     ),
 
-    'response' => array(),
+    'response' => array(
+        'buyerId' => array(
+            'name' => '买家ID',
+            'column' => 'buyerId',
+            'type' => 'String',
+        ),
+        'id' => array(
+            'name' => '地址ID',
+            'column' => 'rpc_addr_id',
+            'type' => 'long',
+        ),
+        'receiveAddr' => array(
+            'name' => '收货地址',
+            'column' => 'receiveAddr',
+            'type' => 'String',
+        ),
+    ),
 );

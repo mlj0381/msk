@@ -788,6 +788,19 @@ class b2c_ctl_site_member extends b2c_frontpage
                     $this->splash('error', '', '保存失败');
                 }
                 $maddr = $mdl_maddr->getRow('*', array('member_id' => $member_id, 'addr_id' => $addr['addr_id']));
+                //rpc更新或添加收货时间
+                foreach($maddr["habit_normal_time"] as $k=>$v){
+                    $update_time_data[] = array(
+                        'buyer_id' => $member_data['buyer_id'],
+                        'recPerType' => (string)($k+1),
+                        'timeDescribe' => $v,
+                    );
+                }
+                $update_time_result = $this->app->rpc('update_receive_time')->request($update_time_data);
+                if (!$update_time_result['status']) {
+                    $this->splash('error', '', '同步收货时间保存失败');
+                }
+
                 //rpc更新或添加收货地址
                 $update_data[] = array(
                     'buyer_id' => $member_data['buyer_id'],
@@ -798,7 +811,9 @@ class b2c_ctl_site_member extends b2c_frontpage
                 if (!$update_result['status']) {
                     $this->splash('error', '', '同步收货地址保存失败');
                 }else{
-                    $mdl_maddr->save(array('rpc_addr_id' => $update_result['result'][0]['rpc_addr_id'], 'addr_id' => $addr['addr_id']));
+                    if(in_array($update_result['result'][0],$update_result['result'])){
+                        $mdl_maddr->update(array('rpc_addr_id' => $update_result['result'][0]['rpc_addr_id']), array('addr_id' => $addr['addr_id']));
+                    };
                 };
                 $this->splash('success', $redirect, '保存成功');
                 break;
