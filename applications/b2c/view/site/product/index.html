@@ -19,11 +19,11 @@
             <div class="row pricebox clearfix">
                 <!-- <h4>数量随心订 · 价格大不同</h4> -->
                 <h4><img src="<{$base_url}>/themes/pc/default/statics/images/font_tip.png"></h4>
-                <div class="price_lt">
+                <!--<div class="price_lt">
                     <p>通道阶梯价</p>
                     <p>随心量</p>
                 </div>
-                <div class="price_rt">
+                 <div class="price_rt">
                     <ul>
                         <li>
                             <span class="price_item"><strong>105</strong>/元</span>
@@ -72,17 +72,53 @@
                         </li>
                     </ul>
                     <div class="price_bg"></div>
-                </div>
-            <!-- <table>
+                </div> -->
+            <table>
                 <tbody>
                     <tr>
                         <td>随心量</td>
-                        foreach开始
-                        <td>
+                        <!-- foreach开始 -->
+                        <!-- <td>
                             <span class="num-dn"><{$item.num_dn|default:1}></span>-
                             <span class="num-up"><{$item.num_up|default:不限}></span>箱
+                        </td> -->
+                        <!-- foreach结束 -->
+                        <td>
+                            <span class="num-dn">1</span>-
+                            <span class="num-up">50</span>箱
                         </td>
-                        foreach结束
+                        <td>
+                            <span class="num-dn">51</span>-
+                            <span class="num-up">100</span>箱
+                        </td>
+                        <td>
+                            <span class="num-dn">101</span>-
+                            <span class="num-up">150</span>箱
+                        </td>
+                        <td>
+                            <span class="num-dn">151</span>-
+                            <span class="num-up">200</span>箱
+                        </td>
+                        <td>
+                            <span class="num-dn">201</span>-
+                            <span class="num-up">250</span>箱
+                        </td>
+                        <td>
+                            <span class="num-dn">251</span>-
+                            <span class="num-up">300</span>箱
+                        </td>
+                        <td>
+                            <span class="num-dn">301</span>-
+                            <span class="num-up">350</span>箱
+                        </td>
+                        <td>
+                            <span class="num-dn">351</span>-
+                            <span class="num-up">400</span>箱
+                        </td>
+                        <td>
+                            <span class="num-dn">401</span>-
+                            <span class="num-up">450</span>箱
+                        </td>
                     </tr>
                     <tr>
                         <td>通道阶梯价</td>
@@ -91,7 +127,7 @@
                         <{/foreach}>
                     </tr>
                 </tbody>
-            </table> -->
+            </table>
         </div>
             <div class="col-xs-5">
                 <div class="product-main-image" style="position: relative; overflow: hidden; width:450px; height:450px; margin-top:15px;">
@@ -291,14 +327,14 @@
                 <{WIDGET_STORE_DETAILS app=b2c store_id=$data_detail.store_id}>
 
                 <!-- 客服中心 -->
-                <div class="kefu_list">
+                <!-- <div class="kefu_list">
                     <a href="#">
                         <img src="<{$base_url}>/themes/pc/default/statics/images/kefulist.png" />
                     </a>
-                </div>
+                </div> -->
 
                 <!-- 店主推荐 -->
-                <div class="shopkeeper_tj">
+                <!-- <div class="shopkeeper_tj">
                     <h3><span>店主推荐</span><a href="">更多推荐》</a></h3>
                     <ul>
                         <li>
@@ -326,7 +362,7 @@
                             </div>
                         </li>
                     </ul>
-                </div>
+                </div> -->
             </div>
             <div class="product_detail_rt">
                 <div class="product-page-content">
