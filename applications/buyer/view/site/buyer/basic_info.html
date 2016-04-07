@@ -64,10 +64,10 @@
 			    <div class="col-xs-4 sex-radio">
 			    	<div class="form-item">
 				      	<label class="radio-inline">
-						  	<input type="radio" name="sex" value="0" <{if $basic_info.sex eq 0  }> checked = "checked" <{/if}>> 男
+						  	<input type="radio" name="sex" value="1" <{if $basic_info.sex eq '1'  }> checked = "checked" <{/if}>> 男
 						</label>
 						<label class="radio-inline">
-						  	<input type="radio" name="sex" value="1" <{if $basic_info.sex eq 1  }>  checked = "checked" <{/if}> required="true"> 女
+						  	<input type="radio" name="sex" value="0" <{if $basic_info.sex eq '0'  }>  checked = "checked" <{/if}> required="true"> 女
 						</label>
 					</div>
 					<span class="msgTip" data-message="error"></span>
