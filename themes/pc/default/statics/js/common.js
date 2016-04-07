@@ -245,8 +245,6 @@ $(function() {
     }).on("click",function(ev){
         $(".timeStart").datetimepicker("setEndDate", $(".timeEnd").val());
     }).on("hide",function(ev){
-        var $value = $(".timeStart").val();
-        $(".timeStart").attr('value',$value);
         $(".timeStart").trigger('blur');
     });
     $(".timeEnd").datetimepicker({
@@ -261,8 +259,6 @@ $(function() {
     }).on("click", function (ev) {
         $(".timeEnd").datetimepicker("setStartDate", $(".timeStart").val());
     }).on("hide",function(ev){
-        var $value = $(".timeEnd").val();
-        $(".timeEnd").attr('value',$value);
         $(".timeEnd").trigger('blur');
     });
    
