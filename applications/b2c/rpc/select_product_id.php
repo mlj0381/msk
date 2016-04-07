@@ -4,13 +4,12 @@
  */
 $remote['b2c_select_product_id'] = array(
     'url' => '/pd/pd_standard_list',
-
     'request' => array(
         'member_id' => array(
             'name' => '登陆的用户ID',
             'column' => 'loginId',
             'type' => 'String',
-            'default' => '',
+            'default' => '1',
             'require' => false,
         ),
         'param' => array(
@@ -44,9 +43,9 @@ $remote['b2c_select_product_id'] = array(
         ),
     ),
     'searchList' => array(
-        'standardID' => array(
+        'standardId' => array(
             'name' => '产品标准ID',
-            'column' => 'standardID',
+            'column' => 'standardId',
             'type' => 'String',
         ),
         'classesCode' => array(

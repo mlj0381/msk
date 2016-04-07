@@ -50,13 +50,14 @@ class base_rpc
 	private $action = "";
 
 	private $result = array();	
-	private $base_url = "";
+	static  $base_url = "";
 	private $url = "";
-	private $version = 'v1';
+    static $version = 'v1';
 
-	private $headers = array();	
-	private $postData = array(); //
+	static $headers = array();
+    static $postData = array(); //
 
+    private $_postData = Array();
 	private $_params = array(); //
 	private $_subs = array(); // 
 
@@ -65,7 +66,6 @@ class base_rpc
 	private $status = true;
 	private $message = "";
 	private $returnCode = "";
-
 	private $_timeout = 300;
 
 	public function __construct($app)
@@ -86,26 +86,18 @@ class base_rpc
             $base = app::get('base');
 			$setting = new base_setting($base);
 			$config = $setting->get_conf('remote');
-			$this->base_url = $this->build_url($config);
-			$this->version = $config['version'];
+			self::$base_url = $this->build_url($config);
+            self::$version = $config['version'];
 			if(!empty($config['param']))
 			{
-				$this->postData = $config['param'];
+				self::$postData = $config['param'];
 			}			
 			// 头部处理
 			if(!empty($config['headers']))
 			{
-				$this->headers = $config['headers'];
+				self::$headers = $config['headers'];
 			}
-			$result = $setting->get_conf('result');
-			if(is_array($result))
-			{
-				foreach($result as $key => $item )
-				{
-					$this->$key = $item;
-				}
-			}
-			self::$initialized = true;			
+			self::$initialized = true;
         }
 	}
 
@@ -151,20 +143,21 @@ class base_rpc
 			self::$_rpc_config[$index] = $remote[$index];			
 		}
 		$this->configs = self::$_rpc_config[$index];
-		if(empty($this->configs['request'])) return ;
-		
+		if(empty($this->configs['request'])) return $this->error('错误的请求');
 		if(empty(self::$_rpc_config[$index]['url'])){
 			$this->error('Not found this Url!');
 		}else{
-			$version = empty(self::$_rpc_config[$index]['version']) ? $this->version : self::$_rpc_config[$index]['version'];
-			$this->url = $this->base_url . '/'. $version . self::$_rpc_config[$index]['url'];
+            $version = self::$version;
+            empty(self::$_rpc_config[$index]['version']) || $version = self::$_rpc_config[$index]['version'];
+			$this->url = self::$base_url . '/'. $version . self::$_rpc_config[$index]['url'];
 		}
+        $this->_postData = self::$postData;
 		foreach($this->configs['request'] as $key => $item){
 			$column = isset($item['column']) ? $item['column'] : $key;
 			if(!empty($item['require']) && !isset($data[$key])) return $this->error("{$key}=>{$column}为必填字段！");
 			$type = strtolower($item['type']);  
 			$value = $key == 'param' ? $data : $data[$key];// 放在外层			
-			$this->postData[$column] = $this->_convert($key, $item, $value);		
+			$this->_postData[$column] = $this->_convert($key, $item, $value);
 		}
 		// 处理参数			
 		if(!$this->status) return ;
@@ -239,8 +232,8 @@ class base_rpc
 		if($this->_page !== Null) $this->postData['param']['pageNo'] = $this->_page;
 		if($this->_perpage !== Null) $this->postData['param']['pageCount'] = $this->_page;
 		//print_r($this->postData);
-        if(count($this->postData['param']) <= 0) unset($this->postData['param']);
-		$query = json_encode($this->postData, true);
+        if(count($this->_postData['param']) <= 0) unset($this->_postData['param']);
+		$query = json_encode($this->_postData, true);
 		return $query;
 	}
 	
@@ -251,13 +244,12 @@ class base_rpc
         curl_setopt($ch, CURLOPT_HEADER, 0);		
 		curl_setopt($ch, CURLOPT_POST, 1);
 		curl_setopt($ch, CURLOPT_POSTFIELDS, $this->_prepare());
-		//print_r($this->headers);
-		curl_setopt($ch, CURLOPT_HTTPHEADER, $this->headers);
+		curl_setopt($ch, CURLOPT_HTTPHEADER, self::$headers);
         curl_setopt($ch, CURLOPT_TIMEOUT, $this->_timeout);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 		//curl_setopt($ch, CURLOPT_COOKIEJAR, $this->_cookieFileLocation);
         //curl_setopt($ch, CURLOPT_COOKIEFILE, $this->_cookieFileLocation);
-		//print_r(curl_getinfo($ch));
+		//var_dump($this->_prepare(), curl_getinfo($ch));
 		$return = curl_exec($ch);
 		$requestHeader = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 		//$this->request_logs = curl_getinfo($ch);	
