@@ -109,8 +109,8 @@ class buyer_mdl_buyers extends dbeav_model{
 		return $this->getRow('buyer_id',array('mobile'=>trim($mobile)));
 	}
 	
-	public function reset_password($user_id,$old_password,$new_password){
-		$mdl_pm_buyers = app::get('pam')->model('buyers');
+	public function reset_password($member_id,$old_password,$new_password){
+		$mdl_pm_buyers = app::get('pam')->model('members');
 		$check_data = $mdl_pm_buyers->getRow('login_account,createtime,password_account,login_password',array('buyer_id'=>$user_id));
 		
 		$use_pass_data['login_name'] = $check_data['password_account'];
@@ -118,7 +118,7 @@ class buyer_mdl_buyers extends dbeav_model{
 		if (pam_encrypt::get_encrypted_password($old_password, 'member',$use_pass_data) == $check_data['login_password']){
 			$reset['login_password'] = pam_encrypt::get_encrypted_password($new_password, 'member',$use_pass_data);
 			$reset['password'] = $new_password;
-			if ($mdl_pm_buyers->update($reset,array('buyer_id'=>$user_id))){
+			if ($mdl_pm_buyers->update($reset,array('member_id'=>$member_id))){
 				//这个根据RPC的必填项（object） 需要分步提交
 // 				$basic_data = $this->app->model('buyers')->getRow('*', array('buyer_id'=>$user_id));
 // 				$mdl_rpc = $this->app->rpc('edit_buyer_info');
@@ -132,7 +132,6 @@ class buyer_mdl_buyers extends dbeav_model{
 // 								'authStatus'	=>2,
 // 						),);
 // 				$mdl_rpc->request($request, false);
-				vmc::singleton('buyer_user_object')->set_session($user_id, '');
 				//修改成功
 				return 'success';
 			}else {
