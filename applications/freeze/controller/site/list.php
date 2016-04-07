@@ -14,7 +14,7 @@ class freeze_ctl_site_list extends freeze_frontpage
         $this->set_tmpl('default');
         $model_freeze = app::get('freeze')->model('freeze');
         $limit = 8;
-        $filter = array();
+        $filter = array('code|noequal'=>'','account|noequal'=>'');
         $freeze_list = $model_freeze->getList('*',$filter,($page-1)*$limit,$limit);
         $count = $model_freeze->count($filter);
 

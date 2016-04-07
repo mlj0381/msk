@@ -605,29 +605,28 @@ class b2c_user_passport {
     public function save_members($saveData, &$msg) {
         $saveData = vmc::singleton('b2c_site_filter')->check_input($saveData);
         $member_model = $this->app->model('members');
-        //$db = vmc::database();
-        //$db->beginTransaction();
-        print_r($saveData['b2c_members']);
+        $db = vmc::database();
+        $db->beginTransaction();
+
         if ($jg = $member_model->save($saveData['b2c_members'])) {
             $member_id = $saveData['b2c_members']['member_id'];
-            print_r($saveData['b2c_members']);
+         
             $saveData['pam_account']['member_id'] = $member_id;
             $saveData['pam_account']['mobile'] = $saveData['b2c_members']['mobile'];
             
             if (!app::get('pam')->model('members')->save($saveData['pam_account'])) {
-                //$db->rollBack();
+                $db->rollBack();
                 $msg = '账户数据保存异常!';
 
-                //return false;
+                return false;
             }
-            //$db->commit();
+            $db->commit();
         } else {
             $msg = '保存失败!';
 
-            //return false;
+            return false;
         }
-        var_dump($jg);
-		die(vmc::database()->last_query);
+       
         return $member_id;
     }
 

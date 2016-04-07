@@ -45,7 +45,6 @@ class b2c_ctl_site_checkout extends b2c_frontpage
         ));
         $filter = array();
         $member_id = $this->app->member_id;
-
         if ($fastbuy !== false) {
             $filter['is_fastbuy'] = 'true';
         }
@@ -89,19 +88,25 @@ class b2c_ctl_site_checkout extends b2c_frontpage
                 $available_coupons[$p['coupon_code']]['in_cart'] = 'true';
             }
         }
-        $member_id =  vmc::singleton('b2c_user_object')->get_member_id();
-        if($member_id)
+
+        $object_obj = vmc::singleton('buyer_user_object');
+        $buyer_id = $object_obj->get_id();
+        if(!$buyer_id)
         {
             $member = app::get('b2c')->model('members')->getRow('*',array('member_id'=>$member_id));
             $api_buyer_id = $member['buyer_id'];
             $buyer_code = $member['buyer_code'];
             $buyer_name = '1';
         }else{
-            $buyer_id = vmc::singleton('buyer_user_object')->get_id();
             $buyer = app::get('buyer')->model('buyers')->getRow('*',array('buyer_id'=>$buyer_id));
-            $api_buyer_id = $buyer['api_buyer_id']?$buyer['api_buyer_id']:'408880027';
+            $api_buyer_id = $buyer['api_buyer_id'];
             $buyer_code = $buyer['buyer_code'];
             $buyer_name = $buyer['local'];
+        }
+
+        if(!$api_buyer_id && !$buyer_code)
+        {
+            $this->splash('error', '', '用户不存在');
         }
         $api_data = array(
             'districtCode' => $_SESSION['account']['addr'],

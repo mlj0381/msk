@@ -53,10 +53,13 @@ class freeze_mdl_freeze extends dbeav_model
     /**
      * 得到管家账号
      */
-    public function get_account($buyer_id)
+    public function get_account($member_id)
     {
-
-        $data = app::get('pam')->model('buyers')->getRow("login_account",array('buyer_id'=>$buyer_id));
+        $data = app::get('pam')->model('members')->getRow("login_account",array('member_id'=>$member_id));
+        $buyer_id = app::get('buyer')->model('buyers')->getRow('buyer_id',array('member_id'=>$member_id));
+        $buyer_id = $buyer_id['buyer_id'];
+//        $object_obj = vmc::singleton('buyer_user_object');
+//		$buyer_id = $object_obj->get_id();
         $count = $this->count(array('buyer_id' => $buyer_id));
         $account_name = $data['login_account'];
         if ($count < 10) {

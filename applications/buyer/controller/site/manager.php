@@ -17,14 +17,14 @@
  *
  */
 class buyer_ctl_site_manager extends buyer_frontpage{
-	
+
 	public function __construct(&$app){
 		parent::__construct($app);
 		$this->verify_buyer();
 		//后面还需要什么............
 	}
-	
-	
+
+
 	/**
 	 * 冻品管家管理（list）
 	 */
@@ -54,21 +54,21 @@ class buyer_ctl_site_manager extends buyer_frontpage{
 		$this->pagedata['list'] = $freeze_list;
 		$this->output('');
 	}
-	
-	
+
+
 	/**
 	 * 管家注册（有下一步）
 	 */
 	public function signup(){
 		//处理冻品管家登录账号
 		$object_obj = vmc::singleton('buyer_user_object');
-		$buyer_id = $object_obj->get_id();
-		$account_name = app::get('freeze')->model('freeze')->get_account($buyer_id);
+		$member_id = $object_obj->get_session();
+		$account_name = app::get('freeze')->model('freeze')->get_account($member_id['member']);
 
 		$this->pagedata['account_name'] = $account_name;
 		$this->output('');
 	}
-	
+
 
 
 
@@ -78,6 +78,6 @@ class buyer_ctl_site_manager extends buyer_frontpage{
 	public function feat(){
 		$this->output('');
 	}
-	
-	
+
+
 }

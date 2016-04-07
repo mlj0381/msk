@@ -27,7 +27,7 @@
         <menu app='b2c' controller='site_member' action='setting' display='true' order="60">个人资料</menu>
         <menu app='b2c' controller='site_member' action='securitycenter' display='true' order="60">安全中心</menu>
         <menu app='b2c' controller='site_member' action='receiver' display='true' order="60">收货地址</menu>
-        <menu app='b2c' controller='site_member' action='receiver_time' display='true' order="60">收货时间</menu>
+        <menu app='b2c' controller='site_member' action='receiver_time' display='false' order="60">收货时间</menu>
         <menu app='b2c' controller='site_member' action='ticket' display='fasle' order="60">增票资质</menu>
         <menu app='site' controller='index' action='build' display='false' order="60">我的会员卡</menu>
     </menugroup>

@@ -87,7 +87,7 @@ class b2c_ctl_site_order extends b2c_frontpage
 //                    $order_sdf['is_cod'] = 'Y';
 //                }
 //            }
-            if (!$params['addr_id'] && !empty($member_id)) {
+            if (!$params['addr_id']) {
                 $this->logger->fail('create', '无收货人信息', $params);
                 $this->splash('error', $redirect_checkout, '无收货人信息');
             } else {
@@ -180,8 +180,9 @@ class b2c_ctl_site_order extends b2c_frontpage
             $data['quantity'] = $product['nums'];
             $api_data['products'][] = $data;
         }
-
-        if($member_id)
+        $object_obj = vmc::singleton('buyer_user_object');
+		$buyer_id = $object_obj->get_id();
+        if(!$buyer_id)
         {
             $result = app::get('buyer')->rpc('create_out_order')->request($api_data);
         }else{

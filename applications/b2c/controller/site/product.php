@@ -59,10 +59,9 @@ class b2c_ctl_site_product extends b2c_frontpage {
         $products_data = $this->app->model('products')->getRow('goods_id,bn',array('product_id'=>$params[0]));
         //调用接口获取四级分类和五级分类
         $response = $this->app->rpc('goods_info')->request($data=array());
-        $data_detail_response = utils::array_change_key($response['result']['goods'], 'goods_code')[$products_data['bn']];
-        
+        $data_detail_response = utils::array_change_key($response['result']['goods'], 'bn')[$products_data['bn']];
         //这个是data_detail拼接
-        $data_detail['name'] = str_replace('/'," ",$data_detail_response['goods_name']);
+        $data_detail['name'] = str_replace('/'," ",$data_detail_response['name']);
         //一级
         $data_detail['classesCode'] = $data_detail_response['cat_1'];
         //二级
@@ -86,6 +85,8 @@ class b2c_ctl_site_product extends b2c_frontpage {
        
         //包装规格  $data[0];
         $data_detail['weight_data_list'] = array_filter(array_unique($weight_data));
+        
+        //var_dump($data_detail);exit;
         
         $this->pagedata['buyer_id'] = vmc::singleton('buyer_user_object')->get_session();
         $this->pagedata['data_detail'] = $data_detail;

@@ -70,7 +70,7 @@ class buyer_ctl_site_buyer extends buyer_frontpage{
 					$request = array(
 							'slAccount'=>array(
 									'login_account'	=>$data['login_account'],
-									'mobile'		=>$basic_data['mobile'],
+									'phone'		=>$basic_data['mobile'],
 									'local'			=>$basic_data['local'],
 									'name'			=>$basic_data['name'],
 									'password'		=>$data['password'],
