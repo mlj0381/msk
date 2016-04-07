@@ -348,45 +348,100 @@ class b2c_ctl_site_member extends b2c_frontpage
          * ISO151415 订单整体取消 订单已付款状态 订单已全部发货 订单全部收货 订单部分发货 订单部分收货
          * ISO151412 删除/恢复订单
          */
-        $mdl_order = $this->app->model('orders');
-        $mdl_order_items = $this->app->model('order_items');
-        $limit = 5;
-        $status_filter = $mdl_order->status_filter();
+//        $mdl_order = $this->app->model('orders');
+//        $mdl_order_items = $this->app->model('order_items');
+//        $limit = 5;
+//        $status_filter = $mdl_order->status_filter();
+//
+//        $this->pagedata['status'] = $status;
+//        $filter = $status_filter[$status];
+//        $obj_order_search = vmc::singleton('b2c_order_search');
+//        $search = $obj_order_search->search($_POST);
+//        $filter['member_id'] = $this->member['member_id'];
+//        if ($status == 's2') {
+//            $where = $search['sql'];
+//            $sql = "SELECT * FROM vmc_b2c_orders WHERE `member_id`={$this->member['member_id']} AND `status` = 'active' AND `confirm` = 'N' AND (`is_cod`='Y' OR `pay_status`='1') {$where} AND `ship_status`='0' ORDER BY createtime desc LIMIT ".(($page - 1) * $limit).", {$limit}";
+//            $order_list = vmc::database()->select($sql);
+//        } else {
+//            $search['order_id|has'] && $filter['order_id|has'] = $search['order_id|has'];
+//            $search['order_id|in'] && $filter['order_id|in'] = $search['order_id|in'];
+//            $order_list = $mdl_order->getList('*', $filter, ($page - 1) * $limit, $limit);
+//        }
+//        $obj_store = vmc::singleton('store_store_object');
+//        $mdl_request_order = app::get('aftersales')->model('request');
+//        foreach ($order_list as $key => $value) {
+//            //所属店铺信息
+//            $store_info = $obj_store->store_info($value['store_id'], 'store_id, store_name');
+//            $order_list[$key]['store_name'] = $store_info['store_name'];
+//            //查看订单是否已申请退款、售后
+//            $result = $mdl_request_order->getRow('request_id, order_id', array('order_id' => $value['order_id']));
+//            $order_list[$key]['request'] = $result;
+//        }
+//        $oids = array_keys(utils::array_change_key($order_list, 'order_id'));
+//        $order_items = $mdl_order_items->getList('*', array(
+//            'order_id' => $oids,
+//        ));
+//        $order_items_group = utils::array_change_key($order_items, 'order_id', true);
+//        $order_count = $mdl_order->count($filter);
 
-        $this->pagedata['status'] = $status;
-        $filter = $status_filter[$status];
-        $obj_order_search = vmc::singleton('b2c_order_search');
-        $search = $obj_order_search->search($_POST);
-        $filter['member_id'] = $this->member['member_id'];
-        if ($status == 's2') {
-            $where = $search['sql'];
-            $sql = "SELECT * FROM vmc_b2c_orders WHERE `member_id`={$this->member['member_id']} AND `status` = 'active' AND `confirm` = 'N' AND (`is_cod`='Y' OR `pay_status`='1') {$where} AND `ship_status`='0' ORDER BY createtime desc LIMIT " . (($page - 1) * $limit) . ", {$limit}";
-            $order_list = vmc::database()->select($sql);
-        } else {
-            $search['order_id|has'] && $filter['order_id|has'] = $search['order_id|has'];
-            $search['order_id|in'] && $filter['order_id|in'] = $search['order_id|in'];
-            $order_list = $mdl_order->getList('*', $filter, ($page - 1) * $limit, $limit);
+        /**
+         *  订单列表查询接口---------------ISO151416
+         */
+        $limit = 1;
+        $offset = ($page - 1) * $limit;
+        $rpc_orders = app::get('buyer')->rpc("get_orders_list");
+        $request_filter = app::get('b2c')->model('members')->getRow('buyer_code,buyer_id',array('member_id'=>$this->app->member_id));
+        $response = $rpc_orders->request($request_filter);
+
+        if($response['status'])
+        {
+            $api_orders_list = $response['result']['orders'];
+            //如果不是查询全部订单就进行状态筛选
+            if($status != 'all')
+            {
+                foreach($api_orders_list as $k=>$order)
+                {
+                    if($order['orderStatus'] != $status)
+                    {
+                        unset($api_orders_list[$k]);
+                    }
+                }
+                sort($api_orders_list);
+            }
+            //分页处理
+            $api_orders = array_slice($api_orders_list,$offset,$limit);
+            $order_count = count($api_orders_list);
+
+            //查询本地数据库数据
+            $api_orders = utils::array_change_key($api_orders,'orderId');
+            $api_order_id = array_keys($api_orders);
+            $mdl_order = $this->app->model('orders');
+            $mdl_order_items = $this->app->model('order_items');
+            $local_orders = $mdl_order->getList('*', array('api_order_id'=>$api_order_id));
+            $local_orders = utils::array_change_key($local_orders,'api_order_id');
+            $order_list = array();
+            //进行接口数据合并
+            foreach($api_orders as $k=>$order)
+            {
+                if($local_orders[$order['orderId']])
+                {
+                    $order = array_merge($order,$local_orders[$order['orderId']]);
+                }
+                $order['status_name'] = $this->api_order_status($order['orderStatus']);
+                $order_list[] = $order;
+            }
+            $oids = array_keys(utils::array_change_key($order_list, 'order_id'));
+            $order_items = $mdl_order_items->getList('*', array(
+                'order_id' => $oids,
+            ));
+            $order_items_group = utils::array_change_key($order_items, 'order_id', true);
+
         }
-        $obj_store = vmc::singleton('store_store_object');
-        $mdl_request_order = app::get('aftersales')->model('request');
-        foreach ($order_list as $key => $value) {
-            //所属店铺信息
-            $store_info = $obj_store->store_info($value['store_id'], 'store_id, store_name');
-            $order_list[$key]['store_name'] = $store_info['store_name'];
-            //查看订单是否已申请退款、售后
-            $result = $mdl_request_order->getRow('request_id, order_id', array('order_id' => $value['order_id']));
-            $order_list[$key]['request'] = $result;
-        }
-        $oids = array_keys(utils::array_change_key($order_list, 'order_id'));
-        $order_items = $mdl_order_items->getList('*', array(
-            'order_id' => $oids,
-        ));
-        $order_items_group = utils::array_change_key($order_items, 'order_id', true);
-        $order_count = $mdl_order->count($filter);
+
         $this->pagedata['search'] = $_POST['search'];
         $this->pagedata['type'] = 'orders';
         $this->pagedata['current_status'] = $status;
-        $this->pagedata['status_map'] = $status_filter;
+//        $this->pagedata['status_map'] = $status_filter;
         $this->pagedata['order_list'] = $order_list;
         $this->pagedata['order_count'] = $order_count;
         $this->pagedata['order_items_group'] = $order_items_group;
@@ -405,6 +460,31 @@ class b2c_ctl_site_member extends b2c_frontpage
             'token' => $token,
         );
         $this->output();
+    }
+
+    public function api_order_status($status)
+    {
+        $status_array = array(
+            1=>'新建',
+            2=>'待付款',
+            3=>'已付款',
+            4=>'待审核',
+            5=>'已审核',
+            6=>'待分销',
+            7=>'分销中',
+            8=>'已确认',
+            9=>'待发货',
+            10=>'部分发货',
+            11=>'部分收货',
+            12=>'全部发货',
+            13=>'全部收货',
+            14=>'分销失败'
+        );
+        if($status_array[$status])
+        {
+            return $status_array[$status];
+        }
+        return false;
     }
 
     //购买过的店铺

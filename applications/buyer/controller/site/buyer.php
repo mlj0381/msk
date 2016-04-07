@@ -24,16 +24,12 @@ class buyer_ctl_site_buyer extends buyer_frontpage{
 		parent::__construct($app);
 		$this->verify_buyer();
 		$this->buyer_id = vmc::singleton('buyer_user_object')->get_id();
-		$this->member_id = vmc::singleton('buyer_user_object')->get_session()['member_id'];
+		$this->member_id = vmc::singleton('buyer_user_object')->get_session()['member'];
 		//后面还需要什么............
 	}
 	
 	
 	public function index($status){
-// 		vmc::singleton('base_session')->start();
-// 		var_dump($_SESSION);
-// 		15230315235
-		//'args'=>$status;
         $this->output();
 	}
 	

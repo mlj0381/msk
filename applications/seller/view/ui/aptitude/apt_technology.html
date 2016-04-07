@@ -1,4 +1,4 @@
-<div class="modal-header">
+<div class="modal-header" data-type="3">
     <button type="button" class="close" data-dismiss="modal" aria-label="Close" required="true"><span aria-hidden="true">&times;</span></button>
     <h4 class="modal-title" id="myModalLabel">产品加工技术标准指标</h4>
 </div>
@@ -11,12 +11,14 @@
             <thead>
                 <tr>
                     <th width="30%" rowspan="2">指标内容</th>
-                    <th width="70%" colspan="2">等级</th>
-                </tr>
-                <tr>
+                    <!-- <th width="70%" colspan="2">等级</th> -->
                     <th>合格</th>
                     <th>不合格</th>
                 </tr>
+                <!-- <tr>
+                    <th>合格</th>
+                    <th>不合格</th>
+                </tr> -->
             </thead>
             <tbody>
             <{foreach from=$card.mctList item=item}>

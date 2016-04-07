@@ -46,6 +46,7 @@ class buyer_ctl_site_goods extends buyer_frontpage{
 	/**
 	 * 销售商品订单(订单管理)
 	 */
+
 	public function stock($current_status='all', $page = 1){
 		$limit = 20;
 		$where =array();

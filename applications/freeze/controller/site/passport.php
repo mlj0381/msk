@@ -33,7 +33,7 @@ class freeze_ctl_site_passport extends freeze_frontpage{
 
         if ($member_id = $this->passport_obj->save_members($member_sdf_data, $msg)) {
 //            $this->user_obj->set_member_session($member_id);
-//            $this->bind_freeze($member_id);
+            $this->bind_member($member_id);
 
             $db->commit($this->transaction_status); //事务提交
             $this->splash('success', $next, '注册成功');
@@ -83,6 +83,7 @@ class freeze_ctl_site_passport extends freeze_frontpage{
         }
         //设置session
         $this->user_obj->set_member_session($member_id);
+        $this->bind_member($member_id);
 
         $forward = $params['forward'];
 

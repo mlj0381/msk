@@ -33,7 +33,7 @@ class seller_frontpage extends site_controller
         $this->action = $this->_request->get_act_name();
         $this->controller = $this->_request->get_ctl_name();
         if ($this->controller != 'site_passport') {
-            $this->_schedule();
+            //$this->_schedule();
         }
         $this->menuSetting = 'index';
         $this->seller = $this->seller ?: $this->get_current_seller();
