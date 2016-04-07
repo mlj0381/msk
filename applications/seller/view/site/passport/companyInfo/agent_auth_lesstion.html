@@ -18,9 +18,9 @@
 			授权期限：
 		</label>
 		<div class="col-xs-4">
-			<div class="form-item">
-				<input type="text" name="agent_auth_lesstion[value][start]" value="<{$extra.agent_auth_lesstion.value.start}>"  class="form-control" style="width:46%; display: inline-block;" placeholder="2010-10-20"> 至 
-				<input type="text" name="agent_auth_lesstion[value][end]" value="<{$extra.agent_auth_lesstion.value.end}>"  class="form-control" style="width:46%; display: inline-block;" placeholder="2010-10-20">
+			<div class="timeLimit">
+				<input type="text" name="agent_auth_lesstion[value][start]" value="<{$extra.agent_auth_lesstion.value.start}>"  class="form-control date timeStart" style="width:46.5%; display: inline-block;" placeholder="2010-10-20" readonly required="true"> 至 
+				<input type="text" name="agent_auth_lesstion[value][end]" value="<{$extra.agent_auth_lesstion.value.end}>"  class="form-control date timeEnd" style="width:46.5%; display: inline-block;" placeholder="2010-10-20" readonly required="true">
 				<span class="msgTip" data-message="error"></span>
 			</div>
 		</div>

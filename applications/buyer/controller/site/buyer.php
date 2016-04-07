@@ -58,7 +58,7 @@ class buyer_ctl_site_buyer extends buyer_frontpage{
 			 * 更新店铺信息---也即是调用编辑buyer基本信息接口
 			 * 
 			 */
-			
+
 			$data = app::get('pam')->model('members')->getRow('login_account,login_password,password', array('member_id'=>$this->member_id));
 			$basic_data = $this->app->model('buyers')->getRow('*', array('buyer_id'=>$this->buyer_id));
 			if ($this->app->model('buyers')->update($params, array('buyer_id' => $this->buyer_id))){
@@ -304,7 +304,7 @@ class buyer_ctl_site_buyer extends buyer_frontpage{
 	}
 	
 	public function rpc_update_data($update_params){
-		$data = app::get('pam')->model('buyers')->getRow('login_account,login_password,password', array('buyer_id'=>$this->buyer_id));
+		$data = app::get('pam')->model('members')->getRow('login_account,login_password,password', array('member_id'=>$this->member_id));
 		$basic_data = $this->app->model('buyers')->getRow('*', array('buyer_id'=>$this->buyer_id));
 		$params = array_merge($data, $basic_data);
 		$region = $basic_data['area'];
@@ -313,7 +313,7 @@ class buyer_ctl_site_buyer extends buyer_frontpage{
 				'slAccount'=>array(
 						'buyer_code'	=>$params['buyer_code'],
 						'login_account'	=>$params['login_account'],
-						'mobile'		=>$params['mobile'],
+						'phone'		=>$params['phone'],
 						'local'			=>$update_params['local'] ?:$params['local'],
 						'name'			=>$update_params['name'] ?:$params['name'],
 						'password'		=>$params['password'],
@@ -324,10 +324,10 @@ class buyer_ctl_site_buyer extends buyer_frontpage{
 						'login_account'	=>$params['login_account'],
 						'slConFlg'		=>'1',//生产国籍
 						'areaCode'		=>'1',//大区编码
-						'lgcsAreaCode'	=>$area_result['province']['code'],//物流区编码
-						'provinceCode'	=>$area_result['province']['code'],//省编码
-						'cityCode'		=>$area_result['city']['code'],//地区编码
-						'districtCode'	=>$area_result['district']['code'],//区编码
+						'lgcsAreaCode'	=>$area_result['province']['code']?:'01',//物流区编码
+						'provinceCode'	=>$area_result['province']['code']?:'01',//省编码
+						'cityCode'		=>$area_result['city']['code']?:'01',//地区编码
+						'districtCode'	=>$area_result['district']['code']?:'01',//区编码
 						'slMainClass'	=>4,//卖家主分类
 						'snkFlg'		=>'否',//神农客标志
 						'selfFlg'		=>'否',//自产型卖家标志
@@ -348,6 +348,7 @@ class buyer_ctl_site_buyer extends buyer_frontpage{
 						'buyer_code'	=>$params['buyer_code'],
 						'store_name'	=>$params['store_name'] ?:$update_params['store_name'],
 						'store_logo'	=>$params['store_logo'] ?:$update_params['store_logo'],
+						'managingCharact1'=>$params['operate_feature'],
 				),
 					
 		);
