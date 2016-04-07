@@ -384,6 +384,7 @@ class seller_ctl_site_goods extends seller_frontpage
                 $this->splash('error', $redirect_url, '保存失败');
             }
         }
+
         $goods['card'] = $card;
         if(!$jg = $this->_apiAddGoods1($goods)){
             $this->splash('error', $redirect_url, '保存失败');
@@ -428,8 +429,6 @@ class seller_ctl_site_goods extends seller_frontpage
 
         $api['slPdList'] = $slPdList;
         $result = $this->app->rpc('edit_seller_product')->request($api);
-        echo 'aaaaaaaaa';
-        print_r($result);
         $product = Array();
         if($result['status'])
         {
@@ -607,8 +606,6 @@ class seller_ctl_site_goods extends seller_frontpage
             );
         }
         $result = $this->app->rpc('edit_seller_product1')->request($api);
-        echo 'bbbbbbbbb';
-        print_r($result);
         if($result['status']){
             return true;
         }
