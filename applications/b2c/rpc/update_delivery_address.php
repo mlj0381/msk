@@ -29,7 +29,7 @@ $remote['b2c_update_delivery_address'] = array(
             'type' => 'String',
             'require' => true,
         ),
-        'addr_id' => array(
+        'rpc_addr_id' => array(
             'name' => '地址ID',
             'column' => 'id',
             'type' => 'String',

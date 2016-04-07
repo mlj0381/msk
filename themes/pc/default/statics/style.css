@@ -369,18 +369,64 @@ ol {
   width: 1140px;
   margin: 10px auto 15px;
   color: #999;
-  /* table{
-					border-collapse: collapse;
-					width:100%;
-					tr{
-						td{
-							//width:10%;
-							border:1px solid #fff;
-							height:30px;
-							line-height: 30px;
-							padding:5px;
-							font-size: 14px;
-							text-align: center;
+  /* .price_lt{
+					.fl;
+					width:100px;
+					height:60px;
+					overflow: hidden;
+					p{
+						font-size: 16px;
+						margin-bottom:15px;
+					}
+				
+				}
+				.price_rt{
+					//overflow: hidden;
+					position: relative;
+					.fr;
+					width:1000px;
+					height:60px;
+					.price_bg{
+						box-sizing: border-box;
+						width:100%;
+						height:10px;
+						background: #de6969;
+						border-radius:5px;
+						//top:25px;
+						margin-top:25px;
+						//margin-left:55px;
+						z-index: 9;
+					}
+					ul{
+						position:absolute;
+						left:-50px;
+						z-index: 10;
+						width:100%;
+						li{
+							width:110px;
+							.fl;
+							span{
+								display: block;
+								width:100%;
+								height:20px;
+								line-height: 20px;
+								text-align: center;
+								font-size: 14px;
+								strong{
+									color:#de6969;
+								}
+							}
+							i{
+								display: block;
+								width:20px;
+								height:20px;
+								margin:0 auto;
+								line-height: 20px;
+								background: #fff;
+								border:5px solid #de6969;
+								border-radius:50%;
+				
+							}
 						}
 					}
 				} */
@@ -389,61 +435,21 @@ ol {
   color: #a40001;
   margin: 0 0 20px;
 }
-.product-container .product-page .product_firstRow .pricebox .price_lt {
-  float: left;
-  width: 100px;
-  height: 60px;
-  overflow: hidden;
-}
-.product-container .product-page .product_firstRow .pricebox .price_lt p {
-  font-size: 16px;
-  margin-bottom: 15px;
-}
-.product-container .product-page .product_firstRow .pricebox .price_rt {
-  position: relative;
-  float: right;
-  width: 1000px;
-  height: 60px;
-}
-.product-container .product-page .product_firstRow .pricebox .price_rt .price_bg {
-  box-sizing: border-box;
+.product-container .product-page .product_firstRow .pricebox table {
+  border-collapse: collapse;
   width: 100%;
-  height: 10px;
-  background: #de6969;
-  border-radius: 5px;
-  margin-top: 25px;
-  z-index: 9;
+  background: #e06060;
+  border: 1px solid #fff;
 }
-.product-container .product-page .product_firstRow .pricebox .price_rt ul {
-  position: absolute;
-  left: -50px;
-  z-index: 10;
-  width: 100%;
-}
-.product-container .product-page .product_firstRow .pricebox .price_rt ul li {
-  width: 110px;
-  float: left;
-}
-.product-container .product-page .product_firstRow .pricebox .price_rt ul li span {
-  display: block;
-  width: 100%;
-  height: 20px;
-  line-height: 20px;
-  text-align: center;
+.product-container .product-page .product_firstRow .pricebox table tr td {
+  width: 10%;
+  border: 1px solid #fff;
+  height: 30px;
+  line-height: 30px;
+  padding: 5px;
   font-size: 14px;
-}
-.product-container .product-page .product_firstRow .pricebox .price_rt ul li span strong {
-  color: #de6969;
-}
-.product-container .product-page .product_firstRow .pricebox .price_rt ul li i {
-  display: block;
-  width: 20px;
-  height: 20px;
-  margin: 0 auto;
-  line-height: 20px;
-  background: #fff;
-  border: 5px solid #de6969;
-  border-radius: 50%;
+  text-align: center;
+  color: #fff;
 }
 .product-container .product-page .product_firstRow .pref_info {
   width: 100%;

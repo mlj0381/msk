@@ -1,0 +1,47 @@
+<div class="receiver_timepage">
+    <div class="page-header clearfix">
+        <h1 class="pull-left">我的收货时间</h1>
+    </div>
+    <form class="form-horizontal receiver_time_form" action="<{link app=b2c ctl=site_member act=receiver args0=save}>" method="post" id="receiver_time_form" data-module="validator">
+            <{if $maddr.addr_id}>
+                <input type="hidden" name="maddr[addr_id]" value="<{$maddr.addr_id}>">
+            <{/if}>
+            <div class="form-group">
+                <label class="col-xs-2 control-label">习惯正常收货时间段<span class="text-danger">*</span></label>
+                <div class="col-xs-7 time_period">
+                    <div class="form-item">
+                        <{foreach from=$receiving key=key item=item}>
+                            <span class="list_item" data-id="<{$key}>">
+                                <input type="checkbox" <{if in_array($item, $maddr.habit_normal_time)}>checked<{/if}>  value="<{$item}>" required="true" name="maddr[habit_normal_time][]" />
+                                <{$item}>
+                            </span>
+                        <{/foreach}>   
+                    </div>
+                    <span class="msgTip" data-message="error"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-xs-2 control-label">习惯最早收货时间<span class="text-danger">*</span></label>
+                <div class="col-xs-7">
+                    <input type="text" value="<{$maddr.habit_normal_first}>" name="maddr[habit_normal_first]" required="true" format="time" class="form-control" placeholder="例如：06:00">
+                    <span class="msgTip" data-message="format">请输入正确时间格式</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-xs-2 control-label">习惯最晚收货时间<span class="text-danger">*</span></label>
+                <div class="col-xs-7">
+                    <input type="text" value="<{$maddr.habit_normal_last}>" name="maddr[habit_normal_last]" required="true" format="time" class="form-control" placeholder="例如：23:00">
+                    <span class="msgTip" data-message="format">请输入正确时间格式</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-xs-7 col-xs-offset-2">
+                    <button type="submit" class="btn btn-md btn-danger">保存设置
+                        <{if $maddr.addr_id}>修改
+                            <{/if}>
+                    </button>
+                </div>
+            </div>
+    </form>
+    
+</div>

@@ -145,55 +145,55 @@
                   data-target=".category_add_modal"
                   href="<{link app=seller ctl=site_passport act=display_type args0=apt_stock}>?cat=1"
                   data-tagId="1" title="原种">原
-                <input type="hidden" name="apt_stock" value="0"/>
+                <input type="hidden" name="card[apt_stock]" value="0"/>
             </span>
             <span class="apt_tag active apt_prove-1" data-type="1" data-toggle="modal"
                   data-target=".category_add_modal"
                   href="<{link app=seller ctl=site_passport act=display_type args0=apt_prove}>"
                   data-tagId="2" title="原种种源标准指标">种
-                <input type="hidden" name="apt_prove" value="0"/>
+                <input type="hidden" name="card[apt_prove]" value="1"/>
             </span>
             <span class="apt_tag active apt_raise-1" data-type="2" data-toggle="modal"
                   data-target=".category_add_modal"
                   href="<{link app=seller ctl=site_passport act=display_type args0=apt_raise}>"
                   data-tagId="3"
                   title="原种饲养标准指标">饲
-                <input type="hidden" name="apt_raise" value="0"/>
+                <input type="hidden" name="card[apt_raise]" value="1"/>
             </span>
             <span class="apt_tag active apt_technology-1" data-type="3" data-toggle="modal"
                   data-target=".category_add_modal"
                   href="<{link app=seller ctl=site_passport act=display_type args0=apt_technology}>"
                   data-tagId="4"
                   title="产品加工技术标准指标">技 
-                <input type="hidden" name="apt_technology" value="0"/>
+                <input type="hidden" name="card[pt_technology]" value="0"/>
             </span>
             <span class="apt_tag active apt_quality-1" data-type="4" data-toggle="modal"
                   data-target=".category_add_modal"
                   href="<{link app=seller ctl=site_passport act=display_type args0=apt_quality}>"
                   data-tagId="5"
                   title="产品加工质量标准指标">质
-                <input type="hidden" name="apt_quality" value="0"/>
+                <input type="hidden" name="card[apt_quality]" value="0"/>
             </span>
             <span class="apt_tag active apt_common-1" data-type="5" data-toggle="modal"
                   data-target=".category_add_modal"
                   href="<{link app=seller ctl=site_passport act=display_type args0=apt_common}>"
                   data-tagId="6"
                   title="产品通用质量标准指标">通
-                <input type="hidden" name="apt_common" value="0"/>
+                <input type="hidden" name="card[apt_common]" value="0"/>
             </span>
             <span class="apt_tag active apt_safety-1" data-type="6" data-toggle="modal"
                   data-target=".category_add_modal"
                   href="<{link app=seller ctl=site_passport act=display_type args0=apt_safety}>"
                   data-tagId="7"
                   title="产品安全标准指标">安
-                <input type="hidden" name="apt_safety" value="0"/>
+                <input type="hidden" name="card[apt_safety]" value="0"/>
             </span>
             <span class="apt_tag active apt_transport-1" data-type="7" data-toggle="modal"
                   data-target=".category_add_modal"
                   href="<{link app=seller ctl=site_passport act=display_type args0=apt_transport}>"
                   data-tagId="8"
                   title="储存运输标准指标">运
-                <input type="hidden" name="apt_transport" value="0"/>
+                <input type="hidden" name="card[apt_transport]" value="0"/>
             </span>
             <!--<span class="apt_tag active apt_pack-1" data-toggle="modal"-->
                   <!--data-target=".category_add_modal"-->
@@ -488,7 +488,7 @@
     $('.category_add_modal').on('hidden.bs.modal', function () {
         ck_val = get_val();
         var index = $(this).find('.modal-header').attr('data-type');
-        $('.fileCard span:eq('+index+')').attr('data-value',ck_val);
+        $('.fileCard span:eq('+index+')').find('input:hidden').attr('value',ck_val);
     });
 
    
