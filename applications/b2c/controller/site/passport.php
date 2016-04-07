@@ -390,21 +390,14 @@ class b2c_ctl_site_passport extends b2c_frontpage
             'login_password' => $params['pam_account']['login_password'],
             'mobile' => $member_sdf_data['b2c_members']['contact']['phone']['mobile'],
         );
-<<<<<<< HEAD
-        //$result = $this->app->rpc('register')->request($rpc_data);
 
-//         if (!$result['status']) {
-
-//             $this->splash('error', $signup_url, '注册失败,会员数据保存异常1');
-//         }
-=======
         $result = $this->app->rpc('register')->request($rpc_data);
         if(!$result['status']){
             $this->splash('error', $signup_url, '注册失败,会员数据保存异常');
         }
->>>>>>> 9f7954e55e0e68cb5eeae68a137566eaab467708
+
         //end 调用接口
-        $member_sdf_data['b2c_members']['buyer_id'] = '1111111111111';//$result['result']['buyer_id'];
+        $member_sdf_data['b2c_members']['buyer_id'] = $result['result']['buyer_id'];
         $member_sdf_data['pam_account']['password'] = $params['pam_account']['login_password'];
         
         if ($member_id = $this->passport_obj->save_members($member_sdf_data, $msg)) {
