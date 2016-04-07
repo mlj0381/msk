@@ -852,6 +852,17 @@ class b2c_ctl_site_member extends b2c_frontpage
     }
 
     /**
+     * 习惯收货时间.
+     */
+    public function receiver_time(){
+        $this->menuSetting = 'setting';
+        $user_obj = vmc::singleton('b2c_user_object');
+        $this->pagedata['receiving'] = $this->app->getConf('receiving_time');
+        $this->pagedata['pam_data'] = $user_obj->get_pam_data('*', $this->member['member_id']);
+        $this->output();
+    }
+
+    /**
      * 我的优惠券.
      */
     public function coupon($action = 'list')
