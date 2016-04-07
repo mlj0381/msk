@@ -21,25 +21,25 @@ class buyer_mdl_buyers extends dbeav_model{
 	public function  get_buyer_account($username){
 		$login_type = vmc::singleton('buyer_user_passport')->get_login_account_type($username);
 		if ($login_type){
-			$where['login_type']		=	$login_type;
-			$where['login_account']		=	$username;
-			$date = app::get('pam')->model('buyers')->getRow('buyer_id',$where);
-			if ($date){
-				$date['buyer_id'] = (int)$date['buyer_id'];
-				$date['login_account'] = $username;
+			$date = app::get('buyer')->model('buyers')->getRow('buyer_id,member_id,buyer_code',array($login_type=>$username));
+			if ($date['member_id'] and $date['buyer_id']){
+				$date['buyer_id']		=	(int)$date['buyer_id'];
+				$date['member_id']		=	(int)$date['member_id'];
+				$date['login_account']	=	$username;
+				return $date;
 			}
-			return $date;
+			return false;
 		}
 	}
 	
 	//验证密码的
-	public function check_password($buyer_id, $password){
-		$mdl_pm_buyers = app::get('pam')->model('buyers');
-		$check_data = $mdl_pm_buyers->getRow('login_account,createtime,password_account,login_password',array('buyer_id'=>$buyer_id));
+	public function check_password($buyer_data, $password){
+		$mdl_pm_buyers = app::get('pam')->model('members');
+		$check_data = $mdl_pm_buyers->getRow('login_account,createtime,password_account,login_password',array('member_id'=>$buyer_data['member_id']));
 		$use_pass_data['login_name'] = $check_data['password_account'];
 		$use_pass_data['createtime'] = $check_data['createtime'];
 		
-		if ($check_data['login_password'] == pam_encrypt::get_encrypted_password($password, 'seller',$use_pass_data)){
+		if ($check_data['login_password'] == pam_encrypt::get_encrypted_password($password, 'member',$use_pass_data)){
 			return true;
 		}else {
 			return false;
@@ -72,11 +72,9 @@ class buyer_mdl_buyers extends dbeav_model{
 	 * @param unknown $data
 	 */
 	public function save_buyer_data($request){
-		//获取用户注册信息
-		$log_data = app::get('pam')->model('buyers')->getRow('login_account,login_type,createtime',array('buyer_id'=>$request['buyer_id']));
-		
 		//这个判断数据库表buyer_buyers是否存在buyer_id对应的记录
-		$schedule_type = $this->app->model('buyers')->getRow('schedule',array('buyer_id'=>$request['buyer_id']));
+		$schedule_type = $this->app->model('buyers')->getRow('schedule,member_id',array('buyer_id'=>$request['buyer_id']));
+		$log_data = app::get('pam')->model('members')->getRow('login_account,login_type,createtime',array('member_id'=>$schedule_type['member_id']));
 		if ((int)$schedule_type['schedule'] == 2){
 			return false;
 		}
@@ -87,7 +85,7 @@ class buyer_mdl_buyers extends dbeav_model{
 		$request['regtime'] = $request['createtime'] = $log_data['createtime'];
 		$request['schedule'] = '2';
 		if ($this->app->model('buyers')->update($request,array('buyer_id'=>$request['buyer_id']))){
-			$this->request_rpc($request);
+			//$this->request_rpc($request);
 			return TRUE;
 		}
 		return FALSE;
@@ -98,10 +96,6 @@ class buyer_mdl_buyers extends dbeav_model{
 		$rpc_model = $this->app->rpc('register');
 		$data = [
 			'telNo' => '',
-		
-			
-		
-		
 		];
 		
 	}
@@ -115,16 +109,16 @@ class buyer_mdl_buyers extends dbeav_model{
 		return $this->getRow('buyer_id',array('mobile'=>trim($mobile)));
 	}
 	
-	public function reset_password($user_id,$old_password,$new_password){
-		$mdl_pm_buyers = app::get('pam')->model('buyers');
+	public function reset_password($member_id,$old_password,$new_password){
+		$mdl_pm_buyers = app::get('pam')->model('members');
 		$check_data = $mdl_pm_buyers->getRow('login_account,createtime,password_account,login_password',array('buyer_id'=>$user_id));
 		
 		$use_pass_data['login_name'] = $check_data['password_account'];
 		$use_pass_data['createtime'] = $check_data['createtime'];
-		if (pam_encrypt::get_encrypted_password($old_password, 'seller',$use_pass_data) == $check_data['login_password']){
-			$reset['login_password'] = pam_encrypt::get_encrypted_password($new_password, 'seller',$use_pass_data);
+		if (pam_encrypt::get_encrypted_password($old_password, 'member',$use_pass_data) == $check_data['login_password']){
+			$reset['login_password'] = pam_encrypt::get_encrypted_password($new_password, 'member',$use_pass_data);
 			$reset['password'] = $new_password;
-			if ($mdl_pm_buyers->update($reset,array('buyer_id'=>$user_id))){
+			if ($mdl_pm_buyers->update($reset,array('member_id'=>$member_id))){
 				//这个根据RPC的必填项（object） 需要分步提交
 // 				$basic_data = $this->app->model('buyers')->getRow('*', array('buyer_id'=>$user_id));
 // 				$mdl_rpc = $this->app->rpc('edit_buyer_info');
@@ -138,7 +132,6 @@ class buyer_mdl_buyers extends dbeav_model{
 // 								'authStatus'	=>2,
 // 						),);
 // 				$mdl_rpc->request($request, false);
-				vmc::singleton('buyer_user_object')->set_session($user_id, '');
 				//修改成功
 				return 'success';
 			}else {
@@ -167,9 +160,6 @@ class buyer_mdl_buyers extends dbeav_model{
 		}
 		
 	}
-	
-	
-	
 	
 	
 }
