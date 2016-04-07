@@ -74,7 +74,7 @@ class seller_ctl_site_passport extends seller_frontpage
         if (empty($params['vcode'])) {
             $this->splash('error', $login_url, '请输入验证码');
         }
-
+      
         /**
          * 润和接口 卖家登入  【查询卖家账户 - ISL231105】
          */
@@ -102,7 +102,7 @@ class seller_ctl_site_passport extends seller_frontpage
         	vmc::singleton('pam_passport_site_basic')->local_seller_rsyns($seller,$account);
         }
        
-        
+       
         //尝试登陆
         $seller_id = vmc::singleton('pam_passport_site_basic')->login($account_data, $params['vcode'], $msg, 'sellers');
         if (!$seller_id) {
