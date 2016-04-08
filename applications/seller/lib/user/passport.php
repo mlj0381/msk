@@ -974,7 +974,7 @@ class seller_user_passport
         if ($this->seller['ident'] & 4) {
             $seller_type['oemFlg'] = '3';
         }
-        $region = app::get('ectools')->model('regions')->region_decode($tmp['seller']['area']);
+        $region = app::get('ectools')->model('regions')->region_decode($tmp['seller']['area']); //todo地区三级联动
 
         $result['slSeller'] = array(
             'login_account' => $tmp['pam']['login_account'],
