@@ -118,4 +118,10 @@ class b2c_ctl_admin_goods_cat extends desktop_controller
         $mdl_gcat->clean_cache();
         $this->end(true, ('操作成功'));
     }
+
+    public function addAptitudes($nCatId = 0)
+    {
+        print_r($nCatId);
+        $this->display('admin/goods/category/addAptitudes.html');
+    }
 }

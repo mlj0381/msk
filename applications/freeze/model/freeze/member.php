@@ -52,8 +52,14 @@ class freeze_mdl_freeze_member extends dbeav_model
     {
         $where = 'WHERE   1';
         foreach($filter as $k=>$v){
-            $where .= ' AND fm.'.$k.' =';
-            $where .= "'".$v."'" ;
+            if(count($k_arr= explode('|in',$k)) > 1)
+            {
+                $where .= ' AND '.$k_arr[0].' in('.$v.')';
+            }else{
+                $where .= ' AND '.$k.' =';
+                $where .= "'".$v."'" ;
+            };
+
         };
         $where_limit = '';
         if(is_numeric($offset))
