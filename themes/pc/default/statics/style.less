@@ -568,7 +568,7 @@ ul,ol{
 				padding:10px 0;
 				border-bottom:1px dashed #ddd;
 				label{
-					width:80px;
+					min-width:80px;
 					display: inline-block;
 					margin-right:10px;
 				}
@@ -588,8 +588,45 @@ ul,ol{
 				span{
 					display: inline-block;
 					margin-right:20px;
-					min-width: 100px;
+					width:auto;
 				}
+			}
+			.pro_spec{
+				padding-bottom:0px;
+				label{
+					.fl;
+				}
+				.spec_items{
+					.fl;
+					max-width: 560px;
+					
+					.spec_item{
+						width:auto;
+						padding:5px 20px 5px 5px;
+						background: #fcf8e3;
+						border:1px solid #faebcc;
+						color:#8a6d3b;
+						position: relative;
+						margin-bottom:10px;
+						cursor: pointer;
+
+						i{
+							position: absolute;
+							right:2px;
+							bottom:2px;
+							display: inline;
+							width:12px;
+							height:12px;
+							line-height: 12px;
+							text-align: center;
+							background: #d9534f;
+							color:#fff;
+							border-radius:50%;
+							font-size: 12px;
+						}
+					}
+				}
+				
 			}
 
 			.turnover_info{
@@ -879,8 +916,9 @@ ul,ol{
 			}
 			.product-page-content{
 				width:100%;
-
+				max-width: 100%;
 				.tab-content{
+					padding-top:15px;
 					.description{
 						.pro_param{
 							width:100%;
@@ -898,6 +936,9 @@ ul,ol{
 								overflow: hidden;
 							}
 							
+						}
+						img{
+							max-width:100%;
 						}
 					}
 					#record{
@@ -1333,3 +1374,12 @@ ul,ol{
 }
 
 //END延时跳转页面
+
+
+//起止时间
+form{
+	.timeStart, .timeEnd{
+		width:46%;
+		display: inline-block;
+	}
+}
