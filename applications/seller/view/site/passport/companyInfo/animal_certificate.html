@@ -1,4 +1,4 @@
-<input type="hidden" name="animal_certificate[content_id]" value="<{$extra.animal_certificate.content_id}>"/>
+
 <div id="animal_certificate">
 	<h4>动物防疫条件合格证</h4>
 	<div class="form-group">
@@ -6,7 +6,7 @@
 			<span class="text-danger">*</span>动物防疫条件合格证代码编号：
 		</label>
 		<div class="col-xs-4">
-			<input type="text" value="<{$extra.animal_certificate.value.code}>" name="animal_certificate[value][code]" class="form-control" required="true" format="digits">
+			<input type="text" value="<{$cat.extra.creature.code}>" name="cat[extra][creature][code]" class="form-control" required="true" format="digits">
 			<span class="msgTip" data-message="format">格式不正确</span>
 		</div>
 	</div>
@@ -16,7 +16,7 @@
 			年检日期：
 		</label>
 		<div class="col-xs-4">
-			<input type="text" value="<{$extra.animal_certificate.value.as}>" name="animal_certificate[value][as]" class="form-control date form_datetime" readonly placeholder="2010-12-20">	
+			<input type="text" value="<{$cat.extra.creature.as}>" name="cat[extra][creature][as]" class="form-control date form_datetime" readonly placeholder="2010-12-20">
 		</div>
 	</div>
 
@@ -25,7 +25,7 @@
 			<span class="text-danger">*</span>动物防疫条件合格证电子版：
 		</label>
 		<div class="col-xs-4">
-	        <{input type="imageupload" tag="图片上传" name="animal_certificate[attach]" value=$extra.animal_certificate.attach required='true' accept="jpg|png|gif"}>   
+	        <{input type="imageupload" tag="图片上传" name="cat[extra][creature][image]" value=$cat.extra.creature.image required='true' accept="jpg|png|gif"}>
             <span class="msgTip" data-message="error">不能为空</span>
 		</div>
 	</div>

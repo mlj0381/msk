@@ -44,21 +44,11 @@
                                    <{if $this_cat[$key].children[$k].cat_id eq $item.cat_id}> checked <{/if}>
                                    name="cat[<{$key}>][parent][<{$k}>][check]" >
                             <span><{$item.cat_name}></span>
-                             <a href="<{link app=seller ctl=site_cat act=write_aptitude}>" data-toggle="modal" data-target="#write_apt_modal" class="warning"><i class="text-danger icon-exclamation-sign"> </i><small>缺少资质</small></a>
+                             <{if !$this_cat[$key].children[$k].extra}>
+                             <a href="<{link app=seller ctl=site_cat act=write_aptitude args0=$item.cat_id}>" data-toggle="modal" data-target="#write_apt_modal" class="warning"><i class="text-danger icon-exclamation-sign"> </i><small>缺少资质</small></a>
+                             <{/if}>
                         </label>
                         <{/foreach}>
-                        <!--<label class="dir_item">-->
-                        	<!--<input type="checkbox"-->
-                                   <!--<{if $this_cat[$key].children[$k].cat_id eq $item.cat_id}> checked <{/if}>-->
-                                   <!--name="cat[<{$key}>][parent][<{$k}>][check]" >-->
-                                   <!--<span>三黄鸡</span>-->
-                        <!--</label>-->
-                        <!--<label class="dir_item">-->
-                        	<!--<input type="checkbox" disabled="disabled"-->
-                                   <!--name="cat[<{$key}>][parent][<{$k}>][check]" >-->
-                                   <!--<span>白斩鸡</span>-->
-                                   <!--<a href="<{link app=seller ctl=site_cat act=write_aptitude}>" data-toggle="modal" data-target="#write_apt_modal" class="warning"><i class="text-danger icon-exclamation-sign"> </i><small>缺少资质</small></a>-->
-                        <!--</label>-->
 	            </div>
 	        </div>                
                 <{/foreach}>
@@ -86,6 +76,52 @@
 <script type="text/javascript">
 	$('#write_apt_modal').on('shown.bs.modal', function () {
         $.VMC.init();  //重新绑定图片上传事件
+        /**
+         * 日期选择
+         */
+         $('.form_datetime').datetimepicker({
+            format: "yyyy-mm-dd",
+            autoclose: true,
+            todayBtn: true,
+            weekStart: 1,
+            todayHighlight: 1,
+            minView:2,
+            language:"zh-CN",
+            pickerPosition: "bottom-left"
+        }).on("hide",function(ev){
+            $(".form_datetime").trigger('blur');
+        });
+
+
+        /*区间日期选择*/
+        $(".timeStart").datetimepicker({
+            format: "yyyy-mm-dd",
+            autoclose: true,
+            todayBtn: true,
+            weekStart: 1,
+            todayHighlight: 1,
+            minView:2,
+            language:"zh-CN",
+            pickerPosition: "bottom-left"
+        }).on("click",function(ev){
+            $(".timeStart").datetimepicker("setEndDate", $(".timeEnd").val());
+        }).on("hide",function(ev){
+            $(".timeStart").trigger('blur');
+        });
+        $(".timeEnd").datetimepicker({
+            format: "yyyy-mm-dd",
+            autoclose: true,
+            todayBtn: true,
+            weekStart: 1,
+            todayHighlight: 1,
+            minView:2,
+            language:"zh-CN",
+            pickerPosition: "bottom-left"
+        }).on("click", function (ev) {
+            $(".timeEnd").datetimepicker("setStartDate", $(".timeStart").val());
+        }).on("hide",function(ev){
+            $(".timeEnd").trigger('blur');
+        });
     });
 	$("#write_apt_modal").on("hidden.bs.modal", function () {
         $(this).removeData("bs.modal");  //关闭时清空数据

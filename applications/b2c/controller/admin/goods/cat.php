@@ -119,9 +119,39 @@ class b2c_ctl_admin_goods_cat extends desktop_controller
         $this->end(true, ('操作成功'));
     }
 
+    /**
+     * 添加资质 页面
+     * @param int $nCatId
+     *
+     */
     public function addAptitudes($nCatId = 0)
     {
-        print_r($nCatId);
+        $this->pagedata['cat'] = $this->app->model('goods_cat')->getRow('cat_name, cat_id', array('cat_id' => $nCatId));
+        $this->pagedata['aptitudes'] = $this->app->model('cat_aptitudes')->getRow('*', array('cat_id' => $nCatId));
         $this->display('admin/goods/category/addAptitudes.html');
+    }
+
+    /**
+     * 设置分类所需资质
+     */
+    public function saveAptitudes()
+    {
+        $this->begin('index.php?app=b2c&ctl=admin_goods_cat&act=index');
+        $data = array(
+            'id' => $_POST['id'],
+            'cat_id' => $_POST['cat_id'],
+            'creature' => $_POST['creature'] ?: 'false',
+            'food' => $_POST['food'] ?: 'false',
+            'butcher' => $_POST['butcher'] ?: 'false',
+            'muslim' => $_POST['muslim'] ?: 'false',
+            'shanghai' => $_POST['shanghai'] ?: 'false',
+            'iso14001' => $_POST['iso14001'] ?: 'false',
+            'iso22000' => $_POST['iso22000'] ?: 'false',
+            'iso9001' => $_POST['iso9001'] ?: 'false',
+        );
+        if(!$this->app->model('cat_aptitudes')->save($data)){
+            $this->end(false, '设置失败');
+        }
+        $this->end(true, '设置成功');
     }
 }

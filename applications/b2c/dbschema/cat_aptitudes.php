@@ -17,6 +17,7 @@ $db['cat_aptitudes'] = array(
             'type' => 'number',
             'pkey' => true,
             'required' => true,
+            'extra' => 'auto_increment',
             'label' => ('id'),
             'in_list' => true,
             'default_in_list' => true,
