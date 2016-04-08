@@ -177,7 +177,7 @@
                     <label>产品规格 </label>
                     <div class="spec_items">
                         <{foreach from=$data_detail.feature_data_list item=feature}>
-                        <span class="spec_item" data-proId=""><{$feature.featureName}><i class="icon-ok"></i></span>
+                        <span class="spec_item active" data-proId=""><{$feature.featureName}></span>
                         <{/foreach}>
                     </div>
                 </div>
@@ -185,7 +185,7 @@
                     <label>包装规格 </label>
                     <div class="spec_items">
                         <{foreach from=$data_detail.weight_data_list item=weight}>
-                        <span class="spec_item" data-packId=""><{$weight.0.weightName}><i class="icon-ok"></i></span>
+                        <span class="spec_item active" data-packId=""><{$weight.0.weightName}> </span>
                         <{/foreach}>
                     </div>
                 </div>
@@ -491,6 +491,10 @@
 <script type="text/javascript" src="<{$base_url}>/openapi/goods/counter/goods_id/<{$data_detail.goods_id}>/view_count/1/uv.js"></script>
 <{script src="jquery.zoom.js"}>
 <script charset="utf-8">
+/**
+ * 商品价格即时显示
+ */
+
 
 /*
  * 时间条件查询成交记录 
