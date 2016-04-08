@@ -42,7 +42,7 @@ class freeze_frontpage extends site_controller
         $user_obj = vmc::singleton('freeze_user_object');
         $data = $user_obj->get_members_data(array('freeze'=>'*'));
         $data = $data['freeze'];
-        if(!$data['mobile'] && !$data['name'])
+        if(!$data['name'])
         {
             $redirect = $this->gen_url(array(
                 'app' => 'freeze',
@@ -50,7 +50,17 @@ class freeze_frontpage extends site_controller
                 'act' => 'index',
             ));
 
-            $this->splash('success', $redirect,'完善个人信息');
+            $this->splash('error', $redirect,'完善个人信息');
+        }
+        if(!$data['mobile'])
+        {
+            $redirect = $this->gen_url(array(
+                'app' => 'freeze',
+                'ctl' => 'site_account',
+                'act' => 'set_pam_mobile',
+            ));
+
+            $this->splash('error', $redirect,'完善手机号码');
         }
     }
 
