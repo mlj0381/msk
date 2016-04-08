@@ -162,12 +162,6 @@
                     <label>配送至 </label>
                     <span>
                         <{input type="region" name="address" id="address"}>
-                        <!-- <select>
-                            <option value="1">上海</option>
-                            <option value="2">无锡</option>
-                            <option value="3">苏州</option>
-                            <option value="4">南通</option>
-                        </select> -->
                     </span>
                     <span><b>运费</b> ￥:<{$data_detail.deliver_fee}> 元</span>
                 </div>
@@ -179,22 +173,26 @@
                     <label>产品等级</label>
                     <span><{$data_detail.gradeCode}></span>
                 </div>
-                <div class="distr_info">
+                <div class="distr_info pro_spec clearfix">
                     <label>产品规格 </label>
-                    <{foreach from=$data_detail.feature_data_list item=feature}>
-                    <span><{$feature.featureName}></span>
-                    <{/foreach}>
+                    <div class="spec_items">
+                        <{foreach from=$data_detail.feature_data_list item=feature}>
+                        <span class="spec_item" data-proId=""><{$feature.featureName}><i class="icon-ok"></i></span>
+                        <{/foreach}>
+                    </div>
                 </div>
-                 <div class="distr_info">
+                 <div class="distr_info pro_spec clearfix">
                     <label>包装规格 </label>
-                    <{foreach from=$data_detail.weight_data_list item=weight}>
-                    <span><{$weight.0.weightName}></span>
-                    <{/foreach}>
+                    <div class="spec_items">
+                        <{foreach from=$data_detail.weight_data_list item=weight}>
+                        <span class="spec_item" data-packId=""><{$weight.0.weightName}><i class="icon-ok"></i></span>
+                        <{/foreach}>
+                    </div>
                 </div>
-                <ul class="list-unstyled promotion-list">
+                <!-- <ul class="list-unstyled promotion-list">
                 </ul>
                 <{if $data_detail.spec_desc}>
-                <!-- 规格选择器 -->
+                规格选择器
                 <div class="product-spec-options">
                     <dl class="dl-horizontal">
                         <{foreach from=$data_detail.spec_desc.t key=key item=item}>
@@ -227,7 +225,7 @@
                         <{/foreach}>
                     </dl>
                 </div>
-                <{/if}>
+                <{/if}> -->
                 <!-- <div class="pref_info clearfix">
                     <div class="pref_table">
                         <table>
