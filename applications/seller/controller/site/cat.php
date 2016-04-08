@@ -72,8 +72,29 @@ class seller_ctl_site_cat extends seller_frontpage
     }
 
     //选择商品类目填写相关资质
-    public function write_aptitude()
+    public function write_aptitude($cat_id = 0)
     {
+        if(!is_numeric($cat_id)) $cat_id = 0;
+        $this->pagedata['aptitude'] = app::get('b2c')->model('cat_aptitudes')->getRow('*', array('cat_id' => $cat_id));
+        $this->pagedata['cat'] = app::get('store')->model('goods_cat')->getRow('*', array('cat_id' => $cat_id));
         $this->display('site/goods/write_aptitude.html');
+    }
+
+    /**
+     * 保存分类所需资质
+     */
+    public function saveAptitude()
+    {
+        if(!$_POST){
+            $this->splash('error', '', '非法请求');
+        }
+        $updateValue = array('extra' => $_POST['cat']);
+        $filter = array('id' => $_POST['id']);
+        print_r($updateValue);
+        print_r($filter);die;
+        if(!app::get('store')->model('goods_cat')->update()){
+            $this->splash('error', '', '添加失败');
+        }
+        $this->splash('success', '', '添加成功');
     }
 }

@@ -1,4 +1,3 @@
-<input type="hidden" name="iso14001_lesstion[content_id]"  value="<{$extra.iso14001_lesstion.content_id}>" class="form-control">
 <div id="iso14001_lesstion">
 	<h4>ISO14001环境管理体系认证证书</h4>	
 	<div class="form-group">
@@ -6,7 +5,7 @@
 			证书编号：
 		</label>
 		<div class="col-xs-4">
-			<input type="text" value="<{$extra.iso14001_lesstion.value.code}>" name="iso14001_lesstion[value][code]" class="form-control">
+			<input type="text" value="<{$cat.extra.iso14001.code}>" name="cat[extra][iso14001][code]" class="form-control">
 		</div>
 	</div>
 	<div class="form-group">
@@ -14,7 +13,7 @@
 			认证标准：
 		</label>
 		<div class="col-xs-4">
-			<input type="text" value="<{$extra.iso14001_lesstion.value.stand}>" name="iso14001_lesstion[value][stand]" class="form-control">
+			<input type="text" value="<{$cat.extra.iso14001.stand}>" name="cat[extra][iso14001][stand]" class="form-control">
 		</div>
 	</div>
 	<div class="form-group">
@@ -22,7 +21,7 @@
 			认证范围：
 		</label>
 		<div class="col-xs-4">
-			<input type="text" value="<{$extra.iso14001_lesstion.value.range}>" name="iso14001_lesstion[value][range]" class="form-control">
+			<input type="text" value="<{$cat.extra.iso14001.range}>" name="cat[extra][iso14001][range]" class="form-control">
 		</div>
 	</div>
 	<div class="form-group">
@@ -30,7 +29,7 @@
 			发证日期：
 		</label>
 		<div class="col-xs-4">
-			<input type="text" value="<{$extra.iso14001_lesstion.value.grant_date}>" name="iso14001_lesstion[value][grant_date]" placeholder="2010-10-20" class="form-control date form_datetime" readonly>
+			<input type="text" value="<{$cat.extra.iso14001.grant_date}>" name="cat[extra][iso14001][grant_date]" placeholder="2010-10-20" class="form-control date form_datetime" readonly>
 		</div>
 	</div>
 	<div class="form-group">
@@ -39,8 +38,8 @@
 		</label>
 		<div class="col-xs-4">
 			<div class="timeLimit">
-				<input type="text" value="<{$extra.iso14001_lesstion.value.start}>" name="iso14001_lesstion[value][start]" class="form-control date timeStart" placeholder="2010-10-20" style="width:46.5%; display: inline-block;" readonly> 至 
-				<input type="text" value="<{$extra.iso14001_lesstion.value.end}>" name="iso14001_lesstion[value][end]" class="form-control date timeEnd" placeholder="2010-10-20" style="width:46.5%; display: inline-block;" readonly>
+				<input type="text" value="<{$cat.extra.iso14001.start}>" name="cat[extra][iso14001][start]" class="form-control date timeStart" placeholder="2010-10-20" style="width:46.5%; display: inline-block;" readonly> 至
+				<input type="text" value="<{$cat.extra.iso14001.end}>" name="cat[extra][iso14001]" class="form-control date timeEnd" placeholder="2010-10-20" style="width:46.5%; display: inline-block;" readonly>
 			</div>
 		</div>
 	</div>
@@ -49,7 +48,7 @@
 			认证机构：
 		</label>
 		<div class="col-xs-4">
-			<input type="text" value="<{$extra.iso14001_lesstion.value.approve_org}>" name="iso14001_lesstion[value][approve_org]" class="form-control">
+			<input type="text" value="<{$cat.extra.iso14001.approve_org}>" name="cat[extra][iso14001][approve_org]" class="form-control">
 		</div>
 	</div>
 	<div class="form-group">
@@ -57,7 +56,7 @@
 			证书电子版：
 		</label>
 		<div class="col-xs-4">
-	        <{input type="imageupload" tag="图片上传" name="iso14001_lesstion[attach]" value=$extra.iso14001_lesstion.attach accept="jpg|png|gif"}>   
+	        <{input type="imageupload" tag="图片上传" name="cat[extra][iso14001][attach]" value=$cat.extra.iso14001.attach accept="jpg|png|gif"}>
             <span class="msgTip" data-message="error">不能为空</span>
 		</div>
 	</div>

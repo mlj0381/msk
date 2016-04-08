@@ -44,21 +44,11 @@
                                    <{if $this_cat[$key].children[$k].cat_id eq $item.cat_id}> checked <{/if}>
                                    name="cat[<{$key}>][parent][<{$k}>][check]" >
                             <span><{$item.cat_name}></span>
-                             <a href="<{link app=seller ctl=site_cat act=write_aptitude}>" data-toggle="modal" data-target="#write_apt_modal" class="warning"><i class="text-danger icon-exclamation-sign"> </i><small>缺少资质</small></a>
+                             <{if !$this_cat[$key].children[$k].extra}>
+                             <a href="<{link app=seller ctl=site_cat act=write_aptitude args0=$item.cat_id}>" data-toggle="modal" data-target="#write_apt_modal" class="warning"><i class="text-danger icon-exclamation-sign"> </i><small>缺少资质</small></a>
+                             <{/if}>
                         </label>
                         <{/foreach}>
-                        <!--<label class="dir_item">-->
-                        	<!--<input type="checkbox"-->
-                                   <!--<{if $this_cat[$key].children[$k].cat_id eq $item.cat_id}> checked <{/if}>-->
-                                   <!--name="cat[<{$key}>][parent][<{$k}>][check]" >-->
-                                   <!--<span>三黄鸡</span>-->
-                        <!--</label>-->
-                        <!--<label class="dir_item">-->
-                        	<!--<input type="checkbox" disabled="disabled"-->
-                                   <!--name="cat[<{$key}>][parent][<{$k}>][check]" >-->
-                                   <!--<span>白斩鸡</span>-->
-                                   <!--<a href="<{link app=seller ctl=site_cat act=write_aptitude}>" data-toggle="modal" data-target="#write_apt_modal" class="warning"><i class="text-danger icon-exclamation-sign"> </i><small>缺少资质</small></a>-->
-                        <!--</label>-->
 	            </div>
 	        </div>                
                 <{/foreach}>

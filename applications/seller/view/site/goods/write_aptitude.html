@@ -3,30 +3,46 @@
     <h4 class="modal-title" id="myModalLabel">资质填写</h4>
 </div>
 <div class="modal-body">
-    <form class="write_apt_form form-horizontal" method="post" action="" data-module="validator">
+    <form class="write_apt_form form-horizontal" method="post" action="<{link app=seller ctl=site_cat act=saveAptitude}>" data-module="validator">
+        <input type="hidden" name="cat[id]" value="<{$cat.id}>"/>
+        <input type="hidden" name="cat[cat_id]" value="<{$cat.cat_id}>"/>
         <!-- 动检证 -->
+        <{if $aptitude.creature eq 'true'}>
         <{include file="site/passport/companyInfo/animal_certificate.html"}>
+        <{/if}>
         <!-- 食品生产许可证 -->
-        <{include file="site/passport/companyInfo/f_p_lesstion.html"}> 
+        <{if $aptitude.food eq 'true'}>
+        <{include file="site/passport/companyInfo/f_p_lesstion.html"}>
+        <{/if}>
         <!-- 定点屠宰证 -->
-        <{include file="site/passport/companyInfo/slaughter_lesstion.html"}> 
-
+        <{if $aptitude.butcher eq 'true'}>
+        <{include file="site/passport/companyInfo/slaughter_lesstion.html"}>
+        <{/if}>
 
         <!-- 选填 -->
 
         <!-- 进沪证 -->
+        <{if $aptitude.shanghai eq 'true'}>
         <{include file="site/passport/companyInfo/entry_lesstion.html"}>
+        <{/if}>
 
         <!-- ISO证 -->
-        <{include file="site/passport/companyInfo/iso14001_lesstion.html"}> 
-        <{include file="site/passport/companyInfo/iso22000_lesstion.html"}> 
-        <{include file="site/passport/companyInfo/iso9001_lesstion.html"}> 
-
+        <{if $aptitude.iso14001 eq 'true'}>
+        <{include file="site/passport/companyInfo/iso14001_lesstion.html"}>
+        <{/if}>
+        <{if $aptitude.iso22000 eq 'true'}>
+        <{include file="site/passport/companyInfo/iso22000_lesstion.html"}>
+        <{/if}>
+        <{if $aptitude.iso9001 eq 'true'}>
+        <{include file="site/passport/companyInfo/iso9001_lesstion.html"}>
+        <{/if}>
         <!-- 清真食品生产经营许可证 -->
+        <{if $aptitude.muslim eq 'true'}>
         <{include file="site/passport/companyInfo/food_mosque_lesstion.html"}>
+        <{/if}>
     </form>
 </div>
 <div class="modal-footer">
     <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-    <button type="button" class="btn btn-primary">保存</button>
+    <button type="submit" class="btn btn-primary">保存</button>
 </div>

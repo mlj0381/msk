@@ -119,9 +119,28 @@ class b2c_ctl_admin_goods_cat extends desktop_controller
         $this->end(true, ('操作成功'));
     }
 
+    /**
+     * 添加资质 页面
+     * @param int $nCatId
+     *
+     */
     public function addAptitudes($nCatId = 0)
     {
-        print_r($nCatId);
+        $cat = $this->app->model('goods_cat')->getRow('cat_name, cat_id', array('cat_id' => $nCatId));
+        $this->pagedata['cat'] = $cat;
         $this->display('admin/goods/category/addAptitudes.html');
+    }
+
+    /**
+     * 设置分类所需资质
+     */
+    public function saveAptitudes()
+    {
+        $this->begin('index.php?app=b2c&ctl=admin_goods_cat&act=index');
+        $params = $_POST;
+        if(!$this->app->save($params)){
+            $this->end(false, '设置失败');
+        }
+        $this->end(true, '设置成功');
     }
 }
