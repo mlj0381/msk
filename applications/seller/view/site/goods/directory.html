@@ -35,29 +35,30 @@
 	                </div> -->
 	            </div>
 	            <div class="panel-body">
-                        <{*foreach from=$items.children key=k item=item}>
+                        <{foreach from=$items.children key=k item=item}>
                         <input type="hidden" value="<{$item.cat_name}>" name="cat[<{$key}>][parent][<{$k}>][cat_name]"/>
                         <input type="hidden" value="<{$this_cat[$key].children[$k].id}>" name="cat[<{$key}>][parent][<{$k}>][id]"/>
                         <input type="hidden" value="<{$item.cat_id}>" name="cat[<{$key}>][parent][<{$k}>][cat_id]"/>
-                        <!-- <label class="dir_item">
+                         <label class="dir_item">
                             <input type="checkbox"
                                    <{if $this_cat[$key].children[$k].cat_id eq $item.cat_id}> checked <{/if}>
                                    name="cat[<{$key}>][parent][<{$k}>][check]" >
                             <span><{$item.cat_name}></span>
-                        </label> -->
-                        <{/foreach*}>
-                        <label class="dir_item">
-                        	<input type="checkbox"
-                                   <{if $this_cat[$key].children[$k].cat_id eq $item.cat_id}> checked <{/if}>
-                                   name="cat[<{$key}>][parent][<{$k}>][check]" >
-                                   <span>三黄鸡</span>
+                             <a href="<{link app=seller ctl=site_cat act=write_aptitude}>" data-toggle="modal" data-target="#write_apt_modal" class="warning"><i class="text-danger icon-exclamation-sign"> </i><small>缺少资质</small></a>
                         </label>
-                        <label class="dir_item">
-                        	<input type="checkbox" disabled="disabled"
-                                   name="cat[<{$key}>][parent][<{$k}>][check]" >
-                                   <span>白斩鸡</span>
-                                   <a href="<{link app=seller ctl=site_cat act=write_aptitude}>" data-toggle="modal" data-target="#write_apt_modal" class="warning"><i class="text-danger icon-exclamation-sign"> </i><small>缺少资质</small></a>
-                        </label>
+                        <{/foreach}>
+                        <!--<label class="dir_item">-->
+                        	<!--<input type="checkbox"-->
+                                   <!--<{if $this_cat[$key].children[$k].cat_id eq $item.cat_id}> checked <{/if}>-->
+                                   <!--name="cat[<{$key}>][parent][<{$k}>][check]" >-->
+                                   <!--<span>三黄鸡</span>-->
+                        <!--</label>-->
+                        <!--<label class="dir_item">-->
+                        	<!--<input type="checkbox" disabled="disabled"-->
+                                   <!--name="cat[<{$key}>][parent][<{$k}>][check]" >-->
+                                   <!--<span>白斩鸡</span>-->
+                                   <!--<a href="<{link app=seller ctl=site_cat act=write_aptitude}>" data-toggle="modal" data-target="#write_apt_modal" class="warning"><i class="text-danger icon-exclamation-sign"> </i><small>缺少资质</small></a>-->
+                        <!--</label>-->
 	            </div>
 	        </div>                
                 <{/foreach}>
@@ -77,6 +78,7 @@
 <div class="modal fade" id="write_apt_modal" tabindex="-1" role="dialog">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
+            
     </div>
   </div>
 </div>

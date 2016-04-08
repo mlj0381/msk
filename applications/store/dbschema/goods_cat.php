@@ -114,6 +114,12 @@ $db['goods_cat'] = array(
             'in_list' => false,
             'orderby' => false,
         ),
+        'extra' => array(
+            'type' => 'serialize',
+            'default' => '',
+            'label' => '资质信息',
+            'comment' => '资质信息',
+        ),
         'disabled' => array(
             'type' => 'bool',
             'default' => 'false',

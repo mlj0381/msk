@@ -29,6 +29,17 @@ class seller_ctl_site_brand extends seller_frontpage {
          * ISL231153 查询卖家产品品牌
          */
 
+/*        $company_brand_data = array(
+            'epId'=> '88956',
+        );
+        $company_brand_result = $this->app->rpc('select_company_brand')->request($company_brand_data);
+        $seller_brand_data = array(
+            'slCode'=> '7010900169',
+        );
+        $seller_brand_result = $this->app->rpc('select_seller_brand')->request($seller_brand_data);
+        vmc::dump($this->mB2cbrand->getList('*', array('seller_id' => $this->seller['seller_id'])),$company_brand_result['result'],$seller_brand_result['result']);die;*/
+
+
 
         $this->title = '商品品牌';
         //查询详细信息

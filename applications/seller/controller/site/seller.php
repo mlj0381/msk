@@ -95,7 +95,7 @@ class seller_ctl_site_seller extends seller_frontpage {
             }
             $companyInfo[$key] = $company_columns[$key] ?: $companyInfo[$key];
         }
-        $this->pagedata['company'] = $companyInfo;
+        $this->pagedata['company'] = array($this->seller['ident'] => $companyInfo[$this->seller['ident']]);
         $this->passport_obj->entryType = 'centre';
         $this->pagedata['info'] = $this->passport_obj->edit_info($columns, $this->seller['seller_id'], $storeType, $index);
 
@@ -118,6 +118,8 @@ class seller_ctl_site_seller extends seller_frontpage {
         $params = utils::_filter_input($_POST);
         unset($_POST);
         $result = $this->passport_obj->entry($params);
+        //推送接口
+        if(!$this->passport_obj->apiEntry()) $this->splash('error', $redirect, '操作失败');
         if(!$result) $this->splash('error', $redirect, '操作失败');
         $this->splash('success', $redirect, '修改成功');
     }

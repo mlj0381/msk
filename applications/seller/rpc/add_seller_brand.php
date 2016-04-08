@@ -38,7 +38,7 @@ $remote['seller_add_seller_brand'] = array(
             'name' => '品牌ID',
             'column' => 'brandId',
             'type' => 'Integer',
-            'require' => true,
+            'require' => false,
         ),
         'brandName' => array(
             'name' => '品牌名称',
