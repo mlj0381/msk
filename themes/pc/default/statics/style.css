@@ -788,6 +788,10 @@ ol {
 }
 .product-container .product-page .goods-detailRow .product-page-content {
   width: 100%;
+  max-width: 100%;
+}
+.product-container .product-page .goods-detailRow .product-page-content .tab-content {
+  padding-top: 15px;
 }
 .product-container .product-page .goods-detailRow .product-page-content .tab-content .description .pro_param {
   width: 100%;
@@ -804,6 +808,9 @@ ol {
   font-size: 12px;
   margin-left: 20px;
   overflow: hidden;
+}
+.product-container .product-page .goods-detailRow .product-page-content .tab-content .description img {
+  max-width: 100%;
 }
 .product-container .product-page .goods-detailRow .product-page-content .tab-content #record {
   margin-top: 25px;
@@ -1125,4 +1132,9 @@ ol {
 }
 .splash_con {
   min-height: 500px;
+}
+form .timeStart,
+form .timeEnd {
+  width: 46%;
+  display: inline-block;
 }

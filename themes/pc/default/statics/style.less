@@ -879,8 +879,9 @@ ul,ol{
 			}
 			.product-page-content{
 				width:100%;
-
+				max-width: 100%;
 				.tab-content{
+					padding-top:15px;
 					.description{
 						.pro_param{
 							width:100%;
@@ -898,6 +899,9 @@ ul,ol{
 								overflow: hidden;
 							}
 							
+						}
+						img{
+							max-width:100%;
 						}
 					}
 					#record{
@@ -1333,3 +1337,12 @@ ul,ol{
 }
 
 //END延时跳转页面
+
+
+//起止时间
+form{
+	.timeStart, .timeEnd{
+		width:46%;
+		display: inline-block;
+	}
+}
