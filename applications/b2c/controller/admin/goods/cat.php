@@ -126,8 +126,8 @@ class b2c_ctl_admin_goods_cat extends desktop_controller
      */
     public function addAptitudes($nCatId = 0)
     {
-        $cat = $this->app->model('goods_cat')->getRow('cat_name, cat_id', array('cat_id' => $nCatId));
-        $this->pagedata['cat'] = $cat;
+        $this->pagedata['cat'] = $this->app->model('goods_cat')->getRow('cat_name, cat_id', array('cat_id' => $nCatId));
+        $this->pagedata['aptitudes'] = $this->app->model('cat_aptitudes')->getRow('*', array('cat_id' => $nCatId));
         $this->display('admin/goods/category/addAptitudes.html');
     }
 
@@ -137,8 +137,19 @@ class b2c_ctl_admin_goods_cat extends desktop_controller
     public function saveAptitudes()
     {
         $this->begin('index.php?app=b2c&ctl=admin_goods_cat&act=index');
-        $params = $_POST;
-        if(!$this->app->save($params)){
+        $data = array(
+            'id' => $_POST['id'],
+            'cat_id' => $_POST['cat_id'],
+            'creature' => $_POST['creature'] ?: 'false',
+            'food' => $_POST['food'] ?: 'false',
+            'butcher' => $_POST['butcher'] ?: 'false',
+            'muslim' => $_POST['muslim'] ?: 'false',
+            'shanghai' => $_POST['shanghai'] ?: 'false',
+            'iso14001' => $_POST['iso14001'] ?: 'false',
+            'iso22000' => $_POST['iso22000'] ?: 'false',
+            'iso9001' => $_POST['iso9001'] ?: 'false',
+        );
+        if(!$this->app->model('cat_aptitudes')->save($data)){
             $this->end(false, '设置失败');
         }
         $this->end(true, '设置成功');

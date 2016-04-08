@@ -1,11 +1,13 @@
-<div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-    <h4 class="modal-title" id="myModalLabel">资质填写</h4>
-</div>
-<div class="modal-body">
-    <form class="write_apt_form form-horizontal" method="post" action="<{link app=seller ctl=site_cat act=saveAptitude}>" data-module="validator">
-        <input type="hidden" name="cat[id]" value="<{$cat.id}>"/>
-        <input type="hidden" name="cat[cat_id]" value="<{$cat.cat_id}>"/>
+<form class="write_apt_form form-horizontal" method="post" action="<{link app=seller ctl=site_cat act=saveAptitude}>"
+      data-module="validator">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">资质填写</h4>
+    </div>
+    <div class="modal-body">
+        <input type="hidden" name="id" value="<{$cat.id}>"/>
+        <input type="hidden" name="cat_id" value="<{$cat.cat_id}>"/>
         <!-- 动检证 -->
         <{if $aptitude.creature eq 'true'}>
         <{include file="site/passport/companyInfo/animal_certificate.html"}>
@@ -40,9 +42,10 @@
         <{if $aptitude.muslim eq 'true'}>
         <{include file="site/passport/companyInfo/food_mosque_lesstion.html"}>
         <{/if}>
-    </form>
-</div>
-<div class="modal-footer">
-    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-    <button type="submit" class="btn btn-primary">保存</button>
-</div>
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+        <button type="submit" class="btn btn-primary">保存</button>
+    </div>
+</form>
