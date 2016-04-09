@@ -52,7 +52,7 @@
 	            </div>
 	        </div>                
                 <{/foreach}>
-	        <div class="clearfix"><button class="btn btn-danger pull-right">保存修改</button></div>
+	        <div class="clearfix"><button class="btn btn-danger pull-right directory_submit">保存修改</button></div>
         </form>
     </div>
 
@@ -74,6 +74,29 @@
 </div>
 <!-- 填写资质modal 结束-->
 <script type="text/javascript">
+    $('.directory_form').submit(function(){
+        var confirm = true;
+        $('.dir_item').each(function(index,element){
+            var status_ck = $(this).find('input[type=checkbox]').is(':checked');
+            var has_warning = $(this).find('a').hasClass('warning');
+            console.log(status_ck,has_warning);
+            if(status_ck == true && has_warning == true){
+                alert('您勾选的分类，资质未完善');
+                $(this).find('input[type=checkbox]').focus();
+                confirm = false;
+                return false; 
+            } 
+            
+        });
+        if(!confirm)  return false;
+
+        return false;
+
+    })
+    var $cat_item = $('.directory_form .dir_item');
+    
+
+
 	$('#write_apt_modal').on('shown.bs.modal', function () {
         $.VMC.init();  //重新绑定图片上传事件
         /**

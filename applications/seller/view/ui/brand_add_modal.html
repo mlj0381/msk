@@ -1,5 +1,5 @@
 <{if $type eq 'entry'}>
-<form method="post" action="<{link app=seller ctl=site_passport act=add_brand}>" data-module="validator">
+<form method="post" id="entry-add-brand" action="<{link app=seller ctl=site_passport act=add_brand}>" data-module="validator">
 <{else}>
 <form method="post" action="<{link app=seller ctl=site_brand act=brand_add}>" data-module="validator">
     <{/if}>
@@ -125,5 +125,11 @@
                 }
             });
         });
+
     });
+//    void function(saveBrand){
+//        saveBrand.find('.brand_save_btn').click(function(){
+//            alert('');
+//        });
+//    }('#entry-add-brand');
 </script>
