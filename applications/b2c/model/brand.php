@@ -80,7 +80,7 @@ class b2c_mdl_brand extends dbeav_model
         $db->beginTransaction();
         $mdl_b2c_brand = app::get('b2c')->model('brand');
         if ($brand['brand_id']) {
-            $brand_name = $this->mBrand->getRow('brand_name', array('brand_id' => $brand['brand_id'], 'seller_id' => $brand['seller_id']));
+            $brand_name = $this->getRow('brand_name', array('brand_id' => $brand['brand_id'], 'seller_id' => $brand['seller_id']));
             $b2c_fun_name = 'save';
             $seller_fun_name = 'update';
             $brand['brand_name'] = $brand_name['brand_name'];
