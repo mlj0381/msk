@@ -2,7 +2,7 @@
 	<div class="page-header">
 		<h1>商户信息</h1>
 	</div>
-	<form action="<{link app=seller ctl=site_seller act=save_businessInfo}>" id="companyInfo_form" method="post" class="edit_form form-horizontal" data-module="validator">
+	<form action="<{link app=seller ctl=site_seller act=save_businessInfo args0=$activePage args1=$storeType args2=$company_index + 1}>" id="companyInfo_form" method="post" class="edit_form form-horizontal" data-module="validator">
         <input type="hidden" name="pageIndex" value="<{$activePage}>"/>
         <{foreach from=$company key=companyType item=pageSets}>
         <{foreach from=$pageSets key=index item=pageSet}>

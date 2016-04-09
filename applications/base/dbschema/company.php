@@ -47,7 +47,7 @@ $db['company'] = array(
             'comment' => '公司类型',
         ),
         'business' => array(
-            'type' => 'varchar(20)',
+            'type' => 'varchar(50)',
             'default' => '',
             'comment' => '营业执照号',
             'label' => '营业执照号',

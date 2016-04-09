@@ -724,7 +724,8 @@ class seller_user_passport
         $mdl_seller = $this->app->model('sellers');
         $mdl_company_seller = app::get('base')->model('company_seller');
         $company_extra = $mdl_company_seller->getList('company_id', array(
-            'seller_id' => $seller['seller_id'], 'identity' => $params['typeId'], 'from' => '1'), '0', '1', 'cs_id desc');
+            'uid' => $seller['seller_id'], 'identity' => $params['typeId'], 'from' => '1'), '0', '1', 'cs_id desc');
+
         $company_info = array(
             array('key' => 'company', 'label' => '公司信息', 'app' => 'base'),
             array('key' => 'contact', 'label' => '联系人信息', 'app' => 'base'),
@@ -807,7 +808,7 @@ class seller_user_passport
                 $params[$col]['uid'] = $seller['seller_id'];
                 $params[$col]['createtime'] = time();
                 $params[$col]['from'] = 1;
-
+                //print_r($params[$col]);die;
                 //电商成员信息
                 if (is_array(reset($params[$col]['value']))) {
 
@@ -893,7 +894,7 @@ class seller_user_passport
     /**
      * 提交商家入驻信息
      */
-    public function apiEntry()
+    public function apiEntry($type)
     {
         //取得商家已绑定的公司
         $company_id = app::get('base')->model('company_seller')->getList('company_id', array('uid' => $this->seller['seller_id'], 'from' => '1'));
@@ -912,7 +913,8 @@ class seller_user_passport
             }
         }
         $data = $this->pre_entry_process($api_data);
-        $result = app::get('seller')->rpc('edit_seller_info')->request($data);
+        $rpc = $this->_checkData($data, $type);
+        $result = app::get('seller')->rpc($rpc)->request($data);
         if ($result['result']) {
             $filter = array('company_id' => $company_id[0]['company_id']);
             $update_value = array('ep_id' => $result['result']['epId']);
@@ -933,6 +935,20 @@ class seller_user_passport
         }
         return false;
     }
+
+    private function _checkData(&$data, $type)
+    {
+        $rpc = 'edit_seller_info';
+        switch($type){
+            case 'update':
+                unset($data['slAccount']);
+                unset($data['slSeller']);
+                $rpc = 'edit_seller_info1';
+                break;
+        }
+        return $rpc;
+    }
+
 
     /**
      * 组织提交给接口的数据
@@ -955,10 +971,9 @@ class seller_user_passport
     private function _process_account(&$result)
     {
         $tmp['pam'] = app::get('pam')->model('sellers')->getRow('*', array('seller_id' => $this->seller['seller_id']));
-        $tmp['seller'] = app::get('seller')->model('sellers')->getRow('*', array('seller_id' => $this->seller['seller_id']));
         $result['slAccount'] = array(
             'login_account' => $tmp['pam']['login_account'],
-            'mobile' => $tmp['seller']['mobile'],
+            'mobile' => $this->seller['mobile'],
             'show_name' => $tmp['pam']['login_account'],
             'contact_person' => $tmp['pam']['login_account'],
             'login_password' => $tmp['pam']['password'],
@@ -979,7 +994,7 @@ class seller_user_passport
 
         $result['slSeller'] = array(
             'login_account' => $tmp['pam']['login_account'],
-            'slCode' => '',
+            'slCode' => $this->seller['sl_code'],
             'slConFlg' => '1',
             'provinceCode' => '1',//$region['province']['code'],
             'cityCode' => '2',//$region['city']['code'],
@@ -1020,7 +1035,7 @@ class seller_user_passport
                     $catList[] = array(
                         'pdClassesCode' => $parent['addon'],
                         'machiningCode' => $v['addon'],
-                        'slCode' => '',
+                        'slCode' => $this->seller['sl_code'],
                     );
                 }
             }
@@ -1028,9 +1043,10 @@ class seller_user_passport
             $tmp[$key]['pdClassesCodeList'] = $catList;
             //企业基本资质
             $company_id = $value['business_licence']['extra_id'];
+            $apiCompanyId = app::get('base')->model('company')->getRow('ep_id', array('company_id' => $company_id));
             $tmp[$key]['slEnterprise'] = array(
-                'slCode' => '',
-                'epId' => '',
+                'slCode' => $this->seller['sl_code'],
+                'epId' => $apiCompanyId['ep_id'],
                 'epName' => $this->company[$company_id]['name'],
                 'licType' => $this->company[$company_id]['business_type'],
                 'licName' => $this->company[$company_id]['name'],
@@ -1077,11 +1093,12 @@ class seller_user_passport
 
             //企业荣誉
             $slEpHonorList = Array();
-            foreach ($value['company_touted'] as $v) {
+            $apiSellerInfo = $this->app->rpc('select_seller_info')->request(array('login_account' => $this->seller['login_account']));
+            foreach ($value['company_touted'] as $k => $v) {
                 $slEpHonorList[] = array(
-                    'epId' => '',
-                    'honorId' => '',
-                    'honorDesc' => $v['value']['desc'] . 'aaaaaaaaaaaaaaaaaaa',
+                    'epId' => $apiCompanyId['ep_id'],
+                    'honorId' => $apiSellerInfo['result']['slEpHonorList'][$k]['honorId'],
+                    'honorDesc' => $v['value']['desc'],
                     'certDate' => $v['value']['date'],
                     'certIssuer' => '',
                 );
@@ -1091,8 +1108,8 @@ class seller_user_passport
             //企业产品品牌
             foreach ($brand as $v) {
                 $brand_list[] = array(
-                    'epId' => '',
-                    'brandId' => '',
+                    'epId' => $apiCompanyId['ep_id'],
+                    'brandId' => $v['api_brand_id'],
                     'brandClass' => '0',
                     'brandName' => $v['brand_name'],
                     'brandNo' => '123456',
@@ -1117,10 +1134,10 @@ class seller_user_passport
 
             //企业车间
             $slEpWorkshopList = Array();
-            foreach ($value['workshop'] as $v) {
+            foreach ($value['workshop'] as $k => $v) {
                 $slEpWorkshopList[] = array(
-                    'epId' => '',
-                    'workshopId' => '',
+                    'epId' => $apiCompanyId['ep_id'],
+                    'workshopId' => $apiSellerInfo['result']['slEpWorkshopList'][$k]['workshopId'],
                     'workshopName' => $v['value']['name'],
                     'product' => '',
                     'process' => '',
@@ -1131,8 +1148,8 @@ class seller_user_passport
 
             //企业生产能力
             $tmp[$key]['slEpCap'] = array(
-                'slCode' => '',
-                'epId' => '',
+                'slCode' => $this->seller['sl_code'],
+                'epId' => $apiCompanyId['ep_id'],
                 'ftyAsset' => $value['factory']['value']['general'],
                 'ftyRegCapital' => $value['factory']['value']['general'], // ???
                 'ftyLandArea' => $value['factory']['value']['soil_area'],
@@ -1149,7 +1166,7 @@ class seller_user_passport
                 'labFunction' => $value['laboratory']['value']['fun'],
                 'labInvestment' => $value['laboratory']['value']['invest'],
                 'labMember' => $value['laboratory']['value']['staff'],
-                'ddEquipment' => '',
+                //'ddEquipment' => '',
             );
 
             //生产商
@@ -1178,10 +1195,11 @@ class seller_user_passport
             $manage[5]['duties'] = '财务部经理';
             //企业管理团队
             $slEpManagerList = Array();
-            foreach ($manage as $v) {
+
+            foreach ($manage as $k => $v) {
                 $slEpManagerList[] = array(
-                    'epId' => '',
-                    'memberId' => '',
+                    'epId' => $apiCompanyId['ep_id'],
+                    'memberId' => $apiSellerInfo['result']['slEpManagerList'][$k]['memberId'],
                     'memberDuties' => $v['duties'],
                     'memberName' => $v['value']['name'],
                     'memberAge' => $v['value']['age'],
@@ -1196,10 +1214,10 @@ class seller_user_passport
             $slEcTeamList = Array();
             //ec_group_manager
             $value['ec_group_employees'][] = $value['ec_group_manager'];
-            foreach ($value['ec_group_employees'] as $v) {
+            foreach ($value['ec_group_employees'] as $k => $v) {
                 $slEcTeamList[] = array(
-                    'slCode' => '',
-                    'memberId' => '',
+                    'slCode' => $this->seller['sl_code'],
+                    'memberId' => $apiSellerInfo['result']['slEcTeamList'][$k]['memberId'],
                     'leaderFlg' => $v['key'] == 'ec_group_manager' ? '1' : '0',
                     'memberName' => $v['value']['name'],
                     'memberAge' => (int)$v['value']['age'],

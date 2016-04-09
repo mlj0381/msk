@@ -17,7 +17,7 @@
     <menugroup label="交易管理" name="deal">
         <menu app='seller' controller='site_order' action='index' display='true' order="60">订单管理</menu>
         <menu app='seller' controller='site_store' action='appraisal' display='true' order="60">评价管理</menu>
-        <menu app='seller' controller='site_seller' action='clearing' display='true' order="60">我的结算</menu>
+        <menu app='seller' controller='site_seller' action='clearing' display='false' order="60">我的结算</menu>
     </menugroup>
     <!-- <menugroup name="物流管理">
 		<menu app='seller' controller='site_seller' action='account' display='true' order="60">发货</menu>
@@ -28,7 +28,7 @@
         <menu app='seller' controller='site_goods' action='add' display='true' order="60">发布商品</menu>
         <menu app='seller' controller='site_goods' action='index' display='true' order="60">出售中的商品</menu>
         <menu app='seller' controller='site_goods' action='storage' display='true' order="60">仓库中的商品</menu>
-        <menu app='seller' controller='site_goods' action='price' display='true' order="60">价格管理</menu>
+        <menu app='seller' controller='site_goods' action='price' display='false' order="60">价格管理</menu>
         <menu app='seller' controller='site_brand' action='index' display='true' order="60">品牌管理</menu>
     </menugroup>
 

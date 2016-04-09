@@ -588,6 +588,7 @@ class seller_ctl_site_passport extends seller_frontpage
         $this->pagedata['info'] = $this->passport_obj->edit_info($columns, $this->seller['seller_id'], $storeType);
         $this->pagedata['info']['company_extra']['page_setting'] = $this->passport_obj->columns();
         $this->pagedata['info']['company_extra']['pageIndex'] = $step;
+        $this->pagedata['info']['company_extra']['identity'] = $this->seller['ident'];
         $this->pagedata['menu'] = array('storeType' => $storeType, 'activeMenu' => $index);
         $this->pagedata['pageSet'] = $columns;
         $this->pagedata['pageIndex'] = $step;
@@ -680,6 +681,7 @@ class seller_ctl_site_passport extends seller_frontpage
     //添加品牌资质
     public function add_brand()
     {
+
         if ($_POST) {
             $params = utils::_filter_input($_POST);
             unset($_POST);
@@ -698,10 +700,11 @@ class seller_ctl_site_passport extends seller_frontpage
         $redirect = Array('app' => 'seller', 'ctl' => 'site_passport', 'act' => 'entry', 'args0' => ($count['sum'] - 1));
         $redirect = $this->gen_url($redirect);
         $post['brand']['seller_id'] = $this->seller['seller_id'];
-        if (!app::get('b2c')->model('brand')->save_brand($post)) {
+
+        if (!app::get('b2c')->model('brand')->save($post['brand'])) {
             $this->splash('error', $redirect, '操作失败');
         }
-        $this->splash('success', $redirect, '添加成功');
+        $this->splash('success', $redirect, array('name' => $post['brand']['brand_name'], 'id' => $post['brand']['brand_id']));
     }
 
     /*

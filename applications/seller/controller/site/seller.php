@@ -116,18 +116,20 @@ class seller_ctl_site_seller extends seller_frontpage {
         $this->output();
     }
 
-    public function save_businessInfo(){
+    public function save_businessInfo($step = 1, $storeType = 1, $index = 1){
         $redirect = $this->gen_url(array(
             'app' => 'seller',
             'ctl' => 'site_seller',
-            'act' => 'businessInfo'
+            'act' => 'businessInfo',
+            'args' => array($step, $storeType, ($index + 1))
         ));
         if(empty($_POST)) $this->splash('error', $redirect, '非法请求');
         $params = utils::_filter_input($_POST);
+        $params['typeId'] = $params['typeId'] ?: $this->seller['ident'];
         unset($_POST);
         $result = $this->passport_obj->entry($params);
         //推送接口
-        if(!$this->passport_obj->apiEntry()) $this->splash('error', $redirect, '操作失败');
+        //if(!$this->passport_obj->apiEntry('update')) $this->splash('error', $redirect, '操作失败');
         if(!$result) $this->splash('error', $redirect, '操作失败');
         $this->splash('success', $redirect, '修改成功');
     }
