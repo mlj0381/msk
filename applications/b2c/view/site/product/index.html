@@ -78,12 +78,14 @@
                     <tr>
                         <td>随心量</td>
                         <!-- foreach开始 -->
-                        <!-- <td>
-                            <span class="num-dn"><{$item.num_dn|default:1}></span>-
-                            <span class="num-up"><{$item.num_up|default:不限}></span>箱
-                        </td> -->
-                        <!-- foreach结束 -->
+                        <{foreach from=$pricelist key=key item=item}>
                         <td>
+                            <span class="num-dn"><{$item.boxMin|default:1}></span>-
+                            <span class="num-up"><{$item.boxMax|default:不限}></span>箱
+                        </td>
+                        <{/foreach}>
+                        <!-- foreach结束 -->
+                        <!-- <td>
                             <span class="num-dn">1</span>-
                             <span class="num-up">50</span>箱
                         </td>
@@ -118,12 +120,12 @@
                         <td>
                             <span class="num-dn">401</span>-
                             <span class="num-up">450</span>箱
-                        </td>
+                        </td> -->
                     </tr>
                     <tr>
                         <td>通道阶梯价</td>
-                        <{foreach from=$data_detail.product.interval key=key item=item}>
-                        <td><span><{$item.price|cur}></span>元/箱</td>
+                        <{foreach from=$pricelist key=key item=item}>
+                        <td><span><{$item.priceOfBox|cur}></span>元/箱</td>
                         <{/foreach}>
                     </tr>
                 </tbody>
@@ -167,7 +169,7 @@
                 </div>
                 <div class="distr_info">
                     <label>品牌</label>
-                    <span>美侍客</span>
+                    <span><{$data_detail.brand.brand_name}></span>
                 </div>
                 <div class="distr_info">
                     <label>产品等级</label>

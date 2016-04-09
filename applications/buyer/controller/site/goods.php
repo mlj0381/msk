@@ -158,7 +158,7 @@ class buyer_ctl_site_goods extends buyer_frontpage{
 			$list = array_slice($order_list, ($page-1)*$limit, $limit);
 		}
 
-		is_array($list) and array_walk($list,function(&$v,$k){
+		is_array($list) && array_walk($list,function(&$v,$k){
 			$v['pay_status'] = self::$_pay_list[$v['orderStatus']];
 		});
 		$this->pagedata['order_list'] = $list;
@@ -202,13 +202,13 @@ class buyer_ctl_site_goods extends buyer_frontpage{
 		);
 		$response = $this->app->rpc('get_orders_list')->request($data, false);
 
-		if ($where['orderStatus'] and $where['orderCode']){
+		if ($where['orderStatus'] && $where['orderCode']){
 			foreach ($response['result']['orders'] as $k=>$v){
-				if ( $v['orderCode'] == $where['orderCode'] and $v['orderStatus'] == $where['orderStatus']){
+				if ( $v['orderCode'] == $where['orderCode'] && $v['orderStatus'] == $where['orderStatus']){
 					$list[$k] = $response['result']['orders'][$k];
 				}
 			}
-		}elseif (empty($where['orderStatus']) and empty($where['orderCode'])){
+		}elseif (empty($where['orderStatus']) && empty($where['orderCode'])){
 			$list = $response['result']['orders'];
 		}else {
 			foreach ($response['result']['orders'] as $k=>$v){

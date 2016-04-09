@@ -22,7 +22,7 @@ class buyer_mdl_buyers extends dbeav_model{
 		$login_type = vmc::singleton('buyer_user_passport')->get_login_account_type($username);
 		if ($login_type){
 			$date = app::get('buyer')->model('buyers')->getRow('buyer_id,member_id,buyer_code',array($login_type=>$username));
-			if ($date['member_id'] and $date['buyer_id']){
+			if ($date['member_id'] && $date['buyer_id']){
 				$date['buyer_id']		=	(int)$date['buyer_id'];
 				$date['member_id']		=	(int)$date['member_id'];
 				$date['login_account']	=	$username;

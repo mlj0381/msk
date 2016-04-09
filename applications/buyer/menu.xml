@@ -19,11 +19,11 @@
 		<!-- <menu app='buyer' controller='site_buyer' action='add_security' display='true' order="60">添加密保</menu> -->
     </menugroup>
     
-    <menugroup label="交易管理" name="goods">
+    <!-- <menugroup label="交易管理" name="goods">
     	<menu app='buyer' controller='site_goods' action='stock' display='true' order="60">销售订单管理</menu>
-        <!-- <menu app='buyer' controller='site_accounts' action='index' display='true' order="60">结算管理</menu> -->
-        <!-- <menu app='buyer' controller='site_goods' action='index' display='true' order="60">出货管理</menu> -->      
-    </menugroup>
+        <menu app='buyer' controller='site_accounts' action='index' display='true' order="60">结算管理</menu>
+        <menu app='buyer' controller='site_goods' action='index' display='true' order="60">出货管理</menu>      
+    </menugroup> -->
 
     <menugroup label="商品管理" name="goods">
         <!-- <menu app='buyer' controller='site_goods' action='repertory' display='true' order="60">仓库中的商品</menu> -->
