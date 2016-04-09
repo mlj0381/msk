@@ -649,6 +649,7 @@ class seller_user_passport
             $sum['sum'] += count($conf[4]['pageSet']);
             $sum['label'] .= $conf[4]['companyType'];
         }
+        $sum['label'] = trim($sum['label'], '+');
         $sum['sum'] += count($conf['comm']['pageSet']);
         return $sum;
     }
@@ -981,8 +982,8 @@ class seller_user_passport
             'slCode' => '',
             'slConFlg' => '1',
             'provinceCode' => '1',//$region['province']['code'],
-            'cityCode' => '2',// $region['city']['code'],
-            'districtCode' => '1',// $region['district']['code'],
+            'cityCode' => '2',//$region['city']['code'],
+            'districtCode' => '1',//$region['district']['code'],
             'slMainClass' => $this->seller['type'] == '1' ? 4 : (int)$seller_type[array_rand($seller_type)],
             'snkFlg' => '0',
             'selfFlg' => $seller_type['selfFlg'] ? '1' : '0',
@@ -1005,6 +1006,7 @@ class seller_user_passport
         $brand = app::get('b2c')->model('brand')->getList('*', array('seller_id' => $this->seller['seller_id']));
         $mdl_cat = app::get('store')->model('goods_cat');
         $cat = $mdl_cat->getList('*', array('seller_id' => $this->seller['seller_id']));
+		
         $conf = $this->app->getConf('education');
 
         foreach ($api_data as $key => $value) {
@@ -1012,9 +1014,9 @@ class seller_user_passport
             $catList = Array();
             foreach ($cat as $v) {
                 $cat_id = explode(',', $v['cat_path']);
+				if(count($cat_id) >= 3) continue;
                 if (count($cat_id) == 2) {
-                    $parent = $mdl_cat->getRow('addon', array('cat_id' => $cat_id[0]));
-
+                    $parent = $mdl_cat->getRow('addon', array('cat_id' => $cat_id[0], 'seller_id' =>  $this->seller['seller_id']));
                     $catList[] = array(
                         'pdClassesCode' => $parent['addon'],
                         'machiningCode' => $v['addon'],
@@ -1022,6 +1024,7 @@ class seller_user_passport
                     );
                 }
             }
+			
             $tmp[$key]['pdClassesCodeList'] = $catList;
             //企业基本资质
             $company_id = $value['business_licence']['extra_id'];

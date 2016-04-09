@@ -65,6 +65,7 @@ class seller_ctl_site_seller extends seller_frontpage {
          */
         !is_numeric($step) && $step = 1;
         $companyInfo = $this->app->getConf('seller_entry');
+        $comm = $companyInfo['comm'];
         $step == 1 && $licence_type = $this->_request->get_get('card') ?:
             $this->passport_obj->new_or_old($this->seller['seller_id'], $storeType, $index);
 
@@ -95,10 +96,17 @@ class seller_ctl_site_seller extends seller_frontpage {
             }
             $companyInfo[$key] = $company_columns[$key] ?: $companyInfo[$key];
         }
-        $this->pagedata['company'] = array($this->seller['ident'] => $companyInfo[$this->seller['ident']]);
-        $this->passport_obj->entryType = 'centre';
-        $this->pagedata['info'] = $this->passport_obj->edit_info($columns, $this->seller['seller_id'], $storeType, $index);
 
+        $companyInfo[$this->seller['ident']][0]['pageSet'][] = $comm['pageSet'][1];
+        $this->pagedata['company'] = array($this->seller['ident'] => $companyInfo[$this->seller['ident']]);
+
+        $this->passport_obj->entryType = 'centre';
+
+        if($step == count($companyInfo[$this->seller['ident']][0]['pageSet'])){
+            $this->pagedata['info'] = $this->passport_obj->edit_info($comm['pageSet'][1], $this->seller['seller_id'], 'comm');
+        }else{
+            $this->pagedata['info'] = $this->passport_obj->edit_info($columns, $this->seller['seller_id'], $storeType, $index);
+        }
         $this->pagedata['info']['company_extra']['type'] = 'center';
         $this->pagedata['info']['company_extra']['page_setting'] = $this->passport_obj->columns();
         $this->pagedata['activePage'] = $step;
