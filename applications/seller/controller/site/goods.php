@@ -29,7 +29,7 @@ class seller_ctl_site_goods extends seller_frontpage
     {
         // 入商品库
         !is_numeric($page) && $page = 1;
-        $search = $_POST['goods'] ? $_POST['goods'] : '';
+        $search = $_POST['goods'] ?: '';
         $mdl_goods_cat = app::get('b2c')->model('goods_cat');
         $this->pagedata['cat'] = $mdl_goods_cat->get_tree();
         $this->pagedata['goodList'] = $this->_good_list(1, $search, $page);
@@ -273,7 +273,6 @@ class seller_ctl_site_goods extends seller_frontpage
         $mdl_store_cat = app::get('store')->model('goods_cat');
         $store_id = $mdl_store->getRow('store_id', array('seller_id' => $this->seller['seller_id']));
         foreach ($post['cat'] as $value) {
-
             $count = 0;
             foreach ($value['parent'] as $v) {
                 !empty($v['check']) && $count++;

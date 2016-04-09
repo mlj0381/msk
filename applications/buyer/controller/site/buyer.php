@@ -45,7 +45,7 @@ class buyer_ctl_site_buyer extends buyer_frontpage{
 		
 		$this->menuSetting = 'account';
 		//$buyer_id = vmc::singleton('buyer_user_object')->get_session();
-		if ($action == 'update' and $_POST){
+		if ($action == 'update' && $_POST){
 			$redirect = $this->gen_url(array(
 					'app' => 'buyer',
 					'ctl' => 'site_buyer',
@@ -173,7 +173,7 @@ class buyer_ctl_site_buyer extends buyer_frontpage{
 		 * 
 		 * 
 		 */
-		if ($action == 'update' and $_POST){
+		if ($action == 'update' && $_POST){
 			$redirect = $this->gen_url(array(
 					'app' => 'buyer',
 					'ctl' => 'site_buyer',
@@ -184,7 +184,7 @@ class buyer_ctl_site_buyer extends buyer_frontpage{
 			if(strlen($params['card_id']) != 18){
 				$this->splash('error', $redirect, '身份证填写错误！');
 			}
-			if (strlen((int)$params['qq']) < 5 and strlen((int)$params['qq'] >13)){
+			if (strlen((int)$params['qq']) < 5 && strlen((int)$params['qq'] >13)){
 				$this->splash('error', $redirect, 'QQ号格式或位数错误！');
 			}
 			if ($this->app->model('buyers')->update($params, array('buyer_id' => $this->buyer_id))){

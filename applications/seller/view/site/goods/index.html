@@ -57,7 +57,7 @@
             <{foreach from=$goodList item=item name="item"}>
                 <tr>
                     <td>
-                        <a href="" class="thumbnail"><img src="<{$item.image_default_id|storager:'xs'}>"></a>
+                        <a href="<{link app=b2c ctl=site_product act=index args0=$item.product_id args1=$item.store_id}>" class="thumbnail"><img src="<{$item.image_default_id|storager:'xs'}>"></a>
                     </td>
                     <td><{$item.gid}></td>
                     <td><{$item.name|cut:50:'...'}></td>

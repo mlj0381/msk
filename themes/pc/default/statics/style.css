@@ -438,7 +438,7 @@ ol {
 .product-container .product-page .product_firstRow .pricebox table {
   border-collapse: collapse;
   width: 100%;
-  background: #e06060;
+  background: #e4393c;
   border: 1px solid #fff;
 }
 .product-container .product-page .product_firstRow .pricebox table tr td {
@@ -540,29 +540,59 @@ ol {
   float: left;
   max-width: 560px;
 }
-.product-container .product-page .product_firstRow .pro_spec .spec_items .spec_item {
+.product-container .product-page .product_firstRow .pro_spec .spec_items span.spec_item {
+  display: inline-block;
   width: auto;
-  padding: 5px 20px 5px 5px;
-  background: #fcf8e3;
-  border: 1px solid #faebcc;
-  color: #8a6d3b;
+  padding: 5px 5px;
+  background: #fff;
+  border: 1px solid #ccc;
+  color: #666;
   position: relative;
   margin-bottom: 10px;
   cursor: pointer;
 }
-.product-container .product-page .product_firstRow .pro_spec .spec_items .spec_item i {
+.product-container .product-page .product_firstRow .pro_spec .spec_items span.spec_item:hover {
+  padding: 4px 4px;
+  border: 2px solid #e4393c;
+}
+.product-container .product-page .product_firstRow .pro_spec .spec_items span.spec_item:hover:after {
+  content: '';
   position: absolute;
-  right: 2px;
-  bottom: 2px;
-  display: inline;
-  width: 12px;
-  height: 12px;
-  line-height: 12px;
+  right: -2px;
+  bottom: -2px;
+  display: block;
+  width: 15px;
+  height: 15px;
+  line-height: 15px;
   text-align: center;
-  background: #8a6d3b;
-  color: #fff;
-  border-radius: 50%;
-  font-size: 12px;
+  background: url(images/small_check.png) no-repeat right bottom;
+  color: #000;
+  font-size: 0px;
+}
+.product-container .product-page .product_firstRow .pro_spec .spec_items span.active {
+  display: inline-block;
+  width: auto;
+  padding: 4px 4px;
+  border: 2px solid #e4393c;
+  background: #fff;
+  color: #666;
+  position: relative;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+.product-container .product-page .product_firstRow .pro_spec .spec_items span.active:after {
+  content: '';
+  position: absolute;
+  right: -2px;
+  bottom: -2px;
+  display: block;
+  width: 15px;
+  height: 15px;
+  line-height: 15px;
+  text-align: center;
+  background: url(images/small_check.png) no-repeat right bottom;
+  color: #000;
+  font-size: 0px;
 }
 .product-container .product-page .product_firstRow .turnover_info {
   width: 100%;

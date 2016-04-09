@@ -78,12 +78,14 @@
                     <tr>
                         <td>随心量</td>
                         <!-- foreach开始 -->
-                        <!-- <td>
-                            <span class="num-dn"><{$item.num_dn|default:1}></span>-
-                            <span class="num-up"><{$item.num_up|default:不限}></span>箱
-                        </td> -->
-                        <!-- foreach结束 -->
+                        <{foreach from=$pricelist key=key item=item}>
                         <td>
+                            <span class="num-dn"><{$item.boxMin|default:1}></span>-
+                            <span class="num-up"><{$item.boxMax|default:不限}></span>箱
+                        </td>
+                        <{/foreach}>
+                        <!-- foreach结束 -->
+                        <!-- <td>
                             <span class="num-dn">1</span>-
                             <span class="num-up">50</span>箱
                         </td>
@@ -118,12 +120,12 @@
                         <td>
                             <span class="num-dn">401</span>-
                             <span class="num-up">450</span>箱
-                        </td>
+                        </td> -->
                     </tr>
                     <tr>
                         <td>通道阶梯价</td>
-                        <{foreach from=$data_detail.product.interval key=key item=item}>
-                        <td><span><{$item.price|cur}></span>元/箱</td>
+                        <{foreach from=$pricelist key=key item=item}>
+                        <td><span><{$item.priceOfBox|cur}></span>元/箱</td>
                         <{/foreach}>
                     </tr>
                 </tbody>
@@ -167,7 +169,7 @@
                 </div>
                 <div class="distr_info">
                     <label>品牌</label>
-                    <span>美侍客</span>
+                    <span><{$data_detail.brand.brand_name}></span>
                 </div>
                 <div class="distr_info">
                     <label>产品等级</label>
@@ -177,7 +179,7 @@
                     <label>产品规格 </label>
                     <div class="spec_items">
                         <{foreach from=$data_detail.feature_data_list item=feature}>
-                        <span class="spec_item" data-proId=""><{$feature.featureName}><i class="icon-ok"></i></span>
+                        <span class="spec_item active" data-proId=""><{$feature.featureName}></span>
                         <{/foreach}>
                     </div>
                 </div>
@@ -185,7 +187,7 @@
                     <label>包装规格 </label>
                     <div class="spec_items">
                         <{foreach from=$data_detail.weight_data_list item=weight}>
-                        <span class="spec_item" data-packId=""><{$weight.0.weightName}><i class="icon-ok"></i></span>
+                        <span class="spec_item active" data-packId=""><{$weight.0.weightName}> </span>
                         <{/foreach}>
                     </div>
                 </div>
@@ -491,6 +493,10 @@
 <script type="text/javascript" src="<{$base_url}>/openapi/goods/counter/goods_id/<{$data_detail.goods_id}>/view_count/1/uv.js"></script>
 <{script src="jquery.zoom.js"}>
 <script charset="utf-8">
+/**
+ * 商品价格即时显示
+ */
+
 
 /*
  * 时间条件查询成交记录 

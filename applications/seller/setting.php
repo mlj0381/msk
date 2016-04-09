@@ -148,7 +148,7 @@ $setting = array(
             array(
                 'title' => '公司资质审批',
                 'setting' => array(
-                    'label' => array('卖家资质审批', '被代理生产商资质审批', 'OEM生产商资质审批'),
+                    'label' => array('卖家资质审批'),//, '被代理生产商资质审批', 'OEM生产商资质审批'
                     'type' => array('1', '2', '4'),
                     'page' => array('1'),
                 ),
@@ -156,7 +156,7 @@ $setting = array(
             array(
                 'title' => '公司基本信息提交',
                 'setting' => array(
-                    'label' => array('卖家基本信息提交', '被代理生产商基本信息提交', 'OEM生产商基本信息提交'),
+                    'label' => array('卖家基本信息提交'),//, '被代理生产商基本信息提交', 'OEM生产商基本信息提交'
                     'type' => array('1', '2', '4'),
                     'page' => array('2', '3', '4')
                 ),
@@ -164,7 +164,7 @@ $setting = array(
             array(
                 'title' => '公司管理团队信息',
                 'setting' => array(
-                    'label' => array('卖家管理团队信息', '被代理生产商管理团队信息', 'OEM生产商管理团队信息'),
+                    'label' => array('卖家管理团队信息'),//, '被代理生产商管理团队信息', 'OEM生产商管理团队信息'
                     'type' => array('1', '2', '4'),
                     'page' => array('5'),
                 ),

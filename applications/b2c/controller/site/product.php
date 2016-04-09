@@ -86,7 +86,10 @@ class b2c_ctl_site_product extends b2c_frontpage {
         //包装规格  $data[0];
         $data_detail['weight_data_list'] = array_filter(array_unique($weight_data));
         
-        //var_dump($data_detail);exit;
+        //这个需要定时任务数据到数据库中....
+        $products_price_data = $this->get_product_price('', '', '');
+        //var_dump($products_price_data);exit;
+        
         
         $this->pagedata['buyer_id'] = vmc::singleton('buyer_user_object')->get_session();
         $this->pagedata['data_detail'] = $data_detail;
@@ -106,6 +109,7 @@ class b2c_ctl_site_product extends b2c_frontpage {
         $goods_order_list = $this->app->model('orders')->get_goods_order($goods_id=8, $_POST['time_type'] ?: '1', $offset=0, $set=2);
         $this->pagedata['goods_order_list'] = $goods_order_list;
         $this->pagedata['product_id'] = $params[0];
+        $this->pagedata['pricelist'] = $products_price_data['pricelist'];
         $this->_set_seo($data_detail);
         $this->page('site/product/index.html');
     }
@@ -222,4 +226,19 @@ class b2c_ctl_site_product extends b2c_frontpage {
         );
         $this->display('site/comment/list.html');
     }
+    
+    
+    public function get_product_price($logiAreaCode, $slCode, $productCode){
+    	$no_month = ceil(date('j')/7);
+    	if (date('w') < date('w', strtotime(date('Y-m-01')))){
+    		$no_month++;
+    	}
+    	$data['pricePeriod'] = date('ym').$no_month;
+    	$rpc_response = $this->app->rpc('select_price_offer')->request($data);
+    	$rpc_data = $rpc_response['result']['productslist'];
+    	$one_product = utils::array_change_key($rpc_response['result']['productslist'], 'productCode')['0120401012'];
+    	return $one_product;
+    }
+    
+    
 }
