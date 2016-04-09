@@ -37,6 +37,15 @@ $db['brand'] = array(
             'in_list' => true,
             'default_in_list' => true,
         ),
+        'api_brand_id' =>
+            array(
+                'type' => 'varchar(50)',
+                'default' => '',
+                'label' => ('润和品牌id'),
+                'comment' => ('润和品牌id'),
+                'in_list' => false,
+                'default_in_list' => false,
+            ),
         'brand_initial' =>
         array(
             'type' => 'varchar(1)',
