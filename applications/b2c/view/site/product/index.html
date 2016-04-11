@@ -78,7 +78,7 @@
                     <tr>
                         <td>随心量</td>
                         <!-- foreach开始 -->
-                        <{foreach from=$pricelist key=key item=item}>
+                        <{foreach from=$pricelist item=item}>
                         <td>
                             <span class="num-dn"><{$item.boxMin|default:1}></span>-
                             <span class="num-up"><{$item.boxMax|default:不限}></span>箱
@@ -179,7 +179,7 @@
                     <label>产品规格 </label>
                     <div class="spec_items">
                         <{foreach from=$data_detail.feature_data_list item=feature}>
-                        <span class="spec_item active" data-proId=""><{$feature.featureName}></span>
+                        <span class="spec_item <{if $data_detail.featureCode eq $feature.featureCode}>active<{/if}>" data-proId=""><{$feature.featureName}></span>
                         <{/foreach}>
                     </div>
                 </div>
@@ -187,7 +187,7 @@
                     <label>包装规格 </label>
                     <div class="spec_items">
                         <{foreach from=$data_detail.weight_data_list item=weight}>
-                        <span class="spec_item active" data-packId=""><{$weight.0.weightName}> </span>
+                        <span class="spec_item active" data-packId=""><{$weight.weightName}> </span>
                         <{/foreach}>
                     </div>
                 </div>
@@ -277,7 +277,8 @@
                     <div class="price-availability-block">
                         <label>支付金额</label>
                         <span class="price text-danger">
-                            <strong>￥<{$data_detail.product.price_up|cur}></strong>
+                            <strong>￥<{$pricelist.0.priceOfBox}></strong>
+                            <!-- <strong>￥<{$data_detail.product.price_up|cur}></strong> -->
                         </span>
                     </div>
                     <hr>

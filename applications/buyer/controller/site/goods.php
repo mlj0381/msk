@@ -22,7 +22,7 @@ class buyer_ctl_site_goods extends buyer_frontpage{
 		parent::__construct($app);
 		$this->verify_buyer();
 // 		$this->verify_member();
-		$this->buyer_id = vmc::singleton('buyer_user_object')->get_session();
+		$this->buyer_id = vmc::singleton('buyer_user_object')->get_id();
 		//后面还需要什么............
 	}
 	
@@ -132,12 +132,19 @@ class buyer_ctl_site_goods extends buyer_frontpage{
 		if (!in_array($current_status,array('all','2','8'))){
 			$order_list = null;
 		}else {
-			$rpc_model = $this->app->rpc('get_orders_list');
+			$request_data = $this->app->model('buyers')->getRow('buyer_code,api_buyer_id',array('buyer_id'=>$this->buyer_id));
 			$data = array(
 					'buyersId'	=>'BI01',
 					'buyersCode'=>'BC01',
 			);
-			$response = $rpc_model->request($data, 2);
+			$where =array();
+			$current_status == 'all' ?$where['orderStatus'] = '': $where['orderStatus'] = $current_status;
+			$_POST['search'] ?$where['orderCode'] = $_POST['search'] : $where['orderCode'] = '';
+			
+			$list = $this->get_goods_order($where);
+			
+			//下面的$data = $request_data;
+			$response = $this->app->rpc('get_orders_list')->request($data, 2);
 			if ($current_status == 'all' or empty($current_status)){
 				if (!empty($_POST['search'])){
 					foreach ($response['result']['orders'] as $k=>$v){
@@ -177,6 +184,36 @@ class buyer_ctl_site_goods extends buyer_frontpage{
 		);
 		$this->output();
 	}
+	
+// 	public function store($current_status='all', $page = 1){
+// 		$limit = 20;
+// 		if (in_array($current_status,array('all','2','8'))){
+// 			$where =array();
+// 			$current_status == 'all' ?$where['orderStatus'] = '': $where['orderStatus'] = $current_status;
+// 			$_POST['search'] ?$where['orderCode'] = $_POST['search'] : $where['orderCode'] = '';
+			
+// 			$list = $this->get_goods_order($where);
+// 		}else {
+// 			$list = array();
+// 		}
+// 		//var_dump($list);
+// 		$order_list = array_slice($list, ($page-1)*$limit, $limit);
+// 		$this->pagedata['order_list'] = $order_list;
+// 		$this->pagedata['current_status'] = $current_status;
+// 		$this->pagedata['search'] = $_POST['search'];
+// 		$this->pagedata['pager'] = array(
+// 				'total' => ceil(count($list) / $limit),
+// 				'current' => $page,
+// 				'link' => array(
+// 						'app' => 'buyer',
+// 						'ctl' => 'site_goods',
+// 						'act' => 'store',
+// 						'args' => array($current_status,($token = time())),
+// 						),
+// 				'token' => $token,
+// 		);
+// 		$this->output();
+// 	}
 	
 	private static $_pay_list=array(
 			1=>'新建',
