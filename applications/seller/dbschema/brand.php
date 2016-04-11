@@ -41,6 +41,24 @@ $db['brand'] = array(
             'label' => '品牌名称',
             'comment' => '品牌名称',
         ),
+        'agent_code' => array(
+            'type' => 'char(32)',
+            'default' => '',
+            'comment' => ('rpc品牌授权码'),
+            'label' => ('品牌授权码'),
+        ),
+        'agent_start' => array(
+            'type' => 'char(32)',
+            'default' => '',
+            'comment' => ('rpc品牌授权开始时间'),
+            'label' => ('品牌授权开始时间'),
+        ),
+        'agent_end' => array(
+            'type' => 'char(32)',
+            'default' => '',
+            'comment' => ('rpc品牌授权结束时间'),
+            'label' => ('品牌授权结束时间'),
+        ),
         'brand_logo' => array(
             'type' => 'varchar(50)',
             'default' => '',
