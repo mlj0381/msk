@@ -563,7 +563,8 @@ class seller_ctl_site_passport extends seller_frontpage
         if ($_POST) {
             $params = utils::_filter_input($_POST);
             unset($_POST);
-            $result = $this->passport_obj->entry($params, $msg);
+            $result = $this->passport_obj->entry($params, $msg, $params['pageIndex']);
+
             if (!$result) $this->splash('error', $redirect, '操作失败');
         }
         $licence_type = $this->_request->get_get('card');
@@ -572,11 +573,10 @@ class seller_ctl_site_passport extends seller_frontpage
         }
         //页面总步骤
         $countPage = $this->passport_obj->countPage();
-        $step = $params['pageIndex'] ? $params['pageIndex'] : $step;
+        $step = $params['pageIndex'] ?: $step;
         $step = $type == 'up' ? $step - 1 : $step + 1;
         $step <= 1 && $step = 1;
         $step > $countPage['sum'] && $step = $countPage['sum'] + 1;
-
         if ($params['typeId']) $storeType = $params['typeId'];
         if (!$storeType && $this->seller['ident'] & 1) $storeType = 1;
         if (!$storeType && $this->seller['ident'] & 2) $storeType = 2;
@@ -585,7 +585,7 @@ class seller_ctl_site_passport extends seller_frontpage
         $this->pagedata['leftMenu'] = $this->app->getConf('seller_group');
         $index = $step;
         $this->passport_obj->_entry($step, $storeType, $index);
-        $this->pagedata['info'] = $this->passport_obj->edit_info($columns, $this->seller['seller_id'], $storeType);
+        $this->pagedata['info'] = $this->passport_obj->edit_info($columns, $this->seller['seller_id'], $storeType, 1, $step);
         $this->pagedata['info']['company_extra']['page_setting'] = $this->passport_obj->columns();
         $this->pagedata['info']['company_extra']['pageIndex'] = $step;
         $this->pagedata['info']['company_extra']['identity'] = $this->seller['ident'];
@@ -732,6 +732,32 @@ class seller_ctl_site_passport extends seller_frontpage
     {
         //获取分类
         $this->display('ui/add-category.html');
+    }
+
+    //选择商品类目填写相关资质
+    public function write_aptitude($cat_id = 0)
+    {
+        if (!is_numeric($cat_id)) $cat_id = 0;
+        $this->pagedata['aptitude'] = app::get('b2c')->model('cat_aptitudes')->getRow('*', array('cat_id' => $cat_id));
+        $this->pagedata['cat'] = app::get('store')->model('goods_cat')->getRow('*', array('cat_id' => $cat_id, 'seller_id' => $this->seller['seller_id']));
+        $this->pagedata['type'] = 'entry';
+        $this->display('site/goods/write_aptitude.html');
+    }
+
+    /**
+     * 保存分类所需资质
+     */
+    public function saveAptitude()
+    {
+        if (!$_POST) {
+            $this->splash('error', '', '非法请求');
+        }
+        $updateValue = array('extra' => $_POST['cat']);
+        $filter = array('id' => $_POST['id']);
+        if (!app::get('store')->model('goods_cat')->update($updateValue, $filter)) {
+            $this->splash('error', '', '添加失败');
+        }
+        $this->splash('success', '', '添加成功');
     }
 
 }

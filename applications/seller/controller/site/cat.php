@@ -83,7 +83,7 @@ class seller_ctl_site_cat extends seller_frontpage
     {
         if (!is_numeric($cat_id)) $cat_id = 0;
         $this->pagedata['aptitude'] = app::get('b2c')->model('cat_aptitudes')->getRow('*', array('cat_id' => $cat_id));
-        $this->pagedata['cat'] = app::get('store')->model('goods_cat')->getRow('*', array('cat_id' => $cat_id));
+        $this->pagedata['cat'] = app::get('store')->model('goods_cat')->getRow('*', array('cat_id' => $cat_id, 'seller_id' => $this->seller['seller_id']));
         $this->display('site/goods/write_aptitude.html');
     }
 

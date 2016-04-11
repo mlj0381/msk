@@ -46,6 +46,15 @@ $db['company_seller'] = array(
             'comment' => '身份类型', //1 工厂 2 代理 4 OEM
             'label' => '身份类型',
         ),
+		'company_type' => array(
+            'type' => array(
+				'0' => '生产商基本信息',
+				'1' => '卖家基本信息'
+				),
+            'default' => '0',
+            'comment' => '公司信息类型',
+            'label' => '公司信息类型',
+        ),
         'company_id' => array(
             'type' => 'number',
             'default' => 0,

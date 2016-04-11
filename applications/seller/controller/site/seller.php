@@ -129,7 +129,7 @@ class seller_ctl_site_seller extends seller_frontpage {
         unset($_POST);
         $result = $this->passport_obj->entry($params);
         //推送接口
-        //if(!$this->passport_obj->apiEntry('update')) $this->splash('error', $redirect, '操作失败');
+        if(!$this->passport_obj->apiEntry('update')) $this->splash('error', $redirect, '操作失败');
         if(!$result) $this->splash('error', $redirect, '操作失败');
         $this->splash('success', $redirect, '修改成功');
     }
