@@ -1,0 +1,6 @@
+<services>
+    <service id="freeze_passport">
+        <class>freeze_user_passport</class>
+    </service>
+
+</services>
