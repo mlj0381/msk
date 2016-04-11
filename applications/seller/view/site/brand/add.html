@@ -2,7 +2,7 @@
     <div class="modal-header">
         <h3 class="modal-title"><{if $brand.brand_id }>品牌编辑<{else}>品牌添加<{/if}></h3>
     </div>
-    <form method="post" action="<{link app=seller ctl=site_brand act=add}>" id='brand_form' calss="form">
+    <form method="post" action="<{link app=seller ctl=site_brand act=add}>" id='brand_form' calss="form" data-module="validator">
         <div class="modal-body  form-horizontal">
             <div class="form-body">
                 <{if $brand.brand_id }>
@@ -17,8 +17,9 @@
                     </label>
 
                     <div class="col-xs-5">
-                        <input type="text" required="required" id="check_brand_name" name="brand[brand_name]"
+                        <input type="text" required="true" id="check_brand_name" name="brand[brand_name]"
                                value="<{$brand.brand_name}>" class="form-control brand_name" placeholder="品牌全系统唯一，不能有重复">
+                        <span class="msgTip" data-message="error"></span>
                     </div>
                 </div>
                 <div class="form-group">
@@ -65,6 +66,27 @@
                     </div>
                 </div>
                 <div class="form-group">
+                    <label class="col-xs-2 control-label">
+                        <span class="text-danger">*</span>品牌有效期限
+                    </label>
+                    <div class="col-xs-5">
+                        <div class="timeLimit">
+                            <input type="text" name="agent_auth_lesstion[value][start]" value="<{$extra.agent_auth_lesstion.value.start}>"  class="form-control date timeStart" placeholder="2010-10-20" readonly required="true"> 至 
+                            <input type="text" name="agent_auth_lesstion[value][end]" value="<{$extra.agent_auth_lesstion.value.end}>"  class="form-control date timeEnd" placeholder="2010-10-20" readonly required="true">
+                            <span class="msgTip" data-message="error"></span>
+                        </div>
+                    </div>  
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-xs-2">
+                        <span class="text-danger">*</span>品牌授权码
+                    </label>
+                    <div class="col-xs-5">
+                        <input type="text" class="form-control" required="true" name="brand[code]" value="<{$brand[code]}>">
+                        <span class="msgTip" data-message="error"></span>
+                    </div>
+                </div>
+                <div class="form-group">
                     <label class="control-label col-xs-2">
                         <span class="text-danger">*</span>品牌授权书
                     </label>
@@ -102,7 +124,7 @@ $(function() {
             brand_name: input.val()
         }, function(re) {
             if (re.success) {
-                input.closest('.form-group').removeClass('has-error').addClass('has-success');
+                //input.closest('.form-group').removeClass('has-error').addClass('has-success');
                 if (re.data && re.data.is_mobile) {
                     $('.local-vcode').hide();
                     $('.mobile-vcode').show();
@@ -118,7 +140,7 @@ $(function() {
                     container: 'body'
                 });
                 input.popover('show');
-                input.closest('.form-group').removeClass('has-success').addClass('has-error');
+                //input.closest('.form-group').removeClass('has-success').addClass('has-error');
             }
         }, 'json');
         $.post(url_initial, {
