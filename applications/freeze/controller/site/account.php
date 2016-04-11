@@ -175,6 +175,14 @@ class freeze_ctl_site_account extends freeze_frontpage
     public function reset_password($action)
     {
         $this->title = '重置密码';
+        $user_obj = vmc::singleton('freeze_user_object');
+//            $mobile = $user_obj->_get_pam_type_data('login_account', 'mobile');
+        $freeze = $user_obj->get_members_data(array('freeze'=>'*'))['freeze'];
+        if(!$freeze['mobile'])
+        {
+            $redirect_mobile = array('app' => 'freeze', 'ctl' => 'site_account', 'act' => 'set_pam_mobile');
+            $this->splash('error', $redirect_mobile, '先绑定手机号码');
+        }
         if ($action == 'doreset') {
             $passport_obj = vmc::singleton('freeze_user_passport');
             $redirect_here = array('app' => 'freeze', 'ctl' => 'site_account', 'act' => 'reset_password');
@@ -198,11 +206,11 @@ class freeze_ctl_site_account extends freeze_frontpage
                 $this->splash('error', $redirect_here, '手机短信验证码不正确');
             }
 
-            $result = app::get('pam')->model('freeze')->getRow('freeze_id', array('login_account' => $params['mobile'], 'login_type' => 'mobile'));
-            if (empty($result)) {
-                $this->splash('error', $redirect_here, '未知帐号!');
-            }
-            $member_id = $result['freeze_id'];
+//            $result = app::get('pam')->model('freeze')->getRow('freeze_id', array('login_account' => $params['mobile'], 'login_type' => 'mobile'));
+//            if (empty($result)) {
+//                $this->splash('error', $redirect_here, '未知帐号!');
+//            }
+            $member_id = $freeze['freeze_id'];
             if (!$passport_obj->reset_password($member_id, $params['new_password'])) {
                 $this->splash('error', $redirect_here, '密码重置失败!');
             }
@@ -212,17 +220,14 @@ class freeze_ctl_site_account extends freeze_frontpage
             if (!$auth->type) {
                 $auth->type = $this->app->app_id;
             }
-            foreach (vmc::servicelist('passport') as $k => $passport) {
+            foreach (vmc::servicelist('freeze.passport') as $k => $passport) {
                 $passport->loginout($auth);
             }
 
             $redirect = $this->gen_url(array('app' => 'freeze', 'ctl' => 'site_passport', 'act' => 'login'));
             $this->splash('success', $redirect, '密码重置成功，请重新登录');
         } else {
-            $user_obj = vmc::singleton('freeze_user_object');
-            $mobile = $user_obj->_get_pam_type_data('login_account', 'mobile');
-
-            $this->pagedata['mobile'] = $mobile['login_account'];
+            $this->pagedata['mobile'] = $freeze['mobile'];
             $this->output();
         }
     }

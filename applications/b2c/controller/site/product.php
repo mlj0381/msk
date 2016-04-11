@@ -77,19 +77,18 @@ class b2c_ctl_site_product extends b2c_frontpage {
         $data_detail['pricelist'] = $price_response['result'][0]['pricelist'];
 
         $data_detail['feature_data_list'] = $this->app->rpc('select_product_cat4')->request($data_detail, false)['result'];
-        //var_dump($data_detail['feature_data_list']);exit;
-        foreach ($data_detail['feature_data_list'] as $key=>$value){
-        	$data_detail['featureCode'] = $value['featureCode'];
-        	$weight_data[$key] = $this->app->rpc('select_product_cat5')->request($data_detail, false)['result'];
-        }
+        $weight_data = $this->app->rpc('select_product_cat5')->request($data_detail, false)['result'];
        
         //包装规格  $data[0];
         $data_detail['weight_data_list'] = array_filter(array_unique($weight_data));
-        
+        //var_dump($data_detail);exit;
         //这个需要定时任务数据到数据库中....
-        $products_price_data = $this->get_product_price('', '', '');
-        //var_dump($products_price_data);exit;
+        //$logi_area_code=$_SESSION['account']['addr'],
+        //$seller_code=无法获取,
+        //$product_code=$products_data['bn'],
+        //$level_code = 2;
         
+        $products_price_data = $this->get_product_price($_SESSION['account']['addr'], null, '012040101', '2');        
         
         $this->pagedata['buyer_id'] = vmc::singleton('buyer_user_object')->get_session();
         $this->pagedata['data_detail'] = $data_detail;
@@ -109,7 +108,7 @@ class b2c_ctl_site_product extends b2c_frontpage {
         $goods_order_list = $this->app->model('orders')->get_goods_order($goods_id=8, $_POST['time_type'] ?: '1', $offset=0, $set=2);
         $this->pagedata['goods_order_list'] = $goods_order_list;
         $this->pagedata['product_id'] = $params[0];
-        $this->pagedata['pricelist'] = $products_price_data['pricelist'];
+        $this->pagedata['pricelist'] = $products_price_data;
         $this->_set_seo($data_detail);
         $this->page('site/product/index.html');
     }
@@ -228,16 +227,18 @@ class b2c_ctl_site_product extends b2c_frontpage {
     }
     
     
-    public function get_product_price($logiAreaCode, $slCode, $productCode){
+    public function get_product_price($logi_area_code, $seller_code, $product_code, $level_code){
     	$no_month = ceil(date('j')/7);
     	if (date('w') < date('w', strtotime(date('Y-m-01')))){
     		$no_month++;
     	}
-    	$data['pricePeriod'] = date('ym').$no_month;
-    	$rpc_response = $this->app->rpc('select_price_offer')->request($data);
-    	$rpc_data = $rpc_response['result']['productslist'];
-    	$one_product = utils::array_change_key($rpc_response['result']['productslist'], 'productCode')['0120401012'];
-    	return $one_product;
+    	$data['pricePeriod'] = 16042;//date('ym').$no_month;
+    	if ($seller_code){
+    		$where['seller_code']=$seller_code;
+    	}
+    	$where = ['logi_area_code'=>$logi_area_code, 'product_code'=>$product_code, 'level_code'=>$level_code];
+    	$return = $this->app->model('products_price')->getList('*', $where, 0, -1, array('orderlevelCode','desc'));
+    	return $return;
     }
     
     

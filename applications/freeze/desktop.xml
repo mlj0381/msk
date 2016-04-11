@@ -1,0 +1,9 @@
+<desktop>
+    <workground icon="icon-diamond" id="freeze" name="冻品管家管理" order="10">
+        <menugroup name="冻品管家管理">
+            <menu action="index" controller="admin_freeze" display="true" order='10' permission=''>管家列表</menu>
+        </menugroup>
+    </workground>
+
+
+</desktop>
