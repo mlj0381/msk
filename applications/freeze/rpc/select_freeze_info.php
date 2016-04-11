@@ -27,7 +27,7 @@ $remote['freeze_select_freeze_info'] = array(
             'name' => '买手店编码',
             'column' => 'slCode',
             'type' => 'String',
-            'require' => true,
+            'require' => false,
         ),
         'account' => array(
             'name' => '管家账号',
@@ -41,9 +41,39 @@ $remote['freeze_select_freeze_info'] = array(
             'type' => 'String',
             'require' => false,
         ),
+        'page_count' => array(
+            'name' => '页总条数',
+            'column' => 'pageCount',
+            'type' => 'String',
+            'require' => false,
+        ),
+        'page_no' => array(
+            'name' => '页数',
+            'column' => 'pageNo',
+            'type' => 'String',
+            'require' => false,
+        ),
     ),
 
     'response' => array(
+        'totalCount' => array(
+            'name' => '总条数',
+            'column' => 'count',
+            'type' => 'String',
+            'require' => false,
+        ),
+        'totalPage' => array(
+            'name' => '总页数',
+            'column' => 'total_page',
+            'type' => 'String',
+            'require' => false,
+        ),
+        'pageNo' => array(
+            'name' => '当前页数',
+            'column' => 'pageNo',
+            'type' => 'String',
+            'require' => false,
+        ),
         'houseList' => array(
             'name' => '管家列表',
             'column' => 'houseList',
@@ -64,7 +94,7 @@ $remote['freeze_select_freeze_info'] = array(
         ),
         'houseCode' => array(
             'name' => '用于登录的卖家账号',
-            'column' => 'houseCode',
+            'column' => 'code',
             'type' => 'String',
         ),
         'houseTel' => array(

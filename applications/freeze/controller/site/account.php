@@ -119,13 +119,17 @@ class freeze_ctl_site_account extends freeze_frontpage
      */
     public function set_ID($action)
     {
+        $user_obj = vmc::singleton('freeze_user_object');
         if ($action == 'save') {
             $redirect_here = array('app' => 'freeze', 'ctl' => 'site_account', 'act' => 'set_ID');
             $redirect = $this->gen_url(array('app' => 'freeze', 'ctl' => 'site_account', 'act' => 'security'));
             $mdl_freeze = app::get('freeze')->model('freeze');
-            $user_obj = vmc::singleton('freeze_user_object');
             $freeze_id = $this->app->freeze_id;
             $data = $_POST;
+            if(!$mdl_freeze->check_id($data['ID']))
+            {
+                $this->splash('error', $redirect_here, '身份证号码错误');
+            };
             $data['freeze_id'] = $freeze_id;
             if (!$mdl_freeze->save($data)) {
                 $this->splash('error', $redirect_here, $msg);
@@ -133,7 +137,6 @@ class freeze_ctl_site_account extends freeze_frontpage
                 $this->splash('success', $redirect, '身份保存成功');
             }
         } else {
-            $user_obj = vmc::singleton('freeze_user_object');
             $info = $user_obj->get_members_data(array('freeze' => '*'));
             $this->pagedata['info'] = $info;
             $this->output();
@@ -256,6 +259,11 @@ class freeze_ctl_site_account extends freeze_frontpage
             $msg = '无效基本信息';
             return false;
         }
+        if(!$freeze_model->check_id($data['ID']))
+        {
+            $msg  = '身份证号码错误';
+            return false;
+        };
 //        if($freeze_model->count(array('ID'=>$data['ID'],'freeze_id|notin'=>$generate_data['freeze_id'])) >0)
 //        {
 //            $msg  = '身份证已存在';

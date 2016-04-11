@@ -37,7 +37,9 @@
 	        		<div class="col-xs-3 item">
 	        		<div class="sec-info">
 	        			<div class="pull-left head-img">
-							<img src="<{$freeze.head_image|storager:'s'}>" class="img-circle">
+							<a href="<{link app=freeze ctl=site_list act=freeze_goods arg0=$freeze.freeze_id}>">
+								<img src="<{$freeze.head_image|storager:'s'}>" class="img-circle">
+							</a>
 						</div>
 	        			<div class="pull-left intro">
 	        				<h4><a href="<{link app=freeze ctl=site_list act=freeze_goods arg0=$freeze.freeze_id}>"><{$freeze.name}></a></h4>
