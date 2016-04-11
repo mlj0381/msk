@@ -390,7 +390,20 @@ class freeze_user_passport {
         return true;
     }
 
-
+    /**
+     * 退出相关操作.
+     *
+     * @param object $autn    pam_auth对象
+     * @param string $backurl 跳转地址
+     */
+    public function loginout($auth, $backurl = 'index.php')
+    {
+        unset($_SESSION['account'][$auth->type]);
+        unset($_SESSION['last_error']);
+        setcookie('UNAME', '', time() - 3600,'/');
+        setcookie('MEMBER_IDENT', '', time() - 3600,'/');
+        #Header('Location: '.$backurl);
+    }
 
 
 }

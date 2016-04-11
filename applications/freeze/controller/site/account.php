@@ -119,13 +119,17 @@ class freeze_ctl_site_account extends freeze_frontpage
      */
     public function set_ID($action)
     {
+        $user_obj = vmc::singleton('freeze_user_object');
         if ($action == 'save') {
             $redirect_here = array('app' => 'freeze', 'ctl' => 'site_account', 'act' => 'set_ID');
             $redirect = $this->gen_url(array('app' => 'freeze', 'ctl' => 'site_account', 'act' => 'security'));
             $mdl_freeze = app::get('freeze')->model('freeze');
-            $user_obj = vmc::singleton('freeze_user_object');
             $freeze_id = $this->app->freeze_id;
             $data = $_POST;
+            if(!$mdl_freeze->check_id($data['ID']))
+            {
+                $this->splash('error', $redirect_here, '身份证号码错误');
+            };
             $data['freeze_id'] = $freeze_id;
             if (!$mdl_freeze->save($data)) {
                 $this->splash('error', $redirect_here, $msg);
@@ -133,7 +137,6 @@ class freeze_ctl_site_account extends freeze_frontpage
                 $this->splash('success', $redirect, '身份保存成功');
             }
         } else {
-            $user_obj = vmc::singleton('freeze_user_object');
             $info = $user_obj->get_members_data(array('freeze' => '*'));
             $this->pagedata['info'] = $info;
             $this->output();
@@ -172,6 +175,14 @@ class freeze_ctl_site_account extends freeze_frontpage
     public function reset_password($action)
     {
         $this->title = '重置密码';
+        $user_obj = vmc::singleton('freeze_user_object');
+//            $mobile = $user_obj->_get_pam_type_data('login_account', 'mobile');
+        $freeze = $user_obj->get_members_data(array('freeze'=>'*'))['freeze'];
+        if(!$freeze['mobile'])
+        {
+            $redirect_mobile = array('app' => 'freeze', 'ctl' => 'site_account', 'act' => 'set_pam_mobile');
+            $this->splash('error', $redirect_mobile, '先绑定手机号码');
+        }
         if ($action == 'doreset') {
             $passport_obj = vmc::singleton('freeze_user_passport');
             $redirect_here = array('app' => 'freeze', 'ctl' => 'site_account', 'act' => 'reset_password');
@@ -195,11 +206,11 @@ class freeze_ctl_site_account extends freeze_frontpage
                 $this->splash('error', $redirect_here, '手机短信验证码不正确');
             }
 
-            $result = app::get('pam')->model('freeze')->getRow('freeze_id', array('login_account' => $params['mobile'], 'login_type' => 'mobile'));
-            if (empty($result)) {
-                $this->splash('error', $redirect_here, '未知帐号!');
-            }
-            $member_id = $result['freeze_id'];
+//            $result = app::get('pam')->model('freeze')->getRow('freeze_id', array('login_account' => $params['mobile'], 'login_type' => 'mobile'));
+//            if (empty($result)) {
+//                $this->splash('error', $redirect_here, '未知帐号!');
+//            }
+            $member_id = $freeze['freeze_id'];
             if (!$passport_obj->reset_password($member_id, $params['new_password'])) {
                 $this->splash('error', $redirect_here, '密码重置失败!');
             }
@@ -209,17 +220,14 @@ class freeze_ctl_site_account extends freeze_frontpage
             if (!$auth->type) {
                 $auth->type = $this->app->app_id;
             }
-            foreach (vmc::servicelist('passport') as $k => $passport) {
+            foreach (vmc::servicelist('freeze.passport') as $k => $passport) {
                 $passport->loginout($auth);
             }
 
             $redirect = $this->gen_url(array('app' => 'freeze', 'ctl' => 'site_passport', 'act' => 'login'));
             $this->splash('success', $redirect, '密码重置成功，请重新登录');
         } else {
-            $user_obj = vmc::singleton('freeze_user_object');
-            $mobile = $user_obj->_get_pam_type_data('login_account', 'mobile');
-
-            $this->pagedata['mobile'] = $mobile['login_account'];
+            $this->pagedata['mobile'] = $freeze['mobile'];
             $this->output();
         }
     }
@@ -256,6 +264,11 @@ class freeze_ctl_site_account extends freeze_frontpage
             $msg = '无效基本信息';
             return false;
         }
+        if(!$freeze_model->check_id($data['ID']))
+        {
+            $msg  = '身份证号码错误';
+            return false;
+        };
 //        if($freeze_model->count(array('ID'=>$data['ID'],'freeze_id|notin'=>$generate_data['freeze_id'])) >0)
 //        {
 //            $msg  = '身份证已存在';
