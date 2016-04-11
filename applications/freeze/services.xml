@@ -1,5 +1,5 @@
 <services>
-    <service id="freeze_passport">
+    <service id="freeze.passport">
         <class>freeze_user_passport</class>
     </service>
 

@@ -220,7 +220,7 @@ class freeze_ctl_site_account extends freeze_frontpage
             if (!$auth->type) {
                 $auth->type = $this->app->app_id;
             }
-            foreach (vmc::servicelist('passport') as $k => $passport) {
+            foreach (vmc::servicelist('freeze.passport') as $k => $passport) {
                 $passport->loginout($auth);
             }
 
