@@ -124,14 +124,15 @@ class b2c_ctl_site_passport extends b2c_frontpage
         	$account = array();
         	$account['login_account'] 	 = $params['uname'];
         	$account['createtime'] 		 = time();
-        	
+        	$account['password'] = $params['password'];
         	$account['login_password']	 = $login_password = pam_encrypt::get_encrypted_password($params['password'], 'member', array(
         			'createtime' => $account['createtime'],
         			'login_name' => $params['uname'],
         	));
         	$account['password_account'] = $params['uname'];
-        	$account['login_type'] 		 = 'local';
         	
+        	$account['login_type'] 		 = $this->passport_obj->get_login_account_type($params['uname']);
+
         	vmc::singleton('pam_passport_site_basic')->local_user_rsyns($member,$account);
         }
         

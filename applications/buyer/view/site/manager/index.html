@@ -5,21 +5,28 @@
 	<table class="table mo-list-head">
         <thead>
             <tr class="text-nowrap">
-                <th width="20%" class="text-center">
-                    管家名称
+                <th width="10" class="text-center">
+                    用户名
                 </th>
                 <th width="10%" class="text-center">
+                    手机号
+                </th>
+                <th width="15%" class="text-center">
+                    邮箱
+                </th>
+                <th width="5%" class="text-center">
+                    名字
+                </th>
+                <th width="5%" class="text-center">
                     性别
                 </th>
-                <th width="10%" class="text-center">
-                    年龄
+                <th width="20%" class="text-center">
+                    虚拟经营地址
                 </th>
-                <th width="15%" class="text-center">
-                    工作经验
+                <th width="20%" class="text-center">
+                    虚拟经营详细地址
                 </th>
-                <th width="15%" class="text-center">
-                    地区
-                </th>
+
                 <!--<th width="15%" class="text-center">-->
                     <!--操作-->
                 <!--</th>-->
@@ -30,35 +37,31 @@
         <{foreach from=$list item=freeze}>
         	<tr>
         		<td width="10%" class="text-center mem-head">
+                    <{$account[$freeze.freeze_id].login_account}>
+                </td>
+                <td width="10%" class="text-center">
+                    <{$freeze.mobile}>
+                </td>
+                <td width="15%" class="text-center">
+                    <{$freeze.email}>
+                </td>
+                <td width="5%" class="text-center">
                     <{$freeze.name}>
-                    <!--<div class="row">-->
-                    	<!--&lt;!&ndash;<div class="col-xs-6"><img src=""></div>&ndash;&gt;-->
-                    	<!--<div class="col-xs-6 name"></div>-->
-                    <!--</div>-->
                 </td>
-                <td width="10%" class="text-center">
+                <td width="5%" class="text-center">
                     <{if $freeze.sex == 0}>
-                            女
-                        <{else $freeze.sex == 1}>
-                            男
-                        <{else $freeze.sex == 2}>
-                            其他
+                    女
+                    <{else $freeze.sex == 1}>
+                    男
+                    <{else $freeze.sex == 2}>
+                    其他
                     <{/if}>
                 </td>
-                <td width="10%" class="text-center">
-                    <{$freeze.age}>
-                </td>
-                <td width="15%" class="text-center">
-                    <{if $freeze.experience == 1}>
-                        1年以下
-                    <{else $freeze.experience == 2}>
-                        1~3年
-                    <{else $freeze.experience == 3}>
-                        5年以上
-                    <{/if}>
-                </td>
-                <td width="15%" class="text-center">
+                <td width="20%" class="text-center">
 					<{$freeze.area|region}>
+                </td>
+                <td width="20%" class="text-center">
+                    <{$freeze.address}>
                 </td>
                 <!--<td width="15%" class="text-center opt">-->
                     <!--&lt;!&ndash;<{link app=freeze ctl=site_center act=index arg0=$freeze.freeze_id}>&ndash;&gt;-->

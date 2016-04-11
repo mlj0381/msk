@@ -38,6 +38,11 @@ class buyer_ctl_site_manager extends buyer_frontpage{
 		$freeze_list = $model_freeze->getList('*',array('buyer_id' => $buyer_id,'code|noequal'=>''),($page - 1) * $limit, $limit);
 		$count = $model_freeze->count(array('buyer_id' => $buyer_id));
 
+		$freeze_ids = array_keys(utils::array_change_key($freeze_list,'freeze_id'));
+		$login_account = app::get('pam')->model('freeze')->getList('login_account,freeze_id',array('freeze_id'=>$freeze_ids));
+		$login_account = utils::array_change_key($login_account,'freeze_id');
+		$this->pagedata['account'] = $login_account;
+
 		$this->pagedata['pager'] = array(
 			'total' => ceil($count / $limit),
 			'current' => $page,

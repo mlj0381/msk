@@ -13,10 +13,29 @@ class freeze_ctl_site_list extends freeze_frontpage
     {
         $this->set_tmpl('default');
         $model_freeze = app::get('freeze')->model('freeze');
+
         $limit = 8;
-        $filter = array('code|noequal'=>'','account|noequal'=>'');
-        $freeze_list = $model_freeze->getList('*',$filter,($page-1)*$limit,$limit);
-        $count = $model_freeze->count($filter);
+        $filter = array(
+            'page_count' => $limit,
+            'page_no' => $page
+        );
+        $result = app::get('freeze')->rpc('select_freeze_info')->request($filter);
+        /**
+         * 查询冻品管家信息  - IBS2101105
+         */
+        if($result['status'])
+        {
+            $codes = array_keys(utils::array_change_key($result['result']['houseList'],'code'));
+            $count = $result['result']['count'];
+            $freeze_list = $model_freeze->getList('*',array('code'=>$codes));
+        }else{
+
+            $filter = array('code|noequal'=>'','account|noequal'=>'');
+            $freeze_list = $model_freeze->getList('*',$filter,($page-1)*$limit,$limit);
+            $count = $model_freeze->count($filter);
+        }
+
+
 
         $this->pagedata['pager'] = array(
             'total' => ceil($count / $limit),
@@ -52,7 +71,7 @@ class freeze_ctl_site_list extends freeze_frontpage
 
 
         //推荐商品
-        $limit  = 5;
+        $limit  = 8;
         $filter = array();
         $mdl_goods = app::get('b2c')->model('goods');
         $goods_list = $mdl_goods->getList('*', $filter, ($page-1)*$limit, $limit);

@@ -24,4 +24,9 @@
   <schedule>59 23 31 6 12</schedule>
   <enabled>true</enabled>
 </cron>
+  <cron id="b2c_tasks_api_price">
+    <description>更新价盘</description>
+    <schedule>59 23 * * 0</schedule>
+    <enabled>true</enabled>
+  </cron>
 </cronentries>

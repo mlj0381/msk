@@ -25,11 +25,16 @@ $db['freeze'] = array(
         ) ,
         'code' => array(
             'type' => 'varchar(255)',
-            'label' => ('润和返回的管家编码') ,
+            'label' => ('润和的管家编码') ,
+            'in_list' => true,
+            'default_in_list' => true,
         ) ,
         'account' => array(
             'type' => 'varchar(255)',
-            'label' => ('润和返回的管家账号') ,
+            'label' => ('润和的管家账号') ,
+
+            'in_list' => true,
+            'default_in_list' => true,
         ) ,
         'head_image' => array(
             'type' => 'varchar(32)',
@@ -53,13 +58,8 @@ $db['freeze'] = array(
             'type' => 'varchar(50)',
             'label' => ('姓名') ,
 
-            'searchtype' => 'has',
-            'editable' => true,
-            'filtertype' => 'normal',
-            'filterdefault' => 'true',
             'in_list' => true,
-            'is_title' => true,
-            'default_in_list' => false,
+            'default_in_list' => true,
         ) ,
 
         'sex' => array(
@@ -102,6 +102,7 @@ $db['freeze'] = array(
             'type' => 'char(18)',
             'default' => null,
             'label' => ('身份证') ,
+
             'in_list' => true,
             'default_in_list' => true,
         ) ,
@@ -109,12 +110,7 @@ $db['freeze'] = array(
             'type' => 'varchar(50)',
             'label' => ('身份证名称') ,
 
-            'searchtype' => 'has',
-            'editable' => true,
-            'filtertype' => 'normal',
-            'filterdefault' => 'true',
             'in_list' => true,
-            'is_title' => true,
             'default_in_list' => false,
         ) ,
         'ID_image' => array(
@@ -163,8 +159,7 @@ $db['freeze'] = array(
             'label' => ('QQ') ,
             'default' => null,
             'type' => 'varchar(255)',
-            'filtertype' => 'yes',
-            'filterdefault' => 'true',
+
             'in_list' => true,
             'default_in_list' => false,
         ),
@@ -172,8 +167,7 @@ $db['freeze'] = array(
             'label' => ('微信号') ,
             'default' => null,
             'type' => 'varchar(255)',
-            'filtertype' => 'yes',
-            'filterdefault' => 'true',
+
             'in_list' => true,
             'default_in_list' => false,
         ),

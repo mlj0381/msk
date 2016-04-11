@@ -73,54 +73,19 @@
                     </ul>
                     <div class="price_bg"></div>
                 </div> -->
-            <table>
+            <table class="price_table">
                 <tbody>
                     <tr>
                         <td>随心量</td>
                         <!-- foreach开始 -->
-                        <{foreach from=$pricelist key=key item=item}>
+                        <{foreach from=$pricelist item=item}>
                         <td>
                             <span class="num-dn"><{$item.boxMin|default:1}></span>-
                             <span class="num-up"><{$item.boxMax|default:不限}></span>箱
                         </td>
                         <{/foreach}>
                         <!-- foreach结束 -->
-                        <!-- <td>
-                            <span class="num-dn">1</span>-
-                            <span class="num-up">50</span>箱
-                        </td>
-                        <td>
-                            <span class="num-dn">51</span>-
-                            <span class="num-up">100</span>箱
-                        </td>
-                        <td>
-                            <span class="num-dn">101</span>-
-                            <span class="num-up">150</span>箱
-                        </td>
-                        <td>
-                            <span class="num-dn">151</span>-
-                            <span class="num-up">200</span>箱
-                        </td>
-                        <td>
-                            <span class="num-dn">201</span>-
-                            <span class="num-up">250</span>箱
-                        </td>
-                        <td>
-                            <span class="num-dn">251</span>-
-                            <span class="num-up">300</span>箱
-                        </td>
-                        <td>
-                            <span class="num-dn">301</span>-
-                            <span class="num-up">350</span>箱
-                        </td>
-                        <td>
-                            <span class="num-dn">351</span>-
-                            <span class="num-up">400</span>箱
-                        </td>
-                        <td>
-                            <span class="num-dn">401</span>-
-                            <span class="num-up">450</span>箱
-                        </td> -->
+                        
                     </tr>
                     <tr>
                         <td>通道阶梯价</td>
@@ -179,7 +144,7 @@
                     <label>产品规格 </label>
                     <div class="spec_items">
                         <{foreach from=$data_detail.feature_data_list item=feature}>
-                        <span class="spec_item active" data-proId=""><{$feature.featureName}></span>
+                        <span class="spec_item <{if $data_detail.featureCode eq $feature.featureCode}>active<{/if}>" data-proId=""><{$feature.featureName}></span>
                         <{/foreach}>
                     </div>
                 </div>
@@ -187,7 +152,7 @@
                     <label>包装规格 </label>
                     <div class="spec_items">
                         <{foreach from=$data_detail.weight_data_list item=weight}>
-                        <span class="spec_item active" data-packId=""><{$weight.0.weightName}> </span>
+                        <span class="spec_item active" data-packId=""><{$weight.weightName}> </span>
                         <{/foreach}>
                     </div>
                 </div>
@@ -277,7 +242,8 @@
                     <div class="price-availability-block">
                         <label>支付金额</label>
                         <span class="price text-danger">
-                            <strong>￥<{$data_detail.product.price_up|cur}></strong>
+                            <strong>￥<{$pricelist.0.priceOfBox}></strong>
+                            <!-- <strong>￥<{$data_detail.product.price_up|cur}></strong> -->
                         </span>
                     </div>
                     <hr>
