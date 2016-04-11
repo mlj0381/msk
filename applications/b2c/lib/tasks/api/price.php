@@ -11,23 +11,16 @@
 // +----------------------------------------------------------------------
 
 
-$db['freeze_buyer'] = array(
-    'columns' => array(
+class b2c_tasks_api_price extends base_task_abstract implements base_interface_task
+{
+    /**
+     * 产品盘价查询 - IPD141111
+     */
+    public function exec($params = null)
+    {
 
-        'freeze_id' => array(
-            'type' => 'number',
-            'pkey' => true,
-            'label' => '冻结商家ID',
-        ),
-        'buyer_id' => array(
-            'type' => 'number',
-            'label' => ('买手账号id') ,
-        ) ,
-        'time' => array(
-            'type' => 'time',
-            'label' => '时间',
-        )
-    ),
-    'engine' => 'innodb',
-    'comment' => '买手和冻结管家关联表',
-);
+        var_dump('产品盘价查询 - IPD141111');
+        die;
+        return true;
+    }
+}

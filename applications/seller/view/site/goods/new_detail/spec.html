@@ -7,8 +7,8 @@
             <td>规格名称</td>
             <td>商品货号</td>
             <td>价盘设置</td>
-            <td>商品库存</td>
-            <!--<td>是否分销</td>-->
+            <!--<td>商品库存</td>-->
+            <td>是否分销</td>
             <td>是否上架</td>
         </tr>
         </thead>
@@ -16,6 +16,7 @@
             <{foreach from=$goods.product key=key item=item}>
             <tr>
                 <td>
+                    <input type="hidden" name="goods[product][new_<{$key}>][product_id]" value="<{$item.product_id}>">
                     <input type="text" name="goods[product][new_<{$key}>][spec_info]" class="form-control input-sm spec-info"
                            value="<{$item.spec_info}>">
                     <input type="hidden" name="goods[product][new_<{$key}>][spec_desc]" class="spec-desc" value="<{$item.spec_desc}>">
@@ -72,14 +73,14 @@
                         </div>
                     </div>
                 </td>
-                <td>
-                    <input type="text" data-map="storage" class="form-control input-sm"
-                           name="goods[product][new_<{$key}>][quantity]" value="<{$item.stock.quantity}>">
-                    <input type="hidden" name="goods[product][new_<{$key}>][stock_id]" value="<{$item.stock.quantity}>">
-                </td>
-                <!--<td align="center">-->
-                    <!--<input type="checkbox" name="goods[agent]" value="true" checked>-->
+                <!--<td>-->
+                    <!--<input type="text" data-map="storage" class="form-control input-sm"-->
+                           <!--name="goods[product][new_<{$key}>][quantity]" value="<{$item.stock.quantity}>">-->
+                    <!--<input type="hidden" name="goods[product][new_<{$key}>][stock_id]" value="<{$item.stock.quantity}>">-->
                 <!--</td>-->
+                <td align="center">
+                    <input type="checkbox" name="goods[agent]" value="true" checked>
+                </td>
                 <td align="center">
                     <input type="checkbox" name="goods[product][new_<{$key}>][marketable]" value="true" checked>
                 </td>

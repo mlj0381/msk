@@ -63,15 +63,30 @@ $remote['b2c_select_price_offer'] = array(
     ),
 
     'pricelist' => array(
-        'orderLevel' => array(
+        'orderlevelCode' => array(
             'name' => '订单等级',
-            'column' => 'orderLevel',
+            'column' => 'orderlevelCode',
             'type' => 'String',
         ),
-        'price' => array(
-            'name' => '商品价格',
-            'column' => 'price',
-            'type' => 'String',
+        'priceOfKg' => array(
+            'name' => 'priceOfKg',
+            'column' => 'priceOfKg',
+            'type' => 'float',
+        ),
+        'priceOfBox' => array(
+        	'name' => 'priceOfBox',
+        	'column' => 'priceOfBox',
+        	'type' => 'float',
+        ),
+        'boxMin' => array(
+        	'name' => 'boxMin',
+        	'column' => 'boxMin',
+        	'type' => 'int',
+        ),
+        'boxMax' => array(
+        	'name' => 'boxMax',
+        	'column' => 'boxMax',
+       		'type' => 'int',
         ),
     ),
 );

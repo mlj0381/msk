@@ -1,5 +1,5 @@
 <{if $type eq 'entry'}>
-<form method="post" action="<{link app=seller ctl=site_passport act=add_brand}>" data-module="validator">
+<form method="post" id="entry-add-brand" action="<{link app=seller ctl=site_passport act=add_brand}>" data-module="validator">
 <{else}>
 <form method="post" action="<{link app=seller ctl=site_brand act=brand_add}>" data-module="validator">
     <{/if}>
@@ -85,7 +85,7 @@
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-        <button type="submit" class="btn btn-primary brand_save_btn" data-save="brand_save">保存品牌</button>
+        <button type="button" class="btn btn-primary brand_save_btn">保存品牌</button>
     </div>
 </form>
 
@@ -125,5 +125,18 @@
                 }
             });
         });
+
     });
+    void function(saveBrand){
+        saveBrand.find('.btn-primary').click(function(){
+            $.post(saveBrand.prop('action'), saveBrand.serialize(), function(re){
+                if(re.success){
+                    $('.brand_list').append('<span class="brand_item">' + re.data.name +
+                            ' <i class="icon-remove" data-id="'+re.data.id+'"></i></span>');
+                }else{
+                    alert('添加失败');
+                }
+            });
+        });
+    }($('#entry-add-brand'));
 </script>

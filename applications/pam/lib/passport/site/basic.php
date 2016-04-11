@@ -21,17 +21,17 @@ class pam_passport_site_basic
 			$db->beginTransaction();
 			
 			$t1 = app::get('b2c')->model('members')->save($members);
-			$t1 = true ;//待修改的代码，保存成功也返回false
+			
 			if(!$t1){
 				$db->rollback();
 			}
 			$member_id = vmc::database()->lastinsertid();
 			$account['member_id'] = $member_id;
 			$t2 = app::get('pam')->model('members')->save($account);
-			$t2 = true ;//待修改的代码，保存成功也返回false
+			
 			if(!$t2){
 				$db->rollback();
-			}
+			} 
 			$db->commit();
 		}		
 	}
@@ -50,7 +50,7 @@ class pam_passport_site_basic
 			$db->beginTransaction();
 				
 			$t1 = app::get('seller')->model('sellers')->save($sellers);
-			$t1 = true ;//待修改的代码，保存成功也返回false
+			
 			if(!$t1){
 				$db->rollback();
 			}
@@ -58,7 +58,7 @@ class pam_passport_site_basic
 			$seller_id = vmc::database()->lastinsertid();
 			$account['seller_id'] = $seller_id;
 			$t2 = app::get('pam')->model('sellers')->save($account);
-			$t2 = true ;//待修改的代码，保存成功也返回false
+			
 			if(!$t2){
 				$db->rollback();
 			}
