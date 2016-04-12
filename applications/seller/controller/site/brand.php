@@ -12,9 +12,11 @@
 // | 商家品牌申请、授权
 //
 
-class seller_ctl_site_brand extends seller_frontpage {
+class seller_ctl_site_brand extends seller_frontpage
+{
 
-    public function __construct(&$app) {
+    public function __construct(&$app)
+    {
         parent::__construct($app);
         $this->app = $app;
         $this->verify();
@@ -22,23 +24,23 @@ class seller_ctl_site_brand extends seller_frontpage {
         $this->mB2cbrand = app::get('b2c')->model('brand');
     }
 
-    public function index() {
+    public function index()
+    {
         /**
          * 润和接口 品牌列表
          * ISL231149 查询企业产品品牌
          * ISL231153 查询卖家产品品牌
          */
 
-/*        $company_brand_data = array(
-            'epId'=> '88956',
-        );
-        $company_brand_result = $this->app->rpc('select_company_brand')->request($company_brand_data);
-        $seller_brand_data = array(
-            'slCode'=> '7010900169',
-        );
-        $seller_brand_result = $this->app->rpc('select_seller_brand')->request($seller_brand_data);
-        vmc::dump($this->mB2cbrand->getList('*', array('seller_id' => $this->seller['seller_id'])),$company_brand_result['result'],$seller_brand_result['result']);die;*/
-
+        /*        $company_brand_data = array(
+                    'epId'=> '88956',
+                );
+                $company_brand_result = $this->app->rpc('select_company_brand')->request($company_brand_data);
+                $seller_brand_data = array(
+                    'slCode'=> '7010900169',
+                );
+                $seller_brand_result = $this->app->rpc('select_seller_brand')->request($seller_brand_data);
+                vmc::dump($this->mB2cbrand->getList('*', array('seller_id' => $this->seller['seller_id'])),$company_brand_result['result'],$seller_brand_result['result']);die;*/
 
 
         $this->title = '商品品牌';
@@ -48,7 +50,8 @@ class seller_ctl_site_brand extends seller_frontpage {
     }
 
     //添加品牌
-    public function add($brand_id) {
+    public function add($brand_id)
+    {
         /**
          * 润和接口 品牌列表
          * ISL231146 增加企业产品品牌
@@ -62,14 +65,16 @@ class seller_ctl_site_brand extends seller_frontpage {
         $this->pagedata['company'] = app::get('base')->model('company_seller')->getList('company_id, company_name',
             array('uid' => $this->seller['seller_id'], 'from' => 1));
         if (is_numeric($brand_id)) {
-            $this->pagedata['brand'] = app::get('b2c')->model('brand')->getRow('*', array('brand_id' => $brand_id, 'seller_id' => $this->seller['seller_id']));
+            $this->pagedata['brand'] = app::get('b2c')->model('brand')->getRow('*',
+                array('brand_id' => $brand_id, 'seller_id' => $this->seller['seller_id']));
             //查询商家所有的公司
         }
         $this->output();
     }
 
     //品牌添加
-    public function brand_add(){
+    public function brand_add()
+    {
         if ($_POST) {
             $params = utils::_filter_input($_POST);
             unset($_POST);
@@ -81,7 +86,8 @@ class seller_ctl_site_brand extends seller_frontpage {
         $this->display('ui/brand_add_modal.html');
     }
 
-    private function _post($post) {
+    private function _post($post)
+    {
         $redirect = array('app' => 'seller', 'ctl' => 'site_brand', 'act' => 'index');
 //        if($post['type'] == 'entry'){
 //            $count = vmc::singleton('seller_user_passport')->countPage();
@@ -89,24 +95,55 @@ class seller_ctl_site_brand extends seller_frontpage {
 //        }
         $redirect = $this->gen_url($redirect);
         $post['brand']['seller_id'] = $this->seller['seller_id'];
-        if(!$this->mB2cbrand->save_brand($post))
-        {
-            $this->splash('error', $redirect, '操作失败');
+        if ($post['brand_class'] == '1') { //添加企业品牌
+            $this->splash('success', $redirect, '添加成功');//暂时
+        } elseif ($post['brand_class'] == '2') { //添加店铺品牌
+            if (!$this->mB2cbrand->save_brand($post)) {
+                $this->splash('error', $redirect, '操作失败');
+            } else {
+                $brand_data = app::get('b2c')->model('brand')->getRow('*',array('brand_id' => $post['brand']['brand_id']));
+                $data = array(
+                    'slCode' => $brand_data['seller_id'],
+                    'brandEpId' => $brand_data['company_id'],
+                    'brandId' => $brand_data['api_brand_id'],
+                    'brandName' => $brand_data['brand_name'],
+                    'brandType' => $brand_data['type'] == 2 ? $brand_data['type'] : 1,
+                    'brandClass' => 0,
+                    'contractNo' => $brand_data['agent_code'],
+                    'termBegin' => $brand_data['agent_start'],
+                    'termEnd' => $brand_data['agent_end'],
+                );
+                if(!$this->app->rpc('add_seller_brand')->request($data)['status']){
+                    $this->splash('error', $redirect, '数据同步失败');
+                }
+            }
         }
+
         $this->splash('success', $redirect, '添加成功');
     }
 
+    //rpc添加品牌
+    public function rpc_save_brand()
+    {
+
+    }
+
     //修改品牌
-    public function edit() {
-        
+    public function edit()
+    {
+
     }
 
     //删除
-    public function remove($brand_id) {
+    public function remove($brand_id)
+    {
         $brand_id = $_POST['brand_id'] ?: $brand_id;
         $redirect = $this->gen_url(array('app' => 'seller', 'ctl' => 'site_brand', 'act' => 'index'));
-        if(!is_numeric($brand_id)) $this->splash('error', $redirect, '非法操作');
-        $filter = app::get('store')->model('store')->getList('store_id', array('seller_id' => $this->seller['seller_id']));
+        if (!is_numeric($brand_id)) {
+            $this->splash('error', $redirect, '非法操作');
+        }
+        $filter = app::get('store')->model('store')->getList('store_id',
+            array('seller_id' => $this->seller['seller_id']));
         $mdl_b2c_goods = app::get('b2c')->model('goods');
         foreach ($filter as $value) {
             $value['brand_id'] = $brand_id;
@@ -121,7 +158,10 @@ class seller_ctl_site_brand extends seller_frontpage {
             $db->rollback();
             $this->splash('error', $redirect, '删除失败');
         }
-        $result = app::get('b2c')->model('brand')->delete(array('brand_id' => $brand_id, 'seller_id' => $this->seller['seller_id']));
+        $result = app::get('b2c')->model('brand')->delete(array(
+            'brand_id' => $brand_id,
+            'seller_id' => $this->seller['seller_id'],
+        ));
         if (!$result) {
             $db->rollback();
             $this->splash('error', $redirect, '删除失败');
@@ -131,7 +171,8 @@ class seller_ctl_site_brand extends seller_frontpage {
     }
 
     //判断品牌重名
-    public function check_brand_name() {
+    public function check_brand_name()
+    {
         $mdl_brand = app::get('b2c')->model('brand');
         $post = $_POST;
         if ($mdl_brand->getRow('brand_name', array('brand_name' => $post['brand_name']))) {
@@ -141,7 +182,8 @@ class seller_ctl_site_brand extends seller_frontpage {
     }
 
     //取得品牌首字母拼音
-    public function brand_initial() {
+    public function brand_initial()
+    {
         $initials = new base_py('utf-8');
         $py = $initials->getInitials($_POST['brand_name']);
         preg_match('/^[A-Za-z]/', $py, $result);

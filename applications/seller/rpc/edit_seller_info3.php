@@ -1,9 +1,9 @@
 <?php
 /**
  * 编辑商家基本信息---------------ISL231180
- * 生产商修改信息
+ * OEM专家类型
  */
-$remote['seller_edit_seller_info1'] = array(
+$remote['seller_edit_seller_info3'] = array(
     'url' => '/sl/slInfo/newOrUpdateAll',
 
     'request' => array(
@@ -23,14 +23,19 @@ $remote['seller_edit_seller_info1'] = array(
     ),
 
     'param' => array(
-
-//        'slSeller' => array(
-//            'name' => '卖家基本信息',
-//            'column' => 'slSeller',
-//            'type' => 'Object',
-//            'default' => '',
-//            'require' => false,
-//        ),
+        'slAccount' => array(
+            'name' => '卖家账号信息',
+            'column' => 'slAccount',
+            'type' => 'Object',
+            'require' => false,
+        ),
+        'slSeller' => array(
+            'name' => '卖家基本信息',
+            'column' => 'slSeller',
+            'type' => 'Object',
+            'default' => '',
+            'require' => false,
+        ),
         'pdClassesCodeList' => array(
             'name' => '产品类别List',
             'column' => 'pdClassesCodeList',
@@ -59,14 +64,27 @@ $remote['seller_edit_seller_info1'] = array(
             'default' => '',
             'require' => '',
         ),
-//        'slEpBrandList' => array(
-//            'name' => '',
-//            'column' => 'slEpBrandList',
+        'slEpBrandList' => array(
+            'name' => '',
+            'column' => 'slEpBrandList',
+            'type' => 'List',
+            'default' => '',
+            'require' => '',
+        ),
+//        'slEpBrandHonorList' => array(
+//            'name' => '企业产品品牌荣誉信息List',
+//            'column' => 'slEpBrandHonorList',
 //            'type' => 'List',
 //            'default' => '',
 //            'require' => '',
 //        ),
-
+//        'slPdBrandList' => array(
+//            'name' => '',
+//            'column' => 'slPdBrandList',
+//            'type' => 'List',
+//            'default' => '不是自己企业的品牌时使用',
+//            'require' => '',
+//        ),
         'slEpWorkshopList' => array(
             'name' => '企业车间List',
             'column' => 'slEpWorkshopList',
@@ -81,13 +99,13 @@ $remote['seller_edit_seller_info1'] = array(
             'default' => '',
             'require' => '',
         ),
-//        'slEpAuthList' => array(
-//            'name' => '',
-//            'column' => 'slEpAuthList',
-//            'type' => 'List',
-//            'default' => '',
-//            'require' => '',
-//        ),
+        'slEpAuthList' => array(
+            'name' => '',
+            'column' => 'slEpAuthList',
+            'type' => 'List',
+            'default' => '',
+            'require' => '',
+        ),
         'slEpManagerList' => array(
             'name' => '',
             'column' => 'slEpManagerList',
@@ -122,16 +140,328 @@ $remote['seller_edit_seller_info1'] = array(
             'default' => '',
             'require' => false
         ),
-//        'insertFlag' => array(
-//            'name' => '全体/单个',
-//            'column' => 'insertFlag',
-//            'type' => 'String',
-//            'default' => '',//0：全体，1：单个
-//            'require' => false,
-//        ),
+        'insertFlag' => array(
+            'name' => '全体/单个',
+            'column' => 'insertFlag',
+            'type' => 'String',
+            'default' => '',//0：全体，1：单个
+            'require' => false,
+        ),
     ),
 
+    'slAccount' => array(
+        'login_account' => array(
+            'name' => '卖家账号',
+            'column' => 'slAccount',
+            'type' => 'String',
+            'require' => false,
+        ),
+        'mobile' => array(
+            'name' => '登录手机号码',
+            'column' => 'slTel',
+            'type' => 'String',
+            'require' => false,
+        ),
+        'show_name' => array(
+            'name' => '卖家显示名称',
+            'column' => 'slShowName',
+            'type' => 'String',
+            'require' => false,
+        ),
+        'contact_person' => array(
+            'name' => '联系人姓名',
+            'column' => 'slContact',
+            'type' => 'String',
+            'require' => false,
+        ),
+        'login_password' => array(
+            'name' => '登录密码',
+            'column' => 'accountPsd',
+            'type' => 'String',
+            'require' => false,
+        ),
+        'authStatus' => array(
+            'name' => '认证状态',
+            'column' => 'authStatus',
+            'type' => 'Integer',
+            'require' => false,
+        ),
+        'fromFlg' => array(
+            'name' => '注册来源',
+            'column' => 'fromFlg',
+            'type' => 'String',
+            'require' => false,
+        ),
+    ),
 
+    'slSeller' => array(
+        'login_account' => array(
+            'name' => '',
+            'column' => 'slAccount',
+            'type' => 'String',
+            'default' => '',
+            'require' => false,
+        ),
+        'slCode' => array(
+            'name' => '卖家ID',
+            'column' => 'slCode',
+            'type' => 'String',
+            'default' => '',
+            'require' => false,
+        ),
+        'slConFlg' => array(
+            'name' => '生产国籍',
+            'column' => 'slConFlg',
+            'type' => 'String',
+            'default' => '',
+            'require' => false,
+        ),
+        'areaCode' => array(
+            'name' => '大区编码',
+            'column' => 'areaCode',
+            'type' => 'String',
+            'default' => '',
+            'require' => false,
+        ),
+        'lgcsAreaCode' => array(
+            'name' => '物流区编码',
+            'column' => 'lgcsAreaCode',
+            'type' => 'String',
+            'default' => '',
+            'require' => false,
+        ),
+        'provinceCode' => array(
+            'name' => '省编码',
+            'column' => 'provinceCode',
+            'type' => 'String',
+            'default' => '',
+            'require' => false,
+        ),
+        'cityCode' => array(
+            'name' => '地区编码',
+            'column' => 'cityCode',
+            'type' => 'String',
+            'default' => '',
+            'require' => false,
+        ),
+        'districtCode' => array(
+            'name' => '区编码',
+            'column' => 'districtCode',
+            'type' => 'String',
+            'default' => '',
+            'require' => false,
+        ),
+        'epId' => array(
+            'name' => '企业ID',
+            'column' => 'epId',
+            'type' => 'Integer',
+            'default' => '',
+            'require' => false,
+        ),
+        'slMainClass' => array(
+            'name' => '卖家主分类',
+            'column' => 'slMainClass',
+            'type' => 'Integer',
+            'default' => '',
+            'require' => false,
+        ),
+        'snkFlg' => array(
+            'name' => '神农客标志',
+            'column' => 'snkFlg',
+            'type' => 'String',
+            'default' => '',
+            'require' => false,
+        ),
+        'selfFlg' => array(
+            'name' => '自产型卖家标志',
+            'column' => 'selfFlg',
+            'type' => 'String',
+            'default' => '',
+            'require' => false,
+        ),
+        'agentFlg' => array(
+            'name' => '代理型卖家标志',
+            'column' => 'agentFlg',
+            'type' => 'String',
+            'default' => '',
+            'require' => false,
+        ),
+        'oemFlg' => array(
+            'name' => 'OEM型卖家标志',
+            'column' => 'oemFlg',
+            'type' => 'String',
+            'default' => '',
+            'require' => false,
+        ),
+        'buyerFlg' => array(
+            'name' => '买手型卖家标志',
+            'column' => 'buyerFlg',
+            'type' => 'String',
+            'default' => '',
+            'require' => false,
+        ),
+        'sqaStatus' => array(
+            'name' => '神农客贯标审核',
+            'column' => 'sqaStatus',
+            'type' => 'Integer',
+            'default' => '',
+            'require' => false,
+        ),
+        'distQua' => array(
+            'name' => '卖家分销资格',
+            'column' => 'distQua',
+            'type' => 'Integer',
+            'default' => '',
+            'require' => false,
+        ),
+        'shopQua' => array(
+            'name' => '卖家开店资格',
+            'column' => 'shopQua',
+            'type' => 'String',
+            'default' => '',
+            'require' => false,
+        ),
+        'memo1' => array(
+            'name' => '微信号码',
+            'column' => 'memo1',
+            'type' => 'String',
+            'default' => '',
+            'require' => false,
+        ),
+        'memo2' => array(
+            'name' => 'QQ号码',
+            'column' => 'memo2',
+            'type' => 'String',
+            'default' => '',
+            'require' => false,
+        ),
+        'memo3' => array(
+            'name' => '邮箱',
+            'column' => 'memo3',
+            'type' => 'String',
+            'default' => '',
+            'require' => false,
+        ),
+        'memo4' => array(
+            'name' => '固定电话',
+            'column' => 'memo4',
+            'type' => 'String',
+            'default' => '',
+            'require' => false,
+        ),
+        'memo5' => array(
+            'name' => '传真号',
+            'column' => 'memo5',
+            'type' => 'String',
+            'default' => '',
+            'require' => false,
+        ),
+        'memo6' => array(
+            'name' => '买手类型',
+            'column' => 'memo6',
+            'type' => 'String',
+            'default' => '',
+            'require' => false,
+        ),
+        'memo7' => array(
+            'name' => '身份证号',
+            'column' => 'memo7',
+            'type' => 'String',
+            'default' => '',
+            'require' => false,
+        ),
+        'memo8' => array(
+            'name' => '备用字段8',
+            'column' => 'memo8',
+            'type' => 'String',
+            'default' => '',
+            'require' => false,
+        ),
+        'memo9' => array(
+            'name' => '备用字段9',
+            'column' => 'memo9',
+            'type' => 'String',
+            'default' => '',
+            'require' => false,
+        ),
+        'memo10' => array(
+            'name' => '备用字段10',
+            'column' => 'memo10',
+            'type' => 'String',
+            'default' => '',
+            'require' => false,
+        ),
+        'memo11' => array(
+            'name' => '备用字段11',
+            'column' => 'memo11',
+            'type' => 'String',
+            'default' => '',
+            'require' => false,
+        ),
+        'memo12' => array(
+            'name' => '备用字段12',
+            'column' => 'memo12',
+            'type' => 'String',
+            'default' => '',
+            'require' => false,
+        ),
+        'memo13' => array(
+            'name' => '备用字段13',
+            'column' => 'memo13',
+            'type' => 'String',
+            'default' => '',
+            'require' => false,
+        ),
+        'memo14' => array(
+            'name' => '备用字段14',
+            'column' => 'memo14',
+            'type' => 'String',
+            'default' => '',
+            'require' => false,
+        ),
+        'memo15' => array(
+            'name' => '备用字段15',
+            'column' => 'memo15',
+            'type' => 'String',
+            'default' => '',
+            'require' => false,
+        ),
+        'memo16' => array(
+            'name' => '备用字段16',
+            'column' => 'memo16',
+            'type' => 'String',
+            'default' => '',
+            'require' => false,
+        ),
+        'memo17' => array(
+            'name' => '备用字段17',
+            'column' => 'memo17',
+            'type' => 'String',
+            'default' => '',
+            'require' => false,
+        ),
+        'memo18' => array(
+            'name' => '备用字段18',
+            'column' => 'memo18',
+            'type' => 'String',
+            'default' => '',
+            'require' => false,
+        ),
+        'memo19' => array(
+            'name' => '备用字段19',
+            'column' => 'memo19',
+            'type' => 'String',
+            'default' => '',
+            'require' => false,
+        ),
+        'memo20' => array(
+            'name' => '备用字段20',
+            'column' => 'memo20',
+            'type' => 'String',
+            'default' => '',
+            'require' => false,
+        ),
+    ),
 
     'pdClassesCodeList' => array(
         'pdClassesCode' => array(
@@ -453,58 +783,58 @@ $remote['seller_edit_seller_info1'] = array(
 
     ),
 
-//    'slEpBrandList' => array(
-//        'epId' => array(
-//            'name' => '企业ID',
-//            'column' => 'epId',
-//            'type' => 'Integer',
-//            'default' => '',
-//            'require' => false,
-//        ),
-//        'brandId' => array(
-//            'name' => '品牌ID',
-//            'column' => 'brandId',
-//            'type' => 'Integer',
-//            'default' => '',
-//            'require' => false,
-//        ),
-//        'brandClass' => array(
-//            'name' => '品牌分类',
-//            'column' => 'brandClass',
-//            'type' => 'String',
-//            'default' => '',
-//            'require' => false,
-//        ),
-//        'brandName' => array(
-//            'name' => '品牌名称',
-//            'column' => 'brandName',
-//            'type' => 'String',
-//            'default' => '',
-//            'require' => false,
-//        ),
-//        'brandNo' => array(
-//            'name' => '商标注册证',
-//            'column' => 'brandNo',
-//            'type' => 'String',
-//            'default' => '',
-//            'require' => false,
-//        ),
-//        'brandTermBegin' => array(
-//            'name' => '有效期限开始',
-//            'column' => 'brandTermBegin',
-//            'type' => 'Datetime',
-//            'default' => '',
-//            'require' => false,
-//        ),
-//        'brandTermEnd' => array(
-//            'name' => '有效期限截止',
-//            'column' => 'brandTermEnd',
-//            'type' => 'Datetime',
-//            'default' => '',
-//            'require' => false,
-//        ),
-//
-//    ),
+    'slEpBrandList' => array(
+        'epId' => array(
+            'name' => '企业ID',
+            'column' => 'epId',
+            'type' => 'Integer',
+            'default' => '',
+            'require' => false,
+        ),
+        'brandId' => array(
+            'name' => '品牌ID',
+            'column' => 'brandId',
+            'type' => 'Integer',
+            'default' => '',
+            'require' => false,
+        ),
+        'brandClass' => array(
+            'name' => '品牌分类',
+            'column' => 'brandClass',
+            'type' => 'String',
+            'default' => '',
+            'require' => false,
+        ),
+        'brandName' => array(
+            'name' => '品牌名称',
+            'column' => 'brandName',
+            'type' => 'String',
+            'default' => '',
+            'require' => false,
+        ),
+        'brandNo' => array(
+            'name' => '商标注册证',
+            'column' => 'brandNo',
+            'type' => 'String',
+            'default' => '',
+            'require' => false,
+        ),
+        'brandTermBegin' => array(
+            'name' => '有效期限开始',
+            'column' => 'brandTermBegin',
+            'type' => 'Datetime',
+            'default' => '',
+            'require' => false,
+        ),
+        'brandTermEnd' => array(
+            'name' => '有效期限截止',
+            'column' => 'brandTermEnd',
+            'type' => 'Datetime',
+            'default' => '',
+            'require' => false,
+        ),
+
+    ),
 
     'slEpBrandHonorList' => array(
         'epId' => array(
@@ -800,64 +1130,64 @@ $remote['seller_edit_seller_info1'] = array(
         ),
     ),
 
-//    'slEpAuthList' => array(
-//        'flag' => array(
-//            'name' => '1：卖家代理及分销授权:2：卖家OEM委托授权标志',
-//            'column' => 'flag',
-//            'type' => 'String',
-//            'default' => '',
-//            'require' => false,
-//        ),
-//        'slCode' => array(
-//            'name' => '卖家ID',
-//            'column' => 'slCode',
-//            'type' => 'String',
-//            'default' => '全体新增时为空，单独新增时不为空，修改时不为空',
-//            'require' => false,
-//        ),
-//        'producerEpId' => array(
-//            'name' => '生产商_企业ID',
-//            'column' => 'producerEpId',
-//            'type' => 'Integer',
-//            'default' => '',
-//            'require' => false,
-//        ),
-//        'contractNo' => array(
-//            'name' => '授权经销合同号',
-//            'column' => 'contractNo',
-//            'type' => 'String',
-//            'default' => '',
-//            'require' => false,
-//        ),
-//        'authEpName' => array(
-//            'name' => '授权单位',
-//            'column' => 'authEpName',
-//            'type' => 'String',
-//            'default' => '',
-//            'require' => false,
-//        ),
-//        'authTermBegin' => array(
-//            'name' => '授权期限开始',
-//            'column' => 'authTermBegin',
-//            'type' => 'Datetime',
-//            'default' => '',
-//            'require' => false,
-//        ),
-//        'authTermEnd' => array(
-//            'name' => '授权期限结束',
-//            'column' => 'authTermEnd',
-//            'type' => 'Datetime',
-//            'default' => '',
-//            'require' => false,
-//        ),
-//        'authTermUnliimited' => array(
-//            'name' => '授权期限长期标志',
-//            'column' => 'authTermUnliimited',
-//            'type' => 'String',
-//            'default' => '',
-//            'require' => false,
-//        ),
-//    ),
+    'slEpAuthList' => array(
+        'flag' => array(
+            'name' => '1：卖家代理及分销授权:2：卖家OEM委托授权标志',
+            'column' => 'flag',
+            'type' => 'String',
+            'default' => '',
+            'require' => false,
+        ),
+        'slCode' => array(
+            'name' => '卖家ID',
+            'column' => 'slCode',
+            'type' => 'String',
+            'default' => '全体新增时为空，单独新增时不为空，修改时不为空',
+            'require' => false,
+        ),
+        'producerEpId' => array(
+            'name' => '生产商_企业ID',
+            'column' => 'producerEpId',
+            'type' => 'Integer',
+            'default' => '',
+            'require' => false,
+        ),
+        'contractNo' => array(
+            'name' => '授权经销合同号',
+            'column' => 'contractNo',
+            'type' => 'String',
+            'default' => '',
+            'require' => false,
+        ),
+        'authEpName' => array(
+            'name' => '授权单位',
+            'column' => 'authEpName',
+            'type' => 'String',
+            'default' => '',
+            'require' => false,
+        ),
+        'authTermBegin' => array(
+            'name' => '授权期限开始',
+            'column' => 'authTermBegin',
+            'type' => 'Datetime',
+            'default' => '',
+            'require' => false,
+        ),
+        'authTermEnd' => array(
+            'name' => '授权期限结束',
+            'column' => 'authTermEnd',
+            'type' => 'Datetime',
+            'default' => '',
+            'require' => false,
+        ),
+        'authTermUnliimited' => array(
+            'name' => '授权期限长期标志',
+            'column' => 'authTermUnliimited',
+            'type' => 'String',
+            'default' => '',
+            'require' => false,
+        ),
+    ),
 
     'slEpManagerList' => array(
         'epId' => array('name' => '企业ID',

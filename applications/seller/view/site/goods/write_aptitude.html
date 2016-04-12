@@ -1,4 +1,8 @@
+<{if $type}>
+<form class="write_apt_form form-horizontal" method="post" action="<{link app=seller ctl=site_passport act=saveAptitude}>"
+      <{else}>
 <form class="write_apt_form form-horizontal" method="post" action="<{link app=seller ctl=site_cat act=saveAptitude}>"
+<{/if}>
       data-module="validator">
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
@@ -46,6 +50,15 @@
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-        <button type="submit" class="btn btn-primary">保存</button>
+        <button type="submit" class="btn btn-primary" id="saveAptitude">保存</button>
     </div>
 </form>
+<script>
+    void function (companyForm) {
+        companyForm.find('#saveAptitude').click(function (e) {
+
+            e.stopPropagation();
+
+        });
+    }($('#companyInfo_form'));
+</script>
