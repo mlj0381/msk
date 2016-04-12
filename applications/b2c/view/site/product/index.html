@@ -134,7 +134,7 @@
                     <label>产品规格 </label>
                     <div class="spec_items">
                         <{foreach from=$data_detail.feature_data_list item=feature}>
-                        <a href="#"><span class="spec_item <{if $data_detail.featureCode eq $feature.featureCode}>active<{/if}>" data-proId=""><{$feature.featureName}></span></a>
+                        <a href="<{link app=b2c ctl=site_product args0=$feature.product_id args1=$feature.seller_id}>"><span class="spec_item <{if $data_detail.featureCode eq $feature.featureCode}>active<{/if}>" data-proId=""><{$feature.featureName}></span></a>
                         <{/foreach}>
                     </div>
                 </div>
@@ -142,7 +142,7 @@
                     <label>包装规格 </label>
                     <div class="spec_items">
                         <{foreach from=$data_detail.weight_data_list item=weight}>
-                        <a href="#"><span class="spec_item active" data-packId=""><{$weight.weightName}> </span></a>
+                        <a href="<{link app=b2c ctl=site_product args0=$weight.product_id args1=$weight.seller_id}>"><span class="spec_item active" data-packId=""><{$weight.weightName}> </span></a>
                         <{/foreach}>
                     </div>
                 </div>

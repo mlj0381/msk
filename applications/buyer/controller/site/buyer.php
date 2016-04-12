@@ -85,16 +85,17 @@ class buyer_ctl_site_buyer extends buyer_frontpage{
 									'cityCode'		=>$area_result['city']['code'] ?: '09',//地区编码
 									'districtCode'	=>$area_result['district']['code'] ?: '09',//区编码
 									'slMainClass'	=>4,//卖家主分类
-									'snkFlg'		=>'否',//神农客标志
-									'selfFlg'		=>'否',//自产型卖家标志
-									'agentFlg'		=>'否',//代理型卖家标志
-									'oemFlg'		=>'否',//OEM型卖家标志
-									'buyerFlg'		=>'否',//买手型卖家标志
+									'snkFlg'		=>'0',//神农客标志
+									'selfFlg'		=>'0',//自产型卖家标志
+									'agentFlg'		=>'0',//代理型卖家标志
+									'oemFlg'		=>'0',//OEM型卖家标志
+									'buyerFlg'		=>'1',//买手型卖家标志
 							),
 							'slBuyerShop'=>array(
 									'card_id'	=>$basic_data['card_id'],
 									'slSort'	=>2,
 									'addr'		=>$basic_data['addr'],
+									'flag1'		=> $params['sex']==1 ?'0':'1',
 							),
 							'slShopInfo'=>array(
 									'store_name'=>$params['store_name'],
@@ -333,11 +334,11 @@ class buyer_ctl_site_buyer extends buyer_frontpage{
 						'cityCode'		=>$area_result['city']['code']?:'01',//地区编码
 						'districtCode'	=>$area_result['district']['code']?:'01',//区编码
 						'slMainClass'	=>4,//卖家主分类
-						'snkFlg'		=>'否',//神农客标志
-						'selfFlg'		=>'否',//自产型卖家标志
-						'agentFlg'		=>'否',//代理型卖家标志
-						'oemFlg'		=>'否',//OEM型卖家标志
-						'buyerFlg'		=>'否',//买手型卖家标志
+						'snkFlg'		=>'0',//神农客标志
+						'selfFlg'		=>'0',//自产型卖家标志
+						'agentFlg'		=>'0',//代理型卖家标志
+						'oemFlg'		=>'0',//OEM型卖家标志
+						'buyerFlg'		=>'1',//买手型卖家标志
 						'qq'			=>$params['qq'] ?:$update_params['qq'],
 						'wechat'		=>$params['wechat'] ?:$update_params['wechat'],
 						'email'			=>$params['email'] ?:$update_params['email'],
@@ -347,6 +348,7 @@ class buyer_ctl_site_buyer extends buyer_frontpage{
 						'card_id'	=>$params['card_id'],
 						'slSort'	=>2,
 						'addr'		=>$params['addr'] ?:$update_params['addr'],
+						'flag1'		=> $params['sex']==1 ?'0':'1',
 				),
 				'slShopInfo'=>array(
 						'buyer_code'	=>$params['buyer_code'],
