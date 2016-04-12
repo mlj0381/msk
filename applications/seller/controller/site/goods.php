@@ -385,7 +385,7 @@ class seller_ctl_site_goods extends seller_frontpage
         }
 
         $goods['card'] = $card;
-        if(!$jg = $this->_apiAddGoods1($goods)){
+        if (!$this->_apiAddGoods1($goods)) {
             $this->splash('error', $redirect_url, '保存失败');
             $db->rollback();
         };
@@ -429,8 +429,7 @@ class seller_ctl_site_goods extends seller_frontpage
         $api['slPdList'] = $slPdList;
         $result = $this->app->rpc('edit_seller_product')->request($api);
         $product = Array();
-        if($result['status'])
-        {
+        if ($result['status']) {
             foreach ($slPdList as $v) {
 
                 //查询包装信息
@@ -453,7 +452,7 @@ class seller_ctl_site_goods extends seller_frontpage
                 }
             }
 
-            if($this->_apiAddGoods2($goods, $product)){
+            if ($this->_apiAddGoods2($goods, $product)) {
                 return true;
             }
         }
@@ -605,7 +604,7 @@ class seller_ctl_site_goods extends seller_frontpage
             );
         }
         $result = $this->app->rpc('edit_seller_product1')->request($api);
-        if($result['status']){
+        if ($result['status']) {
             return true;
         }
         return false;
@@ -728,22 +727,22 @@ class seller_ctl_site_goods extends seller_frontpage
         if (!$_POST) $this->splash('error', '', '非法请求');
         extract($_POST);
         //获取地区价盘
-        //$dlyplace = app::get('b2c')->model('dlyplace')->get_api_area();
-        //$dlyplace = utils::array_change_key($dlyplace['logiAreaList'], 'logiAreaCode');
+        $mdl_product_price = app::get('b2c')->model('products_price');
+
         $product = str_replace('-', '', $product);
         $productId = Array();
-        foreach ($feature as $v1) {
-            foreach ($weight as $v2) {
-                $productId[] = $product . $v1 . $v2;
-            }
+        foreach ($pack as $v2) {
+            $tmp = explode('-', $v2);
+            $productId[] = $product . $tmp[0] . $tmp[1];
+            $pack_id[] = $tmp[2];
         }
-
         //获取商品列表
         $apiProduct = app::get('b2c')->rpc('goods_info')->request('', 259000);
         $productArray = array();
-        foreach ($apiProduct['result']['goods'] as $value) {
-            if (in_array($value['bn'], $productId) && in_array($value['pack'], $pack)) {
-                $productArray[] = $value;
+        foreach ($apiProduct['result']['goods'] as $key => $value) {
+            if (in_array($value['bn'], $productId) && in_array($value['pack'], $pack_id)) {
+                $value['product_price'] = $mdl_product_price->getList();
+                $productArray[$key] = $value;
             }
         }
         $this->splash('success', '', $productArray);
