@@ -39,6 +39,7 @@
         <label class="col-xs-2 control-label">
             <span class="text-danger">*</span>企业品牌：
         </label>
+
         <div class="col-xs-4">
             <button type="button" class="btn btn-md btn-default brand_add_btn" data-toggle="modal"
                     data-target=".brand_add_modal" href="<{link app=seller ctl=site_passport act=add_brand}>"><i
@@ -46,7 +47,8 @@
             </button>
             <div class="brand_list" data-list="brand_list">
                 <{foreach from=$extra.brand item=item}>
-                <span class="brand_item"><{$item.brand_name}> <i class="icon-remove" data-id="<{$item.brand_id}>"></i></span>
+                <span class="brand_item"><{$item.brand_name}> <i class="icon-remove"
+                                                                 data-id="<{$item.brand_id}>"></i></span>
                 <{/foreach}>
             </div>
         </div>
@@ -71,19 +73,34 @@
                         <th width="50%">名称</th>
                         <th width="30%">标准资质</th>
                     </tr>
-                    <{foreach from=$extra.store.cat item=cat1}>
-                        <tr data-treeId="<{$cat1.addon}>" data-catName="<{$cat1.cat_name}>">
-                            <td><span class="arrow icon-caret-right"></span><{$cat1.addon}></td>
-                            <td><input type="checkbox" data-elem="checkbox" name="cat_id[]" value="<{$cat1.cat_id}>"><{$cat1.cat_name}></td>
-                            <td></td>
-                        </tr>
-                        <{foreach from=$cat1.son item=cat2}>
-                            <tr data-treeId="<{$cat1.addon}>-<{$cat2.addon}>" data-parId="<{$cat1.addon}>" data-catName="<{$cat1.cat_name}>">
-                            <td>&nbsp;&nbsp;&nbsp;&nbsp;<span class="arrow icon-caret-right"></span><{$cat2.addon}></td>
-                            <td>&nbsp;&nbsp;&nbsp;&nbsp;<label><input type="checkbox" data-elem="checkbox" name="cat_id[]" value="<{$cat2.cat_id}>"><{$cat2.cat_name}></label></td>
+                    <{foreach from=$extra.store.cat key=k1 item=cat1}>
+                    <tr data-treeId="<{$cat1.addon}>" data-catName="<{$cat1.cat_name}>">
+                        <td><span class="arrow icon-caret-right"></span><{$cat1.addon}></td>
+                        <td><input type="checkbox" name="cat_id[]"
+                            <{if $cat1.cat_id eq $extra.store.selectedCat[$k1].cat_id}> checked <{/if}>
+                            value="<{$cat1.cat_id}>"><{$cat1.cat_name}>
+                        </td>
+                        <td></td>
+                    </tr>
+                    <{foreach from=$cat1.son key=k2 item=cat2}>
+                    <tr data-treeId="<{$cat1.addon}>-<{$cat2.addon}>" data-catName="<{$cat1.cat_name}>">
+                        <td>&nbsp;&nbsp;&nbsp;&nbsp;<span class="arrow icon-caret-right"></span><{$cat2.addon}></td>
+                        <td>&nbsp;&nbsp;&nbsp;&nbsp;<label>
+                            <input type="checkbox" name="cat_id[]"
+                            <{if $cat2.cat_id eq $extra.store.selectedCat[$k1].children[$k2].cat_id}> checked <{/if}>
+                            value="<{$cat2.cat_id}>"><{$cat2.cat_name}>
 
-                            <td>
-                                <!--data-toggle="modal" data-target=".category_add_modal"-->
+                            <{if !$extra.store.selectedCat[$k1].children[$k2].extra}>
+                            <a href="<{link app=seller ctl=site_passport act=write_aptitude args0=$cat2.cat_id}>"
+                               data-toggle="modal" data-target="#write_apt_modal" class="warning"><i
+                                    class="text-danger icon-exclamation-sign"> </i>
+                                <small>缺少资质</small>
+                            </a>
+                            <{/if}>
+                        </label></td>
+
+                        <td>
+                            <!--data-toggle="modal" data-target=".category_add_modal"-->
                                 <span class="apt_tag active apt_stock-1"
                                       href="<{link app=seller ctl=site_passport act=display_type args0=apt_stock}>?cat=<{$cat1.addon}>-<{$cat2.addon}>"
                                       data-tagId="1" title="原种">原
@@ -131,22 +148,28 @@
                                       title="储存运输标准指标">运
                                     <input type="hidden" name="apt_transport" value="0"/>
                                 </span>
-                                <!--<span class="apt_tag active apt_pack-1"-->
-                                <!--href="<{link app=seller ctl=site_passport act=display_type args0=apt_pack args1=1}>"-->
-                                <!--data-tagId="9"-->
-                                <!--title="包装标准指标">包-->
-                                <!--<input type="hidden" name="apt_pack" value="0" />-->
-                                <!--</span>-->
-                            </td>
-                        </tr>
-                            <{foreach from=$cat2.son item=cat3}>
-                                <tr data-treeId="<{$cat1.addon}>-<{$cat2.addon}>-<{$cat3.addon}>" data-parId="<{$cat1.addon}>-<{$cat2.addon}>" data-catName="<{$cat1.cat_name}>">
-                                <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="arrow icon-caret-right"></span><{$cat3.addon}></td>
-                                <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label><input type="checkbox" data-elem="checkbox" name="cat_id[]" value="<{$cat3.cat_id}>"><{$cat3.cat_name}></label></td>
-                                <td>
+                            <!--<span class="apt_tag active apt_pack-1"-->
+                            <!--href="<{link app=seller ctl=site_passport act=display_type args0=apt_pack args1=1}>"-->
+                            <!--data-tagId="9"-->
+                            <!--title="包装标准指标">包-->
+                            <!--<input type="hidden" name="apt_pack" value="0" />-->
+                            <!--</span>-->
+                        </td>
+                    </tr>
+                    <{foreach from=$cat2.son key=k3 item=cat3}>
+                    <tr data-treeId="<{$cat1.addon}>-<{$cat2.addon}>-<{$cat3.addon}>" data-catName="<{$cat1.cat_name}>">
+                        <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="arrow icon-caret-right"></span><{$cat3.addon}>
+                        </td>
+                        <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label>
+                            <input type="checkbox" name="cat_id[]"
+                            <{if $cat3.cat_id eq $extra.store.selectedCat[$k1].children[$k2].children[$k3].cat_id}>
+                            checked <{/if}>
+                            value="<{$cat3.cat_id}>">
+                            <{$cat3.cat_name}></label></td>
+                        <td>
                                     <span class="apt_tag active apt_stock-1"
-                                      href="<{link app=seller ctl=site_passport act=display_type args0=apt_stock}>?cat=<{$cat1.addon}>-<{$cat2.addon}>-<{$cat3.addon}>"
-                                      data-tagId="1" title="原种">原
+                                          href="<{link app=seller ctl=site_passport act=display_type args0=apt_stock}>?cat=<{$cat1.addon}>-<{$cat2.addon}>-<{$cat3.addon}>"
+                                          data-tagId="1" title="原种">原
                                             <input type="hidden" name="apt_stock" value="0"/>
                                     </span>
                                     <span class="apt_tag active apt_prove-1"
@@ -191,21 +214,21 @@
                                           title="储存运输标准指标">运
                                         <input type="hidden" name="apt_transport" value="0"/>
                                     </span>
-                                </td>
-                            </tr>
-                                <!--<{*foreach from=$cat3.son item=cat4*}>-->
-                                    <!--<tr data-treeId="<{$cat1.addon}>-<{$cat2.addon}>-<{$cat3.addon}>-<{$cat4.addon}>" data-catName="三黄鸡">-->
-                                        <!--<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-->
-                                            <!--<span class="arrow icon-caret-right"></span><{$cat4.addon}>-->
-                                        <!--</td>-->
-                                        <!--<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-->
-                                            <!--<input type="checkbox" name="cat_id[]" value="<{$cat4.cat_id}>"><{$cat4.cat_name}>-->
-                                        <!--</td>-->
-                                        <!--<td></td>-->
-                                    <!--</tr>-->
-                                <!--<{*/foreach*}>-->
-                            <{/foreach}>
-                        <{/foreach}>
+                        </td>
+                    </tr>
+                    <!--<{*foreach from=$cat3.son item=cat4*}>-->
+                    <!--<tr data-treeId="<{$cat1.addon}>-<{$cat2.addon}>-<{$cat3.addon}>-<{$cat4.addon}>" data-catName="三黄鸡">-->
+                    <!--<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-->
+                    <!--<span class="arrow icon-caret-right"></span><{$cat4.addon}>-->
+                    <!--</td>-->
+                    <!--<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-->
+                    <!--<input type="checkbox" name="cat_id[]" value="<{$cat4.cat_id}>"><{$cat4.cat_name}>-->
+                    <!--</td>-->
+                    <!--<td></td>-->
+                    <!--</tr>-->
+                    <!--<{*/foreach*}>-->
+                    <{/foreach}>
+                    <{/foreach}>
                     <{/foreach}>
                 </table>
             </div>
@@ -230,11 +253,24 @@
     </div>
 
 </div>
+<!-- 填写资质modal 开始-->
+
+<div class="modal fade" id="write_apt_modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+
+        </div>
+    </div>
+</div>
+<!-- 填写资质modal 结束-->
 
 
 <script type="text/javascript">
 
     $(function () {
+
+
+
 
         //创建品牌
         $('#brand_add_modal').on('click', '.brand_save_btn', function () {
@@ -310,25 +346,26 @@
          */
         $('.cat_tree tr[data-treeid]').each(function(index){
             var $treeid = $(this).attr('data-treeId');
-            if($treeid.indexOf('-')>0){
+            if ($treeid.indexOf('-') > 0) {
                 $(this).addClass('hide');   //隐藏所有子分类
             }
         });
 
-        $('.cat_tree tr').on('click','.arrow',function(e){
+        $('.cat_tree tr').on('click', '.arrow', function (e) {
 
             var target = e.target || e.srcElement;
             var $curtr = $(target).parents('tr');
             var parTreeId = $($curtr).attr('data-treeId');
-            if(!$(this).hasClass('icon-caret-down')){
-                $('.cat_tree tr[data-treeid]').each(function(index){
-                    
-                    $('.cat_tree tr[data-treeId^='+parTreeId+']').removeClass('hide').find('.arrow').attr('class','arrow icon-caret-down');;
+            if (!$(this).hasClass('icon-caret-down')) {
+                $('.cat_tree tr[data-treeid]').each(function (index) {
+
+                    $('.cat_tree tr[data-treeId^=' + parTreeId + ']').removeClass('hide').find('.arrow').attr('class', 'arrow icon-caret-down');
+                    ;
                 });
-            }else{
-                $(this).attr('class','arrow icon-caret-right');
-                $('.cat_tree tr[data-treeId^='+parTreeId+']').addClass('hide');
-                $('.cat_tree tr[data-treeId='+parTreeId+']').removeClass('hide');
+            } else {
+                $(this).attr('class', 'arrow icon-caret-right');
+                $('.cat_tree tr[data-treeId^=' + parTreeId + ']').addClass('hide');
+                $('.cat_tree tr[data-treeId=' + parTreeId + ']').removeClass('hide');
             }
         });
 
@@ -357,4 +394,22 @@
         //分类树效果结束
     });
 
+
+    $('.directory_form').submit(function () {
+        var confirm = true;
+        $('.dir_item').each(function (index, element) {
+            var status_ck = $(this).find('input[type=checkbox]').is(':checked');
+            var has_warning = $(this).find('a').hasClass('warning');
+            console.log(status_ck, has_warning);
+            if (status_ck == true && has_warning == true) {
+                alert('您勾选的分类，资质未完善');
+                $(this).find('input[type=checkbox]').focus();
+                confirm = false;
+                return false;
+            }
+
+        });
+        if (!confirm)  return false;
+        return false;
+    });
 </script>

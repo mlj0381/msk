@@ -96,7 +96,11 @@ class buyer_ctl_site_buyer extends buyer_frontpage{
 									'slSort'	=>2,
 									'addr'		=>$basic_data['addr'],
 							),
-							'slShopInfo'=>$basic_data,
+							'slShopInfo'=>array(
+									'store_name'=>$params['store_name'],
+									'store_logo'=>$params['store_logo'],
+									'managingCharact1'=>$params['operate_feature'],
+							),
 					);
 				}
 				$edit = $this->app->rpc('edit_buyer_info')->request($request, false);

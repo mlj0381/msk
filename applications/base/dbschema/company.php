@@ -112,6 +112,15 @@ $db['company'] = array(
             'in_list' => false,
             'comment' => '法人代表',
         ),
+		'company_type' => array(
+            'type' => array(
+				'0' => '生产商基本信息',
+				'1' => '卖家基本信息'
+				),
+            'default' => '0',
+            'comment' => '公司信息类型',
+            'label' => '公司信息类型',
+        ),
         'tel' => array(
             'type' => 'varchar(50)',
             'label' => ('固定电话'),

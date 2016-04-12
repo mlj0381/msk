@@ -659,15 +659,30 @@ class seller_user_passport
     {
         $result['company'] = app::get('seller')->getConf('company_type');
         $result['store'] = app::get('seller')->getConf('store_type');
+        //$sql = "SELECT * FROM vmc_base_company WHERE company_type = '0' AND ep_id > 0";
+        //$result['agent_company'] = app::get('base')->model('company')->getList('*', array('company_type' => '0', 'ep_id|than' => 0));
+        $agent = app::get('seller')->rpc('select_company_qualifications')->request('', 259000);
+        $result['agent_company'] = $agent['result']['epInfoList'];
         return $result;
     }
 
     //查询已注册的信息
-    public function &edit_info($columns, $seller_id, $storeType, $company_index = 1)
+    /**
+     * @params $colums 所需字段
+     * @params $seller_id 商家id
+     * @params $storeType 店铺类型
+     * @params $company_index 查询该商家第几个公司下标 多重身份
+     * @parmas $step 所需查询页面信息下标
+     */
+    public function &edit_info($columns, $seller_id, $storeType, $company_index = 1, $step = 0)
     {
+
         $info = array();
+        $company_type = $step == 1 ? 1 : 0;
         $company = app::get('base')->model('company_seller')->getList('company_id', array(
-            'uid' => $seller_id, 'from' => '1', 'identity' => $storeType), ($company_index - 1), '1', 'cs_id DESC');
+            'uid' => $seller_id, 'from' => '1', 'identity' => $this->seller['ident']), ($company_index - 1), '1', 'cs_id DESC');
+        if (!$company[0]['company_id']) Return array();
+
         //$extra_id = app::get('seller')->model('sellers')->getRow('company_extra', array('seller_id' => $seller_id));
 //        foreach($companys as $value){
 //            $company['company_id'][] = $value['company_id'];
@@ -688,6 +703,7 @@ class seller_user_passport
                 $company_extra[$value] = $mdl_base_extra->arrayInfo('*', array_merge($filter, array('key' => $value)));
             }
         }
+
         $info['company_extra'] = $company_extra;
         $info['company_extra']['company'] = $mdl_company->getRow('*', array('company_id' => $company[0]['company_id'], 'info_type' => $storeType));
         unset($company_extra);
@@ -710,12 +726,29 @@ class seller_user_passport
         //获取商品类目信息
         //调用接口获取分类下的档案卡信息
         $info['company_extra']['store']['cat'] = app::get('b2c')->model('goods_cat')->get_tree('', null);
+        $selectedCat = app::get('store')->model('goods_cat')->get_tree($this->seller['seller_id'], '', null);
+        $info['company_extra']['store']['selectedCat'] = $this->changeKey($selectedCat);
+    }
+
+    private function &changeKey(&$cat)
+    {
+        $tmp = Array();
+        if(is_array($cat)){
+            foreach($cat as $v){
+                $tmp[$v['cat_id']] = $v;
+                if(is_array($v['children'])){
+                    $this->changeKey($v['children']);
+                }
+            }
+        }
+        return $tmp;
     }
 
 
     //保存注册信息
-    public function entry($params, &$msg)
+    public function entry($params, &$msg, $step)
     {
+        $company_type = $step == 1 ? 1 : 0;
         $db = vmc::database();
         $db->beginTransaction();
         $extra_columns = $this->page_setting($params['pageIndex'], '', $params['typeId']);
@@ -724,8 +757,7 @@ class seller_user_passport
         $mdl_seller = $this->app->model('sellers');
         $mdl_company_seller = app::get('base')->model('company_seller');
         $company_extra = $mdl_company_seller->getList('company_id', array(
-            'uid' => $seller['seller_id'], 'identity' => $params['typeId'], 'from' => '1'), '0', '1', 'cs_id desc');
-
+            'uid' => $seller['seller_id'], 'identity' => $this->seller['ident'], 'from' => '1'), '0', '1', 'cs_id desc');
         $company_info = array(
             array('key' => 'company', 'label' => '公司信息', 'app' => 'base'),
             array('key' => 'contact', 'label' => '联系人信息', 'app' => 'base'),
@@ -779,7 +811,9 @@ class seller_user_passport
                         'company_id' => $company_id ?: $company_extra[0]['company_id'],
                         'company_name' => $params[$value['key']]['name'],
                         'createtime' => time(),
+                        'company_type' => $params[$value['key']]['company_type'] ?: '0',
                     );
+
                     $cs_id = $mdl_company_seller->getRow('cs_id', array('company_id' => $company_seller['company_id'], 'uid' => $seller['seller_id'], 'from' => '1'));
                     $company_seller['cs_id'] = $cs_id['cs_id'];
                     if (!$mdl_company_seller->save($company_seller)) {
@@ -920,13 +954,13 @@ class seller_user_passport
             $update_value = array('ep_id' => $result['result']['epId']);
             $db = vmc::database();
             $db->beginTransaction();
-            if(!$mdl_company->update($update_value, $filter)){
+            if (!$mdl_company->update($update_value, $filter)) {
                 $db->rollback();
                 return false;
             }
             $filter = array('seller_id' => $this->seller['seller_id']);
             $update_value = array('sl_code' => $result['result']['slCode']);
-            if(!app::get('seller')->model('sellers')->update($update_value, $filter)){
+            if (!app::get('seller')->model('sellers')->update($update_value, $filter)) {
                 $db->rollback();
                 return false;
             }
@@ -938,11 +972,24 @@ class seller_user_passport
 
     private function _checkData(&$data, $type)
     {
-        $rpc = 'edit_seller_info';
-        switch($type){
+        $rpc = '';
+        switch ($this->seller['ident']) {
+            case '1' :
+                $rpc = 'edit_seller_info';
+                break;
+            case '2' :
+                $rpc = 'edit_seller_info2';
+                break;
+            case '4' :
+                $rpc = 'edit_seller_info3';
+                break;
+        }
+
+        switch ($type) {
             case 'update':
                 unset($data['slAccount']);
                 unset($data['slSeller']);
+                unset($data['insertFlag']);
                 $rpc = 'edit_seller_info1';
                 break;
         }
@@ -1021,7 +1068,7 @@ class seller_user_passport
         $brand = app::get('b2c')->model('brand')->getList('*', array('seller_id' => $this->seller['seller_id']));
         $mdl_cat = app::get('store')->model('goods_cat');
         $cat = $mdl_cat->getList('*', array('seller_id' => $this->seller['seller_id']));
-		
+
         $conf = $this->app->getConf('education');
 
         foreach ($api_data as $key => $value) {
@@ -1029,9 +1076,9 @@ class seller_user_passport
             $catList = Array();
             foreach ($cat as $v) {
                 $cat_id = explode(',', $v['cat_path']);
-				if(count($cat_id) >= 3) continue;
+                if (count($cat_id) >= 3) continue;
                 if (count($cat_id) == 2) {
-                    $parent = $mdl_cat->getRow('addon', array('cat_id' => $cat_id[0], 'seller_id' =>  $this->seller['seller_id']));
+                    $parent = $mdl_cat->getRow('addon', array('cat_id' => $cat_id[0], 'seller_id' => $this->seller['seller_id']));
                     $catList[] = array(
                         'pdClassesCode' => $parent['addon'],
                         'machiningCode' => $v['addon'],
@@ -1039,7 +1086,7 @@ class seller_user_passport
                     );
                 }
             }
-			
+
             $tmp[$key]['pdClassesCodeList'] = $catList;
             //企业基本资质
             $company_id = $value['business_licence']['extra_id'];
@@ -1170,17 +1217,28 @@ class seller_user_passport
             );
 
             //生产商
-//            $tmp[$key]['slEpAuthList'] = array(
-//                'flag' => '',
-//                'slCode' => '',
-//                'producerEpId' => '',
-//                'contractNo' => '',
-//                'authEpName' => '',
-//                'authTermBegin' => '',
-//                'authTermEnd' => '',
-//                'authTermUnliimited' => '',
-//
-//            );
+            $agent = app::get('base')->model('company_extra')->getList('*', array(
+                'key' => 'agent_auth_lesstion',
+                'uid' => $this->seller['seller_id'],
+                'form' => '1'));
+
+            if ($this->seller['ident'] == 2) {
+                $identity = 1;
+            }
+            if ($this->seller['ident'] == 4) {
+                $identity = 2;
+            }
+            $tmp[$key]['slEpAuthList'] = array(
+                array(
+                    'flag' => $identity,
+                    'slCode' => '',
+                    'producerEpId' => $agent['agent_auth_lesstion']['value']['agent'],
+                    'contractNo' => $agent['agent_auth_lesstion']['value']['num'],
+                    'authEpName' => $agent['agent_auth_lesstion']['value']['unit'],
+                    'authTermBegin' => $agent['agent_auth_lesstion']['value']['start'],
+                    'authTermEnd' => $agent['agent_auth_lesstion']['value']['end'],
+                    'authTermUnliimited' => '',
+                ));
             $manage[0] = $value['president'];
             $manage[0]['duties'] = '董事长';
             $manage[1] = $value['general_manager'];
@@ -1286,32 +1344,33 @@ class seller_user_passport
         $return = $this->add_buyer($seller_data, $pam_data);
         return $return;
     }
-    
+
     /**
      * 买手注册走pam_member表,
      * @param unknown $seller_data
      * @param unknown $pam_data
      */
-    public function add_buyer($seller_data, $pam_data){
-    	$check_buyer_account = app::get('buyer')->model('buyers')->getRow($pam_data['login_type'], array($pam_data['login_type']=>$pam_data['login_account']));
-    	//buyer_buyers不存在
-    	if (empty($check_buyer_account[$pam_data['login_type']])){
-    		$check_member_account = app::get('pam')->model('members')->getRow('member_id', array('login_account'=>$pam_data['login_account']));
-    		//pam_members存在
-    		$seller_data['phone'] = $seller_data['mobile'];
-    		$seller_data[$pam_data['login_type']] = $pam_data['login_account'];
-    		if ($check_member_account['member_id']){
-    			$seller_data['member_id'] = $check_member_account['member_id'];
-    			app::get('buyer')->model('buyers')->save($seller_data);
-    		}else {
-    			app::get('b2c')->model('members')->save($seller_data);
-    			$pam_data['member_id'] = $seller_data['member_id'];
-    			app::get('pam')->model('members')->save($pam_data);
-    			app::get('buyer')->model('buyers')->save($seller_data);
-    		}
-    		return $seller_data ?: null;
-    	}
+    public function add_buyer($seller_data, $pam_data)
+    {
+        $check_buyer_account = app::get('buyer')->model('buyers')->getRow($pam_data['login_type'], array($pam_data['login_type'] => $pam_data['login_account']));
+        //buyer_buyers不存在
+        if (empty($check_buyer_account[$pam_data['login_type']])) {
+            $check_member_account = app::get('pam')->model('members')->getRow('member_id', array('login_account' => $pam_data['login_account']));
+            //pam_members存在
+            $seller_data['phone'] = $seller_data['mobile'];
+            $seller_data[$pam_data['login_type']] = $pam_data['login_account'];
+            if ($check_member_account['member_id']) {
+                $seller_data['member_id'] = $check_member_account['member_id'];
+                app::get('buyer')->model('buyers')->save($seller_data);
+            } else {
+                app::get('b2c')->model('members')->save($seller_data);
+                $pam_data['member_id'] = $seller_data['member_id'];
+                app::get('pam')->model('members')->save($pam_data);
+                app::get('buyer')->model('buyers')->save($seller_data);
+            }
+            return $seller_data ?: null;
+        }
     }
-    
-    
+
+
 }

@@ -43,7 +43,7 @@ $setting = array(
                 ),
             ),
             1 => array(
-                'companyType' => '工厂',
+                'companyType' => '卖家',
                 'pageSet' => array(
                     1 => array(
                         'label' => '生产商企业基本资质',
@@ -73,68 +73,82 @@ $setting = array(
                 ),
             ),
             2 => array(
-                'companyType' => '代理',
+                'companyType' => '卖家',
                 'pageSet' => array(
-                    1 => array(
+					1 => array(
+							'label' => '卖家企业基本资质',
+							'page' => array(
+								'three_lesstion', 'business_licence', 'tax_licence', 'organization_licence', 'bank_lesstion',
+								'food_flow_licence', 'agent_auth_lesstion', 'company_type')
+					),
+					/*
+                    2 => array(
                         'label' => '生产商企业基本资质',
                         'page' => array(
-                            'three_lesstion', 'business_licence', 'tax_licence', 'organization_licence', 'bank_lesstion',
-                            'f_b_licence', 'food_flow_licence', 'agent_auth_lesstion')
+                            'three_lesstion', 'business_licence', 'tax_licence', 'organization_licence'
+                            )
                     ),
-                    2 => array(
+                    3 => array(
                         'label' => '生产商企业基本生产能力',
                         'page' => array(
                             'company_touted', 'factory',)
                     ),
-                    3 => array(
+                    4 => array(
                         'label' => '生产商企业生产车间、设备、产品工艺流程',
                         'page' => array(
                             'workshop', 'storage',)
                     ),
-                    4 => array(
+                    5 => array(
                         'label' => '生产商企业实验室、检测设备及产品质量控制系统',
                         'page' => array(
                             'laboratory', 'equipment', 'qa_department', 'q_c_department')
                     ),
-                    5 => array(
-                        'label' => '生产商企业管理团队',
+					*/
+                    2 => array(
+                        'label' => '卖家企业管理团队',
                         'page' => array(
                             'president', 'general_manager', 'vice_general_manager', 'sale_manager', 'qa_manager', 'finance_manager')
                     ),
                 ),
             ),
             4 => array(
-                'companyType' => 'OEM',
+                'companyType' => '卖家',
                 'pageSet' => array(
+				
                     1 => array(
-                        'label' => '生产商企业基本资质',
+                        'label' => 'OEM企业基本资质',
                         'page' => array(
                             'three_lesstion', 'business_licence', 'tax_licence', 'organization_licence', 'bank_lesstion',
-                            'f_b_licence', 'food_flow_licence', 'oem_auth_lesstion')
+                            'food_flow_licence', 'oem_auth_lesstion', 'company_type')
+                    ),
+					/*1 => array(
+                        'label' => 'OEM企业基本资质',
+                        'page' => array(
+                            'three_lesstion', 'business_licence', 'tax_licence', 'organization_licence'),
                     ),
 //                    2 => array(
 //                        'label' => '生产商企业专业资质',
 //                        'page' => array(
 //                            'animal_certificate', 'slaughter_lesstion', 'f_p_lesstion', 'n_p_lesstion', 'entry_lesstion', 'iso9001_lesstion',
 //                            'iso22000_lesstion', 'iso14001_lesstion', 'food_mosque_lesstion',)
-//                    ),
+//                    ),*/
                     2 => array(
-                        'label' => '生产商企业基本生产能力',
+                        'label' => 'OEM企业基本生产能力',
                         'page' => array(
                             'company_touted', 'factory',)
                     ),
                     3 => array(
-                        'label' => '生产商企业生产车间、设备、产品工艺流程',
+                        'label' => 'OEM企业生产车间、设备、产品工艺流程',
                         'page' => array(
                             'workshop', 'storage',)
                     ),
                     4 => array(
-                        'label' => '生产商企业实验室、检测设备及产品质量控制系统',
+                        'label' => 'OEM企业实验室、检测设备及产品质量控制系统',
                         'page' => array(
                             'laboratory', 'equipment', 'qa_department', 'q_c_department')
                     ),
                     5 => array(
-                        'label' => '生产商企业管理团队',
+                        'label' => 'OEM企业管理团队',
                         'page' => array(
                             'president', 'general_manager', 'vice_general_manager', 'sale_manager', 'qa_manager', 'finance_manager')
                     ),
