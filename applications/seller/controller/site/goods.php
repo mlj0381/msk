@@ -846,4 +846,11 @@ class seller_ctl_site_goods extends seller_frontpage
         $this->splash('error', $redirect, '操作失败');
     }
 
+
+    public function addNewCard()
+    {
+        $params = $this->_request->get_get();
+        if(empty($params)) $this->splash('error', '', '非法请求');
+
+    }
 }
