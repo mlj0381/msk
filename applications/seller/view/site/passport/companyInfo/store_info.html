@@ -48,7 +48,7 @@
             <div class="brand_list" data-list="brand_list">
                 <{foreach from=$extra.brand item=item}>
                 <span class="brand_item"><{$item.brand_name}> <i class="icon-remove"
-                                                                 data-id="<{$item.brand_id}>"></i></span>
+                 data-id="<{$item.brand_id}>"></i></span>
                 <{/foreach}>
             </div>
         </div>
@@ -269,6 +269,58 @@
 
     $(function () {
 
+        $('#write_apt_modal').on('shown.bs.modal', function () {
+        $.VMC.init();  //重新绑定图片上传事件
+        /**
+         * 日期选择
+         */
+         $('.form_datetime').datetimepicker({
+            format: "yyyy-mm-dd",
+            autoclose: true,
+            todayBtn: true,
+            weekStart: 1,
+            todayHighlight: 1,
+            minView:2,
+            language:"zh-CN",
+            pickerPosition: "bottom-left"
+        }).on("hide",function(ev){
+            $(".form_datetime").trigger('blur');
+        });
+
+
+        /*区间日期选择*/
+        $(".timeStart").datetimepicker({
+            format: "yyyy-mm-dd",
+            autoclose: true,
+            todayBtn: true,
+            weekStart: 1,
+            todayHighlight: 1,
+            minView:2,
+            language:"zh-CN",
+            pickerPosition: "bottom-left"
+        }).on("click",function(ev){
+            $(".timeStart").datetimepicker("setEndDate", $(".timeEnd").val());
+        }).on("hide",function(ev){
+            $(".timeStart").trigger('blur');
+        });
+        $(".timeEnd").datetimepicker({
+            format: "yyyy-mm-dd",
+            autoclose: true,
+            todayBtn: true,
+            weekStart: 1,
+            todayHighlight: 1,
+            minView:2,
+            language:"zh-CN",
+            pickerPosition: "bottom-left"
+        }).on("click", function (ev) {
+            $(".timeEnd").datetimepicker("setStartDate", $(".timeStart").val());
+        }).on("hide",function(ev){
+            $(".timeEnd").trigger('blur');
+        });
+    });
+    $("#write_apt_modal").on("hidden.bs.modal", function () {
+        $(this).removeData("bs.modal");  //关闭时清空数据
+    });
 
 
 
@@ -368,20 +420,23 @@
                 $('.cat_tree tr[data-treeId=' + parTreeId + ']').removeClass('hide');
             }
         });
-
+        //勾选
         $('.cat_tree tr').on('click','input[type=checkbox]',function(e){
             var target = e.target || e.srcElement;
             var treeId = $(target).parents('tr').attr('data-treeId');
-            var arrId = treeId.split('-');
+            var arrId = treeId.split('-');   //将treeId分割为一个数组
             var concatId = "";
+
             if($(this).is(':checked')){
                 for(var i = 0; i < arrId.length; i++){
                     if(i<=0){
-                        concatId = arrId[i];
+                        concatId = arrId[i]; 
                     }else{
                         concatId += ('-'+arrId[i])
+                    };
+                    if($('.cat_tree tr[data-treeId='+concatId+']').find('a.warning').size() > 0){
+                        return false;    //缺少资质
                     }
-
                     $('.cat_tree tr[data-treeId='+concatId+']').find('input[type=checkbox]')
                     .attr('checked','checked').prop('checked',true);
                 }
@@ -392,6 +447,11 @@
             
         })
         //分类树效果结束
+
+        
+
+
+
     });
 
 
@@ -412,4 +472,7 @@
         if (!confirm)  return false;
         return false;
     });
+
+
+
 </script>

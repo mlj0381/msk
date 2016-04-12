@@ -855,6 +855,7 @@ ol {
 }
 .product-container .product-page .goods-detailRow .product-page-content .tab-content {
   padding-top: 15px;
+  overflow: hidden;
 }
 .product-container .product-page .goods-detailRow .product-page-content .tab-content .description .pro_param {
   width: 100%;
