@@ -322,7 +322,7 @@ $remote['buyer_select_buyer_info'] = array(
         ),
         'shopId' => array(
             'name' => '店铺ID',
-            'column' => 'shopId',
+            'column' => 'shop_id',
             'type' => 'Integer',
         ),
         'shopName' => array(
