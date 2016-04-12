@@ -581,7 +581,10 @@
             var sumPrice = 0;
             $('.price_table tr:first td:gt(0)').each(function(i,td){
                 var minNum = parseInt($(td).find('.num-dn').text().trim());
-                //alert(minNum +'===='+ num);
+                //var maxNum = parseInt($(td).find('.num-up').text().trim());
+                //console.log(minNum);
+                //console.log(maxNum);
+                alert(minNum +'===='+ num);
                 if(minNum > num){
                     price = parseFloat($('.price_table tr:last td:eq('+i+')').find('span').text().trim());
                     sumPrice = num * price;
