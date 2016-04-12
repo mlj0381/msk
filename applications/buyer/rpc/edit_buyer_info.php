@@ -439,7 +439,7 @@ $remote['buyer_edit_buyer_info'] = array(
             'type' => 'String',
             'require' => false,
         ),
-        'shopId' => array(
+        'shop_id' => array(
             'name' => '店铺ID',
             'column' => 'shopId',
             'type' => 'Integer',
