@@ -471,7 +471,7 @@ class seller_ctl_site_passport extends seller_frontpage
         }
         
     	$smscode_obj = vmc::singleton('b2c_user_smscode');
-		$smscode = $smscode_obj->send_smscode($mobile,'sms',$msg);
+		$smscode = $smscode_obj->send_smscode($mobile,'signup',$msg);
 		if($smscode){
 			$this->splash('success', $smscode, '短信已发送');
 		}else{
@@ -499,9 +499,16 @@ class seller_ctl_site_passport extends seller_frontpage
             if (empty($seller)) {
                 $this->splash('error', $redirect, '不存在的用户');
             }
-            if (!vmc::singleton('seller_user_vcode')->verify($smscode, $pam_account['mobile'], 'signup')) {
+            
+             /* if (!vmc::singleton('seller_user_vcode')->verify($smscode, $pam_account['mobile'], 'signup')) {
                 $this->splash('error', $redirect, '手机短信验证码不正确');
+            }  */
+          
+            if (!vmc::singleton('b2c_user_smscode')->bool_sms($pam_account['mobile'],$smscode,'signup')) {
+            	$this->splash('error', $redirect, '手机短信验证码不正确');
             }
+            
+            
             if ($pam_account['login_password'] != $pam_account['psw_confirm']) {
                 $this->splash('error', $redirect, '确认密码输入不正确');
             }

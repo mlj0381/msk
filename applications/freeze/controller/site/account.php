@@ -202,8 +202,11 @@ class freeze_ctl_site_account extends freeze_frontpage
                 $this->splash('error', $redirect_here, '两次输入的密码不一致!');
             }
 
-            if (!vmc::singleton('b2c_user_vcode')->verify($params['vcode'], $params['mobile'], 'freeze_reset')) {
+           /*  if (!vmc::singleton('b2c_user_vcode')->verify($params['vcode'], $params['mobile'], 'freeze_reset')) {
                 $this->splash('error', $redirect_here, '手机短信验证码不正确');
+            } */
+            if ( !vmc::singleton('b2c_user_smscode')->bool_sms($params['mobile'],$params['vcode'],'freeze_reset')) {
+            	$this->splash('error', $signup_url, '手机短信验证码不正确');
             }
 
 //            $result = app::get('pam')->model('freeze')->getRow('freeze_id', array('login_account' => $params['mobile'], 'login_type' => 'mobile'));
@@ -299,8 +302,9 @@ class freeze_ctl_site_account extends freeze_frontpage
                 $this->splash('error', null, '错误的手机格式');
             }
         }
-
-        $uvcode_obj = vmc::singleton('b2c_user_vcode');
+       
+       /* 
+        *  $uvcode_obj = vmc::singleton('b2c_user_vcode');
         $vcode = $uvcode_obj->set_vcode($mobile, $type, $msg);
         $this->splash('success', $vcode, '短信已发送'); // 2015/9/7 短信直接显示
 
@@ -313,7 +317,18 @@ class freeze_ctl_site_account extends freeze_frontpage
         } else {
             $this->splash('failed', null, $msg);
         }
-        $this->splash('success', null, '短信已发送');
+        $this->splash('success', null, '短信已发送'); */
+        
+        
+        $smscode_obj = vmc::singleton('b2c_user_smscode');
+        $smscode = $smscode_obj->send_smscode($mobile,'freeze_reset',$msg);
+        if($smscode){
+        	$this->splash('success', $smscode, '短信已发送');
+        }else{
+        	$this->splash('error', null, $msg);
+        }
+        
+        
     }
 
     public function set_forward(&$forward)
