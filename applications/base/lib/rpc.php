@@ -155,13 +155,14 @@ class base_rpc
 			$type = strtolower($item['type']);  
 			$value = $key == 'param' ? $data : $data[$key];// 放在外层
 			$convertData = $this->_convert($key, $item, $value);
+
 			if($convertData === false){
 				return false; // 有必填字段未填返回
 			}
 			$this->_postData[$column] = $convertData;
 		}
 		// 处理参数			
-		//if(!$this->status) return ;
+		if(!$this->status) return ;
 		return $this->remote();
 	}	
 	private function _convert($key, $item, $data){		
