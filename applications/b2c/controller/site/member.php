@@ -288,6 +288,9 @@ class b2c_ctl_site_member extends b2c_frontpage
                     $this->splash('error', $redirect, '修改失败');
                 }
             }
+            if(!vmc::singleton('b2c_user_passport')->saveApiData()){
+                $this->splash('error', $redirect, '修改失败');
+            }
             $this->splash('success', $redirect, '修改成功');
         }
     }

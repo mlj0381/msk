@@ -30,19 +30,6 @@
     </div>
 
 
-    <!--<div class="form-group">-->
-    <!--<label class="col-xs-2 control-label"><span class="text-danger">*</span><span>所在物流区</span></label>-->
-
-    <!--<div class="col-xs-5">-->
-    <!--<{*input type=region name="goods[stock]" detail=1 value=$goods.stock required="true"*}>-->
-    <!--<div class="form-item logistics">-->
-    <!--<{foreach from=$params.logistics item=item}>-->
-    <!--<span><input type="checkbox" value="<{$item.logiAreaCode}>"> <{$item.logiAreaName}></span>-->
-    <!--<{/foreach}>-->
-    <!--</div>-->
-    <!--</div>-->
-    <!--</div>-->
-
     <div class="form-group">
         <label class="col-xs-2 control-label"><span class="text-danger">*</span><span>特征</span></label>
 
@@ -84,6 +71,18 @@
                            <{if in_array($item.normsCode, $goods.api_spec_desc.pack)}>checked<{/if}>
                            value="<{$item.normsCode}>"><{$item.normsName}>
                 </span>
+                <{/foreach}>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-xs-2 control-label"><span class="text-danger">*</span><span>所在物流区</span></label>
+
+        <div class="col-xs-5">
+            <{*input type=region name="goods[stock]" detail=1 value=$goods.stock required="true"*}>
+            <div class="form-item logistics">
+                <{foreach from=$params.logistics item=item}>
+                <span><input type="checkbox" value="<{$item.logiAreaCode}>"> <{$item.logiAreaName}></span>
                 <{/foreach}>
             </div>
         </div>
@@ -267,10 +266,21 @@
      };
      */
 
-    var htmlFormat = function (re, key, name, idx) {
+    var htmlFormat = function (re, key, name, idx, result, product) {
         var html = '';
+        var text = '';
+        var product_id = '';
+        if (result) {
+            text = result + '/';
+        }
+        if (product) {
+            product_id = product + '-';
+        }
+
         for (var i in re.data) {
-            html += $.VMC.format('<span class="' + name + idx + '"><input data-type="' + idx + '" type="checkbox" name=name value="{0}">{1}</span>', re.data[i][key[0]], re.data[i][key[1]]);
+            html += $.VMC.format('<span class="' + name + idx + '"><input data-type="' + idx + '" ' +
+                    'data-product="' + product_id + re.data[i][key[0]] + '"' +
+                    ' type="checkbox" name=name value="{0}">' + text + '{1}</span>', re.data[i][key[0]], re.data[i][key[1]]);
         }
         return html;
     };
@@ -340,9 +350,7 @@
         var apiSpec = $('.api-spec-desc');
         var catId = apiCat() + '-' + obj.attr('data-type') + '-' + idx;
         if (!obj.prop('checked')) {
-
             $('.pack' + idx).remove();
-            console.log($('.pack' + idx));
             apiSpec.find('input[data-type="weight' + idx + '"]').remove();
             return false;
         }
@@ -352,22 +360,19 @@
         var url = '<{link app=seller ctl=site_goods act=getPack}>';
         $.post(url, {cat: catId}, function (re) {
             if (!re.data) return false;
-
-            var input = $('.pack input');
-            var result = true;
-            input.each(function (idx, item) {
-                for (var i in re.data) {
-                    if ($(item).val() == re.data[i].normsCode) {
-                        result = false;
-                        return false;
-                    }
+            var input = $('.weight input');
+            var result = '';
+            var product = '';
+            input.each(function (index, item) {
+                if ($(item).prop('checked')) {
+                    result = $(obj).parents('span').text();
+                    product = $(obj).attr('data-product');
                 }
             });
-            if (!result) return false;
-            var pack = htmlFormat(re, ['normsCode', 'normsName'], 'pack', idx);
+            var pack = htmlFormat(re, ['normsCode', 'normsName'], 'pack', idx, result, product);
             $('.pack').append($(pack));
             //添加商品规格信息spec_desc
-            $('.pack input').click(function () {
+            $('.pack input:last').click(function () {
                 addSpecDesc($(this));
             });
         });
@@ -391,19 +396,17 @@
             if (!re.data) return false;
             var input = $('.feature input');
             var result = '';
-            input.each(function (idx, item) {
+            input.each(function (index, item) {
                 if ($(item).val() == idx) {
                     result = $(item).parents('span').text();
-                    console.log($(item));
-                    //alert(result);
                     return false;
                 }
             });
 
-            var weight = htmlFormat(re, ['weightCode', 'weightName'], 'weight', idx);
+            var weight = htmlFormat(re, ['weightCode', 'weightName'], 'weight', idx, result, idx);
             $('.weight').append($(weight));
 
-            $('.weight input').click(function () {
+            $('.weight input:last').click(function () {
                 pack($(this));
             });
         });
@@ -411,51 +414,54 @@
 
     var formatProduct = function () {
 
-        var featureArray = [];
-        var weightArray = [];
+//        var featureArray = [];
+//        var weightArray = [];
         var packArray = [];
-        $('.feature input').each(function (idx, item) {
-            if ($(item).prop('checked')) {
-                featureArray[idx] = $(item).val();
-            }
-        });
-        $('.weight input').each(function (idx, item) {
-            if ($(item).prop('checked')) {
-                weightArray[idx] = $(item).val();
-            }
-        });
+//        $('.feature input').each(function (idx, item) {
+//            if ($(item).prop('checked')) {
+//                featureArray[idx] = $(item).val();
+//            }
+//        });
+//        $('.weight input').each(function (idx, item) {
+//            if ($(item).prop('checked')) {
+//                weightArray[idx] = $(item).val();
+//            }
+//        });
         $('.pack input').each(function (idx, item) {
             if ($(item).prop('checked')) {
-                packArray[idx] = $(item).val();
+                packArray[idx] = $(item).attr('data-product');
             }
         });
-        return {product: apiCat(), feature: featureArray, weight: weightArray, pack: packArray};
+        return {product: apiCat(), pack: packArray};
     };
 
     $(function (re) {
         $('.create-product').click(function () {
             $('.spec_table tbody').empty();
             //var productId = $(this).attr('data-product');
-            //var logistics = createProduct('logistics');
+            var logistics = createProduct('logistics');
             var pack = createProduct('pack');
-//            if(!logistics){
-//                alert('请选择物流区')
-//            }
+            if(!logistics){
+                alert('请选择物流区')
+            }
             if (!pack) {
                 alert('请选择包装规格');
                 return false;
             }
-
-            //var products = {'logistics': logistics, 'pack': pack, product : productId};
+            var data = $.extend(logistics, formatProduct());
             var url = '<{link app=seller ctl=site_goods act=createProduct}>';
-            $.post(url, formatProduct(), function (result) {
+            $.post(url, data, function (result) {
                 if (!result.data) return false;
                 $tmp = $('.product-item-tpl').val();
+
                 var html = '';
                 for (var i = 0; i < result.data.length; i++) {
                     var feature = $('.feature input[value="' + result.data[i].feature + '"]').parent('span').text();
                     var pack = $('.pack input[value="' + result.data[i].pack + '"]').parent('span').text();
                     html += $.VMC.format($tmp, result.data[i].name, result.data[i].bn, i, feature, pack);
+                    for(var j in result.data[i].product_price){
+
+                    }
                 }
                 $('.spec_table tbody').append(html);
             });
@@ -471,7 +477,7 @@
                     index++;
                 }
             });
-            return logistics;
+            return {logistics : logistics};
         };
     });
 

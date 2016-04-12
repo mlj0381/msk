@@ -22,25 +22,25 @@ $remote['b2c_update_member_base_info'] = array(
     ),
 
     'param' => array(
-        'member_id' => array(
+        'buyerId' => array(
             'name' => '买家ID',
             'column' => 'buyerId',
             'type' => 'String',
             'require' => false,
         ),
-        'buyer_code' => array(
+        'buyerCode' => array(
             'name' => '买家编码',
             'column' => 'buyerCode',
             'type' => 'String',
             'require' => false,
         ),
-        'name' => array(
+        'buyerName' => array(
             'name' => '买家名称',
             'column' => 'buyerName',
             'type' => 'String',
             'require' => false,
         ),
-        'addr' => array(
+        'buyerAddr' => array(
             'name' => '买家地址',
             'column' => 'buyerAddr',
             'type' => 'String',
@@ -52,13 +52,13 @@ $remote['b2c_update_member_base_info'] = array(
             'type' => 'String',
             'require' => false,
         ),
-        'web_site' => array(
+        'buyerWebsite' => array(
             'name' => '买家网站',
             'column' => 'buyerWebsite',
             'type' => 'String',
             'require' => false,
         ),
-        'wechat' => array(
+        'buyerWechat' => array(
             'name' => '买家微信公众号',
             'column' => 'buyerWechat',
             'type' => 'String',
@@ -76,7 +76,7 @@ $remote['b2c_update_member_base_info'] = array(
             'type' => 'String',
             'require' => false,
         ),
-        'tel' => array(
+        'busiTel' => array(
             'name' => '营业电话',
             'column' => 'busiTel',
             'type' => 'String',
