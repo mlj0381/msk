@@ -96,16 +96,27 @@ class seller_ctl_site_brand extends seller_frontpage
         $redirect = $this->gen_url($redirect);
         $post['brand']['seller_id'] = $this->seller['seller_id'];
         if ($post['brand_class'] == '1') { //添加企业品牌
-            $this->splash('success', $redirect, '添加成功');//暂时
+            $data = array(
+                'epId' => app::get('base')->model('company')->getRow('ep_id',array('company_id' => $post['brand']['company_id']))['ep_id'],
+//                'brandId' => (int)$brand_data['api_brand_id'],
+                'brandName' => $post['brand']['brand_name'],
+                'brandClass' => 0,
+                'brandNo' => $post['brand']['agent_code'],
+                'brandTermBegin' => $post['brand']['agent_start'],
+                'brandTermEnd' => $post['brand']['agent_end'],
+            );
+            if(!$this->app->rpc('add_company_brand')->request($data)['status']){
+                $this->splash('error', $redirect, '数据同步失败');
+            }
         } elseif ($post['brand_class'] == '2') { //添加店铺品牌
             if (!$this->mB2cbrand->save_brand($post)) {
                 $this->splash('error', $redirect, '操作失败');
             } else {
                 $brand_data = app::get('b2c')->model('brand')->getRow('*',array('brand_id' => $post['brand']['brand_id']));
                 $data = array(
-                    'slCode' => $brand_data['seller_id'],
-                    'brandEpId' => $brand_data['company_id'],
-                    'brandId' => $brand_data['api_brand_id'],
+                    'slCode' => app::get('seller')->model('sellers')->getRow('sl_code',array('seller_id' => $brand_data['seller_id']))['sl_code'],
+                    'brandEpId' => app::get('base')->model('company')->getRow('ep_id',array('company_id' => $brand_data['company_id']))['ep_id'],
+                    'brandId' => (int)$brand_data['api_brand_id'],
                     'brandName' => $brand_data['brand_name'],
                     'brandType' => $brand_data['type'] == 2 ? $brand_data['type'] : 1,
                     'brandClass' => 0,

@@ -40,6 +40,12 @@ $remote['seller_add_company_brand'] = array(
             'type' => 'String',
             'require' => true,
         ),
+        'brandClass' => array(
+            'name' => '品牌分类',
+            'column' => 'brandClass',
+            'type' => 'Integer',
+            'require' => false,
+        ),
         'brandNo' => array(
             'name' => '商标注册证',
             'column' => 'brandNo',
@@ -62,7 +68,8 @@ $remote['seller_add_company_brand'] = array(
             'name' => '创建者ID',
             'column' => 'crtId',
             'type' => 'String',
-            'require' => true,
+            'require' => false,
+            'default' => '1',
         ),
     ),
     'response' => array(),
