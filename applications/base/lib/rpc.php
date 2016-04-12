@@ -49,7 +49,8 @@ class base_rpc
 	private $app_dir = "";
 	private $action = "";
 
-	private $result = array();	
+	private $result = array();
+
 	static  $base_url = "";
 	private $url = "";
     static $version = 'v1';
@@ -106,30 +107,26 @@ class base_rpc
 		$this->status = true;
 		if(!$this->action /*||  !$data */) return $this->error('错误的请求');
 		$index = $this->app_id . "_" . $this->action;	
-		$this->result = Array();
+		$result = Array();
 		if($expire !== false)
 		{			
 			$key = $index . md5(json_encode($data));			
 			$path = $this->_cache_path . $this->app_id;			
-			base_kvstore::instance($path)->fetch($key, $this->result);
+			base_kvstore::instance($path)->fetch($key, $result);
 		}
-		if(empty($this->result))
+		if(empty($result))
 		{
-			$this->_request($index, $data);
-			if($this->status && $expire !== false && $this->result) {
-				base_kvstore::instance($path)->store($key, $this->result, $expire);
+			$result = $this->_request($index, $data);
+			if($this->status && $expire !== false && $result) {				
+				base_kvstore::instance($path)->store($key, $result, $expire);
 			}
 		}
-		return $this->response();
-	}
-
-	private function response()
-	{
+		
 		return array(
 			'status' => $this->status,
 			'returnCode' => $this->returnCode,
 			'message' => $this->message,
-			'result' => $this->result
+			'result' => $result
 		);
 	}
 
@@ -145,7 +142,7 @@ class base_rpc
 		$this->configs = self::$_rpc_config[$index];
 		if(empty($this->configs['request'])) return $this->error('错误的请求');
 		if(empty(self::$_rpc_config[$index]['url'])){
-			$this->error('Not found this Url!');
+			return $this->error('Not found this Url!');
 		}else{
             $version = self::$version;
             empty(self::$_rpc_config[$index]['version']) || $version = self::$_rpc_config[$index]['version'];
@@ -156,12 +153,17 @@ class base_rpc
 			$column = isset($item['column']) ? $item['column'] : $key;
 			if(!empty($item['require']) && !isset($data[$key])) return $this->error("{$key}=>{$column}为必填字段！");
 			$type = strtolower($item['type']);  
-			$value = $key == 'param' ? $data : $data[$key];// 放在外层			
-			$this->_postData[$column] = $this->_convert($key, $item, $value);
+			$value = $key == 'param' ? $data : $data[$key];// 放在外层
+			$convertData = $this->_convert($key, $item, $value);
+
+			if($convertData === false){
+				return false; // 有必填字段未填返回
+			}
+			$this->_postData[$column] = $convertData;
 		}
 		// 处理参数			
-		//if(!$this->status) return ;
-		$this->result = $this->remote();
+		if(!$this->status) return ;
+		return $this->remote();
 	}	
 	private function _convert($key, $item, $data){		
 		extract($item);
@@ -296,7 +298,7 @@ class base_rpc
 	private function error($message = 'Request Fail', $code='')
 	{
 		$this->status = false;
-		$this->message = $message;
+		$this->message = $message;		
 		if($code) $this->returnCode = $code;
 		logger::error("{$this->app_id}_{$this->action}\n\tmessage:{$this->message}");
 		return false;
