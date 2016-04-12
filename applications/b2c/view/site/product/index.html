@@ -77,15 +77,12 @@
                 <tbody>
                     <tr>
                         <td>随心量</td>
-                        <!-- foreach开始 -->
                         <{foreach from=$pricelist item=item}>
                         <td>
-                            <span class="num-dn"><{$item.boxMin|default:1}></span>-
+                            <span class="num-dn"><{$item.boxMin|default:1}></span> -
                             <span class="num-up"><{$item.boxMax|default:不限}></span>箱
                         </td>
                         <{/foreach}>
-                        <!-- foreach结束 -->
-                        
                     </tr>
                     <tr>
                         <td>通道阶梯价</td>
@@ -117,13 +114,6 @@
                     <{$data_detail.name}><br>
                     <!-- <small><{$data_detail.product.spec_info}></small> -->
                 </h1>
-                <!-- <p class="pro_No">
-                    货号：<span class="text-warning"><{$data_detail.product.product_id}>&nbsp;&nbsp;<{$data_detail.mark_star|star}></span> <small><{$data_detail.mark_star|number_format:'1'}></small>
-                </p> -->
-                <!--<div style="background-color:#D77F71; height:80px; color:#fff; font-size:14px; padding:10px;">&lt;!&ndash; class="pref_info"&ndash;&gt;-->
-                    <!--<p><span style="margin-right:55px;display:inline-block; width:100px;">采购数量</span><span style="margin-right:55px;display:inline-block; width:100px;">&gt;<{$data_detail.product.price_interval}>箱</span><span >&lt;<{$data_detail.product.price_interval}>箱</span></p>-->
-                    <!--<p><span style="margin-right:55px;display:inline-block; width:100px;">价格</span><span style="margin-right:55px;display:inline-block; width:100px;">￥<{$data_detail.product.price_up|cur}>/箱</span><span>￥<{$data_detail.product.price_dn|cur}>/箱</span></p>-->
-                <!--</div>-->
 
                 <div class="distr_info">
                     <label>配送至 </label>
@@ -144,7 +134,7 @@
                     <label>产品规格 </label>
                     <div class="spec_items">
                         <{foreach from=$data_detail.feature_data_list item=feature}>
-                        <span class="spec_item <{if $data_detail.featureCode eq $feature.featureCode}>active<{/if}>" data-proId=""><{$feature.featureName}></span>
+                        <a href="#"><span class="spec_item <{if $data_detail.featureCode eq $feature.featureCode}>active<{/if}>" data-proId=""><{$feature.featureName}></span></a>
                         <{/foreach}>
                     </div>
                 </div>
@@ -152,7 +142,7 @@
                     <label>包装规格 </label>
                     <div class="spec_items">
                         <{foreach from=$data_detail.weight_data_list item=weight}>
-                        <span class="spec_item active" data-packId=""><{$weight.weightName}> </span>
+                        <a href="#"><span class="spec_item active" data-packId=""><{$weight.weightName}> </span></a>
                         <{/foreach}>
                     </div>
                 </div>
@@ -587,25 +577,18 @@
         var priceCount = function(num){
             var buyerIdentity = '<{$buyer_id}>';
             var agent = '<{$data_detail.agent}>';
-            var index = 0;
             var price = 0;
-            var discount = 0;
-            $('.pref_info .interval tr').each(function(idx, item){
-                var minNum = parseInt($(item).find('.num-dn').text().trim());
+            var sumPrice = 0;
+            $('.price_table tr:first td:gt(0)').each(function(i,td){
+                var minNum = parseInt($(td).find('.num-dn').text().trim());
+                //alert(minNum +'===='+ num);
                 if(minNum > num){
-                    if(buyerIdentity > 0 && agent == 1)
-                        discount = parseFloat($(item).prev('tr').find('.discount').text().trim());
-                    price = parseFloat($(item).prev('tr').find('.num-price span').text().trim());
-                    index = idx;
+                    price = parseFloat($('.price_table tr:last td:eq('+i+')').find('span').text().trim());
+                    sumPrice = num * price;
                     return false;
                 }
-                discount = parseFloat($(item).find('.discount').text().trim());
-                price = parseFloat($(item).find('.num-price span').text().trim());
-            });
-            var sumPrice = num * price;
-            if(buyerIdentity > 0 && agent == 1)
-                sumPrice = sumPrice * discount / 100;
-            return sumPrice.toFixed(2);
+            })
+            return sumPrice.toFixed(2);    
         };
 
 
