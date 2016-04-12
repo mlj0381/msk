@@ -269,7 +269,9 @@ class b2c_ctl_site_passport extends b2c_frontpage
         }
         $this->set_tmpl('passport');
         $this->pagedata['pageIndex'] = $pageIndex;
+
         if($pageIndex >= $pageIndexMax){
+            $this->passport_obj->saveApiData();
             $this->page('site/passport/signup_complete.html');
         }else{
             $this->page('site/passport/signup_baseInfo.html');

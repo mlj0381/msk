@@ -3,14 +3,14 @@
         <div class="col-xs-4 m-baseinfo">
             <dl class="clearfix">
                 <dt>
-                    <a href="<{link app=seller ctl=site_seller act=account}>">
-                        <img width=50 height=50  class="img-circle" src="<{$seller.avatar|storager:'avatar'}>" title="<{$seller.login_account}>头像" />
+                    <a href="<{link app=buyer ctl=site_buyer act=basic_info}>">
+                        <img width=50 height=50  class="img-circle" src="<{$data.photo|storager:'avatar'}>" title="<{$data.name}>头像" />
 
                     </a>
                 </dt>
                 <dd>
                     <h4>
-                        <a href="<{link app=seller ctl=site_seller act=account}>"><{$sellers.login_account}></a>
+                        <{$data.name}>
                     </h4>
                     <ul class="list-inline">
                         <li><span class="label label-warning">买手店用户</span></li>

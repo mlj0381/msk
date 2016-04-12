@@ -29,8 +29,9 @@ class buyer_ctl_site_buyer extends buyer_frontpage{
 	}
 	
 	
-	public function index($status){
-        $this->output();
+	public function index(){
+		$this->pagedata['data'] = $this->app->model('buyers')->getRow('*',array('buyer_id'=>$this->buyer_id));
+		$this->output();
 	}
 	
 	
@@ -85,16 +86,17 @@ class buyer_ctl_site_buyer extends buyer_frontpage{
 									'cityCode'		=>$area_result['city']['code'] ?: '09',//地区编码
 									'districtCode'	=>$area_result['district']['code'] ?: '09',//区编码
 									'slMainClass'	=>4,//卖家主分类
-									'snkFlg'		=>'否',//神农客标志
-									'selfFlg'		=>'否',//自产型卖家标志
-									'agentFlg'		=>'否',//代理型卖家标志
-									'oemFlg'		=>'否',//OEM型卖家标志
-									'buyerFlg'		=>'否',//买手型卖家标志
+									'snkFlg'		=>'0',//神农客标志
+									'selfFlg'		=>'0',//自产型卖家标志
+									'agentFlg'		=>'0',//代理型卖家标志
+									'oemFlg'		=>'0',//OEM型卖家标志
+									'buyerFlg'		=>'1',//买手型卖家标志
 							),
 							'slBuyerShop'=>array(
 									'card_id'	=>$basic_data['card_id'],
 									'slSort'	=>2,
 									'addr'		=>$basic_data['addr'],
+									'flag1'		=> $params['sex']==1 ?'0':'1',
 							),
 							'slShopInfo'=>array(
 									'store_name'=>$params['store_name'],
@@ -103,11 +105,12 @@ class buyer_ctl_site_buyer extends buyer_frontpage{
 							),
 					);
 				}
-				$edit = $this->app->rpc('edit_buyer_info')->request($request, false);
+				$this->app->rpc('edit_buyer_info')->request($request, false);
 				$buyer_info_response = $this->app->rpc('select_buyer_info')->request($data, false);
+				
 				if ($buyer_code = $buyer_info_response['result']['buyershopList'][0]){
 					app::get('pam')->model('buyers')->update(array('buyer_code'=>$buyer_code['buyer_code']), array('buyer_id'=>$this->buyer_id));
-					$this->app->model('buyers')->update(array('buyer_code'=>$buyer_code['buyer_code'],'api_buyer_id'=>$buyer_code['buyer_codedis']), array('buyer_id'=>$this->buyer_id));
+					$this->app->model('buyers')->update(array('buyer_code'=>$buyer_code['buyer_code'], 'api_buyer_id'=>$buyer_code['buyer_codedis'], 'shop_id'=>$buyer_code['shop_id']), array('buyer_id'=>$this->buyer_id));
 				}
 				$this->splash('success', $redirect, '店铺信息更新成功！');
 			}else {
@@ -309,6 +312,7 @@ class buyer_ctl_site_buyer extends buyer_frontpage{
 	
 	public function rpc_update_data($update_params){
 		$data = app::get('pam')->model('members')->getRow('login_account,login_password,password', array('member_id'=>$this->member_id));
+		
 		$basic_data = $this->app->model('buyers')->getRow('*', array('buyer_id'=>$this->buyer_id));
 		$params = array_merge($data, $basic_data);
 		$region = $basic_data['area'];
@@ -333,11 +337,11 @@ class buyer_ctl_site_buyer extends buyer_frontpage{
 						'cityCode'		=>$area_result['city']['code']?:'01',//地区编码
 						'districtCode'	=>$area_result['district']['code']?:'01',//区编码
 						'slMainClass'	=>4,//卖家主分类
-						'snkFlg'		=>'否',//神农客标志
-						'selfFlg'		=>'否',//自产型卖家标志
-						'agentFlg'		=>'否',//代理型卖家标志
-						'oemFlg'		=>'否',//OEM型卖家标志
-						'buyerFlg'		=>'否',//买手型卖家标志
+						'snkFlg'		=>'0',//神农客标志
+						'selfFlg'		=>'0',//自产型卖家标志
+						'agentFlg'		=>'0',//代理型卖家标志
+						'oemFlg'		=>'0',//OEM型卖家标志
+						'buyerFlg'		=>'1',//买手型卖家标志
 						'qq'			=>$params['qq'] ?:$update_params['qq'],
 						'wechat'		=>$params['wechat'] ?:$update_params['wechat'],
 						'email'			=>$params['email'] ?:$update_params['email'],
@@ -347,9 +351,11 @@ class buyer_ctl_site_buyer extends buyer_frontpage{
 						'card_id'	=>$params['card_id'],
 						'slSort'	=>2,
 						'addr'		=>$params['addr'] ?:$update_params['addr'],
+						'flag1'		=> $params['sex']==1 ?'0':'1',
 				),
 				'slShopInfo'=>array(
 						'buyer_code'	=>$params['buyer_code'],
+						'shop_id'		=>$params['shop_id'],
 						'store_name'	=>$params['store_name'] ?:$update_params['store_name'],
 						'store_logo'	=>$params['store_logo'] ?:$update_params['store_logo'],
 						'managingCharact1'=>$params['operate_feature'],

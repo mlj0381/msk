@@ -19,6 +19,7 @@ class b2c_ctl_site_product extends b2c_frontpage {
         parent::__construct($app);
 
         $this->goods_stage = vmc::singleton('b2c_goods_stage');
+        $this->addr_id = $_SESSION['account']['addr'];
         if ($this->app->member_id = vmc::singleton('b2c_user_object')->get_member_id()) {
             $this->goods_stage->set_member($this->app->member_id);
         }
@@ -42,37 +43,23 @@ class b2c_ctl_site_product extends b2c_frontpage {
     public function index($typ) {
         //获取参数 货品ID
         $params = $this->_request->get_params();
-        //调用接口 2015/12/9
-        //$data_detail = $this->app->model('products')->goods_detail($params[0]);
-        //>>
+        
         if (empty($params)){
         	$params = json_decode($_POST['parms_post'],true);
         }
-        
-        $data_detail = $this->goods_stage->detail($params[0], $msg); //引用传递
-        if (!$data_detail) {
+        //获取详情
+        $data_detail_one = $this->goods_stage->detail($params[0], $msg); //引用传递
+        if (!$data_detail_one) {
             vmc::singleton('site_router')->http_status(404);
             $this->splash('error', null, $msg);
         }
         
-        //通过vmc_b2c_products 表获取goods_id 和 bn
-        $products_data = $this->app->model('products')->getRow('goods_id,bn',array('product_id'=>$params[0]));
-        //调用接口获取四级分类和五级分类
-        $response = $this->app->rpc('goods_info')->request($data=array());
-        $data_detail_response = utils::array_change_key($response['result']['goods'], 'bn')[$products_data['bn']];
-        //这个是data_detail拼接
-        $data_detail['name'] = str_replace('/'," ",$data_detail_response['name']);
-        //一级
-        $data_detail['classesCode'] = $data_detail_response['cat_1'];
-        //二级
-        $data_detail['machiningCode'] = $data_detail_response['cat_2'];
-        //三级
-        $data_detail['breedCode'] = $data_detail_response['breed_code'];
-        $data_detail['featureCode'] = $data_detail_response['feature'];
+        $data_detail = array_merge($this->get_code($data_detail_one['product']['bn']),$data_detail_one);
+        
         $data_detail['gradeCode'] = 'A2';
         $data_detail['deliver_fee'] = '0';
         /*******************这个需要获取物流区地址：目前写死了************************************/
-        $data_detail['logiAreaCode'] = '41';
+        $data_detail['logiAreaCode'] = $this->addr_id;
         $price_response = $this->app->rpc('select_product_price')->request($data_detail, false);
         $data_detail['pricelist'] = $price_response['result'][0]['pricelist'];
 
@@ -81,14 +68,17 @@ class b2c_ctl_site_product extends b2c_frontpage {
        
         //包装规格  $data[0];
         $data_detail['weight_data_list'] = array_filter(array_unique($weight_data));
-        //var_dump($data_detail);exit;
+        
         //这个需要定时任务数据到数据库中....
         //$logi_area_code=$_SESSION['account']['addr'],
         //$seller_code=无法获取,
         //$product_code=$products_data['bn'],
         //$level_code = 2;
         
-        $products_price_data = $this->get_product_price($_SESSION['account']['addr'], null, '012040101', '2');        
+        $data_detail = $this->get_product_id($data_detail);
+        //var_dump($data_detail);
+       	//这个是获取价盘的----查询数据库操作
+        $products_price_data = $this->get_product_price($this->addr_id, null, '012040101', '2');        
         
         $this->pagedata['buyer_id'] = vmc::singleton('buyer_user_object')->get_session();
         $this->pagedata['data_detail'] = $data_detail;
@@ -240,6 +230,34 @@ class b2c_ctl_site_product extends b2c_frontpage {
     	$return = $this->app->model('products_price')->getList('*', $where, 0, -1, array('orderlevelCode','desc'));
     	return $return;
     }
+    
+    public function get_code($bn){
+    	if ($bn==0)return null;
+    	return [
+	    	'classesCode'	=>	substr($bn, 0, 2),
+	    	'machiningCode'		=>	substr($bn, 2, 1),
+	    	'breedCode'	=>	substr($bn, 3, 2),
+	    	'featureCode'	=>	substr($bn, 5, 2),
+	    	'weightCode'	=>	substr($bn, 7, 2),
+    	];
+    	
+    }
+    
+    public function get_product_id($data){
+    	
+    	$model = $this->app->model('products');
+    	foreach ($data['feature_data_list'] as $key=>&$value){
+    		$value['product_id'] = $model->getRow('product_id', array('bn'=>substr($data['product']['bn'], 0 ,5).$value['featureCode'].$data['weightCode']))['product_id'] ?: 0;
+    		$value['seller_id'] = $model->getRow('seller_id', array('bn'=>substr($data['product']['bn'], 0 ,5).$value['featureCode'].$data['weightCode']))['seller_id'] ?: 0;
+    	}
+    	
+    	foreach ($data['weight_data_list'] as $key=>&$value){
+    		$value['product_id'] = $model->getRow('product_id', array('bn'=>substr($data['product']['bn'], 0 ,7).$value['weightCode']))['product_id'] ?: 0;
+    		$value['seller_id'] = $model->getRow('seller_id', array('bn'=>substr($data['product']['bn'], 0 ,7).$value['weightCode']))['seller_id'] ?: 0;
+    	}
+    	return $data;
+    }
+    
     
     
 }
