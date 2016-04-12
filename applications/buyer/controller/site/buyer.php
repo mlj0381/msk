@@ -107,6 +107,7 @@ class buyer_ctl_site_buyer extends buyer_frontpage{
 				}
 				$this->app->rpc('edit_buyer_info')->request($request, false);
 				$buyer_info_response = $this->app->rpc('select_buyer_info')->request($data, false);
+				
 				if ($buyer_code = $buyer_info_response['result']['buyershopList'][0]){
 					app::get('pam')->model('buyers')->update(array('buyer_code'=>$buyer_code['buyer_code']), array('buyer_id'=>$this->buyer_id));
 					$this->app->model('buyers')->update(array('buyer_code'=>$buyer_code['buyer_code'], 'api_buyer_id'=>$buyer_code['buyer_codedis'], 'shop_id'=>$buyer_code['shop_id']), array('buyer_id'=>$this->buyer_id));
@@ -311,6 +312,7 @@ class buyer_ctl_site_buyer extends buyer_frontpage{
 	
 	public function rpc_update_data($update_params){
 		$data = app::get('pam')->model('members')->getRow('login_account,login_password,password', array('member_id'=>$this->member_id));
+		
 		$basic_data = $this->app->model('buyers')->getRow('*', array('buyer_id'=>$this->buyer_id));
 		$params = array_merge($data, $basic_data);
 		$region = $basic_data['area'];

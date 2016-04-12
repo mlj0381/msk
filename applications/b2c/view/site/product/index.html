@@ -580,17 +580,22 @@
             var price = 0;
             var sumPrice = 0;
             $('.price_table tr:first td:gt(0)').each(function(i,td){
-                var minNum = parseInt($(td).find('.num-dn').text().trim());
-                //var maxNum = parseInt($(td).find('.num-up').text().trim());
-                //console.log(minNum);
-                //console.log(maxNum);
-                alert(minNum +'===='+ num);
-                if(minNum > num){
+                var lowNum = parseInt($(td).find('.num-dn').text().trim());
+                var maxNum = parseInt($('.price_table tr:first td:last').find('.num-dn').text().trim());
+                console.log(maxNum)
+                //console.log(lowNum +'===='+ num);
+                if(num < lowNum){
                     price = parseFloat($('.price_table tr:last td:eq('+i+')').find('span').text().trim());
+                    sumPrice = num * price;
+                    return false;
+                };
+                if(num >= maxNum){
+                    price = parseFloat($('.price_table tr:last td:last').find('span').text().trim());
                     sumPrice = num * price;
                     return false;
                 }
             })
+            console.log(sumPrice)
             return sumPrice.toFixed(2);    
         };
 
