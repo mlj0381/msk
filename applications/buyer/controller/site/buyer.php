@@ -29,8 +29,9 @@ class buyer_ctl_site_buyer extends buyer_frontpage{
 	}
 	
 	
-	public function index($status){
-        $this->output();
+	public function index(){
+		$this->pagedata['data'] = $this->app->model('buyers')->getRow('*',array('buyer_id'=>$this->buyer_id));
+		$this->output();
 	}
 	
 	
@@ -104,11 +105,11 @@ class buyer_ctl_site_buyer extends buyer_frontpage{
 							),
 					);
 				}
-				$edit = $this->app->rpc('edit_buyer_info')->request($request, false);
+				$this->app->rpc('edit_buyer_info')->request($request, false);
 				$buyer_info_response = $this->app->rpc('select_buyer_info')->request($data, false);
 				if ($buyer_code = $buyer_info_response['result']['buyershopList'][0]){
 					app::get('pam')->model('buyers')->update(array('buyer_code'=>$buyer_code['buyer_code']), array('buyer_id'=>$this->buyer_id));
-					$this->app->model('buyers')->update(array('buyer_code'=>$buyer_code['buyer_code'],'api_buyer_id'=>$buyer_code['buyer_codedis']), array('buyer_id'=>$this->buyer_id));
+					$this->app->model('buyers')->update(array('buyer_code'=>$buyer_code['buyer_code'], 'api_buyer_id'=>$buyer_code['buyer_codedis'], 'shop_id'=>$buyer_code['shop_id']), array('buyer_id'=>$this->buyer_id));
 				}
 				$this->splash('success', $redirect, '店铺信息更新成功！');
 			}else {
@@ -352,6 +353,7 @@ class buyer_ctl_site_buyer extends buyer_frontpage{
 				),
 				'slShopInfo'=>array(
 						'buyer_code'	=>$params['buyer_code'],
+						'shop_id'		=>$params['shop_id'],
 						'store_name'	=>$params['store_name'] ?:$update_params['store_name'],
 						'store_logo'	=>$params['store_logo'] ?:$update_params['store_logo'],
 						'managingCharact1'=>$params['operate_feature'],

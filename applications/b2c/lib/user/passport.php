@@ -95,7 +95,6 @@ class b2c_user_passport
 
     public function save_company($params)
     {
-
         $db = vmc::database();
         $db->beginTransaction();
         $extra_columns = app::get('b2c')->getConf('member_extra_column');
@@ -150,13 +149,10 @@ class b2c_user_passport
      */
     public function saveApiData()
     {
-        header('Content-Type:text/html; charset=utf-8');
         $company = vmc::singleton('b2c_user_object')->page_company();
         $member = vmc::singleton('b2c_user_object')->get_current_member();
-        //print_r($company['info']);
         $region = app::get('ectools')->model('regions')->region_decode($company['info']['company']['area']);
-       // print_r($region);
-        array(
+        $data = array(
             'buyerId' => $member['buyer_id'],
             'buyerCode' => '',
             'buyerName' => $company['info']['company']['name'],
@@ -164,14 +160,14 @@ class b2c_user_passport
             'superiorId' => '',
             'superiorType' => '',
             'cityCode' => $region['city']['code'],
-            'districtCode' => $region['district']['local_name'],
-            'cityName' => $region['city']['code'],
-            'districtName' => '',
-            'buyerWebsite' => '',
-            'buyerWechat' => '',
-            'storeNo' => '',
+            'districtCode' => $region['district']['code'],
+            'cityName' => $region['city']['local_name'],
+            'districtName' => $region['district']['local_name'],
+            'buyerWebsite' => $company['info']['company']['web_site'],
+            'buyerWechat' => $company['info']['company_extra']['company_extra']['value']['wechat'],
+            'storeNo' => $company['info']['company_extra']['shop']['value']['store_num'],
             'storeArea' => '',
-            'busiTel' => '',
+            'busiTel' => $company['info']['company']['tel'],
             'employeesNum' => '',
             'paymentType' => '',
             'planOrderGap' => '',
@@ -179,9 +175,18 @@ class b2c_user_passport
             'actualOrderGap' => '',
             'actualOrderNum' => '',
             'marketingsStatus' => '',
-            'updId'
+            'updId' => '1'
         );
-
+        $result = $this->app->rpc('update_member_base_info')->request($data);
+        if($result['status']){
+            //更新买家code
+            $update_value = array('buyer_code' => $result['result']['buyer_code']);
+            $filter = array('member_id' => $member['member_id']);
+            if(app::get('b2c')->model('members')->update($update_value, $filter)){
+                return true;
+            }
+        }
+        return false;
     }
 
     //用户注册过滤 2016、1、4

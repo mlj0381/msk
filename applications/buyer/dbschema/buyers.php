@@ -122,10 +122,16 @@ $db['buyers'] = array(
         	'comment' => '买手店编码',
         ),
         'api_buyer_id' => array(
-        		'type' => 'varchar(50)',
-        		'required' => true,
-        		'default' => '',
-        		'comment' => '买手店codedis',
+        	'type' => 'varchar(50)',
+        	'required' => true,
+        	'default' => '',
+        	'comment' => '买手店codedis',
+        ),
+        'shop_id' => array(
+        	'type' => 'varchar(50)',
+        	'required' => true,
+        	'default' => '',
+        	'comment' => '接口传递过来的店铺ID',
         ),
         'store_name' => array(
         	'type' => 'varchar(50)',
