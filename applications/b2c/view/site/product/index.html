@@ -77,15 +77,12 @@
                 <tbody>
                     <tr>
                         <td>随心量</td>
-                        <!-- foreach开始 -->
                         <{foreach from=$pricelist item=item}>
                         <td>
-                            <span class="num-dn"><{$item.boxMin|default:1}></span>-
+                            <span class="num-dn"><{$item.boxMin|default:1}></span> -
                             <span class="num-up"><{$item.boxMax|default:不限}></span>箱
                         </td>
                         <{/foreach}>
-                        <!-- foreach结束 -->
-                        
                     </tr>
                     <tr>
                         <td>通道阶梯价</td>
@@ -590,7 +587,24 @@
             var index = 0;
             var price = 0;
             var discount = 0;
-            $('.pref_info .interval tr').each(function(idx, item){
+            var sumPrice = 0;
+            $('.price_table tr:first td:gt(0)').each(function(i,td){
+                var minNum = parseInt($(td).find('.num-dn').text().trim());
+                //alert(minNum +'===='+ num);
+                if(minNum > num){
+                    price = parseFloat($('.price_table tr:last td:eq('+i+')').find('span').text().trim());
+                    index = i;
+                    console.log(num)
+                    console.log(price)
+                    sumPrice = num * price;
+                    return false;
+                }
+
+            })
+            return sumPrice.toFixed(2);
+            
+            /*$('.price_table tr').each(function(idx, item){
+                console.log('ss')
                 var minNum = parseInt($(item).find('.num-dn').text().trim());
                 if(minNum > num){
                     if(buyerIdentity > 0 && agent == 1)
@@ -605,7 +619,7 @@
             var sumPrice = num * price;
             if(buyerIdentity > 0 && agent == 1)
                 sumPrice = sumPrice * discount / 100;
-            return sumPrice.toFixed(2);
+            return sumPrice.toFixed(2);*/
         };
 
 
