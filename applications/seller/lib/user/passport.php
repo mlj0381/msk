@@ -968,6 +968,16 @@ class seller_user_passport
                 $db->rollback();
                 return false;
             }
+
+            $apiBrand = $this->app->rpc('select_company_brand')->request(array('epId' => $result['result']['epId']));
+
+            $filter = array('seller_id' => $this->seller['seller_id']);//api_company_id api_brand_id
+            $update_value = array('api_brand_id' => $apiBrand['result']['slEpBrandList'][0]['brandId'],
+                'api_company_id' => $result['result']['epId']);
+            if (!app::get('b2c')->model('brand')->update($update_value, $filter)) {
+                $db->rollback();
+                return false;
+            }
             $db->commit();
             return true;
         }

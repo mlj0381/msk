@@ -186,7 +186,7 @@ class seller_ctl_site_goods extends seller_frontpage
         $return['cat'] = $mdl_goods_cat->get_tree('', null);
 
         //商品品牌
-        $return['brand'] = app::get('seller')->model('brand')->getList('*', array('seller_id' => $this->seller['seller_id']));
+        $return['brand'] = app::get('seller')->model('brand')->getList('*', array('seller_id' => $this->seller['seller_id'], 'brand_class' => '2'));
 
         //$apiBrand = $this->app->rpc('select_seller_brand')->request(array('slCode' => $this->seller['sl_code']));
         //$return['brand'] = $apiBrand['result']['slPdBrandList'];
@@ -420,34 +420,14 @@ class seller_ctl_site_goods extends seller_frontpage
         $slPdList = Array();
         $catId = explode('-', $goods['api_cat']);
 
-        /*******************************************/
         //获取自己的企业id
-       // $brand = app::get('b2c')->model('brand')->getRow('*', array('brand_id' => $goods['brand_id']));
-
-       // $company_id = app::get('base')->model('company')->getRow('ep_id', array('company_id' => $brand['company_id']));
-
-        /*******************************************/
-
-
-        $company = app::get('base')->model('company_seller')->getRow('*', array('uid' => $this->seller['seller_id']));
-        $company_id = app::get('base')->model('company')->getRow('*', array('company_id' => $company['company_id']));
-
-
-
-
-
-
-
-
-
-
-
+        $brand = app::get('b2c')->model('brand')->getRow('*', array('brand_id' => $goods['brand_id'], 'brand_class' => '2'));
         foreach ($goods['product'] as $v) {
             $slPdList[] = array(
                 'slCode' => $this->seller['sl_code'],
-                'prodEpId' => (int)$company_id['ep_id'],
-                'brandEpId' => (int)$company_id['ep_id'],
-                'brandId' => '111294',//$brand['api_brand_id'],
+                'prodEpId' => (int)$brand['api_company_id'],
+                'brandEpId' => (int)$brand['api_company_id'],
+                'brandId' => $brand['api_brand_id'],
                 'pdClassesCode' => $catId[0],
                 'machiningCode' => $catId[1],
                 'pdBreedCode' => $catId[2],

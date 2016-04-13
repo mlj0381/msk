@@ -1,6 +1,6 @@
 <?php
 /**
- * 查询企业产品品牌---------------lSL231149
+ * 查询企业产品品牌---------------lSL231149 ISL231149
  */
 $remote['seller_select_company_brand'] = array(
     'url' => '/sl/slInfo/slEpBrandcTeam/search',
