@@ -91,12 +91,16 @@ class buyer_ctl_site_buyer extends buyer_frontpage{
 									'agentFlg'		=>'0',//代理型卖家标志
 									'oemFlg'		=>'0',//OEM型卖家标志
 									'buyerFlg'		=>'1',//买手型卖家标志
+									'qq'			=>$basic_data['qq'],
+									'wechat'		=>$basic_data['wechat'],
+									'email'			=>$basic_data['email'],
+									'memo6'			=>$basic_data['buyer_type'],
 							),
 							'slBuyerShop'=>array(
 									'card_id'	=>$basic_data['card_id'],
 									'slSort'	=>2,
 									'addr'		=>$basic_data['addr'],
-									'flag1'		=> $params['sex']==1 ?'0':'1',
+									'flag1'		=> $params['sex']==0 ?'2':'1',
 							),
 							'slShopInfo'=>array(
 									'store_name'=>$params['store_name'],
@@ -345,13 +349,14 @@ class buyer_ctl_site_buyer extends buyer_frontpage{
 						'qq'			=>$params['qq'] ?:$update_params['qq'],
 						'wechat'		=>$params['wechat'] ?:$update_params['wechat'],
 						'email'			=>$params['email'] ?:$update_params['email'],
+						'memo6'			=>$params['buyer_type'] ?:$update_params['buyer_type'],
 				),
 				'slBuyerShop'=>array(
 						'buyer_code'	=>$params['buyer_code'],
 						'card_id'	=>$params['card_id'],
 						'slSort'	=>2,
 						'addr'		=>$params['addr'] ?:$update_params['addr'],
-						'flag1'		=> $params['sex']==1 ?'0':'1',
+						'flag1'		=> $params['sex']==0 ?'2':'1',
 				),
 				'slShopInfo'=>array(
 						'buyer_code'	=>$params['buyer_code'],
