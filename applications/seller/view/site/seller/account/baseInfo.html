@@ -27,7 +27,7 @@
             手机号码
         </label>
         <div class="col-xs-4">
-            <input type="text" name="seller[mobile]" value="<{$seller.mobile}>" class="form-control">
+            <input type="text" name="seller[mobile]" value="<{$seller.mobile}>" class="form-control" readonly>
         </div>
     </div>
     <div class="form-group">
@@ -35,7 +35,7 @@
             电子邮箱
         </label>
         <div class="col-xs-4">
-            <input type="text" name="seller[email]" value="<{$seller.email}>" class="form-control">
+            <input type="text" name="seller[email]" value="<{$seller.email}>" class="form-control" readonly>
             <a class="btn btn-md btn-danger pull-right" style="margin-right:-90px; margin-top:-34px;" href="<{link app=seller ctl=site_seller act=set_pam_email}>">
                 <{if $seller.email}>
                     修改邮箱
