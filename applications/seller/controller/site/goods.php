@@ -851,8 +851,24 @@ class seller_ctl_site_goods extends seller_frontpage
     {
         $params = $this->_request->get_get();
         if(empty($params)) $this->splash('error', '', '非法请求');
-        $this->display('site/goods/add-new-pack.html');
-        //$this->display('site/goods/add-new-pack.html');
+
+        $label = '品种';
+        switch($params['type'])
+        {
+            case 'pack':
+                $label = '包装';
+                break;
+            case 'weight':
+                $label = '净重';
+                break;
+            case 'feature':
+                $label = '特征';
+                break;
+        }
+        $this->pagedata['label'] = $label;
+        $this->pagedata['catPath'] = $params['cat'];
+        $this->pagedata['parentLabel'] = $params['label'];
+        $this->display('site/goods/add-new-cat.html');
     }
 
     public function saveNewCard()
