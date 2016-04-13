@@ -83,6 +83,7 @@ class seller_ctl_site_brand extends seller_frontpage
         $post['brand']['seller_id'] = $this->seller['seller_id'];
         $post['brand']['brand_name'] = $store_brand['brand_name'];
         $post['brand']['api_brand_id'] = $store_brand['api_brand_id'];
+        unset($post['brand']['brand_id']);
         if (!$this->mB2cbrand->save($post['brand'])) {
             $this->splash('error', $redirect, '操作失败');
         } else {
