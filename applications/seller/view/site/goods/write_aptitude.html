@@ -8,7 +8,8 @@
     </div>
     <div class="modal-body">
         <input type="hidden" name="id" value="<{$cat.id}>"/>
-        <input type="hidden" name="cat_id" value="<{$cat.cat_id}>"/>
+        <input type="hidden" name="cat_id" value="<{$cat_id}>"/>
+        <input type="hidden" name="step" value="<{$step}>"/>
         <!-- 动检证 -->
         <{if $aptitude.creature eq 'true'}>
         <{include file="site/passport/companyInfo/animal_certificate.html"}>
