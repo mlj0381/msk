@@ -117,6 +117,13 @@ function checkSubmit(){
         alert('请添加产品相册');
         $('.file_input').focus();
         return false;
+    };
+    var goodsInfo = $('.spec_table tbody tr').size();
+    if(goodsInfo < 1){
+        alert('必须生成商品规格');
+        $('.file_input').focus();
+        $('.create-product').focus();
+        return false;
     }
     return true;
 }
