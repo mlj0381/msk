@@ -25,7 +25,6 @@ class buyer_user_object{
      * 设置会员登录session seller_id
      */
     public function set_session($buyer_data){
-    	$this->member_id = $buyer_data['member_id'];
         $_SESSION['account'] = ['member' => $buyer_data['member_id'],'buyer_id' => $buyer_data['buyer_id'], 'buyer_code' => $buyer_data['buyer_code']];
     }
 
