@@ -10,9 +10,11 @@
             <!-- identity="store" seller=$seller_id -->
             <{input type="category" identity="store" seller=$seller_id name="goods[category][cat_id]"
             value=$goods.category.cat_id callback="callBack"}>
-            <a class="addNewCard btn btn-danger btn-sm" title="新增三级分类" data-type="breed" data-toggle="modal" data-target="#write_apt_modal">新增三级分类
+            <a class="addNewCard btn btn-danger btn-sm" title="新增三级分类" data-type="breed" data-toggle="modal"
+               data-target="#write_apt_modal">新增三级分类
             </a>
-            <a class="addNewCard btn btn-danger btn-sm" title="新增产品特征" data-type="breed" data-toggle="modal" data-target="#write_apt_modal">新增产品特征
+            <a class="addNewCard btn btn-danger btn-sm" title="新增产品特征" data-type="feature" data-toggle="modal"
+               data-target="#write_apt_modal">新增产品特征
             </a>
         </div>
     </div>
@@ -270,21 +272,23 @@
         $(this).removeData("bs.modal");  //关闭时清空数据
     });
 
-    var addNewCard = function($_self){
+    var addNewCard = function ($_self) {
         var url = '<{link app=seller ctl=site_goods act=addNewCard}>?';
         var type = $_self.attr('data-type');
-
+        var parent = $_self.parents('span');
         switch (type) {
             case 'breed':
-                var cat = apiCat().split('-')
+                var cat = apiCat().split('-');
                 if (cat.length == 3 && cat[2] == '') {
                     url += 'type=' + type + '&cat=' + cat[0];
                 }
                 break;
             case 'feature':
+                url += 'type=' + type + '&cat=' + apiCat();
+                break;
             case 'weight':
             case 'pack':
-                url += 'type=' + type + '&cat=' + $_self.parents('span').find('input').val();
+                url += 'type=' + type + '&cat=' + apiCat() + '-' + parent.find('input').attr('data-product')+ '&label=' + parent.text();
                 break;
         }
         $_self.attr('href', url);
@@ -320,7 +324,7 @@
      };
      */
 
-    var htmlFormat = function (re, key, name, idx, result, product, catType) {
+    var htmlFormat = function (re, key, name, idx, result, product, catType, label) {
         var html = '';
         var text = '';
         var product_id = '';
@@ -331,13 +335,16 @@
         if (product) {
             product_id = product + '-';
         }
-
+        var addNew = '<a class="addNewCard btn btn-default btn-xs" title="新增' + label + '" data-type="' + catType + '"' +
+                'data-toggle="modal" data-target="#write_apt_modal"><i class="icon-plus"></i></a>';
+        if (catType == 'addPack') {
+            addNew = '';
+        }
         for (var i in re.data) {
             html += $.VMC.format('<span class="' + name + idx + '">' +
                     '<input data-type="' + idx + '" data-product="' + product_id + re.data[i][key[0]] + '"' +
-                    ' type="checkbox" name=name value="{0}">' + text + '{1}' +
-                    '<a class="addNewCard btn btn-default btn-xs" title="新增" data-type="'+catType+'"data-toggle="modal" data-target="#write_apt_modal">' +
-                    '<i class="icon-plus"></i></a></span>'
+                    ' type="checkbox" name=name value="{0}">' + text + '{1}' + addNew +
+                    '</span>'
                     , re.data[i][key[0]], re.data[i][key[1]]);
         }
         return html;
@@ -367,7 +374,15 @@
         $.post(url, data, function (re) {
             if (!re.data) return;
             $('.feature').empty();
-            var pack = htmlFormat(re, ['featureCode', 'featureName'], 'feature', '', '', '', 'feature');
+//            var data = {
+//                key: ['featureCode', 'featureName'],
+//                name: 'feature',
+//                idx: idx,
+//                result: result,
+//                product : idx,
+//                catType : 'weight'
+//            };
+            var pack = htmlFormat(re, ['featureCode', 'featureName'], 'feature', '', '', '', 'weight', '净重');
             $('.api_cat').val(apiCatId);
             $('.feature').append($(pack));
             $('.feature input').click(function () {
@@ -430,15 +445,15 @@
                     product = $(obj).attr('data-product');
                 }
             });
-            var pack = htmlFormat(re, ['normsCode', 'normsName'], 'pack', idx, result, product, 'pack');
+            var pack = htmlFormat(re, ['normsCode', 'normsName'], 'pack', idx, result, product, 'addPack');
             $('.pack').append($(pack));
             //添加商品规格信息spec_desc
             $('.pack input:last').click(function () {
                 addSpecDesc($(this));
             });
-            $('.pack .addNewCard:last').click(function () {
-                addNewCard($(this));
-            });
+//            $('.pack .addNewCard:last').click(function () {
+//                addNewCard($(this));
+//            });
         });
     };
     var weight = function (obj) {
@@ -466,8 +481,17 @@
                     return false;
                 }
             });
-
-            var weight = htmlFormat(re, ['weightCode', 'weightName'], 'weight', idx, result, idx, 'weight');
+            // key, name, idx, result, product, catType
+//            var data = {
+//                key: ['weightCode', 'weightName'],
+//                name: 'weight',
+//                idx: idx,
+//                result: result,
+//                product : idx,
+//                catType : 'pack'
+//            };
+            var weight = htmlFormat(re, ['weightCode', 'weightName'], 'weight', idx, result, idx, 'pack', '包装');
+            //var weight = htmlFormat(re, data);
             $('.weight').append($(weight));
 
             $('.weight input:last').click(function () {
