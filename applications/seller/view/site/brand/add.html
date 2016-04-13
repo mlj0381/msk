@@ -38,7 +38,7 @@
                         <span class="text-danger">*</span>品牌分类
                     </label>
                     <div class="col-xs-5">
-                        <select class="form-control" name="brand_class" required="true">
+                        <select class="form-control" name="brand[brand_class]" required="true">
                             <option value="1">企业品牌</option>
                             <option value="2">店铺品牌</option>
                         </select>
@@ -49,7 +49,6 @@
                     <label class="control-label col-xs-2">
                         <span class="text-danger">*</span>品牌类型
                     </label>
-
                     <div class="col-xs-5">
                         <select class="form-control" name="brand[type]" required="true">
                             <option value="1">自有品牌</option>
@@ -120,7 +119,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <!--<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>-->
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
                 <button type="submit" class="btn btn-primary brand_save_btn" data-save="brand_save">保存品牌</button>
             </div>
     </form>

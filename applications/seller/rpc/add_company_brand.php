@@ -72,6 +72,12 @@ $remote['seller_add_company_brand'] = array(
             'default' => '1',
         ),
     ),
-    'response' => array(),
+    'response' => array(
+        'brandId' => array(
+            'name' => '品牌ID',
+            'column' => 'brandId',
+            'type' => 'Integer',
+        ),
+    ),
 
 );
