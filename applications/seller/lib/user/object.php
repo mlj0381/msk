@@ -77,7 +77,7 @@ class seller_user_object{
         }
         $sellerFilter = array(
             'account' => 'seller_id, login_account, login_type',
-            'sellers'=> 'seller_id, avatar, email, mobile,name, ident, schedule, type, sl_code',
+            'sellers'=> 'seller_id, avatar, email, mobile,name, ident, schedule, type, sl_code, area',
             'company'=> 'company_id, name',
         );
         $sellerData = $this->get_sellers_data($sellerFilter,$seller_id);
@@ -96,6 +96,8 @@ class seller_user_object{
 			$this->seller_info['schedule'] =  $seller_sdf['schedule'];
             $this->seller_info['type'] =  $seller_sdf['type'];
             $this->seller_info['sl_code'] =  $seller_sdf['sl_code'];
+            $this->seller_info['area'] =  $seller_sdf['area'];
+
         }
         return $this->seller_info;
     }
