@@ -112,9 +112,7 @@
         <label class="col-xs-2 control-label"><span>商品品牌</span></label>
 
         <div class="col-xs-5">
-            <select class="form-control"> name="goods[brand_id]" value="<{$goods.brand_id}>" readonly="true">
-                <option>哇哈哈</option>
-            </select>
+            <{input type=select required="true" name="goods[brand_id]" rows=$params.brand valueColumn="brand_id" labelColumn="brand_name" value=$goods.brand_id}>
             <span class="msgTip" data-message="error"></span>
         </div>
     </div>
