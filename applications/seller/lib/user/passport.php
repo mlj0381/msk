@@ -733,10 +733,10 @@ class seller_user_passport
     private function &changeKey(&$cat)
     {
         $tmp = Array();
-        if(is_array($cat)){
-            foreach($cat as $v){
+        if (is_array($cat)) {
+            foreach ($cat as $v) {
                 $tmp[$v['cat_id']] = $v;
-                if(is_array($v['children'])){
+                if (is_array($v['children'])) {
                     $this->changeKey($v['children']);
                 }
             }
@@ -864,7 +864,8 @@ class seller_user_passport
             $extra_data = array(
                 'seller_id' => $seller['seller_id'],
                 'schedule' => $params['pageIndex'],
-                'company_extra' => $company_extra['company_id']);
+                'company_extra' => $company_extra['company_id'],
+                'sl_code' => $this->seller['sl_code']);
 
             if (!$mdl_seller->save($extra_data)) {
                 $db->rollback();
@@ -959,7 +960,7 @@ class seller_user_passport
                 return false;
             }
             $filter = array('seller_id' => $this->seller['seller_id']);
-            $update_value = array('sl_code' => $result['result']['slCode']);
+            $update_value = array('sl_code' => $this->seller['sl_code'] ?: $result['result']['slCode']);
             if (!app::get('seller')->model('sellers')->update($update_value, $filter)) {
                 $db->rollback();
                 return false;
@@ -967,6 +968,7 @@ class seller_user_passport
             $db->commit();
             return true;
         }
+        die;
         return false;
     }
 
