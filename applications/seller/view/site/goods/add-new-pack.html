@@ -1,4 +1,4 @@
-<form action="" method="post">
+<form action="<{link app=seller ctl=site_goods act=saveNewPack}>" id="add-new-pack"  method="post">
     <input type="hidden" name="addType" value="<{$type}>">
     <input type="hidden" name="parentLabel" value="<{$parentLabel}>">
     <input type="hidden" name="catPath" value="<{$catPath}>">
@@ -14,22 +14,6 @@
             </label>
             <div class="col-xs-5">
                 <input type="text" class="form-control" name="packName">
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="control-label col-xs-2">
-                <span class="text-danger"></span>净重名称
-            </label>
-            <div class="col-xs-5">
-                <input type="text" class="form-control" name="suttleName">
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="control-label col-xs-2">
-                <span class="text-danger"></span>净重数值
-            </label>
-            <div class="col-xs-5">
-                <input type="text" class="form-control" name="suttleNum">
             </div>
         </div>
         <div class="form-group">
@@ -184,10 +168,23 @@
                 <input type="text" class="form-control" name="normsVolume">
             </div>
         </div>
-        <div class="agree">
-            <input type="checkbox" checked="checked" disabled="disabled"> 我同意该产品包装标准</div>
+        <!--<div class="agree">-->
+            <!--<input type="checkbox" checked="checked" disabled="disabled"> 我同意该产品包装标准</div>-->
     </div>
     <div class="modal-footer apt_pack">
-        <button type="button" class="btn btn-default confirm-<{$cat_id}>" data-dismiss="modal">确定</button>
+        <button type="button" class="btn btn-default save" data-dismiss="modal">确定</button>
     </div>
 </form>
+<script>
+    void function(addFrom){
+        addFrom.find('.save').click(function(){
+            $.post(addFrom.attr('action'), addFrom.serialize(), function(re){
+                if(re.success){
+                    alert('添加成功，请耐心等待平台审核');
+                }else{
+                    alert('添加失败');
+                }
+            });
+        });
+    }($('#add-new-pack'));
+</script>

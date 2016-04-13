@@ -186,7 +186,10 @@ class seller_ctl_site_goods extends seller_frontpage
         $return['cat'] = $mdl_goods_cat->get_tree('', null);
 
         //商品品牌
-        $return['brand'] = app::get('b2c')->model('brand')->getList('*', array('seller_id' => $this->seller['seller_id']));
+        $return['brand'] = app::get('seller')->model('brand')->getList('*', array('seller_id' => $this->seller['seller_id']));
+
+        //$apiBrand = $this->app->rpc('select_seller_brand')->request(array('slCode' => $this->seller['sl_code']));
+        //$return['brand'] = $apiBrand['result']['slPdBrandList'];
         //商品参数配置
         $return['goods_type'] = $this->getProp();
         $mdl_goods_type = app::get('b2c')->model('goods_type');
@@ -873,24 +876,14 @@ class seller_ctl_site_goods extends seller_frontpage
         $this->display('site/goods/' . $tmp . '.html');
     }
 
+    /**
+     * 添加新分类、特征、净重信息
+     */
     public function saveNewCard()
     {
         $parent = explode('-', $_POST['catPath']);
-        $mdl_cat = app::get('b2c')->model('goods_cat');
-        $cat = array(
-            array('classesCode', 'classesName'),
-            array('machiningCode', 'machiningName'),
-            array('breedCode', 'breedName'),
-//            array('featureCode', 'featureName'),
-//            array('weightName', 'weightVal'),
-        );
 
-        foreach($parent as $key => $value){
-            $cat_name = $mdl_cat->getRow('cat_name, addon', array('cat_id' => $value));
-            $apiData[$cat[$key][0]] = $cat_name['addon'];
-            $apiData[$cat[$key][1]] = $cat_name['cat_name'];
-        }
-
+        $apiData = $this->_selectCat($parent);
         $addNewType = (string)(count($parent) - 1);
         $apiData['newFlag'] = $addNewType;
         $apiData['crtId'] = '1';
@@ -906,7 +899,55 @@ class seller_ctl_site_goods extends seller_frontpage
             $apiData['breedName'] = $_POST['name'];
         }
 
-        $result = $this->app->rpc('apply_for_packaging')->request($apiData);
+        $result = $this->app->rpc('apply_for_sku')->request($apiData);
+        if($result['status']){
+            $this->splash('success', '', '添加成功');
+        }
+        $this->splash('error', '', '添加失败');
+    }
+
+    /**
+     * @param $parent 分类路径
+     * @return mixed 分类name
+     */
+    private function _selectCat($parent)
+    {
+        $mdl_cat = app::get('b2c')->model('goods_cat');
+        $cat = array(
+            array('classesCode', 'classesName'),
+            array('machiningCode', 'machiningName'),
+            array('breedCode', 'breedName'),
+//            array('featureCode', 'featureName'),
+//            array('weightName', 'weightVal'),
+        );
+
+        foreach($parent as $key => $value){
+            $cat_name = $mdl_cat->getRow('cat_name, addon', array('cat_id' => $value));
+            $apiData[$cat[$key][0]] = $cat_name['addon'];
+            $apiData[$cat[$key][1]] = $cat_name['cat_name'];
+        }
+        return $apiData;
+    }
+
+    /**
+     * 添加新包装信息
+     */
+    public function saveNewPack()
+    {
+        $params = $_POST;
+        unset($_POST);
+        $parent = explode('-', $params['catPath']);
+        $tmp = $this->_selectCat($parent);
+        $apiLabel = explode('-', $params['parentLabel']);
+
+        $tmp['featureCode'] = $parent[3];
+        $tmp['featureName'] = $apiLabel[0];
+        $tmp['weightCode']= $parent[4];
+        $tmp['weightName'] = $apiLabel[1];
+        $tmp['weightVal'] = $apiLabel[1];
+        $apiData = array_merge($tmp, $params);
+
+        $result = $this->app->rpc('apply_for_packaging')->request(array('newPdPkgList' => $apiData));
         if($result['status']){
             $this->splash('success', '', '添加成功');
         }
