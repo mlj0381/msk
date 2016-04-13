@@ -22,6 +22,13 @@ $remote['freeze_querybuyer'] = array(
         ) ,
     ) ,
     'param' => array(
+        'houseCode' => array(
+            'name' => '管家编码',
+            'column' => 'houseCode',
+            'type' => 'String',
+            'default' => '',
+            'require' => false
+        ) ,
         'slCode' => array(
             'name' => '卖家编码',
             'column' => 'slCode',
@@ -57,8 +64,32 @@ $remote['freeze_querybuyer'] = array(
             'default' => '',
             'require' => false
         ) ,
+        'applyStatus' => array(
+            'name' => '申请状态',
+            'column' => 'applyStatus',
+            'type' => 'String',
+            'require' => false
+        ) ,
     ) ,
     'response' => array(
+        'totalCount' => array(
+            'name' => '总条数',
+            'column' => 'count',
+            'type' => 'String',
+            'require' => false,
+        ),
+        'totalPage' => array(
+            'name' => '总页数',
+            'column' => 'total_page',
+            'type' => 'String',
+            'require' => false,
+        ),
+        'pageNo' => array(
+            'name' => '当前页数',
+            'column' => 'pageNo',
+            'type' => 'String',
+            'require' => false,
+        ),
         'slBuyerList' => array(
             'name' => '买手买家列表',
             'coloumn' => 'slBuyerList',
@@ -138,7 +169,7 @@ $remote['freeze_querybuyer'] = array(
         ) ,
         'buyerAddr' => array(
             'name' => '买家地址',
-            'column' => 'buyerAddr',
+            'column' => 'address',
             'type' => 'String'
         ) ,
         'busiTel' => array(
