@@ -1,41 +1,13 @@
 <form action="" method="post">
+    <input type="hidden" name="addType" value="<{$type}>">
+    <input type="hidden" name="parentLabel" value="<{$parentLabel}>">
+    <input type="hidden" name="catPath" value="<{$catPath}>">
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close" required="true"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title" id="myModalLabel">产品包装信息</h4>
     </div>
     <div class="modal-body">
-        <div class="form-group">
-            <label class="control-label col-xs-2">
-                <span class="text-danger"></span>产品一级分类名称
-            </label>
-            <div class="col-xs-5">
-                <input type="text" class="form-control" name="rootCatName">
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="control-label col-xs-2">
-                <span class="text-danger"></span>产品二级分类名称
-            </label>
-            <div class="col-xs-5">
-                <input type="text" class="form-control" name="secondCatName">
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="control-label col-xs-2">
-                <span class="text-danger"></span>品种名称
-            </label>
-            <div class="col-xs-5">
-                <input type="text" class="form-control" name="breed_name">
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="control-label col-xs-2">
-                <span class="text-danger"></span>产品特征名称
-            </label>
-            <div class="col-xs-5">
-                <input type="text" class="form-control" name="featureName">
-            </div>
-        </div>
+
         <div class="form-group">
             <label class="control-label col-xs-2">
                 <span class="text-danger"></span>包装名称

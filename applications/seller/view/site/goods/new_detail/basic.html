@@ -280,17 +280,18 @@
         var parent = $_self.parents('span');
         switch (type) {
             case 'breed':
-                var cat = apiCat().split('-');
+                var cat = selfCat().split('-');
+
                 if (cat.length == 3 && cat[2] == '') {
                     url += 'type=' + type + '&cat=' + cat[0];
                 }
                 break;
             case 'feature':
-                url += 'type=' + type + '&cat=' + apiCat();
+                url += 'type=' + type + '&cat=' + selfCat();
                 break;
             case 'weight':
             case 'pack':
-                url += 'type=' + type + '&cat=' + apiCat() + '-' + parent.find('input').attr('data-product')+ '&label=' + parent.text();
+                url += 'type=' + type + '&cat=' + selfCat() + '-' + parent.find('input').attr('data-product')+ '&label=' + parent.text();
                 break;
         }
         $_self.attr('href', url);
@@ -332,7 +333,7 @@
         var product_id = '';
         catType = catType ? catType : 'breed';
         if (result) {
-            text = result + '/';
+            text = result + '-';
         }
         if (product) {
             product_id = product + '-';
@@ -356,6 +357,14 @@
         var apiCatArray = [];
         $('.api-cat select').each(function (idx, item) {
             apiCatArray[idx] = $(item).find('option:selected').attr('apiCatId');
+        });
+        return apiCatArray.join('-');
+    };
+
+    var selfCat = function () {
+        var apiCatArray = [];
+        $('.api-cat select').each(function (idx, item) {
+            apiCatArray[idx] = $(item).find('option:selected').val();
         });
         return apiCatArray.join('-');
     };
