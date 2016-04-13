@@ -43,13 +43,12 @@
             <div class="form-item feature">
                 <{foreach from=$api_cat.feature item=item}>
                 <span class="feature<{$item.parent}>">
-                    <input data-type="<{$item.parent}>
+                    <input data-type="<{$item.parent}>"
                            <{if in_array($item.featureCode, $goods.api_spec_desc.feature)}>checked<{/if}>
                            type="checkbox" name=name value="<{$item.featureCode}>"><{$item.featureName}>
-                <a class="addNewCard" data-type="feature"
-                   data-toggle="modal" data-target="#write_apt_modal" class="warning"><i
-                        class="text-danger icon-exclamation-sign"> </i>
-                    <small>+</small>
+                <a class="addNewCard btn btn-default btn-xs" data-type="feature" title="添加净重"
+                   data-toggle="modal" data-target="#write_apt_modal">
+                    <i class="icon-plus"></i>
                 </a>
                 </span>
 
@@ -68,10 +67,10 @@
                     <input data-type="<{$item.parent}>" type="checkbox"
                            <{if in_array($item.weightCode, $goods.api_spec_desc.weight)}>checked<{/if}>
                            name=name value="<{$item.weightCode}>"><{$item.weightName}>
-                    <a class="addNewCard" data-type="weight"
-                       data-toggle="modal" data-target="#write_apt_modal" class="warning"><i
-                            class="text-danger icon-exclamation-sign"> </i>
-                        <small>+</small>
+
+                    <a class="addNewCard btn btn-default btn-xs" data-type="feature" title="添加包装"
+                       data-toggle="modal" data-target="#write_apt_modal">
+                        <i class="icon-plus"></i>
                     </a>
                 </span>
                 <{/foreach}>
