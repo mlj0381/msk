@@ -57,11 +57,11 @@ class b2c_ctl_admin_goods_cat extends desktop_controller
     public function save()
     {
         if ($_POST['no_redirect']) { //为了临时添加分类特殊处理
-             $this->begin();
+            $this->begin();
         } else {
             $redirect = 'index.php?app=b2c&ctl=admin_goods_cat&act=index';
-            if($_POST['cat']['parent_id']){
-                $redirect ='index.php?app=b2c&ctl=admin_goods_cat&act=index&p[0]='.$_POST['cat']['parent_id'];
+            if ($_POST['cat']['parent_id']) {
+                $redirect = 'index.php?app=b2c&ctl=admin_goods_cat&act=index&p[0]=' . $_POST['cat']['parent_id'];
             }
             $this->begin($redirect);
         }
@@ -95,9 +95,9 @@ class b2c_ctl_admin_goods_cat extends desktop_controller
     {
         $objCat = $this->app->model('goods_cat');
         $cat_sdf = $objCat->dump($nCatId);
-        $this->begin('index.php?app=b2c&ctl=admin_goods_cat&act=index&p[0]='.$cat_sdf['parent_id']);
+        $this->begin('index.php?app=b2c&ctl=admin_goods_cat&act=index&p[0]=' . $cat_sdf['parent_id']);
         if ($objCat->remove($nCatId, $msg)) {
-            $this->end(true, $cat_sdf['cat_name'].('已删除'));
+            $this->end(true, $cat_sdf['cat_name'] . ('已删除'));
         }
         $this->end(false, $msg);
     }
@@ -110,8 +110,8 @@ class b2c_ctl_admin_goods_cat extends desktop_controller
     public function update()
     {
         $mdl_gcat = $this->app->model('goods_cat');
-        $cat = $mdl_gcat->getRow('parent_id',array('cat_id'=>current($_POST['p_order'])));
-        $this->begin('index.php?app=b2c&ctl=admin_goods_cat&act=index&p[0]='.$cat['parent_id']);
+        $cat = $mdl_gcat->getRow('parent_id', array('cat_id' => current($_POST['p_order'])));
+        $this->begin('index.php?app=b2c&ctl=admin_goods_cat&act=index&p[0]=' . $cat['parent_id']);
         foreach ($_POST['p_order'] as $k => $v) {
             $mdl_gcat->update(array('p_order' => ($v === '' ? null : $v)), array('cat_id' => $k));
         }
@@ -148,8 +148,17 @@ class b2c_ctl_admin_goods_cat extends desktop_controller
             'iso14001' => $_POST['iso14001'] ?: 'false',
             'iso22000' => $_POST['iso22000'] ?: 'false',
             'iso9001' => $_POST['iso9001'] ?: 'false',
+            'time' => time(),
         );
-        if(!$this->app->model('cat_aptitudes')->save($data)){
+        if ($data['id']) {
+            $sql = " UPDATE `vmc_b2c_cat_aptitudes` SET  `cat_id`={$data['cat_id']},`creature`='{$data['creature']}',`food`='{$data['food']}',`butcher`='{$data['butcher']}',`muslim`='{$data['muslim']}',`shanghai`='{$data['shanghai']}',`iso14001`='{$data['iso14001']}',`iso22000`='{$data['iso22000']}',`iso9001`='{$data['iso9001']}' WHERE `id`={$data['id']}";
+
+        } else {
+            $sql = "INSERT INTO `vmc_b2c_cat_aptitudes`(`cat_id`,`creature`,`food`,`butcher`,`muslim`,`shanghai`,
+`iso14001`,`iso22000`,`iso9001`,`time` ) VALUES ({$data['cat_id']},'{$data['creature']}','{$data['food']}','{$data['butcher']}','{$data['muslim']}','{$data['shanghai']}','{$data['iso14001']}','{$data['iso22000']}','{$data['iso9001']}' ,'{$data['time']}')";
+        }
+
+        if (!$jg = vmc::database()->exec($sql)) {
             $this->end(false, '设置失败');
         }
         $this->end(true, '设置成功');
