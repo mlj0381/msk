@@ -40,14 +40,14 @@
                         <{input type=select required="true" value=$brand.company_id name="brand[company_id]" rows=$company
                         valueColumn="company_id" labelColumn="company_name"}>
                         <span class="msgTip" data-message="error">不能为空</span>
-                        <{if !$brand.brand_id }>
-                        <button type="button" class="btn-link"
-                                href="<{link app=seller ctl=site_passport act=brand_aptitude}>?type=add"
-                                style="margin-top:10px;" data-toggle="tooltip" data-placement="right" title="需要重新填写相关资质">新增品牌持有者
-                        </button>
+                        <!--<{if !$brand.brand_id }>-->
+                        <!--<button type="button" class="btn-link"-->
+                                <!--href="<{link app=seller ctl=site_passport act=brand_aptitude}>?type=add"-->
+                                <!--style="margin-top:10px;" data-toggle="tooltip" data-placement="right" title="需要重新填写相关资质">新增品牌持有者-->
+                        <!--</button>-->
 
-                        <a href="<{link app=seller ctl=site_passport act=brand_aptitude}>?type=add" data-link="write_apt">请去填写公司相关资质</a>
-                        <{/if}>
+                        <!--<a href="<{link app=seller ctl=site_passport act=brand_aptitude}>?type=add" data-link="write_apt">请去填写公司相关资质</a>-->
+                        <!--<{/if}>-->
                     </div>
                 </div>
                 <div class="form-group">
