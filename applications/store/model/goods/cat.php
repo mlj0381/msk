@@ -256,9 +256,13 @@ class store_mdl_goods_cat extends dbeav_model {
     /**
      * 批量添加经营分类
      */
-    public function addCat($catId, $sellerId)
+    public function addCat($catId, $sellerId, $entry = false)
     {
+
         $catList = app::get('b2c')->model('goods_cat')->getList('*', array('cat_id|in' => $catId));
+        if($entry){
+            $catList[] = app::get('b2c')->model('goods_cat')->getRow('*', array('cat_id|in' => $catList[0]['parent_id']));
+        }
         foreach($catList as $value)
         {
             $value['seller_id'] = $sellerId;

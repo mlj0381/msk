@@ -74,7 +74,7 @@ class seller_ctl_site_passport extends seller_frontpage
         if (empty($params['vcode'])) {
             $this->splash('error', $login_url, '请输入验证码');
         }
-      
+
         /**
          * 润和接口 卖家登入  【查询卖家账户 - ISL231105】
          */
@@ -86,7 +86,7 @@ class seller_ctl_site_passport extends seller_frontpage
 //         	$seller	= array();
 //         	$seller['mobile'] = $result['result']['slAccount']['slTel'];
 //         	$seller['api_seller_id'] = $result['result']['slSeller']['epId'];
-        	
+
 //         	/* 用户账户信息 */
 //         	$account = array();
 //         	$account['login_account'] 	 = $params['uname'];
@@ -101,8 +101,8 @@ class seller_ctl_site_passport extends seller_frontpage
 //         	$account['api_seller']		 = $result['result']['slSeller']['epId'];
 //         	vmc::singleton('pam_passport_site_basic')->local_seller_rsyns($seller,$account);
 //         }
-       
-       
+
+
         //尝试登陆
         $seller_id = vmc::singleton('pam_passport_site_basic')->login($account_data, $params['vcode'], $msg, 'sellers');
         if (!$seller_id) {
@@ -356,14 +356,14 @@ class seller_ctl_site_passport extends seller_frontpage
          *
          */
         extract($post);
-       /* if (!vmc::singleton('seller_user_vcode')->verify($smscode, $pam_account['mobile'], 'signup')) {
+        /* if (!vmc::singleton('seller_user_vcode')->verify($smscode, $pam_account['mobile'], 'signup')) {
+             $this->splash('error', $signup_url, '手机短信验证码不正确');
+         }*/
+
+        if (!vmc::singleton('b2c_user_smscode')->bool_sms($post['pam_account']['mobile'], $post['smscode'], 'signup')) {
             $this->splash('error', $signup_url, '手机短信验证码不正确');
-        }*/
-     
-        if ( !vmc::singleton('b2c_user_smscode')->bool_sms($post['pam_account']['mobile'],$post['smscode'],'signup')) {
-        	$this->splash('error', $signup_url, '手机短信验证码不正确');
         }
-        
+
         if (!$this->passport_obj->check_signup($post, $msg)) {
             $this->splash('error', $signup_url, $msg);
         }
@@ -391,9 +391,8 @@ class seller_ctl_site_passport extends seller_frontpage
         if (!vmc::singleton('seller_user_vcode')->verify($smscode, $pam_account['mobile'], 'signup')) {
             $this->splash('error', '', '手机短信验证码不正确');
         }
-        
-        
-        
+
+
         $this->splash('success', '', '验证成功');
     }
 
@@ -465,18 +464,18 @@ class seller_ctl_site_passport extends seller_frontpage
             }
         }
 
-     	$msg = $this->passport_obj->get_login_account_type($mobile);
+        $msg = $this->passport_obj->get_login_account_type($mobile);
         if ($msg != 'mobile') {
             $this->splash('error', null, '错误的手机格式');
         }
-        
-    	$smscode_obj = vmc::singleton('b2c_user_smscode');
-		$smscode = $smscode_obj->send_smscode($mobile,'signup',$msg);
-		if($smscode){
-			$this->splash('success', $smscode, '短信已发送');
-		}else{
-			$this->splash('error', null, $msg);
-		}
+
+        $smscode_obj = vmc::singleton('b2c_user_smscode');
+        $smscode = $smscode_obj->send_smscode($mobile, 'signup', $msg);
+        if ($smscode) {
+            $this->splash('success', $smscode, '短信已发送');
+        } else {
+            $this->splash('error', null, $msg);
+        }
     }
 
 
@@ -499,16 +498,16 @@ class seller_ctl_site_passport extends seller_frontpage
             if (empty($seller)) {
                 $this->splash('error', $redirect, '不存在的用户');
             }
-            
-             /* if (!vmc::singleton('seller_user_vcode')->verify($smscode, $pam_account['mobile'], 'signup')) {
+
+            /* if (!vmc::singleton('seller_user_vcode')->verify($smscode, $pam_account['mobile'], 'signup')) {
+               $this->splash('error', $redirect, '手机短信验证码不正确');
+           }  */
+
+            if (!vmc::singleton('b2c_user_smscode')->bool_sms($pam_account['mobile'], $smscode, 'signup')) {
                 $this->splash('error', $redirect, '手机短信验证码不正确');
-            }  */
-          
-            if (!vmc::singleton('b2c_user_smscode')->bool_sms($pam_account['mobile'],$smscode,'signup')) {
-            	$this->splash('error', $redirect, '手机短信验证码不正确');
             }
-            
-            
+
+
             if ($pam_account['login_password'] != $pam_account['psw_confirm']) {
                 $this->splash('error', $redirect, '确认密码输入不正确');
             }
@@ -535,7 +534,6 @@ class seller_ctl_site_passport extends seller_frontpage
         }
         $this->splash('success', $forward, '退出登录成功');
     }
-
 
 
     // 入驻
@@ -698,7 +696,7 @@ class seller_ctl_site_passport extends seller_frontpage
         $this->pagedata['company'] = app::get('base')->model('company_seller')->getList('company_id, company_name',
             array('uid' => $this->seller['seller_id'], 'from' => 1));
         $this->pagedata['type'] = 'entry';
-        $this->display('ui/brand_add_modal.html');
+        $this->display('ui/entry_brand_add.html');
     }
 
     private function _post_brand($post)
@@ -742,12 +740,14 @@ class seller_ctl_site_passport extends seller_frontpage
     }
 
     //选择商品类目填写相关资质
-    public function write_aptitude($cat_id = 0)
+    public function write_aptitude($cat_id = 0, $step = 0)
     {
         if (!is_numeric($cat_id)) $cat_id = 0;
         $this->pagedata['aptitude'] = app::get('b2c')->model('cat_aptitudes')->getRow('*', array('cat_id' => $cat_id));
         $this->pagedata['cat'] = app::get('store')->model('goods_cat')->getRow('*', array('cat_id' => $cat_id, 'seller_id' => $this->seller['seller_id']));
         $this->pagedata['type'] = 'entry';
+        $this->pagedata['step'] = $step;
+        $this->pagedata['cat_id'] = $cat_id;
         $this->display('site/goods/write_aptitude.html');
     }
 
@@ -756,15 +756,20 @@ class seller_ctl_site_passport extends seller_frontpage
      */
     public function saveAptitude()
     {
+        $redirect = $this->gen_url(array('app' => 'seller', 'ctl' => 'site_passport', 'act' => 'entry', 'args0' => $_POST['step'] - 1));
         if (!$_POST) {
             $this->splash('error', '', '非法请求');
         }
-        $updateValue = array('extra' => $_POST['cat']);
-        $filter = array('id' => $_POST['id']);
-        if (!app::get('store')->model('goods_cat')->update($updateValue, $filter)) {
-            $this->splash('error', '', '添加失败');
+        $data = array('cat_id' => $_POST['cat_id'], 'extra' => $_POST['cat'], 'seller_id' => $this->seller['seller_id']);
+        if (!app::get('store')->model('goods_cat')->addCat($_POST['cat_id'], $this->seller['seller_id'], 'entry')) {
+            $this->splash('error', $redirect, '添加失败');
         }
-        $this->splash('success', '', '添加成功');
+        $filter = app::get('store')->model('goods_cat')->getList('id', array('cat_id' => $_POST['cat_id'], 'seller_id' => $this->seller['seller_id']), '0', '1', 'id desc');
+        if (!app::get('store')->model('goods_cat')->update($data, $filter[0])) {
+
+            $this->splash('error', $redirect, '添加失败');
+        }
+        $this->splash('success', $redirect, '添加成功');
     }
 
 }
