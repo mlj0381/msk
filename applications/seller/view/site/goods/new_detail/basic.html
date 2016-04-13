@@ -10,10 +10,10 @@
             <!-- identity="store" seller=$seller_id -->
             <{input type="category" identity="store" seller=$seller_id name="goods[category][cat_id]"
             value=$goods.category.cat_id callback="callBack" required="true"}>
-            <a class="addNewCard btn btn-danger btn-sm" title="新增三级分类" data-type="breed" data-toggle="modal"
+            <a class="addNewCard btn btn-danger btn-sm add_three_cat hide" title="新增三级分类" data-type="breed" data-toggle="modal"
                data-target="#write_apt_modal">新增三级分类
             </a>
-            <a class="addNewCard btn btn-danger btn-sm" title="新增产品特征" data-type="feature" data-toggle="modal"
+            <a class="addNewCard btn btn-danger btn-sm add_feature hide" title="新增产品特征" data-type="feature" data-toggle="modal"
                data-target="#write_apt_modal">新增产品特征
             </a>
         </div>
@@ -264,6 +264,18 @@
     </div>
 </div>
 <script>
+    //商品类目-三级分类新增，产品特征新增
+    $('.cat_select').on('change','select',function(e){
+        var target = e.target || e.srcElement;
+        var index = $('.cat_select select').index(this);
+        if(index==1){
+            $('.add_three_cat').removeClass('hide');
+            $('.add_feature').addClass('hide');
+        }else if(index ==2){
+            $('.add_feature').removeClass('hide');
+            $('.add_three_cat').addClass('hide');
+        }
+    })
     //添加新分类
     $("#write_apt_modal").on("hidden.bs.modal", function () {
         $(this).removeData("bs.modal");  //关闭时清空数据

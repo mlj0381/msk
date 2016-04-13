@@ -71,6 +71,24 @@ $remote['b2c_buyer_common'] = array(
     ),
 
     'response' => array(
+        'totalCount' => array(
+            'name' => '总条数',
+            'column' => 'count',
+            'type' => 'String',
+            'require' => false,
+        ),
+        'totalPage' => array(
+            'name' => '总页数',
+            'column' => 'total_page',
+            'type' => 'String',
+            'require' => false,
+        ),
+        'pageNo' => array(
+            'name' => '当前页数',
+            'column' => 'pageNo',
+            'type' => 'String',
+            'require' => false,
+        ),
         'slBuyerList' => array(
             'name' => '买手买家列表',
             'column' => 'slBuyerList',
@@ -145,7 +163,7 @@ $remote['b2c_buyer_common'] = array(
         ),
         'buyerAddr' => array(
             'name' => '买家地址',
-            'column' => 'buyerAddr',
+            'column' => 'address',
             'type' => 'String',
         ),
         'busiTel' => array(

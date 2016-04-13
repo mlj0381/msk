@@ -83,16 +83,33 @@ class freeze_ctl_site_center extends freeze_frontpage
             );
         }
 
+
         /**
          * 调用润和接口
          */
-        $request = array(
-            'buyerFlag' => '1',
-            'pageCount' => $limit,
-            'pageNo' => $page,
-        );
-        $result = app::get('freeze')->rpc('querybuyer')->request($request);
-        $api_member_list = $result['result']['slBuyerList'];
+        if($status == 'all') {
+            $request = array(
+                'pageCount' => $limit,
+                'pageNo' => $page,
+            );
+            $result = app::get('b2c')->rpc('buyer_common')->request($request);
+            $api_member_list = $result['result']['slBuyerList'];
+
+            $count = $result['result']['count'];
+        }else{
+            $houseCode = $this->user_obj->get_members_data(array('freeze'=>'code'))['freeze']['code'];
+            $request = array(
+                'houseCode' => $houseCode,
+                'buyerFlag' => '1',
+                'pageCount' => $limit,
+                'pageNo' => $page,
+                'applyStatus' => $status,
+            );
+            $result = app::get('freeze')->rpc('querybuyer')->request($request);
+            $api_member_list = $result['result']['slBuyerList'];
+
+            $count = $result['result']['count'];
+        }
         $buyer_id = array();
         foreach($api_member_list as $member)
         {
@@ -105,9 +122,7 @@ class freeze_ctl_site_center extends freeze_frontpage
         {
             $filter['bm.buyer_id|in'] = implode(',',$buyer_id);
         }
-        $count = count(app::get('freeze')->rpc('querybuyer')->request(array( 'buyerFlag' => '1'))['result']['slBuyerList']);
         //end
-
 
         //买家信息
         $local_member_list = $mdl_freeze_member->get_freeze_member('bm.*,fm.status,fm.apply_type', $filter);
@@ -118,8 +133,17 @@ class freeze_ctl_site_center extends freeze_frontpage
         $member_list = array();
         foreach($api_member_list as $api_member)
         {
-            $member_list[] = array_merge($api_member,$merge_local_list[$api_member['buyer_id']]);
+            if($merge_local_list[$api_member['buyer_id']]) {
+                $member_list[] = array_merge($api_member,$merge_local_list[$api_member['buyer_id']]);
+            }else{
+                $member_list[] = $api_member;
+            }
+
         }
+
+
+
+
 
         //查询出绑定状态
         $bind_status = $mdl_freeze_member->getList('*', array('member_id' => $member_ids));
