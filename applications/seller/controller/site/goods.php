@@ -851,7 +851,8 @@ class seller_ctl_site_goods extends seller_frontpage
     {
         $params = $this->_request->get_get();
         if(empty($params)) $this->splash('error', '', '非法请求');
-        $this->display('site/goods/add-new-cat.html');
+        $this->display('site/goods/add-new-pack.html');
+        //$this->display('site/goods/add-new-pack.html');
     }
 
     public function saveNewCard()
