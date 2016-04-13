@@ -102,7 +102,7 @@ class freeze_ctl_site_center extends freeze_frontpage
                 'buyerFlag' => '1',
                 'pageCount' => $limit,
                 'pageNo' => $page,
-                'applyStatus' => $status,
+                'applyStatus' => $status=='0'?1:2,
             );
             $result = app::get('freeze')->rpc('querybuyer')->request($request);
             $api_member_list = $result['result']['slBuyerList'];
@@ -112,9 +112,9 @@ class freeze_ctl_site_center extends freeze_frontpage
         $buyer_id = array();
         foreach($api_member_list as $member)
         {
-            if($member['buyerId'])
+            if($member['buyer_id'])
             {
-                $buyer_id[] =  "'".$member['buyerId']."'";
+                $buyer_id[] =  "'".$member['buyer_id']."'";
             }
         }
         if($buyer_id)
