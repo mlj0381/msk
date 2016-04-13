@@ -851,6 +851,38 @@ class seller_ctl_site_goods extends seller_frontpage
     {
         $params = $this->_request->get_get();
         if(empty($params)) $this->splash('error', '', '非法请求');
+        $this->display('site/goods/add-new-cat.html');
+    }
 
+    public function saveNewCard()
+    {
+        $parent = explode('-', $_POST['catPath']);
+        $mdl_cat = app::get('b2c')->model('goods_cat');
+        $cat = array(
+            array('classesCode', 'classesName'),
+            array('machiningCode', 'machiningName'),
+            array('breedCode', 'breedName'),
+//            array('featureCode', 'featureName'),
+//            array('weightName', 'weightVal'),
+        );
+
+        foreach($parent as $key => $value){
+            $cat_name = $mdl_cat->getRow('cat_name', array('cat_id' => $value));
+            $apiData[$cat[$key][0]] = $value;
+            $apiData[$cat[$key][1]] = $cat_name['cat_name'];
+        }
+        $addNewType = (string)$parent - 2;
+        $apiData['newFlag'] = $addNewType;
+        $apiData['crtId'] = '1';
+        if($addNewType == '3'){
+            //查询特征名称
+            $apiData['weightName'] = $_POST['num'];
+            $apiData['weightVal'] = $_POST['name'];
+        }
+        $result = $this->app->rpc('apply_for_packaging')->request($apiData);
+        if($result['start']){
+            $this->splash('success', '', '添加成功');
+        }
+        $this->splash('error', '', '添加失败');
     }
 }
