@@ -22,11 +22,15 @@ class b2c_ctl_site_checkout extends b2c_frontpage
         //$this->app->member_id  已赋值
         $this->cart_stage = vmc::singleton('b2c_cart_stage');
         $this->cart_stage->set_member_id($this->buyer_id ?: $this->app->member_id);
+        if(!$this->app->member_id) {
+            $this->app->member_id = $this->member['member_id'];
+        }
         $this->set_tmpl('checkout');
     }
     //checkout 主页
     public function index($fastbuy = false, $params)
     {
+
         $blank_url = $this->gen_url(array(
             'app' => 'b2c',
             'ctl' => 'site_cart',
