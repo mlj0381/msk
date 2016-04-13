@@ -360,7 +360,7 @@ class seller_ctl_site_passport extends seller_frontpage
             $this->splash('error', $signup_url, '手机短信验证码不正确');
         }*/
      
-        if ( !vmc::singleton('b2c_user_smscode')->bool_sms($post['pam_account']['mobile'],$post['smscode'],'sms')) {
+        if ( !vmc::singleton('b2c_user_smscode')->bool_sms($post['pam_account']['mobile'],$post['smscode'],'signup')) {
         	$this->splash('error', $signup_url, '手机短信验证码不正确');
         }
         
