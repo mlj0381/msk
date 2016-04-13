@@ -9,11 +9,11 @@
         <div class="col-xs-8 cat_select">
             <!-- identity="store" seller=$seller_id -->
             <{input type="category" identity="store" seller=$seller_id name="goods[category][cat_id]"
-            value=$goods.category.cat_id callback="callBack"}>
-            <a class="addNewCard btn btn-danger btn-sm" title="新增三级分类" data-type="breed" data-toggle="modal"
+            value=$goods.category.cat_id callback="callBack" required="true"}>
+            <a class="addNewCard btn btn-danger btn-sm add_three_cat hide" title="新增三级分类" data-type="breed" data-toggle="modal"
                data-target="#write_apt_modal">新增三级分类
             </a>
-            <a class="addNewCard btn btn-danger btn-sm" title="新增产品特征" data-type="feature" data-toggle="modal"
+            <a class="addNewCard btn btn-danger btn-sm add_feature hide" title="新增产品特征" data-type="feature" data-toggle="modal"
                data-target="#write_apt_modal">新增产品特征
             </a>
         </div>
@@ -43,13 +43,12 @@
             <div class="form-item feature">
                 <{foreach from=$api_cat.feature item=item}>
                 <span class="feature<{$item.parent}>">
-                    <input data-type="<{$item.parent}>
+                    <input data-type="<{$item.parent}>"
                            <{if in_array($item.featureCode, $goods.api_spec_desc.feature)}>checked<{/if}>
                            type="checkbox" name=name value="<{$item.featureCode}>"><{$item.featureName}>
-                <a class="addNewCard" data-type="feature"
-                   data-toggle="modal" data-target="#write_apt_modal" class="warning"><i
-                        class="text-danger icon-exclamation-sign"> </i>
-                    <small>+</small>
+                <a class="addNewCard btn btn-default btn-xs" data-type="feature" title="添加净重"
+                   data-toggle="modal" data-target="#write_apt_modal">
+                    <i class="icon-plus"></i>
                 </a>
                 </span>
 
@@ -68,10 +67,10 @@
                     <input data-type="<{$item.parent}>" type="checkbox"
                            <{if in_array($item.weightCode, $goods.api_spec_desc.weight)}>checked<{/if}>
                            name=name value="<{$item.weightCode}>"><{$item.weightName}>
-                    <a class="addNewCard" data-type="weight"
-                       data-toggle="modal" data-target="#write_apt_modal" class="warning"><i
-                            class="text-danger icon-exclamation-sign"> </i>
-                        <small>+</small>
+
+                    <a class="addNewCard btn btn-default btn-xs" data-type="feature" title="添加包装"
+                       data-toggle="modal" data-target="#write_apt_modal">
+                        <i class="icon-plus"></i>
                     </a>
                 </span>
                 <{/foreach}>
@@ -109,11 +108,10 @@
         </div>
     </div>
     <div class="form-group">
-        <label class="col-xs-2 control-label"><span>商品品牌</span></label>
+        <label class="col-xs-2 control-label"><span class="text-danger">*</span><span>商品品牌</span></label>
 
-        <div class="col-xs-5">
-            <{input type=select required="true" name="goods[brand_id]" rows=$params.brand valueColumn="brand_id" labelColumn="brand_name" value=$goods.brand_id}>
-            <span class="msgTip" data-message="error"></span>
+        <div class="col-xs-5 pro_brand">
+            <{input type=select name="goods[brand_id]" rows=$params.brand valueColumn="brand_id" labelColumn="brand_name" value=$goods.brand_id}>
         </div>
     </div>
     <div class="form-group">
@@ -122,15 +120,13 @@
         <div class="col-xs-5">
             <input type="text" value="<{$goods.gid}>" remote="<{link app=seller ctl=site_goods act=check_gid}>"
             <{if $goods.gid}> readonly=true<{/if}>name="goods[gid]" placeholder="不填则系统自动生成" class="form-control" >
-            <span class="msgTip" data-message="error"></span>
         </div>
     </div>
     <div class="form-group">
         <label class="col-xs-2 control-label"><span class="text-danger">*</span><span>商品名称</span></label>
 
         <div class="col-xs-5">
-            <input type="text" name="goods[name]" value="<{$goods.name}>" id='goods_name' placeholder="请输入商品名称" class="form-control"
-                   required="true">
+            <input type="text" name="goods[name]" value="<{$goods.name}>" id='goods_name' placeholder="请输入商品名称" class="form-control">
         </div>
     </div>
     <div class="form-group">
@@ -268,6 +264,18 @@
     </div>
 </div>
 <script>
+    //商品类目-三级分类新增，产品特征新增
+    $('.cat_select').on('change','select',function(e){
+        var target = e.target || e.srcElement;
+        var index = $('.cat_select select').index(this);
+        if(index==1){
+            $('.add_three_cat').removeClass('hide');
+            $('.add_feature').addClass('hide');
+        }else if(index ==2){
+            $('.add_feature').removeClass('hide');
+            $('.add_three_cat').addClass('hide');
+        }
+    })
     //添加新分类
     $("#write_apt_modal").on("hidden.bs.modal", function () {
         $(this).removeData("bs.modal");  //关闭时清空数据
