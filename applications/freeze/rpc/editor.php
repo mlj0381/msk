@@ -209,14 +209,14 @@ $remote['freeze_editor'] = array(
             'default' => '',
             'require' => false,
         ),
-        'wechat' => array(
+        'WeChat' => array(
             'name' => '微信号码',
             'column' => 'wechat',
             'type' => 'String',
             'default' => '',
             'require' => false,
         ),
-        'qq' => array(
+        'QQ' => array(
             'name' => 'QQ号码',
             'column' => 'qq',
             'type' => 'String',
