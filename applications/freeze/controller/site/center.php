@@ -94,7 +94,6 @@ class freeze_ctl_site_center extends freeze_frontpage
             );
             $result = app::get('b2c')->rpc('buyer_common')->request($request);
             $api_member_list = $result['result']['slBuyerList'];
-
             $count = $result['result']['count'];
         }else{
             $houseCode = $this->user_obj->get_members_data(array('freeze'=>'code'))['freeze']['code'];
@@ -138,9 +137,10 @@ class freeze_ctl_site_center extends freeze_frontpage
             }else{
                 $member_list[] = $api_member;
             }
-
         }
 
+
+    
 
 
 
