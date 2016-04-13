@@ -43,7 +43,7 @@
             <div class="form-item feature">
                 <{foreach from=$api_cat.feature item=item}>
                 <span class="feature<{$item.parent}>">
-                    <input data-type="<{$item.parent}>"
+                    <input data-type="<{$item.parent}>
                            <{if in_array($item.featureCode, $goods.api_spec_desc.feature)}>checked<{/if}>
                            type="checkbox" name=name value="<{$item.featureCode}>"><{$item.featureName}>
                 <a class="addNewCard" data-type="feature"
@@ -103,7 +103,7 @@
             <{*input type=region name="goods[stock]" detail=1 value=$goods.stock required="true"*}>
             <div class="form-item logistics">
                 <{foreach from=$params.logistics item=item}>
-                <span><input type="checkbox" value="<{$item.logiAreaCode}>"> <{$item.logiAreaName}></span>
+                <span><input type="checkbox" value="<{$item.logiAreaCode}>" > <{$item.logiAreaName}></span>
                 <{/foreach}>
             </div>
         </div>
@@ -131,7 +131,7 @@
         <label class="col-xs-2 control-label"><span class="text-danger">*</span><span>商品名称</span></label>
 
         <div class="col-xs-5">
-            <input type="text" name="goods[name]" value="<{$goods.name}>" placeholder="请输入商品名称" class="form-control"
+            <input type="text" name="goods[name]" value="<{$goods.name}>" id='goods_name' placeholder="请输入商品名称" class="form-control"
                    required="true">
         </div>
     </div>
