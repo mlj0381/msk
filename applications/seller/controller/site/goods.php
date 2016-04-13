@@ -846,4 +846,70 @@ class seller_ctl_site_goods extends seller_frontpage
         $this->splash('error', $redirect, '操作失败');
     }
 
+
+    public function addNewCard()
+    {
+        $params = $this->_request->get_get();
+        if(empty($params)) $this->splash('error', '', '非法请求');
+        $tmp = 'add-new-cat';
+        $label = '品种';
+        switch($params['type'])
+        {
+            case 'pack':
+                $label = '包装';
+                $tmp = 'add-new-pack';
+                break;
+            case 'weight':
+                $label = '净重';
+                break;
+            case 'feature':
+                $label = '特征';
+                break;
+        }
+        $this->pagedata['label'] = $label;
+        $this->pagedata['type'] = $params['type'];;
+        $this->pagedata['catPath'] = $params['cat'];
+        $this->pagedata['parentLabel'] = $params['label'];
+        $this->display('site/goods/' . $tmp . '.html');
+    }
+
+    public function saveNewCard()
+    {
+        $parent = explode('-', $_POST['catPath']);
+        $mdl_cat = app::get('b2c')->model('goods_cat');
+        $cat = array(
+            array('classesCode', 'classesName'),
+            array('machiningCode', 'machiningName'),
+            array('breedCode', 'breedName'),
+//            array('featureCode', 'featureName'),
+//            array('weightName', 'weightVal'),
+        );
+
+        foreach($parent as $key => $value){
+            $cat_name = $mdl_cat->getRow('cat_name, addon', array('cat_id' => $value));
+            $apiData[$cat[$key][0]] = $cat_name['addon'];
+            $apiData[$cat[$key][1]] = $cat_name['cat_name'];
+        }
+
+        $addNewType = (string)(count($parent) - 1);
+        $apiData['newFlag'] = $addNewType;
+        $apiData['crtId'] = '1';
+        if($addNewType == '3'){
+            //净重
+            $apiData['weightName'] = $_POST['num'];
+            $apiData['weightVal'] = $_POST['name'];
+        }elseif($addNewType == '2'){
+            //特征
+            $apiData['featureName'] = $_POST['name'];
+        }elseif($addNewType == '1'){
+            //特征
+            $apiData['breedName'] = $_POST['name'];
+        }
+
+        $result = $this->app->rpc('apply_for_packaging')->request($apiData);
+        if($result['status']){
+            $this->splash('success', '', '添加成功');
+        }
+        $this->splash('error', '', '添加失败');
+    }
 }

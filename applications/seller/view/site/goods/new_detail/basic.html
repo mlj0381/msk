@@ -6,10 +6,16 @@
     <div class="form-group">
         <label class="col-xs-2 control-label"><span class="text-danger">*</span><span>商品类目</span></label>
 
-        <div class="col-xs-8">
+        <div class="col-xs-8 cat_select">
             <!-- identity="store" seller=$seller_id -->
             <{input type="category" identity="store" seller=$seller_id name="goods[category][cat_id]"
             value=$goods.category.cat_id callback="callBack"}>
+            <a class="addNewCard btn btn-danger btn-sm" title="新增三级分类" data-type="breed" data-toggle="modal"
+               data-target="#write_apt_modal">新增三级分类
+            </a>
+            <a class="addNewCard btn btn-danger btn-sm" title="新增产品特征" data-type="feature" data-toggle="modal"
+               data-target="#write_apt_modal">新增产品特征
+            </a>
         </div>
     </div>
 
@@ -39,8 +45,16 @@
                 <span class="feature<{$item.parent}>">
                     <input data-type="<{$item.parent}>"
                            <{if in_array($item.featureCode, $goods.api_spec_desc.feature)}>checked<{/if}>
-                           type="checkbox" name=name value="<{$item.featureCode}>"><{$item.featureName}></span>
+                           type="checkbox" name=name value="<{$item.featureCode}>"><{$item.featureName}>
+                <a class="addNewCard" data-type="feature"
+                   data-toggle="modal" data-target="#write_apt_modal" class="warning"><i
+                        class="text-danger icon-exclamation-sign"> </i>
+                    <small>+</small>
+                </a>
+                </span>
+
                 <{/foreach}>
+
             </div>
         </div>
     </div>
@@ -54,8 +68,14 @@
                     <input data-type="<{$item.parent}>" type="checkbox"
                            <{if in_array($item.weightCode, $goods.api_spec_desc.weight)}>checked<{/if}>
                            name=name value="<{$item.weightCode}>"><{$item.weightName}>
+                    <a class="addNewCard" data-type="weight"
+                       data-toggle="modal" data-target="#write_apt_modal" class="warning"><i
+                            class="text-danger icon-exclamation-sign"> </i>
+                        <small>+</small>
+                    </a>
                 </span>
                 <{/foreach}>
+
             </div>
         </div>
     </div>
@@ -72,6 +92,7 @@
                            value="<{$item.normsCode}>"><{$item.normsName}>
                 </span>
                 <{/foreach}>
+                <span class="msgTip" data-message="error"></span>
             </div>
         </div>
     </div>
@@ -240,7 +261,48 @@
 
 </textarea>
 
+<!-- 新增类目modal -->
+<div class="modal fade" id="write_apt_modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+
+        </div>
+    </div>
+</div>
 <script>
+    //添加新分类
+    $("#write_apt_modal").on("hidden.bs.modal", function () {
+        $(this).removeData("bs.modal");  //关闭时清空数据
+    });
+
+    var addNewCard = function ($_self) {
+        var url = '<{link app=seller ctl=site_goods act=addNewCard}>?';
+        var type = $_self.attr('data-type');
+        var parent = $_self.parents('span');
+        switch (type) {
+            case 'breed':
+                var cat = selfCat().split('-');
+
+                if (cat.length == 3 && cat[2] == '') {
+                    url += 'type=' + type + '&cat=' + cat[0];
+                }
+                break;
+            case 'feature':
+                url += 'type=' + type + '&cat=' + selfCat();
+                break;
+            case 'weight':
+            case 'pack':
+                url += 'type=' + type + '&cat=' + selfCat() + '-' + parent.find('input').attr('data-product')+ '&label=' + parent.text();
+                break;
+        }
+        $_self.attr('href', url);
+    };
+
+    $('.addNewCard').click(function () {
+        addNewCard($(this));
+
+    });
+    //
     /*
      var callBack = function (cat_id) {
      var url = "<{link app=seller ctl=site_goods act=getProp}>";
@@ -266,21 +328,28 @@
      };
      */
 
-    var htmlFormat = function (re, key, name, idx, result, product) {
+    var htmlFormat = function (re, key, name, idx, result, product, catType, label) {
         var html = '';
         var text = '';
         var product_id = '';
+        catType = catType ? catType : 'breed';
         if (result) {
-            text = result + '/';
+            text = result + '-';
         }
         if (product) {
             product_id = product + '-';
         }
-
+        var addNew = '<a class="addNewCard btn btn-default btn-xs" title="新增' + label + '" data-type="' + catType + '"' +
+                'data-toggle="modal" data-target="#write_apt_modal"><i class="icon-plus"></i></a>';
+        if (catType == 'addPack') {
+            addNew = '';
+        }
         for (var i in re.data) {
-            html += $.VMC.format('<span class="' + name + idx + '"><input data-type="' + idx + '" ' +
-                    'data-product="' + product_id + re.data[i][key[0]] + '"' +
-                    ' type="checkbox" name=name value="{0}">' + text + '{1}</span>', re.data[i][key[0]], re.data[i][key[1]]);
+            html += $.VMC.format('<span class="' + name + idx + '">' +
+                    '<input data-type="' + idx + '" data-product="' + product_id + re.data[i][key[0]] + '"' +
+                    ' type="checkbox" name=name value="{0}">' + text + '{1}' + addNew +
+                    '</span>'
+                    , re.data[i][key[0]], re.data[i][key[1]]);
         }
         return html;
     };
@@ -289,6 +358,14 @@
         var apiCatArray = [];
         $('.api-cat select').each(function (idx, item) {
             apiCatArray[idx] = $(item).find('option:selected').attr('apiCatId');
+        });
+        return apiCatArray.join('-');
+    };
+
+    var selfCat = function () {
+        var apiCatArray = [];
+        $('.api-cat select').each(function (idx, item) {
+            apiCatArray[idx] = $(item).find('option:selected').val();
         });
         return apiCatArray.join('-');
     };
@@ -309,11 +386,22 @@
         $.post(url, data, function (re) {
             if (!re.data) return;
             $('.feature').empty();
-            var pack = htmlFormat(re, ['featureCode', 'featureName'], 'feature');
+//            var data = {
+//                key: ['featureCode', 'featureName'],
+//                name: 'feature',
+//                idx: idx,
+//                result: result,
+//                product : idx,
+//                catType : 'weight'
+//            };
+            var pack = htmlFormat(re, ['featureCode', 'featureName'], 'feature', '', '', '', 'weight', '净重');
             $('.api_cat').val(apiCatId);
             $('.feature').append($(pack));
             $('.feature input').click(function () {
                 weight($(this));
+            });
+            $('.feature .addNewCard').click(function () {
+                addNewCard($(this));
             });
         });
     };
@@ -369,12 +457,15 @@
                     product = $(obj).attr('data-product');
                 }
             });
-            var pack = htmlFormat(re, ['normsCode', 'normsName'], 'pack', idx, result, product);
+            var pack = htmlFormat(re, ['normsCode', 'normsName'], 'pack', idx, result, product, 'addPack');
             $('.pack').append($(pack));
             //添加商品规格信息spec_desc
             $('.pack input:last').click(function () {
                 addSpecDesc($(this));
             });
+//            $('.pack .addNewCard:last').click(function () {
+//                addNewCard($(this));
+//            });
         });
     };
     var weight = function (obj) {
@@ -402,12 +493,24 @@
                     return false;
                 }
             });
-
-            var weight = htmlFormat(re, ['weightCode', 'weightName'], 'weight', idx, result, idx);
+            // key, name, idx, result, product, catType
+//            var data = {
+//                key: ['weightCode', 'weightName'],
+//                name: 'weight',
+//                idx: idx,
+//                result: result,
+//                product : idx,
+//                catType : 'pack'
+//            };
+            var weight = htmlFormat(re, ['weightCode', 'weightName'], 'weight', idx, result, idx, 'pack', '包装');
+            //var weight = htmlFormat(re, data);
             $('.weight').append($(weight));
 
             $('.weight input:last').click(function () {
                 pack($(this));
+            });
+            $('.weight .addNewCard:last').click(function () {
+                addNewCard($(this));
             });
         });
     };
@@ -441,7 +544,7 @@
             //var productId = $(this).attr('data-product');
             var logistics = createProduct('logistics');
             var pack = createProduct('pack');
-            if(!logistics){
+            if (!logistics) {
                 alert('请选择物流区')
             }
             if (!pack) {
@@ -459,15 +562,15 @@
                 var html = '';
                 var price = '';
                 for (var i in result.data) {
-                    for(var j in result.data[i].product_price){
+                    for (var j in result.data[i].product_price) {
                         console.log(result.data[i].product_price)
                         price += $.VMC.format($price, result.data[i].product_price[j].boxMin, result.data[i].product_price[j].boxMax, i, result.data[i].product_price[j].priceOfBox);
-                        
+
                     }
-                    
+
                     var feature = $('.feature input[value="' + result.data[i].feature + '"]').parent('span').text();
                     var pack = $('.pack input[value="' + result.data[i].pack + '"]').parent('span').text();
-                    html += $.VMC.format($tmp, result.data[i].name, result.data[i].bn, i, feature, pack, price); 
+                    html += $.VMC.format($tmp, result.data[i].name, result.data[i].bn, i, feature, pack, price);
                 }
                 $('.spec_table tbody').append(html);
             });
@@ -483,7 +586,7 @@
                     index++;
                 }
             });
-            return {logistics : logistics};
+            return {logistics: logistics};
         };
     });
 
