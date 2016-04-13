@@ -33,6 +33,8 @@
             <menu action='setting' controller="sms" display="true" order='50' permission='performance'>短信平台配置</menu>
             <menu action='index' controller="admin_crontab" app="system" display="true" order='50' permission='performance'>计划任务管理</menu>
             <menu action='index' controller="admin_queue" app="system" display="true" order='50' permission='performance'>队列管理</menu>
+            <menu action="index" controller="admin_dlytype" app="b2c" display="true"  order='60' >配送方式</menu>
         </menugroup>
     </workground>
+
 </desktop>
