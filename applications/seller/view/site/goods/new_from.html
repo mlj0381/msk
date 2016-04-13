@@ -12,7 +12,7 @@
     <div class="page-header">
         <h1><{if $goods}>编辑商品<{else}>添加商品<{/if}></h1>
     </div>
-    <form class="form-horizontal addgoods_form" action="<{link app=seller ctl=site_goods act=save}>" method="post" id="goods_edit_form" data-module="validator">
+    <form class="form-horizontal addgoods_form" action="<{link app=seller ctl=site_goods act=save}>" method="post" id="goods_edit_form">
         <div class="goods_tabbox">
             <!-- 商品基本信息 -->
             <{include file="site/goods/new_detail/basic.html"}>
@@ -69,47 +69,62 @@ $("#goods_gid").blur(function() {
 
 
 //提交表单添加商品
-//$(".addgoods_form").submit(function() {
-//    var cat_value = $('.cat_select select:last').find('option:selected').attr('value');
-//    if(cat_value == -1){
-//        alert('请选择商品目录');
-//        return
-//    };
-//    var feature_ck = $('div.feature input[type=checkbox]:checked').size();
-//    console.log(feature_ck);
-//    if(feature_ck < 1){
-//        alert('请至少选择一个商品特征');
-//        return
-//    };
-//    var weight_ck = $('div.weight input[type=checkbox]:checked').size();
-//    if(weight_ck < 1){
-//        alert('请至少选择一个商品净重');
-//        return
-//    };
-//    var pack_ck = $('div.pack input[type=checkbox]:checked').size();
-//    if(pack_ck < 1){
-//        alert('请至少选择一个商品包装');
-//        return
-//    };
-//    var logistics_ck = $('div.logistics input[type=checkbox]:checked').size();
-//    if(logistics_ck < 1){
-//        alert('请至少选择一个所在物流区');
-//        return
-//    };
-//    var goods_name = $.trim($('#goods_name').val());
-//    if(!goods_name){
-//        alert('请填写商品名称');
-//        return
-//    };
-//    var pro_img = $('.pro_imgs').find('.fileboxs').size();
-//    if(pro_img < 2){
-//        alert('请添加产品相册');
-//        return
-//    }
-//
-//
-//    return false;
-//});
+function checkSubmit(){
+    var cat_value = $('.cat_select select:last').find('option:selected').attr('value');
+    if(cat_value == -1){
+        alert('请选择商品目录');
+        $('.cat_select select:last').focus();
+        return false;
+    };
+    var feature_ck = $('div.feature input[type=checkbox]:checked').size();
+    if(feature_ck < 1){
+        alert('请至少选择一个商品特征');
+        $('div.feature input[type=checkbox]:eq(0)').focus();
+        return false;
+    };
+    var weight_ck = $('div.weight input[type=checkbox]:checked').size();
+    if(weight_ck < 1){
+        alert('请至少选择一个商品净重');
+        $('div.weight input[type=checkbox]:eq(0)').focus();
+        return false;
+    };
+    var pack_ck = $('div.pack input[type=checkbox]:checked').size();
+    if(pack_ck < 1){
+        alert('请至少选择一个商品包装');
+        $('div.pack input[type=checkbox]:eq(0)').focus();
+        return false;
+    };
+    var logistics_ck = $('div.logistics input[type=checkbox]:checked').size();
+    if(logistics_ck < 1){
+        alert('请至少选择一个所在物流区');
+        $('div.logistics input[type=checkbox]:eq(0)').focus();
+        return false;
+    };
+    var pro_brand = $('.pro_brand').find('select').find('option:selected').val();
+    if(pro_brand == -1){
+        alert('请至少选择商品品牌');
+        $('.pro_brand').find('select').focus();
+        return false;
+    }
+    var goods_name = $.trim($('#goods_name').val());
+    if(!goods_name){
+        alert('请填写商品名称');
+        $('#goods_name').focus();
+        return false;
+    };
+    var pro_img = $('.pro_imgs').find('.pro_img_item').size();
+    if(pro_img < 1){
+        alert('请添加产品相册');
+        $('.file_input').focus();
+        return false;
+    }
+    return true;
+}
+
+$(".addgoods_form").submit(function() {
+   return checkSubmit();
+});
+
 
 </script>
 

@@ -68,7 +68,7 @@
                         <li>
                             <{$order.orderTime|cdate}>
                         </li>
-                        <li>订单编号:<a class="text-muted" href="<{link app=buyer ctl=site_goods act=detail args0=$order.order_id}>"><strong><{$order.orderCode}></strong></a></li>
+                        <li>订单编号:<a class="text-muted" href="<{link app=buyer ctl=site_goods act=detail args0=$order.orderId}>"><strong><{$order.orderCode}></strong></a></li>
                         <li>店铺:<a class="text-muted" href="#"><{$order.sellerName}></a></li>
                         <li class="opt-contact"><a class="text-muted" href="#">联系客服</a></li>
                     </ul>

@@ -30,6 +30,7 @@ class b2c_ctl_site_product extends b2c_frontpage {
     	$params = $_POST;
     	
     	$goods_data = $this->app->model('products')->getRow('goods_id,bn',array('product_id'=>$params['product_id']));
+    	//模拟数据
     	$goods_data['goods_id'] = 8;
     	
     	//成交记录
@@ -78,6 +79,7 @@ class b2c_ctl_site_product extends b2c_frontpage {
         $data_detail = $this->get_product_id($data_detail);
         //var_dump($data_detail);
        	//这个是获取价盘的----查询数据库操作
+       	//模拟数据
         $products_price_data = $this->get_product_price($this->addr_id, null, '012040101', '2');        
         
         $this->pagedata['buyer_id'] = vmc::singleton('buyer_user_object')->get_session();
@@ -222,6 +224,8 @@ class b2c_ctl_site_product extends b2c_frontpage {
     	if (date('w') < date('w', strtotime(date('Y-m-01')))){
     		$no_month++;
     	}
+    	
+    	//模拟数据
     	$data['pricePeriod'] = 16042;//date('ym').$no_month;
     	if ($seller_code){
     		$where['seller_code']=$seller_code;

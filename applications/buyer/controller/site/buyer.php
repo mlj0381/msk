@@ -25,6 +25,7 @@ class buyer_ctl_site_buyer extends buyer_frontpage{
 		$this->verify_buyer();
 		$this->buyer_id = vmc::singleton('buyer_user_object')->get_id();
 		$this->member_id = vmc::singleton('buyer_user_object')->get_session()['member'];
+		$this->addr_id = vmc::singleton('buyer_user_object')->get_session()['addr'];
 		//后面还需要什么............
 	}
 	
@@ -80,11 +81,11 @@ class buyer_ctl_site_buyer extends buyer_frontpage{
 							'slSeller'=>array(
 									'login_account'	=>$data['login_account'],
 									'slConFlg'		=>'1',//生产国籍
-									'areaCode'		=>'1',//大区编码
-									'lgcsAreaCode'	=>$area_result['province']['code'] ?: '09',//物流区编码
-									'provinceCode'	=>$area_result['province']['code'] ?: '09',//省编码
-									'cityCode'		=>$area_result['city']['code'] ?: '09',//地区编码
-									'districtCode'	=>$area_result['district']['code'] ?: '09',//区编码
+									//'areaCode'		=>'1',//大区编码
+									'lgcsAreaCode'	=>$this->addr_id,//物流区编码
+									'provinceCode'	=>$area_result['province']['code'],//省编码
+									'cityCode'		=>$area_result['city']['code'],//地区编码
+									'districtCode'	=>$area_result['district']['code'],//区编码
 									'slMainClass'	=>4,//卖家主分类
 									'snkFlg'		=>'0',//神农客标志
 									'selfFlg'		=>'0',//自产型卖家标志
@@ -335,11 +336,11 @@ class buyer_ctl_site_buyer extends buyer_frontpage{
 						'buyer_code'	=>$params['buyer_code'],
 						'login_account'	=>$params['login_account'],
 						'slConFlg'		=>'1',//生产国籍
-						'areaCode'		=>'1',//大区编码
-						'lgcsAreaCode'	=>$area_result['province']['code']?:'01',//物流区编码
-						'provinceCode'	=>$area_result['province']['code']?:'01',//省编码
-						'cityCode'		=>$area_result['city']['code']?:'01',//地区编码
-						'districtCode'	=>$area_result['district']['code']?:'01',//区编码
+						//'areaCode'		=>$this->addr_id,//大区编码
+						'lgcsAreaCode'	=>$this->addr_id,//物流区编码
+						'provinceCode'	=>$area_result['province']['code'],//省编码
+						'cityCode'		=>$area_result['city']['code'],//地区编码
+						'districtCode'	=>$area_result['district']['code'],//区编码
 						'slMainClass'	=>4,//卖家主分类
 						'snkFlg'		=>'0',//神农客标志
 						'selfFlg'		=>'0',//自产型卖家标志
