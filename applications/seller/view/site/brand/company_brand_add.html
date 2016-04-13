@@ -1,9 +1,4 @@
-
-
-
-
-
-<!-- <div class="brand_edit_page">   
+<div class="brand_edit_page">   
     <div class="modal-header">
         <h3 class="modal-title"><{if $brand.brand_id }>品牌编辑<{else}>品牌添加<{/if}></h3>
     </div>
@@ -20,9 +15,9 @@
                 <{if $brand.brand_id }>
                     <input type="hidden" value="<{$brand.brand_id }>"  name="brand[brand_id]" />
                     <{/if}>
-                <input type="hidden" value="centre" name="type"/> 判断跳转位置
+                <input type="hidden" value="centre" name="type"/> <!-- 判断跳转位置-->
                 <input type="hidden" value="<{$brand.brand_initial }>" class="initial" name="brand[brand_initial]"/>
-                拼音首字母
+                <!-- 拼音首字母-->
                 <div class="form-group" data-module="brand_add">
                     <label class="control-label col-xs-2">
                         <span class="text-danger">*</span>品牌持有者
@@ -31,14 +26,14 @@
                         <{input type=select required="true" value=$brand.company_id name="brand[company_id]" rows=$company
                         valueColumn="company_id" labelColumn="company_name"}>
                         <span class="msgTip" data-message="error">不能为空</span>
-                        <{if !$brand.brand_id }>
+                        <!-- <{if !$brand.brand_id }>
                         <button type="button" class="btn-link"
                                 href="<{link app=seller ctl=site_passport act=brand_aptitude}>?type=add"
                                 style="margin-top:10px;" data-toggle="tooltip" data-placement="right" title="需要重新填写相关资质">新增品牌持有者
                         </button>
                         
                         <a href="<{link app=seller ctl=site_passport act=brand_aptitude}>?type=add" data-link="write_apt">请去填写公司相关资质</a>
-                        <{/if}>
+                        <{/if}> -->
                     </div>
                 </div>
                 <div class="form-group">
@@ -156,4 +151,4 @@ $(function() {
         });
     });
 });
-</script> -->
+</script>

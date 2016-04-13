@@ -147,7 +147,7 @@ $remote['buyer_create_get_order'] = array(
             'type' => 'String',
             'require' => false,
         ),
-        'tel' => array(
+        'mobile' => array(
             'name' => '收货人电话',
             'column' => 'receiverTel',
             'type' => 'String',
