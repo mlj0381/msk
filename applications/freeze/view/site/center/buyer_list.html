@@ -33,7 +33,8 @@
         <tbody>
         <!-- foreach 开始 -->
         <{foreach from=$list item=v}>
-        <tr>
+        <{if $v.member_id}>
+            <tr>
             <td width="30%" class="buyer-info">
                 <div class="row">
                     <div class="col-xs-5 buyer-head"><img src="<{$v.avatar|storager:s}>"></div>
@@ -70,6 +71,7 @@
                 <{/if}>
             </td>
         </tr>
+        <{/if}>
         <{/foreach}>
 
         <!-- foreach 结束 -->

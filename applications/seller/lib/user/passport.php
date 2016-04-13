@@ -788,7 +788,9 @@ class seller_user_passport
                         $params[$value['key']]['seller_id'] = $seller['seller_id'];
                         $params[$value['key']]['store_type'] = $seller['ident'];
                         //添加经营分类
-                        if (array_filter($params['cat_id']) && !app::get('store')->model('goods_cat')->addCat($params['cat_id'], $seller['seller_id'])) {
+                        if (array_filter($params['cat_id']) &&
+                            !$params['id'] &&
+                            !app::get('store')->model('goods_cat')->addCat($params['cat_id'], $seller['seller_id'])) {
                             $db->rollback();
                             $msg = '经营分类添加失败';
                             return false;
@@ -834,6 +836,7 @@ class seller_user_passport
         }
 
         $mdl_company_extra = app::get('base')->model('company_extra');
+
         foreach ($extra_columns['page'] as $key => $col) {
             if (isset($params[$col]) && !empty($params[$col])) {
                 $params[$col]['content_id'] && $sqlType = true;
@@ -842,7 +845,7 @@ class seller_user_passport
                 $params[$col]['uid'] = $seller['seller_id'];
                 $params[$col]['createtime'] = time();
                 $params[$col]['from'] = 1;
-                //print_r($params[$col]);die;
+
                 //电商成员信息
                 if (is_array(reset($params[$col]['value']))) {
 
@@ -968,7 +971,6 @@ class seller_user_passport
             $db->commit();
             return true;
         }
-        die;
         return false;
     }
 
@@ -983,7 +985,7 @@ class seller_user_passport
                 $rpc = 'edit_seller_info2';
                 break;
             case '4' :
-                $rpc = 'edit_seller_info3';
+                $rpc = 'edit_seller_info2';
                 break;
         }
 
@@ -1039,8 +1041,8 @@ class seller_user_passport
         if ($this->seller['ident'] & 4) {
             $seller_type['oemFlg'] = '3';
         }
-        $region = app::get('ectools')->model('regions')->region_decode($tmp['seller']['area']); //todo地区三级联动
 
+        $region = app::get('ectools')->model('regions')->region_decode($this->seller['area']); //todo地区三级联动
         $result['slSeller'] = array(
             'login_account' => $tmp['pam']['login_account'],
             'slCode' => $this->seller['sl_code'],
