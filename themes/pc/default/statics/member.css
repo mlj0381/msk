@@ -2065,7 +2065,49 @@ ol {
   margin-top: 40px;
   padding-bottom: 30px;
 }
-.buyer_container .addgoods_form #baseinfo .form-item span {
+.buyer_container .addgoods_form #baseinfo {
+  /* .form-item{
+				span{
+					display: inline-block;
+					width:auto;
+					input[type='checkbox']{
+					
+					}
+				}
+			} */
+}
+.buyer_container .addgoods_form #baseinfo .cat_select {
+  display: inline-block;
+}
+.buyer_container .addgoods_form #baseinfo .cat_select .api-cat {
+  float: left;
+  margin-right: 15px;
+}
+.buyer_container .addgoods_form #baseinfo .cat_select .addNewCard {
+  float: left;
+  margin-top: 2px;
+  margin-right: 5px;
+}
+.buyer_container .addgoods_form #baseinfo .feature span,
+.buyer_container .addgoods_form #baseinfo .weight span,
+.buyer_container .addgoods_form #baseinfo .pack span {
+  display: inline-block;
+  width: auto;
+  padding-right: 15px;
+  padding-bottom: 10px;
+}
+.buyer_container .addgoods_form #baseinfo .feature span input[type='checkbox'],
+.buyer_container .addgoods_form #baseinfo .weight span input[type='checkbox'],
+.buyer_container .addgoods_form #baseinfo .pack span input[type='checkbox'] {
+  margin-right: 3px;
+}
+.buyer_container .addgoods_form #baseinfo .feature span .addNewCard,
+.buyer_container .addgoods_form #baseinfo .weight span .addNewCard,
+.buyer_container .addgoods_form #baseinfo .pack span .addNewCard {
+  display: inline-block;
+  margin-left: 5px;
+}
+.buyer_container .addgoods_form #baseinfo .logistics span {
   display: inline-block;
   width: 115px;
 }

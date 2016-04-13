@@ -6,13 +6,13 @@
     <div class="form-group">
         <label class="col-xs-2 control-label"><span class="text-danger">*</span><span>商品类目</span></label>
 
-        <div class="col-xs-8">
+        <div class="col-xs-8 cat_select">
             <!-- identity="store" seller=$seller_id -->
             <{input type="category" identity="store" seller=$seller_id name="goods[category][cat_id]"
             value=$goods.category.cat_id callback="callBack"}>
-            <a class="addNewCard" data-type="breed" data-toggle="modal" data-target="#write_apt_modal"
-               class="warning"><i class="text-danger icon-exclamation-sign"> </i>
-                <small>+</small>
+            <a class="addNewCard btn btn-danger btn-sm" title="新增三级分类" data-type="breed" data-toggle="modal" data-target="#write_apt_modal">新增三级分类
+            </a>
+            <a class="addNewCard btn btn-danger btn-sm" title="新增产品特征" data-type="breed" data-toggle="modal" data-target="#write_apt_modal">新增产品特征
             </a>
         </div>
     </div>
@@ -279,7 +279,6 @@
                 var cat = apiCat().split('-')
                 if (cat.length == 3 && cat[2] == '') {
                     url += 'type=' + type + '&cat=' + cat[0];
-                    alert(url += 'type=' + type + '&cat=' + cat[0]);
                 }
                 break;
             case 'feature':
@@ -337,8 +336,8 @@
             html += $.VMC.format('<span class="' + name + idx + '">' +
                     '<input data-type="' + idx + '" data-product="' + product_id + re.data[i][key[0]] + '"' +
                     ' type="checkbox" name=name value="{0}">' + text + '{1}' +
-                    '<a class="addNewCard" data-type="'+catType+'"data-toggle="modal" data-target="#write_apt_modal" class="warning">' +
-                    '<i class="text-danger icon-exclamation-sign"> </i> <small>+</small></a></span>'
+                    '<a class="addNewCard btn btn-default btn-xs" title="新增" data-type="'+catType+'"data-toggle="modal" data-target="#write_apt_modal">' +
+                    '<i class="icon-plus"></i></a></span>'
                     , re.data[i][key[0]], re.data[i][key[1]]);
         }
         return html;
