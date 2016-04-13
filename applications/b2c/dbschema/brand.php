@@ -128,6 +128,13 @@ $db['brand'] = array(
                     'comment' => ('所属公司'),
                     'label' => ('所属公司'),
                 ),
+            'api_company_id' =>
+                array(
+                    'type' => 'number',
+                    'default' => 0,
+                    'comment' => ('润和公司id'),
+                    'label' => ('润和公司id'),
+                ),
             'brand_logo' =>
                 array(
                     'type' => 'varchar(255)',
