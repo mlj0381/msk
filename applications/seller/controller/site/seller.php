@@ -170,8 +170,59 @@ class seller_ctl_site_seller extends seller_frontpage {
     }
 
 
-    
+    public function company_list()
+    {
+        $this->title = '商品品牌';
+        $this->menuSetting = 'account';
+        //查询企业详细信息
+        $this->pagedata['brands'] = app::get('b2c')->model('brand')->getList('*', array('seller_id' => $this->seller['seller_id'],'brand_class'=> 1));
+        $this->output();
+    }
+    //添加企业品牌
+    public function company_brand_add($brand_id)
+    {
+        $this->menuSetting = 'account';
+        if ($_POST) {
+//            vmc::dump($_POST);die;
+            $params = utils::_filter_input($_POST);
+            unset($_POST);
+            $this->_post($params);
+        }
+        $this->pagedata['company'] = app::get('base')->model('company_seller')->getList('company_id, company_name',
+            array('uid' => $this->seller['seller_id'], 'from' => 1));
+        if (is_numeric($brand_id)) {
+            $this->pagedata['brand'] = app::get('b2c')->model('brand')->getRow('*',
+                array('brand_id' => $brand_id, 'seller_id' => $this->seller['seller_id']));
+        }
+        $this->output();
+    }
 
+    private function _post($post)
+    {
+        $redirect = array('app' => 'seller', 'ctl' => 'site_seller', 'act' => 'company_list');
+        $redirect = $this->gen_url($redirect);
+        $post['brand']['seller_id'] = $this->seller['seller_id'];
+        if (!app::get('b2c')->model('brand')->save($post['brand'])) {
+            $this->splash('error', $redirect, '操作失败');
+        } else {
+            $data = array(
+                'epId' => app::get('base')->model('company')->getRow('ep_id', array('company_id' => $post['brand']['company_id']))['ep_id'],
+                'brandId' => (int)app::get('b2c')->model('brand')->getRow('*',array('brand_id' => $post['brand']['brand_id']))['api_brand_id'],
+                'brandName' => $post['brand']['brand_name'],
+                'brandClass' => 0,
+                'brandNo' => $post['brand']['agent_code'],
+                'brandTermBegin' => $post['brand']['agent_start'],
+                'brandTermEnd' => $post['brand']['agent_end'],
+            );
+            $res = app::get('seller')->rpc('add_company_brand')->request($data);
+            if (!$res['status']) {
+                $this->splash('error', $redirect, '数据同步失败');
+            }else{
+                app::get('b2c')->model('brand')->update(array('api_brand_id'=>$res['result']['brandId']),array('brand_id' => $post['brand']['brand_id']));
+            }
+        }
+        $this->splash('success', $redirect, '添加成功');
+    }
     
 
 }

@@ -3,6 +3,7 @@
         <menu app='seller' controller='site_seller' action='account' display='true' order="60">个人资料</menu>
         <menu app='seller' controller='site_seller' action='businessInfo' display='true' order="60">商户信息</menu>
         <menu app='seller' controller='site_seller' action='securitycenter' display='true' order="60">安全设置</menu>
+        <menu app='seller' controller='site_seller' action='company_list' display='true' order="60">企业品牌管理</menu>
     </menugroup>
 
     <menugroup label="店铺管理" name="store">

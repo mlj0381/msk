@@ -1,7 +1,7 @@
 <div class="brand_page">
     <div class="page-header">
-        <h1 class="clearfix">店铺商品品牌
-		<a class="btn btn-danger pull-right" label="品牌申请" icon="fa-plus" href="<{link app=seller ctl=site_brand act=store_brand_add}>">
+        <h1 class="clearfix">企业商品品牌
+		<a class="btn btn-danger pull-right" label="品牌申请" icon="fa-plus" href="<{link app=seller ctl=site_seller act=company_brand_add}>">
 	        品牌添加&nbsp;<i class="glyphicon glyphicon-plus-sign"></i>
 		</a>
 	</h1>
@@ -34,7 +34,7 @@
                                 <{/if}>
                             </td>
                             <td>
-                                <a href="<{link app=seller ctl=site_brand act=store_brand_add args0=$item.brand_id}>" class="btn btn-xs btn-default"><i class="fa fa-edit"></i> 编辑</a>
+                                <a href="<{link app=seller ctl=site_seller act=company_brand_add args0=$item.brand_id}>" class="btn btn-xs btn-default"><i class="fa fa-edit"></i> 编辑</a>
                                 <!--<a href="<{link app=seller ctl=site_brand act=remove args0=$item.brand_id}>" class="btn btn-xs btn-default cat-del"><i class="fa fa-trash-o"></i> 删除</a>-->
                             </td>
                         </tr>
