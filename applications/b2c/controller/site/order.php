@@ -148,6 +148,7 @@ class b2c_ctl_site_order extends b2c_frontpage
             'district_code' => $_SESSION['account']['addr'],
             'buyer_id' => $_SESSION['account']['api_buyer_id'],
             'buyer_code' => $_SESSION['account']['buyer_code'],
+            'buyer_name' => $this->member['login_account'],
             'seller_code' => $seller_code,
             'seller_name' => $seller_name,
             'need_invoice' => $order_sdf['need_invoice']?'1':'0',
@@ -182,10 +183,14 @@ class b2c_ctl_site_order extends b2c_frontpage
         }
         $object_obj = vmc::singleton('buyer_user_object');
 		$buyer_id = $object_obj->get_id();
+
         if(!$buyer_id)
         {
+            //创建第三方买手销售订单
             $result = app::get('buyer')->rpc('create_out_order')->request($api_data);
         }else{
+            //创建第三方买手囤货订单
+
             $result = app::get('buyer')->rpc('create_get_order')->request($api_data);
         }
         if(!$result['status'])
