@@ -93,7 +93,7 @@
                             <input type="hidden" name="id[]" value="<{$extra.store.selectedCat[$k1].children[$k2].id}>">
                             <{if !$extra.store.selectedCat[$k1].children[$k2].extra}>
 
-                            <a href="<{link app=seller ctl=site_passport act=write_aptitude args0=$cat2.cat_id}>"
+                            <a href="<{link app=seller ctl=site_passport act=write_aptitude args0=$cat2.cat_id args1=$extra.pageIndex}>"
                                data-toggle="modal" data-target="#write_apt_modal" class="warning"><i
                                     class="text-danger icon-exclamation-sign"> </i>
                                 <small>缺少资质</small>

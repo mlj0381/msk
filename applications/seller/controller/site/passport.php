@@ -740,13 +740,13 @@ class seller_ctl_site_passport extends seller_frontpage
     }
 
     //选择商品类目填写相关资质
-    public function write_aptitude($cat_id = 0, $step = 0)
+    public function write_aptitude($cat_id = 0)
     {
         if (!is_numeric($cat_id)) $cat_id = 0;
         $this->pagedata['aptitude'] = app::get('b2c')->model('cat_aptitudes')->getRow('*', array('cat_id' => $cat_id));
         $this->pagedata['cat'] = app::get('store')->model('goods_cat')->getRow('*', array('cat_id' => $cat_id, 'seller_id' => $this->seller['seller_id']));
         $this->pagedata['type'] = 'entry';
-        $this->pagedata['step'] = $step;
+
         $this->pagedata['cat_id'] = $cat_id;
         $this->display('site/goods/write_aptitude.html');
     }
@@ -761,7 +761,7 @@ class seller_ctl_site_passport extends seller_frontpage
             $this->splash('error', '', '非法请求');
         }
         $data = array('cat_id' => $_POST['cat_id'], 'extra' => $_POST['cat'], 'seller_id' => $this->seller['seller_id']);
-        if (!app::get('store')->model('goods_cat')->addCat($_POST['cat_id'], $this->seller['seller_id'], 'entry')) {
+        if (!app::get('store')->model('goods_cat')->addCat($_POST['cat_id'], $this->seller['seller_id'])) {
             $this->splash('error', $redirect, '添加失败');
         }
         $filter = app::get('store')->model('goods_cat')->getList('id', array('cat_id' => $_POST['cat_id'], 'seller_id' => $this->seller['seller_id']), '0', '1', 'id desc');
