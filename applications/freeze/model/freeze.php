@@ -37,7 +37,11 @@ class freeze_mdl_freeze extends dbeav_model
         {
             unset($api_data['code']);
         }
-
+        if($api_data['sex'] == '0') {
+            $api_data['sex'] = '2';
+        }elseif($api_data['sex'] == '2') {
+            $api_data['sex'] = '0';
+        }
         //调用接口更新数据
         $rpc_editor = app::get('freeze')->rpc("editor");
         $result = $rpc_editor->request(array('account_data'=>$api_data));

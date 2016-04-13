@@ -168,7 +168,7 @@ $remote['b2c_buyer_common'] = array(
         ),
         'busiTel' => array(
             'name' => '买家联系电话',
-            'column' => 'busiTel',
+            'column' => 'mobile',
             'type' => 'String',
         ),
     ),

@@ -46,6 +46,13 @@
 			    <label class="col-xs-2 control-label"><em class="text-danger">*</em> 电子邮箱</label>
 			    <div class="col-xs-4">
 			      <input type="email" name="email" value="<{$basic_info.email}>" <{if $basic_info.email}> readonly="readonly" <{/if}> class="form-control" required="true" format="email">
+			      <a class="btn btn-md btn-danger pull-right" style="margin-right:-90px; margin-top:-34px;" href="<{link app=buyer ctl=site_buyer act=update_email}>">
+                <{if $basic_info.email}>
+                    修改邮箱
+                <{else}>
+                    绑定邮箱
+                <{/if}>
+            </a>
 			      <span class="msgTip" data-message="format">邮箱格式错误！</span>
 			    </div>
 			    <!-- <div class="col-xs-4 bind-opt">
