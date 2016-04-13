@@ -244,7 +244,7 @@ $remote['freeze_editor'] = array(
             'default' => '',
             'require' => false,
         ),
-        'flag1' => array(
+        'sex' => array(
             'name' => '备用1',
             'column' => 'flag1',
             'type' => 'String',
