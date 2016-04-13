@@ -36,7 +36,7 @@ class freeze_mdl_freeze_member extends dbeav_model
         $api_data['buyer_id'] = $buyer_id['buyer_id'];
         $api_data['buyer_code'] = $buyer_code['buyer_code'];
         $api_data['code'] = $freeze['code'];
-        $api_data['apply_type'] = $api_data['apply_type']=='1'?'A':'B';
+        $api_data['apply_type'] = $api_data['apply_type']=='1'?'B':'A';
         $api_data['status'] = $api_data['status']=='0'?'1':'2';
         $api_data['time'] = $api_data['apply_time'] = date('Y-m-d',$api_data['time']?$api_data['time']:time());
         $result = $rpc_editorbuyer->request($api_data);
