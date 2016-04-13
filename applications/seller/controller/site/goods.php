@@ -410,14 +410,16 @@ class seller_ctl_site_goods extends seller_frontpage
         $slPdList = Array();
         $catId = explode('-', $goods['api_cat']);
         //获取自己的企业id
-        $company_id = app::get('base')->model('company')->getRow('ep_id', array('uid' => $this->seller['seller_id'], 'from' => '1'));
-        $brand_id = $this->seller['ident'] == 1 ? $company_id['ep_id'] : $company_id['ep_id'];//查询品牌所属企业id
+        $brand = app::get('b2c')->model('brand')->getRow('*', array('brand_id' => $goods['brand_id']));
+        //array('uid' => $this->seller['seller_id'], 'from' => '1',
+        $company_id = app::get('base')->model('company')->getRow('ep_id', array('company_id' => $brand['company_id']));
+        //$brand_id = $this->seller['ident'] == 1 ? $company_id['ep_id'] : $company_id['ep_id'];//查询品牌所属企业id
         foreach ($goods['product'] as $v) {
             $slPdList[] = array(
                 'slCode' => $this->seller['sl_code'],
                 'prodEpId' => (int)$company_id['ep_id'],
-                'brandEpId' => (int)$brand_id,
-                'brandId' => 111197,//todo 品牌id查询
+                'brandEpId' => (int)$company_id['ep_id'],
+                'brandId' => $brand['api_brand_id'],
                 'pdClassesCode' => $catId[0],
                 'machiningCode' => $catId[1],
                 'pdBreedCode' => $catId[2],
@@ -744,7 +746,8 @@ class seller_ctl_site_goods extends seller_frontpage
         $productArray = array();
         foreach ($apiProduct['result']['goods'] as $key => $value) {
             if (in_array($value['bn'], $productId) && in_array($value['pack'], $pack_id)) {
-                $value['product_price'] = $mdl_product_price->getList();
+                $value['product_price'] = $mdl_product_price->getList('*', array('seller_code' => $this->seller['sl_code'],
+                    'product_code' => $value['bn']));
                 $productArray[$key] = $value;
             }
         }

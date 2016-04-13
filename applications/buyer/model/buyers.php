@@ -110,15 +110,23 @@ class buyer_mdl_buyers extends dbeav_model{
 	}
 	
 	public function reset_password($member_id,$old_password,$new_password){
+		
 		$mdl_pm_buyers = app::get('pam')->model('members');
-		$check_data = $mdl_pm_buyers->getRow('login_account,createtime,password_account,login_password',array('buyer_id'=>$user_id));
+		$check_data = $mdl_pm_buyers->getRow('login_account,createtime,password_account,login_password',array('member_id'=>$member_id));
 		
 		$use_pass_data['login_name'] = $check_data['password_account'];
 		$use_pass_data['createtime'] = $check_data['createtime'];
+		
 		if (pam_encrypt::get_encrypted_password($old_password, 'member',$use_pass_data) == $check_data['login_password']){
 			$reset['login_password'] = pam_encrypt::get_encrypted_password($new_password, 'member',$use_pass_data);
 			$reset['password'] = $new_password;
+			$params = $this->app->model('buyers')->getRow('*', array('member_id'=>$member_id));
+			$params['password'] = $new_password;
+			$params['authStatus'] = 2;
+			$request = array('slAccount'=>array_merge($check_data, $params),);
+			
 			if ($mdl_pm_buyers->update($reset,array('member_id'=>$member_id))){
+				$this->app->rpc('edit_buyer_pwd')->request($request, false);
 				return 'success';
 			}else {
 				//修改失败

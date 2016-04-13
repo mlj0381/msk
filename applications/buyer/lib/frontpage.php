@@ -45,8 +45,8 @@ class buyer_frontpage extends b2c_frontpage{
 		 * @var unknown
 		 */
 		if (!$this->object_obj->is_login()){
-		$this->set_cookie('UNAME', null);
-		$this->set_cookie('BUYER_IDENT', null);
+// 		$this->set_cookie('UNAME', null);
+// 		$this->set_cookie('BUYER_IDENT', null);
 			$login_url = $this->gen_url(array(
 					'app' => 'buyer',
 					'ctl' => 'site_passport',
