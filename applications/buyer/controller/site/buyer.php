@@ -32,7 +32,7 @@ class buyer_ctl_site_buyer extends buyer_frontpage{
 	
 	public function index(){
 		$data = $this->app->model('buyers')->getRow('*',array('buyer_id'=>$this->buyer_id));
-		$data_account = app::get('pam')->model('members')->getRow('login_account', array('buyer_id'=>$this->buyer_id));
+		$data_account = app::get('pam')->model('members')->getRow('login_account', array('member_id'=>$this->member_id));
 		$this->pagedata['data'] = array_merge($data, $data_account);
 		$this->output();
 	}
