@@ -202,6 +202,7 @@ class seller_ctl_site_seller extends seller_frontpage {
         $redirect = array('app' => 'seller', 'ctl' => 'site_seller', 'act' => 'company_list');
         $redirect = $this->gen_url($redirect);
         $post['brand']['seller_id'] = $this->seller['seller_id'];
+        $post['brand']['api_company_id'] = app::get('base')->model('company')->getRow('ep_id',array('company_id' => $post['brand']['company_id']))['ep_id'];
         if (!app::get('b2c')->model('brand')->save($post['brand'])) {
             $this->splash('error', $redirect, '操作失败');
         } else {
