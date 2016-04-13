@@ -83,6 +83,7 @@ class seller_ctl_site_brand extends seller_frontpage
         $post['brand']['seller_id'] = $this->seller['seller_id'];
         $post['brand']['brand_name'] = $store_brand['brand_name'];
         $post['brand']['api_brand_id'] = $store_brand['api_brand_id'];
+        $post['brand']['api_company_id'] = app::get('base')->model('company')->getRow('ep_id',array('company_id' => $post['brand']['company_id']))['ep_id'];
         unset($post['brand']['brand_id']);
         if (!$this->mB2cbrand->save($post['brand'])) {
             $this->splash('error', $redirect, '操作失败');
@@ -110,7 +111,7 @@ class seller_ctl_site_brand extends seller_frontpage
 
 
     //修改店铺品牌
-    public function store_brand_add()
+    public function store_brand_add($brand_id)
     {
         if ($_POST) {
             $params = utils::_filter_input($_POST);
@@ -120,6 +121,11 @@ class seller_ctl_site_brand extends seller_frontpage
         $this->pagedata['brands'] = $this->mB2cbrand->getList('*', array('seller_id' => $this->seller['seller_id'],'brand_class'=> 1));
         $this->pagedata['company'] = app::get('base')->model('company_seller')->getList('company_id, company_name',
             array('uid' => $this->seller['seller_id'], 'from' => 1));
+        if (is_numeric($brand_id)) {
+            $this->pagedata['brand'] = app::get('b2c')->model('brand')->getRow('*',
+                array('brand_id' => $brand_id, 'seller_id' => $this->seller['seller_id']));
+            //查询商家所有的公司
+        }
         $this->output();
     }
 
