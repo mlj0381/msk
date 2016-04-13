@@ -149,7 +149,7 @@ class base_view_input{
         unset($params['value']);
         $html=utils::buildTag($params,'select',false);
         if(!$params['required']){
-            $html.='<option></option>';
+            $html.='<option value="-1">请选择</option>';
         }
         foreach((array)$options as $k=>$item){
             if($k==='0' || $k===0){
