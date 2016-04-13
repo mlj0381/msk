@@ -340,6 +340,7 @@ class seller_ctl_site_goods extends seller_frontpage
             'store_id' => $this->store['store_id']
         ));
 
+
         $objGoodsData->checkin($goods);
 
         $db = vmc::database();
@@ -350,7 +351,14 @@ class seller_ctl_site_goods extends seller_frontpage
             $db->rollback();
             $this->splash('error', $redirect_url, '保存失败');
         }
+        $mdl_product = app::get('b2c')->model('products');
 
+        foreach($goods['product'] as $v){
+            if(!$mdl_product->save($v)){
+                $db->rollback();
+                $this->splash('error', $redirect_url, '保存失败');
+            }
+        }
 
         if (!$objGoodsData->interval($goods)) {
             $db->rollback();
@@ -377,15 +385,17 @@ class seller_ctl_site_goods extends seller_frontpage
             $stockData = array(
                 'title' => $goods['name'],
                 'sku_bn' => $value['bn'],
-                'quantity' => $value['quantity'],
+                'quantity' => $value['storage'],
                 'warehouse' => $goods['store_id'],
                 'stock_id' => $value['stock_id'],
             );
+
             if (!$mdl_stock->save($stockData)) {
                 $db->rollback();
                 $this->splash('error', $redirect_url, '保存失败');
             }
         }
+
 
         $goods['card'] = $card;
         if (!$this->_apiAddGoods1($goods)) {
