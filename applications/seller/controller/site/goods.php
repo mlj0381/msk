@@ -186,7 +186,7 @@ class seller_ctl_site_goods extends seller_frontpage
         $return['cat'] = $mdl_goods_cat->get_tree('', null);
 
         //商品品牌
-        $return['brand'] = app::get('seller')->model('brand')->getList('*', array('seller_id' => $this->seller['seller_id'], 'brand_class' => '2'));
+        $return['brand'] = app::get('b2c')->model('brand')->getList('*', array('seller_id' => $this->seller['seller_id'], 'brand_class' => '2'));
 
         //$apiBrand = $this->app->rpc('select_seller_brand')->request(array('slCode' => $this->seller['sl_code']));
         //$return['brand'] = $apiBrand['result']['slPdBrandList'];
