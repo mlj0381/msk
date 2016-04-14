@@ -114,14 +114,14 @@ class buyer_ctl_site_goods extends buyer_frontpage{
 		$rpc_model = $this->app->rpc('get_orders_list');
 		$buyer_code = $this->app->model('buyers')->getRow('buyer_code,api_buyer_id', array('buyer_id'=>$this->buyer_id));
 		//模拟数据
-		$data = array(
-				'buyersId'	=>'BI01',
-				'buyersCode'=>'BC01',
-		);
 // 		$data = array(
-// 				'buyersId'	=>$buyer_code['buyer_code'],
-// 				'buyersCode'=>$buyer_code['api_buyer_id'],
+// 				'buyersId'	=>'BI01',
+// 				'buyersCode'=>'BC01',
 // 		);
+		$data = array(
+				'buyersId'	=>$buyer_code['buyer_code'],
+				'buyersCode'=>$buyer_code['api_buyer_id'],
+		);
 		$response = $rpc_model->request($data, 2);
 		$detail = utils::array_change_key($response['result']['orders'], 'orderId')[$goods_id];
 		$detail['pay_status'] = self::$_pay_list[$detail['orderStatus']];
@@ -147,14 +147,14 @@ class buyer_ctl_site_goods extends buyer_frontpage{
 			
 			$buyer_code = $this->app->model('buyers')->getRow('buyer_code,api_buyer_id', array('buyer_id'=>$this->buyer_id));
 			//模拟数据
+// 			$data = array(
+// 					'buyersId'	=>'BI01',
+// 					'buyersCode'=>'BC01',
+// 			);
 			$data = array(
-					'buyersId'	=>'BI01',
-					'buyersCode'=>'BC01',
+					'buyersId'	=>$buyer_code['buyer_code'],
+					'buyersCode'=>$buyer_code['api_buyer_id'],
 			);
-			// 		$data = array(
-			// 				'buyersId'	=>$buyer_code['buyer_code'],
-			// 				'buyersCode'=>$buyer_code['api_buyer_id'],
-			// 		);
 			$response = $this->app->rpc('get_orders_list')->request($data, 2);
 			if ($current_status == 'all' or empty($current_status)){
 				if (!empty($_POST['search'])){
