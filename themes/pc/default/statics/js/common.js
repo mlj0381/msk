@@ -3,7 +3,7 @@ $(function() {
     /**
      * 全站导航
      */
-    var siteNav = $('.site_nav')[0];
+    /*var siteNav = $('.site_nav')[0];
     var webMenu = $('.website_menu')[0];
     var timer = null;
     webMenu.onmouseover = siteNav.onmouseover = function() {
@@ -18,7 +18,7 @@ $(function() {
             webMenu.style.display = "none";
         }
         $('.site_nav a i').attr('class', 'icon-angle-down');
-    }
+    };*/
 
 
     /**
