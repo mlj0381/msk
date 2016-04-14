@@ -206,7 +206,7 @@ class freeze_ctl_site_account extends freeze_frontpage
                 $this->splash('error', $redirect_here, '手机短信验证码不正确');
             } */
             if ( !vmc::singleton('b2c_user_smscode')->bool_sms($params['mobile'],$params['vcode'],'freeze_reset')) {
-            	$this->splash('error', $signup_url, '手机短信验证码不正确');
+            	$this->splash('error', $redirect_here, '手机短信验证码不正确');
             }
 
 //            $result = app::get('pam')->model('freeze')->getRow('freeze_id', array('login_account' => $params['mobile'], 'login_type' => 'mobile'));
@@ -218,6 +218,22 @@ class freeze_ctl_site_account extends freeze_frontpage
                 $this->splash('error', $redirect_here, '密码重置失败!');
             }
 
+            /*
+             * 润和接口调用修改密码
+             * IBS2101109
+             * */
+            $pam_freeze = app::get('pam')->model('freeze')->getRow('*',array('freeze_id'=>$member_id));
+            $api_data = array(
+                'account' => $freeze['account'],
+                'old_password' => $pam_freeze['password'],
+                'new_password' => $params['new_password']
+            );
+            $result = app::get('freeze')->rpc('reset_password')->request($api_data);
+            if(!$result['status']) {
+                $this->splash('error', $redirect_here, '密码重置失败!');
+            }
+            //end
+
             //退出当前登录状态
             $auth = pam_auth::instance(pam_account::get_account_type($this->app->app_id));
             if (!$auth->type) {
@@ -226,7 +242,7 @@ class freeze_ctl_site_account extends freeze_frontpage
             foreach (vmc::servicelist('freeze.passport') as $k => $passport) {
                 $passport->loginout($auth);
             }
-
+            
             $redirect = $this->gen_url(array('app' => 'freeze', 'ctl' => 'site_passport', 'act' => 'login'));
             $this->splash('success', $redirect, '密码重置成功，请重新登录');
         } else {
