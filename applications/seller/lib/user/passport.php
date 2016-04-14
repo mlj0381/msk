@@ -1115,7 +1115,7 @@ class seller_user_passport
                 'licAddr' => $this->company[$company_id]['address'],
                 'licBusiType' => '',
                 'licBusiScope' => $this->company[$company_id]['operating_period'],
-                'licLegalPerson' => $this->company[$company_id]['leagl_person'],
+                'licLegalPerson' => $value['business_licence']['value']['name'],
                 'licRegCapital' => $this->company[$company_id]['registered_capital'],
                 'licPaidinCapital' => $this->company[$company_id]['reality_capital'],
                 'licCrtDate' => $this->company[$company_id]['establishment_date'],
@@ -1137,6 +1137,7 @@ class seller_user_passport
                 'fdlTermBegin' => $value['food_flow_licence']['value']['date_start'],
                 'fdlTermEnd' => $value['food_flow_licence']['value']['date_end'],
             );
+				
             //企业专业资质
 //            $result[$key]['certInfoList'] = array(
 //                array(
@@ -1200,12 +1201,11 @@ class seller_user_passport
                     'epId' => $apiCompanyId['ep_id'],
                     'workshopId' => $apiSellerInfo['result']['slEpWorkshopList'][$k]['workshopId'],
                     'workshopName' => $v['value']['name'],
-                    'product' => '',
-                    'process' => '',
+                    'product' => $v['value']['pro'],
+                    'process' => $v['value']['trait'],
                 );
             }
             $tmp[$key]['slEpWorkshopList'] = $slEpWorkshopList;
-
 
             //企业生产能力
             $tmp[$key]['slEpCap'] = array(
@@ -1229,7 +1229,7 @@ class seller_user_passport
                 'labMember' => $value['laboratory']['value']['staff'],
                 //'ddEquipment' => '',
             );
-
+			
             //生产商
             $agent = app::get('base')->model('company_extra')->getList('*', array(
                 'key' => 'agent_auth_lesstion',
@@ -1300,9 +1300,33 @@ class seller_user_passport
 
                 $tmp[$key]['slEcTeamList'] = $slEcTeamList;
             }
+			/*//企业检测设备
+			$slEpDdList = Array();
+            foreach ($value['equipment'] as $k => $v) {
+                $slEpDdList[] = array(
+                    'epId' => (int)$apiCompanyId['ep_id'],
+					'ddId' => (int)$apiSellerInfo['result']['slEpDdList'][$k]['ddId'],
+					'ddName' => $v['value']['main_device'],
+					'ddEquipment' => $v['value']['use']
+                );
+
+                $tmp[$key]['slEpDdList'] = $slEcTeamList;
+            }*/
+
+			
             $result = array_merge($result, current($tmp));
         }
     }
+
+	/**
+     * 添加企业资质提交到接口
+     **/
+	private function apiAptitudes() 
+	{
+		$setting = array(
+			'' => '',
+		);
+	}
 
 
     /**

@@ -31,7 +31,7 @@ class b2c_ctl_site_product extends b2c_frontpage {
     	
     	$goods_data = $this->app->model('products')->getRow('goods_id,bn',array('product_id'=>$params['product_id']));
     	//模拟数据
-    	$goods_data['goods_id'] = 8;
+    	//$goods_data['goods_id'] = 8;
     	
     	//成交记录
     	$goods_order_list = $this->app->model('orders')->get_goods_order($goods_data['goods_id'], $params['time_type'] ?: '1', $offset=0, $set=2);
@@ -57,6 +57,8 @@ class b2c_ctl_site_product extends b2c_frontpage {
         
         $data_detail = array_merge($this->get_code($data_detail_one['product']['bn']),$data_detail_one);
         
+        $data_detail['seller_code'] = app::get('seller')->model('sellers')->getRow('sl_code',array('seller_id'=>$data_detail_one['product']['seller_id']))['sl_code'];
+        
         $data_detail['gradeCode'] = 'A2';
         $data_detail['deliver_fee'] = '0';
         /*******************这个需要获取物流区地址：目前写死了************************************/
@@ -73,14 +75,15 @@ class b2c_ctl_site_product extends b2c_frontpage {
         //这个需要定时任务数据到数据库中....
         //$logi_area_code=$_SESSION['account']['addr'],
         //$seller_code=无法获取,
-        //$product_code=$products_data['bn'],
+        //$product_code=$data_detail['product']['bn'],
         //$level_code = 2;
         
         $data_detail = $this->get_product_id($data_detail);
-        //var_dump($data_detail);
+        
        	//这个是获取价盘的----查询数据库操作
        	//模拟数据
-        $products_price_data = $this->get_product_price($this->addr_id, null, '012040101', '2');        
+        //$products_price_data = $this->get_product_price($this->addr_id, null, '012040101', '2'); 
+        $products_price_data = $this->get_product_price($this->addr_id, $data_detail['seller_code'], $data_detail['product']['bn'], '2');
         
         $this->pagedata['buyer_id'] = vmc::singleton('buyer_user_object')->get_session();
         $this->pagedata['data_detail'] = $data_detail;
@@ -220,18 +223,18 @@ class b2c_ctl_site_product extends b2c_frontpage {
     
     
     public function get_product_price($logi_area_code, $seller_code, $product_code, $level_code){
-    	$no_month = ceil(date('j')/7);
-    	if (date('w') < date('w', strtotime(date('Y-m-01')))){
-    		$no_month++;
-    	}
+//     	$no_month = ceil(date('j')/7);
+//     	if (date('w') < date('w', strtotime(date('Y-m-01')))){
+//     		$no_month++;
+//     	}
     	
     	//模拟数据
-    	$data['pricePeriod'] = 16042;//date('ym').$no_month;
-    	if ($seller_code){
+    	//$data['pricePeriod'] = 16043;//date('ym').$no_month;
+    	$where = ['logi_area_code'=>$logi_area_code, 'product_code'=>$product_code, 'level_code'=>$level_code];
+        if ($seller_code){
     		$where['seller_code']=$seller_code;
     	}
-    	$where = ['logi_area_code'=>$logi_area_code, 'product_code'=>$product_code, 'level_code'=>$level_code];
-    	$return = $this->app->model('products_price')->getList('*', $where, 0, -1, array('orderlevelCode','desc'));
+    	$return = $this->app->model('products_price')->getList('*', $where, 0, 9, array('orderlevelCode','desc'));
     	return $return;
     }
     

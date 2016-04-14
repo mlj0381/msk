@@ -19,11 +19,12 @@ class b2c_tasks_api_price extends base_task_abstract implements base_interface_t
     public function exec($params = null)
     {
     	
-    	$no_month = ceil(date('j')/7);
-    	if (date('w') < date('w', strtotime(date('Y-m-01')))){
-    		$no_month++;
-    	}
-    	$data['pricePeriod'] = 16042;//date('ym').$no_month;
+//     	$no_month = ceil(date('j')/7);
+//     	if (date('w') < date('w', strtotime(date('Y-m-01')))){
+//     		$no_month++;
+//     	}
+//     	$data['pricePeriod'] = 16042;//date('ym').$no_month;
+    	$data['pricePeriod'] = date('ym').ceil(date('j')/5);
     	$rpc_response = app::get('b2c')->rpc('select_price_offer')->request($data);
     	$rpc_data = $rpc_response['result']['productslist'];
     	$model = app::get('b2c')->model('products_price');
