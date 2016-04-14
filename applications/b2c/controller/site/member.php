@@ -789,32 +789,27 @@ class b2c_ctl_site_member extends b2c_frontpage
                 if (!$mdl_maddr->save($addr)) {
                     $this->splash('error', '', '保存失败');
                 }
-                $maddr = $mdl_maddr->getRow('*', array('member_id' => $member_id, 'addr_id' => $addr['addr_id']));
+                $b = $mdl_maddr->getList('habit_normal_time', array('member_id' => $member_id));
+                foreach($b as $k1=>$v1){
+                    foreach($v1["habit_normal_time"] as $k2=>$v2){
+                        $e["habit_normal_time"][$k2] = $v2;
+                    }
+                }
                 //rpc更新或添加收货时间
-                foreach($maddr["habit_normal_time"] as $k=>$v){
+                foreach($e["habit_normal_time"] as $k=>$v){
+//                foreach($maddr["habit_normal_time"] as $k=>$v){
                     $update_time_data[] = array(
                         'buyer_id' => $member_data['buyer_id'],
                         'recPerType' => (string)($k+1),
                         'timeDescribe' => $v,
                     );
                 }
-//                $maddr = $mdl_maddr->getList('*', array('member_id' => $member_id));
-//                foreach($maddr as $k1=>$v1){
-//                    $time = array_merge($v1["habit_normal_time"]);
-//                }
-//                //rpc更新或添加收货时间
-//                foreach($time as $k=>$v){
-//                    $update_time_data[] = array(
-//                        'buyer_id' => $member_data['buyer_id'],
-//                        'recPerType' => (string)($k+1),
-//                        'timeDescribe' => $v,
-//                    );
-//                }
                 $update_time_result = $this->app->rpc('update_receive_time')->request($update_time_data);
                 if (!$update_time_result['status']) {
                     $this->splash('error', '', '同步收货时间保存失败');
                 }
 
+                $maddr = $mdl_maddr->getRow('*', array('member_id' => $member_id, 'addr_id' => $addr['addr_id']));
                 //rpc更新或添加收货地址
                 $update_data[] = array(
                     'buyer_id' => $member_data['buyer_id'],
