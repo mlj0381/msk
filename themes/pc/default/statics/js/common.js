@@ -215,54 +215,59 @@ $(function() {
     }
 
 
-    /**
-     * 日期选择
-     */
-     $('.form_datetime').datetimepicker({
-        format: "yyyy-mm-dd",
-        autoclose: true,
-        todayBtn: true,
-        weekStart: 1,
-        todayHighlight: 1,
-        minView:2,
-        language:"zh-CN",
-        pickerPosition: "bottom-left"
-    }).on("hide",function(ev){
-        $(".form_datetime").trigger('blur');
-    });
 
 
-    /*区间日期选择*/
-    $(".timeStart").datetimepicker({
-        format: "yyyy-mm-dd",
-        autoclose: true,
-        todayBtn: true,
-        weekStart: 1,
-        todayHighlight: 1,
-        minView:2,
-        language:"zh-CN",
-        pickerPosition: "bottom-left"
-    }).on("click",function(ev){
-        $(".timeStart").datetimepicker("setEndDate", $(".timeEnd").val());
-    }).on("hide",function(ev){
-        $(".timeStart").trigger('blur');
-    });
-    $(".timeEnd").datetimepicker({
-        format: "yyyy-mm-dd",
-        autoclose: true,
-        todayBtn: true,
-        weekStart: 1,
-        todayHighlight: 1,
-        minView:2,
-        language:"zh-CN",
-        pickerPosition: "bottom-left"
-    }).on("click", function (ev) {
-        $(".timeEnd").datetimepicker("setStartDate", $(".timeStart").val());
-    }).on("hide",function(ev){
-        $(".timeEnd").trigger('blur');
-    });
-   
+        /**
+         * 日期选择
+         */
+        if($('.form_datetime').size() > 0){
+             $('.form_datetime').datetimepicker({
+                format: "yyyy-mm-dd",
+                autoclose: true,
+                todayBtn: true,
+                weekStart: 1,
+                todayHighlight: 1,
+                minView:2,
+                language:"zh-CN",
+                pickerPosition: "bottom-left"
+            }).on("hide",function(ev){
+                $(".form_datetime").trigger('blur');
+            });
+        }
 
+        /*区间日期选择*/
+        if($('.timeStart').size() > 0){
+            $(".timeStart").datetimepicker({
+                format: "yyyy-mm-dd",
+                autoclose: true,
+                todayBtn: true,
+                weekStart: 1,
+                todayHighlight: 1,
+                minView:2,
+                language:"zh-CN",
+                pickerPosition: "bottom-left"
+            }).on("click",function(ev){
+                $(".timeStart").datetimepicker("setEndDate", $(".timeEnd").val());
+            }).on("hide",function(ev){
+                $(".timeStart").trigger('blur');
+            });
+        }
+        if($('.timeEnd').size() > 0){
+            $(".timeEnd").datetimepicker({
+                format: "yyyy-mm-dd",
+                autoclose: true,
+                todayBtn: true,
+                weekStart: 1,
+                todayHighlight: 1,
+                minView:2,
+                language:"zh-CN",
+                pickerPosition: "bottom-left"
+            }).on("click", function (ev) {
+                $(".timeEnd").datetimepicker("setStartDate", $(".timeStart").val());
+            }).on("hide",function(ev){
+                $(".timeEnd").trigger('blur');
+            });
+        }
 
    
 })

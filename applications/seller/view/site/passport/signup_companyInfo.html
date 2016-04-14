@@ -109,6 +109,24 @@
             _this.find('div[data-item="creat-item"]:last').find('img').attr('src', imgUrl);
             itemLen++;
             $.VMC.init();
+            //重新绑定日历
+            if($('.form_datetime').size() > 0){
+                 $('.form_datetime').datetimepicker({
+                    format: "yyyy-mm-dd",
+                    autoclose: true,
+                    todayBtn: true,
+                    weekStart: 1,
+                    todayHighlight: 1,
+                    minView:2,
+                    language:"zh-CN",
+                    pickerPosition: "bottom-left"
+                }).on("hide",function(ev){
+                    $(".form_datetime").trigger('blur');
+                });
+            }
+            items.find('div[data-item="creat-item"]:last *').each(function(index,dom){
+                $(dom).attr('value','').val('');
+            })
         })
         
         //删除
