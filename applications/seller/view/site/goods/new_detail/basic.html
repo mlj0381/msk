@@ -91,7 +91,6 @@
                            value="<{$item.normsCode}>"><{$item.normsName}>
                 </span>
                 <{/foreach}>
-                <span class="msgTip" data-message="error"></span>
             </div>
         </div>
     </div>
@@ -270,12 +269,25 @@
     $('.cat_select').on('change','select',function(e){
         var target = e.target || e.srcElement;
         var index = $('.cat_select select').index(this);
-        if(index==1){
+        if($(target).find('option:selected').attr('value')== -1){
+            $('.feature, .weight, .pack').html('');
+        }
+        switch(index){
+            case 0 :
+            $('.add_three_cat').addClass('hide');
+            $('.add_feature').addClass('hide');
+
+            break;
+
+            case 1 :
             $('.add_three_cat').removeClass('hide');
             $('.add_feature').addClass('hide');
-        }else if(index ==2){
+            break;
+
+            case 2 :
             $('.add_feature').removeClass('hide');
             $('.add_three_cat').addClass('hide');
+            break;
         }
     })
     //添加新分类
@@ -290,10 +302,8 @@
         switch (type) {
             case 'breed':
                 var cat = selfCat().split('-');
-
-                if (cat.length == 3 && cat[2] == '') {
-                    url += 'type=' + type + '&cat=' + cat[0];
-                }
+                    url += 'type=' + type + '&cat=' + cat[0] + '-' + cat[1];
+                    //alert(selfCat());
                 break;
             case 'feature':
                 url += 'type=' + type + '&cat=' + selfCat();
@@ -414,6 +424,9 @@
         });
     };
 
+
+
+
     (function () {
         $('.feature input').click(function () {
             weight($(this));
@@ -439,6 +452,7 @@
 
         var html = '<input type="hidden" name="goods[spec_desc][v][]" data-id="' + obj.val() + '"  value="' + obj.parent('span').text() + '"/>';
         $('.spec-desc-v').append(html);
+
     };
 
     var pack = function (obj) {
