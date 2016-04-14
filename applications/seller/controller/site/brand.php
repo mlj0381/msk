@@ -79,16 +79,19 @@ class seller_ctl_site_brand extends seller_frontpage
     {
         $redirect = array('app' => 'seller', 'ctl' => 'site_brand', 'act' => 'index');
         $redirect = $this->gen_url($redirect);
-        $store_brand = app::get('b2c')->model('brand')->getRow('*',array('brand_id' => $post['brand']['brand_id']));
+        $store_brand = app::get('b2c')->model('brand')->getRow('*',array('brand_id' => $post['brand']['company_brand_id']));
         $post['brand']['seller_id'] = $this->seller['seller_id'];
         $post['brand']['brand_name'] = $store_brand['brand_name'];
         $post['brand']['api_brand_id'] = $store_brand['api_brand_id'];
         $post['brand']['api_company_id'] = app::get('base')->model('company')->getRow('ep_id',array('company_id' => $post['brand']['company_id']))['ep_id'];
-        unset($post['brand']['brand_id']);
+//        unset($post['brand']['company_brand_id']);
         if (!$this->mB2cbrand->save($post['brand'])) {
             $this->splash('error', $redirect, '操作失败');
         } else {
-            $brand_data = app::get('b2c')->model('brand')->getRow('*',array('brand_id' => $post['brand']['brand_id']));
+            if($post['brand']['brand_id']){
+                $this->splash('success', $redirect, '修改成功');
+            }
+            $brand_data = app::get('b2c')->model('brand')->getRow('*',array('brand_id' => $post['brand']['company_brand_id']));
             $data = array(
                 'slCode' => app::get('seller')->model('sellers')->getRow('sl_code',array('seller_id' => $brand_data['seller_id']))['sl_code'],
                 'brandEpId' => app::get('base')->model('company')->getRow('ep_id',array('company_id' => $brand_data['company_id']))['ep_id'],
