@@ -14,7 +14,9 @@
             <div class="form-body">
                 <{if $brand.brand_id }>
                     <input type="hidden" value="<{$brand.brand_id }>"  name="brand[brand_id]" />
+                    <input type="hidden" value="1"  name="brand[edit]" />
                     <{/if}>
+                <input type="hidden" value="0"  name="brand[edit]" />
                 <input type="hidden" value="centre" name="type"/> <!-- 判断跳转位置-->
                 <input type="hidden" value="<{$brand.brand_initial }>" class="initial" name="brand[brand_initial]"/>
                 <!-- 拼音首字母-->
@@ -46,6 +48,7 @@
                     </div>
                 </div> -->
                 <input type="hidden" value="2"  name="brand[brand_class]" />
+                <input type="hidden" value="1"  name="brand[brand_status]" />
                 <div class="form-group">
                     <label class="control-label col-xs-2">
                         <span class="text-danger">*</span>品牌名称
