@@ -922,7 +922,6 @@ class b2c_ctl_site_member extends b2c_frontpage
         $this->menuSetting = 'setting';
         $user_obj = vmc::singleton('b2c_user_object');
         //$this->pagedata['pam_data'] = $user_obj->get_pam_data('*', $this->member['member_id']);
-        var_dump($this->app->model('members')->getRow('*', array('member_id'=>$this->member['member_id'])));
         $this->pagedata['pam_data'] = $this->app->model('members')->getRow('*', array('member_id'=>$this->member['member_id']));
         $this->output();
     }
