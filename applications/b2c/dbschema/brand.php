@@ -103,6 +103,13 @@ $db['brand'] = array(
                     'comment' => ('品牌分类'),
                     'label' => ('品牌分类'), // 1 企业品牌  2 店铺品牌
                 ),
+            'brand_status' =>
+                array(
+                    'type' => 'number',
+                    'default' => 0,
+                    'comment' => ('品牌是否授权'),
+                    'label' => ('品牌是否授权'), // 0 否  1 是
+                ),
             'agent_code' => array(
                 'type' => 'char(32)',
                 'default' => '',

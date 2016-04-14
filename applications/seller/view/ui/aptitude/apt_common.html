@@ -22,8 +22,9 @@
                 <tr class="par_row"><!--gnqStdClaId -->
                     <td colspan="3"><{$items.gnqStdClaName}></td>
                 </tr>
+                <{foreach from=$items.gnqStdSublist item=item}>
                 <tr><!-- gnqStdItemId-->
-                    <{foreach from=$items.gnqStdSublist item=item}>
+                    
                     <td><{$item.gnqStdClaName}></td>
                     <td>
                         <textarea name="qualified[water]"><{$item.okVal}>
@@ -33,8 +34,9 @@
                         <textarea name="unqualified[water]"><{$item.ngVal}>
                         </textarea>
                     </td>
-                    <{/foreach}>
+                    
                 </tr>
+                <{/foreach}>
                 <{/foreach}>
                 </tbody>
             </table>
