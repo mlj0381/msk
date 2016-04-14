@@ -236,6 +236,9 @@ ol {
   overflow: hidden;
   text-align: center;
 }
+.buyer_container .my-main .my-page .alert-warning .m-baseinfo dl dd h4 a {
+  font-size: 12px;
+}
 .buyer_container .my-main .my-page .alert-warning .m-baseinfo dl dd ul {
   margin-top: 10px;
 }

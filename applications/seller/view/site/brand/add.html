@@ -1,28 +1,24 @@
+<<<<<<< HEAD
+<div class="brand_edit_page">   
+=======
 
 
 
 
 
 <!-- <div class="brand_edit_page">
+>>>>>>> 7cf4b5fe3522d88d3e8eb5550bba2076ae6ec351
     <div class="modal-header">
         <h3 class="modal-title"><{if $brand.brand_id }>品牌编辑<{else}>品牌添加<{/if}></h3>
     </div>
-     <div class="company_brand_add" style="margin-top:20px;">
-
-      <ul class="nav nav-tabs" role="tablist">
-        <li role="presentation" class="active"><a href="#company_brand" role="tab" data-toggle="tab">企业品牌/企业品牌编辑</a></li>
-        <li role="presentation"><a href="#store_brand" role="tab" data-toggle="tab">店铺品牌/店铺品牌编辑</a></li>
-      </ul>
-
-      <form method="post" action="<{link app=seller ctl=site_brand act=add}>" id='brand_form' calss="form" data-module="validator">
+    <form method="post" action="<{link app=seller ctl=site_brand act=add}>" id='brand_form' calss="form" data-module="validator">
         <div class="modal-body  form-horizontal">
             <div class="form-body">
                 <{if $brand.brand_id }>
                     <input type="hidden" value="<{$brand.brand_id }>"  name="brand[brand_id]" />
                     <{/if}>
-                <input type="hidden" value="centre" name="type"/> 判断跳转位置
+                <input type="hidden" value="centre" name="type"/> <!-- 判断跳转位置-->
                 <input type="hidden" value="<{$brand.brand_initial }>" class="initial" name="brand[brand_initial]"/>
-                拼音首字母
                 <div class="form-group" data-module="brand_add">
                     <label class="control-label col-xs-2">
                         <span class="text-danger">*</span>品牌持有者
@@ -31,14 +27,14 @@
                         <{input type=select required="true" value=$brand.company_id name="brand[company_id]" rows=$company
                         valueColumn="company_id" labelColumn="company_name"}>
                         <span class="msgTip" data-message="error">不能为空</span>
-                        <{if !$brand.brand_id }>
+                        <!-- <{if !$brand.brand_id }>
                         <button type="button" class="btn-link"
                                 href="<{link app=seller ctl=site_passport act=brand_aptitude}>?type=add"
                                 style="margin-top:10px;" data-toggle="tooltip" data-placement="right" title="需要重新填写相关资质">新增品牌持有者
                         </button>
 
                         <a href="<{link app=seller ctl=site_passport act=brand_aptitude}>?type=add" data-link="write_apt">请去填写公司相关资质</a>
-                        <{/if}>
+                        <{/if}> -->
                     </div>
                 </div>
                 <div class="form-group">
@@ -46,10 +42,203 @@
                         <span class="text-danger">*</span>品牌分类
                     </label>
                     <div class="col-xs-5">
-                        <input class="form-control" name="brand[brand_class]" required="true" readonly value="企业品牌">
+                        <select class="form-control brand_class" name="brand[brand_class]" required="true">
+                            <option value="1">企业品牌</option>
+                            <option value="2">店铺品牌</option>
+                        </select>
                         <span class="msgTip" data-message="error">不能为空</span>
                     </div>
                 </div>
+                <!-- 拼音首字母-->
+                <div class="brand_name_wrap">
+                    <div class="form-group">
+                        <label class="control-label col-xs-2">
+                            <span class="text-danger">*</span>品牌名称
+                        </label>
+
+                        <div class="col-xs-5">
+                            <input type="text" required="true" id="check_brand_name" name="brand[brand_name]"value="<{$brand.brand_name}>" class="form-control brand_name" placeholder="品牌全系统唯一，不能有重复">
+                            <span class="msgTip" data-message="error"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-xs-2">
+                        <span class="text-danger">*</span>品牌logo
+                    </label>
+
+                    <div class="col-xs-5">
+                        <{input type="imageupload" tag="图片上传" name="brand[brand_logo]" value=$brand.brand_logo required='true'
+                        accept="jpg|png|gif" }>
+                        <span class="msgTip" data-message="error">不能为空</span>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="col-xs-2 control-label">
+                        <span class="text-danger">*</span>品牌有效期限
+                    </label>
+                    <div class="col-xs-5">
+                        <div class="timeLimit">
+                            <input type="text" name="brand[agent_start]" value="<{$brand.agent_start}>"  class="form-control date timeStart" placeholder="2010-10-20" readonly required="true"> 至
+                            <input type="text" name="brand[agent_end]" value="<{$brand.agent_end}>"  class="form-control date timeEnd" placeholder="2010-10-20" readonly required="true">
+                            <span class="msgTip" data-message="error"></span>
+                        </div>
+                    </div>  
+                </div>
+                <div class="brand_agent_wrap">
+                    <div class="form-group">
+                        <label class="control-label col-xs-2">
+                            <span class="text-danger">*</span>商标注册码
+                        </label>
+                        <div class="col-xs-5">
+                            <input type="text" class="form-control" required="true" name="brand[agent_code]" value="<{$brand[agent_code]}>">
+                            <span class="msgTip" data-message="error"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-xs-2">
+                            注册商标证书
+                        </label>
+
+                        <div class="col-xs-5">
+                            <{input type="imageupload" tag="图片上传" name="brand[brand_setting][reg_card]"
+                            value=$brand.brand_setting.reg_card required='true' accept="jpg|png|gif" }>
+                        </div>
+                    </div>
+                </div>
+                
+                
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="submit" class="btn btn-primary brand_save_btn" data-save="brand_save">保存品牌</button>
+            </div>
+        </div>
+    </form>
+</div>
+<textarea class="hide brandName_html">
+    <div class="form-group">
+        <label class="control-label col-xs-2">
+            <span class="text-danger">*</span>品牌名称
+        </label>
+        <div class="col-xs-5">
+            <select required="true" id="check_brand_name" name="brand[brand_name]"
+                   value="<{$brand.brand_name}>" class="form-control brand_name" placeholder="品牌全系统唯一，不能有重复">
+                   <option value="1">1111</option>
+                   <option value="2">2222</option>
+            </select>
+            <span class="msgTip" data-message="error"></span>
+        </div>
+    </div>
+</textarea>
+<textarea class="hide brand_agent_html">
+    <div class="form-group">
+        <label class="control-label col-xs-2">
+            <span class="text-danger">*</span>品牌授权码
+        </label>
+        <div class="col-xs-5">
+            <input type="text" class="form-control" required="true" name="brand[agent_code]" value="<{$brand[agent_code]}>">
+            <span class="msgTip" data-message="error"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-2">
+            <span class="text-danger">*</span>品牌授权书
+        </label>
+        <div class="col-xs-5">
+            <{input type="imageupload" tag="图片上传" name="brand[accredit]" value=$brand.accredit
+            required='true' accept="jpg|png|gif" }>
+            <span class="msgTip" data-message="error">不能为空</span>
+        </div>
+    </div>
+</textarea>
+<script charset="utf-8">
+$(function() {
+    //品牌类型不同，字段展示不同
+    var brand_name_wrap = $('.brand_name_wrap').html();
+    var brand_agent_wrap = $('.brand_agent_wrap').html();
+    var brandName_html = $('.brandName_html').val();
+    var brand_agent_html = $('.brand_agent_html').val();
+    //var brand_class = $('.brand_class option:selected').attr('value');
+    function displayCtrl(brand_class){
+        if(brand_class==1){
+            console.log(brand_class);
+            $('.brand_name_wrap').html('').append(brand_name_wrap);
+            $('.brand_agent_wrap').html('').append(brand_agent_wrap);
+        }else if(brand_class==2){
+            $('.brand_name_wrap').html('').append(brandName_html);
+            $('.brand_agent_wrap').append(brand_agent_html);
+        }
+    };
+    $('.brand_class').on('change',function(value){
+        var value = $('.brand_class option:selected').attr('value');
+        displayCtrl(value);
+        $.VMC.init();
+    })
+
+    $('#check_brand_name').blur(function() {
+        var url = "<{link app=seller ctl=site_brand act=check_brand_name}>";
+        var url_initial = "<{link app=seller ctl=site_brand act=brand_initial}>";
+        var input = $(this);
+        if (input.val() == '') return;
+        $.post(url, {
+            brand_name: input.val()
+        }, function(re) {
+            if (re.success) {
+                //input.closest('.form-group').removeClass('has-error').addClass('has-success');
+                if (re.data && re.data.is_mobile) {
+                    $('.local-vcode').hide();
+                    $('.mobile-vcode').show();
+                } else {
+                    $('.local-vcode').show();
+                    $('.mobile-vcode').hide();
+                }
+            } else {
+                input.popover({
+                    content: re.error,
+                    placement: 'right',
+                    trigger: 'click',
+                    container: 'body'
+                });
+                input.popover('show');
+                //input.closest('.form-group').removeClass('has-success').addClass('has-error');
+            }
+        }, 'json');
+        $.post(url_initial, {
+            brand_name: input.val()
+        }, function(re) {
+            if (re.success) {
+                $('.initial').val(re.success);
+            } else if (re.error) {
+
+            }
+        });
+    });
+});
+</script>
+
+
+
+
+
+
+
+
+
+<!-- <div class="brand_edit_page">   
+    <div class="modal-header">
+        <h3 class="modal-title"><{if $brand.brand_id }>品牌编辑<{else}>品牌添加<{/if}></h3>
+    </div>
+    <form method="post" action="<{link app=seller ctl=site_brand act=add}>" id='brand_form' calss="form" data-module="validator">
+        <div class="modal-body  form-horizontal">
+            <div class="form-body">
+                <{if $brand.brand_id }>
+                    <input type="hidden" value="<{$brand.brand_id }>"  name="brand[brand_id]" />
+                    <{/if}>
+                <input type="hidden" value="centre" name="type"/> 判断跳转位置
+                <input type="hidden" value="<{$brand.brand_initial }>" class="initial" name="brand[brand_initial]"/>
+                拼音首字母
                 <div class="form-group">
                     <label class="control-label col-xs-2">
                         <span class="text-danger">*</span>品牌名称
@@ -72,8 +261,54 @@
                         <span class="msgTip" data-message="error">不能为空</span>
                     </div>
                 </div>
+<<<<<<< HEAD
+                <div class="form-group">
+                    <label class="control-label col-xs-2">
+                        <span class="text-danger">*</span>品牌分类
+                    </label>
+                    <div class="col-xs-5">
+                        <select class="form-control" name="brand[brand_class]" required="true">
+                            <option value="1">企业品牌</option>
+                            <option value="2">店铺品牌</option>
+                        </select>
+                        <span class="msgTip" data-message="error">不能为空</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-xs-2">
+                        <span class="text-danger">*</span>品牌类型
+                    </label>
+                    <div class="col-xs-5">
+                        <select class="form-control" name="brand[type]" required="true">
+                            <option value="1">自有品牌</option>
+                            <option value="2">代理品牌</option>
+                            <option value="3">OEM委托品牌</option>
+                        </select>
+                        <span class="msgTip" data-message="error">不能为空</span>
+                    </div>
+                </div>
+                <div class="form-group" data-module="brand_add">
+                    <label class="control-label col-xs-2">
+                        <span class="text-danger">*</span>品牌持有者
+                    </label>
+                    <div class="col-xs-5">
+                        <{input type=select required="true" value=$brand.company_id name="brand[company_id]" rows=$company
+                        valueColumn="company_id" labelColumn="company_name"}>
+                        <span class="msgTip" data-message="error">不能为空</span>
+                        <{if !$brand.brand_id }>
+                        <button type="button" class="btn-link"
+                                href="<{link app=seller ctl=site_passport act=brand_aptitude}>?type=add"
+                                style="margin-top:10px;" data-toggle="tooltip" data-placement="right" title="需要重新填写相关资质">新增品牌持有者
+                        </button>
+
+                        <a href="<{link app=seller ctl=site_passport act=brand_aptitude}>?type=add" data-link="write_apt">请去填写公司相关资质</a>
+                        <{/if}>
+                    </div>
+                </div>
+=======
 
 
+>>>>>>> 7cf4b5fe3522d88d3e8eb5550bba2076ae6ec351
                 <div class="form-group">
                     <label class="col-xs-2 control-label">
                         <span class="text-danger">*</span>品牌有效期限
@@ -88,11 +323,21 @@
                 </div>
                 <div class="form-group">
                     <label class="control-label col-xs-2">
-                        <span class="text-danger">*</span>商标注册码
+                        <span class="text-danger">*</span>品牌授权码
                     </label>
                     <div class="col-xs-5">
                         <input type="text" class="form-control" required="true" name="brand[agent_code]" value="<{$brand[agent_code]}>">
                         <span class="msgTip" data-message="error"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-xs-2">
+                        <span class="text-danger">*</span>品牌授权书
+                    </label>
+                    <div class="col-xs-5">
+                        <{input type="imageupload" tag="图片上传" name="brand[accredit]" value=$brand.accredit
+                        required='true' accept="jpg|png|gif" }>
+                        <span class="msgTip" data-message="error">不能为空</span>
                     </div>
                 </div>
                 <div class="form-group">
@@ -111,9 +356,13 @@
                 <button type="submit" class="btn btn-primary brand_save_btn" data-save="brand_save">保存品牌</button>
             </div>
         </div>
+<<<<<<< HEAD
+    </form>
+=======
      </form>
 
     </div>
+>>>>>>> 7cf4b5fe3522d88d3e8eb5550bba2076ae6ec351
 </div>
 <script charset="utf-8">
 $(function() {
@@ -156,4 +405,5 @@ $(function() {
         });
     });
 });
-</script> -->
+</script>
+ -->

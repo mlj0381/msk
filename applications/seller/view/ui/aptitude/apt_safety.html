@@ -21,8 +21,9 @@
                 <tr class="par_row"><!--sftStdClaId -->
                     <td colspan="3"><{$items.sftStdClaName}></td>
                 </tr>
+               <{foreach from=$items.sftStdSublist item=item}>
                 <tr>
-                    <{foreach from=$items.sftStdSublist item=item}>
+                    
                     <td><{$item.sftStdClaName}></td>
                     <td>
                         <textarea name="qualified[one_class]"><{$item.okVal}>
@@ -32,8 +33,9 @@
                         <textarea name="unqualified[one_class]"><{$item.ngVal}>
                         </textarea>
                     </td>
-                    <{/foreach}>
+                    
                 </tr>
+                <{/foreach}>
             <{/foreach}>
             </tbody>
         </table>
