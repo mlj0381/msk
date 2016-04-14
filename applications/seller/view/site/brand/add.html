@@ -1,4 +1,13 @@
+<<<<<<< HEAD
 <div class="brand_edit_page">   
+=======
+
+
+
+
+
+<!-- <div class="brand_edit_page">
+>>>>>>> 7cf4b5fe3522d88d3e8eb5550bba2076ae6ec351
     <div class="modal-header">
         <h3 class="modal-title"><{if $brand.brand_id }>品牌编辑<{else}>品牌添加<{/if}></h3>
     </div>
@@ -23,7 +32,7 @@
                                 href="<{link app=seller ctl=site_passport act=brand_aptitude}>?type=add"
                                 style="margin-top:10px;" data-toggle="tooltip" data-placement="right" title="需要重新填写相关资质">新增品牌持有者
                         </button>
-                        
+
                         <a href="<{link app=seller ctl=site_passport act=brand_aptitude}>?type=add" data-link="write_apt">请去填写公司相关资质</a>
                         <{/if}> -->
                     </div>
@@ -252,6 +261,7 @@ $(function() {
                         <span class="msgTip" data-message="error">不能为空</span>
                     </div>
                 </div>
+<<<<<<< HEAD
                 <div class="form-group">
                     <label class="control-label col-xs-2">
                         <span class="text-danger">*</span>品牌分类
@@ -295,6 +305,10 @@ $(function() {
                         <{/if}>
                     </div>
                 </div>
+=======
+
+
+>>>>>>> 7cf4b5fe3522d88d3e8eb5550bba2076ae6ec351
                 <div class="form-group">
                     <label class="col-xs-2 control-label">
                         <span class="text-danger">*</span>品牌有效期限
@@ -305,7 +319,7 @@ $(function() {
                             <input type="text" name="brand[agent_end]" value="<{$brand.agent_end}>"  class="form-control date timeEnd" placeholder="2010-10-20" readonly required="true">
                             <span class="msgTip" data-message="error"></span>
                         </div>
-                    </div>  
+                    </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label col-xs-2">
@@ -342,7 +356,13 @@ $(function() {
                 <button type="submit" class="btn btn-primary brand_save_btn" data-save="brand_save">保存品牌</button>
             </div>
         </div>
+<<<<<<< HEAD
     </form>
+=======
+     </form>
+
+    </div>
+>>>>>>> 7cf4b5fe3522d88d3e8eb5550bba2076ae6ec351
 </div>
 <script charset="utf-8">
 $(function() {

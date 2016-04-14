@@ -32,8 +32,8 @@ class seller_ctl_site_brand extends seller_frontpage
          * ISL231153 查询卖家产品品牌
          */
         $this->title = '商品品牌';
-        //查询详细信息
-        $this->pagedata['brands'] = $this->mB2cbrand->getList('*', array('seller_id' => $this->seller['seller_id']));
+        //查询店铺详细信息
+        $this->pagedata['brands'] = $this->mB2cbrand->getList('*', array('seller_id' => $this->seller['seller_id'],'brand_class'=> 2));
         $this->output();
     }
 
@@ -52,6 +52,7 @@ class seller_ctl_site_brand extends seller_frontpage
         }
         $this->pagedata['company'] = app::get('base')->model('company_seller')->getList('company_id, company_name',
             array('uid' => $this->seller['seller_id'], 'from' => 1));
+        $this->pagedata['brands'] = $this->mB2cbrand->getList('*',array('seller_id' => $this->seller['seller_id']));
         if (is_numeric($brand_id)) {
             $this->pagedata['brand'] = app::get('b2c')->model('brand')->getRow('*',
                 array('brand_id' => $brand_id, 'seller_id' => $this->seller['seller_id']));
@@ -77,70 +78,55 @@ class seller_ctl_site_brand extends seller_frontpage
     private function _post($post)
     {
         $redirect = array('app' => 'seller', 'ctl' => 'site_brand', 'act' => 'index');
-//        if($post['type'] == 'entry'){
-//            $count = vmc::singleton('seller_user_passport')->countPage();
-//            $redirect = Array('app' => 'seller', 'ctl' => 'site_passport', 'act' => 'entry', 'args0' => ($count['sum'] - 1));
-//        }
         $redirect = $this->gen_url($redirect);
+        $store_brand = app::get('b2c')->model('brand')->getRow('*',array('brand_id' => $post['brand']['brand_id']));
         $post['brand']['seller_id'] = $this->seller['seller_id'];
-        if ($post['brand']['brand_class'] == '1') { //添加企业品牌
-//            vmc::dump($post);die;
-//            if (!$this->mB2cbrand->save_brand($post)) {
-            if (!$this->mB2cbrand->save($post['brand'])) {
-                $this->splash('error', $redirect, '操作失败');
-            } else {
-                $data = array(
-                    'epId' => app::get('base')->model('company')->getRow('ep_id', array('company_id' => $post['brand']['company_id']))['ep_id'],
-                    'brandId' => (int)app::get('b2c')->model('brand')->getRow('*',array('brand_id' => $post['brand']['brand_id']))['api_brand_id'],
-                    'brandName' => $post['brand']['brand_name'],
-                    'brandClass' => 0,
-                    'brandNo' => $post['brand']['agent_code'],
-                    'brandTermBegin' => $post['brand']['agent_start'],
-                    'brandTermEnd' => $post['brand']['agent_end'],
-                );
-                $res = $this->app->rpc('add_company_brand')->request($data);
-                if (!$res['status']) {
-                    $this->splash('error', $redirect, '数据同步失败');
-                }else{
-                    app::get('b2c')->model('brand')->update(array('api_brand_id'=>$res['result']['brandId']),array('brand_id' => $post['brand']['brand_id']));
-                }
-            }
-        } elseif ($post['brand']['brand_class'] == '2') { //添加店铺品牌
-//            if (!$this->mB2cbrand->save_brand($post)) {
-            if (!$this->mB2cbrand->save($post['brand'])) {
-                $this->splash('error', $redirect, '操作失败');
-            } else {
-                $brand_data = app::get('b2c')->model('brand')->getRow('*',array('brand_id' => $post['brand']['brand_id']));
-                $data = array(
-                    'slCode' => app::get('seller')->model('sellers')->getRow('sl_code',array('seller_id' => $brand_data['seller_id']))['sl_code'],
-                    'brandEpId' => app::get('base')->model('company')->getRow('ep_id',array('company_id' => $brand_data['company_id']))['ep_id'],
-                    'brandId' => (int)$brand_data['api_brand_id'],
-                    'brandName' => $brand_data['brand_name'],
-                    'brandType' => $brand_data['type'] == 2 ? $brand_data['type'] : 1,
-                    'brandClass' => 0,
-                    'contractNo' => $brand_data['agent_code'],
-                    'termBegin' => $brand_data['agent_start'],
-                    'termEnd' => $brand_data['agent_end'],
-                );
-                if(!$this->app->rpc('add_seller_brand')->request($data)['status']){
-                    $this->splash('error', $redirect, '数据同步失败');
-                }
+        $post['brand']['brand_name'] = $store_brand['brand_name'];
+        $post['brand']['api_brand_id'] = $store_brand['api_brand_id'];
+        $post['brand']['api_company_id'] = app::get('base')->model('company')->getRow('ep_id',array('company_id' => $post['brand']['company_id']))['ep_id'];
+        unset($post['brand']['brand_id']);
+        if (!$this->mB2cbrand->save($post['brand'])) {
+            $this->splash('error', $redirect, '操作失败');
+        } else {
+            $brand_data = app::get('b2c')->model('brand')->getRow('*',array('brand_id' => $post['brand']['brand_id']));
+            $data = array(
+                'slCode' => app::get('seller')->model('sellers')->getRow('sl_code',array('seller_id' => $brand_data['seller_id']))['sl_code'],
+                'brandEpId' => app::get('base')->model('company')->getRow('ep_id',array('company_id' => $brand_data['company_id']))['ep_id'],
+                'brandId' => (int)$brand_data['api_brand_id'],
+                'brandName' => $brand_data['brand_name'],
+                'brandType' => $brand_data['type'] == 2 ? $brand_data['type'] : 1,
+                'brandClass' => 0,
+                'contractNo' => $brand_data['agent_code'],
+                'termBegin' => $brand_data['agent_start'],
+                'termEnd' => $brand_data['agent_end'],
+            );
+//            vmc::dump($data);die;
+            if(!$this->app->rpc('add_seller_brand')->request($data)['status']){
+                $this->splash('error', $redirect, '数据同步失败');
             }
         }
 
         $this->splash('success', $redirect, '添加成功');
     }
 
-    //rpc添加品牌
-    public function rpc_save_brand()
+
+    //修改店铺品牌
+    public function store_brand_add($brand_id)
     {
-
-    }
-
-    //修改品牌
-    public function edit()
-    {
-
+        if ($_POST) {
+            $params = utils::_filter_input($_POST);
+            unset($_POST);
+            $this->_post($params);
+        }
+        $this->pagedata['brands'] = $this->mB2cbrand->getList('*', array('seller_id' => $this->seller['seller_id'],'brand_class'=> 1));
+        $this->pagedata['company'] = app::get('base')->model('company_seller')->getList('company_id, company_name',
+            array('uid' => $this->seller['seller_id'], 'from' => 1));
+        if (is_numeric($brand_id)) {
+            $this->pagedata['brand'] = app::get('b2c')->model('brand')->getRow('*',
+                array('brand_id' => $brand_id, 'seller_id' => $this->seller['seller_id']));
+            //查询商家所有的公司
+        }
+        $this->output();
     }
 
     //删除

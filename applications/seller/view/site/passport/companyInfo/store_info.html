@@ -79,6 +79,7 @@
                         <td><input type="checkbox" name="cat_id[]"
                             <{if $cat1.cat_id eq $extra.store.selectedCat[$k1].cat_id}> checked <{/if}>
                             value="<{$cat1.cat_id}>"><{$cat1.cat_name}>
+                            <input type="hidden" name="id[]" value="<{$extra.store.selectedCat[$k1].id}>">
                         </td>
                         <td></td>
                     </tr>
@@ -89,9 +90,10 @@
                             <input type="checkbox" name="cat_id[]"
                             <{if $cat2.cat_id eq $extra.store.selectedCat[$k1].children[$k2].cat_id}> checked <{/if}>
                             value="<{$cat2.cat_id}>"><{$cat2.cat_name}>
-
+                            <input type="hidden" name="id[]" value="<{$extra.store.selectedCat[$k1].children[$k2].id}>">
                             <{if !$extra.store.selectedCat[$k1].children[$k2].extra}>
-                            <a href="<{link app=seller ctl=site_passport act=write_aptitude args0=$cat2.cat_id}>"
+
+                            <a href="<{link app=seller ctl=site_passport act=write_aptitude args0=$cat2.cat_id args1=$extra.pageIndex}>"
                                data-toggle="modal" data-target="#write_apt_modal" class="warning"><i
                                     class="text-danger icon-exclamation-sign"> </i>
                                 <small>缺少资质</small>

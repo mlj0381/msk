@@ -30,42 +30,7 @@
 /**
  *动态添加多项,例如：检测设备，电商团队成员，企业荣誉，车间概况
  */
-    /*$('div[data-module="creater"]').each(function(index, el) {
-
-        var addBtn = $(this).find('.addBtn');
-        var delBtn = $(this).find('delBtn');
-        var items = $(this).find('div[data-items="itemList"]');
-        var item = items.find('div[data-item="creat-item"]');
-        var itemLen = item.size();
-        var html = items.clone(true).html(); 
-
-        //增加
-        addBtn.bind('click',function(){
-            $('div[data-module="creater"]').find('div[data-items="itemList"]').append(html);
-            itemLen++;
-            $.VMC.init();
-
-        })
-        
-        //删除
-        var _this = $('div[data-module="creater"]');
-        if(itemLen <= 1){
-           item.find($('.delBtn')).hide(); 
-        }
-        _this.on('click','.delBtn',function(){
-            var parent = $(this).parents('div[data-item="creat-item"]');
-            var content_id = parent.find('input[name="equipment[content_id][]"]').val();
-            var url = '<{link app=seller ctl=site_passport act=del_extra}>';
-            $.post(url, {content_id: content_id}, function (re) {
-                if (re.success) {
-                    parent.remove();
-                    itemLen--;
-                } else {
-                    alert('操作失败');
-                }
-            });            
-        });    
-    });*/
+    
     var itemLength = function(obj){
         var items = obj.find('div[data-items="itemList"]');
         var item = items.find('div[data-item="creat-item"]:first');

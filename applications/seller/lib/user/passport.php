@@ -733,10 +733,10 @@ class seller_user_passport
     private function &changeKey(&$cat)
     {
         $tmp = Array();
-        if(is_array($cat)){
-            foreach($cat as $v){
+        if (is_array($cat)) {
+            foreach ($cat as $v) {
                 $tmp[$v['cat_id']] = $v;
-                if(is_array($v['children'])){
+                if (is_array($v['children'])) {
                     $this->changeKey($v['children']);
                 }
             }
@@ -788,7 +788,9 @@ class seller_user_passport
                         $params[$value['key']]['seller_id'] = $seller['seller_id'];
                         $params[$value['key']]['store_type'] = $seller['ident'];
                         //添加经营分类
-                        if (array_filter($params['cat_id']) && !app::get('store')->model('goods_cat')->addCat($params['cat_id'], $seller['seller_id'])) {
+                        if (array_filter($params['cat_id']) &&
+                            !$params['id'] &&
+                            !app::get('store')->model('goods_cat')->addCat($params['cat_id'], $seller['seller_id'])) {
                             $db->rollback();
                             $msg = '经营分类添加失败';
                             return false;
@@ -834,6 +836,7 @@ class seller_user_passport
         }
 
         $mdl_company_extra = app::get('base')->model('company_extra');
+
         foreach ($extra_columns['page'] as $key => $col) {
             if (isset($params[$col]) && !empty($params[$col])) {
                 $params[$col]['content_id'] && $sqlType = true;
@@ -842,7 +845,7 @@ class seller_user_passport
                 $params[$col]['uid'] = $seller['seller_id'];
                 $params[$col]['createtime'] = time();
                 $params[$col]['from'] = 1;
-                //print_r($params[$col]);die;
+
                 //电商成员信息
                 if (is_array(reset($params[$col]['value']))) {
 
@@ -864,7 +867,8 @@ class seller_user_passport
             $extra_data = array(
                 'seller_id' => $seller['seller_id'],
                 'schedule' => $params['pageIndex'],
-                'company_extra' => $company_extra['company_id']);
+                'company_extra' => $company_extra['company_id'],
+                'sl_code' => $this->seller['sl_code']);
 
             if (!$mdl_seller->save($extra_data)) {
                 $db->rollback();
@@ -959,8 +963,18 @@ class seller_user_passport
                 return false;
             }
             $filter = array('seller_id' => $this->seller['seller_id']);
-            $update_value = array('sl_code' => $result['result']['slCode']);
+            $update_value = array('sl_code' => $this->seller['sl_code'] ?: $result['result']['slCode']);
             if (!app::get('seller')->model('sellers')->update($update_value, $filter)) {
+                $db->rollback();
+                return false;
+            }
+
+            $apiBrand = $this->app->rpc('select_company_brand')->request(array('epId' => $result['result']['epId']));
+
+            $filter = array('seller_id' => $this->seller['seller_id']);//api_company_id api_brand_id
+            $update_value = array('api_brand_id' => $apiBrand['result']['slEpBrandList'][0]['brandId'],
+                'api_company_id' => $result['result']['epId']);
+            if (!app::get('b2c')->model('brand')->update($update_value, $filter)) {
                 $db->rollback();
                 return false;
             }
@@ -981,7 +995,7 @@ class seller_user_passport
                 $rpc = 'edit_seller_info2';
                 break;
             case '4' :
-                $rpc = 'edit_seller_info3';
+                $rpc = 'edit_seller_info2';
                 break;
         }
 
@@ -1037,8 +1051,8 @@ class seller_user_passport
         if ($this->seller['ident'] & 4) {
             $seller_type['oemFlg'] = '3';
         }
-        $region = app::get('ectools')->model('regions')->region_decode($tmp['seller']['area']); //todo地区三级联动
 
+        $region = app::get('ectools')->model('regions')->region_decode($this->seller['area']); //todo地区三级联动
         $result['slSeller'] = array(
             'login_account' => $tmp['pam']['login_account'],
             'slCode' => $this->seller['sl_code'],

@@ -20,8 +20,9 @@
                 <tr class="par_row"><!-- tspStdClaId-->
                     <td colspan="3"><{$items.tspStdClaName}></td>
                 </tr>
+                <{foreach from=$items.tspStdSublist item=item}>
                 <tr><!--tspStdItemId -->
-                    <{foreach from=$items.tspStdSublist item=item}>
+                    
                     <td><{$item.tspStdClaName}></td>
                     <td>
                         <textarea name="qualified[temp]"><{$item.okVal}></textarea>
@@ -29,8 +30,9 @@
                     <td>
                         <textarea name="unqualified[temp]"><{$item.ngVal}></textarea>
                     </td>
-                    <{/foreach}>
+                    
                 </tr>
+                <{/foreach}>
             <{/foreach}>
             </tbody>
         </table>

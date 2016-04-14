@@ -1,35 +1,64 @@
+
+
 <input type="hidden" name="oem_auth_lesstion[content_id]"  value="<{$extra.oem_auth_lesstion.content_id}>" class="form-control">
+
+
 <div id="oem_auth_lesstion">
-	<h4>OEM委托授权书</h4>
-	<div class="form-group">
-		<label class="col-xs-2 control-label">
-			<span class="text-danger">*</span>委托单位：
-		</label>
-		<div class="col-xs-4">
-			<input type="text" name="oem_auth_lesstion[value][auth_unit]" value="<{$extra.oem_auth_lesstion.value.auth_unit}>" class="form-control" required="true">
-			<span class="msgTip" data-message="error"></span>
-		</div>
-	</div>
 
-	<div class="form-group">
-		<label class="col-xs-2 control-label">
-			<span class="text-danger">*</span>被委托单位：
-		</label>
-		<div class="col-xs-4">
-			<input type="text" name="oem_auth_lesstion[value][comm_unit]" value="<{$extra.oem_auth_lesstion.value.comm_unit}>" class="form-control" required="true">
-			<span class="msgTip" data-message="error"></span>
-		</div>
-	</div>
+    <h4>OEM委托授权书</h4>
+    <div class="form-group">
+        <label class="col-xs-2 control-label">
+            <span class="text-danger">*</span>生产商：
+        </label>
+        <div class="col-xs-4">
+            <{input type=select required="true" name="oem_auth_lesstion[value][agent]" rows=$extra.page_setting.agent_company valueColumn="epId"
+            labelColumn="epName" value=$extra.oem_auth_lesstion.value.agent}>
+            <span class="msgTip" data-message="error"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-xs-2 control-label">
+            <span class="text-danger">*</span>授权单位：
+        </label>
+        <div class="col-xs-4">
+            <input type="text" name="oem_auth_lesstion[value][unit]" value="<{$extra.oem_auth_lesstion.value.unit}>" class="form-control" required="true">
+            <span class="msgTip" data-message="error"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-xs-2 control-label">
+            <span class="text-danger">*</span>授权证书号：
+        </label>
+        <div class="col-xs-4">
+            <input type="text" name="oem_auth_lesstion[value][num]" value="<{$extra.oem_auth_lesstion.value.num}>" class="form-control" required="true">
+            <span class="msgTip" data-message="error"></span>
+        </div>
+    </div>
 
-	<div class="form-group">
-		<label class="col-xs-2 control-label">
-			<span class="text-danger">*</span>授权书电子版：
-		</label>
-		<div class="col-xs-4">
-	        <{input type="imageupload" tag="图片上传" name="oem_auth_lesstion[attach]" value=$extra.oem_auth_lesstion.attach required='true' accept="jpg|png|gif"}>   
+    <div class="form-group">
+        <label class="col-xs-2 control-label">
+            授权期限：
+        </label>
+        <div class="col-xs-4">
+            <div class="timeLimit">
+                <input type="text" name="oem_auth_lesstion[value][start]" value="<{$extra.oem_auth_lesstion.value.start}>"  class="form-control date timeStart" placeholder="2010-10-20" readonly> 至
+                <input type="text" name="oem_auth_lesstion[value][end]" value="<{$extra.oem_auth_lesstion.value.end}>"  class="form-control date timeEnd" placeholder="2010-10-20" readonly>
+                <span class="msgTip" data-message="error"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-xs-2 control-label">
+            <span class="text-danger">*</span>授权书电子版：
+        </label>
+        <div class="col-xs-4">
+            <{input type="imageupload" tag="图片上传" name="oem_auth_lesstion[attach]" value=$extra.oem_auth_lesstion.attach required='true' accept="jpg|png|gif"}>
             <span class="msgTip" data-message="error">不能为空</span>
-		</div>
-	</div>
+        </div>
+    </div>
+
+
 </div>
 
 

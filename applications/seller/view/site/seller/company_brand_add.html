@@ -1,6 +1,6 @@
 <div class="brand_edit_page">   
     <div class="modal-header">
-        <h3 class="modal-title"><{if $brand.brand_id }>店铺品牌编辑<{else}>店铺品牌添加<{/if}></h3>
+        <h3 class="modal-title"><{if $brand.brand_id }>企业品牌编辑<{else}>企业品牌添加<{/if}></h3>
     </div>
      <div class="company_brand_add" style="margin-top:20px;">
 
@@ -9,7 +9,7 @@
         <li role="presentation"><a href="#store_brand" role="tab" data-toggle="tab">店铺品牌/店铺品牌编辑</a></li>
       </ul>-->
 
-      <form method="post" action="<{link app=seller ctl=site_brand act=store_brand_add}>" id='brand_form' calss="form" data-module="validator">
+      <form method="post" action="<{link app=seller ctl=site_seller act=company_brand_add}>" id='brand_form' calss="form" data-module="validator">
         <div class="modal-body  form-horizontal">
             <div class="form-body">
                 <{if $brand.brand_id }>
@@ -36,29 +36,24 @@
                         <{/if}> -->
                     </div>
                 </div>
-                <!-- <div class="form-group">
+<!--                <div class="form-group">
                     <label class="control-label col-xs-2">
                         <span class="text-danger">*</span>品牌分类
                     </label>
-                    <div class="col-xs-5"> 
+                    <div class="col-xs-5">
                         <input class="form-control" name="brand[brand_class]" required="true" readonly value="企业品牌">
                         <span class="msgTip" data-message="error">不能为空</span>
                     </div>
-                </div> -->
-                <input type="hidden" value="2"  name="brand[brand_class]" />
+                </div>-->
+                <input type="hidden" value="1"  name="brand[brand_class]" />
                 <div class="form-group">
                     <label class="control-label col-xs-2">
                         <span class="text-danger">*</span>品牌名称
                     </label>
 
                     <div class="col-xs-5">
-                        <!-- <input type="text" required="true" id="check_brand_name" name="brand[brand_name]"
-                               value="<{$brand.brand_name}>" class="form-control brand_name" placeholder="品牌全系统唯一，不能有重复"> -->
-                       <select class="form-control" name="brand[brand_id]" >
-                           <{foreach from=$brands key=key item=item }>
-                                <option value="<{$item.brand_id}>"><{$item.brand_name}></option>
-                           <{/foreach}>
-                       </select>
+                        <input type="text" required="true" id="check_brand_name" name="brand[brand_name]"
+                               value="<{$brand.brand_name}>" class="form-control brand_name" placeholder="品牌全系统唯一，不能有重复">
                         <span class="msgTip" data-message="error"></span>
                     </div>
                 </div>
@@ -73,8 +68,15 @@
                         <span class="msgTip" data-message="error">不能为空</span>
                     </div>
                 </div>
-                
-                
+                <div class="form-group">
+                    <label class="control-label col-xs-2">
+                        <span class="text-danger">*</span>商标注册码
+                    </label>
+                    <div class="col-xs-5">
+                        <input type="text" class="form-control" required="true" name="brand[agent_code]" value="<{$brand[agent_code]}>">
+                        <span class="msgTip" data-message="error"></span>
+                    </div>
+                </div>
                 <div class="form-group">
                     <label class="col-xs-2 control-label">
                         <span class="text-danger">*</span>品牌有效期限
@@ -85,25 +87,6 @@
                             <input type="text" name="brand[agent_end]" value="<{$brand.agent_end}>"  class="form-control date timeEnd" placeholder="2010-10-20" readonly required="true">
                             <span class="msgTip" data-message="error"></span>
                         </div>
-                    </div>  
-                </div>
-                <div class="form-group">
-                    <label class="control-label col-xs-2">
-                        <span class="text-danger">*</span>品牌授权码
-                    </label>
-                    <div class="col-xs-5">
-                        <input type="text" class="form-control" required="true" name="brand[agent_code]" value="<{$brand[agent_code]}>">
-                        <span class="msgTip" data-message="error"></span>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label col-xs-2">
-                        <span class="text-danger">*</span>品牌授权书
-                    </label>
-                    <div class="col-xs-5">
-                        <{input type="imageupload" tag="图片上传" name="brand[accredit]" value=$brand.accredit
-                        required='true' accept="jpg|png|gif" }>
-                        <span class="msgTip" data-message="error">不能为空</span>
                     </div>
                 </div>
                 <div class="form-group">
