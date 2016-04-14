@@ -206,18 +206,24 @@ class b2c_ctl_site_member extends b2c_frontpage
     {
         if ($action == 'active') {
             $params = $_POST;
-            if (!vmc::singleton('b2c_user_vcode')->verify($params['vcode'], $params['email'], 'reset')) {
-                $this->splash('error', '', '验证码错误！');
-            }
+            $redirect = $this->gen_url(array(
+            		'app' => 'b2c',
+            		'ctl' => 'site_member',
+            		'act' => 'active_pam_email',
+            ));
+//             if (!vmc::singleton('b2c_user_vcode')->verify($params['vcode'], $params['email'], 'reset')) {
+//                 $this->splash('error', '', '验证码错误！');
+//             }
             $mdl_pm = app::get('pam')->model('members');
             $p_m = $mdl_pm->getRow('member_id,login_type', array('login_account' => $params['email']));
-            if (empty($p_m['member_id']) || $p_m['login_type'] != 'email') {
-                $this->splash('error', '', '账号异常!');
-            }
-            if ($mdl_pm->update(array('disabled' => 'false'), array('member_id' => $p_m['member_id'], 'login_type' => $p_m['login_type']))) {
-                $this->splash('success', array('app' => 'b2c', 'ctl' => 'site_member', 'act' => 'securitycenter'), $params['email'] . '已成功激活!');
-            } else {
-                $this->splash('error', '', '激活异常!');
+            if ($p_m){
+            	$this->splash('error', $redirect, '邮箱已被绑定！');
+            }else {
+            	if ($this->app->model('members')->update(array('email' => $params['email']), array('member_id' => $p_m['member_id']))) {
+            		$this->splash('success', array('app' => 'b2c', 'ctl' => 'site_member', 'act' => 'securitycenter'), $params['email'] . '已成功激活!');
+            	} else {
+            		$this->splash('error', $redirect, '激活异常!');
+            	}
             }
         } else {
             $user_obj = vmc::singleton('b2c_user_object');
@@ -920,7 +926,9 @@ class b2c_ctl_site_member extends b2c_frontpage
     {
         $this->menuSetting = 'setting';
         $user_obj = vmc::singleton('b2c_user_object');
-        $this->pagedata['pam_data'] = $user_obj->get_pam_data('*', $this->member['member_id']);
+        //$this->pagedata['pam_data'] = $user_obj->get_pam_data('*', $this->member['member_id']);
+        var_dump($this->app->model('members')->getRow('*', array('member_id'=>$this->member['member_id'])));
+        $this->pagedata['pam_data'] = $this->app->model('members')->getRow('*', array('member_id'=>$this->member['member_id']));
         $this->output();
     }
 
