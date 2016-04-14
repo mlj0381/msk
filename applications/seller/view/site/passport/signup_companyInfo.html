@@ -170,12 +170,12 @@
 
 
 
-$('#companyInfo_form .business').change(function(){
-    var typeId = $('#companyInfo_form input[name="typeId"]').val().trim();
-    var url = '<{link app=seller ctl=site_passport act=check_company}>';
-    $.post(url, {business : $(this).val().trim(), business_type : 0, type_id : typeId}, function(re){
-        console.log(re);
-    })
+//$('#companyInfo_form .business').change(function(){
+//    var typeId = $('#companyInfo_form input[name="typeId"]').val().trim();
+//    var url = '<{link app=seller ctl=site_passport act=check_company}>';
+//    $.post(url, {business : $(this).val().trim(), business_type : 0, type_id : typeId}, function(re){
+//        console.log(re);
+//    })
 });
 
 

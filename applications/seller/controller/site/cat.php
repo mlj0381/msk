@@ -84,22 +84,26 @@ class seller_ctl_site_cat extends seller_frontpage
         if (!is_numeric($cat_id)) $cat_id = 0;
         $this->pagedata['aptitude'] = app::get('b2c')->model('cat_aptitudes')->getRow('*', array('cat_id' => $cat_id));
         $this->pagedata['cat'] = app::get('store')->model('goods_cat')->getRow('*', array('cat_id' => $cat_id, 'seller_id' => $this->seller['seller_id']));
+        $this->pagedata['cat_id'] = $cat_id;
+        $this->pagedata['type'] = 'center';
         $this->display('site/goods/write_aptitude.html');
     }
 
-    /**
-     * 保存分类所需资质
-     */
-    public function saveAptitude()
-    {
-        if (!$_POST) {
-            $this->splash('error', '', '非法请求');
-        }
-        $updateValue = array('extra' => $_POST['cat']);
-        $filter = array('id' => $_POST['id']);
-        if (!app::get('store')->model('goods_cat')->update($updateValue, $filter)) {
-            $this->splash('error', '', '添加失败');
-        }
-        $this->splash('success', '', '添加成功');
-    }
+//    /**
+//     * 保存分类所需资质
+//     */
+//    public function saveAptitude()
+//    {
+//
+//        if (!$_POST) {
+//            $this->splash('error', '', '非法请求');
+//        }
+//        print_r($_POST);die;
+//        $updateValue = array('extra' => $_POST['cat']);
+//        $filter = array('id' => $_POST['id']);
+//        if (!app::get('store')->model('goods_cat')->save($updateValue, $filter)) {
+//            $this->splash('error', '', '添加失败');
+//        }
+//        $this->splash('success', '', '添加成功');
+//    }
 }
