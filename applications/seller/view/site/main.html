@@ -18,14 +18,14 @@
                                </li>
 							   <{/if}>
                             <{/foreach}>
-                            <!--<{if $active eq 'account'}>-->
-                            <!--<li data-myaction="addCompany"-->
-                                <!--class="mm-site_seller- <{if 'addCompany' == $current_action}> active<{/if}>">-->
-                                <!--<a  data-target="main"  href="<{link app=seller ctl=site_seller act=addCompany}>">-->
-                                    <!--<span>添加生产商</span>-->
-                                <!--</a>-->
-                            <!--</li>-->
-                            <!--<{/if}>-->
+                            <{if $active eq 'account' && $seller.ident neq '1'}>
+                            <li data-myaction="addCompany"
+                                class="mm-site_seller- <{if 'addCompany' == $current_action}> active<{/if}>">
+                                <a  data-target="main"  href="<{link app=seller ctl=site_seller act=addCompany}>">
+                                    <span>添加生产商</span>
+                                </a>
+                            </li>
+                            <{/if}>
                         </ul>
                     </dd>
               <{/foreach}>

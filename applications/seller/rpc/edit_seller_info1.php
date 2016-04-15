@@ -88,6 +88,13 @@ $remote['seller_edit_seller_info1'] = array(
 //            'default' => '',
 //            'require' => '',
 //        ),
+        'slEpDdList' => array(
+            'name' => '',
+            'column' => 'slEpDdList',
+            'type' => 'List',
+            'default' => '',
+            'require' => '',
+        ),
         'slEpManagerList' => array(
             'name' => '',
             'column' => 'slEpManagerList',
@@ -557,6 +564,36 @@ $remote['seller_edit_seller_info1'] = array(
             'require' => false,
         ),
 
+    ),
+    'slEpDdList' => array(
+        'epId' => array(
+            'name' => '企业ID',
+            'column' => 'epId',
+            'type' => 'String',
+            'default' => '',
+            'require' => false,
+        ),
+        'ddId' => array(
+            'name' => '设备ID',
+            'column' => 'ddId',
+            'type' => 'Integer',
+            'default' => '',
+            'require' => false,
+        ),
+        'ddName' => array(
+            'name' => '设备名称',
+            'column' => 'ddName',
+            'type' => 'Integer',
+            'default' => '',
+            'require' => false,
+        ),
+        'ddEquipment' => array(
+            'name' => '主要用途',
+            'column' => 'ddEquipment',
+            'type' => 'Integer',
+            'default' => '',
+            'require' => false,
+        ),
     ),
 
 //    'slPdBrandList' => array(

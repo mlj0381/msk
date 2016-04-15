@@ -760,7 +760,7 @@ class seller_ctl_site_passport extends seller_frontpage
     public function saveAptitude()
     {
         $url = array('app' => 'seller', 'ctl' => 'site_passport', 'act' => 'entry', 'args0' => $_POST['step'] - 1);
-        if($_POST['type']){
+        if($_POST['type'] == 'center'){
             $url = array('app' => 'seller', 'ctl' => 'site_goods', 'act' => 'directory');
         }
         $redirect = $this->gen_url($url);

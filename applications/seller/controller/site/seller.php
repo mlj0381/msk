@@ -280,7 +280,11 @@ class seller_ctl_site_seller extends seller_frontpage
             'authTermEnd' => $_POST['oem_auth_lesstion']['value']['end'],
             'authTermUnliimited' => 1,
         );
-        $result = $this->app->rpc('');
+
+        $result = $this->app->rpc('add_producer')->request($apiData);
+
+        //print_r($data);
+        //die;
         $data = array(
             'uid' => $this->seller['seller_id'],
             'from' => '1',
@@ -288,6 +292,7 @@ class seller_ctl_site_seller extends seller_frontpage
             'company_id' => $selfCompany['company_id'],
             'company_name' => $selfCompany['name'],
             'createtime' => time());
+
         //ISL231134
         //$agent = app::get('seller')->rpc('select_company_qualifications')->request('', 259000);
     }
