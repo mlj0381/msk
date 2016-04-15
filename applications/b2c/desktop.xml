@@ -7,28 +7,28 @@
 		<permission display='true' workground="b2c.wrokground.shop" id="shopsetting">商城设置</permission>        
 	<!--商品-->
 		<permission display='true' id="goods">查看商品</permission>
-        <permission display='false' id="addgoods">添加商品</permission>
+        <!--<permission display='false' id="addgoods">添加商品</permission>-->
         <permission display='true' id="editgoods">编辑商品</permission>
-        <permission display='false' id="importgoods">商品导入</permission>
+        <!--<permission display='false' id="importgoods">商品导入</permission>
         <permission display='false' id="exportgoods">商品导出</permission>
         <permission display='false' id="deletegoods">商品删除</permission>
         <permission display='false' id="catgoods">商品分类</permission>
-        <permission display='false' id="typegoods">商品类型</permission>
+        <permission display='false' id="typegoods">商品类型</permission>-->
         <permission display='true' id="brandgoods">商品品牌</permission>
         <permission display='true' id="stock">商品库存</permission>
-        <permission display='false' id="stock_batch_save">商品库存批量编辑</permission>
+        <!--<permission display='false' id="stock_batch_save">商品库存批量编辑</permission>
         <permission display='false' id="stock_quick_update">商品库存快速编辑</permission>
         <permission display='false' id="editmktprice">市场价</permission>
-        <permission display='false' id="editprice">销售价</permission>
+        <permission display='false' id="editprice">销售价</permission>-->
 
 
 	<!--订单-->
 
 		<permission display='true' id="order_list">订单列表</permission>
 		<permission display='true' id="order_detail">订单详情</permission>
-		<permission display='false' id="order_edit">订单减价</permission>
+		<!--<permission display='false' id="order_edit">订单减价</permission>-->
 		<permission display='true' id="order_discount">订单编辑</permission>
-		<permission display='false' id="order_delivery">发\退货单据管理</permission>
+		<!--<permission display='false' id="order_delivery">发\退货单据管理</permission>-->
 
 	<!--会员-->
 

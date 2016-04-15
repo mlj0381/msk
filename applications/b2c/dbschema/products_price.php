@@ -19,6 +19,12 @@ $db['products_price'] = array(
             'pkey' => true,
             'extra' => 'auto_increment',
         ) ,
+    	'price_period' => array(
+    		'type' => 'number',
+    		'default' => 0,
+    		'required' => true,
+    		'comment'	=> '价盘周期',
+    	) ,
         'logi_area_code' => array(
             'type' => 'number',
             'default' => 0,

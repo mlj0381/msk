@@ -18,17 +18,12 @@ class b2c_tasks_api_price extends base_task_abstract implements base_interface_t
      */
     public function exec($params = null)
     {
-    	
-//     	$no_month = ceil(date('j')/7);
-//     	if (date('w') < date('w', strtotime(date('Y-m-01')))){
-//     		$no_month++;
-//     	}
-//     	$data['pricePeriod'] = 16042;//date('ym').$no_month;
-    	$rpc_request['pricePeriod'] = date('ym').ceil(date('j')/5);
+    	$rpc_request['pricePeriod'] = 16043;
+    	//$rpc_request['pricePeriod'] = date('ym').ceil(date('j')/5);
     	$rpc_response = app::get('b2c')->rpc('select_price_offer')->request($rpc_request);
     	$rpc_data = $rpc_response['result']['productslist'];
     	$model = app::get('b2c')->model('products_price');
-    	$model->db->exec('TRUNCATE TABLE vmc_b2c_products_price');
+    	//$model->db->exec('DELETE FROM `vmc_b2c_products_price` WHERE price_period = '.date('ym').ceil(date('j')/5));
     	foreach ($rpc_data as $key=>$value){
     		foreach ($value['pricelist'] as $k=>$v){
     			$data = array();
@@ -36,6 +31,8 @@ class b2c_tasks_api_price extends base_task_abstract implements base_interface_t
     			$data['seller_code']	=	$value['slCode'];
     			$data['product_code']	=	substr($value['productCode'], 0, 9);
     			$data['level_code']		=	substr($value['productCode'], -1);
+    			$data['price_period']	=	16043;
+    			//$data['price_period']	=	date('ym').ceil(date('j')/5);
     			$model->save(array_merge($data,$v));
     		}
     	}
