@@ -165,7 +165,7 @@ class b2c_view_widget {
         $conf = app::get('b2c')->getConf('serach');
         switch ($params['target']) {
             case 'brand':
-                $tmp = app::get('b2c')->model($params['target'])->getList('brand_id, brand_name');
+                $tmp = app::get('b2c')->model($params['target'])->getList('brand_id, brand_name', array('brand_class'=>2));
                 foreach ($tmp as $key => $value) {
                     $render->pagedata['filter']['items'][$key]['id'] = $value['brand_id'];
                     $render->pagedata['filter']['items'][$key]['name'] = $value['brand_name'];
