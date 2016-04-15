@@ -266,24 +266,24 @@ class seller_ctl_site_seller extends seller_frontpage
     {
         $selfCompany = app::get('base')->model('company')->getRow('*', array('ep_id' => $_POST['oem_auth_lesstion']['value']['agent']));
         if ($this->seller['ident'] == '2') {
-            $fiag = 1;
+            $fiag = '1';
         } elseif ($this->seller['ident'] == '4') {
-            $fiag = 2;
+            $fiag = '2';
         }
         $apiData = array(
             'flag' => $fiag,
             'slCode' => $this->seller['sl_code'],
-            'producerEpId' => $_POST['oem_auth_lesstion']['value']['agent'],
+            'producerEpId' => (int)$_POST['oem_auth_lesstion']['value']['agent'],
             'contractNo' => $_POST['oem_auth_lesstion']['value']['unit'],
             'authEpName' => $_POST['oem_auth_lesstion']['value']['num'],
             'authTermBegin' => $_POST['oem_auth_lesstion']['value']['start'],
             'authTermEnd' => $_POST['oem_auth_lesstion']['value']['end'],
-            'authTermUnliimited' => 1,
+            'authTermUnliimited' => '1',
         );
 
         $result = $this->app->rpc('add_producer')->request($apiData);
-
-        //print_r($data);
+die;
+        //print_r($result);
         //die;
         $data = array(
             'uid' => $this->seller['seller_id'],
