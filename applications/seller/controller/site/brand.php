@@ -33,7 +33,7 @@ class seller_ctl_site_brand extends seller_frontpage
          */
         $this->title = '商品品牌';
         //查询店铺详细信息
-        $this->pagedata['brands'] = $this->mB2cbrand->getList('*', array('seller_id' => $this->seller['seller_id'],'brand_class'=> 2));
+        $this->pagedata['brands'] = $this->mB2cbrand->getList('*', array('seller_id' => $this->seller['seller_id'],'brand_class'=> 2,'brand_status' =>1));
         $this->output();
     }
 
@@ -88,7 +88,8 @@ class seller_ctl_site_brand extends seller_frontpage
         if (!$this->mB2cbrand->save($post['brand'])) {
             $this->splash('error', $redirect, '操作失败');
         } else {
-            if($post['brand']['brand_id']){
+            app::get('b2c')->model('brand')->update(array('brand_status' =>1),array('brand_id' => $post['brand']['company_brand_id']));
+            if($post['brand']['edit']){
                 $this->splash('success', $redirect, '修改成功');
             }
             $brand_data = app::get('b2c')->model('brand')->getRow('*',array('brand_id' => $post['brand']['company_brand_id']));
@@ -103,7 +104,6 @@ class seller_ctl_site_brand extends seller_frontpage
                 'termBegin' => $brand_data['agent_start'],
                 'termEnd' => $brand_data['agent_end'],
             );
-//            vmc::dump($data);die;
             if(!$this->app->rpc('add_seller_brand')->request($data)['status']){
                 $this->splash('error', $redirect, '数据同步失败');
             }
@@ -121,7 +121,7 @@ class seller_ctl_site_brand extends seller_frontpage
             unset($_POST);
             $this->_post($params);
         }
-        $this->pagedata['brands'] = $this->mB2cbrand->getList('*', array('seller_id' => $this->seller['seller_id'],'brand_class'=> 1));
+        $this->pagedata['brands'] = $this->mB2cbrand->getList('*', array('seller_id' => $this->seller['seller_id'],'brand_class'=> 1, 'brand_status'=>0));
         $this->pagedata['company'] = app::get('base')->model('company_seller')->getList('company_id, company_name',
             array('uid' => $this->seller['seller_id'], 'from' => 1));
         if (is_numeric($brand_id)) {
@@ -173,8 +173,8 @@ class seller_ctl_site_brand extends seller_frontpage
     {
         $mdl_brand = app::get('b2c')->model('brand');
         $post = $_POST;
-        if ($mdl_brand->getRow('brand_name', array('brand_name' => $post['brand_name']))) {
-            $this->splash('error', '', '重名');
+        if ($mdl_brand->getRow('brand_name', array('brand_name' => $post['brand']['brand_name']))) {
+            $this->splash('error', '', '该品牌已存在');
         }
         $this->splash('success', '', '可用');
     }
@@ -183,7 +183,7 @@ class seller_ctl_site_brand extends seller_frontpage
     public function brand_initial()
     {
         $initials = new base_py('utf-8');
-        $py = $initials->getInitials($_POST['brand_name']);
+        $py = $initials->getInitials($_POST['brand']['brand_name']);
         preg_match('/^[A-Za-z]/', $py, $result);
         $inital = current($result);
         if ($inital) {

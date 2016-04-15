@@ -1,0 +1,76 @@
+<form id="member_signup_form" data-module="validator" class="form-horizontal"
+      action="<{link app=seller ctl=site_seller act=saveCompany}>" method="post">
+    <div>
+        <h4>添加生产商</h4>
+
+        <div class="form-group">
+            <label class="col-xs-2 control-label">
+                <span class="text-danger">*</span>生产商：
+            </label>
+
+            <div class="col-xs-4">
+                <{input type=select required="true" name="oem_auth_lesstion[value][agent]"
+                rows=$company.result.epInfoList valueColumn="epId"
+                labelColumn="epName" value=$extra.oem_auth_lesstion.value.agent}>
+                <span class="msgTip" data-message="error"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-xs-2 control-label">
+                <span class="text-danger">*</span>授权单位：
+            </label>
+
+            <div class="col-xs-4">
+                <input type="text" name="oem_auth_lesstion[value][unit]" value="<{$extra.oem_auth_lesstion.value.unit}>"
+                       class="form-control" required="true">
+                <span class="msgTip" data-message="error"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-xs-2 control-label">
+                <span class="text-danger">*</span>授权证书号：
+            </label>
+
+            <div class="col-xs-4">
+                <input type="text" name="oem_auth_lesstion[value][num]" value="<{$extra.oem_auth_lesstion.value.num}>"
+                       class="form-control" required="true">
+                <span class="msgTip" data-message="error"></span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-xs-2 control-label">
+                授权期限：
+            </label>
+
+            <div class="col-xs-4">
+                <div class="timeLimit">
+                    <input type="text" name="oem_auth_lesstion[value][start]"
+                           value="<{$extra.oem_auth_lesstion.value.start}>" class="form-control date timeStart"
+                           placeholder="2010-10-20" readonly> 至
+                    <input type="text" name="oem_auth_lesstion[value][end]"
+                           value="<{$extra.oem_auth_lesstion.value.end}>" class="form-control date timeEnd"
+                           placeholder="2010-10-20" readonly>
+                    <span class="msgTip" data-message="error"></span>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-xs-2 control-label">
+                <span class="text-danger">*</span>授权书电子版：
+            </label>
+
+            <div class="col-xs-4">
+                <{input type="imageupload" tag="图片上传" name="oem_auth_lesstion[attach]"
+                value=$extra.oem_auth_lesstion.attach required='true' accept="jpg|png|gif"}>
+                <span class="msgTip" data-message="error">不能为空</span>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-4">
+            <button type="submit" data-loading-text="正在提交..." class="btn btn-danger">确定</button>
+        </div>
+    </div>
+</form>
+

@@ -51,7 +51,7 @@
                 <dl class="clearfix">
                     <dt><i class="icon-warning-sign"></i></dt>
                     <dd>
-                        <p>1.信息提交前，请务必先了解<a href="">《美侍客招商标准》</a>;</p>
+                        <p>1.信息提交前，请务必先了解<a href="">《云冻品b2b招商标准》</a>;</p>
                         <p>2.公司类需填项较多，建议先查看<a href="">《公司信息注意事项》</a>再填写;</p>
                         <p>3.以下所需要上传的电子版资质仅支持JPG、GIF、PNG格式图片，大小不超过1M,且必须加盖企业公章;</p>
                     </dd>
@@ -109,6 +109,24 @@
             _this.find('div[data-item="creat-item"]:last').find('img').attr('src', imgUrl);
             itemLen++;
             $.VMC.init();
+            //重新绑定日历
+            if($('.form_datetime').size() > 0){
+                 $('.form_datetime').datetimepicker({
+                    format: "yyyy-mm-dd",
+                    autoclose: true,
+                    todayBtn: true,
+                    weekStart: 1,
+                    todayHighlight: 1,
+                    minView:2,
+                    language:"zh-CN",
+                    pickerPosition: "bottom-left"
+                }).on("hide",function(ev){
+                    $(".form_datetime").trigger('blur');
+                });
+            }
+            items.find('div[data-item="creat-item"]:last *').each(function(index,dom){
+                $(dom).attr('value','').val('');
+            })
         })
         
         //删除
@@ -170,13 +188,13 @@
 
 
 
-$('#companyInfo_form .business').change(function(){
-    var typeId = $('#companyInfo_form input[name="typeId"]').val().trim();
-    var url = '<{link app=seller ctl=site_passport act=check_company}>';
-    $.post(url, {business : $(this).val().trim(), business_type : 0, type_id : typeId}, function(re){
-        console.log(re);
-    })
-});
+//$('#companyInfo_form .business').change(function(){
+//    var typeId = $('#companyInfo_form input[name="typeId"]').val().trim();
+//    var url = '<{link app=seller ctl=site_passport act=check_company}>';
+//    $.post(url, {business : $(this).val().trim(), business_type : 0, type_id : typeId}, function(re){
+//        console.log(re);
+//    })
+//});
 
 
 </script>

@@ -64,7 +64,7 @@ $('#active_email_form .email-vcode button').on('click',function(e){
     var btn = $(this);
     if(btn.hasClass('disabled'))return;
     btn.addClass('disabled');
-    $.post('<{link app=b2c ctl=site_passport act=member_vcode}>',{account:$('#email_input').val()},function(re){
+    $.post('<{link app=b2c ctl=site_passport act=email_vcode}>',{account:$('#email_input').val()},function(re){
         if(re && re.error){
             btn.removeClass('disabled');
             _alert_error(re.error);

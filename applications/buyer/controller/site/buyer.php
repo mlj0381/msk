@@ -103,7 +103,7 @@ class buyer_ctl_site_buyer extends buyer_frontpage{
 									'card_id'	=>$basic_data['card_id'],
 									'slSort'	=>2,
 									'addr'		=>$basic_data['addr'],
-									'flag1'		=> $params['sex']==0 ?'2':'1',
+									'flag1'		=>$basic_data['sex']==0 ?'2':'1',
 							),
 							'slShopInfo'=>array(
 									'store_name'=>$params['store_name'],

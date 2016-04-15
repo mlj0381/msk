@@ -2,7 +2,7 @@
     <div class="modal-header">
         <h3 class="modal-title"><{if $brand.brand_id }>品牌编辑<{else}>品牌添加<{/if}></h3>
     </div>
-    <form method="post" action="<{link app=seller ctl=site_passport act=add_brand}>" id='brand_form' calss="form">
+    <form method="post" action="<{link app=seller ctl=site_passport act=add_brand}>" id='brand_form' calss="form" data-module="validator">
         <div class="modal-body  form-horizontal">
             <div class="form-body">
                 <{if $brand.brand_id }>
@@ -17,8 +17,8 @@
                     </label>
 
                     <div class="col-xs-5">
-                        <input type="text" required="required" id="check_brand_name" name="brand[brand_name]"
-                               value="<{$brand.brand_name}>" class="form-control brand_name" placeholder="品牌全系统唯一，不能有重复">
+                        <input type="text" required="true" id="check_brand_name" name="brand[brand_name]"value="<{$brand.brand_name}>" class="form-control brand_name" placeholder="品牌全系统唯一，不能有重复" remote="<{link app=seller ctl=site_passport act=check_brand_name}>">
+                        <span class="msgTip" data-message="error"></span>
                     </div>
                 </div>
                 <div class="form-group">
@@ -50,7 +50,7 @@
                         <!--<{/if}>-->
                     </div>
                 </div>
-                <div class="form-group">
+                <!--   <div class="form-group">
                     <label class="control-label col-xs-2">
                         <span class="text-danger">*</span>品牌授权书
                     </label>
@@ -59,7 +59,7 @@
                         required='true' accept="jpg|png|gif" }>
                         <span class="msgTip" data-message="error">不能为空</span>
                     </div>
-                </div>
+                </div> -->
                 <div class="form-group">
                     <label class="control-label col-xs-2">
                         注册商标证书
@@ -75,11 +75,13 @@
                 <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
                 <button type="button" class="btn btn-primary brand_save_btn">保存品牌</button>
             </div>
-    </form>
+        </form>
+    </div>
 </div>
+
 <script charset="utf-8">
     $(function() {
-        $('#check_brand_name').blur(function() {
+        /*$('#check_brand_name').blur(function() {
             var url = "<{link app=seller ctl=site_brand act=check_brand_name}>";
             var url_initial = "<{link app=seller ctl=site_brand act=brand_initial}>";
             var input = $(this);
@@ -116,7 +118,7 @@
 
                 }
             });
-        });
+        });*/
     });
     void function (brandForm){
         brandForm.find('.brand_save_btn').click(function(){

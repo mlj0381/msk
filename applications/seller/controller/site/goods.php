@@ -750,9 +750,10 @@ class seller_ctl_site_goods extends seller_frontpage
             $pack_id[] = $tmp[2];
         }
         //获取商品列表
-        $apiProduct = app::get('b2c')->rpc('goods_info')->request('', 259000);
+        //$apiProduct = app::get('b2c')->rpc('goods_info')->request(array(1), 259000); $apiProduct['result']['goods']
+        $apiProduct = app::get('b2c')->model('api_product')->getList('*');
         $productArray = array();
-        foreach ($apiProduct['result']['goods'] as $key => $value) {
+        foreach ($apiProduct as $key => $value) {
             if (in_array($value['bn'], $productId) && in_array($value['pack'], $pack_id)) {
                 $value['product_price'] = $mdl_product_price->getList('*', array('seller_code' => $this->seller['sl_code'],
                     'product_code' => $value['bn']));
