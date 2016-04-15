@@ -303,7 +303,6 @@
             case 'breed':
                 var cat = selfCat().split('-');
                     url += 'type=' + type + '&cat=' + cat[0] + '-' + cat[1];
-                    //alert(selfCat());
                 break;
             case 'feature':
                 url += 'type=' + type + '&cat=' + selfCat();
@@ -566,19 +565,10 @@
             //var productId = $(this).attr('data-product');
             var logistics = createProduct('logistics');
             var pack = createProduct('pack');
-            if (!logistics) {
-                alert('请选择物流区')
-            }
-            if (!pack) {
-                alert('请选择包装规格');
-                return false;
-            }
             var data = $.extend(logistics, formatProduct());
             var url = '<{link app=seller ctl=site_goods act=createProduct}>';
             $.post(url, data, function (result) {
-
                 if (!result.data) return false;
-
                 $tmp = $('.product-item-tpl').val();
                 $price = $('.price-spec').val();
                 var html = '';
@@ -596,6 +586,7 @@
                 }
                 $('.spec_table tbody').append(html);
             });
+
         });
 
 
