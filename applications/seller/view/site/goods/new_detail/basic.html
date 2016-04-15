@@ -303,7 +303,6 @@
             case 'breed':
                 var cat = selfCat().split('-');
                     url += 'type=' + type + '&cat=' + cat[0] + '-' + cat[1];
-                    //alert(selfCat());
                 break;
             case 'feature':
                 url += 'type=' + type + '&cat=' + selfCat();
@@ -569,7 +568,6 @@
             var data = $.extend(logistics, formatProduct());
             var url = '<{link app=seller ctl=site_goods act=createProduct}>';
             $.post(url, data, function (result) {
-                alert(result.data);
                 if (!result.data) return false;
                 $tmp = $('.product-item-tpl').val();
                 $price = $('.price-spec').val();
