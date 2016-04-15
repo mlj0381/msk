@@ -400,8 +400,10 @@ class b2c_ctl_site_member extends b2c_frontpage
         $offset = ($page - 1) * $limit;
         $rpc_orders = app::get('buyer')->rpc("get_orders_list");
         $request_filter = app::get('b2c')->model('members')->getRow('buyer_code,buyer_id',array('member_id'=>$this->app->member_id));
-        $response = $rpc_orders->request($request_filter);
-
+        if($request_filter)
+        {
+            $response = $rpc_orders->request($request_filter);
+        }
         if($response['status'])
         {
             $api_orders_list = $response['result']['orders'];

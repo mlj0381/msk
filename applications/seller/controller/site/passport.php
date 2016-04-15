@@ -783,8 +783,29 @@ class seller_ctl_site_passport extends seller_frontpage
         $this->splash('success', $redirect, '添加成功');
     }
 
+    //判断品牌重名
+    public function check_brand_name()
+    {
+        $mdl_brand = app::get('b2c')->model('brand');
+        $post = $_POST;
+        $result = $mdl_brand->getRow('brand_name', array('brand_name' => $post['brand']['brand_name']));
+        if ($result['brand_name']) {
+            $this->splash('error', '', '该品牌已存在');
+        }
+        $this->splash('success', '', '可用');
+    }
 
-
-
+    //取得品牌首字母拼音
+    public function brand_initial()
+    {
+        $initials = new base_py('utf-8');
+        $py = $initials->getInitials($_POST['brnad']['brand_name']);
+        preg_match('/^[A-Za-z]/', $py, $result);
+        $inital = current($result);
+        if ($inital) {
+            $this->splash('success', '', $inital);
+        }
+        $this->splash('error', '', '~');
+    }
 
 }

@@ -84,7 +84,7 @@ $remote['b2c_goods_info'] = array(
         ),
         'pkgSpec' => array(
             'name' => '包装规格',
-            'column' => 'spec',
+            'column' => 'pkg_spec',
             'type' => 'String'
         ),
         'netWeight' => array(

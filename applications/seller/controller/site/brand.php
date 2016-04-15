@@ -173,8 +173,8 @@ class seller_ctl_site_brand extends seller_frontpage
     {
         $mdl_brand = app::get('b2c')->model('brand');
         $post = $_POST;
-        if ($mdl_brand->getRow('brand_name', array('brand_name' => $post['brand_name']))) {
-            $this->splash('error', '', '重名');
+        if ($mdl_brand->getRow('brand_name', array('brand_name' => $post['brand']['brand_name']))) {
+            $this->splash('error', '', '该品牌已存在');
         }
         $this->splash('success', '', '可用');
     }
@@ -183,7 +183,7 @@ class seller_ctl_site_brand extends seller_frontpage
     public function brand_initial()
     {
         $initials = new base_py('utf-8');
-        $py = $initials->getInitials($_POST['brand_name']);
+        $py = $initials->getInitials($_POST['brand']['brand_name']);
         preg_match('/^[A-Za-z]/', $py, $result);
         $inital = current($result);
         if ($inital) {
