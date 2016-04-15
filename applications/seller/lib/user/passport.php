@@ -790,7 +790,8 @@ class seller_user_passport
                         //添加经营分类
                         if (array_filter($params['cat_id']) &&
                             !$params['id'] &&
-                            !app::get('store')->model('goods_cat')->addCat($params['cat_id'], $seller['seller_id'])) {
+                            !app::get('store')->model('goods_cat')->addCat($params['cat_id'], $seller['seller_id'])
+                        ) {
                             $db->rollback();
                             $msg = '经营分类添加失败';
                             return false;
@@ -1038,7 +1039,7 @@ class seller_user_passport
             'show_name' => $tmp['pam']['login_account'],
             'contact_person' => $tmp['pam']['login_account'],
             'login_password' => $tmp['pam']['password'],
-            'authStatus' => 1,
+            'authStatus' => 2,
             'fromFlg' => '2',
         );
         $seller_type = Array();
@@ -1137,7 +1138,7 @@ class seller_user_passport
                 'fdlTermBegin' => $value['food_flow_licence']['value']['date_start'],
                 'fdlTermEnd' => $value['food_flow_licence']['value']['date_end'],
             );
-				
+
             //企业专业资质
 //            $result[$key]['certInfoList'] = array(
 //                array(
@@ -1229,7 +1230,7 @@ class seller_user_passport
                 'labMember' => $value['laboratory']['value']['staff'],
                 //'ddEquipment' => '',
             );
-			
+
             //生产商
             $agent = app::get('base')->model('company_extra')->getList('*', array(
                 'key' => 'agent_auth_lesstion',
@@ -1300,33 +1301,90 @@ class seller_user_passport
 
                 $tmp[$key]['slEcTeamList'] = $slEcTeamList;
             }
-			/*//企业检测设备
-			$slEpDdList = Array();
+            /*//企业检测设备
+            $slEpDdList = Array();
             foreach ($value['equipment'] as $k => $v) {
                 $slEpDdList[] = array(
                     'epId' => (int)$apiCompanyId['ep_id'],
-					'ddId' => (int)$apiSellerInfo['result']['slEpDdList'][$k]['ddId'],
-					'ddName' => $v['value']['main_device'],
-					'ddEquipment' => $v['value']['use']
+                    'ddId' => (int)$apiSellerInfo['result']['slEpDdList'][$k]['ddId'],
+                    'ddName' => $v['value']['main_device'],
+                    'ddEquipment' => $v['value']['use']
                 );
 
                 $tmp[$key]['slEpDdList'] = $slEcTeamList;
             }*/
 
-			
+
             $result = array_merge($result, current($tmp));
         }
     }
 
-	/**
+    /**
      * 添加企业资质提交到接口
      **/
-	private function apiAptitudes() 
-	{
-		$setting = array(
-			'' => '',
-		);
-	}
+    public function apiAptitudes($cat)
+    {
+        //aptitudes
+
+        $filter = array('seller_id' => $this->seller['seller_id']);
+        if ($cat) {
+            $filter['cat_id'] = $cat;
+        }
+        $catList = app::get('store')->model('goods_cat')->getList('*', $filter);
+        $apiAptitudes = $this->app->getConf('aptitudes');
+        $apiData = array();
+        $j = 0;
+        foreach ($catList as $value) {
+            if (empty($value['extra'])) continue;
+            $i = 0;
+            foreach ($value['extra']['extra'] as $k => $v) {
+
+                $apiData[$j]['certInfoList'][$i] = array(
+                    'epId' => $this->seller['sl_code'],
+                    'certId' => $apiAptitudes[$k]['id'],
+                    'certName' => $apiAptitudes[$k]['label'],
+                );
+                switch ($k) {
+                    case 'muslim':
+                        $v = array(
+                            'code' => $v['code'],
+                            'date' => $v['start'] . '-' . $v['end'],
+                            'approve_org' => $v['approve_org'],
+                        );
+                        break;
+                    case 'iso14001';
+                    case 'iso9001';
+                    case 'iso22000';
+                        $v = array(
+                            'code' => $v['code'] ?: $v['name'],
+                            'stand' => $v['stand'],
+                            'range' => $v['range'],
+                            'date' => $v['start'] . '-' . $v['end'],
+                            'approve_org' => $v['approve_org'],
+                        );
+                        break;
+                }
+                foreach ($apiAptitudes[$k]['item'] as $k1 => $v2) {
+                    $apiData[$j]['certInfoList'][$i]['certItemList'][] = array(
+                        'certId' => '',
+                        'certItemId' => 1,
+                        'certItemName' => $apiAptitudes[$k]['item'][$k1],
+                        'certItemValue' => current($v),
+                    );
+                    next($v);
+                }
+                $i++;
+            }
+            $j++;
+        }
+        foreach ($apiData as $key => $value) {
+            $result = app::get('seller')->rpc('edit_seller_aptitudes')->request($value);
+            if (!$result['status']) {
+                return $result['message'];
+            }
+        }
+        return true;
+    }
 
 
     /**

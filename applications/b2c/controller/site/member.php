@@ -206,18 +206,24 @@ class b2c_ctl_site_member extends b2c_frontpage
     {
         if ($action == 'active') {
             $params = $_POST;
-            if (!vmc::singleton('b2c_user_vcode')->verify($params['vcode'], $params['email'], 'reset')) {
-                $this->splash('error', '', '验证码错误！');
-            }
+            $redirect = $this->gen_url(array(
+            		'app' => 'b2c',
+            		'ctl' => 'site_member',
+            		'act' => 'active_pam_email',
+            ));
+//             if (!vmc::singleton('b2c_user_vcode')->verify($params['vcode'], $params['email'], 'reset')) {
+//                 $this->splash('error', '', '验证码错误！');
+//             }
             $mdl_pm = app::get('pam')->model('members');
             $p_m = $mdl_pm->getRow('member_id,login_type', array('login_account' => $params['email']));
-            if (empty($p_m['member_id']) || $p_m['login_type'] != 'email') {
-                $this->splash('error', '', '账号异常!');
-            }
-            if ($mdl_pm->update(array('disabled' => 'false'), array('member_id' => $p_m['member_id'], 'login_type' => $p_m['login_type']))) {
-                $this->splash('success', array('app' => 'b2c', 'ctl' => 'site_member', 'act' => 'securitycenter'), $params['email'] . '已成功激活!');
-            } else {
-                $this->splash('error', '', '激活异常!');
+            if ($p_m){
+            	$this->splash('error', $redirect, '邮箱已被绑定！');
+            }else {
+            	if ($this->app->model('members')->update(array('email' => $params['email']), array('member_id' => $p_m['member_id']))) {
+            		$this->splash('success', array('app' => 'b2c', 'ctl' => 'site_member', 'act' => 'securitycenter'), $params['email'] . '已成功激活!');
+            	} else {
+            		$this->splash('error', $redirect, '激活异常!');
+            	}
             }
         } else {
             $user_obj = vmc::singleton('b2c_user_object');
@@ -789,32 +795,27 @@ class b2c_ctl_site_member extends b2c_frontpage
                 if (!$mdl_maddr->save($addr)) {
                     $this->splash('error', '', '保存失败');
                 }
-                $maddr = $mdl_maddr->getRow('*', array('member_id' => $member_id, 'addr_id' => $addr['addr_id']));
+                $b = $mdl_maddr->getList('habit_normal_time', array('member_id' => $member_id));
+                foreach($b as $k1=>$v1){
+                    foreach($v1["habit_normal_time"] as $k2=>$v2){
+                        $e["habit_normal_time"][$k2] = $v2;
+                    }
+                }
                 //rpc更新或添加收货时间
-                foreach($maddr["habit_normal_time"] as $k=>$v){
+                foreach($e["habit_normal_time"] as $k=>$v){
+//                foreach($maddr["habit_normal_time"] as $k=>$v){
                     $update_time_data[] = array(
                         'buyer_id' => $member_data['buyer_id'],
                         'recPerType' => (string)($k+1),
                         'timeDescribe' => $v,
                     );
                 }
-//                $maddr = $mdl_maddr->getList('*', array('member_id' => $member_id));
-//                foreach($maddr as $k1=>$v1){
-//                    $time = array_merge($v1["habit_normal_time"]);
-//                }
-//                //rpc更新或添加收货时间
-//                foreach($time as $k=>$v){
-//                    $update_time_data[] = array(
-//                        'buyer_id' => $member_data['buyer_id'],
-//                        'recPerType' => (string)($k+1),
-//                        'timeDescribe' => $v,
-//                    );
-//                }
                 $update_time_result = $this->app->rpc('update_receive_time')->request($update_time_data);
                 if (!$update_time_result['status']) {
                     $this->splash('error', '', '同步收货时间保存失败');
                 }
 
+                $maddr = $mdl_maddr->getRow('*', array('member_id' => $member_id, 'addr_id' => $addr['addr_id']));
                 //rpc更新或添加收货地址
                 $update_data[] = array(
                     'buyer_id' => $member_data['buyer_id'],
@@ -920,7 +921,8 @@ class b2c_ctl_site_member extends b2c_frontpage
     {
         $this->menuSetting = 'setting';
         $user_obj = vmc::singleton('b2c_user_object');
-        $this->pagedata['pam_data'] = $user_obj->get_pam_data('*', $this->member['member_id']);
+        //$this->pagedata['pam_data'] = $user_obj->get_pam_data('*', $this->member['member_id']);
+        $this->pagedata['pam_data'] = $this->app->model('members')->getRow('*', array('member_id'=>$this->member['member_id']));
         $this->output();
     }
 
