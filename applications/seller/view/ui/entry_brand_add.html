@@ -1,5 +1,6 @@
 <div class="brand_edit_page">
     <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h3 class="modal-title"><{if $brand.brand_id }>品牌编辑<{else}>品牌添加<{/if}></h3>
     </div>
     <form method="post" action="<{link app=seller ctl=site_passport act=add_brand}>" id='brand_form' calss="form" data-module="validator">
@@ -26,9 +27,8 @@
                         <span class="text-danger">*</span>品牌logo
                     </label>
 
-                    <div class="col-xs-5">
-                        <{input type="imageupload" tag="图片上传" name="brand[brand_logo]" value=$brand.brand_logo required='true'
-                        accept="jpg|png|gif" }>
+                    <div class="col-xs-5 brand_logo">
+                        <{input type="imageupload" tag="图片上传" name="brand[brand_logo]" value=$brand.brand_logo required='true' accept="jpg|png|gif" }>
                         <span class="msgTip" data-message="error">不能为空</span>
                     </div>
                 </div>
@@ -36,7 +36,7 @@
                     <label class="control-label col-xs-2">
                         <span class="text-danger">*</span>品牌持有者
                     </label>
-                    <div class="col-xs-5">
+                    <div class="col-xs-5 brand_holder">
                         <{input type=select required="true" value=$brand.company_id name="brand[company_id]" rows=$company
                         valueColumn="company_id" labelColumn="company_name"}>
                         <span class="msgTip" data-message="error">不能为空</span>
@@ -73,61 +73,28 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                <button type="button" class="btn btn-primary brand_save_btn">保存品牌</button>
+                <button type="submit" class="btn btn-primary brand_save_btn">保存品牌</button>
             </div>
         </form>
     </div>
 </div>
 
 <script charset="utf-8">
-    $(function() {
-        /*$('#check_brand_name').blur(function() {
-            var url = "<{link app=seller ctl=site_brand act=check_brand_name}>";
-            var url_initial = "<{link app=seller ctl=site_brand act=brand_initial}>";
-            var input = $(this);
-            if (input.val() == '') return;
-            $.post(url, {
-                brand_name: input.val()
-            }, function(re) {
-                if (re.success) {
-                    input.closest('.form-group').removeClass('has-error').addClass('has-success');
-                    if (re.data && re.data.is_mobile) {
-                        $('.local-vcode').hide();
-                        $('.mobile-vcode').show();
-                    } else {
-                        $('.local-vcode').show();
-                        $('.mobile-vcode').hide();
-                    }
-                } else {
-                    input.popover({
-                        content: re.error,
-                        placement: 'right',
-                        trigger: 'click',
-                        container: 'body'
-                    });
-                    input.popover('show');
-                    input.closest('.form-group').removeClass('has-success').addClass('has-error');
-                }
-            }, 'json');
-            $.post(url_initial, {
-                brand_name: input.val()
-            }, function(re) {
-                if (re.success) {
-                    $('.initial').val(re.success);
-                } else if (re.error) {
-
-                }
-            });
-        });*/
-    });
     void function (brandForm){
-        brandForm.find('.brand_save_btn').click(function(){
+        brandForm.on('submit', function(e) {
+            e.stopPropagation();
+            brandForm.find('button[type=submit]').button('loading');
+            function modalHide(){ $("#brand_add_modal").modal('hide')};
             $.post(brandForm.attr('action'), brandForm.serialize(), function(re){
                 if(re.success){
-                    alert('添加成功');
-                   // addBrand();
-                }
-            });
+                    var brand = $.trim($('.brand_name').val());
+                    var brand_html = '<span class="brand_item">' + brand + ' <i class="icon-remove"></i></span>';
+                    $('.brand_list').append(brand_html);
+                    setTimeout(modalHide,200);
+                } 
+            }, 'json');
+            return false;
+            
         });
     }($('#brand_form'));
 </script>
