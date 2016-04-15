@@ -269,9 +269,8 @@
     $('.cat_select').on('change','select',function(e){
         var target = e.target || e.srcElement;
         var index = $('.cat_select select').index(this);
-        if($(target).find('option:selected').attr('value')== -1){
-            $('.feature, .weight, .pack').html('');
-        }
+        $('.feature, .weight, .pack').html('');  //清空特征、净重、包装
+
         switch(index){
             case 0 :
             $('.add_three_cat').addClass('hide');
