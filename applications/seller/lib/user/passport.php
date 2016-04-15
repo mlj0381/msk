@@ -1138,8 +1138,8 @@ class seller_user_passport
                 'taxNo' => $value['tax_licence']['value']['code'],
                 'taxVatNo' => $value['tax_licence']['value']['num'],
                 'orgNo' => $value['organization_licence']['value']['code'],
-                'orgTermBegin' => '',
-                'orgTermEnd' => '',
+                'orgTermBegin' => $value['organization_licence']['value']['date_start'],
+                'orgTermEnd' => $value['organization_licence']['value']['date_end'],
 
                 //银行开户许可证
                 'balLegalPerson' => $value['bank_lesstion']['value']['legal'],
@@ -1259,12 +1259,12 @@ class seller_user_passport
                 array(
                     'flag' => $identity,
                     'slCode' => $this->seller['sl_code'],
-                    'producerEpId' => $agent['agent_auth_lesstion']['value']['agent'],
-                    'contractNo' => $agent['agent_auth_lesstion']['value']['num'],
-                    'authEpName' => $agent['agent_auth_lesstion']['value']['unit'],
-                    'authTermBegin' => $agent['agent_auth_lesstion']['value']['start'],
-                    'authTermEnd' => $agent['agent_auth_lesstion']['value']['end'],
-                    'authTermUnliimited' => '',
+                    'producerEpId' => $agent['agent_auth_lesstion']['value']['agent'] ?: $agent['oem_auth_lesstion']['value']['agent'],
+                    'contractNo' => $agent['agent_auth_lesstion']['value']['num'] ?: $agent['oem_auth_lesstion']['value']['num'],
+                    'authEpName' => $agent['agent_auth_lesstion']['value']['unit'] ?: $agent['oem_auth_lesstion']['value']['unit'],
+                    'authTermBegin' => $agent['agent_auth_lesstion']['value']['start'] ?: $agent['oem_auth_lesstion']['value']['start'],
+                    'authTermEnd' => $agent['agent_auth_lesstion']['value']['end'] ?: $agent['oem_auth_lesstion']['value']['end'],
+                    'authTermUnliimited' => '1',
                 ));
             $manage[0] = $value['president'];
             $manage[0]['duties'] = '董事长';

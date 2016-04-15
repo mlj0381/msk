@@ -1,18 +1,21 @@
 <div class="businessInfo_page">
-	<div class="page-header">
-		<h1>商户信息</h1>
-	</div>
-	<form action="<{link app=seller ctl=site_seller act=save_businessInfo args0=$activePage args1=$storeType args2=$company_index + 1}>" id="companyInfo_form" method="post" class="edit_form form-horizontal" data-module="validator">
+    <div class="page-header">
+        <h1>商户信息</h1>
+    </div>
+    <form action="<{link app=seller ctl=site_seller act=save_businessInfo args0=$activePage args1=$storeType args2=$company_index + 1}>"
+          id="companyInfo_form" method="post" class="edit_form form-horizontal" data-module="validator">
         <input type="hidden" name="pageIndex" value="<{$activePage}>"/>
         <{foreach from=$company key=companyType item=pageSets}>
         <{foreach from=$pageSets key=index item=pageSet}>
         <h2><{$pageSet.companyType}></h2>
         <{foreach from=$pageSet.pageSet key=key item=items}>
         <div class="area_box">
-            <a href="<{link app=seller ctl=site_seller act=businessInfo args0=$key args1=$companyType args2=($index+1)}>"><h2><{$items.label}><i class="icon-chevron-down" ></i></h2></a>
+            <a href="<{link app=seller ctl=site_seller act=businessInfo args0=$key args1=$companyType args2=($index+1)}>">
+                <h2><{$items.label}><i class="icon-chevron-down"></i></h2></a>
+
             <div class="<{if $key eq $activePage && $companyType eq $storeType}> area_con show<{else}> hide<{/if}>">
                 <{if $key eq $activePage && $company_index eq $index}>
-                <{foreach from=$items.page  item=item}>
+                <{foreach from=$items.page item=item}>
                 <{include file="site/passport/companyInfo/{$item}.html" extra=$info.company_extra}>
                 <{/foreach}>
                 <button type="submit" class="btn btn-danger btn-md col-xs-offset-5">确定修改</button>
@@ -22,21 +25,23 @@
         <{/foreach}>
         <{/foreach}>
         <{/foreach}>
-	</form>
-</div>	
+    </form>
+</div>
 
 
 <script type="text/javascript">
-/**
- *动态添加多项,例如：检测设备，电商团队成员，企业荣誉，车间概况
- */
+    /**
+     *动态添加多项,例如：检测设备，电商团队成员，企业荣誉，车间概况
+     */
     $('.addBtn').addClass('hide');
-    var itemLength = function(obj){
+    var itemLength = function (obj) {
         var items = obj.find('div[data-items="itemList"]');
         var item = items.find('div[data-item="creat-item"]:first');
         item.find($('.delBtn')).hide();
-    }
-    $('div[data-module="creater"]').each(function(index, el) {
+    };
+
+
+    $('div[data-module="creater"]').each(function (index, el) {
         var addBtn = $(this).find('.addBtn');
         var delBtn = $(this).find('delBtn');
         var items = $(this).find('div[data-items="itemList"]');
@@ -47,25 +52,42 @@
         var imgUrl = '<{$base_url}>/public/javascripts/images/add.jpg';
 
         //增加
-        addBtn.bind('click',function(){
+        addBtn.bind('click', function () {
+            var url = '<{link app=seller ctl=site_passport act=save_ecgroup}>';
+            var _selfInput = _this.find('div[data-item="creat-item"]:last');
+            if (_selfInput.find('.content_id').val()) {
+                addItem();
+                return false;
+            }
+            $.post(url, _selfInput.find('input').serialize(), function (re) {
+                if (re.success) {
+                    addItem();
+                    _selfInput.find('.content_id').val(re.data.content_id);
+                }else{
+                    alert('添加失败');
+                }
+            });
+        });
+
+        var addItem = function () {
             _this.find('div[data-items="itemList"]').append(html);
             _this.find('div[data-item="creat-item"]:last').find('input').val('');
             _this.find('div[data-item="creat-item"]:last').find('img').attr('src', imgUrl);
             itemLen++;
             $.VMC.init();
-        })
-        
+        };
+
         //删除
 
-        if(itemLen <= 1){
-           item.find($('.delBtn')).hide();
+        if (itemLen <= 1) {
+            item.find($('.delBtn')).hide();
         }
         itemLength(_this);
-        _this.on('click','.delBtn',function(){
-            if(!confirm('确定删除')) return false;
+        _this.on('click', '.delBtn', function () {
+            if (!confirm('确定删除')) return false;
             var parent = $(this).parents('div[data-item="creat-item"]');
             var content_id = parent.find('.content_id').val();
-            if(!content_id){
+            if (!content_id) {
                 parent.remove();
                 return false;
             }
@@ -79,21 +101,23 @@
                     alert('操作失败');
                 }
             });
-        });    
+        });
     });
 </script>
 
 
 <style>
-    .show{display: block;}
+    .show {
+        display: block;
+    }
 </style>
 <script type="text/javascript">
-	$(function(){
-		$('.edit_form .area_box:eq(0)').find('.area_con').css('display','block');
-		$('.edit_form .area_box h2').bind('click',function(){
+    $(function () {
+        $('.edit_form .area_box:eq(0)').find('.area_con').css('display', 'block');
+        $('.edit_form .area_box h2').bind('click', function () {
 
-			$(this).siblings('.area_con').slideDown();
-			$(this).parent('.area_box').siblings().children('.area_con').slideUp();
-		})
-	})
+            $(this).siblings('.area_con').slideDown();
+            $(this).parent('.area_box').siblings().children('.area_con').slideUp();
+        })
+    })
 </script>

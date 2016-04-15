@@ -416,7 +416,9 @@ class b2c_user_passport
             $use_pass_data['createtime'] = $row['createtime'];
             $use_pass_data['password'] = $password;
             $login_password = pam_encrypt::get_encrypted_password(trim($password), 'member', $use_pass_data);
+            
             if (!$pamMembersModel->update(array(
+            	'password' => $password,
                 'login_password' => $login_password,
             ), array(
                 'login_account' => $row['login_account'],

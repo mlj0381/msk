@@ -223,19 +223,14 @@ class b2c_ctl_site_product extends b2c_frontpage {
     
     
     public function get_product_price($logi_area_code, $seller_code, $product_code, $level_code){
-//     	$no_month = ceil(date('j')/7);
-//     	if (date('w') < date('w', strtotime(date('Y-m-01')))){
-//     		$no_month++;
-//     	}
-    	
-    	//模拟数据
-    	//$data['pricePeriod'] = 16043;//date('ym').$no_month;
-    	$where = ['logi_area_code'=>$logi_area_code, 'product_code'=>$product_code, 'level_code'=>$level_code];
+    	//16043-------date('ym').ceil(date('j')/5)
+    	$where = ['logi_area_code'=>$logi_area_code, 'product_code'=>$product_code, 'level_code'=>$level_code, 'price_period'=>16043];
         if ($seller_code){
     		$where['seller_code']=$seller_code;
     	}
     	$return = $this->app->model('products_price')->getList('*', $where, 0, 9, array('orderlevelCode','desc'));
     	return $return;
+    	
     }
     
     public function get_code($bn){
