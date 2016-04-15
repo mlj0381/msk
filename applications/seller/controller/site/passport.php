@@ -672,15 +672,18 @@ class seller_ctl_site_passport extends seller_frontpage
 
 
     //ajax判断所填写的营业执照号是否已经填写过并返回信息
+    /**
+     * 营业执照号验证
+     */
     public function check_company()
     {
-        if (!is_numeric($_POST['business'])) $this->splash('error', '', '请输入正确的格式');
-        $mdl_company = app::get('base')->model('company');
-        $mdl_company_extra = app::get('base')->model('company_extra');
-        $company = $mdl_company->getRow('*', array('business' => $_POST['business'], 'business_type' => $_POST['business_type']));
-        if (!empty($company)) {
-            $company['extra'] = $mdl_company_extra->getList('*', array('extra_id' => $company['company_id'], 'identity' => ''));
+        if (!is_numeric($_POST['company']['business'])) $this->splash('error', '', '请输入正确的格式');
+                //, 'business_type' => $_POST['business_type']
+        $company = app::get('base')->model('company')->getRow('business', array('business' => $_POST['company']['business']));
+        if (empty($company['business'])) {
+            $this->splash('success', '', '可用');
         }
+        $this->splash('error', '', '已被注册');
     }
 
     //添加品牌资质
@@ -756,7 +759,11 @@ class seller_ctl_site_passport extends seller_frontpage
      */
     public function saveAptitude()
     {
-        $redirect = $this->gen_url(array('app' => 'seller', 'ctl' => 'site_passport', 'act' => 'entry', 'args0' => $_POST['step'] - 1));
+        $url = array('app' => 'seller', 'ctl' => 'site_passport', 'act' => 'entry', 'args0' => $_POST['step'] - 1);
+        if($_POST['type'] == 'center'){
+            $url = array('app' => 'seller', 'ctl' => 'site_goods', 'act' => 'directory');
+        }
+        $redirect = $this->gen_url($url);
 		if (!$_POST) {
             $this->splash('error', '', '非法请求');
         }
@@ -769,7 +776,36 @@ class seller_ctl_site_passport extends seller_frontpage
 
             $this->splash('error', $redirect, '添加失败');
         }
+        $result = vmc::singleton('seller_user_passport')->apiAptitudes($_POST['cat_id']);
+        if($result !== true){
+            $this->splash('error', $redirect, $result);
+        }
         $this->splash('success', $redirect, '添加成功');
+    }
+
+    //判断品牌重名
+    public function check_brand_name()
+    {
+        $mdl_brand = app::get('b2c')->model('brand');
+        $post = $_POST;
+        $result = $mdl_brand->getRow('brand_name', array('brand_name' => $post['brand']['brand_name']));
+        if ($result['brand_name']) {
+            $this->splash('error', '', '该品牌已存在');
+        }
+        $this->splash('success', '', '可用');
+    }
+
+    //取得品牌首字母拼音
+    public function brand_initial()
+    {
+        $initials = new base_py('utf-8');
+        $py = $initials->getInitials($_POST['brnad']['brand_name']);
+        preg_match('/^[A-Za-z]/', $py, $result);
+        $inital = current($result);
+        if ($inital) {
+            $this->splash('success', '', $inital);
+        }
+        $this->splash('error', '', '~');
     }
 
 }

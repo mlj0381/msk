@@ -75,13 +75,13 @@ $setting = array(
             2 => array(
                 'companyType' => '代理',
                 'pageSet' => array(
-					1 => array(
-							'label' => '卖家企业基本资质',
-							'page' => array(
-								'three_lesstion', 'business_licence', 'tax_licence', 'organization_licence', 'bank_lesstion',
-								'food_flow_licence', 'agent_auth_lesstion', 'company_type')
-					),
-					/*
+                    1 => array(
+                        'label' => '卖家企业基本资质',
+                        'page' => array(
+                            'three_lesstion', 'business_licence', 'tax_licence', 'organization_licence', 'bank_lesstion',
+                            'food_flow_licence', 'agent_auth_lesstion', 'company_type')
+                    ),
+                    /*
                     2 => array(
                         'label' => '生产商企业基本资质',
                         'page' => array(
@@ -103,7 +103,7 @@ $setting = array(
                         'page' => array(
                             'laboratory', 'equipment', 'qa_department', 'q_c_department')
                     ),
-					*/
+                    */
                     2 => array(
                         'label' => '卖家企业管理团队',
                         'page' => array(
@@ -114,14 +114,14 @@ $setting = array(
             4 => array(
                 'companyType' => 'OEM',
                 'pageSet' => array(
-				
+
                     1 => array(
                         'label' => 'OEM企业基本资质',
                         'page' => array(
                             'three_lesstion', 'business_licence', 'tax_licence', 'organization_licence', 'bank_lesstion',
                             'food_flow_licence', 'oem_auth_lesstion', 'company_type')
                     ),
-					/*1 => array(
+                    /*1 => array(
                         'label' => 'OEM企业基本资质',
                         'page' => array(
                             'three_lesstion', 'business_licence', 'tax_licence', 'organization_licence'),
@@ -252,4 +252,84 @@ $setting = array(
             '7' => '其他',
         ),
     ),
+    'aptitudes' => array(
+        'default' => array(
+            'creature' => array( //动物防疫证
+                'id' => 1,
+                'label' => '动物条件合格证',
+                'item' => array(
+                    1 => '代码编号',
+                    2 => '年检日期',
+                ),
+            ),
+            'muslim' => array( //清真证
+                'id' => 2,
+                'label' => '清真食品生产经营许可证',
+                'item' => array(
+                    1 => '证书编号',
+                    2 => '发证日期及有效期',
+                    3 => '签发机构',
+                ),
+            ),
+
+            'food' => array( //食品生产许可证
+                'id' => 3,
+                'label' => '食品生产许可证(副本)(全国工业产品生产许可证)',
+                'item' => array(
+                    1 => '证书编号',
+                    2 => '有效期',
+                ),
+            ),
+            'butcher' => array( //屠宰证
+                'id' => 4,
+                'label' => '生猪定点屠宰许可证',
+                'item' => array(
+                    1 => '定点屠宰代码',
+                    2 => '批准号',
+                ),
+            ),
+            'shanghai' => array( //进泸证
+                'id' => 5,
+                'label' => '进沪证',
+                'item' => array(
+                    1 => '单位名称',
+                    2 => '品种',
+                    3 => '登记日期',
+                ),
+            ),
+            'iso14001' => array(  //iso14001
+                'id' => 6,
+                'label' => 'ISO4001环境管理体系领证证书',
+                'item' => array(
+                    1 => '注册号',
+                    2 => '认证标准',
+                    3 => '认证范围',
+                    4 => '发证日期及有效期',
+                    5 => '认证机构',
+                ),
+            ),
+            'iso22000' => array( //iso22000
+                'id' => 7,
+                'label' => 'ISO22000食品安全管理体系认证证书',
+                'item' => array(
+                    1 => '证书编号',
+                    2 => '认证标准',
+                    3 => '认证范围',
+                    4 => '发证日期及有效期',
+                    5 => '认证机构',
+                ),
+            ),
+            'iso9001' => array( //iso9001
+                'id' => 8,
+                'label' => 'ISO9001质量管理体系认证证书',
+                'item' => array(
+                    1 => '证书编号',
+                    2 => '认证标准',
+                    3 => '认证范围',
+                    4 => '发证日期及有效期',
+                    5 => '认证机构',
+                ),
+            ),
+        ),
+    )
 );

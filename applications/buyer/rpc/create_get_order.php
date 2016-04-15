@@ -3,7 +3,7 @@
  * 创建第三方买手囤货订单---------------ISO151414
  */
 $remote['buyer_create_get_order'] = array(
-    'url' => '/so/sdo/thirdparty/create',
+    'url' => '/so/sdo/thirdbuyer/create',
 
     'request' => array(
         'member_id' => array(

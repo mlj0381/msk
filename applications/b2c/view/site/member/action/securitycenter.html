@@ -11,15 +11,16 @@
                 </p>
             </div>
             <div class="col-xs-8">
-                <{if $pam_data.memberData.mobile}>
-                    <h3><{$pam_data.mobile.login_account}></h3>
+                <{if $pam_data.mobile}>
+                    <h3><{$pam_data.mobile}></h3>
+                    已是验证&激活状态
                     <{else}>
                     <h3>未绑定手机</h3>
                     <a href="<{link app=b2c ctl=site_member act=set_pam_mobile}>" class="btn btn-xs btn-link"><i class="glyphicon glyphicon-chevron-right"></i> 立即绑定</a>
                 <{/if}>
             </div>
             <div class="col-xs-2">
-                <{if $pam_data.memberData.mobile}>
+                <{if $pam_data.mobile}>
                     <h2 class="glyphicon glyphicon-ok-sign"></h2>
                     <{else}>
                     <h2 class="glyphicon glyphicon-warning-sign"></h2>
@@ -36,11 +37,10 @@
                 </p>
             </div>
             <div class="col-xs-8">
-                <{if $member.email}>
-                    <h3><{$pam_data.email.login_account}></h3>
-                    <{if $pam_data.email.disabled=='true'}>
-                    <!-- <span class="label label-warning">未激活</span> -->
-                    <a href="<{link app=b2c ctl=site_member act=active_pam_email}>" class="btn btn-xs btn-success">验证&激活</a>
+                <{if $pam_data.email}>
+                    <h3><{$pam_data.email}></h3>
+                    <{if $pam_data.email}>
+                      已是验证&激活状态
                     <{/if}>
                 <{else}>
                     <h3>未绑定邮箱</h3>

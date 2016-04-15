@@ -119,14 +119,14 @@ $remote['seller_edit_seller_info'] = array(
             'default' => '',
             'require' => '',
         ),
-		/*
+
 		'slEpDdList' => array(
             'name' => '',
             'column' => 'slEpDdList',
             'type' => 'List',
             'default' => '',
             'require' => '',
-        ),*/
+        ),
         'loginId' => array(
             'name' => '  创建者ID/更新者ID',
             'column' => 'loginId',
@@ -1307,7 +1307,7 @@ $remote['seller_edit_seller_info'] = array(
             'require' => false,
         ),
     ),
-	/*
+
 	'slEpDdList' => array(
         'epId' => array(
             'name' => '企业ID',
@@ -1337,7 +1337,7 @@ $remote['seller_edit_seller_info'] = array(
             'default' => '',
             'require' => false,
         ),
-    ),*/
+    ),
     'response' => array(
         'epId' => array(
             'name' => '企业id',

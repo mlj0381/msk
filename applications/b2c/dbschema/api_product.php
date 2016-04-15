@@ -23,80 +23,86 @@ $db['api_product'] = array(
             'in_list' => false,
             'default_in_list' => false,
         ),
-        'productCode' => array(
+        'bn' => array(
             'type' => 'char(9)',
             'request' => 'true',
             'label' => '货品id',
             'comment' => '货品id',
         ),
-        'productName' => array(
+        'name' => array(
             'type' => 'varchar(50)',
             'request' => 'true',
             'label' => '货品名称',
             'comment' => '货品名称',
         ),
-        'classesCode' => array(
+        'cat_1' => array(
             'type' => 'char(2)',
             'request' => 'true',
             'label' => '类别id',
             'comment' => '类别id',
         ),
-        'machiningCode' => array(
+        'cat_2' => array(
             'type' => 'char(1)',
             'request' => 'true',
             'label' => '二级分类id',
             'comment' => '二级分类id',
         ),
-        'breedCode' => array(
+        'breed_code' => array(
             'type' => 'char(2)',
             'request' => 'true',
             'label' => '品种',
             'comment' => '品种',
         ),
-        'featureCode' => array(
+        'feature' => array(
             'type' => 'char(2)',
             'request' => 'true',
             'label' => '特征',
             'comment' => '特征',
         ),
-        'weightCode' => array(
+        'weight' => array(
             'type' => 'char(2)',
             'request' => 'true',
             'label' => '净重',
             'comment' => '净重',
         ),
-        'pkgSpec' => array(
+        'pkg_spec' => array(
             'type' => 'varchar(20)',
             'request' => 'true',
             'label' => '包装名称',
             'comment' => '包装名称',
         ),
-        'pkgCode' => array(
+        'pack' => array(
             'type' => 'char(3)',
             'request' => 'true',
             'label' => '包装id',
             'comment' => '包装id',
         ),
-        'productSpec' => array(
+        'spec' => array(
             'type' => 'varchar(20)',
             'request' => 'true',
             'label' => '产品规格(产品特征名)',
             'comment' => '产品规格(产品特征名)',
         ),
-        'netWeight' => array(
+        'net_weight' => array(
             'type' => 'varchar(20)',
             'request' => 'true',
             'label' => '净重',
             'comment' => '净重',
         ),
+        'createtime' => array(
+            'type' => 'time',
+            'request' => 'true',
+            'label' => '添加时间',
+            'comment' => '添加时间',
+        ),
     ),
     'index' =>
         array(
-            'ind_productCode' =>
+            'ind_bn' =>
                 array(
                     'columns' =>
                         array(
-                            0 => 'productCode',
+                            0 => 'bn',
                         ),
                 ),
 

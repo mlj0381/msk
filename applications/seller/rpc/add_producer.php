@@ -6,11 +6,11 @@ $remote['seller_add_producer'] = array(
     'url' => '/sl/slInfo/slProducer/new',
 
     'request' => array(
-        'member_id' => array(
+        'loginId' => array(
             'name' => '登陆的用户ID',
             'column' => 'loginId',
             'type' => 'String',
-            'default' => '',
+            'default' => 'msk001',
             'require' => false,
         ),
         'param' => array(
@@ -75,6 +75,7 @@ $remote['seller_add_producer'] = array(
             'column' => 'crtId',
             'type' => 'String',
             'require' => false,
+            'default' => '11'
         ),
     ),
 

@@ -66,9 +66,9 @@ class buyer_ctl_site_passport extends buyer_frontpage{
 			if (empty($params['vcode'])){
 				$this->splash('error', '', '验证码不能为空!');
 			}
-// 			if (!base_vcode::verify('passport', $params['vcode'])){
-// 				$this->splash('error', '', '验证码错误！');
-// 			}
+			if (!base_vcode::verify('passport', $params['vcode'])){
+				$this->splash('error', '', '验证码错误！');
+			}
 			
 			$username = $params['uname'];
 			$password = $params['password'];
