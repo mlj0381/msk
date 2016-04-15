@@ -16,7 +16,12 @@
 			<span class="text-danger">*</span>注册号：
 		</label>
 		<div class="col-xs-4">
-            <input type="text" value="<{$extra.company.business}>" name="company[business]" class="form-control business" required="true" format="digits" remote="<{link app=seller ctl=site_passport act=check_company}>">
+            <input type="text" value="<{$extra.company.business}>" name="company[business]" class="form-control business" required="true" format="digits"
+			<{if $extra.company.company_id}>
+            readonly
+			<{else}>
+			remote="<{link app=seller ctl=site_passport act=check_company}>">
+			<{/if}>>
             <span class="msgTip" data-message="format">格式不正确</span>
 		</div>
 	</div>

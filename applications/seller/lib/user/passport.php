@@ -1039,7 +1039,7 @@ class seller_user_passport
             'show_name' => $tmp['pam']['login_account'],
             'contact_person' => $tmp['pam']['login_account'],
             'login_password' => $tmp['pam']['password'],
-            'authStatus' => 1,
+            'authStatus' => 2,
             'fromFlg' => '2',
         );
         $seller_type = Array();
