@@ -982,32 +982,45 @@ class seller_user_passport
             $db->commit();
             return true;
         }
-        return false;
+        return $result['message'];
     }
 
     private function _checkData(&$data, $type)
     {
         $rpc = '';
-        switch ($this->seller['ident']) {
-            case '1' :
-                $rpc = 'edit_seller_info';
-                break;
-            case '2' :
-                $rpc = 'edit_seller_info2';
-                break;
-            case '4' :
-                $rpc = 'edit_seller_info2';
-                break;
+        if($type == 'update')
+        {
+            unset($data['slAccount']);
+            unset($data['slSeller']);
+            unset($data['insertFlag']);
+            $rpc = 'edit_seller_info1';
+            switch ($this->seller['ident']) {
+                case '1' :
+                    $rpc = 'edit_seller_info1';
+                    break;
+                case '2' :
+                    $rpc = 'edit_seller_info2-2';
+                    break;
+                case '4' :
+                    $rpc = 'edit_seller_info2-2';
+                    break;
+            }
+        }
+        else
+        {
+            switch ($this->seller['ident']) {
+                case '1' :
+                    $rpc = 'edit_seller_info';
+                    break;
+                case '2' :
+                    $rpc = 'edit_seller_info2';
+                    break;
+                case '4' :
+                    $rpc = 'edit_seller_info2';
+                    break;
+            }
         }
 
-        switch ($type) {
-            case 'update':
-                unset($data['slAccount']);
-                unset($data['slSeller']);
-                unset($data['insertFlag']);
-                $rpc = 'edit_seller_info1';
-                break;
-        }
         return $rpc;
     }
 
@@ -1071,7 +1084,6 @@ class seller_user_passport
             'distQua' => '1',
             'shopQua' => '1',
         );
-
     }
 
     /**
@@ -1246,7 +1258,7 @@ class seller_user_passport
             $tmp[$key]['slEpAuthList'] = array(
                 array(
                     'flag' => $identity,
-                    'slCode' => '',
+                    'slCode' => $this->seller['sl_code'],
                     'producerEpId' => $agent['agent_auth_lesstion']['value']['agent'],
                     'contractNo' => $agent['agent_auth_lesstion']['value']['num'],
                     'authEpName' => $agent['agent_auth_lesstion']['value']['unit'],
@@ -1301,7 +1313,7 @@ class seller_user_passport
 
                 $tmp[$key]['slEcTeamList'] = $slEcTeamList;
             }
-            /*//企业检测设备
+            //企业检测设备
             $slEpDdList = Array();
             foreach ($value['equipment'] as $k => $v) {
                 $slEpDdList[] = array(
@@ -1311,10 +1323,8 @@ class seller_user_passport
                     'ddEquipment' => $v['value']['use']
                 );
 
-                $tmp[$key]['slEpDdList'] = $slEcTeamList;
-            }*/
-
-
+                $tmp[$key]['slEpDdList'] = $slEpDdList;
+            }
             $result = array_merge($result, current($tmp));
         }
     }
@@ -1338,7 +1348,7 @@ class seller_user_passport
             if (empty($value['extra'])) continue;
             $i = 0;
             foreach ($value['extra']['extra'] as $k => $v) {
-
+                if(!join('', $v)) continue;
                 $apiData[$j]['certInfoList'][$i] = array(
                     'epId' => $this->seller['sl_code'],
                     'certId' => $apiAptitudes[$k]['id'],
