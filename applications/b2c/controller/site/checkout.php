@@ -191,6 +191,17 @@ class b2c_ctl_site_checkout extends b2c_frontpage
             'ctl' => 'site_member',
             'act' => 'orders',
         ));
+        //判断是买手还是买家
+        $object_obj = vmc::singleton('buyer_user_object');
+        $buyer_id = $object_obj->get_id();
+        if($buyer_id)
+        {
+            $redirect = $this->gen_url(array(
+                'app' => 'buyer',
+                'ctl' => 'site_goods',
+                'act' => 'store',
+            ));
+        }
         $order = $this->app->model('orders')->dump($order_id);
         if (!$order) {
             $this->splash('error', $redirect, '未知订单信息');
