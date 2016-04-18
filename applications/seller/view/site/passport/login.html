@@ -95,7 +95,7 @@ function(login_form) {
         login_form.find('button[type=submit]').button('loading');
         $.post(login_form.prop('action'), login_form.serialize(), function(re) {
             if (re.error) {
-                login_form.find('.alert-error').remove();
+                login_form.find('.alert-danger').remove();
                 login_form.append($('<div class="alert alert-danger">' + re.error + '</div>'));
                 alert_timer = setTimeout(function() {
                     clearTimeout(alert_timer);
