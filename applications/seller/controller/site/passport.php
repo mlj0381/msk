@@ -734,7 +734,6 @@ class seller_ctl_site_passport extends seller_frontpage
     }
 
 
-    //ajax判断所填写的营业执照号是否已经填写过并返回信息
     /**
      * 营业执照号验证
      */
@@ -793,7 +792,6 @@ class seller_ctl_site_passport extends seller_frontpage
             'apt_technology', 'apt_transport');
         if (in_array($html_type, $html_arr)) {
             $this->pagedata['card'] = app::get('b2c')->model('goods')->fileCard($html_type, $this->_request->get_get('cat'));
-            print_r($this->pagedata['card']);
             $this->display('ui/aptitude/' . $html_type . '.html');
         }
     }
