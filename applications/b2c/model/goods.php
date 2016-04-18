@@ -285,7 +285,7 @@ class b2c_mdl_goods extends dbeav_model
         $result = Array();
         if(array_key_exists($type, $card))
         {
-            $result = app::get('seller')->rpc($card[$type])->request('', 604800);//一星期
+            $result = app::get('seller')->rpc($card[$type])->request(array(1));//一星期
         }
         $cat_id = explode('-', $cat); //01-1-01 分类编码组合 一级 - 二级 - 三级
         foreach($result['result']['searchList'] as $value)

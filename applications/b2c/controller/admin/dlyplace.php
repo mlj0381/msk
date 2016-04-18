@@ -44,6 +44,9 @@ class b2c_ctl_admin_dlyplace extends desktop_controller {
         $this->begin('index?app=b2c&ctl=admin_dlyplace&act=index');
         $warehouse = $_POST['warehouse'];
         unset($_POST['warehouse']);
+		if(!$warehouse['addr_id']){
+			$this->end(false, '覆盖地区不能为空');
+		}
         $db = vmc::database();
         $db->beginTransaction();
         $result = $this->mDlyplace->save($_POST);

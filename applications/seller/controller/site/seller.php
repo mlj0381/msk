@@ -241,8 +241,9 @@ class seller_ctl_site_seller extends seller_frontpage
         $selfBind = app::get('base')->model('company_seller')->getList('company_id', array('uid' => $this->seller['seller_id'],
             'from' => '1'));
 
-        $tmp = app::get('seller')->rpc('select_company_qualifications')->request('', 259000);
-        $bindCompanyId = array();
+        //$tmp = app::get('seller')->rpc('select_company_qualifications')->request('', 259000);
+        $tmp['result']['epInfoList'] = app::Get('base')->model('company')->getList('*');
+		$bindCompanyId = array();
         foreach ($selfBind as $v) {
             $bindCompanyId[] = $v['company_id'];
         }
@@ -266,9 +267,9 @@ class seller_ctl_site_seller extends seller_frontpage
     {
         $selfCompany = app::get('base')->model('company')->getRow('*', array('ep_id' => $_POST['oem_auth_lesstion']['value']['agent']));
         if ($this->seller['ident'] == '2') {
-            $fiag = '1';
+            $fiag = 1;
         } elseif ($this->seller['ident'] == '4') {
-            $fiag = '2';
+            $fiag = 2;
         }
         $apiData = array(
             'flag' => $fiag,
@@ -278,23 +279,30 @@ class seller_ctl_site_seller extends seller_frontpage
             'authEpName' => $_POST['oem_auth_lesstion']['value']['num'],
             'authTermBegin' => $_POST['oem_auth_lesstion']['value']['start'],
             'authTermEnd' => $_POST['oem_auth_lesstion']['value']['end'],
-            'authTermUnliimited' => '1',
+            'authTermUnliimited' => 1,
         );
 
         $result = $this->app->rpc('add_producer')->request($apiData);
-die;
-        //print_r($result);
-        //die;
+		$redirect = array('app' => 'seller', 'ctl' => 'site_seller', 'act' => 'addCompany');
+        $redirect = $this->gen_url($redirect);
+		if(!$result['status']) 
+			$this->splash('error', $redirect, '添加失败');
+
+		/*如果生产商来源不只有美侍客，用企业id去查询生产商信息包括品牌信息 现阶段接口没有*/
+
         $data = array(
             'uid' => $this->seller['seller_id'],
             'from' => '1',
             'identity' => $this->seller['ident'],
             'company_id' => $selfCompany['company_id'],
             'company_name' => $selfCompany['name'],
-            'createtime' => time());
+            'createtime' => time()
+		);
+		
+		if(!app::get('base')->model('company_seller')->save($data))
+			$this->splash('error', $redirect, '添加失败');
 
-        //ISL231134
-        //$agent = app::get('seller')->rpc('select_company_qualifications')->request('', 259000);
+		$this->splash('success', $redirect, '添加成功');
     }
 }
 
