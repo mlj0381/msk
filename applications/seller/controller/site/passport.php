@@ -614,14 +614,21 @@ class seller_ctl_site_passport extends seller_frontpage
         if (!$_POST) {
             $this->splash('error', '', '非法请求');
         }
+		
         $params = utils::_filter_input($_POST);
         unset($_POST);
+		//调用接口添加
+		$type = key($params);
+		
+        if($type != 'ec_group_employees'){
+			$apiCompanyId = app::get('base')->model('company')->getRow('company_id, ep_id', array('uid' => $this->seller['seller_id'], 'from' => '1'));
+		}
+		$params[$type]['extra_id'] = $apiCompanyId['ep_id'];
         $result = $this->_saveApiArray($params);
-        if ($result['error']) {
-            $this->splash('error', '', $result['error']);
+        if (!$result) {
+            $this->splash('error', '', '添加失败');
         }
-        $type = key($params);
-        //调用接口添加
+        
         $data = array();
         foreach ($params[$type]['value'] as $key => $value) {
             $data[$type]['value'][$key] = $value[0];
@@ -630,6 +637,9 @@ class seller_ctl_site_passport extends seller_frontpage
         $data[$type]['uid'] = $this->seller['seller_id'];
         $data[$type]['from'] = '1';
         $data[$type]['key'] = $type;
+		$data[$type]['createtime'] = time();
+		$data[$type]['identity'] = $this->seller['ident'];
+		$data[$type]['extra_id'] = $apiCompanyId['company_id'];
         $data[$type]['attach'] = $params[$type]['attach'][0];
         $func_name = $data[$type]['content_id'] ? 'save' : 'insert';
         $mdl_company_extra = app::get('base')->model('company_extra');
@@ -653,49 +663,69 @@ class seller_ctl_site_passport extends seller_frontpage
          * edit_seller_touted 企业荣誉
          * edit_seller_workshop 车间概况
          */
-        $apiData = Array();
-        print_r($params);
-        switch (key($params)) {
+		$rpc = '';
+		$apiData = Array();
+		$type = key($params);
+		
+		
+        switch ($type) {
             case 'workshop': //车间概况
                 $apiData['slEpWorkshopList'] = array(
-                    'epId' => '',
-                    'workshopId' => '',
-                    'workshopName' => '',
-                    'product' => '',
-                    'process' => '',
+					array(
+						'epId' => $params[$type]['extra_id'],
+						'workshopId' => '',
+						'workshopName' => $params['workshop']['value']['name'][0],
+						'product' => $params['workshop']['value']['pro'][0],
+						'process' => $params['workshop']['value']['trait'][0],
+					),
                 );
+				$rpc = 'edit_seller_workshop';
                 break;
             case 'company_touted': //企业荣誉
                 $apiData['slEpHonorList'] = array(
-                    'epId' => '',
-                    'honorId' => '',
-                    'honorDesc' => $params['company_touted']['value']['data'][0],
-                    'certDate' => '',
-                    'certIssuer' => '',
+					array(
+						'epId' => $params[$type]['extra_id'],
+						'honorId' => '',
+						'honorDesc' => $params['company_touted']['value']['desc'][0],
+						'certDate' => $params['company_touted']['value']['date'][0],
+						'certIssuer' => '',
+					),
                 );
+				$rpc = 'edit_seller_touted';
                 break;
             case 'equipment': //检测设备
                 $apiData['slEpDdList'] = array(
-                    'epId' => '',
-                    'ddId' => '',
-                    'ddName' => '',
-                    'ddEquipment' => '',
+						array(
+						'epId' => $params[$type]['extra_id'],
+						'ddId' => '',
+						'ddName' => $params['equipment']['value']['main_device'][0],
+						'ddEquipment' => $params['equipment']['value']['use'][0],
+					),
                 );
+				$rpc = 'edit_seller_equipment';
                 break;
             case 'ec_group_employees': //电商团队
+				$conf = $this->app->getConf('education');
                 $apiData['slEcTeamList'] = array(
-                    'slCode' => '',
-                    'memberId' => '',
-                    'leaderFlg' => '',
-                    'memberName' => '',
-                    'memberAge' => '',
-                    'birthday' => '',
-                    'memberEduc' => '',
-                    'memberTel' => '',
-                );
+						array(
+						'slCode' => $this->seller['seller_id'],
+						'memberId' => '',
+						'leaderFlg' => '0',
+						'memberName' => $params['ec_group_employees']['value']['name'][0],
+						'memberAge' => $params['ec_group_employees']['value']['age'][0],
+						'birthday' => '',
+						'memberEduc' => $conf[$params['ec_group_employees']['value']['edu'][0]],
+						'memberTel' => $params['ec_group_employees']['value']['contact'][0],
+					),
+				);
+				$rpc = 'edit_seller_ec_group';
                 break;
         }
-        return Array();
+		$result = $this->app->rpc($rpc)->request($apiData);
+		if($result['status']){
+			Return true;
+		}
+		Return false;
     }
 
 

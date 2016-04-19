@@ -2,7 +2,7 @@
 /**
  * 编辑电商团队---------------ISL231180
  */
-$remote['seller_edit_seller_equipment'] = array(
+$remote['seller_edit_seller_ec_group'] = array(
     'url' => '/sl/slInfo/newOrUpdateAll',
 
     'request' => array(
@@ -34,7 +34,7 @@ $remote['seller_edit_seller_equipment'] = array(
             'name' => '  创建者ID/更新者ID',
             'column' => 'loginId',
             'type' => 'String',
-            'default' => '',
+            'default' => '11',
             'require' => false,
         ),
         'delFlg' => array(
@@ -54,7 +54,7 @@ $remote['seller_edit_seller_equipment'] = array(
             'name' => '全体/单个',
             'column' => 'insertFlag',
             'type' => 'String',
-            'default' => '',//0：全体，1：单个
+            'default' => '1',//0：全体，1：单个
             'require' => false,
         ),
     ),
