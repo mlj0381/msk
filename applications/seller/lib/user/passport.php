@@ -1385,6 +1385,12 @@ class seller_user_passport
                 }
                 $i++;
             }
+			$prentCatId = app::get('b2c')->model('goods_cat')->getRow('addon', array('cat_id' => $value['parent_id']));
+			$apiData[$j]['pdClassesCodeList'][] = array(
+				'pdClassesCode'	=> $prentCatId['addon'],
+				'machiningCode'	=> $value['addon'],
+				'slCode' => $this->seller['sl_code'],
+			);
             $j++;
         }
         foreach ($apiData as $key => $value) {

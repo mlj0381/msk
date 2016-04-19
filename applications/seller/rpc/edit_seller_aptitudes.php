@@ -29,6 +29,13 @@ $remote['seller_edit_seller_aptitudes'] = array(
             'default' => '',
             'require' => '',
         ),
+		'pdClassesCodeList' => array(
+            'name' => '产品类别List',
+            'column' => 'pdClassesCodeList',
+            'type' => 'List',
+            'default' => '',
+            'require' => '',
+        ),
         'loginId' => array(
             'name' => '  创建者ID/更新者ID',
             'column' => 'loginId',
@@ -40,7 +47,7 @@ $remote['seller_edit_seller_aptitudes'] = array(
             'name' => '  删除标志',
             'column' => 'delFlg',
             'type' => 'String',
-            'default' => '',
+            'default' => '0',
             'require' => false,
         ),
         'ver' => array('name' => '  版本号',
@@ -114,6 +121,30 @@ $remote['seller_edit_seller_aptitudes'] = array(
         'certItemValue' => array(
             'name' => '证照项目内容',
             'column' => 'certItemValue',
+            'type' => 'String',
+            'default' => '',
+            'require' => false,
+        ),
+
+    ),
+	'pdClassesCodeList' => array(
+        'pdClassesCode' => array(
+            'name' => '产品类别',
+            'column' => 'pdClassesCode',
+            'type' => 'String',
+            'default' => '',
+            'require' => false,
+        ),
+        'machiningCode' => array(
+            'name' => '产品二级分类',
+            'column' => 'machiningCode',
+            'type' => 'String',
+            'default' => '',
+            'require' => false,
+        ),
+        'slCode' => array(
+            'name' => '卖家ID',
+            'column' => 'slCode',
             'type' => 'String',
             'default' => '',
             'require' => false,

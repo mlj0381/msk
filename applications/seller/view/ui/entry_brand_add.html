@@ -83,7 +83,7 @@
     void function (brandForm){
         brandForm.on('submit', function(e) {
             e.stopPropagation();
-            brandForm.find('button[type=submit]').button('loading');
+            //brandForm.find('button[type=submit]').button('loading');
             function modalHide(){ $("#brand_add_modal").modal('hide')};
             $.post(brandForm.attr('action'), brandForm.serialize(), function(re){
                 if(re.success){
@@ -91,7 +91,9 @@
                     var brand_html = '<span class="brand_item">' + brand + ' <i class="icon-remove"></i></span>';
                     $('.brand_list').append(brand_html);
                     setTimeout(modalHide,200);
-                } 
+                } else{
+					
+				}
             }, 'json');
             return false;
             

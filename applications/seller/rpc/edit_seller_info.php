@@ -138,7 +138,7 @@ $remote['seller_edit_seller_info'] = array(
             'name' => '  删除标志',
             'column' => 'delFlg',
             'type' => 'String',
-            'default' => '',
+            'default' => '0',
             'require' => false,
         ),
         'ver' => array('name' => '  版本号',

@@ -800,12 +800,32 @@ class seller_ctl_site_passport extends seller_frontpage
         $redirect = Array('app' => 'seller', 'ctl' => 'site_passport', 'act' => 'entry', 'args0' => ($count['sum'] - 1));
         $redirect = $this->gen_url($redirect);
         $post['brand']['seller_id'] = $this->seller['seller_id'];
+		
+		$mdlBrand = app::get('b2c')->model('brand');
 
-        if (!app::get('b2c')->model('brand')->save($post['brand'])) {
+		$checkBrandName = $mdlBrand->getRow('brand_id', array('brand_name' => $post['brand']['brand_name']));
+		if($checkBrandName['brand_id']){
+			$this->splash('error', $redirect, '品牌名重复');
+		}
+        if (!$mdlBrand->save($post['brand'])) {
             $this->splash('error', $redirect, '操作失败');
         }
         $this->splash('success', $redirect, array('name' => $post['brand']['brand_name'], 'id' => $post['brand']['brand_id']));
     }
+
+	public function removeBrand() 
+	{
+        $redirect = $this->gen_url(Array('app' => 'seller', 'ctl' => 'site_passport', 'act' => 'entry'));
+		if(empty($_POST['brand_id']) && !is_numeric($_POST['brand_id'])){
+			$this->splash('error', $redirect, '非法请求');
+		}
+
+		if(app::get('b2c')->model('brand')->delete(array('brand_id' => $_POST['brand_id']))){
+			$this->splash('success', $redirect, '操作成功');
+		}
+		$this->splash('error', $redirect, '操作失败');
+	}
+
 
     /*
      * 商家入驻添加经营类别
@@ -867,10 +887,12 @@ class seller_ctl_site_passport extends seller_frontpage
 
             $this->splash('error', $redirect, '添加失败');
         }
-        $result = vmc::singleton('seller_user_passport')->apiAptitudes($_POST['cat_id']);
-        if ($result !== true) {
-            $this->splash('error', $redirect, $result);
-        }
+		if($_POST['type'] == 'center'){
+			$result = vmc::singleton('seller_user_passport')->apiAptitudes($_POST['cat_id']);
+			if ($result !== true) {
+				$this->splash('error', $redirect, $result);
+			}
+		}
         $this->splash('success', $redirect, '添加成功');
     }
 

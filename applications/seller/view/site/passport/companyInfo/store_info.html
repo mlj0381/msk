@@ -345,7 +345,7 @@
                     return false;
                 }
                 var _self = $(this);
-                var url = '<{link app=seller ctl=site_brand act=remove}>';
+                var url = '<{link app=seller ctl=site_passport act=removeBrand}>';
                 $.post(url, {'brand_id': brandId}, function (re) {
                     if (re.success) {
                         _self.parent('.brand_item').remove();
