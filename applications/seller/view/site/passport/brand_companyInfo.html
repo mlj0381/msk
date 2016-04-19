@@ -42,58 +42,78 @@
 /**
  *动态添加多项,例如：检测设备，电商团队成员，企业荣誉，车间概况
  */
-    var itemLength = function(obj){
-        var items = obj.find('div[data-items="itemList"]');
-        var item = items.find('div[data-item="creat-item"]:first');
-        item.find($('.delBtn')).hide();
-    }
-    $('div[data-module="creater"]').each(function(index, el) {
+var itemLength = function (obj) {
+    var items = obj.find('div[data-items="itemList"]');
+    var item = items.find('div[data-item="creat-item"]:first');
+    item.find($('.delBtn')).hide();
+};
 
-        var addBtn = $(this).find('.addBtn');
-        var delBtn = $(this).find('delBtn');
-        var items = $(this).find('div[data-items="itemList"]');
-        var item = items.find('div[data-item="creat-item"]');
-        var itemLen = item.size();
-        var html = items.find('div[data-item="creat-item"]:first').prop("outerHTML");
-        var _this = $(this);
-        var imgUrl = '<{$base_url}>/public/javascripts/images/add.jpg';
 
-        //增加
-        addBtn.bind('click',function(){
-            _this.find('div[data-items="itemList"]').append(html);
-            _this.find('div[data-item="creat-item"]:last').find('input').val('');
-            _this.find('div[data-item="creat-item"]:last').find('img').attr('src', imgUrl);
-            itemLen++;
-            $.VMC.init();
-        })
-        
-        //删除
+$('div[data-module="creater"]').each(function (index, el) {
+    var addBtn = $(this).find('.addBtn');
+    var delBtn = $(this).find('delBtn');
+    var items = $(this).find('div[data-items="itemList"]');
+    var item = items.find('div[data-item="creat-item"]');
+    var itemLen = item.size();
+    var html = items.find('div[data-item="creat-item"]:first').prop("outerHTML");
+    var _this = $(this);
+    var imgUrl = "<{$base_url}>/public/javascripts/images/add.jpg";
 
-        if(itemLen <= 1){
-           item.find($('.delBtn')).hide();
+    //增加
+    addBtn.bind('click', function () {
+        var url = '<{link app=seller ctl=site_passport act=save_ecgroup}>';
+        var _selfInput = _this.find('div[data-item="creat-item"]:last');
+        if (_selfInput.find('.content_id').val()) {
+            addItem();
+            return false;
         }
-        itemLength(_this);
-        _this.on('click','.delBtn',function(){
-            if(!confirm('确定删除')) return false;
-            var parent = $(this).parents('div[data-item="creat-item"]');
-            var content_id = parent.find('.content_id').val();
-            if(!content_id){
-                parent.remove();
-                return false;
+        $.post(url, _selfInput.find('input, select, textarea').serialize(), function (re) {
+            if (re.success) {
+                addItem();
+                _selfInput.find('.content_id').val(re.data.content_id);
+            }else{
+                alert('添加失败');
             }
-            var url = '<{link app=seller ctl=site_passport act=del_extra}>';
-            $.post(url, {content_id: content_id}, function (re) {
-                if (re.success) {
-                    parent.remove();
-                    itemLen--;
-                    itemLength(_this);
-                } else {
-                    alert('操作失败');
-                }
-            });
-        });    
+        });
     });
 
+    var addItem = function () {
+        _this.find('div[data-items="itemList"]').append(html);
+        _this.find('div[data-item="creat-item"]:last').find('input').val('');
+        _this.find('div[data-item="creat-item"]:last').find('img').attr('src', imgUrl);
+        itemLen++;
+        items.find('div[data-item="creat-item"]:last *').each(function(index,dom){
+            $(dom).attr('value','').val('');
+        });
+        $.VMC.init();
+    };
+
+    //删除
+
+    if (itemLen <= 1) {
+        item.find($('.delBtn')).hide();
+    }
+    itemLength(_this);
+    _this.on('click', '.delBtn', function () {
+        if (!confirm('确定删除')) return false;
+        var parent = $(this).parents('div[data-item="creat-item"]');
+        var content_id = parent.find('.content_id').val();
+        if (!content_id) {
+            parent.remove();
+            return false;
+        }
+        var url = '<{link app=seller ctl=site_passport act=del_extra}>';
+        $.post(url, {content_id: content_id}, function (re) {
+            if (re.success) {
+                parent.remove();
+                itemLen--;
+                itemLength(_this);
+            } else {
+                alert('操作失败');
+            }
+        });
+    });
+});
 
 
 /**

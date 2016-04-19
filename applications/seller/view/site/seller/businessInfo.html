@@ -33,7 +33,6 @@
     /**
      *动态添加多项,例如：检测设备，电商团队成员，企业荣誉，车间概况
      */
-    //$('.addBtn').addClass('hide');
     var itemLength = function (obj) {
         var items = obj.find('div[data-items="itemList"]');
         var item = items.find('div[data-item="creat-item"]:first');
@@ -49,7 +48,7 @@
         var itemLen = item.size();
         var html = items.find('div[data-item="creat-item"]:first').prop("outerHTML");
         var _this = $(this);
-        var imgUrl = '<{$base_url}>/public/javascripts/images/add.jpg';
+        var imgUrl = "<{$base_url}>/public/javascripts/images/add.jpg";
 
         //增加
         addBtn.bind('click', function () {
@@ -74,6 +73,9 @@
             _this.find('div[data-item="creat-item"]:last').find('input').val('');
             _this.find('div[data-item="creat-item"]:last').find('img').attr('src', imgUrl);
             itemLen++;
+            items.find('div[data-item="creat-item"]:last *').each(function(index,dom){
+                $(dom).attr('value','').val('');
+            });
             $.VMC.init();
         };
 
@@ -106,11 +108,6 @@
 </script>
 
 
-<style>
-    .show {
-        display: block;
-    }
-</style>
 <script type="text/javascript">
     $(function () {
         $('.edit_form .area_box:eq(0)').find('.area_con').css('display', 'block');
