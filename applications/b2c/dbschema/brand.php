@@ -82,7 +82,7 @@ $db['brand'] = array(
                 ),
             'company_id' =>
                 array(
-                    'type' => 'table:base@company',
+                    'type' => 'table:company@base',
                     'label' => ('所属公司'),
                     'default' => 0,
                     'comment' => ('所属公司'),
@@ -134,13 +134,6 @@ $db['brand'] = array(
                     'default' => 0,
                     'comment' => ('品牌类型'),
                     'label' => ('品牌类型'), // 1 自有  2 代理  4 OEM
-                ),
-            'company_id' =>
-                array(
-                    'type' => 'number',
-                    'default' => 0,
-                    'comment' => ('所属公司'),
-                    'label' => ('所属公司'),
                 ),
             'api_company_id' =>
                 array(
@@ -223,16 +216,24 @@ $db['brand'] = array(
                 array(
                     'columns' =>
                         array(
-                            0 => 'seller_id',
+                            0 => 'brand_initial', 
                         ),
                 ),
             'ind_company_id' =>
                 array(
                     'columns' =>
                         array(
-                            0 => 'seller_id',
+                            0 => 'company_id',
                         ),
                 ),
+            'ind_brand_name' =>
+            array(
+                'columns' =>
+                    array(
+                        0 => 'brand_name',
+                    ),
+                    'prefix' => 'UNIQUE'
+            ),
             'ind_ordernum' =>
                 array(
                     'columns' =>
