@@ -840,6 +840,7 @@ class seller_user_passport
 
         foreach ($extra_columns['page'] as $key => $col) {
             if (isset($params[$col]) && !empty($params[$col])) {
+                
                 $params[$col]['content_id'] && $sqlType = true;
                 $params[$col]['identity'] = $params['typeId'] == 'comm' ? null : $params['typeId'];
                 $params[$col]['extra_id'] = $company_id ?: $company_extra[0]['company_id'];
@@ -848,6 +849,7 @@ class seller_user_passport
                 $params[$col]['from'] = 1;
 
                 //电商成员信息
+                
                 if (is_array(reset($params[$col]['value']))) {
 
                     if (!$this->_save_array($col, $params[$col], $seller['seller_id'])) {
@@ -888,6 +890,7 @@ class seller_user_passport
             $first_arr = reset($params['value']);
             $length = count($first_arr);
             for ($i = 0; $i < $length; $i++) {
+
                 if (empty($first_arr[$i])) {
                     continue;
                 }
@@ -897,9 +900,10 @@ class seller_user_passport
                 $data['attach'] = $params['attach'][$i];
                 $data['key'] = $key;
                 $data['extra_id'] = $params['extra_id'];
-                $data['identity'] = $params['identity'];
+                $data['identity'] = $this->seller['ident'];
                 $data['createtime'] = time();
                 foreach ($params['value'] as $k => $v) {
+                    if(!$v && $k != 'trait') continue 2; //trait 车间工艺流程特点可以为空非必填
                     $data['value'][$k] = $v[$i];
 
                 }

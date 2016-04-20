@@ -611,24 +611,40 @@ class seller_ctl_site_passport extends seller_frontpage
     //ajax提交保存电商团队成员
     public function save_ecgroup()
     {
+
         if (!$_POST) {
             $this->splash('error', '', '非法请求');
         }
 		
         $params = utils::_filter_input($_POST);
+
         unset($_POST);
 		//调用接口添加
 		$type = key($params);
 		
+
+        for ($i = 0; $i < count(reset($params[$type]['value'])); $i++) 
+        {
+            foreach ($params[$type]['value'] as $key => $value) 
+            {
+                if($key != 'trait' && !$value[$i])
+                {
+                    $this->splash('error', '', '信息未填写完整');
+                }
+            }
+        }
         if($type != 'ec_group_employees'){
 			$apiCompanyId = app::get('base')->model('company')->getRow('company_id, ep_id', array('uid' => $this->seller['seller_id'], 'from' => '1'));
 		}
+
 		$params[$type]['extra_id'] = $apiCompanyId['ep_id'];
-        $result = $this->_saveApiArray($params);
-        if (!$result) {
-            $this->splash('error', '', '添加失败');
+        if($params[$type]['extra_id'] ){
+            //有apiCompanyId 不是入驻的时候添加多个信息调用接口
+            $result = $this->_saveApiArray($params);
+            if (!$result) {
+                $this->splash('error', '', '添加失败');
+            }
         }
-        
         $data = array();
         foreach ($params[$type]['value'] as $key => $value) {
             $data[$type]['value'][$key] = $value[0];
@@ -666,8 +682,6 @@ class seller_ctl_site_passport extends seller_frontpage
 		$rpc = '';
 		$apiData = Array();
 		$type = key($params);
-		
-		
         switch ($type) {
             case 'workshop': //车间概况
                 $apiData['slEpWorkshopList'] = array(
