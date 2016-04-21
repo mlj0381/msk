@@ -38,6 +38,10 @@
                                 <a class="btn btn-md btn-danger pull-right" style="margin-right:-120px; margin-top:-34px;" href="<{link app=freeze ctl=site_account act=set_pam_mobile}>">
                                     绑定手机号码
                                 </a>
+                            <{else}>
+                                <a class="btn btn-md btn-danger pull-right" style="margin-right:-120px; margin-top:-34px;" href="<{link app=freeze ctl=site_account act=set_pam_mobile}>">
+                                    修改手机号码
+                                </a>
                             <{/if}>
 
                             <span class="msgTip" data-message="format">格式不正确</span>
@@ -160,7 +164,7 @@
                 <div class="form-group">
                     <label class="col-xs-2"></label>
                     <div class="col-xs-4">
-                        <button type="submit" data-loading-text="正在提交..." class="btn btn-danger" style="margin-left: 20px;">保存并进行下一步</button>
+                        <button type="submit" data-loading-text="正在提交..." class="btn btn-danger" style="margin-left: 20px;">保存</button>
                     </div>
                 </div>
 
