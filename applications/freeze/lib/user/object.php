@@ -1,6 +1,6 @@
 <?php
 
-class freeze_user_object extends base_user{
+class freeze_user_object extends base_user_object{
 
 	public function __construct(&$app){
 		
