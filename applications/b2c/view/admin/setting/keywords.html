@@ -23,6 +23,7 @@
             </thead>
             <tbody id="node_list">
                 <{foreach from=$hot item=item name="item"}>
+                <{if $item.id && $item.id neq '0'}>
                 <tr>
                     <td>
                         <{$item.id}>
@@ -43,12 +44,12 @@
 
                     </td>
                 </tr>
+                <{/if}>
                 <{/foreach}>
             </tbody>
         </table>
     </div>
 </form>
-
 
 <div class="modal fade" id="node_edit" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg">

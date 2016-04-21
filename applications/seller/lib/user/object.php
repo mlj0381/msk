@@ -1,17 +1,11 @@
 <?php
 
-class seller_user_object{
+class seller_user_object  extends base_user_object{
 
-    public function __construct(&$app){
-        $this->app = $app;
-        if($_COOKIE['AUTO_LOGIN']){
-            $minutes = 7*24*3600;//30天
-            vmc::singleton('base_session')->set_sess_expires($minutes);
-            vmc::singleton('base_session')->set_cookie_expires($minutes);
-            $this->cookie_expires = $minutes;
-        }//如果有自动登录，设置session过期时间，单位：分
-        vmc::singleton('base_session')->start();
-    }
+	public function __construct(&$app){
+		parent::__construct($app);
+		$this->app = $app;
+	}
 
     /**
      * 判断当前用户是否登录
@@ -21,13 +15,7 @@ class seller_user_object{
         return $seller_id ? true : false;
     }
 
-    /**
-     * 获取当前用户ID
-     */
-    public function get_id(){
-        return $seller_id = $this->get_session();
-    }
-
+   
     //根据用户名得到会员ID
     public function get_seller_id_by_username($login_account){
         $pam_sellers_model = app::get('pam')->model('sellers');
@@ -39,20 +27,7 @@ class seller_user_object{
      * 设置会员登录session seller_id
      */
     public function set_session($seller_id){
-        unset($_SESSION['error_count']['seller']);
-        $_SESSION['account']['seller'] = $seller_id;
-    }
-
-    /**
-     * 获取会员登录session seller_id
-     */
-    public function get_session(){
-        if($this->seller_id)return $this->seller_id;
-        if(isset($_SESSION['account']['seller']) &&  $_SESSION['account']['seller']){
-            return $_SESSION['account']['seller'];
-        }else{
-            return false;
-        }
+    	parent::set_session(array('seller_id'=>$seller_id));
     }
 
     /**

@@ -1,24 +1,10 @@
 <?php
 
-class b2c_user_object{
+class b2c_user_object extends base_user_object{
 
     public function __construct(&$app){
+    	parent::__construct($app);
         $this->app = $app;
-        if($_COOKIE['AUTO_LOGIN']){
-            $minutes = 30*24*60;//30天
-            vmc::singleton('base_session')->set_sess_expires($minutes);
-            vmc::singleton('base_session')->set_cookie_expires($minutes);
-            $this->cookie_expires = $minutes;
-        }//如果有自动登录，设置session过期时间，单位：分
-        vmc::singleton('base_session')->start();
-    }
-
-    /**
-     * 判断当前用户是否登录
-     */
-    public function is_login(){
-        $member_id = $this->get_member_session();
-        return $member_id ? true : false;
     }
 
     /**
@@ -40,7 +26,7 @@ class b2c_user_object{
      */
     public function set_member_session($member_id){
         unset($_SESSION['error_count']['b2c']);
-        $_SESSION['account']['member'] = $member_id;
+        $_SESSION['account']['member_id'] = $member_id;
     }
 
     /**
@@ -48,8 +34,8 @@ class b2c_user_object{
      */
     public function get_member_session(){
         if($this->member_id)return $this->member_id;
-        if(isset($_SESSION['account']['member']) &&  $_SESSION['account']['member']){
-            return $_SESSION['account']['member'];
+        if(isset($_SESSION['account']['member_id']) &&  $_SESSION['account']['member_id']){
+            return $_SESSION['account']['member_id'];
         }else{
             return false;
         }
