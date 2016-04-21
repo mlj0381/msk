@@ -273,7 +273,7 @@ class b2c_mdl_goods extends dbeav_model
     public function &fileCard($type, $cat)
     {
         $card = array(
-            //'apt_stock' => '',//
+            'apt_stock' => 'card_pd_mat',//原料种源信息同步
             'apt_prove' => 'card_pd_org',//原种种源标准指标
             'apt_raise' => 'card_pd_fed',//原种饲养标准指标
             'apt_technology' => 'card_pd_mct',//产品加工技术标准指标
@@ -285,11 +285,12 @@ class b2c_mdl_goods extends dbeav_model
         $result = Array();
         if(array_key_exists($type, $card))
         {
-            $result = app::get('seller')->rpc($card[$type])->request('', 604800);//一星期
-        }
+            $result = app::get('seller')->rpc($card[$type])->request(array(1), '604800');//一星期
+        }		
         $cat_id = explode('-', $cat); //01-1-01 分类编码组合 一级 - 二级 - 三级
         foreach($result['result']['searchList'] as $value)
         {
+			if(!$value['breedCode']) $cat_id[2] = ''; //原料种源信息同步 特征没返回
             if($value['classesCode'] == $cat_id[0] && $value['machiningCode'] == $cat_id[1] && $value['breedCode'] == $cat_id[2])
             {
                 return $value;

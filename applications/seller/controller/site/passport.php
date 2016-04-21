@@ -611,12 +611,40 @@ class seller_ctl_site_passport extends seller_frontpage
     //ajax提交保存电商团队成员
     public function save_ecgroup()
     {
+
         if (!$_POST) {
             $this->splash('error', '', '非法请求');
         }
+		
         $params = utils::_filter_input($_POST);
+
         unset($_POST);
-        $type = key($params);
+		//调用接口添加
+		$type = key($params);
+		
+
+        for ($i = 0; $i < count(reset($params[$type]['value'])); $i++) 
+        {
+            foreach ($params[$type]['value'] as $key => $value) 
+            {
+                if($key != 'trait' && !$value[$i])
+                {
+                    $this->splash('error', '', '信息未填写完整');
+                }
+            }
+        }
+        if($type != 'ec_group_employees'){
+			$apiCompanyId = app::get('base')->model('company')->getRow('company_id, ep_id', array('uid' => $this->seller['seller_id'], 'from' => '1'));
+		}
+
+		$params[$type]['extra_id'] = $apiCompanyId['ep_id'];
+        if($params[$type]['extra_id'] ){
+            //有apiCompanyId 不是入驻的时候添加多个信息调用接口
+            $result = $this->_saveApiArray($params);
+            if (!$result) {
+                $this->splash('error', '', '添加失败');
+            }
+        }
         $data = array();
         foreach ($params[$type]['value'] as $key => $value) {
             $data[$type]['value'][$key] = $value[0];
@@ -625,6 +653,9 @@ class seller_ctl_site_passport extends seller_frontpage
         $data[$type]['uid'] = $this->seller['seller_id'];
         $data[$type]['from'] = '1';
         $data[$type]['key'] = $type;
+		$data[$type]['createtime'] = time();
+		$data[$type]['identity'] = $this->seller['ident'];
+		$data[$type]['extra_id'] = $apiCompanyId['company_id'];
         $data[$type]['attach'] = $params[$type]['attach'][0];
         $func_name = $data[$type]['content_id'] ? 'save' : 'insert';
         $mdl_company_extra = app::get('base')->model('company_extra');
@@ -635,6 +666,82 @@ class seller_ctl_site_passport extends seller_frontpage
         }
         $this->splash('success', '', $data[$type]);
     }
+
+    /**
+     * @param $params
+     * @return array
+     */
+    private function _saveApiArray($params)
+    {
+        /*
+         * edit_seller_ec_group 电商团队
+         * edit_seller_equipment 检测设备
+         * edit_seller_touted 企业荣誉
+         * edit_seller_workshop 车间概况
+         */
+		$rpc = '';
+		$apiData = Array();
+		$type = key($params);
+        switch ($type) {
+            case 'workshop': //车间概况
+                $apiData['slEpWorkshopList'] = array(
+					array(
+						'epId' => $params[$type]['extra_id'],
+						'workshopId' => '',
+						'workshopName' => $params['workshop']['value']['name'][0],
+						'product' => $params['workshop']['value']['pro'][0],
+						'process' => $params['workshop']['value']['trait'][0],
+					),
+                );
+				$rpc = 'edit_seller_workshop';
+                break;
+            case 'company_touted': //企业荣誉
+                $apiData['slEpHonorList'] = array(
+					array(
+						'epId' => $params[$type]['extra_id'],
+						'honorId' => '',
+						'honorDesc' => $params['company_touted']['value']['desc'][0],
+						'certDate' => $params['company_touted']['value']['date'][0],
+						'certIssuer' => '',
+					),
+                );
+				$rpc = 'edit_seller_touted';
+                break;
+            case 'equipment': //检测设备
+                $apiData['slEpDdList'] = array(
+						array(
+						'epId' => $params[$type]['extra_id'],
+						'ddId' => '',
+						'ddName' => $params['equipment']['value']['main_device'][0],
+						'ddEquipment' => $params['equipment']['value']['use'][0],
+					),
+                );
+				$rpc = 'edit_seller_equipment';
+                break;
+            case 'ec_group_employees': //电商团队
+				$conf = $this->app->getConf('education');
+                $apiData['slEcTeamList'] = array(
+						array(
+						'slCode' => $this->seller['seller_id'],
+						'memberId' => '',
+						'leaderFlg' => '0',
+						'memberName' => $params['ec_group_employees']['value']['name'][0],
+						'memberAge' => $params['ec_group_employees']['value']['age'][0],
+						'birthday' => '',
+						'memberEduc' => $conf[$params['ec_group_employees']['value']['edu'][0]],
+						'memberTel' => $params['ec_group_employees']['value']['contact'][0],
+					),
+				);
+				$rpc = 'edit_seller_ec_group';
+                break;
+        }
+		$result = $this->app->rpc($rpc)->request($apiData);
+		if($result['status']){
+			Return true;
+		}
+		Return false;
+    }
+
 
     //ajax删除电商团队、主要设备
     public function del_extra()
@@ -671,14 +778,13 @@ class seller_ctl_site_passport extends seller_frontpage
     }
 
 
-    //ajax判断所填写的营业执照号是否已经填写过并返回信息
     /**
      * 营业执照号验证
      */
     public function check_company()
     {
         if (!is_numeric($_POST['company']['business'])) $this->splash('error', '', '请输入正确的格式');
-                //, 'business_type' => $_POST['business_type']
+        //, 'business_type' => $_POST['business_type']
         $company = app::get('base')->model('company')->getRow('business', array('business' => $_POST['company']['business']));
         if (empty($company['business'])) {
             $this->splash('success', '', '可用');
@@ -708,12 +814,32 @@ class seller_ctl_site_passport extends seller_frontpage
         $redirect = Array('app' => 'seller', 'ctl' => 'site_passport', 'act' => 'entry', 'args0' => ($count['sum'] - 1));
         $redirect = $this->gen_url($redirect);
         $post['brand']['seller_id'] = $this->seller['seller_id'];
+		
+		$mdlBrand = app::get('b2c')->model('brand');
 
-        if (!app::get('b2c')->model('brand')->save($post['brand'])) {
+		$checkBrandName = $mdlBrand->getRow('brand_id', array('brand_name' => $post['brand']['brand_name']));
+		if($checkBrandName['brand_id']){
+			$this->splash('error', $redirect, '品牌名重复');
+		}
+        if (!$mdlBrand->save($post['brand'])) {
             $this->splash('error', $redirect, '操作失败');
         }
         $this->splash('success', $redirect, array('name' => $post['brand']['brand_name'], 'id' => $post['brand']['brand_id']));
     }
+
+	public function removeBrand() 
+	{
+        $redirect = $this->gen_url(Array('app' => 'seller', 'ctl' => 'site_passport', 'act' => 'entry'));
+		if(empty($_POST['brand_id']) && !is_numeric($_POST['brand_id'])){
+			$this->splash('error', $redirect, '非法请求');
+		}
+
+		if(app::get('b2c')->model('brand')->delete(array('brand_id' => $_POST['brand_id']))){
+			$this->splash('success', $redirect, '操作成功');
+		}
+		$this->splash('error', $redirect, '操作失败');
+	}
+
 
     /*
      * 商家入驻添加经营类别
@@ -730,7 +856,6 @@ class seller_ctl_site_passport extends seller_frontpage
             'apt_technology', 'apt_transport');
         if (in_array($html_type, $html_arr)) {
             $this->pagedata['card'] = app::get('b2c')->model('goods')->fileCard($html_type, $this->_request->get_get('cat'));
-
             $this->display('ui/aptitude/' . $html_type . '.html');
         }
     }
@@ -749,7 +874,7 @@ class seller_ctl_site_passport extends seller_frontpage
         $this->pagedata['aptitude'] = app::get('b2c')->model('cat_aptitudes')->getRow('*', array('cat_id' => $cat_id));
         $this->pagedata['cat'] = app::get('store')->model('goods_cat')->getRow('*', array('cat_id' => $cat_id, 'seller_id' => $this->seller['seller_id']));
         $this->pagedata['type'] = 'entry';
-		$this->pagedata['step'] = $step;
+        $this->pagedata['step'] = $step;
         $this->pagedata['cat_id'] = $cat_id;
         $this->display('site/goods/write_aptitude.html');
     }
@@ -760,11 +885,11 @@ class seller_ctl_site_passport extends seller_frontpage
     public function saveAptitude()
     {
         $url = array('app' => 'seller', 'ctl' => 'site_passport', 'act' => 'entry', 'args0' => $_POST['step'] - 1);
-        if($_POST['type'] == 'center'){
+        if ($_POST['type'] == 'center') {
             $url = array('app' => 'seller', 'ctl' => 'site_goods', 'act' => 'directory');
         }
         $redirect = $this->gen_url($url);
-		if (!$_POST) {
+        if (!$_POST) {
             $this->splash('error', '', '非法请求');
         }
         $data = array('cat_id' => $_POST['cat_id'], 'extra' => $_POST['cat'], 'seller_id' => $this->seller['seller_id']);
@@ -776,10 +901,12 @@ class seller_ctl_site_passport extends seller_frontpage
 
             $this->splash('error', $redirect, '添加失败');
         }
-        $result = vmc::singleton('seller_user_passport')->apiAptitudes($_POST['cat_id']);
-        if($result !== true){
-            $this->splash('error', $redirect, $result);
-        }
+		if($_POST['type'] == 'center'){
+			$result = vmc::singleton('seller_user_passport')->apiAptitudes($_POST['cat_id']);
+			if ($result !== true) {
+				$this->splash('error', $redirect, $result);
+			}
+		}
         $this->splash('success', $redirect, '添加成功');
     }
 

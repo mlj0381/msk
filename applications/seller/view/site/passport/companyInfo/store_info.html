@@ -272,69 +272,8 @@
     $(function () {
 
         $('#write_apt_modal').on('shown.bs.modal', function () {
-        $.VMC.init();  //重新绑定图片上传事件
-        /**
-         * 日期选择
-         */
-         $('.form_datetime').datetimepicker({
-            format: "yyyy-mm-dd",
-            autoclose: true,
-            todayBtn: true,
-            weekStart: 1,
-            todayHighlight: 1,
-            minView:2,
-            language:"zh-CN",
-            pickerPosition: "bottom-left"
-        }).on("hide",function(ev){
-            $(".form_datetime").trigger('blur');
+            $.VMC.init();  //重新绑定图片上传事件
         });
-
-
-        /*区间日期选择*/
-        $(".timeStart").datetimepicker({
-            format: "yyyy-mm-dd",
-            autoclose: true,
-            todayBtn: true,
-            weekStart: 1,
-            todayHighlight: 1,
-            minView:2,
-            language:"zh-CN",
-            pickerPosition: "bottom-left"
-        }).on("click",function(ev){
-            $(".timeStart").datetimepicker("setEndDate", $(".timeEnd").val());
-        }).on("hide",function(ev){
-            $(".timeStart").trigger('blur');
-        });
-        $(".timeEnd").datetimepicker({
-            format: "yyyy-mm-dd",
-            autoclose: true,
-            todayBtn: true,
-            weekStart: 1,
-            todayHighlight: 1,
-            minView:2,
-            language:"zh-CN",
-            pickerPosition: "bottom-left"
-        }).on("click", function (ev) {
-            $(".timeEnd").datetimepicker("setStartDate", $(".timeStart").val());
-        }).on("hide",function(ev){
-            $(".timeEnd").trigger('blur');
-        });
-    });
-    $("#write_apt_modal").on("hidden.bs.modal", function () {
-        $(this).removeData("bs.modal");  //关闭时清空数据
-    });
-
-
-
-        //创建品牌
-        $('#brand_add_modal').on('click', '.brand_save_btn', function () {
-            var brand = $.trim($('.brand_name').val());
-            var brand_html = '<span class="brand_item">' + brand + ' <i class="icon-remove"></i></span>';
-            if (brand != '' && brand != null && brand != undefined) {
-                $('.brand_list').append(brand_html);
-            }
-            $("#brand_add_modal").modal('hide');
-        })
 
         //移除品牌
         $('.brand_list').on('click', '.icon-remove', function () {
@@ -345,7 +284,7 @@
                     return false;
                 }
                 var _self = $(this);
-                var url = '<{link app=seller ctl=site_brand act=remove}>';
+                var url = '<{link app=seller ctl=site_passport act=removeBrand}>';
                 $.post(url, {'brand_id': brandId}, function (re) {
                     if (re.success) {
                         _self.parent('.brand_item').remove();
@@ -447,13 +386,18 @@
                 .removeAttr('checked');
             }
             
-        })
+        });
+        //判断用户是否选中分类
+        /*$('#companyInfo_form').on('submit',function(e){
+          $('.cat_tree input[type=checkbox]').each(function(index,element){
+            var ck_status = $(element).is(':checked');
+            var cat_level = $(element).parents('tr').attr('data-treeid');
+            var levelArr = cat_level.split('-');
+          })
+            return false;
+        })*/
+
         //分类树效果结束
-
-        
-
-
-
     });
 
 
@@ -469,12 +413,8 @@
                 confirm = false;
                 return false;
             }
-
         });
         if (!confirm)  return false;
         return false;
     });
-
-
-
 </script>

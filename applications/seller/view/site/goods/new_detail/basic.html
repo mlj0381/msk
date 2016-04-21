@@ -161,7 +161,7 @@
         <div class="col-xs-5 fileCard">
             <span class="apt_tag active apt_stock-1" data-type="0" data-toggle="modal"
                   data-target=".category_add_modal"
-                  href="<{link app=seller ctl=site_passport act=display_type args0=apt_stock}>?cat=1"
+                  href="<{link app=seller ctl=site_passport act=display_type args0=apt_stock}>"
                   data-tagId="1" title="原种">原
                 <input type="hidden" name="card[apt_stock]" value="0"/>
             </span>
@@ -269,9 +269,8 @@
     $('.cat_select').on('change','select',function(e){
         var target = e.target || e.srcElement;
         var index = $('.cat_select select').index(this);
-        if($(target).find('option:selected').attr('value')== -1){
-            $('.feature, .weight, .pack').html('');
-        }
+        $('.feature, .weight, .pack').html('');  //清空特征、净重、包装
+
         switch(index){
             case 0 :
             $('.add_three_cat').addClass('hide');

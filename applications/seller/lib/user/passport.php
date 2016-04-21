@@ -840,6 +840,7 @@ class seller_user_passport
 
         foreach ($extra_columns['page'] as $key => $col) {
             if (isset($params[$col]) && !empty($params[$col])) {
+                
                 $params[$col]['content_id'] && $sqlType = true;
                 $params[$col]['identity'] = $params['typeId'] == 'comm' ? null : $params['typeId'];
                 $params[$col]['extra_id'] = $company_id ?: $company_extra[0]['company_id'];
@@ -848,6 +849,7 @@ class seller_user_passport
                 $params[$col]['from'] = 1;
 
                 //电商成员信息
+                
                 if (is_array(reset($params[$col]['value']))) {
 
                     if (!$this->_save_array($col, $params[$col], $seller['seller_id'])) {
@@ -888,6 +890,7 @@ class seller_user_passport
             $first_arr = reset($params['value']);
             $length = count($first_arr);
             for ($i = 0; $i < $length; $i++) {
+
                 if (empty($first_arr[$i])) {
                     continue;
                 }
@@ -897,9 +900,10 @@ class seller_user_passport
                 $data['attach'] = $params['attach'][$i];
                 $data['key'] = $key;
                 $data['extra_id'] = $params['extra_id'];
-                $data['identity'] = $params['identity'];
+                $data['identity'] = $this->seller['ident'];
                 $data['createtime'] = time();
                 foreach ($params['value'] as $k => $v) {
+                    if(!$v && $k != 'trait') continue 2; //trait 车间工艺流程特点可以为空非必填
                     $data['value'][$k] = $v[$i];
 
                 }
@@ -1138,8 +1142,8 @@ class seller_user_passport
                 'taxNo' => $value['tax_licence']['value']['code'],
                 'taxVatNo' => $value['tax_licence']['value']['num'],
                 'orgNo' => $value['organization_licence']['value']['code'],
-                'orgTermBegin' => '',
-                'orgTermEnd' => '',
+                'orgTermBegin' => $value['organization_licence']['value']['date_start'],
+                'orgTermEnd' => $value['organization_licence']['value']['date_end'],
 
                 //银行开户许可证
                 'balLegalPerson' => $value['bank_lesstion']['value']['legal'],
@@ -1259,12 +1263,12 @@ class seller_user_passport
                 array(
                     'flag' => $identity,
                     'slCode' => $this->seller['sl_code'],
-                    'producerEpId' => $agent['agent_auth_lesstion']['value']['agent'],
-                    'contractNo' => $agent['agent_auth_lesstion']['value']['num'],
-                    'authEpName' => $agent['agent_auth_lesstion']['value']['unit'],
-                    'authTermBegin' => $agent['agent_auth_lesstion']['value']['start'],
-                    'authTermEnd' => $agent['agent_auth_lesstion']['value']['end'],
-                    'authTermUnliimited' => '',
+                    'producerEpId' => $agent['agent_auth_lesstion']['value']['agent'] ?: $agent['oem_auth_lesstion']['value']['agent'],
+                    'contractNo' => $agent['agent_auth_lesstion']['value']['num'] ?: $agent['oem_auth_lesstion']['value']['num'],
+                    'authEpName' => $agent['agent_auth_lesstion']['value']['unit'] ?: $agent['oem_auth_lesstion']['value']['unit'],
+                    'authTermBegin' => $agent['agent_auth_lesstion']['value']['start'] ?: $agent['oem_auth_lesstion']['value']['start'],
+                    'authTermEnd' => $agent['agent_auth_lesstion']['value']['end'] ?: $agent['oem_auth_lesstion']['value']['end'],
+                    'authTermUnliimited' => '1',
                 ));
             $manage[0] = $value['president'];
             $manage[0]['duties'] = '董事长';
@@ -1385,6 +1389,12 @@ class seller_user_passport
                 }
                 $i++;
             }
+			$prentCatId = app::get('b2c')->model('goods_cat')->getRow('addon', array('cat_id' => $value['parent_id']));
+			$apiData[$j]['pdClassesCodeList'][] = array(
+				'pdClassesCode'	=> $prentCatId['addon'],
+				'machiningCode'	=> $value['addon'],
+				'slCode' => $this->seller['sl_code'],
+			);
             $j++;
         }
         foreach ($apiData as $key => $value) {

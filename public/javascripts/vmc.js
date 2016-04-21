@@ -1,4 +1,5 @@
 (function( factory ) {
+	
 	if ( typeof define === "function" && define.amd ) {
 		define( [
 			"jquery",
@@ -55,7 +56,7 @@ $.validator.messages = {
 	proprotion: $.validator.format("请输入正确的销售比例")
 	//format : $.validator.format("格式{0}错误！")
 };
- $.extend(true, $.validator.methods, {
+$.extend(true, $.validator.methods, {
 
 	size : function(value, element, param)
 	{
@@ -335,9 +336,6 @@ $.VMC.validator = function(form){
 				}
 				return;
 			}	
-			/*if(element.is("input[class*=timeStart]") || element.is("input[class*=timeEnd]")){
-				error.appendTo ( element.parents('.timeLimit').parent() );
-			}*/	
 			error.insertAfter(element);
 		}
 	};

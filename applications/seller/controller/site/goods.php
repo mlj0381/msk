@@ -910,8 +910,7 @@ class seller_ctl_site_goods extends seller_frontpage
             //特征
             $apiData['breedName'] = $_POST['name'];
         }
-
-        $result = $this->app->rpc('apply_for_sku')->request($apiData);
+        $result = $this->app->rpc('apply_for_sku')->request(array('newPdBFWList' => array($apiData)));
         if($result['status']){
             $this->splash('success', '', '添加成功');
         }

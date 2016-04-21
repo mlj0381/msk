@@ -105,7 +105,7 @@ class seller_ctl_site_brand extends seller_frontpage
                 'termEnd' => $brand_data['agent_end'],
             );
             if(!$this->app->rpc('add_seller_brand')->request($data)['status']){
-                $this->splash('error', $redirect, '数据同步失败');
+//                $this->splash('error', $redirect, '数据同步失败');
             }
         }
 

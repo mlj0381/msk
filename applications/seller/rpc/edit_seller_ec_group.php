@@ -1,8 +1,8 @@
 <?php
 /**
- * 编辑商家基本信息---------------ISL231180
+ * 编辑电商团队---------------ISL231180
  */
-$remote['seller_edit_seller_aptitudes'] = array(
+$remote['seller_edit_seller_ec_group'] = array(
     'url' => '/sl/slInfo/newOrUpdateAll',
 
     'request' => array(
@@ -22,20 +22,14 @@ $remote['seller_edit_seller_aptitudes'] = array(
     ),
 
     'param' => array(
-        'certInfoList' => array(
-            'name' => '企业证照信息List',
-            'column' => 'certInfoList',
+        'slEcTeamList' => array(
+            'name' => '电商团队',
+            'column' => 'slEcTeamList',//电商 团队
             'type' => 'List',
             'default' => '',
             'require' => '',
         ),
-		'pdClassesCodeList' => array(
-            'name' => '产品类别List',
-            'column' => 'pdClassesCodeList',
-            'type' => 'List',
-            'default' => '',
-            'require' => '',
-        ),
+
         'loginId' => array(
             'name' => '  创建者ID/更新者ID',
             'column' => 'loginId',
@@ -47,101 +41,24 @@ $remote['seller_edit_seller_aptitudes'] = array(
             'name' => '  删除标志',
             'column' => 'delFlg',
             'type' => 'String',
-            'default' => '0',
+            'default' => '',
             'require' => false,
         ),
         'ver' => array('name' => '  版本号',
             'column' => 'ver',
             'type' => 'Integer',
-            'default' => '1',
+            'default' => '',
             'require' => false
         ),
         'insertFlag' => array(
             'name' => '全体/单个',
             'column' => 'insertFlag',
             'type' => 'String',
-            'default' => '',//0：全体，1：单个
+            'default' => '1',//0：全体，1：单个
             'require' => false,
         ),
     ),
-
-    'certInfoList' => array(
-        'epId' => array(
-            'name' => '企业ID',
-            'column' => 'epId',
-            'type' => 'Integer',
-            'default' => '',
-            'require' => false,
-        ),
-        'certId' => array(
-            'name' => '证照ID',
-            'column' => 'certId',
-            'type' => 'Integer',
-            'default' => '',
-            'require' => false,
-        ),
-        'certName' => array(
-            'name' => '证照名称',
-            'column' => 'certName',
-            'type' => 'String',
-            'default' => '',
-            'require' => false,
-        ),
-        'certItemList' => array(
-            'name' => '企业证照项目信息List',
-            'column' => 'certItemList',
-            'type' => 'List',
-            'default' => '',
-            'require' => false,
-        ),
-
-    ),
-    'certItemList' => array(
-        'certId' => array(
-            'name' => '证照ID',
-            'column' => 'certId',
-            'type' => 'Integer',
-            'default' => '',
-            'require' => false,
-        ),
-        'certItemId' => array(
-            'name' => '证照项目ID',
-            'column' => 'certItemId',
-            'type' => 'Integer',
-            'default' => '',
-            'require' => false,
-        ),
-        'certItemName' => array(
-            'name' => '证照项目名称',
-            'column' => 'certItemName',
-            'type' => 'Integer',
-            'default' => '',
-            'require' => false,
-        ),
-        'certItemValue' => array(
-            'name' => '证照项目内容',
-            'column' => 'certItemValue',
-            'type' => 'String',
-            'default' => '',
-            'require' => false,
-        ),
-
-    ),
-	'pdClassesCodeList' => array(
-        'pdClassesCode' => array(
-            'name' => '产品类别',
-            'column' => 'pdClassesCode',
-            'type' => 'String',
-            'default' => '',
-            'require' => false,
-        ),
-        'machiningCode' => array(
-            'name' => '产品二级分类',
-            'column' => 'machiningCode',
-            'type' => 'String',
-            'default' => '',
-            'require' => false,
-        ),
+    'slEcTeamList' => array(
         'slCode' => array(
             'name' => '卖家ID',
             'column' => 'slCode',
@@ -149,8 +66,57 @@ $remote['seller_edit_seller_aptitudes'] = array(
             'default' => '',
             'require' => false,
         ),
-
+        'memberId' => array(
+            'name' => '成员ID',
+            'column' => 'memberId',
+            'type' => 'Integer',
+            'default' => '',
+            'require' => false,
+        ),
+        'leaderFlg' => array(
+            'name' => '是否负责人',
+            'column' => 'leaderFlg',
+            'type' => 'String',
+            'default' => '',
+            'require' => false,
+        ),
+        'memberName' => array(
+            'name' => '姓名',
+            'column' => 'memberName',
+            'type' => 'String',
+            'default' => '',
+            'require' => false,
+        ),
+        'memberAge' => array(
+            'name' => '年龄',
+            'column' => 'memberAge',
+            'type' => 'Integer',
+            'default' => '',
+            'require' => false,
+        ),
+        'birthday' => array(
+            'name' => '出生日期',
+            'column' => 'birthday',
+            'type' => 'Datetime',
+            'default' => '',
+            'require' => false,
+        ),
+        'memberEduc' => array(
+            'name' => '文化程度',
+            'column' => 'memberEduc',
+            'type' => 'String',
+            'default' => '',
+            'require' => false,
+        ),
+        'memberTel' => array(
+            'name' => '联系电话',
+            'column' => 'memberTel',
+            'type' => 'String',
+            'default' => '',
+            'require' => false,
+        ),
     ),
+
     'response' => array(
         'epId' => array(
             'name' => '企业id',

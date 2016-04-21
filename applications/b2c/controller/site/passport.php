@@ -424,6 +424,7 @@ class b2c_ctl_site_passport extends b2c_frontpage
 
         $this->title = '重置密码';
         if ($action == 'doreset') {
+        	$old_password = app::get('pam')->model('members')->getRow('password', array('member_id'=>$this->member['member_id']));
             $redirect_here = array('app' => 'b2c', 'ctl' => 'site_passport', 'act' => 'reset_password');
             $params = $_POST;
             $forward = $params['forward'];
@@ -444,8 +445,8 @@ class b2c_ctl_site_passport extends b2c_frontpage
            /*  if (!vmc::singleton('b2c_user_vcode')->verify($params['vcode'], $params['account'], 'reset')) {
                 $this->splash('error', $redirect_here, '验证码错误！');
             } */
-            $login_type = $this->passport_obj->get_login_account_type($params['pam_account']['mobile']);
-            if ($login_type == 'mobile'  && !vmc::singleton('b2c_user_smscode')->bool_sms($params['pam_account']['mobile'],$params['smscode'],'sms')) {
+            $login_type = $this->passport_obj->get_login_account_type($params['account']);
+            if ($login_type == 'mobile'  && !vmc::singleton('b2c_user_smscode')->bool_sms($params['account'],$params['vcode'],'sms')) {
             	$this->splash('error', $signup_url, '手机短信验证码不正确');
             }
 //            if (!vmc::singleton('b2c_user_vcode')->verify($params['vcode'], $params['account'], 'reset')) {
@@ -466,12 +467,11 @@ class b2c_ctl_site_passport extends b2c_frontpage
             /**
              * 润和接口 修改密码 IBY121201
              */
-            $buyer_id = app::get('b2c')->model('members')->getRow('buyer_id',array('member_id'=>$member_id));
             $password = app::get('pam')->model('members')->getRow('password,login_account',array('member_id'=>$member_id));
             $api_data = array(
-                'buyerId' => $buyer_id['buyer_id'],
+                'buyerId' => $this->app->model('members')->getRow('buyer_id', array('member_id'=>$member_id))['buyer_id'],
                 'accountName' => $password['login_account'],
-                'oldAccountPass' => $password['password'],
+                'oldAccountPass' => '123456',//$old_password['password'],
                 'newAccountPass' => $params['new_password'],
             );
             $rpc_password = app::get('b2c')->rpc('edit_password');
@@ -486,14 +486,28 @@ class b2c_ctl_site_passport extends b2c_frontpage
 //            $this->user_obj->set_member_session($member_id);
 //            //设置客户端cookie
 //            $this->bind_member($member_id);
-            $redirect = $this->gen_url(array('app' => 'b2c', 'ctl' => 'site_passport', 'act' => 'login'));
-            $this->splash('success', $redirect, '密码重置成功，请重新登录');
+            $redirect = $this->gen_url(array('app' => 'b2c', 'ctl' => 'site_member', 'act' => 'securitycenter'));
+            $this->splash('success', $redirect, '密码重置成功');
         } else {
+        	$this->pagedata['data'] = $this->app->model('members')->getRow('mobile', array('member_id'=>$this->member['member_id']));
             $this->set_tmpl('passport');
             $this->page('site/passport/reset_password.html');
         }
     }
 
+    //无判断手机号
+    public function new_member_vcode(){
+    	$account = $_POST['account'];
+    	$smscode_obj = vmc::singleton('b2c_user_smscode');
+    	$smscode = $smscode_obj->send_smscode($account,'sms',$msg);
+    	if($smscode){
+    		$this->splash('success', $smscode, '短信已发送');
+    	}else{
+    		$this->splash('error', null, $msg);
+    	}
+    }
+    
+    
     //发送身份识别验证码
     public function member_vcode()
     {

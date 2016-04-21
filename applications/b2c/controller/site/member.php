@@ -852,6 +852,7 @@ class b2c_ctl_site_member extends b2c_frontpage
      */
     public function quick_maddr($action = 'list', $addr_id = false)
     {
+        $member_data = $this->app->model('members')->getRow('*',array('member_id'=> $this->member['member_id']));
         $this->pagedata['action'] = $action;
         $mdl_maddr = $this->app->model('member_addrs');
         $member_id = $this->member['member_id'];
@@ -864,6 +865,16 @@ class b2c_ctl_site_member extends b2c_frontpage
                 $this->splash('success', $redirect, '设置成功');
                 break;
             case 'delete':
+                //rpc删除收货地址
+                $maddr = $mdl_maddr->getRow('*', array('member_id' => $member_id, 'addr_id' => $addr_id));
+                $delete_data = array(
+                    'buyer_id'=> $member_data['buyer_id'],
+                    'rpc_addr_id'=> $maddr['rpc_addr_id'],
+                );
+                $delete_result = $this->app->rpc('delete_delivery_address')->request($delete_data);
+                if (!$delete_result['status']) {
+                    $this->splash('error', '', '同步删除失败');
+                }
                 if (!$mdl_maddr->delete(array('member_id' => $member_id, 'addr_id' => $addr_id))) {
                     $this->splash('error', '', '删除失败');
                 }
@@ -881,7 +892,22 @@ class b2c_ctl_site_member extends b2c_frontpage
                 $addr['member_id'] = $member_id;
                 if (!$mdl_maddr->save($addr)) {
                     $this->splash('error', '', '保存失败');
-                }
+                };
+                $maddr = $mdl_maddr->getRow('*', array('member_id' => $member_id, 'addr_id' => $addr['addr_id']));
+                //rpc更新或添加收货地址
+                $update_data[] = array(
+                    'buyer_id' => $member_data['buyer_id'],
+                    'rpc_addr_id' => $maddr['rpc_addr_id'],//有则更新，无则添加
+                    'addr' => $maddr['addr'],
+                );
+                $update_result = $this->app->rpc('update_delivery_address')->request($update_data);
+                if (!$update_result['status']) {
+                    $this->splash('error', '', '同步收货地址保存失败');
+                }else{
+                    if(in_array($update_result['result'][0],$update_result['result'])){
+                        $mdl_maddr->update(array('rpc_addr_id' => $update_result['result'][0]['rpc_addr_id']), array('addr_id' => $addr['addr_id']));
+                    };
+                };
                 $addr['area'] = vmc::singleton('base_view_helper')->modifier_region($addr['area']);
                 $this->splash('success', $redirect, $addr);
                 break;
