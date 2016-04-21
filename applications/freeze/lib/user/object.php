@@ -1,17 +1,12 @@
 <?php
 
-class freeze_user_object{
+class freeze_user_object extends base_user{
 
-    public function __construct(&$app){
-        $this->app = $app;
-        if($_COOKIE['AUTO_LOGIN']){
-            $minutes = 30*24*60;//30天
-            vmc::singleton('base_session')->set_sess_expires($minutes);
-            vmc::singleton('base_session')->set_cookie_expires($minutes);
-            $this->cookie_expires = $minutes;
-        }//如果有自动登录，设置session过期时间，单位：分
-        vmc::singleton('base_session')->start();
-    }
+	public function __construct(&$app){
+		
+		parent::__construct($app);
+		$this->app = $app;
+	}
 
 
     /**
