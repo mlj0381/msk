@@ -23,6 +23,7 @@
             </thead>
             <tbody id="node_list">
                 <{foreach from=$nav item=item name="item"}>
+                <{if $item.id && $item.id neq '0'}>
                 <tr>
                     <td>
                         <{$item.id}>
@@ -45,6 +46,7 @@
                         <label><input class="status" <{if $item.status eq 'true'}>checked<{/if}> data-aid="<{$item.id}>" type="checkbox">是否启用</label>
                     </td>
                 </tr>
+                <{/if}>
                 <{/foreach}>
             </tbody>
         </table>
