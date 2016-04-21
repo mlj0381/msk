@@ -48,15 +48,15 @@ class b2c_ctl_site_product extends b2c_frontpage {
         if (empty($params)){
         	$params = json_decode($_POST['parms_post'],true);
         }
-        //获取详情
+        //获取详情这个请求时间较长
         $data_detail_one = $this->goods_stage->detail($params[0], $msg); //引用传递
+        
         if (!$data_detail_one) {
             vmc::singleton('site_router')->http_status(404);
             $this->splash('error', null, $msg);
         }
         
         $data_detail = array_merge($this->get_code($data_detail_one['product']['bn']),$data_detail_one);
-        
         $data_detail['seller_code'] = app::get('seller')->model('sellers')->getRow('sl_code',array('seller_id'=>$data_detail_one['product']['seller_id']))['sl_code'];
         
         $data_detail['gradeCode'] = 'A2';
@@ -65,8 +65,9 @@ class b2c_ctl_site_product extends b2c_frontpage {
         $data_detail['logiAreaCode'] = $this->addr_id;
         $price_response = $this->app->rpc('select_product_price')->request($data_detail, false);
         $data_detail['pricelist'] = $price_response['result'][0]['pricelist'];
-
-        $data_detail['feature_data_list'] = $this->app->rpc('select_product_cat4')->request($data_detail, false)['result'];
+        
+        $data_detail['feature_data_list'] = $this->get_feature_data_list($data_detail['goods_id'], $data_detail['product']['bn']);
+        
         $weight_data = $this->app->rpc('select_product_cat5')->request($data_detail, false)['result'];
        
         //包装规格  $data[0];
@@ -224,7 +225,7 @@ class b2c_ctl_site_product extends b2c_frontpage {
     
     public function get_product_price($logi_area_code, $seller_code, $product_code, $level_code){
     	//16043-------date('ym').ceil(date('j')/5)
-    	$where = ['logi_area_code'=>$logi_area_code, 'product_code'=>$product_code, 'level_code'=>$level_code, 'price_period'=>16043];
+    	$where = ['price_period'=>16043, 'logi_area_code'=>$logi_area_code, 'product_code'=>$product_code, 'level_code'=>$level_code];
         if ($seller_code){
     		$where['seller_code']=$seller_code;
     	}
@@ -237,8 +238,8 @@ class b2c_ctl_site_product extends b2c_frontpage {
     	if ($bn==0)return null;
     	return [
 	    	'classesCode'	=>	substr($bn, 0, 2),
-	    	'machiningCode'		=>	substr($bn, 2, 1),
-	    	'breedCode'	=>	substr($bn, 3, 2),
+	    	'machiningCode'	=>	substr($bn, 2, 1),
+	    	'breedCode'		=>	substr($bn, 3, 2),
 	    	'featureCode'	=>	substr($bn, 5, 2),
 	    	'weightCode'	=>	substr($bn, 7, 2),
     	];
@@ -246,7 +247,6 @@ class b2c_ctl_site_product extends b2c_frontpage {
     }
     
     public function get_product_id($data){
-    	
     	$model = $this->app->model('products');
     	foreach ($data['feature_data_list'] as $key=>&$value){
     		$value['product_id'] = $model->getRow('product_id', array('bn'=>substr($data['product']['bn'], 0 ,5).$value['featureCode'].$data['weightCode']))['product_id'] ?: 0;
@@ -258,8 +258,23 @@ class b2c_ctl_site_product extends b2c_frontpage {
     		$value['seller_id'] = $model->getRow('seller_id', array('bn'=>substr($data['product']['bn'], 0 ,7).$value['weightCode']))['seller_id'] ?: 0;
     	}
     	return $data;
+    	
     }
     
+    public function get_feature_data_list($goods_id, $bn_id){
+    	$all_feature_data_list = $this->app->rpc('select_product_cat4')->request($this->get_code($bn_id), false)['result'];
+    	$goods_feature_data_list = $this->app->model('products')->getList('substring(bn, 6, 2) as featureCode', array('goods_id'=>$goods_id));
+    	
+    	for ($i=0; $i<count($goods_feature_data_list); $i++){
+    		foreach ($all_feature_data_list as $key=>$value){
+    			if ($goods_feature_data_list[$i]['featureCode'] == $value['featureCode']){
+    				$return[$key] = $value;
+    			}
+    		}
+    	}
+    	return $return ?:null;
+    	
+    }
     
     
 }
