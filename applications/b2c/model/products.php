@@ -55,7 +55,6 @@ class b2c_mdl_products extends dbeav_model{
     		}
     		if (empty($request['seller_code']))		unset($request['seller_code']);
     		$price_list = $this->app->model('products_price')->getRow('priceOfBox', $request, array('priceOfBox','ASC'));
-    		
     		return $price_list['priceOfBox']*$request['amount'];
     	}else {
     		return null;
