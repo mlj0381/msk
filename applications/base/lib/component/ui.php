@@ -359,7 +359,7 @@ EOF;
                     .'" class="">最后一页<i class="fa fa-angle-double-right"></i></'.$tag.'></li>';
             } else {
                 $next = '<li class="next disabled"><a href="javascript:;">下一页<i class="fa fa-angle-right"></i></a></li>';
-                $last = '<li class="next disabled"><a class="disabled">最后一页<i class="fa fa-angle-double-right"></i></a></li>';
+                $last = '<li class="next disabled"><a href="javascript:;" class="disabled">最后一页<i class="fa fa-angle-double-right"></i></a></li>';
             }
         }
 
