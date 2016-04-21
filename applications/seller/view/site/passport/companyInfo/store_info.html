@@ -74,7 +74,7 @@
                         <th width="30%">标准资质</th>
                     </tr>
                     <{foreach from=$extra.store.cat key=k1 item=cat1}>
-                    <tr data-treeId="<{$cat1.addon}>" data-catName="<{$cat1.cat_name}>">
+                    <tr data-treeId="<{$cat1.addon}>" data-catName="<{$cat1.cat_name}>" data-catLevel="1">
                         <td><span class="arrow icon-caret-right"></span><{$cat1.addon}></td>
                         <td><input type="checkbox" name="cat_id[]"
                             <{if $cat1.cat_id eq $extra.store.selectedCat[$k1].cat_id}> checked <{/if}>
@@ -84,7 +84,7 @@
                         <td></td>
                     </tr>
                     <{foreach from=$cat1.son key=k2 item=cat2}>
-                    <tr data-treeId="<{$cat1.addon}>-<{$cat2.addon}>" data-catName="<{$cat1.cat_name}>">
+                    <tr data-treeId="<{$cat1.addon}>-<{$cat2.addon}>" data-catName="<{$cat1.cat_name}>" data-catLevel="2">
                         <td>&nbsp;&nbsp;&nbsp;&nbsp;<span class="arrow icon-caret-right"></span><{$cat2.addon}></td>
                         <td>&nbsp;&nbsp;&nbsp;&nbsp;<label>
                             <input type="checkbox" name="cat_id[]"
@@ -159,7 +159,7 @@
                         </td>
                     </tr>
                     <{foreach from=$cat2.son key=k3 item=cat3}>
-                    <tr data-treeId="<{$cat1.addon}>-<{$cat2.addon}>-<{$cat3.addon}>" data-catName="<{$cat1.cat_name}>">
+                    <tr data-treeId="<{$cat1.addon}>-<{$cat2.addon}>-<{$cat3.addon}>" data-catName="<{$cat1.cat_name}>" data-catLevel="3">
                         <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="arrow icon-caret-right"></span><{$cat3.addon}>
                         </td>
                         <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label>
@@ -380,6 +380,7 @@
                     }
                     $('.cat_tree tr[data-treeId='+concatId+']').find('input[type=checkbox]')
                     .attr('checked','checked').prop('checked',true);
+                    
                 }
             }else{
                 $('.cat_tree tr[data-treeId^='+treeId+']').find('input[type=checkbox]')
@@ -400,7 +401,27 @@
         //分类树效果结束
     });
 
+    $('#companyInfo_form').submit(function(){
+        
+       return (function submitCheck(){
+            //检测品牌是否添加
+            var brandLen = $('.brand_list .brand_item').size();
+            if(brandLen < 1){
+                alert('请添加品牌');
+                $('.brand_add_btn').focus();
+                return false;
+            };
 
+            //检测分类是否选择
+            var maxLevelCat = $('.cat_tree tr[data-catlevel=3] input[type=checkbox]:checked').length;
+            if(maxLevelCat < 1){
+                alert('请选择经营分类');
+                $('.cat_add_btn').focus();
+                $('.cat_wrapbox').slideDown();
+                return false;
+            }
+        })();
+    });
     $('.directory_form').submit(function () {
         var confirm = true;
         $('.dir_item').each(function (index, element) {

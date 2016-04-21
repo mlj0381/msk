@@ -1194,6 +1194,9 @@ ol {
   font-size: 12px;
   color: #727171;
 }
+.buyer_container .modal-header .modal-title {
+  margin: 0 auto;
+}
 .splash_con {
   min-height: 500px;
 }

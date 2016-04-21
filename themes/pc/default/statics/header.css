@@ -268,6 +268,8 @@ header .searchbar .searchbox .search_label span.active {
 }
 header .searchbar .searchbox .search_form {
   border: 2px solid #a40001;
+  height: 34px;
+  overflow: hidden;
 }
 header .searchbar .searchbox .search_form .search_txt input {
   display: inline-block;
@@ -277,6 +279,7 @@ header .searchbar .searchbox .search_form .search_txt input {
   border: none;
   padding: 0;
   outline: none;
+  font-size: 14px;
   padding-left: 10px;
   overflow: hidden;
 }

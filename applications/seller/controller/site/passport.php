@@ -915,6 +915,7 @@ class seller_ctl_site_passport extends seller_frontpage
     {
         $mdl_brand = app::get('b2c')->model('brand');
         $post = $_POST;
+        
         $result = $mdl_brand->getRow('brand_name', array('brand_name' => $post['brand']['brand_name']));
         if ($result['brand_name']) {
             $this->splash('error', '', '该品牌已存在');

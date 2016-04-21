@@ -2,8 +2,9 @@
 <ul class="category-root">
     <{foreach from=$category_tree item=cat key=ck}>
     <li class="<{if $cat.has_children=='true'}> has-children <{/if}>"
-    data-toggle="tab" data-catid="<{$cat.cat_id}>" >
-        <a href="#subCat<{$cat.cat_id}>" href="<{link app=b2c ctl=site_list act=index}>?cat_id=<{$cat.cat_id}>"  ><{$cat.cat_name}>
+    data-catid="<{$cat.cat_id}>" >
+    <!-- href="#subCat<{$cat.cat_id}>" -->
+        <a href="<{link app=b2c ctl=site_list act=index}>?cat_id=<{$cat.cat_id}>"><{$cat.cat_name}>
             <{if $cat.has_children=='true'}>
             <i class="glyphicon glyphicon-menu-right pull-right"></i>
             <{/if}>
